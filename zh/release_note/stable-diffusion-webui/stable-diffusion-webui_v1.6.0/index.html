@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>stable-diffusion-webui v1.6.0 — STAGS NextStack</title><meta name="description" content="refiner support #12371 · add NV option for Random number generator source setting, which allows to generate same pictures on CPU/AMD/Mac as on NVidia videocards · add style editor dialog"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.6.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/stable-diffusion-webui/1.6.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.6.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/stable-diffusion-webui/1.6.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="stable-diffusion-webui v1.6.0 — STAGS NextStack"><meta property="og:description" content="refiner support #12371 · add NV option for Random number generator source setting, which allows to generate same pictures on CPU/AMD/Mac as on NVidia videocards · add style editor dialog"><meta property="og:url" content="https://www.stags.cn/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.6.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.6.0/#article","headline":"stable-diffusion-webui v1.6.0 release notes","datePublished":"2023-08-31","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/AUTOMATIC1111/stable-diffusion-webui"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/stable-diffusion-webui/1.6.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.6.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/stable-diffusion-webui/1.6.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/stable-diffusion-webui/1.6.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/stable-diffusion-webui/1.6.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/stable-diffusion-webui/1.6.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/stable-diffusion-webui/1.6.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/stable-diffusion-webui">stable-diffusion-webui</a> </nav> <h1 class="detail-title"> <span class="p">stable-diffusion-webui</span> v1.6.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2023年8月31日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" target="_blank" rel="noopener"> <span class="k">来源</span>AUTOMATIC1111/stable-diffusion-webui </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/stable-diffusion-webui/1.6.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.6.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="stable-diffusion-webui-v160">stable-diffusion-webui v1.6.0</h1>
+<h3 id="特点">特点：</h3>
+<ul>
+<li>精炼机支持 <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12371">#12371</a></li>
+<li>为随机数生成器源设置添加 NV 选项，允许在 CPU/AMD/Mac 上生成与 NVidia 显卡上相同的图片</li>
+<li>添加样式编辑器对话框</li>
+<li>修复：添加一个选项以在第二遍中使用不同的检查点（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12181">#12181</a>）</li>
+<li>在内存中保留多个加载模型的选项 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12227">#12227</a>)</li>
+<li>新采样器：重新启动、DPM++ 2M SDE 指数、DPM++ 2M SDE Heun、DPM++ 2M SDE Heun Karras、DPM++ 2M SDE Heun 指数、DPM++ 3M SDE、DPM++ 3M SDE Karras、DPM++ 3M SDE 指数 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12300">#12300</a>、 <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12519">#12519</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12542">#12542</a>)</li>
+<li>重新设计 DDIM、PLMS、UniPC 以使用与 k 扩散采样器中相同的 CFG 降噪器：
+<ul>
+<li>使它们全部与 img2img 一起工作</li>
+<li>使快速合成成为可能（AND）</li>
+<li>使它们可用于 SDXL</li>
+</ul>
+</li>
+<li>始终在 UI 中显示额外的网络选项卡 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/11808">#11808</a>)</li>
+<li>创建模型时使用更少的 RAM (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/11958">#11958</a>, <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12599">#12599</a>)</li>
+<li>SDXL 的文本反转推理支持</li>
+<li>额外网络 UI：显示 SD 检查点的元数据</li>
+<li>检查点合并：添加元数据支持</li>
+<li>提示编辑和注意：添加对数字后空格的支持 ([ red : green : 0.5 ]) (种子破坏更改) (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12177">#12177</a>)</li>
+<li>VAE：允许为每个检查点选择自己的 VAE（在用户元数据编辑器中）</li>
+<li>VAE：将选定的 VAE 添加到信息文本中</li>
+<li>主 UI 中的选项：为 txt2img 和 img2img 添加自己的单独设置，从粘贴的信息文本中正确读取值，添加列数设置（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12551">#12551</a>）</li>
+<li>向 txt2img 和 img2img 选项卡添加调整大小句柄，允许更改赋予生成参数和生成的图像库的水平空间量（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12687">#12687</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12723">#12723</a>）</li>
+<li>更改批处理 cond/uncond 的默认行为 - 现在默认情况下启用它，并通过 UI 设置禁用（Optimizatios -> Batch cond/uncond） - 如果您使用 lowvram/medvram 并遇到 OOM 异常，则需要启用它</li>
+<li>显示队列中的当前位置并使其按照到达顺序处理请求（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12707">#12707</a>）</li>
+<li>添加 <code>--medvram-sdxl</code> 标志，仅对 SDXL 型号启用 <code>--medvram</code></li>
+<li>提示编辑时间线具有单独的第一次通过和雇用修复通过（种子破坏更改）的范围（[#12457]（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12457%EF%BC%89%EF%BC%89">https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12457））</a></li>
+</ul>
+<h3 id="次要">次要：</h3>
+<ul>
+<li>img2img 批次：RAM 节省、VRAM 节省、img2img 批次中的 .tif、.tiff (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12120">#12120</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12514">#12514</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12515">#12515</a>)</li>
+<li>后处理/额外功能：节省 RAM (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12479">#12479</a>)</li>
+<li>XYZ：在轴标签中，从模型文件名中删除路径名</li>
+<li>XYZ：支持雇用采样器（[#12298]（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12298%EF%BC%89%EF%BC%89">https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12298））</a></li>
+<li>XYZ：新选项：使用文本输入而不是下拉菜单（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12491">#12491</a>）</li>
+<li>添加gradio版本警告</li>
+<li>对 VAE 检查点列表进行排序 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12297">#12297</a>)</li>
+<li>在修复中使用透明白色蒙版，以及选择颜色的选项 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12326">#12326</a>)</li>
+<li>将一些设置移动到自己的部分：img2img、VAE</li>
+<li>添加复选框以显示/隐藏额外网络的目录</li>
+<li>为所有 VAE 编码/解码操作添加 TAESD（或更多）选项（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12311">#12311</a>）</li>
+<li>渐变主题缓存，新的渐变主题，以及用户可以输入自己的值的说明（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12346">#12346</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12355">#12355</a>）</li>
+<li>采样器修复/调整：s_tmax、s_churn、s_noise、s_tmax (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12354">#12354</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12356">#12356</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12357">#12357</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12358">#12358</a>、 <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12375">#12375</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12521">#12521</a>)</li>
+<li>使用 Linux 安装的正确说明更新 README.md (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12352">#12352</a>)</li>
+<li>不保存不完整图像的选项，默认开启 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12338">#12338</a>)</li>
+<li>默认启用 cond 缓存</li>
+<li>git 自动修复已损坏的存储库 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12230">#12230</a>)</li>
+<li>允许通过鼠标中键在新浏览器选项卡中打开图像（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12379">#12379</a>）</li>
+<li>在“本地”运行时自动在浏览器中打开 webui (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12254">#12254</a>)</li>
+<li>将常用的采样器放在顶部，使 DPM++ 2M Karras 成为默认选择</li>
+<li>缩放和平移：自动扩展宽图像的选项，改进的集成（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12413">#12413</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12727">#12727</a>）</li>
+<li>在内存中缓存 Lora 网络的选项</li>
+<li>返工雇用修复 UI 以使用手风琴</li>
+<li>面部恢复和平铺移至设置 - 如果您希望恢复它们，请使用“主 UI 中的选项”设置</li>
+<li>更改快速设置项目以具有可变宽度</li>
+<li>Lora：添加 Norm 模块，添加对偏差的支持 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12503">#12503</a>)</li>
+<li>Lora：在 UI 中输出警告，而不是因不适合 Loras 而失败；切换到控制台中的错误输出日志记录</li>
+<li>支持搜索和显示所有额外网络项目的哈希值 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12510">#12510</a>)</li>
+<li>为 img2img 操作添加额外的噪声参数 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12564">#12564</a>)</li>
+<li>支持带有偏见的 Lora (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12584">#12584</a>)</li>
+<li>使中断更快 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12634">#12634</a>)
+*可配置的画廊高度（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12648">#12648</a>）</li>
+<li>使结果列粘性（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12645">#12645</a>）</li>
+<li>更多哈希文件名模式 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12639">#12639</a>)</li>
+<li>使图像查看器实际上适合整个页面 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12635">#12635</a>)</li>
+<li>使进度条独立于实时预览显示工作，从而使其更新得更频繁</li>
+<li>禁止medvram的完整实时预览方法并添加一个设置来撤消禁止</li>
+<li>可以本地化工具提示和占位符</li>
+<li>添加选项以与 sgm 存储库的采样实现保持一致（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12818">#12818</a>）</li>
+<li>恢复面和平铺生成参数已移至主 UI 之外的设置
+<ul>
+<li>如果您想将它们放回主 UI，请使用 UI 页面上的 <code>Options in main UI</code> 设置。</li>
+</ul>
+</li>
+</ul>
+<h3 id="扩展和-api">扩展和 API：</h3>
+<ul>
+<li>渐变 3.41.2</li>
+<li>还提供了软件包的凹凸版本：transformers、GitPython、accelerate、scikit-image、timm、tomesd</li>
+<li>支持渐变元素的工具提示 kwarg：gr.Textbox(label=‘hello’, tooltip=‘world’)</li>
+<li>使用 API 中的 txt2img 和 img2img 时正确清除总控制台进度条</li>
+<li>添加 cmd_arg —disable-extra-extensions 和 —disable-all-extensions (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12294">#12294</a>)
+*shared.py和webui.py分割成许多文件</li>
+<li>添加 —loglevel 用于日志记录的命令行参数</li>
+<li>添加一个结合了手风琴和复选框的自定义 UI 元素</li>
+<li>避免在测试中导入 gradio，因为它会发出垃圾邮件警告</li>
+<li>将用于设置的信息文本标签放入 OptionInfo 定义中，而不是放在单独的列表中</li>
+<li>使 <code>StableDiffusionProcessingImg2Img.mask_blur</code> 成为一个属性，使其与 PIL <code>GaussianBlur</code> 更加一致（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12470">#12470</a>）</li>
+<li>使脚本 UI 不带 gr.Group 的选项</li>
+<li>添加一种方法让脚本在单个组件创建之前/之后注册回调</li>
+<li>使用数据类进行稳定扩散处理</li>
+<li>将 Lora 的补丁存储在专门的模块中，而不是存储在 torch 内</li>
+<li>支持 API 中的 http/https URL (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12663">#12663</a>, <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12698">#12698</a>)</li>
+<li>添加额外的噪音回调（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12616">#12616</a>）</li>
+<li>使用 SIGINT 退出时转储当前堆栈跟踪</li>
+<li>为shared.sd_model的额外字段添加类型注释</li>
+</ul>
+<h3 id="错误修复">错误修复：</h3>
+<ul>
+<li>如果超出 javascriot localStorage 的本地存储配额，不会崩溃</li>
+<li>如果发生异常，XYZ 图不会失败</li>
+<li>如果生成同时使用负 TI 和正 TI，则修复信息文本中丢失的 TI 哈希 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12269">#12269</a>)</li>
+<li>本地化修复（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12307">#12307</a>）</li>
+<li>修复 sdxl 模型被劫持后配置无效的问题</li>
+<li>正确切换信息文本粘贴的附加复选框（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12304">#12304</a>）</li>
+<li>在新页面中打开原始 sysinfo 链接 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12318">#12318</a>)</li>
+<li>提示解析器：考虑交替词语法中的空字段（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12319">#12319</a>）</li>
+<li>为无效文件名字符添加制表符和回车符 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12327">#12327</a>)</li>
+<li>仅修复 api Lora 无法工作的问题 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12387">#12387</a>)</li>
+<li>修复只有一个元素时主 UI 中的选项行为不当</li>
+<li>可以使用信息文本中的采样器，即使它隐藏在下拉列表中</li>
+<li>修复制作批量图像网格时信息文本提示中缺少的样式</li>
+<li>防止在计算员工修复维度时在控制台中输出虚假进度
+*修复—使用文本框种子</li>
+<li>修复损坏的 <code>Lora/Networks: use old method</code> 选项 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12466">#12466</a>)</li>
+<li>使用 <code>--no-hashing</code> 时正确返回 <code>None</code> 以获得 VAE 哈希值 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12463">#12463</a>)</li>
+<li>MPS/macOS 修复和优化 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12526">#12526</a>)</li>
+<li>将 secondary_order 添加到错误地没有它的采样器中</li>
+<li>在额外网络UI中刷新卡片时，不要丢弃用户自定义的分辨率</li>
+<li>修复如果batch_size不是提示/否定提示数量的倍数时发生的处理错误（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12509">#12509</a>）</li>
+<li>修复 alpha 蒙版的修复上传 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12588">#12588</a>)</li>
+<li>修复图像大小不是整数时的异常 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12586">#12586</a>)</li>
+<li>修复不正确的 TAESD 潜伏尺度 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12596">#12596</a>)</li>
+<li>自动添加数据目录到渐变允许路径 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12603">#12603</a>)</li>
+<li>修复扩展目录缺失时的异常 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12607">#12607</a>)</li>
+<li>修复 api 模型刷新和 vae 刷新问题 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12638">#12638</a>)</li>
+<li>修复未使用透明图像选项的 img2img 背景颜色 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12633">#12633</a>)</li>
+<li>尝试解决 fp32 mk2 中 VAE 不稳定的 NaN 问题（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12630">#12630</a>）</li>
+<li>实现 SDXL 缺少的撤消劫持</li>
+<li>修复 xyz 交换轴 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12684">#12684</a>)</li>
+<li>修复备份/恢复选项卡中的错误（如果任何配置文件损坏）（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12689">#12689</a>）</li>
+<li>修复模型重用后 SD VAE 开关错误 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12685">#12685</a>)</li>
+<li>修复尝试创建对于所选格式来说太大的图像 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12667">#12667</a>)</li>
+<li>如有必要，创建 Gradio 临时目录 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12717">#12717</a>)</li>
+<li>使用原子操作用新版本替换缓存，防止在写入时退出时可能发生的缓存丢失</li>
+<li>正确设置 devices.dtype_unet</li>
+<li>在非 CUDA 设备的 GPU 上运行 RealESRGAN (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12737">#12737</a>)</li>
+<li>防止额外的网络按钮被非常小的卡片尺寸的描述遮挡（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12745">#12745</a>）</li>
+<li>修复如果提示中同时存在 <a href="lora:">lora:</a> 和 <a href="lyco:">lyco:</a> 时导致某些额外网络被禁用的错误</li>
+<li>修复隐藏任何主 UI 选项卡时默认设置分页的问题</li>
+<li>修复设置中默认页面中新值保存/显示不正确的问题</li>
+<li>修复重新加载 UI 功能：如果您在一个选项卡上重新加载 UI，其他打开的选项卡将不再停止工作</li>
+<li>修复了一个错误，如果检查点附近存在 VAE，则该错误会阻止在选项更改后重新加载 VAE (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12737">#12797</a>)</li>
+<li>隐藏损坏的图像裁剪工具 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12737">#12792</a>)</li>
+<li>不要在 XYZ 脚本的下拉列表中显示隐藏的采样器 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12737">#12780</a>)</li>
+<li>修复样式编辑对话框在 img2img 和 txt2img 选项卡中打开时中断的问题</li>
+<li>修复允许用户绕过 gradio 和 API 身份验证的错误（由 vysecurity 报告）</li>
+<li>修复内置 WebUI 选项卡处于非活动状态时通知不播放的问题 (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12834">#12834</a>)</li>
+<li>为扩展安装程序提供 <code>--skip-install</code> (<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12832">#12832</a>)</li>
+<li>不要在扩展安装程序中打印空白标准输出（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12832">#12833</a>、<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12855">#12855</a>）</li>
+<li>当返回的值为 <code>None</code> 时，不要更改快速设置下拉选项（<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/pull/12854">#12854</a>）</li>
+<li>让进度条在扩展选项卡中正确显示</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">AUTOMATIC1111/stable-diffusion-webui</a> · 🏷️ 版本：<code>v1.6.0</code> · 📅 发布：2023-08-31 · <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/releases/tag/v1.6.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.7.0"> <span class="k">← 下一个</span> <span class="t">v1.7.0</span> </a> <a href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.5.2"> <span class="k">上一个 →</span> <span class="t">v1.5.2</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/releases/tag/v1.6.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" target="_blank" rel="noopener"> <span>AUTOMATIC1111/stable-diffusion-webui</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#特点" class="lv3">特点：</a><a href="#次要" class="lv3">次要：</a><a href="#扩展和-api" class="lv3">扩展和 API：</a><a href="#错误修复" class="lv3">错误修复：</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.10.1"> <span class="v">v1.10.1</span> <span class="d">25-02-09</span> </a> </li><li> <a href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.10.0"> <span class="v">v1.10.0</span> <span class="d">24-07-27</span> </a> </li><li> <a href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.9.4"> <span class="v">v1.9.4</span> <span class="d">24-05-28</span> </a> </li><li> <a href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.9.3"> <span class="v">v1.9.3</span> <span class="d">24-04-22</span> </a> </li><li> <a href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.9.0"> <span class="v">v1.9.0</span> <span class="d">24-04-13</span> </a> </li><li> <a href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.8.0"> <span class="v">v1.8.0</span> <span class="d">24-03-02</span> </a> </li><li> <a href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.7.0"> <span class="v">v1.7.0</span> <span class="d">23-12-16</span> </a> </li><li> <a href="/zh/release_note/stable-diffusion-webui/stable-diffusion-webui_v1.6.0" aria-current="true"> <span class="v">v1.6.0</span> <span class="d">23-08-31</span> </a> </li> </ul> <a href="/zh/releases/stable-diffusion-webui" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 18 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

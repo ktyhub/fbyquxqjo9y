@@ -1,0 +1,369 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>vitess v24.0.0 — STAGS NextStack</title><meta name="description" content="Major Changes · New Support · Window function pushdown for sharded keyspaces · View Routing Rules"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/vitess/vitess_v24.0.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/vitess/24.0.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/vitess/vitess_v24.0.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/vitess/24.0.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="vitess v24.0.0 — STAGS NextStack"><meta property="og:description" content="Major Changes · New Support · Window function pushdown for sharded keyspaces · View Routing Rules"><meta property="og:url" content="https://www.stags.cn/zh/release_note/vitess/vitess_v24.0.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/vitess/vitess_v24.0.0/#article","headline":"vitess v24.0.0 release notes","datePublished":"2026-04-30","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/vitessio/vitess"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/vitess/24.0.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/vitess/vitess_v24.0.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/vitess/24.0.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/vitess/24.0.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/vitess/24.0.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/vitess/24.0.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/vitess/24.0.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/vitess">vitess</a> </nav> <h1 class="detail-title"> <span class="p">vitess</span> v24.0.0 </h1> <div class="detail-meta"> <span class="chip chip--major">大版本</span> <span><span class="k">发布时间</span>2026年4月30日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/vitessio/vitess" target="_blank" rel="noopener"> <span class="k">来源</span>vitessio/vitess </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/vitess/24.0.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/vitess/vitess_v24.0.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="vitess-v2400">vitess v24.0.0</h1>
+<h1 id="vitess-v2400-发布">Vitess v24.0.0 发布</h1>
+<h2 id="总结">总结</h2>
+<h3 id="目录">目录</h3>
+<ul>
+<li><strong><a href="#major-changes">主要变更</a></strong>
+<ul>
+<li><strong><a href="#new-support">新支持</a></strong>
+<ul>
+<li><a href="#window-function-pushdown">分片键空间的窗口函数下推</a></li>
+<li><a href="#view-routing-rules">查看路由规则</a></li>
+<li><a href="#tablet-targeting">通过 USE 语句定位平板电脑</a></li>
+<li><a href="#vtgate-binlog-dump">VTGate Binlog 流支持</a></li>
+<li><a href="#%E7%BB%93%E6%9E%84%E5%8C%96%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95">结构化日志记录</a></li>
+</ul>
+</li>
+<li><strong><a href="#break-changes">重大变更</a></strong>
+<ul>
+<li><a href="#vttablet-external-decompressor-manifest">外部解压器默认不再从备份清单中读取</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes">小改动</a></strong>
+<ul>
+<li><strong><a href="#minor-changes-vreplication">VReplication</a></strong>
+<ul>
+<li><a href="#vreplication-shards-flag-start-stop">MoveTables/Reshard 启动和停止的 <code>--shards</code> 标志</a></li>
+<li><a href="#vreplication-tablet-error-retry">针对平板电脑特定错误的平板电脑自动重试</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-vtgate">VTGate</a></strong>
+<ul>
+<li><a href="#vtgate-removed-grpc-send-session-in-streaming">删除了 <code>--grpc-send-session-in-streaming</code> 标志</a></li>
+<li><a href="#vtgate-new-default-legacy-replication-lag-algorithm"><code>--legacy-replication-lag-algorithm</code> 标志的新默认值</a></li>
+<li><a href="#vtgate-session-balancer-mode"><code>--vtgate-balancer-mode</code> 标志的新“会话”模式</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-query-serving">查询服务</a></strong>
+<ul>
+<li><a href="#query-serving-json-extract-dynamic-args">JSON_EXTRACT 现在支持动态路径参数</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-vttablet">VTTablet</a></strong>
+<ul>
+<li><a href="#vttablet-init-tablet-type-lookup">新实验标志 <code>--init-tablet-type-lookup</code></a></li>
+<li><a href="#vttablet-querythrottler-metrics">QueryThrottler 可观测性指标</a></li>
+<li><a href="#vttablet-querythrottler-config-watch">QueryThrottler 事件驱动配置更新</a></li>
+<li><a href="#vttablet-conn-pool-waiter-cap">连接池服务员帽</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-tracing">追踪</a></strong>
+<ul>
+<li><a href="#tracing-opentelemetry">OpenTelemetry 跟踪支持</a></li>
+<li><a href="#tracing-opentracing-deprecation">弃用基于 OpenTracing 的跟踪后端</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-vtorc">VTORc</a></strong>
+<ul>
+<li><a href="#vtorc-cell-flag">新 <code>--cell</code> 标志</a></li>
+<li><a href="#vtorc-ordered-recovery-semi-sync">有序恢复执行和半同步推出</a></li>
+<li><a href="#vtorc-deprecated-metric-removed">已删除已弃用的 VTORc 指标</a></li>
+<li><a href="#vtorc-snapshot-topology-deprecation">弃用快照拓扑功能</a></li>
+<li><a href="#vtorc-replication-analysis-api-removed">已删除已弃用的 <code>/api/replication-analysis</code> 端点</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-metrics">指标</a></strong>
+<ul>
+<li><a href="#metrics-extended-go-runtime">通过 Prometheus 扩展 Go 运行时指标</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-backup-restore">备份和恢复</a></strong>
+<ul>
+<li><a href="#mysql-clone-support">MySQL 克隆对副本配置的支持</a></li>
+<li><a href="#restore-hook-backup-engine-env">恢复钩子改进</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="主要变化"><a id="major-changes">主要变化</a></h2>
+<h3 id="新支持"><a id="new-support">新支持</a></h3>
+<h4 id="分片键空间的窗口函数下推"><a id="window-function-pushdown">分片键空间的窗口函数下推</a></h4>
+<p>此版本引入了一项优化，允许窗口函数在按与唯一 vindex 匹配的列分区时被下推到各个分片。
+以前，所有窗口函数查询都需要单分片路由，这限制了它们在分片表上的适用性。通过此更改，现在可以下推 <code>PARTITION BY</code> 子句与唯一 vindex 对齐的查询并在每个分片上执行。
+有关示例和更多详细信息，请参阅<a href="https://vitess.io/docs/24.0/reference/compatibility/mysql-compatibility/#window-functions">文档</a>。</p>
+<h4 id="查看路由规则"><a id="view-routing-rules">查看路由规则</a></h4>
+<p>Vitess 现在支持视图的路由规则，并且可以像 <code>vtctldclient ApplyRoutingRules</code> 的表一样应用。当视图路由规则处于活动状态时，VTGate 会重写引用源视图的查询以改用目标视图的定义。例如，给定以下路由规则：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">  "rules"</span><span style="color:#24292E">: [</span></span>
+<span class="line"><span style="color:#24292E">    {</span></span>
+<span class="line"><span style="color:#005CC5">      "from_table"</span><span style="color:#24292E">: </span><span style="color:#032F62">"source_ks.my_view"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "to_tables"</span><span style="color:#24292E">: [</span><span style="color:#032F62">"target_ks.my_view"</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">  ]</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<p>这个视图定义：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#D73A49">CREATE</span><span style="color:#D73A49"> VIEW</span><span style="color:#6F42C1"> target_ks</span><span style="color:#24292E">.my_view </span><span style="color:#D73A49">AS</span><span style="color:#D73A49"> SELECT</span><span style="color:#24292E"> id, </span><span style="color:#D73A49">name</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> user;</span></span></code></pre>
+<p>像 <code>SELECT * FROM source_ks.my_view</code> 这样的查询将在内部重写为：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> (</span><span style="color:#D73A49">SELECT</span><span style="color:#24292E"> id, </span><span style="color:#D73A49">name</span><span style="color:#D73A49"> FROM</span><span style="color:#005CC5"> target_ks</span><span style="color:#24292E">.</span><span style="color:#005CC5">user</span><span style="color:#24292E">) </span><span style="color:#D73A49">AS</span><span style="color:#24292E"> my_view;</span></span></code></pre>
+<p>视图路由规则要求架构跟踪器监视视图，这意味着 VTGate 必须使用 <code>--enable-views</code> 标志启动，VTTablet 必须使用 <code>--queryserver-enable-views</code> 标志启动。目标视图必须存在于指定的键空间中，路由规则才能正常运行。有关更多详细信息，请参阅<a href="https://vitess.io/docs/24.0/reference/features/schema-routing-rules/">架构路由规则文档</a>。</p>
+<h4 id="通过-use-语句定位平板电脑"><a id="tablet-targeting">通过 USE 语句定位平板电脑</a></h4>
+<p>VTGate 现在支持使用扩展的 <code>USE</code> 语句语法通过别名将查询路由到特定平板电脑：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#D73A49">USE</span><span style="color:#24292E"> keyspace:shard@tablet_type|tablet_alias;</span></span></code></pre>
+<p>例如，要定位特定的副本平板电脑：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#D73A49">USE</span><span style="color:#24292E"> commerce:</span><span style="color:#D73A49">-</span><span style="color:#005CC5">80</span><span style="color:#24292E">@replica|zone1</span><span style="color:#D73A49">-</span><span style="color:#005CC5">0000000100</span><span style="color:#24292E">;</span></span></code></pre>
+<p>设置后，会话中的所有后续查询都会路由到指定的平板电脑，直到使用标准 <code>USE keyspace</code> 或 <code>USE keyspace@tablet_type</code> 语句清除为止。这对于调试、每个平板电脑监控、缓存预热以及需要针对特定​​平板电脑的其他操作任务非常有用。
+注意：使用平板电脑定位时必须指定分片。与分片定位一样，这会绕过基于 vindex 的路由，因此请谨慎使用。</p>
+<h4 id="binlog-流支持"><a id="vtgate-binlog-dump">Binlog 流支持</a></h4>
+<p>VTGate 现在通过两种协议支持基于 GTID 的 binlog 流：</p>
+<ul>
+<li><strong>MySQL 协议</strong>：Clients 可以使用标准 MySQL <code>COM_BINLOG_DUMP_GTID</code> 复制协议命令进行连接 — 无需特殊的 VStream 感知适配器或直接 MySQL 访问。</li>
+<li><strong>gRPC</strong>：<code>vtgateservice</code> 中的新 <code>BinlogDumpGTID</code> 流 RPC 为自定义 client 提供本机 gRPC 访问，而无需 MySQL 协议依赖性。
+注意：仅支持基于 GTID 的流式传输。基于文件/位置的流式传输无法通过 <code>COM_BINLOG_DUMP</code> 或 <code>COM_BINLOG_DUMP_GTID</code> 获得，并返回错误。
+默认情况下禁用此功能。使用 <code>--enable-binlog-dump</code> 启用它。
+<strong>新标志：</strong></li>
+<li><code>--enable-binlog-dump</code>：启用二进制日志转储支持。如果没有此标志，二进制日志转储请求将返回错误。</li>
+<li><code>--binlog-dump-authorized-users</code>：授权执行二进制日志转储操作的用户的逗号分隔列表，或 <code>%</code> 允许所有用户。
+<strong>要求：</strong>
+启动二进制日志转储连接时，clients 必须指定：</li>
+<li>空文件名</li>
+<li>文件位置 (<code>filepos</code>) 为 4</li>
+<li>GTID 位置
+对于 gRPC clients，请直接在 <code>BinlogDumpGTIDRequest</code> 中指定键空间、分片以及可选的平板电脑类型或平板电脑别名。
+<strong>限制：</strong></li>
+<li>每个流在单个平板电脑上运行 - 没有跨分片的数据聚合。</li>
+<li>无自动故障转移 - 如果目标平板电脑不可用，则流将失败，并且 client 必须重新连接到其他平板电脑。</li>
+<li>与 <code>MoveTables</code> 或 <code>Reshard</code> 操作不兼容。对于这些用例，请使用 VStream API。</li>
+</ul>
+<h4 id="结构化日志记录"><a id="structed-logging">结构化日志记录</a></h4>
+<p>Vitess 现在默认使用结构化 JSON 日志记录。日志输出作为 JSON 发送到 stderr。要配置最低日志级别，请传递 <code>--log-level</code>（<code>debug</code>、<code>info</code>、<code>warn</code>、<code>error</code> 之一；默认 <code>info</code>）。对于具有自动颜色检测功能的人类可读格式，请传递 <code>--log-format=text</code>。要恢复到以前的 <code>glog</code> 后端，请传递 <code>--log-structured=false</code>。
+<code>glog</code> 从 v24 开始已弃用，并将在 v25 中删除。</p>
+<h3 id="重大变更"><a id="writing-changes">重大变更</a></h3>
+<h4 id="默认情况下外部解压缩器不再从备份-manifest-中读取"><a id="vttablet-external-decompressor-manifest">默认情况下，外部解压缩器不再从备份 MANIFEST 中读取</a></h4>
+<p>默认情况下，恢复时不再使用备份的 <code>MANIFEST</code> 文件中存储的外部解压缩器命令。以前，当未提供 <code>--external-decompressor</code> 标志时，VTTablet 将回退到 <code>MANIFEST</code> 中指定的命令。这带来了安全风险：具有备份存储写入权限的攻击者可以修改 <code>MANIFEST</code> 以在平板电脑上执行任意命令。
+从 v24 开始，基于 <code>MANIFEST</code> 的解压缩器将被忽略，除非您明确选择使用新的 <code>--external-decompressor-use-manifest</code> 标志。如果您依赖此行为，请将该标志添加到您的 VTablet 配置中，但请注意安全隐患。
+有关详细信息，请参阅 <a href="https://github.com/vitessio/vitess/pull/19460">#19460</a>。</p>
+<h2 id="小改动"><a id="minor-changes">小改动</a></h2>
+<h3 id="vreplication"><a id="minor-changes-vreplication">VReplication</a></h3>
+<h4 id="--shards-movetablesreshard-启动和停止标志"><a id="vreplication-shards-flag-start-stop"><code>--shards</code> MoveTables/Reshard 启动和停止标志</a></h4>
+<p>MoveTables 和 Reshard 工作流程的 <code>start</code> 和 <code>stop</code> 命令现在支持 <code>--shards</code> 标志，允许用户在特定分片子集上启动或停止工作流程，而不是立即在所有分片上启动或停止工作流程。
+<strong>使用示例：</strong></p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Start workflow on specific shards only</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> MoveTables</span><span style="color:#005CC5"> --target-keyspace</span><span style="color:#032F62"> customer</span><span style="color:#005CC5"> --workflow</span><span style="color:#032F62"> commerce2customer</span><span style="color:#032F62"> start</span><span style="color:#005CC5"> --shards=</span><span style="color:#032F62">"-80,80-"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Stop workflow on specific shards only</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> Reshard</span><span style="color:#005CC5"> --target-keyspace</span><span style="color:#032F62"> customer</span><span style="color:#005CC5"> --workflow</span><span style="color:#032F62"> cust2cust</span><span style="color:#032F62"> stop</span><span style="color:#005CC5"> --shards=</span><span style="color:#032F62">"80-"</span></span></code></pre>
+<h4 id="针对平板电脑特定错误自动重试平板电脑"><a id="vreplication-tablet-error-retry">针对平板电脑特定错误自动重试平板电脑</a></h4>
+<p>现在，当遇到特定于平板电脑的错误时，VReplication 工作流程会自动使用不同的平板电脑重试。以前，没有单元首选项的工作流程将默认为本地单元，并且可能会无限期地重试相同的失败平板电脑。
+当平板电脑遇到二进制日志清除（MySQL 错误 1236 或 1789）或 GTID 设置不匹配等错误时，VReplication 会将该平板电脑添加到忽略列表中，并尝试所有单元中的其他平板电脑。尝试完所有匹配的平板电脑后，忽略列表将被清除，工作流程将从头开始重试。
+这在多单元部署中特别有用，其中本地单元中的平板电脑可能缺少所需的二进制日志，但其他单元中的平板电脑仍然有它们。</p>
+<h3 id="vtgate"><a id="minor-changes-vtgate">VTGate</a></h3>
+<h4 id="删除了---grpc-send-session-in-streaming-标志"><a id="vtgate-removed-grpc-send-session-in-streaming">删除了 <code>--grpc-send-session-in-streaming</code> 标志</a></h4>
+<p>VTGate 标志 <code>--grpc-send-session-in-streaming</code> 已被删除。该标志在 v22 中已通过 <a href="https://github.com/vitessio/vitess/pull/17907">#17907</a> 弃用，默认为 <code>true</code>。
+现在，会话始终作为 <code>StreamExecute</code> 和 <code>StreamExecuteMulti</code> RPC 的流响应中的最后一个数据包发送。此行为是支持流处理中的事务所必需的，并且无法禁用。
+<strong>影响</strong>：从 VTGate 启动脚本或配置中删除所有 <code>--grpc-send-session-in-streaming</code> 标志的使用。</p>
+<h4 id="--legacy-replication-lag-algorithm-标志的新默认值"><a id="vtgate-new-default-legacy-replication-lag-algorithm"><code>--legacy-replication-lag-algorithm</code> 标志的新默认值</a></h4>
+<p>VTGate 标志 <code>--legacy-replication-lag-algorithm</code> 现在默认为 <code>false</code>，默认情况下禁用处理复制滞后的旧方法。
+相反，使用纯粹基于低延迟、高延迟和最小平板电脑数量的更简单的算法，该算法已被证明在许多生产环境中更加稳定。这两种方法的详细解释<a href="https://github.com/vitessio/vitess/blob/main/go/vt/discovery/replicationlag.go#L125-L149">在此代码注释中进行了解释</a>。
+在 v25 中，此标志将被弃用，并且在接下来的版本中它将被删除。同时，可以通过设置 <code>--legacy-replication-lag-algorithm=true</code> 来使用旧行为。此弃用在 <a href="https://github.com/vitessio/vitess/issues/18914">https://github.com/vitessio/vitess/issues/18914</a>. 中跟踪</p>
+<h4 id="--vtgate-balancer-mode-标志的新会话模式"><a id="vtgate-session-balancer-mode"><code>--vtgate-balancer-mode</code> 标志的新“会话”模式</a></h4>
+<p>除了现有的“单元”、“首选单元”和“随机”模式之外，VTGate 标志 <code>--vtgate-balancer-mode</code> 现在还支持新的“会话”模式。会话模式在会话持续时间内将每个会话一致地路由到同一平板电脑。
+要启用会话模式，请在启动 VTGate 时设置标志：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>--vtgate-balancer-mode=session</span></span></code></pre>
+<h3 id="查询服务"><a id="minor-changes-query-serving">查询服务</a></h3>
+<h4 id="json_extract-现在支持动态路径参数"><a id="query-serving-json-extract-dynamic-args">JSON_EXTRACT 现在支持动态路径参数</a></h4>
+<p><code>JSON_EXTRACT</code> 函数现在支持动态路径参数，例如绑定变量或其他函数调用的结果。以前，<code>JSON_EXTRACT</code> 仅适用于路径参数的静态字符串文字。
+NULL 处理现在与 MySQL 行为匹配。当文档或路径参数为 NULL 时，该函数返回 NULL。
+即使与动态参数混合，静态路径参数仍然经过优化，因此现有查询不会出现任何性能下降。</p>
+<h3 id="vttablet"><a id="minor-changes-vttablet">VTTablet</a></h3>
+<h4 id="新实验标志---init-tablet-type-lookup"><a id="vttablet-init-tablet-type-lookup">新实验标志 <code>--init-tablet-type-lookup</code></a></h4>
+<p>VTablet 的新实验标志 <code>--init-tablet-type-lookup</code> 允许平板电脑在重新启动时通过查找现有拓扑记录自动恢复以前的平板电脑类型，而不是始终使用静态 <code>--init-tablet-type</code> 值。
+启用后，平板电脑将在重新启动时使用其别名从现有拓扑记录中查找平板电脑类型。这使得平板电脑可以在重新启动后保持其更改后的角色（例如 RDONLY/DRAINED），而无需手动重新配置。如果禁用或不存在拓扑记录，则将使用标准 <code>--init-tablet-type</code> 值。
+<strong>注意</strong>：Vitess Operator 管理的部署通常不会在 pod 替换之间保留拓扑中匹配的平板电脑记录，因此此功能在这些环境中的效果将更加有限。</p>
+<h4 id="querythrottler-可观测性指标"><a id="vttablet-querythrottler-metrics">QueryThrottler 可观测性指标</a></h4>
+<p>VTablet 现在公开新的指标来跟踪 QueryThrottler 行为。
+添加了四个新指标：</p>
+<ul>
+<li><strong>QueryThrottlerRequests</strong>：查询节流器评估的请求总数</li>
+<li><strong>QueryThrottlerThrottled</strong>：被限制的请求数</li>
+<li><strong>QueryThrottlerTotalLatencyNs</strong>：每个请求在查询限制中花费的总时间，包括评估、指标检查和其他开销（以纳秒为单位）</li>
+<li><strong>QueryThrottlerEvaluateLatencyNs</strong>：做出限制决策所需的时间（以纳秒为单位）
+所有指标均包含 <code>Strategy</code>、<code>Workload</code> 和 <code>Priority</code> 的标签。 <code>QueryThrottlerThrottled</code> 指标具有针对 <code>MetricName</code>、<code>MetricValue</code> 和 <code>DryRun</code> 的附加标签，用于识别哪个指标触发了限制以及是否在试运行模式下发生。
+这些指标有助于监控限制模式、确定哪些工作负载受到限制、测量性能开销以及在配置更改之前验证空运行模式下的行为。</li>
+</ul>
+<h4 id="querythrottler-事件驱动的配置更新"><a id="vttablet-querythrottler-config-watch">QueryThrottler 事件驱动的配置更新</a></h4>
+<p>QueryThrottler 配置现在传播并存储在拓扑服务器内的 <code>SrvKeyspace</code> 记录中，并使用标准拓扑工具进行管理。以前，平板电脑每 60 秒轮询一次配置更改。平板电脑现在使用事件驱动的监视 (<code>WatchSrvKeyspace</code>) 在查询限制配置更改时立即接收更新。键空间中的所有平板电脑几乎同时看到配置更改，并且拓扑服务器更改是版本化且可审计的。
+此更改用存储在拓扑中的 protobuf 定义的配置结构取代了之前基于文件的配置加载器。新配置包括用于启用/禁用限制、选择限制策略以及配置特定于策略的规则的字段。</p>
+<h4 id="平板电脑连接池等待上限"><a id="vttablet-conn-pool-waiter-cap">平板电脑连接池等待上限</a></h4>
+<p>VTablet 现在允许用户对等待从连接池获取连接的请求数量设置限制，例如
+查询、流和事务连接池。限制是通过以下标志设置的：</p>
+<ul>
+<li><code>--queryserver-config-query-pool-waiter-cap</code></li>
+<li><code>--queryserver-config-stream-pool-waiter-cap</code></li>
+<li><code>--queryserver-config-txpool-waiter-cap</code>
+以上所有内容都有一个默认值 <code>0</code>，意味着没有限制，从而保留了以前版本的行为。</li>
+</ul>
+<h3 id="跟踪"><a id="minor-changes-tracing">跟踪</a></h3>
+<h4 id="opentelemetry-跟踪支持"><a id="tracing-opentelemetry">OpenTelemetry 跟踪支持</a></h4>
+<p>Vitess 现在支持 <a href="https://opentelemetry.io/">OpenTelemetry</a> 作为跟踪后端。要使用它，请在任何 Vitess 二进制文件上设置 <code>--tracer opentelemetry</code>。迹线通过 OTLP/gRPC 导出，可使用以下标志进行配置：</p>
+<ul>
+<li><code>--otel-endpoint</code>：OpenTelemetry 收集器端点。如果为空，则使用 <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> 环境变量；如果也未设置，则 OTel SDK 默认为 <code>localhost:4317</code>。</li>
+<li><code>--otel-insecure</code>（默认<code>false</code>）：使用与收集器的不安全连接。</li>
+<li><code>--tracing-sampling-rate</code>（默认 <code>0.1</code>）：跟踪的采样率（在所有跟踪后端共享）。
+任何 OTLP 兼容后端（Jaeger v1.35+、Grafana Tempo、Datadog Agent 等）都可以接收这些跟踪。</li>
+</ul>
+<h4 id="弃用基于-opentracing-的跟踪后端"><a id="tracing-opentracing-deprecation">弃用基于 OpenTracing 的跟踪后端</a></h4>
+<p>从 v24 开始，以下跟踪后端已弃用，并将在 v25 中删除：</p>
+<ul>
+<li><code>opentracing-jaeger</code> — 使用已存档的 <a href="https://github.com/uber/jaeger-client-go">Jaeger client-go</a> 库。 Jaeger 项目<a href="https://www.jaegertracing.io/docs/next-release/getting-started/#migrating-from-jaeger-clients-to-opentelemetry-sdk">建议迁移到 OpenTelemetry</a>。用户应使用兼容 OTLP 的 Jaeger 端点 (v1.35+) 迁移到 <code>--tracer opentelemetry</code>。</li>
+<li><code>opentracing-datadog</code> — 在 <code>dd-trace-go</code> 中使用 OpenTracing 桥。用户应使用 Datadog Agent 的 OTLP 摄取端点迁移到 ZZPH100​​ZZ。
+<code>--tracer opentracing-jaeger</code> 和 <code>--tracer opentracing-datadog</code> 选项在 v24 中继续工作，但会在启动时记录弃用警告。以下 Jaeger 特定标志也已弃用，并将在 v25 中删除：</li>
+<li><code>--jaeger-agent-host</code></li>
+<li><code>--tracing-sampling-type</code>
+<strong>迁移</strong>：将 <code>--tracer opentracing-jaeger</code> 替换为 <code>--tracer opentelemetry</code>，将 <code>--jaeger-agent-host host:port</code> 替换为 <code>--otel-endpoint host:4317</code>。确保您的 Jaeger 部署接受 OTLP（Jaeger v1.35+ 默认侦听端口 4317）。</li>
+</ul>
+<h3 id="vtorc"><a id="minor-changes-vtorc">VTORc</a></h3>
+<h4 id="新---cell-标志"><a id="vtorc-cell-flag">新 <code>--cell</code> 标志</a></h4>
+<p>VTOrc 现在支持 <code>--cell</code> 标志，该标志指定 VTORc 进程在哪个 Vitess 单元中运行。该标志在 v24 中是可选的，但在 v25+ 中是必需的，类似于 VTGate 的 <code>--cell</code> 标志。
+如果提供，VTORc 会在启动时验证单元是否存在于拓扑服务中。如果没有该标志，VTORc 会记录有关 v25+ 标志要求的警告。
+这使得未来的跨单元问题验证成为可能，VTORc 将能够在采取恢复操作之前要求另一个单元验证检测到的问题。该标志当前已验证，但尚未在 VTORc 恢复逻辑中使用。
+<strong>注意</strong>：如果您在多单元部署中运行 VTORc，请立即开始使用 <code>--cell</code> 标志来为 v25 要求做好准备。</p>
+<h4 id="有序恢复执行和半同步部署"><a id="vtorc-ordered-recovery-semi-sync">有序恢复执行和半同步部署</a></h4>
+<p>VTORc 现在按照定义的顺序对每个分片执行恢复，而不是单独对每个片执行恢复。具有顺序依赖性的问题（例如，半同步配置）首先串行执行，而独立的问题则并发执行。这确保了相关恢复在分片内以正确的顺序发生。
+面向用户的主要改进是半同步推出：VTORc 现在确保副本在更新主副本之前启用半同步。以前，在足够的副本准备好之前在主服务器上启用半同步可能会在主服务器等待没有副本准备发送的半同步确认时停止写入。
+有关详细信息，请参阅 <a href="https://github.com/vitessio/vitess/pull/19427">#19427</a>。</p>
+<h4 id="已删除已弃用的-vtorc-指标"><a id="vtorc-deprecated-metric-removed">已删除已弃用的 VTORc 指标</a></h4>
+<p><code>DiscoverInstanceTimings</code> 指标已从 v24 中的 VTORc 中删除。该指标在 v23 中已弃用。
+<strong>迁移</strong>：改用 <code>DiscoveryInstanceTimings</code>，它为实例发现操作（后端、实例、其他）提供相同的计时信息。
+<strong>影响</strong>：使用 <code>DiscoverInstanceTimings</code> 的监控仪表板或警报系统必须更新为使用 <code>DiscoveryInstanceTimings</code>。</p>
+<h4 id="弃用快照拓扑功能"><a id="vtorc-snapshot-topology-deprecation">弃用快照拓扑功能</a></h4>
+<p>VTORc 的快照拓扑功能（通过将 <code>--snapshot-topology-interval</code> 设置为非零值来启用）从 v24 开始已弃用，并且计划在 v25 中删除该逻辑。
+由于缺乏读取此功能创建的快照的设施，加上 VTORc 后端的内存特性，意味着此逻辑的用处有限。 <a href="https://github.com/vitessio/vitess/issues/18691">https://github.com/vitessio/vitess/issues/18691</a>. 中详细解释和跟踪了此弃用
+<strong>迁移</strong>：删除 v25 之前的 VTORc 标志 <code>--snapshot-topology-interval</code>。
+<strong>影响</strong>：VTORc 无法再在其后端数据库中创建拓扑快照。</p>
+<h4 id="已删除已弃用的-apireplication-analysis-端点"><a id="vtorc-replication-analysis-api-removed">已删除已弃用的 <code>/api/replication-analysis</code> 端点</a></h4>
+<p><code>/api/replication-analysis</code> 端点已从 v24 中的 VTORc 中删除。请改用 <code>/api/detection-analysis</code>，它提供相同的功能。
+<strong>迁移</strong>：更新调用 <code>/api/replication-analysis</code> 的任何脚本、监控系统或自动化以使用 <code>/api/detection-analysis</code>。替换端点接受相同的查询参数（<code>keyspace</code>、<code>shard</code>）并返回相同的 JSON 响应格式。
+<strong>影响</strong>：对 <code>/api/replication-analysis</code> 的 HTTP 请求将返回 404 Not Found 错误。</p>
+<h3 id="指标"><a id="minor-changes-metrics">指标</a></h3>
+<h4 id="通过-prometheus-扩展-go-运行时指标"><a id="metrics-extended-go-runtime">通过 Prometheus 扩展 Go 运行时指标</a></h4>
+<p>Vitess 现在通过 Prometheus 公开全套 Go 运行时指标。默认的 Prometheus <code>GoCollector</code> 仅公开三个 <code>runtime/metrics</code>（<code>/gc/gogc:percent</code>、<code>/gc/gomemlimit:bytes</code>、<code>/sched/gomaxprocs:threads</code>）加上旧版 <code>go_memstats_*</code> 集。从 v24 开始，所有 Vitess 组件都公开了 Go 的 <code>runtime/metrics</code> 包中的大约 150 个附加指标。
+<strong>新指标包括：</strong></p>
+<ul>
+<li>堆分配直方图</li>
+<li>GC 循环计数和暂停直方图</li>
+<li>内存类别细分</li>
+<li>Goroutine 状态故障</li>
+<li>调度程序延迟直方图</li>
+<li>按类别（用户、GC、清理、空闲）的 CPU 时间细分
+新的 <code>go_info_ext</code> 仪表还添加了 <code>compiler</code>、<code>GOARCH</code> 和 <code>GOOS</code> 标签，提供了标准 <code>go_info</code> 指标之外的扩展构建环境信息。
+<strong>受影响的组件</strong>：vtgate、vttablet、vtctld、vtorc、vtbackup、mysqlctld
+<strong>无需配置</strong> — 对于使用 Prometheus 后端的所有组件，指标会自动显示在 <code>/metrics</code> 端点上。</li>
+</ul>
+<h3 id="备份和恢复"><a id="minor-changes-backup-restore">备份和恢复</a></h3>
+<h4 id="mysql-克隆对副本配置的支持"><a id="mysql-clone-support">MySQL 克隆对副本配置的支持</a></h4>
+<p>VTablet 和 VTBackup 现在支持使用 MySQL 的本机 <a href="https://dev.mysql.com/doc/refman/en/clone-plugin.html">CLONE 插件</a> 通过网络直接从捐赠者平板电脑复制数据来配置新副本。物理级数据复制比逻辑备份和恢复要快得多，尤其是对于大型数据集。需要 MySQL 8.0.17+ 和仅限 InnoDB 的表。
+<strong>新标志：</strong></p>
+<table>
+<thead>
+<tr>
+<th>旗帜</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--mysql-clone-enabled</code></td>
+<td>启用MySQL CLONE插件并在MySQL初始化期间创建克隆用户。对于将参与 CLONE 操作的所有平板电脑来说都是必需的。</td>
+</tr>
+<tr>
+<td><code>--clone-from-primary</code></td>
+<td>从分片的主平板电脑克隆数据，而不是从备份恢复。与 <code>--clone-from-tablet</code> 互斥。</td>
+</tr>
+<tr>
+<td><code>--clone-from-tablet</code></td>
+<td>通过别名（例如 <code>zone1-123</code>）从特定平板电脑克隆数据，而不是从备份中恢复。与 <code>--clone-from-primary</code> 互斥。</td>
+</tr>
+<tr>
+<td><code>--restore-with-clone</code></td>
+<td>使用 MySQL CLONE 进行恢复阶段，而不是从备份恢复。需要 <code>--clone-from-primary</code> 或 <code>--clone-from-tablet</code>。</td>
+</tr>
+<tr>
+<td><code>--clone-restart-wait-timeout</code></td>
+<td>CLONE REMOTE 完成后等待 MySQL 重新启动超时。默认值：5 分钟。</td>
+</tr>
+<tr>
+<td><strong>克隆用户配置：</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>旗帜</td>
+<td>描述</td>
+</tr>
+<tr>
+<td>------</td>
+<td>-------------</td>
+</tr>
+<tr>
+<td><code>--db-clone-user</code></td>
+<td>MySQL 用于克隆操作的用户名（捐赠者身份验证）。</td>
+</tr>
+<tr>
+<td><code>--db-clone-password</code></td>
+<td>克隆用户的密码。</td>
+</tr>
+<tr>
+<td><code>--db-clone-use-ssl</code></td>
+<td>连接到捐赠者进行克隆操作时使用 SSL。</td>
+</tr>
+<tr>
+<td><strong>用法示例：</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>从分片的主分片克隆：</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">vttablet</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --mysql-clone-enabled</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --restore-with-clone</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --clone-from-primary</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#032F62">  ...</span></span></code></pre>
+<p>从特定平板电脑克隆：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">vtbackup</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --mysql-clone-enabled</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --restore-with-clone</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --clone-from-tablet=zone1-0000000100</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#032F62">  ...</span></span></code></pre>
+<p><strong>注意：</strong> 参与 CLONE 操作的所有平板电脑（捐赠者和接收者）必须在 MySQL 初始化期间设置 <code>--mysql-clone-enabled</code>，以确保加载 CLONE 插件并且克隆用户存在。</p>
+<h4 id="恢复挂钩改进"><a id="restore-hook-backup-engine-env">恢复挂钩改进</a></h4>
+<h2 id="扩展钩子覆盖范围现在当通过-vtctldclient-restorefrombackup-触发恢复时vttablet_restore_done-钩子会触发以前此挂钩仅在平板电脑启动或克隆操作期间运行新环境变量该挂钩现在设置-tm_restore_data_backup_engine-来指示使用哪个备份引擎该值来自备份清单的-backupmethod-字段仅当还原从实际备份读取时才设置-tm_restore_data_backup_engine不适用于基于克隆的还原或不使用备份时挂钩脚本可以使用它来根据还原是否使用-builtinxtrabackup-还是其他引擎来执行特定于引擎的操作"><strong>扩展钩子覆盖范围</strong>：现在，当通过 <code>vtctldclient RestoreFromBackup</code> 触发恢复时，<code>vttablet_restore_done</code> 钩子会触发。以前，此挂钩仅在平板电脑启动或克隆操作期间运行。
+<strong>新环境变量</strong>：该挂钩现在设置 <code>TM_RESTORE_DATA_BACKUP_ENGINE</code> 来指示使用哪个备份引擎。该值来自备份清单的 <code>BackupMethod</code> 字段。
+仅当还原从实际备份读取时才设置 <code>TM_RESTORE_DATA_BACKUP_ENGINE</code>，不适用于基于克隆的还原或不使用备份时。挂钩脚本可以使用它来根据还原是否使用 <code>builtin</code>、<code>xtrabackup</code> 还是其他引擎来执行特定于引擎的操作。</h2>
+<p>此版本的整个 changelog 可以在<a href="https://github.com/vitessio/vitess/blob/main/changelog/24.0/24.0.0/changelog.md">此处</a> 找到。
+该版本包括 460 个合并的 Pull 请求。
+感谢我们所有的贡献者：@ChaitanyaD48、@Devanshusharma2005、@MargaretMorehead、@anujagrawal380、@aparajon、@app/dependabot、@app/promptless、@app/vitess-bot、@arthurschreiber、@c-r-dev、@ Chengyuan、@connorolaya、@dasl-、@dbussink、@demmer、 @derekperkins、@ejortegau、@esignorelli、@farhann-saleem、@frouioui、@ghostframe、@harshit-gangal、@jdupe、@khkim6040、@lizztheblizz、@maksimov、@mattlord、@maxenglander、@mcpherrinm、@mcrauwel、@mhamza15、@nickvanw、 @pourtorabehsan、@rjlaine、@rvrangel、@sbaker617、@shlomi-noach、@siddharth16396、@stefanb、@stutibiyani、@systay、@tanjinx、@tetsuro-ohyama、@timvaillancourt、@ttran397、@twthorn、@varundeepsaini、@vitess-bot、@yushuqin</p>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/vitessio/vitess">vitessio/vitess</a> · 🏷️ 版本：<code>v24.0.0</code> · 📅 发布：2026-04-30 · <a href="https://github.com/vitessio/vitess/releases/tag/v24.0.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/vitess/vitess_v23.0.4"> <span class="k">← 下一个</span> <span class="t">v23.0.4</span> </a> <a href="/zh/release_note/vitess/vitess_v23.0.3"> <span class="k">上一个 →</span> <span class="t">v23.0.3</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/vitessio/vitess/releases/tag/v24.0.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/vitessio/vitess" target="_blank" rel="noopener"> <span>vitessio/vitess</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#总结" class>总结</a><a href="#目录" class="lv3">目录</a><a href="#主要变化" class>主要变化</a><a href="#新支持" class="lv3">新支持</a><a href="#重大变更" class="lv3">重大变更</a><a href="#小改动" class>小改动</a><a href="#vreplication" class="lv3">VReplication</a><a href="#vtgate" class="lv3">VTGate</a><a href="#查询服务" class="lv3">查询服务</a><a href="#vttablet" class="lv3">VTTablet</a><a href="#跟踪" class="lv3">跟踪</a><a href="#vtorc" class="lv3">VTORc</a><a href="#指标" class="lv3">指标</a><a href="#备份和恢复" class="lv3">备份和恢复</a><a href="#扩展钩子覆盖范围现在当通过-vtctldclient-restorefrombackup-触发恢复时vttablet_restore_done-钩子会触发以前此挂钩仅在平板电脑启动或克隆操作期间运行新环境变量该挂钩现在设置-tm_restore_data_backup_engine-来指示使用哪个备份引擎该值来自备份清单的-backupmethod-字段仅当还原从实际备份读取时才设置-tm_restore_data_backup_engine不适用于基于克隆的还原或不使用备份时挂钩脚本可以使用它来根据还原是否使用-builtinxtrabackup-还是其他引擎来执行特定于引擎的操作" class>扩展钩子覆盖范围：现在，当通过 vtctldclient RestoreFromBackup 触发恢复时，vttablet_restore_done 钩子会触发。以前，此挂钩仅在平板电脑启动或克隆操作期间运行。
+新环境变量：该挂钩现在设置 TM_RESTORE_DATA_BACKUP_ENGINE 来指示使用哪个备份引擎。该值来自备份清单的 BackupMethod 字段。
+仅当还原从实际备份读取时才设置 TM_RESTORE_DATA_BACKUP_ENGINE，不适用于基于克隆的还原或不使用备份时。挂钩脚本可以使用它来根据还原是否使用 builtin、xtrabackup 还是其他引擎来执行特定于引擎的操作。</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/vitess/vitess_v24.0.5"> <span class="v">v24.0.5</span> <span class="d">26-10-13</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v23.0.8"> <span class="v">v23.0.8</span> <span class="d">26-10-13</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v24.0.4"> <span class="v">v24.0.4</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v23.0.7"> <span class="v">v23.0.7</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v24.0.3"> <span class="v">v24.0.3</span> <span class="d">26-09-03</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v23.0.6"> <span class="v">v23.0.6</span> <span class="d">26-09-03</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v24.0.2"> <span class="v">v24.0.2</span> <span class="d">26-06-24</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v23.0.5"> <span class="v">v23.0.5</span> <span class="d">26-06-24</span> </a> </li> </ul> <a href="/zh/releases/vitess" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

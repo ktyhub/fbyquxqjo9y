@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TensorRT-LLM v0.20.0 — STAGS NextStack</title><meta name="description" content="Model Support · Added Qwen3 support.Refer to “Qwen3” section in examples/models/core/qwen/README.md. · Added HyperCLOVAX-SEED-Vision support in PyTorch flow. Refer to examples/models/contrib/hyperclovax/README.md"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.20.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/tensorrt-llm/0.20.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.20.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/tensorrt-llm/0.20.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="TensorRT-LLM v0.20.0 — STAGS NextStack"><meta property="og:description" content="Model Support · Added Qwen3 support.Refer to “Qwen3” section in examples/models/core/qwen/README.md. · Added HyperCLOVAX-SEED-Vision support in PyTorch flow. Refer to examples/models/contrib/hyperclovax/README.md"><meta property="og:url" content="https://www.stags.cn/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.20.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.20.0/#article","headline":"TensorRT-LLM v0.20.0 release notes","datePublished":"2025-06-19","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/NVIDIA/TensorRT-LLM"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/tensorrt-llm/0.20.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.20.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/tensorrt-llm/0.20.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/tensorrt-llm/0.20.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/tensorrt-llm/0.20.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/tensorrt-llm/0.20.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/tensorrt-llm/0.20.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/tensorrt-llm">TensorRT-LLM</a> </nav> <h1 class="detail-title"> <span class="p">TensorRT-LLM</span> v0.20.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2025年6月19日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noopener"> <span class="k">来源</span>NVIDIA/TensorRT-LLM </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/tensorrt-llm/0.20.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.20.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="tensorrt-llm-v0200">TensorRT-LLM v0.20.0</h1>
+<h2 id="tensorrt-llm-发布-0200">TensorRT-LLM 发布 0.20.0</h2>
+<h3 id="主要功能和增强功能">主要功能和增强功能</h3>
+<ul>
+<li><strong>模型支持</strong>
+<ul>
+<li>添加了 Qwen3 支持。请参阅 <code>examples/models/core/qwen/README.md</code> 中的“Qwen3”部分。</li>
+<li>在 PyTorch 流程中添加了 HyperCLOVAX-SEED-Vision 支持。参考<code>examples/models/contrib/hyperclovax/README.md</code></li>
+<li>在脚手架示例中添加了 Dynasor-CoT。参考<code>examples/scaffolding/contrib/Dynasor/README.md</code></li>
+<li>在 TRT 工作流程中添加了 Mistral Small 3.1 24B VLM 支持</li>
+<li>在 PyTorch 工作流程中添加了 Gemma3-1b-it 支持</li>
+<li>添加了 Nemotron-H 模型支持</li>
+<li>添加了 Eagle-3 对 LLAMA4 的支持</li>
+</ul>
+</li>
+<li><strong>PyTorch 工作流程</strong>
+<ul>
+<li>添加了劳拉支持</li>
+<li>添加了返回日志支持</li>
+<li>在 PyTorch 流程中采用新的 logprob 定义</li>
+<li>使用 PyTorch 后端启用每个请求的统计信息</li>
+<li>在 PyTorch 后端启用 LogitsProcessor</li>
+</ul>
+</li>
+<li>基准：
+<ul>
+<li>添加波束宽度以降低延迟。</li>
+<li>修复 trtllm-bench iter_stats 和 cuda_graph_batch_sizes 错误。</li>
+<li>删除已弃用的 Python 运行时基准测试</li>
+<li>添加对脚手架的基准支持</li>
+</ul>
+</li>
+<li>多式联运模型
+<ul>
+<li>添加了 trtllm-serve 中的支持</li>
+<li>添加了trtllm-bench支持，目前仅支持图像</li>
+</ul>
+</li>
+<li>Hopper 支持 DeepSeek-R1 W4A8</li>
+<li>添加对单 GPU 的 RTX Pro 6000 支持</li>
+<li>集成 Llama4 输入处理器</li>
+<li>在 Blackwell 上添加了 CGA 缩减 FHMA 内核</li>
+<li>为 FlashInfer 启用分块上下文</li>
+<li>支持 MLA 的 KV 缓存重用</li>
+<li>添加了分段 CUDA 图形支持</li>
+<li>支持多种LoRA适配器和TP</li>
+<li>添加了 KV 缓存感知路由器，用于分类服务</li>
+<li>对本机支持的全神贯注</li>
+<li>添加了 group_rms_norm 内核以标准化单个运算符中的多个输入</li>
+<li>为 MoE 模块添加智能路由器</li>
+<li>添加了对 QKV 预处理内核的头大小 72 支持</li>
+<li>添加了 MNNVL MoE A2A 支持</li>
+<li>优化多模态模型中的大型嵌入表</li>
+<li>支持LLMAPI中的Top-K logprobs和prompt_logprobs</li>
+<li>通过执行器 API 在 TRT 工作流程中启用重叠调度程序</li>
+</ul>
+<h3 id="基础设施变化">基础设施变化</h3>
+<ul>
+<li><strong>TRT-LLM 团队在 <a href="https://catalog.ngc.nvidia.com/orgs/nvidia/teams/tensorrt-llm/containers/release/tags">NGC</a> 上正式发布 docker 图像</strong>。</li>
+<li>PyPI 上预构建的 TensorRT-LLM 轮现在与使用 CXX11 ABI 的 PyTorch 2.7.0 链接</li>
+<li>依赖的TensorRT版本更新为10.10.0</li>
+<li>依赖的CUDA版本更新为12.9.0</li>
+<li>依赖的公共PyTorch版本更新为2.7.0</li>
+<li>依赖的NVIDIA ModelOpt版本更新为0.29.0</li>
+<li>依赖的NCCL版本维持在2.25.1</li>
+<li>开源 XQA 内核</li>
+<li>相关数据集版本升级至3.1.0</li>
+<li>将 Triton 后端迁移到 TensorRT LLM 存储库到 TensorRT LLM 子模块</li>
+<li>将 gcc 工具集版本从 13 降级到 11</li>
+</ul>
+<h3 id="api-变化">API 变化</h3>
+<ul>
+<li>[重大变更]：默认启用调度重叠</li>
+<li>从 TRT 工作流程中删除已弃用的 GptSession/V1</li>
+<li>将 _AutoDeployLlmArgs 设置为主要配置对象</li>
+<li>允许使用 trtllm-serve 中的 YAML 文件覆盖 CLI 参数</li>
+<li>在 LlmRequest 中引入了多模式嵌入字段</li>
+</ul>
+<h3 id="已修复的问题">已修复的问题</h3>
+<ul>
+<li>修复上下文服务器没有足够的 KV 缓存容量时的挂起错误 (#3095)</li>
+<li>修复 PyTorch 中的 C++ 解码器同步 (#3106)</li>
+<li>修复创建 cuda 流作为默认参数的错误，该参数将在导入过程中初始化 (#3764)</li>
+<li>修复与创建 CUDA 流作为默认参数相关的错误，该参数将在导入期间初始化 (#3764)</li>
+<li>修复 Qwen3 MoE 模型上的注意力 DP 错误 (#4141)</li>
+<li>修复在启用 CUDA Graph 的情况下运行 LLaMA 4 时的非法内存访问 (#4101)</li>
+<li>重置计划状态以避免 TrtllmAttentionWrapper 中的内存泄漏 (#4227)</li>
+</ul>
+<h3 id="已知问题">已知问题</h3>
+<ul>
+<li>RTX Pro 6000 上的多 GPU 模型支持</li>
+</ul>
+<h2 id="发生了什么变化">发生了什么变化</h2>
+<ul>
+<li>通过 @juney-nvidia 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4420">https://github.com/NVIDIA/TensorRT-LLM/pull/4420</a> 中优化文档</li>
+<li>通过 @juney-nvidia 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4421">https://github.com/NVIDIA/TensorRT-LLM/pull/4421</a> 中优化文档</li>
+<li>由 @juney-nvidia 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4422">https://github.com/NVIDIA/TensorRT-LLM/pull/4422</a> 中完善文档</li>
+<li>删除 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4376">https://github.com/NVIDIA/TensorRT-LLM/pull/4376</a> 中 @Tabrizian 的 vila 测试</li>
+<li>[TRTLLM-4618][feat] 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4363">https://github.com/NVIDIA/TensorRT-LLM/pull/4363</a> 中添加 @farazkh80 对 RTX6000 Pro (SM120) 的 Nemotron Super 49B FP8 测试</li>
+<li>测试：在<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4357%E4%B8%AD%E6%B7%BB%E5%8A%A0@crazydemo%E5%9C%A8%E6%96%87%E6%A1%A3%E4%B8%AD%E6%8F%90%E5%88%B0%E7%9A%84qa%E6%B5%8B%E8%AF%95">https://github.com/NVIDIA/TensorRT-LLM/pull/4357中添加@crazydemo在文档中提到的qa测试</a></li>
+<li>[Infra] - 始终在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4426">https://github.com/NVIDIA/TensorRT-LLM/pull/4426</a> 中的 @chzblych 合并后作业中推送发布映像</li>
+<li>测试：通过 @crazydemo 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4347">https://github.com/NVIDIA/TensorRT-LLM/pull/4347</a> 中添加 rcca 案例的测试用例</li>
+<li>杂务：清理<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/3833%E4%B8%AD@Superjomn%E7%9A%84perf_evaluator%E4%BB%A3%E7%A0%81">https://github.com/NVIDIA/TensorRT-LLM/pull/3833中@Superjomn的perf_evaluator代码</a></li>
+<li>壮举：在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4358">https://github.com/NVIDIA/TensorRT-LLM/pull/4358</a> 中添加 @yuxianq 对混合 attn/mamba 模型的 pp 支持</li>
+<li>修复：@kaiyux 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4433">https://github.com/NVIDIA/TensorRT-LLM/pull/4433</a> 中错误的参数名称 <code>enable_overlap_scheduler</code></li>
+<li>将 README.md 下的“路线图”链接更新为 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4425">https://github.com/NVIDIA/TensorRT-LLM/pull/4425</a> 中@AdamzNV 的路线图标签问题</li>
+<li>修复 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4226">https://github.com/NVIDIA/TensorRT-LLM/pull/4226</a> 中 @yilin-void 的 allreduce fusion kernel 和 ut 中的潜在问题</li>
+<li>[TRTLLM-4638] 壮举（脚手架）：将奖励控制器更新为 PRM 特定控制器，步骤由 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4337">https://github.com/NVIDIA/TensorRT-LLM/pull/4337</a> 中的 @dc3671 分割</li>
+<li>壮举：@Shixiaowei02 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/3934">https://github.com/NVIDIA/TensorRT-LLM/pull/3934</a> 中集成 NIXL 接口</li>
+<li>降低记录器级别以进行后备策略警告。作者：@hyukn 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4440">https://github.com/NVIDIA/TensorRT-LLM/pull/4440</a></li>
+<li>测试：通过 @DomBrown 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4263">https://github.com/NVIDIA/TensorRT-LLM/pull/4263</a> 中改进 C++ DGX 测试中的模型重用，以实现 CI 稳定性</li>
+<li>修复：临时禁用<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4445%E4%B8%AD@Shixiaowei02%E7%9A%84%E9%97%AE%E9%A2%98%E6%B5%8B%E8%AF%95">https://github.com/NVIDIA/TensorRT-LLM/pull/4445中@Shixiaowei02的问题测试</a></li>
+<li>在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4336">https://github.com/NVIDIA/TensorRT-LLM/pull/4336</a> 中添加 @Tabrizian 的 llama4 disagg 准确性测试</li>
+<li>[https://nvbugs/5123103][修复] 修复 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/3952">https://github.com/NVIDIA/TensorRT-LLM/pull/3952</a> 中 @liji-nv 对 DeepSeekV3 的 torch 编译</li>
+<li>[文档] - 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4434">https://github.com/NVIDIA/TensorRT-LLM/pull/4434</a> 中重新应用 @chzblych 的 #4220</li>
+<li>[TRTLLM-4618][feat] 修复 FP8 上的 cutlass MoE GEMM 回退故障 + 添加 @farazkh80 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4335">https://github.com/NVIDIA/TensorRT-LLM/pull/4335</a> 上对 RTX6000 Pro (SM120) 上 Mixtral 8x7B FP8 的 e2e 测试</li>
+<li>[Feat] 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4291">https://github.com/NVIDIA/TensorRT-LLM/pull/4291</a> 中的 @PerkzZheng 在 Hopper（针对 llama4）上添加分块注意力内核</li>
+<li>测试（性能）：在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4128">https://github.com/NVIDIA/TensorRT-LLM/pull/4128</a> 中添加 @venkywonka 的一些 <code>Llama-3_3-Nemotron-Super-49B-v1</code> 集成性能测试（TRT 流程、trtllm-bench）</li>
+<li>修复：[nvbugs/5287097] 对齐 pytorch 和 TRT 流之间的 PP 层分布。通过 @yuxianq 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4399">https://github.com/NVIDIA/TensorRT-LLM/pull/4399</a></li>
+<li>壮举：@kanghui0204 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4344">https://github.com/NVIDIA/TensorRT-LLM/pull/4344</a> 中针对基于 PCIe 的 GPU 进行低精度 Allreduce</li>
+<li>测试：[CI] <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4429%E4%B8%AD%E7%9A%84@xinhe-nv%E5%B0%86%E5%A4%B1%E8%B4%A5%E6%A1%88%E4%BE%8B%E6%B7%BB%E5%8A%A0%E5%88%B0waives.txt%E4%B8%AD">https://github.com/NVIDIA/TensorRT-LLM/pull/4429中的@xinhe-nv将失败案例添加到waives.txt中</a></li>
+<li>[TRTLLM-4932] 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4362">https://github.com/NVIDIA/TensorRT-LLM/pull/4362</a> 中添加 @moraxu 对 Llama-3.3-70B-Instruct 和 LLM API BF16 变体的 CLI 精度测试</li>
+<li>测试：更新 perf test yml 文件中的测试过滤器，以按 GPU 名称选择案例，并通过 @ruodil 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4282">https://github.com/NVIDIA/TensorRT-LLM/pull/4282</a> 中添加 RTX 6000 pro 的案例</li>
+<li>[AutoDeploy] @lucaslie 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4371">https://github.com/NVIDIA/TensorRT-LLM/pull/4371</a> 中对 HF 工厂进行了改进</li>
+<li>杂务：<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4465">https://github.com/NVIDIA/TensorRT-LLM/pull/4465</a> 中 @ZhanruiSunCh 的 0.21.0rc0 凹凸版本</li>
+<li>文档：[TRTLLM-325]将 NGC 映像集成到 Makefile 自动化中，并由 @MartinMarciniszyn 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4400">https://github.com/NVIDIA/TensorRT-LLM/pull/4400</a> 中编写文档</li>
+<li>杂务：<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4469">https://github.com/NVIDIA/TensorRT-LLM/pull/4469</a> 中 @ZhanruiSunCh 的 0.20.0 凹凸版本</li>
+<li>修复：将<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4490%E4%B8%AD%E5%8D%9A%E5%AE%A2%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E9%93%BE%E6%8E%A5%E6%9B%BF%E6%8D%A2%E4%B8%BA@Shixiaowei02">https://github.com/NVIDIA/TensorRT-LLM/pull/4490中博客中的图片链接替换为@Shixiaowei02</a></li>
+<li>修复：清理<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4116%E4%B8%AD@tongyuantongyu%E5%88%86%E7%B1%BB%E6%B5%8B%E8%AF%95%E7%9A%84%E8%BF%9B%E7%A8%8B%E6%A0%91">https://github.com/NVIDIA/TensorRT-LLM/pull/4116中@tongyuantongyu分类测试的进程树</a></li>
+<li>@QiJune 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4512">https://github.com/NVIDIA/TensorRT-LLM/pull/4512</a> 挑选#4508 樱桃</li>
+<li>@yuxianq 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4517">https://github.com/NVIDIA/TensorRT-LLM/pull/4517</a> 采摘 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4447">https://github.com/NVIDIA/TensorRT-LLM/pull/4447</a> 樱桃</li>
+<li>杂务：删除<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4485%E4%B8%AD@kaiyux%E6%9C%AA%E4%BD%BF%E7%94%A8%E7%9A%84%E8%84%9A%E6%9C%AC">https://github.com/NVIDIA/TensorRT-LLM/pull/4485中@kaiyux未使用的脚本</a></li>
+<li>杂务：弃用 autopp。通过 @yuxianq 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4471">https://github.com/NVIDIA/TensorRT-LLM/pull/4471</a></li>
+<li>修复：修复 @dcampora 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4507">https://github.com/NVIDIA/TensorRT-LLM/pull/4507</a> 中的 trtllm 采样器波束宽度错误</li>
+<li>测试：更新 api 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4479">https://github.com/NVIDIA/TensorRT-LLM/pull/4479</a> 中由 @crazydemo 进行的测试中从解码器更改为采样器</li>
+<li>文档：在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/3908">https://github.com/NVIDIA/TensorRT-LLM/pull/3908</a> 中添加 @Funatiq 的 KV 缓存管理文档</li>
+<li>测试：在放弃列表中添加失败案例，并修复 @ruodil 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4528">https://github.com/NVIDIA/TensorRT-LLM/pull/4528</a> 中进行性能测试的一些测试脚本问题</li>
+<li>通过 @Tabrizian 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4544">https://github.com/NVIDIA/TensorRT-LLM/pull/4544</a> 中添加 tritonrelease 容器</li>
+<li>修复：[TRTLLM-325]针对 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4539">https://github.com/NVIDIA/TensorRT-LLM/pull/4539</a> 中的 @MartinMarciniszyn 中的 Python 包中的安全漏洞进行 WAR</li>
+<li>[5141290][5273694][5260696]修复：修复Qwen模型的摘要任务中mrobe参数缺失的问题。作者：@hyukn 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4432">https://github.com/NVIDIA/TensorRT-LLM/pull/4432</a></li>
+<li>测试：放弃 @ruodil 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4563">https://github.com/NVIDIA/TensorRT-LLM/pull/4563</a> 中进行性能测试的悬挂案例</li>
+<li>[nvbugs/5274894] 修复：将已完成的上下文请求移至 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4576">https://github.com/NVIDIA/TensorRT-LLM/pull/4576</a> 中的 @Funatiq 生成</li>
+<li>[5234029][5226211]杂务：取消Qwen模型的多模态测试。通过 @hyukn 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4519">https://github.com/NVIDIA/TensorRT-LLM/pull/4519</a></li>
+<li>测试（perf）：通过 @venkywonka 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4407">https://github.com/NVIDIA/TensorRT-LLM/pull/4407</a> 中扩展 Llama-Nemotron-Nano-8B 性能集成测试（pyt）</li>
+<li>测试：修复性能健全性测试并跳过 @ruodil 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4598">https://github.com/NVIDIA/TensorRT-LLM/pull/4598</a> 中的 fp8 deepseek blackwell 案例</li>
+<li>[5180961] 杂务：Qwen 模型的不可豁免测试。通过 @hyukn 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4524">https://github.com/NVIDIA/TensorRT-LLM/pull/4524</a></li>
+<li>[https://nvbugs/5289907][修复] 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4545">https://github.com/NVIDIA/TensorRT-LLM/pull/4545</a> 中恢复 @Barry-Delaney 的每通道预量化</li>
+<li>由 @Barry-Delaney 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4619">https://github.com/NVIDIA/TensorRT-LLM/pull/4619</a> 中更新内部 cutlass 内核提交 ID</li>
+<li>ci：放弃测试用例 [NVBUG 5297821]，作者：@stnie，<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4616">https://github.com/NVIDIA/TensorRT-LLM/pull/4616</a></li>
+<li>[nvbugs/5274894] 修复：在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4608">https://github.com/NVIDIA/TensorRT-LLM/pull/4608</a> 中通过 @Funatiq 对功能正确性和性能的请求进行排序</li>
+<li>[CI] 通过 @SimengLiu-nv 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4627">https://github.com/NVIDIA/TensorRT-LLM/pull/4627</a> 中测试 TestDeepSeekV3Lite::test_fp8_block_scales_4gpus 放弃已知错误</li>
+<li>[TR[TLLM-4618][feat] 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4548">https://github.com/NVIDIA/TensorRT-LLM/pull/4548</a> 中添加 @farazkh80 在 RTX6000 Pro (SM120) 上剩余的 NVFP4 Nemotron Super 49B 测试</li>
+<li>[TRTLLM-4932] 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4375">https://github.com/NVIDIA/TensorRT-LLM/pull/4375</a> 中添加 @moraxu 对 Llama-3_3-Nemotron-Super-49B-v1 和 LLM API FP8 变体的 CLI 精度测试</li>
+<li>[修复] @moraxu 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4604">https://github.com/NVIDIA/TensorRT-LLM/pull/4604</a> 中的 Llama-3.3-70B-Instruct 中的 CLI 准确性测试的模拟参数不正确</li>
+<li>通过 @Tabrizian 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4591">https://github.com/NVIDIA/TensorRT-LLM/pull/4591</a> 中添加缺失的 rcca 文件夹</li>
+<li>[修复] 修复 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4511">https://github.com/NVIDIA/TensorRT-LLM/pull/4511</a> 中 @jinyangyuan-nvidia 由于 None 张量而导致的 Llama4 allgather 错误</li>
+<li>[TRTLLM-4932] 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4242">https://github.com/NVIDIA/TensorRT-LLM/pull/4242</a> 中添加@moraxu 对 NIM 优先模型的 QA 准确性测试</li>
+<li>更新 @MartinMarciniszyn 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4671">https://github.com/NVIDIA/TensorRT-LLM/pull/4671</a> 中对 NGC docker 图像的描述</li>
+<li>[测试] - 正确放弃 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4680">https://github.com/NVIDIA/TensorRT-LLM/pull/4680</a> 中 @chzblych 的 Slurm 测试阶段
+*修复[nvbug/5286515]：trtllm-llmapi-在<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4529%E4%B8%AD%E7%94%B1@Superjomn%E5%9C%A8%E5%8D%95%E8%8A%82%E7%82%B9%E5%8D%95GPU%E4%B8%8A%E5%90%AF%E5%8A%A8">https://github.com/NVIDIA/TensorRT-LLM/pull/4529中由@Superjomn在单节点单GPU上启动</a></li>
+<li>测试：@crazydemo 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4644">https://github.com/NVIDIA/TensorRT-LLM/pull/4644</a> 中放弃和取消放弃 QA 测试用例</li>
+<li>[TRTLLM-5326] - 修复 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4691">https://github.com/NVIDIA/TensorRT-LLM/pull/4691</a> 中 @yiqingy0 生成的测试覆盖率报告</li>
+<li>修复：[nvbugs/5289912][nvbugs/5232406] 在融合萌系中使用线程池进行多线程权重加载。通过 @yuxianq 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4699">https://github.com/NVIDIA/TensorRT-LLM/pull/4699</a>
+*修复：[nvbug5300494]使用运行时总gpu内存来计算kv缓存内存并通过<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4660%E4%B8%AD%E7%9A%84@HuiGao-NV%E8%AE%B0%E5%BD%95%E6%9B%B4%E5%A4%9A%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF">https://github.com/NVIDIA/TensorRT-LLM/pull/4660中的@HuiGao-NV记录更多内存信息</a></li>
+<li>修复：<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4713">https://github.com/NVIDIA/TensorRT-LLM/pull/4713</a> 中 @brb-nv BS>1 的 Mistral Small 视觉编码器</li>
+<li>[cherry-pick] test(perf)：在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4589">https://github.com/NVIDIA/TensorRT-LLM/pull/4589</a> 中添加@venkywonka 剩余的 <code>Phi-4-mini-instruct</code> 性能测试 (#4443)</li>
+<li>[cherry-pick] 测试（性能）：在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4590">https://github.com/NVIDIA/TensorRT-LLM/pull/4590</a> 中添加 @venkywonka 的 Llama-3_1-Nemotron-Ultra-253B-v1 性能测试 (cpp) (#4446)</li>
+<li>[cherry-pick] 测试(perf): Pt.2 添加 Llama-3_3-Nemotron-Super-49B-v1 集成性能测试 (cpp) (#4499) by @venkywonka in <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4588">https://github.com/NVIDIA/TensorRT-LLM/pull/4588</a></li>
+<li>修复：<a href="https://nvbugs/5305692">https://nvbugs/5305692</a> 更新文档中的无效链接。作者：@nv-guomingz 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4698">https://github.com/NVIDIA/TensorRT-LLM/pull/4698</a></li>
+<li>修复：修复 AutoTuner 预热请求生成问题。通过 @hyukn 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4670">https://github.com/NVIDIA/TensorRT-LLM/pull/4670</a></li>
+<li>修复：[<a href="https://nvbugspro.nvidia.com/bug/5286795">https://nvbugspro.nvidia.com/bug/5286795</a>] 取消对 bug-5286795 的测试。由 @bobboli 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4724">https://github.com/NVIDIA/TensorRT-LLM/pull/4724</a></li>
+<li>删除 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4703">https://github.com/NVIDIA/TensorRT-LLM/pull/4703</a> 中 @Tabrizian 的 V1 批处理测试</li>
+<li>修复：<a href="https://nvbugs/5214239">https://nvbugs/5214239</a> 由 @nv-guomingz 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4718">https://github.com/NVIDIA/TensorRT-LLM/pull/4718</a> 中</li>
+<li>[<a href="https://nvbugspro.nvidia.com/bug/5236935%5D%5B%E4%BF%AE%E5%A4%8D">https://nvbugspro.nvidia.com/bug/5236935][修复</a>] 修复 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4731">https://github.com/NVIDIA/TensorRT-LLM/pull/4731</a> 中 @wili-65535 在 Triton Server 中使用 Draft-Target-Model (DTM) 推测解码的文档</li>
+<li>测试：删除 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4720">https://github.com/NVIDIA/TensorRT-LLM/pull/4720</a> 中@ruodil 的 perf test l40s/l20 oom 测试用例和 unwaive 测试</li>
+<li>[修复] 在<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4744%E4%B8%AD%E6%B7%BB%E5%8A%A0@yuanjingx87%E7%9A%84RTX6000Pro%E5%90%88%E5%B9%B6%E5%90%8E%E6%B5%8B%E8%AF%95">https://github.com/NVIDIA/TensorRT-LLM/pull/4744中添加@yuanjingx87的RTX6000Pro合并后测试</a></li>
+<li>测试：删除大的 bs，因为它将在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4726">https://github.com/NVIDIA/TensorRT-LLM/pull/4726</a> 中由@StanleySun639 oom</li>
+<li>[https://nvbugs/5295389][修复]在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4624">https://github.com/NVIDIA/TensorRT-LLM/pull/4624</a> 中通过 @pamelap-nvidia 修复 sm120 上的 moe fp4</li>
+<li>[nvbugs/5302709] 修复：在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4747">https://github.com/NVIDIA/TensorRT-LLM/pull/4747</a> 中 @amukkara 在 A100 上使用 HF 视觉塔进行 llava-next</li>
+<li>[nvbugs/5297821] 修复 @Tabrizian 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4743">https://github.com/NVIDIA/TensorRT-LLM/pull/4743</a> 中的 llama4 分类服务准确性测试</li>
+<li>测试：通过 @xinhe-nv 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4751">https://github.com/NVIDIA/TensorRT-LLM/pull/4751</a> 中修复 5250460</li>
+<li>测试：放弃 @crazydemo 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4785">https://github.com/NVIDIA/TensorRT-LLM/pull/4785</a> 中失败的案例</li>
+<li>放弃 @yiqingy0 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4795">https://github.com/NVIDIA/TensorRT-LLM/pull/4795</a> 中进行的 l0 次测试</li>
+<li>[文档] - 添加日期和提交信息 (#4448) by @chzblych in <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4752">https://github.com/NVIDIA/TensorRT-LLM/pull/4752</a></li>
+<li>删除 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4707">https://github.com/NVIDIA/TensorRT-LLM/pull/4707</a> 中 @Tabrizian 放弃的分类 cuda 图测试
+*修复：llmapi-启动添加添加带有引擎构建的trtllm-bench测试（#4…由<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4550%E4%B8%AD%E7%9A%84@Superjomn">https://github.com/NVIDIA/TensorRT-LLM/pull/4550中的@Superjomn</a></li>
+<li>[https://nvbugs/5303634] 跳过评估 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4676">https://github.com/NVIDIA/TensorRT-LLM/pull/4676</a> 中的 @QiJune 中的 summarise.py 中的空batch_input_ids</li>
+<li>修复：当 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4786">https://github.com/NVIDIA/TensorRT-LLM/pull/4786</a> 中的 @brb-nv 缺少 WORLD_SIZE 环境变量时，跳过虚拟美杜莎/鹰测试</li>
+<li>修复：修复 @pcastonguay 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4806">https://github.com/NVIDIA/TensorRT-LLM/pull/4806</a> 中发布/0.20 的排队请求统计信息</li>
+<li>[NVBUG-5291971] <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4675">https://github.com/NVIDIA/TensorRT-LLM/pull/4675</a> 中 @farazkh80 的 XQA JIT 路径</li>
+<li>[TRTLLM-4932] 从 @moraxu 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4808">https://github.com/NVIDIA/TensorRT-LLM/pull/4808</a> 中的 Llama-3_1-Nemotron-Ultra-253B-v1 CLI 精度测试中删除与 moe 相关的参数</li>
+<li>测试：通过 @StanleySun639 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4801">https://github.com/NVIDIA/TensorRT-LLM/pull/4801</a> 中删除无效的 Triton 集成测试用例</li>
+<li>测试：缩短 con:1 案例中的要求并添加流案例，在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4796">https://github.com/NVIDIA/TensorRT-LLM/pull/4796</a> 中添加 @ruodil 的 l2 性能测试</li>
+<li>[Infra] - 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4850">https://github.com/NVIDIA/TensorRT-LLM/pull/4850</a> 中更好地利用 @chzblych 的多 GPU CI 资源</li>
+<li>@lfr-0531 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4834">https://github.com/NVIDIA/TensorRT-LLM/pull/4834</a> 中挑选 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4536">https://github.com/NVIDIA/TensorRT-LLM/pull/4536</a></li>
+<li>@lfr-0531 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4833">https://github.com/NVIDIA/TensorRT-LLM/pull/4833</a> 中精选 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4379">https://github.com/NVIDIA/TensorRT-LLM/pull/4379</a></li>
+<li>修复：[nvbugs/5298600] 修复 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4830">https://github.com/NVIDIA/TensorRT-LLM/pull/4830</a> 中 @yechank-nvidia 对 mrope_position_deltas 的非法内存访问</li>
+<li>放弃@yiqingy0在<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4857%E4%B8%AD%E7%9A%84L0%E6%B5%8B%E8%AF%95">https://github.com/NVIDIA/TensorRT-LLM/pull/4857中的L0测试</a></li>
+<li>放弃@yiqingy0在<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4862%E4%B8%AD%E7%9A%84L0%E6%B5%8B%E8%AF%95">https://github.com/NVIDIA/TensorRT-LLM/pull/4862中的L0测试</a></li>
+<li>测试：修复 @StanleySun639 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4868">https://github.com/NVIDIA/TensorRT-LLM/pull/4868</a> 中的 rss 增加测试用例问题</li>
+<li>修复：[nvbugs/5312750] 如果有 tie_word_embeddings，则保留最后 pp 排名的 embed_tokens。作者：@yuxianq 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4902">https://github.com/NVIDIA/TensorRT-LLM/pull/4902</a>
+*修复：max_num_sequences计算与重叠调度到<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4889%E4%B8%AD%E7%9A%84@dcampora%E5%8F%91%E5%B8%83/0.20">https://github.com/NVIDIA/TensorRT-LLM/pull/4889中的@dcampora发布/0.20</a></li>
+<li>[TRTLLM-5340] 修复：删除 run_majority_vote_ai 上的准确性断言…作者：<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4907">https://github.com/NVIDIA/TensorRT-LLM/pull/4907</a> 中的@WeiHao Cheng</li>
+<li>测试：修复 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4908">https://github.com/NVIDIA/TensorRT-LLM/pull/4908</a> 中 @StanleySun639 潜在的拆卸错误</li>
+<li>通过 @lucifer1004 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4886">https://github.com/NVIDIA/TensorRT-LLM/pull/4886</a> 中修复 DeepGEMM NVCC 路径</li>
+<li>修复：@zhengd-nv 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4911">https://github.com/NVIDIA/TensorRT-LLM/pull/4911</a> 中修复缓存感知路由器相关测试</li>
+<li><a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4931%E4%B8%AD%E7%9A%84@yiqingy0%E5%B0%86NCCL%E7%89%88%E6%9C%AC%E4%BB%8E2.26.5%E9%99%8D%E7%BA%A7%E5%88%B02.25.1">https://github.com/NVIDIA/TensorRT-LLM/pull/4931中的@yiqingy0将NCCL版本从2.26.5降级到2.25.1</a></li>
+<li>修复：[nvbug 5321627] 处理 TRT 后端返回的 logits 多于 @hchings 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4921">https://github.com/NVIDIA/TensorRT-LLM/pull/4921</a> 中的输出标记的情况</li>
+<li>[5310329] 修复：修复预热阶段批量大小超出范围的问题。作者：@hyukn 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4912">https://github.com/NVIDIA/TensorRT-LLM/pull/4912</a></li>
+<li>[<a href="https://nvbugspro.nvidia.com/bug/5323820">https://nvbugspro.nvidia.com/bug/5323820</a>] 修复禁用情况下的分块方程。作者：@FrankD412，<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4964">https://github.com/NVIDIA/TensorRT-LLM/pull/4964</a></li>
+<li>[https://nvbugs/5238105] 修复：<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/3951">https://github.com/NVIDIA/TensorRT-LLM/pull/3951</a> 中 @Funatiq 的 ModelRunnerCpp num_return_sequences</li>
+<li>[修复]修复<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4943%E4%B8%AD@liji-nv%E7%9A%84%E9%9D%9E%E6%B3%95%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE%E5%92%8C%E5%8F%AF%E8%83%BD%E7%9A%84%E5%87%86%E7%A1%AE%E6%80%A7%E6%8D%9F%E5%A4%B1">https://github.com/NVIDIA/TensorRT-LLM/pull/4943中@liji-nv的非法内存访问和可能的准确性损失</a></li>
+<li>@lfr-0531 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5005">https://github.com/NVIDIA/TensorRT-LLM/pull/5005</a> 中精选 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5004">https://github.com/NVIDIA/TensorRT-LLM/pull/5004</a></li>
+<li>ci：放弃测试用例 [NVBUG 5247271]，作者：<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4992">https://github.com/NVIDIA/TensorRT-LLM/pull/4992</a> 中的 @stnie</li>
+<li>[Infra] - 通过 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5009">https://github.com/NVIDIA/TensorRT-LLM/pull/5009</a> 中的 @chzblych 更新 JNLP 容器配置</li>
+<li>[5310329] 杂务：取消 test_e2e.py::test_openai_reasoning。由 @hyukn 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4981">https://github.com/NVIDIA/TensorRT-LLM/pull/4981</a></li>
+<li>文档：@kaiyux 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4975">https://github.com/NVIDIA/TensorRT-LLM/pull/4975</a> 中的小修复和澄清</li>
+<li>[5289904] 琐事：Qwen 模型的不可豁免测试。通过 @hyukn 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4657">https://github.com/NVIDIA/TensorRT-LLM/pull/4657</a></li>
+<li>修复：[nvbugs/5324954、nvbugs/5304229] 修复 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4976">https://github.com/NVIDIA/TensorRT-LLM/pull/4976</a> 中 @yechank-nvidia 的 Qwen2-VL 视频和 Qwen2.5-VL 图像测试用例</li>
+<li>测试：修复 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4989">https://github.com/NVIDIA/TensorRT-LLM/pull/4989</a> 中 @crazydemo 测试用例的一些拼写错误和限制</li>
+<li>[https://nvbugs/5277592][修复]修复了 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5058">https://github.com/NVIDIA/TensorRT-LLM/pull/5058</a> 中 @lfr-0531 规范解码的 cuda 图填充（仅适用于 0.20）</li>
+<li>[TRTLLM-5516] perf：在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5190">https://github.com/NVIDIA/TensorRT-LLM/pull/5190</a> 中复制 @kaiyux 对 cuda 图填充的虚拟请求（cherry-pick #4729）
+*测试：在<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5195%E4%B8%AD%E6%B7%BB%E5%8A%A0@ruodil%E7%9A%84deepseek">https://github.com/NVIDIA/TensorRT-LLM/pull/5195中添加@ruodil的deepseek</a> rcca案例</li>
+<li>文档：通过 @nv-guomingz 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5150">https://github.com/NVIDIA/TensorRT-LLM/pull/5150</a> 中为 v0.20.0 添加 release note</li>
+<li>测试：在<a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5225%E4%B8%AD%E6%B7%BB%E5%8A%A0@ruodil%E7%9A%84deepseek_v3_lite">https://github.com/NVIDIA/TensorRT-LLM/pull/5225中添加@ruodil的deepseek_v3_lite</a> rcca案例</li>
+<li>测试：从 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5229">https://github.com/NVIDIA/TensorRT-LLM/pull/5229</a> 中的 @yinggeh 弃用来自 triton_backend L0_backend_trtllm 的 gpt_model_type “v1” 静态批处理</li>
+<li>[doc] 通过 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5324">https://github.com/NVIDIA/TensorRT-LLM/pull/5324</a> 中的 @kaiyux 使用 V0.20 发布数据更新 Perf-Overview.MD (cherry-pick #5176)</li>
+</ul>
+<h2 id="新贡献者">新贡献者</h2>
+<ul>
+<li>@AdamzNV 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4425">https://github.com/NVIDIA/TensorRT-LLM/pull/4425</a> 中做出了第一个贡献</li>
+<li>@stnie 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/4616">https://github.com/NVIDIA/TensorRT-LLM/pull/4616</a> 中做出了第一个贡献</li>
+<li>@yinggeh 在 <a href="https://github.com/NVIDIA/TensorRT-LLM/pull/5229">https://github.com/NVIDIA/TensorRT-LLM/pull/5229</a> 中做出了第一个贡献
+<strong>完整 Changelog</strong>：<a href="https://github.com/NVIDIA/TensorRT-LLM/compare/v0.20.0rc3...v0.20.0">https://github.com/NVIDIA/TensorRT-LLM/compare/v0.20.0rc3…v0.20.0</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/NVIDIA/TensorRT-LLM">NVIDIA/TensorRT-LLM</a> · 🏷️ 版本：<code>v0.20.0</code> · 📅 发布：2025-06-19 · <a href="https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v0.20.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.21.0"> <span class="k">← 下一个</span> <span class="t">v0.21.0</span> </a> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.19.0"> <span class="k">上一个 →</span> <span class="t">v0.19.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v0.20.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noopener"> <span>NVIDIA/TensorRT-LLM</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#tensorrt-llm-发布-0200" class>TensorRT-LLM 发布 0.20.0</a><a href="#主要功能和增强功能" class="lv3">主要功能和增强功能</a><a href="#基础设施变化" class="lv3">基础设施变化</a><a href="#api-变化" class="lv3">API 变化</a><a href="#已修复的问题" class="lv3">已修复的问题</a><a href="#已知问题" class="lv3">已知问题</a><a href="#发生了什么变化" class>发生了什么变化</a><a href="#新贡献者" class>新贡献者</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v1.3.0"> <span class="v">v1.3.0</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v1.2.1"> <span class="v">v1.2.1</span> <span class="d">26-04-20</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v1.2.0"> <span class="v">v1.2.0</span> <span class="d">26-03-12</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v1.1.0"> <span class="v">v1.1.0</span> <span class="d">25-12-19</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v1.0.0"> <span class="v">v1.0.0</span> <span class="d">25-09-24</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.21.0"> <span class="v">v0.21.0</span> <span class="d">25-08-04</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.20.0" aria-current="true"> <span class="v">v0.20.0</span> <span class="d">25-06-19</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.19.0"> <span class="v">v0.19.0</span> <span class="d">25-05-09</span> </a> </li> </ul> <a href="/zh/releases/tensorrt-llm" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 23 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

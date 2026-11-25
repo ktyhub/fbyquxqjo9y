@@ -1,0 +1,326 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>codex rust-v0.166.0 — STAGS NextStack</title><meta name="description" content="Added keyboard-driven transcript selection with word, line, and page motions, integrated search, and configurable shortcuts. (#57221, #57222, #57223, #57224)"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/codex/codex_rust-v0.166.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/codex/rust-v0.166.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/codex/codex_rust-v0.166.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/codex/rust-v0.166.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="codex rust-v0.166.0 — STAGS NextStack"><meta property="og:description" content="Added keyboard-driven transcript selection with word, line, and page motions, integrated search, and configurable shortcuts. (#57221, #57222, #57223, #57224)"><meta property="og:url" content="https://www.stags.cn/zh/release_note/codex/codex_rust-v0.166.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/codex/codex_rust-v0.166.0/#article","headline":"codex rust-v0.166.0 release notes","datePublished":"2026-10-29","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/openai/codex"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/codex/rust-v0.166.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/codex/codex_rust-v0.166.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/codex/rust-v0.166.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/codex/rust-v0.166.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/codex/rust-v0.166.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/codex/rust-v0.166.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/codex/rust-v0.166.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/codex">codex</a> </nav> <h1 class="detail-title"> <span class="p">codex</span> rust-v0.166.0 </h1> <div class="detail-meta"> <span class="chip chip--release">发布</span> <span><span class="k">发布时间</span>2026年10月29日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/openai/codex" target="_blank" rel="noopener"> <span class="k">来源</span>openai/codex </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/codex/rust-v0.166.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/codex/codex_rust-v0.166.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h2 id="新功能">新功能</h2>
+<ul>
+<li>添加了键盘驱动的转录选择，包括单词、行和页面动作、集成搜索和可配置的快捷方式。 （#57221、#57222、#57223、#57224）</li>
+<li>在异步问题、选择、答案和文字回复中一致地呈现 Markdown。 （＃57259，＃57292）</li>
+<li>将 GPT-6.1 Terra 添加到捆绑、Vertex AI 和 Amazon Bedrock 模型目录中。 (#57293)</li>
+<li>添加了 <code>codex queue --resume</code> 以在对消息进行排队后恢复卸载的线程。 (#57232)</li>
+<li>在 TUI 中添加了更清晰的安全块说明和可选的更安全的后续提示。 （＃57363，＃57365）</li>
+<li>添加了 <code>codex doctor --network-only</code>，用于集中配置、连接和 WebSocket 诊断。 (#57606)</li>
+</ul>
+<h2 id="错误修复">错误修复</h2>
+<ul>
+<li>恢复或分叉线程时保留确认的批准和权限设置。 (#57227)</li>
+<li>恢复被杀死的作曲家文本时保留本地图像附件。 (#57502)</li>
+<li>修复了当安装正在使用或路径包含非 ASCII 字符时 macOS 上的独立版本清理。 (#57503)</li>
+<li>在取消归档其父线程时恢复了生成的后代线程。 (#57635)</li>
+<li>修复了应用程序服务器线程启动和关闭竞争并立即发布已完成的运行时。 （＃57787，＃57788）</li>
+<li>改进了 TUI 重新连接恢复，包括离线 <code>/quit</code> 和 <code>/exit</code> 处理。 (#57820)</li>
+<li>跨简历和分叉保留推理令牌会计以避免过早压缩。 (#57839)</li>
+</ul>
+<h2 id="家务事">家务事</h2>
+<ul>
+<li>将 Bazel 切换为源构建的 V8，具有目标匹配的 Rust 绑定和本机 Windows MSVC 存档支持。 （#57164、#57269、#57644、#57832）</li>
+<li>在规范的 CLI 和应用程序服务器发行包中提供独立执行器。 (#57837)</li>
+<li>基于Node.js 24.22.1和Rust 1.95.0的标准化开发和发布。 （＃57168，＃57373）</li>
+</ul>
+<h2 id="changelog">Changelog</h2>
+<p>完整 Changelog: <a href="https://github.com/openai/codex/compare/rust-v0.165.0...rust-v0.166.0">https://github.com/openai/codex/compare/rust-v0.165.0…rust-v0.166.0</a></p>
+<ul>
+<li>#56468 为 Windows 文件系统沙箱助手保留 <code>SystemRoot</code> @jif-oai</li>
+<li>#56477 将 Guardian 批准原因上限移至上下文组合中 @ioanbudea-OAI</li>
+<li>#56483 允许安装的插件元数据跳过显示丰富@bkotsopoulos</li>
+<li>#56493 将 Guardian 工具描述准备移至上下文组合中 @ioanbudea-OAI</li>
+<li>#56494 将频道更新添加到留言板@felixxia-oai</li>
+<li>#56495 将分页频道订阅查询添加到本地留言板@felixxia-oai</li>
+<li>#56505 将同步 Guardian 工具调用截断推迟到准备@ioanbudea-OAI</li>
+<li>#56514 在整个工具调度过程中保留跟踪上下文@bkotsopoulos</li>
+<li>#56515 添加用于轮启动和响应流@bkotsopoulos 的跟踪检测</li>
+<li>#56516 TUI 启动期间尊重服务器批准策略默认值 @etraut-openai</li>
+<li>#56524 添加回合、工具和技能属性到轨迹@bkotsopoulos</li>
+<li>#56525 删除显式模型目录的 1 MiB 响应限制 @eternal-openai</li>
+<li>#56530 在出版物 @TAFOYA-OAI 上记录技能和插件目录大小</li>
+<li>#56533 延迟同步 Guardian 工具输出截断到转录准备 @ioanbudea-OAI</li>
+<li>#56535 将头尾缓冲区提取到实用程序箱中 @seanh-oai</li>
+<li>#56543 跟踪每个后端的简历选择器分页和选择元数据@bc-openai</li>
+<li>#56552 使用 NFS 上的 DELETE 日志初始化 SQLite 数据库 @dkovalenko-oai</li>
+<li>#56553 在线程钩子列表中包含环境钩子@andrewgu-oai</li>
+<li>#56554 启用屏蔽 AWS 凭证以进行本地代理签名 @viyatb-oai</li>
+<li>#56555 在成绩单准备过程中应用同步监护人消息限制@ioanbudea-OAI</li>
+<li>#56556 对所有 Guardian v2 异步分类使用对话 @felixxia-oai</li>
+<li>#56557 练习在卫报传输测试中保留采样@felixxia-oai</li>
+<li>#56559 删除 Guardian 快照特定的上下文帮助程序 @felixxia-oai</li>
+<li>#56560 允许在提供商设置中配置 GCP 项目和位置 @alexsong-oai</li>
+<li>#57164 将 V8 Bazel 构建图移至 Codex @seanh-oai</li>
+<li>#57165 在 Bazel 目标边界强制执行 V8 工件配置文件 @seanh-oai</li>
+<li>#57166 Surface 自动市场更新失败作为启动警告@dkovalenko-oai</li>
+<li>#57167 跟踪 CUA 工具调用启动并删除重复的生命周期事件 @trpcic-openai</li>
+<li>#57168 在 24.22.1 @anp-oai 上集中选择 Node.js 版本</li>
+<li>#57169 澄清配置加载器 APIs 并共享交互式登录设置@smurching-oai</li>
+<li>#57170 将预构建的参数注释 lint 更新为 <code>rust-v0.164.0</code> @tamird</li>
+<li>#57171 将运行时身份验证集成到模型请求中 @cooper-oai</li>
+<li>#57172 公开应用程序服务器线程项上的生命周期时间戳 @charliemarsh-oai</li>
+<li>#57174 将范围内的请求主体秘密替换添加到 MITM 挂钩 @viyatb-oai</li>
+<li>#57175 将配置服务器策略与启动和身份验证集成 @smurching-oai</li>
+<li>#57176 推迟监护节点 REPL 输出截断，直到及时准备 @ioanbudea-OAI</li>
+<li>#57178 默认情况下将 FedRAMP API 密钥路由到政府端点 @lsingh-oai</li>
+<li>#57179 在 <code>apply_auth_headers</code> @cooper-oai 中整合异步标头身份验证</li>
+<li>#57180 添加约束感知独立网络代理配置@viyatb-oai</li>
+<li>#57181 将可选名称添加到 untrusted 附加上下文 @akira-oai</li>
+<li>#57185 集中统一执行输出渲染@anp-oai</li>
+<li>#57186 因不可读的全局搜索根元数据错误而失败@viyatb-oai</li>
+<li>#57187 允许具有可选限制执行的咨询推出预算@nvogt-oai</li>
+<li>#57188 为 GCP 提供商身份验证添加凭证文件覆盖 @alexsong-oai</li>
+<li>#57191 直接从 stdout 和 stderr @anp-oai 读取统一的执行输出</li>
+<li>#57192 执行器版本 @TAFOYA-OAI 上的 Gate 能力发现 V2</li>
+<li>#57193 在推出跟踪重播中保留失败的 <code>write_stdin</code> 调用 @cassirer-openai</li>
+<li>#57194 按运行时处理程序对推出工具调用进行分类 @cassirer-openai</li>
+<li>#57196 隔离共享连接的调用者的 MCP 输入和超时 @charliemarsh-oai</li>
+<li>#57197 澄清 TUI 中的技能切换摘要 @fcoury-oai</li>
+<li>#57198 在 PreToolUse hooks @eternal-openai 中报告本地命令工作目录</li>
+<li>#57199 在 UTF-8 字符边界处截断推出 JSON 摘要 @cassirer-openai</li>
+<li>#57201 捕获功能标志@taohong339背后的直接工具关键路径</li>
+<li>#57202 保留跨运行时期货的工具调度跨度@trpcic-openai</li>
+<li>#57203 在权限和后工具挂钩中保留命令 cwd @eternal-openai</li>
+<li>#57204 注册 <code>untrusted_as_tool_output</code> 功能标志 @akira-oai</li>
+<li>#57206 忽略依赖性检查中的 crypto-bigint 计时建议 @etraut-openai</li>
+<li>#57207 属性批准等待工具关键路径计时@taohong339</li>
+<li>#57208 在独立 Unix 更新中传播安装程序下载失败@etraut-openai</li>
+<li>#57209 报告分析中的关键路径时序@taohong339</li>
+<li>#57210 为本地 stdio MCP 服务器添加选择加入协议发现 @charliemarsh-oai</li>
+<li>#57211 在聊天中共享符合条件的本地 stdio MCP 连接 @charliemarsh-oai</li>
+<li>#57212 为代码模式 gRPC 响应启用 zstd 压缩 @cayoub-oai</li>
+<li>#57215 独立协调简历选择器源@bc-openai</li>
+<li>#57218 支持远程应用程序服务器 client @thorvald-oai 中协商的 WebSocket 压缩</li>
+<li>#57220 记录应用程序服务器 WebSocket 压缩统计信息 @thorvald-oai</li>
+<li>#57221 在文字记录中扩展键盘导航和选择@fcoury-oai</li>
+<li>#57222 将查找与转录选择模式集成@fcoury-oai</li>
+<li>#57223 将键盘选择连接到文字覆盖@fcoury-oai</li>
+<li>#57224 修复转录选择输入路由并保留作曲家草稿@fcoury-oai</li>
+<li>#57225 在 NFS @dkovalenko-oai 上添加 DELETE 日志的托管执行</li>
+<li>#57226 允许具有共享文件权限的 NFS 数据库迁移@dkovalenko-oai</li>
+<li>#57227 在恢复和分叉线程时保留确认的权限@charliemarsh-oai</li>
+<li>#57228 给远程控制配对一个 35 秒的截止时间@etraut-openai</li>
+<li>#57229 简化代码模式单元完成交付@cconger</li>
+<li>#57232 添加可选线程恢复到 <code>codex queue</code> @etraut-openai</li>
+<li>#57233 停止 dotenv 加载持久 I/O 错误 @etraut-openai</li>
+<li>#57234 防止注册表身份验证测试装置中的凭证冲突@jif-oai</li>
+<li>#57235 使用配置的 shell 快照模式标记 exec_command 遥测@jif-oai</li>
+<li>#57238 在子代理上下文继承测试中生成练习 V2 @tamird</li>
+<li>#57239 使 MCP HTTP 探测超时测试具有确定性 @jif-oai</li>
+<li>#57240 绑定内存基线文件并恢复不完整的快照@dhruvgupta-oai</li>
+<li>#57241 遵守加密监护人记录@ioanbudea-OAI 配置的消息限制</li>
+<li>#57242 将默认线程卸载延迟减少到一分钟@jif-oai</li>
+<li>#57243 在启动草案切换测试中暂停 Tokio 时间@goodman-oai</li>
+<li>#57244 在统一执行重用测试中等待进程完成@goodman-oai</li>
+<li>#57245 稳定被拒绝的队列消息测试@goodman-oai</li>
+<li>#57247 当防护措施解除时释放转出维护锁@goodman-oai</li>
+<li>#57248 让登录令牌刷新测试等待身份验证发布@goodman-oai</li>
+<li>#57249 允许在应用程序服务器启动时禁用插件发现预取@zamoshchin-openai</li>
+<li>#57251 显示 ENT26 计划的本机美元线程使用情况@jif-oai</li>
+<li>#57253 允许缓慢的守护进程启动，同时检测早期进程退出@etraut-openai</li>
+<li>#57255 记录 zstd 安全建议的审核例外情况@charliemarsh-oai</li>
+<li>#57256 将父历史记录排除在附加线程视图之外@btraut-openai</li>
+<li>#57257 避免不必要的连接器目录工作以获得工具建议@charliemarsh-oai</li>
+<li>#57258 减少远程插件目录缓存探测开销@charliemarsh-oai</li>
+<li>#57259 在 TUI 异步问题选择中渲染 Markdown @imac-oai</li>
+<li>#57260 集中权限请求准备和批准操作@swastik-oai</li>
+<li>#57261 将 <code>apply_patch</code> 请求准备与执行分开 @swastik-oai</li>
+<li>#57262 在 <code>skill_catalog_deltas</code> @adaley-openai 后面添加增量技能目录</li>
+<li>#57263 支持权限路径警告的模型目录措辞@goodman-oai</li>
+<li>#57265 在 TUI 状态界面中显示有效的处理层 @etraut-openai</li>
+<li>#57267 在 TUI @bc-openai 中保持云对话设置由服务器拥有</li>
+<li>#57268 记录嵌入式 TUI 启动的原因 @etraut-openai</li>
+<li>#57269 添加本机 Windows MSVC V8 源存档构建 @seanh-oai</li>
+<li>#57270 加载沙箱和远程执行服务器命令的云配置@abhinav-oai</li>
+<li>#57271 在警告查看器 @imac-oai 中启用文本选择和鼠标滚动</li>
+<li>#57272 添加代码模式输出截断协议合约@seanh-oai</li>
+<li>#57273 拒绝 <code>codex queue</code> @etraut-openai 不支持的选项</li>
+<li>#57274 将 REPL 证据渲染推迟到同步上下文准备 @ioanbudea-OAI</li>
+<li>#57275 保留图像生成失败元数据以实现高级使用限制@jimxie-oai</li>
+<li>#57276 支持扩展世界状态部分的窗口前缀@fc-oai</li>
+<li>#57277 使用 <code>i18n-config</code> @goodman-oai 的 crates.io 版本</li>
+<li>#57278 重构代理生成、启动和通信助手@rhan-oai</li>
+<li>#57279 渲染 untrusted 附加上下文作为命名工具输出 @akira-oai</li>
+<li>#57280 在推出跟踪中保留完整的 MCP 结果@cassirer-openai</li>
+<li>#57281 为远程应用程序服务器会话启用代理导航@etraut-openai</li>
+<li>#57282 将舍入的令牌计数提升到下一个紧凑单元@etraut-openai</li>
+<li>#57284 将 TUI 鼠标捕获表达为明确的策略 @imac-oai</li>
+<li>#57285 让终端处理扩展问题中的链接@imac-oai</li>
+<li>#57286 在托管需求中支持 <code>network_proxy</code> @viyatb-oai</li>
+<li>#57287 在预测分叉 @keyz 中保留父工具声明</li>
+<li>#57290 添加具有有限 IPC 和生命周期管理的插件进程主机@joesavona</li>
+<li>#57291 使用枚举 @imac-oai 表示用户消息呈现</li>
+<li>#57292 在 TUI @imac-oai 中使用 Markdown 呈现异步问题和回复</li>
+<li>#57293 将 GPT-6.1 Terra 添加到模型目录@BOZHANG-OAI</li>
+<li>#57294 提取插件管理器错误并框实时切换路由@TAFOYA-OAI</li>
+<li>#57295 推迟同步监护人证据限制以准备@ioanbudea-OAI</li>
+<li>#57304 工作区路由 @smurching-oai 期间出现表面刷新令牌拒绝错误</li>
+<li>#57307 在 blob 大小策略中将 <code>openai/fence</code> 更改为 <code>v0.12.2</code> @joesavona</li>
+<li>#57311 在推出跟踪中保留工具输出版本和历史顺序@cassirer-openai</li>
+<li>#57312 集中监护人根上下文准备@ioanbudea-OAI</li>
+<li>#57313 默认网关 OAuth 传递到授权承载令牌 @smurching-oai</li>
+<li>#57314 格式化所有 Rust 源并清理存储库检查@joesavona</li>
+<li>#57315 防止失败的子代理将任务标记为需要注意@bc-openai</li>
+<li>#57317 为明确选择的插件添加选择加入简明提示@adaley-openai</li>
+<li>#57325 为精细审批模板添加模型目录字段@goodman-oai</li>
+<li>#57342 将 TUI 会话恢复准备与激活 @bc-openai 分开</li>
+<li>#57352 在 npm 包装器 @dkovalenko-oai 中保留子信号失败</li>
+<li>#57353 避免 MXC 路径授予@iceweasel-oai 的对象身份预检</li>
+<li>#57357 当 NFS 数据库迁移发现没有数据库时报告 @dkovalenko-oai</li>
+<li>#57358 跨进程序列化会话索引突变@dkovalenko-oai</li>
+<li>#57360 Bound 等待线程写入器协调锁 @dkovalenko-oai</li>
+<li>#57363 在 TUI @etraut-openai 中解释具有回合范围追索权的安全策略块</li>
+<li>#57365 在 TUI @etraut-openai 中的安全块之后提供更安全的重写</li>
+<li>#57366 在 <code>/status</code> @etraut-openai 中显示选定的 ChatGPT 工作区</li>
+<li>#57373 将 Rust 工具链固定到 1.95.0 @TAFOYA-OAI</li>
+<li>#57391 在返回 shell @etraut-openai 之前清除待处理的终端报告</li>
+<li>#57393 在 TUI 数学 @etraut-openai 中渲染积分限制和括号矩阵</li>
+<li>#57394 将实验性 GCP 帐户设置添加到应用服务器@alexsong-oai</li>
+<li>#57420 在 TypeScript 导出 @keyz 中使线程项时间戳可选</li>
+<li>#57425 集中监护人根上下文准备@ioanbudea-OAI</li>
+<li>#57430 在现有工人的卫报评论中测试目标来源@jif-oai</li>
+<li>#57433 为本机工具调用添加选择加入同步 Guardian 审核 @jif-oai</li>
+<li>#57435 将统一的执行命令准备提取到可重用模块@swastik-oai</li>
+<li>#57438 通过统一执行@swastik-oai 携带准备好的命令</li>
+<li>#57439 使用自定义 OpenAI 基本 URL @jif-oai 保留 Guardian 请求元数据</li>
+<li>#57441 添加 Guardian 本机多代理历史功能标志 @jif-oai</li>
+<li>#57448 在卫报评论历史记录中保留本机多代理呼叫@jif-oai</li>
+<li>#57451 通过 Guardian 审核@jif-oai 路由改变状态的多代理调用</li>
+<li>#57452 区分策略限制的容量故障和服务器过载 @toml-openai</li>
+<li>#57455 多代理工具调用 @jif-oai 的集中 Guardian 分类</li>
+<li>#57458 将 Guardian 代币使用计算移至审阅者箱 @jif-oai</li>
+<li>#57462 始终将代码模式工具描述放在命名空间描述之前@swastik-oai</li>
+<li>#57468 修复本地历史测试的监护人切换模拟@jif-oai</li>
+<li>#57474 在 Guardian 评论中测试加密的本机通话历史记录 @jif-oai</li>
+<li>#57476 将 Guardian 会话助手移至审阅者箱 @jif-oai</li>
+<li>#57478 将 Guardian 批准请求类型移至审阅者箱 @jif-oai</li>
+<li>#57483 在选定的线程迁移期间跳过不相关的索引推出@charliemarsh-oai</li>
+<li>#57488 将监护人提示组成移至审阅者箱中 @jif-oai</li>
+<li>#57493 将 Guardian 操作 JSON 格式移至审阅者箱 @jif-oai</li>
+<li>#57494 集中同步 Guardian 上下文准备 @ioanbudea-OAI</li>
+<li>#57500 添加一个选项以省略技能目录中的描述@adaley-openai</li>
+<li>#57501 在 TUI 数学中渲染转义百分号 @etraut-openai</li>
+<li>#57502 恢复杀死的文本时保留本地图像附件@etraut-openai</li>
+<li>#57503 修复 macOS 独立版本修剪@etraut-openai</li>
+<li>#57504 使用本机 clipboard 通过 X11 转发 @etraut-openai 进行 WSL SSH 会话</li>
+<li>#57506 将 Guardian 请求映射移至审阅者箱 @jif-oai</li>
+<li>#57507 解决 <code>ReviewAction</code> @swastik-oai 内的 Guardian 命令路径约定</li>
+<li>#57508 为 UI 插件进程添加有界 V8 运行时 @joesavona</li>
+<li>#57509 将 Guardian 计划行动程序集提取到审阅者箱中 @jif-oai</li>
+<li>#57512 在 Unix @jif-oai 上显式解锁守护进程 PID 保留探测</li>
+<li>#57513 使用 <code>execve</code> @bolinfest 将 npm 包装器替换为本机二进制文件</li>
+<li>#57514 添加实验性 ChatGPT 工作区切换到应用程序服务器@dhruvgupta-oai</li>
+<li>#57515 将 MXC 卷扩展探测限制为符号链接@iceweasel-oai</li>
+<li>#57516 添加个人资料和提供商状态行项目@etraut-openai</li>
+<li>#57519 将同步 Guardian 心跳压缩推迟到准备@ioanbudea-OAI</li>
+<li>#57522 将单独的评论添加到监护人审稿人池@swastik-oai</li>
+<li>#57533 在 Unix @jif-oai 上显式释放空 PID 探测锁</li>
+<li>#57538 在响应消息中保留主机分配的用户输入 ID @zbrunson-openai</li>
+<li>#57542 将模型门控文献搜索添加到独立网络搜索@rhan-oai</li>
+<li>#57552 公开并保留图像生成 ID @jimxie-oai</li>
+<li>#57553 允许在模型步骤之间替换动态工具@sdcoffey</li>
+<li>#57554 当终端颜色不可用时，将提交的提示保持阴影@bc-openai</li>
+<li>#57563 避免在 HTTP 响应流中保留不需要的输出项 @btraut-openai</li>
+<li>#57564 在 Vim 寄存器 @bc-openai 中保留丰富的作曲家内容</li>
+<li>#57567 允许覆盖内置 OpenAI 提供程序 @jamy-OAI 的目录 URL</li>
+<li>#57568 独立配置内存整合服务层@mandal-OAI</li>
+<li>#57569 在背压下保留过程输出和控制回复@ztanner-oai</li>
+<li>#57572 支持没有共享快照的应用程序工具目录@bkotsopoulos</li>
+<li>#57573 添加拦截的补丁命令的无文件系统分类@swastik-oai</li>
+<li>#57575 重构 HTTP client 构造和请求执行 @bz-openai</li>
+<li>#57581 允许模型目录自定义批准说明标题@goodman-oai</li>
+<li>#57584 通过令牌截断保留输出边界@seanh-oai</li>
+<li>#57585 替换模型请求中不可用的图像引用@kchainani-oai</li>
+<li>#57586 添加主机保留的 V2 子创建 APIs @rhan-oai</li>
+<li>#57589 添加独立的 <code>codex-exec-server</code> 可执行文件@dkovalenko-oai</li>
+<li>#57590 在 CLI 和应用程序服务器包中运送 <code>codex-exec-server</code> @dkovalenko-oai</li>
+<li>#57593 删除空的本地暂存路由文件@fcoury-oai</li>
+<li>#57597 保留 WebSocket 探测证据并编辑诊断详细信息@dob-oai</li>
+<li>#57598 使用文件系统监视 @adams-oai 缓存空远程技能发现</li>
+<li>#57599 支持保存的命令前缀通知的目录标题@goodman-oai</li>
+<li>#57606 添加 <code>codex doctor --network-only</code> 以进行集中网络诊断@dob-oai</li>
+<li>#57607 与模型提供者和目录共享运行时身份验证@cooper-oai</li>
+<li>#57612 禁用旧 VTE 后端上的终端状态序列@fcoury-oai</li>
+<li>#57615 保留跨子代理重新加载的推出跟踪 @cassirer-openai</li>
+<li>#57618 在流设置后发布采样提示@btraut-openai</li>
+<li>#57626 显示显式配置的 OpenAI 提供商的 Bedrock 设置@alexsong-oai</li>
+<li>#57628 停止在发布工件中运送 <code>codex-exec-server</code> @fcoury-oai</li>
+<li>#57635 取消归档线程 @etraut-openai 时恢复生成的后代</li>
+<li>#57638 将 OpenTelemetry 需求类型添加到应用程序服务器协议 @arnavpatidar-OAI</li>
+<li>#57644 生成与 Bazel 构建的 V8 档案匹配的 Rust 绑定 @seanh-oai</li>
+<li>#57649 支持托管 OpenTelemetry 配置要求 @abhinav-oai</li>
+<li>#57654 编辑应用程序服务器配置响应中的 OTEL 导出器标头 @arnavpatidar-OAI</li>
+<li>#57657 修复帐户切换后跟踪导出器激活@arnavpatidar-OAI</li>
+<li>#57658 支持托管 OpenTelemetry 元数据和 PEM client 身份 @abhinav-oai</li>
+<li>#57667 删除 <code>review/start</code> @yansenzhou-oai 的独立交付</li>
+<li>#57692 在跟踪测试中断言采样计数之前等待转弯配置文件 @ioanbudea-OAI</li>
+<li>#57697 将 Guardian 审阅状态移至审阅者扩展 @jif-oai</li>
+<li>#57698 将 Guardian 上下文策略和提示移至审阅者扩展 @jif-oai</li>
+<li>#57702 将 Guardian 审阅证据移至审阅者扩展 @jif-oai</li>
+<li>#57710 保留卫报评论的父路由亲和力@jif-oai</li>
+<li>#57720 将 <code>ReviewAction</code> 移至卫报评论者箱 @jif-oai</li>
+<li>#57723 禁用按需 Bazel 模式生成器 @jif-oai 的优化</li>
+<li>#57729 从 Guardian 测试中删除 <code>free_guardian</code> 配置 @ioanbudea-OAI</li>
+<li>#57741 将仅测试的 Rust 源与 Bazel 库和二进制输入分开 @jif-oai</li>
+<li>#57742 避免为运行时夹具更改重新编译 Bazel 集成测试 @jif-oai</li>
+<li>#57743 将 Guardian MCP 启发助手移至审稿人箱 @jif-oai</li>
+<li>#57757 在响应流中公开卫报评估 @jif-oai</li>
+<li>#57758 在 Guardian 标准输入评论中包含终端启动命令@jif-oai</li>
+<li>#57770 选择卫报审稿人时尊重模型目录来源@ioanbudea-OAI</li>
+<li>#57774 在检测粘贴的图像路径时跳过非常规文件 @etraut-openai</li>
+<li>#57782 将代码模式主机替换限制为会话准入@aakash-oai</li>
+<li>#57783 从 MXC 默认读取中排除不相关的网络共享 @iceweasel-oai</li>
+<li>#57787 修复应用程序服务器线程侦听器启动和关闭竞赛@charliemarsh-oai</li>
+<li>#57788 关闭后释放应用程序服务器线程运行时 @charliemarsh-oai</li>
+<li>#57789 当 Guardian 的默认审阅者缺失时刷新模型目录一次 @jif-oai</li>
+<li>#57790 集中同步监护人提示准备@ioanbudea-OAI</li>
+<li>#57796 扩展 GitHub 释放读取重试并添加抖动@imac-oai</li>
+<li>#57800 通过分页历史记录 @btraut-openai 回填执行完成项目</li>
+<li>#57817 分离实时边带观察者而不结束会话@jiahao-oai</li>
+<li>#57818 减少配置处理中不必要的工作@bc-openai</li>
+<li>#57819 同时加载最多八个插件@bc-openai</li>
+<li>#57820 改进 TUI 重新连接恢复和离线退出处理 @etraut-openai</li>
+<li>#57824 在诊断上传中包含直接连接的线程@btraut-openai</li>
+<li>#57825 更新 CI 设置以使用 <code>meta/install-dotslash</code> @seanh-oai</li>
+<li>#57832 Bazel 中默认从源代码构建 V8 @seanh-oai</li>
+<li>#57834 为准备好的行动添加隔离的监护人评估@swastik-oai</li>
+<li>#57835 将并发图像可用性检查限制为八个@kchainani-oai</li>
+<li>#57836 在代码模式下声明图像生成结果类型@alicec-oai</li>
+<li>#57837 在发布包中发送独立执行器@dkovalenko-oai</li>
+<li>#57839 在简历和分叉之间保留推理令牌会计@andrewgu-oai</li>
+<li>#57840 在恢复和输入 @abhinav-oai 之前验证线程提供程序</li>
+<li>#57841 为代码模式主机 @aakash-oai 添加可选的进程指标采样</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>来源</strong> <a href="https://github.com/openai/codex">openai/codex</a> · <code>rust-v0.166.0</code> · 2026-10-29 · <a href="https://github.com/openai/codex/releases/tag/rust-v0.166.0">上游版本</a>
+<em>逐字镜像以进行索引。所有权利属于上游项目。</em></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/openai/codex">openai/codex</a> · 🏷️ 版本：<code>rust-v0.166.0</code> · 📅 发布：2026-10-29 · <a href="https://github.com/openai/codex/releases/tag/rust-v0.166.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/codex/codex_rust-v0.167.0"> <span class="k">← 下一个</span> <span class="t">rust-v0.167.0</span> </a> <a href="/zh/release_note/codex/codex_rust-v0.165.0"> <span class="k">上一个 →</span> <span class="t">rust-v0.165.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/openai/codex/releases/tag/rust-v0.166.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/openai/codex" target="_blank" rel="noopener"> <span>openai/codex</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#新功能" class>新功能</a><a href="#错误修复" class>错误修复</a><a href="#家务事" class>家务事</a><a href="#changelog" class>Changelog</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/codex/codex_rust-v0.171.0"> <span class="v">rust-v0.171.0</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/codex/codex_rust-v0.170.0"> <span class="v">rust-v0.170.0</span> <span class="d">26-11-18</span> </a> </li><li> <a href="/zh/release_note/codex/codex_rust-v0.169.1"> <span class="v">rust-v0.169.1</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/codex/codex_rust-v0.169.0"> <span class="v">rust-v0.169.0</span> <span class="d">26-11-13</span> </a> </li><li> <a href="/zh/release_note/codex/codex_rust-v0.168.0"> <span class="v">rust-v0.168.0</span> <span class="d">26-11-13</span> </a> </li><li> <a href="/zh/release_note/codex/codex_rust-v0.167.2"> <span class="v">rust-v0.167.2</span> <span class="d">26-11-11</span> </a> </li><li> <a href="/zh/release_note/codex/codex_rust-v0.167.1"> <span class="v">rust-v0.167.1</span> <span class="d">26-11-10</span> </a> </li><li> <a href="/zh/release_note/codex/codex_rust-v0.167.0"> <span class="v">rust-v0.167.0</span> <span class="d">26-11-06</span> </a> </li> </ul> <a href="/zh/releases/codex" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 14 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

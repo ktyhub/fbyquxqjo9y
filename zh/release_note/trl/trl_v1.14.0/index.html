@@ -1,0 +1,249 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>trl v1.14.0 — STAGS NextStack</title><meta name="description" content="v1.13 vendored Liger's chunked_loss into trl.losses as a holding action, not a destination (#7063). The problem it was holding: those classes reimplement each trainer's loss math, so TRL carried two copies of every…"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/trl/trl_v1.14.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/trl/1.14.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/trl/trl_v1.14.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/trl/1.14.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="trl v1.14.0 — STAGS NextStack"><meta property="og:description" content="v1.13 vendored Liger's chunked_loss into trl.losses as a holding action, not a destination (#7063). The problem it was holding: those classes reimplement each trainer's loss math, so TRL carried two copies of every…"><meta property="og:url" content="https://www.stags.cn/zh/release_note/trl/trl_v1.14.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/trl/trl_v1.14.0/#article","headline":"trl v1.14.0 release notes","datePublished":"2026-09-25","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/huggingface/trl"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/trl/1.14.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/trl/trl_v1.14.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/trl/1.14.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/trl/1.14.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/trl/1.14.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/trl/1.14.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/trl/1.14.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/trl">trl</a> </nav> <h1 class="detail-title"> <span class="p">trl</span> v1.14.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年9月25日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/huggingface/trl" target="_blank" rel="noopener"> <span class="k">来源</span>huggingface/trl </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/trl/1.14.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/trl/trl_v1.14.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="trl-v1140">trl v1.14.0</h1>
+<h2 id="特点">特点</h2>
+<h3 id="trllosses-消失了dpokto-和-grpo-流式传输自己的日志概率"><code>trl.losses</code> 消失了：DPO、KTO 和 GRPO 流式传输自己的日志概率</h3>
+<blockquote>
+<p>[!警告]
+<code>from trl.losses import FusedLinearDPOLoss</code>（或 <code>FusedLinearKTOLoss</code>、<code>FusedLinearGRPOLoss</code>、<code>FusedLinearJSDLoss</code>）不再起作用。 v1.13 中引入的模块已被删除。
+v1.13 将 Liger 的 <code>chunked_loss</code> 出售给 <code>trl.losses</code> 作为保留操作，而不是目的地 (#7063)。它面临的问题是：这些课程重新实现了每个训练师的损失数学，因此 TRL 携带每个公式的两个副本，并复制漂移。那个漂移就是错误所在。 GRPO 的 <code>grad_norm</code> 与默认路径不同，KTO 忽略了 PEFT 下的参考模型，KTO 类权重和 DPO <code>label_smoothing</code> 被默默丢弃。最糟糕的是，在普通 DDP 下，融合路径会在展开模型上产生损耗，因此 <code>DistributedDataParallel</code> 的减速器从未配备，梯度也从未全部缩减：每个等级都默默地保留自己的等级。
+解决方法是停止重新实施。融合路径中的所有 DPO、KTO 和 GRPO 需要的是所选令牌的每个令牌对数概率，TRL 已经拥有 <code>_ChunkedLogProbFunction</code> 来实现这一点：它使用在线 logsumexp 流式传输词汇并在向后传递中重新计算。现在每个训练器都运行 <code>backbone -> _ChunkedLogProbFunction -> its own existing loss code</code>，没有变化。每次损失都执行一次，并且保留内存胜利，因为完整的 logits 仍然从未实现。
+存在十三项限制只是因为损失被以无法表达这些选择的形式重写。大多数都消失了：带有 <code>use_liger_kernel=True</code> 的 DPO 现在接受混合损失类型、f 散度和预先计算的参考对数概率，GRPO 获得熵和离策略屏蔽。仍然拒绝：<code>use_weighting</code>，<code>compute_metrics</code>，<code>lm_head</code>上的PEFT适配器，即时学习PEFT，以及MoE辅助丢失。
+单 H100、Qwen3-0.6B、<code>bs=4</code>、序列 512：
+|配置 |中值步长|高峰|
+| --- | --- | --- |
+| v1.13 带保险丝，内联参考 | 0.2243 | 7.05国标|
+| v1.14 分块，内联参考 | 0.2457 s (+9.5%) | 7.05国标|
+| v1.14 分块，<code>precompute_ref_log_probs=True</code> | <strong>0.1971 s (-12.1%)</strong> | <strong>4.83 GB (-31%)</strong> |
+第三行是要点：该配置以前不存在，因为融合路径完全拒绝了预先计算的参考日志概率。
+<code>use_liger_kernel=True</code> 仍然可以工作，并且仍然可以通过 Transformer 启用 Liger 的模型内核。在 DPO、GRPO 和 KTO 中，它现在选择 TRL 的分块对数概率路径，而不是 Liger 的融合损失。</p>
+</blockquote>
+<ul>
+<li>@kashif 在 <a href="https://github.com/huggingface/trl/pull/7075">https://github.com/huggingface/trl/pull/7075</a> 中流式传输 KTO 对数概率</li>
+<li>@kashif 在 <a href="https://github.com/huggingface/trl/pull/7077">https://github.com/huggingface/trl/pull/7077</a> 中流式传输 GRPO 日志概率</li>
+<li>将 DPO 移至 <a href="https://github.com/huggingface/trl/pull/7243">https://github.com/huggingface/trl/pull/7243</a> 中 @kashif 的分块日志概率</li>
+<li>从 <a href="https://github.com/huggingface/trl/pull/7301">https://github.com/huggingface/trl/pull/7301</a> 中 @kashif 的实验蒸馏训练器中删除融合的 Liger JSD 路径</li>
+<li>跳过 @kashif 在 <a href="https://github.com/huggingface/trl/pull/7076">https://github.com/huggingface/trl/pull/7076</a> 中冻结的分块对数概率梯度</li>
+<li>通过<a href="https://github.com/huggingface/trl/pull/7247%E4%B8%AD%E7%9A%84@qgallouedec%E5%9C%A8DDP%E4%B8%8B%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E5%8C%85%E8%A3%85%E5%99%A8%E9%87%8D%E5%AE%9A%E5%90%91KTO">https://github.com/huggingface/trl/pull/7247中的@qgallouedec在DDP下的分布式包装器重定向KTO</a> liger损失</li>
+<li>由 @qgallouedec 在 <a href="https://github.com/huggingface/trl/pull/7361">https://github.com/huggingface/trl/pull/7361</a> 中记录 use_liger_kernel 在每个训练器中实际执行的操作</li>
+</ul>
+<h3 id="融合的-triton-logprob--熵内核现在在-trl-中提供">融合的 Triton logprob + 熵内核现在在 TRL 中提供</h3>
+<p>损失头是 TRL 拥有的唯一热路径：变压器已经对模型内部进行了内核化，而 Hub 上的任何内容都无法涵盖解码器之后发生的情况。在一台 H100（bf16、<code>V=151936</code>、<code>H=4096</code>、8192 个代币）上，<code>selective_log_softmax</code> 加 <code>entropy_from_logits</code> 的成本为 12.8 ms，2.32 GiB 超过 <code>[8, 1024, 151936]</code>。融合的 Triton 内核在 0.89 毫秒内执行相同的操作，大约是 14 倍，并且比它所替换的 bf16 路径更接近 fp32 参考。 GRPO 每个步骤运行两到四次。
+它现在位于 <code>trl.kernels</code> 的树内，并且在 CUDA、ROCm 和 XPU 上默认启用，并以 PyTorch 实现作为后备。它被短暂地从集线器加载；这是相反的，因为这个内核是纯 Triton 并在运行时编译，所以 Hub 没有购买任何东西，同时花费了与内核是否工作无关的版本门，离线下载失败，安装了 <code>kernels</code> 的任何人的 <code>trust_remote_code=True</code>，静默的 <code>except Exception: pass</code> 包围了所有这些，并且在 CI 中跳过了 13 项测试中的 13 项。</p>
+<ul>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7253">https://github.com/huggingface/trl/pull/7253</a> 中使用 @kashif 的融合内核进行 logprobs 和熵</li>
+<li>由 @kashif 在 <a href="https://github.com/huggingface/trl/pull/7266">https://github.com/huggingface/trl/pull/7266</a> 中将 TRL 损失内核移至 TRL</li>
+<li>通过 <a href="https://github.com/huggingface/trl/pull/7363">https://github.com/huggingface/trl/pull/7363</a> 中的 @qgallouedec 将 logprob 和 entropy 内核运送到 trl 而不是 Hub 中</li>
+</ul>
+<h3 id="其他">其他</h3>
+<ul>
+<li>确保 <a href="https://github.com/huggingface/trl/pull/6770">https://github.com/huggingface/trl/pull/6770</a> 中 @kaixuanliu 的示例/文档/模板与设备无关</li>
+<li>AsyncGRPO：PEFT/LoRA 支持 <a href="https://github.com/huggingface/trl/pull/7017">https://github.com/huggingface/trl/pull/7017</a> 中的 @AmineDiro 仅适配器 vLLM 同步</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7178">https://github.com/huggingface/trl/pull/7178</a> 中添加 @qgallouedec 对 vLLM 0.29.0 的支持</li>
+<li>[金牌] @kashif 在 <a href="https://github.com/huggingface/trl/pull/6388">https://github.com/huggingface/trl/pull/6388</a> 推荐 LFM2.5 和 Gemma 4 学生</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7212">https://github.com/huggingface/trl/pull/7212</a> 中添加 @kashif 的 TailSFT 示例</li>
+<li>[AsyncGRPO] 在线程池上运行同步工具并支持<a href="https://github.com/huggingface/trl/pull/7175%E4%B8%AD@AmineDiro%E7%9A%84%E5%BC%82%E6%AD%A5%E5%B7%A5%E5%85%B7">https://github.com/huggingface/trl/pull/7175中@AmineDiro的异步工具</a></li>
+</ul>
+<h2 id="打破">打破</h2>
+<h3 id="删除了六名实验训练员">删除了六名实验训练员</h3>
+<p><code>GRPOWithReplayBufferTrainer</code>、<code>BCOTrainer</code>、<code>PRMTrainer</code>、<code>XPOTrainer</code>、<code>NashMDTrainer</code> 和 GSPO 令牌训练器已从 <code>trl.experimental</code> 中消失。
+改变的不是保证，<code>trl.experimental</code> 一直没有保证，而是决定现在被写下来了。删除过去常常一次争论一个拉取请求，每个线程在获得该功能之前都会重新提出该策略。 #7182 解决了判断的权重，#7254 将其放入文档中：使用情况、外部问题和来自实际运行该功能的人员的拉取请求、稳定的培训师是否已经涵盖它、维护成本、下游消费者、所有者和年龄。故意输入判断而不是测试：没有阈值，没有通知周期，并且数字保留在删除拉取请求中，您可以在其中检查它们。纸质索引条目的寿命比它所描述的代码的寿命长。
+数字说明了情况。 <code>BCOTrainer</code> 是 1,600 行，带有自己的参考模型处理、DeepSpeed 准备、标记化和评估循环，可在两个月内进行 11 次真正的训练；这也是 TRL 完全依赖 scikit-learn 和 joblib 的唯一原因，而这两者现在都已从 <code>pyproject.toml</code> 中消失了。 <code>GRPOWithReplayBufferTrainer</code> 从 GRPO 手工复制了 <code>_generate_and_score_completions</code>，并漂移到 616 个不同行中的 385 个，进行 8 次训练。</p>
+<ul>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7136">https://github.com/huggingface/trl/pull/7136</a> 中 @qgallouedec 的实验性 BCO 训练器</li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7132">https://github.com/huggingface/trl/pull/7132</a> 中 @qgallouedec 的实验性 GRPO-with-replay-buffer 训练器</li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7133">https://github.com/huggingface/trl/pull/7133</a> 中 @qgallouedec 的实验性 PRM 训练器</li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7255">https://github.com/huggingface/trl/pull/7255</a> 中 @albertvillanova 的实验性 Nash-MD 训练器</li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7256">https://github.com/huggingface/trl/pull/7256</a> 中 @albertvillanova 的实验性 XPO 训练器</li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7331">https://github.com/huggingface/trl/pull/7331</a> 中 @albertvillanova 的实验性 GSPO 代币训练器
+同样破坏，并在上面覆盖：<code>trl.losses</code> 一路被移除。</li>
+<li>将 DPO 移至 <a href="https://github.com/huggingface/trl/pull/7243">https://github.com/huggingface/trl/pull/7243</a> 中 @kashif 的分块日志概率</li>
+</ul>
+<h2 id="修复">修复</h2>
+<ul>
+<li><strong>在普通 DDP 下，KTO 的梯度从未全部缩减。</strong> <code>compute_loss</code> 仅通过分布式包装器重定向 ZeRO-3 和 FSDP，因此在普通 DDP 上，损失在未包装模型上运行，<code>DistributedDataParallel.forward()</code> 从未运行，其减速器从未装备，并且每个等级默默地保留自己的梯度。作者：@qgallouedec，<a href="https://github.com/huggingface/trl/pull/7247">https://github.com/huggingface/trl/pull/7247</a></li>
+<li><strong>当输入表被切片时，包装重复的数据。</strong> <code>_pack_wrapped</code> 调整切片视图的输出大小，但从原始子缓冲区读取，因此它从缓冲区的开头而不是从切片重新读取，并且 <code>datasets.map(batched=True)</code> 传递切片表。作者：@qgallouedec，<a href="https://github.com/huggingface/trl/pull/6670">https://github.com/huggingface/trl/pull/6670</a></li>
+<li><strong>仅记录某些等级的奖励函数挂起或使运行崩溃。</strong> GRPO 和 RLOO 循环每个等级所持有的键，并为每个键调用一个集体，因此等级称为不同的集体：等级 0 上的 <code>log_metric</code> 单独挂在 NCCL 上，而 <code>log_extra</code> 在分配 1EB 的 <code>gather_object</code> 内崩溃。作者：@behroozazarkhalili，<a href="https://github.com/huggingface/trl/pull/7382">https://github.com/huggingface/trl/pull/7382</a></li>
+<li><strong>特殊令牌 ID 现在到达 <code>Trainer</code> 实际读取的配置</strong>，因此它不再在训练时重新对齐它们并记录用户未进行的更改（#7093 的一部分）：训练器中的 eos (#7127)、写入复合模型的文本配置 (#7315)、奖励模型 pad 令牌 (#7318) 以及应用于视觉数据集的请求的 pad 令牌 (#7316，第7352章）</li>
+<li>默认情况下，不要在蒸馏和 GOLD 入口点中量化老师，@behroozazarkhalili 在 <a href="https://github.com/huggingface/trl/pull/6769">https://github.com/huggingface/trl/pull/6769</a></li>
+<li>当数据集缓存是节点本地时，由 <a href="https://github.com/huggingface/trl/pull/7241">https://github.com/huggingface/trl/pull/7241</a> 中的@qgallouedec 为每个节点准备一次数据集</li>
+<li>从<a href="https://github.com/huggingface/trl/pull/7248%E4%B8%AD@qgallouedec%E7%9A%84%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E4%B8%AD%E8%AF%BB%E5%8F%96MoE%E8%BE%85%E5%8A%A9%E6%8D%9F%E5%A4%B1%E7%B3%BB%E6%95%B0">https://github.com/huggingface/trl/pull/7248中@qgallouedec的模型配置中读取MoE辅助损失系数</a></li>
+<li>等待 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7213">https://github.com/huggingface/trl/pull/7213</a> 中编写为可调用类的异步奖励函数</li>
+<li>修复 <a href="https://github.com/huggingface/trl/pull/7195">https://github.com/huggingface/trl/pull/7195</a> 中 @kashif 的 OffloadActivations 中的两个流竞赛</li>
+<li>仅在 @kashif 在 <a href="https://github.com/huggingface/trl/pull/7193">https://github.com/huggingface/trl/pull/7193</a> 中以流模式对卸载的激活存储进行重复数据删除</li>
+<li>仅在火炬 2.7 或更高版本上通过 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7259">https://github.com/huggingface/trl/pull/7259</a> 上传递 FSDP2ignore_params kwarg</li>
+<li>保护 FSDP2 使用的火炬 2.6 API 和 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7260">https://github.com/huggingface/trl/pull/7260</a> 中的在线 DPO</li>
+<li>减少 <a href="https://github.com/huggingface/trl/pull/7199">https://github.com/huggingface/trl/pull/7199</a> 中 @vladbataev 的 vLLM client 中的连接池警告</li>
+</ul>
+<h2 id="文档">文档</h2>
+<ul>
+<li><strong>记录一个功能如何离开 <code>trl.experimental</code></strong> 由 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7254">https://github.com/huggingface/trl/pull/7254</a>, 中进行上述六次删除的规则</li>
+<li>由 @qgallouedec 在 <a href="https://github.com/huggingface/trl/pull/7361">https://github.com/huggingface/trl/pull/7361</a> 中记录 use_liger_kernel 在每个训练器中实际执行的操作</li>
+<li>由 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7226">https://github.com/huggingface/trl/pull/7226</a> 中记录 AsyncGRPO 工具必须是模块级函数</li>
+<li>从 <a href="https://github.com/huggingface/trl/pull/7177">https://github.com/huggingface/trl/pull/7177</a> 中 @qgallouedec 的文档中删除过时的“正在建设”横幅</li>
+<li>文档：修复 <a href="https://github.com/huggingface/trl/pull/7196">https://github.com/huggingface/trl/pull/7196</a> 中@mrchatam 的 DeepSpeed 指南中的“允许缩放”语法</li>
+</ul>
+<h2 id="ci-和维护">CI 和维护</h2>
+<p><strong>微小模型</strong>，使每个微小测试模型与其参考一致的扫描，全部由 @albertvillanova 完成：</p>
+<ul>
+<li>与参考文献一致：Qwen2.5-Coder (#7134)、DeepSeek-R1-Distill (#7135)、FalconMamba (#7139)、Mistral v0.1 (#7203) 和 v0.2 (#7204)、Gemma (#7217)、Gemma2 (#7228)、OPT (#7233)、Phi-3 (#7257)、Phi-3.5 (#7276) 以及全面的 <code>tie_word_embeddings</code> (#7130)</li>
+<li>第二遍镜像的字段：<code>use_mrope</code> (#7332)、<code>use_mambapy</code> (#7333)、<code>rope_scaling</code> (#7334)、<code>cache_implementation</code> 和 <code>hidden_act</code> (#7335)、<code>activation_dropout</code> 和 <code>prefix</code> (#7336)、<code>attention_bias</code> (#7337)第7338章）</li>
+<li>生成器：播种，因此再生是幂等的，不会推动任何内容（#7258），指向 FalconMamba 参考（#7138），<code>head_dim</code> 为 Gemma（#7216）和 Gemma2（#7227）减少，<code>ffn_dim</code> 通过 OPT（#7232），Phi3 剩余部分被 3 和 3.5 变体取代(#7239)，三个没有测试的消费者退休了(#7186)</li>
+<li>覆盖范围：规范的 GPTNeoX 序列分类 id (#7185)、在 SFT 测试中训练的微型 DeepSeek-R1-Distill (#7187)、针对非安全张量引用跳过的 dtype 检查 (#7238)、微型 Bloom 的聊天模板测试 (#7262)
+<strong>仅当测试受到影响时才运行</strong>，全部由@albertvillanova 完成：</li>
+<li>当它们涵盖的内容没有发生变化时跳过（#7171，#7281），并在测试数据或发货包数据发生变化时运行（#7283），或者当实验工作流程本身发生变化时（#7278）；代码质量转移到自己的工作流程（#7277）</li>
+<li>取代的拉取请求运行已取消 (#7170)，文档构建以拉取请求编号为关键字 (#7174)。相同的分组应用于 <code>main</code> (#7172)，然后恢复 (#7201)，因为 GitHub 与 <code>cancelled</code> 发生故障，而 <code>main</code> 看起来已损坏。
+<strong>发布自动化。</strong> 发布现在发生在标签推送上，除非标记提交中的 <code>VERSION</code> 与标签匹配，否则发布将被拒绝 (#7165)。 Release note 从标签到剖面图 (#7166) 中进行分段，并从更改的路径自动应用文档和维护标签 (#7205、#7210)。加上开发版本的提升 (#7160)。
+<strong>测试可靠性</strong>，全部由 @albertvillanova 完成：重新运行过滤器匹配内存不足消息而不是异常类型 (#7292)，并且需要 <code>pytest-rerunfailures>=16.7</code> 来查看包装的异常 (#7325)； <code>ACCELERATE_MIXED_PRECISION</code> 在测试之间恢复（#7321）； Llava 辅助掩模测试现在已解决，但变压器已经修复了它们（#7373）； <code>use_adapter</code> 测试中的非身份适配器（#7275）； <code>MODEL_REVISIONS</code> 注入 PEFT 装载机 (#7288)；奖励模型垫代币涵盖（#7350）。
+<strong>工作流程强化。</strong> 测试工作流程中的令牌权限缩小 (#7287)、工作流程强化 (#7300) 以及 trufflehog 摘要 pin 链接背后的上游问题 (#7214)。
+<strong>其他。</strong> Dependabot 颠簸（#7192、#7299）、最新版本测试从 T4 转移到 L40S（#7184），并删除了 Slack 操作签出解决方案（#7183）、在个人命名空间下运行的内核发布作业（#7343）、令牌同步注释重新措辞（#7167）以及涵盖所有三个生成配置 eos 形状（#7168），当其参数被冻结时，LM-head 梯度缓冲区和 GEMM 会被跳过 (#7076)，并且转弯结束丢失掩模警告变得可操作 (#7230)。</li>
+</ul>
+<h2 id="依赖关系">依赖关系</h2>
+<p>支持的 vLLM 窗口从 <code>>=0.19.1,&#x3C;=0.28.0</code> 移动到 <code>>=0.20.0,&#x3C;=0.30.0</code>。</p>
+<ul>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7365">https://github.com/huggingface/trl/pull/7365</a> 中添加 @qgallouedec 对 vLLM 0.30.0 的支持</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7366">https://github.com/huggingface/trl/pull/7366</a> 中删除 @qgallouedec 的 vLLM 0.19.1 支持</li>
+</ul>
+<h2 id="新贡献者">新贡献者</h2>
+<ul>
+<li>@mrchatam 在 <a href="https://github.com/huggingface/trl/pull/7196">https://github.com/huggingface/trl/pull/7196</a> 中做出了第一个贡献</li>
+<li>@itwangwang 在 <a href="https://github.com/huggingface/trl/pull/7230">https://github.com/huggingface/trl/pull/7230</a> 中做出了第一个贡献</li>
+<li>@SuryanshSS1011 在 <a href="https://github.com/huggingface/trl/pull/6670">https://github.com/huggingface/trl/pull/6670</a> 中做出了第一个贡献</li>
+<li>@vladbataev 在 <a href="https://github.com/huggingface/trl/pull/7199">https://github.com/huggingface/trl/pull/7199</a> 中做出了第一个贡献</li>
+</ul>
+<h2 id="发生了什么变化">发生了什么变化</h2>
+<ul>
+<li>⬆️ <a href="https://github.com/huggingface/trl/pull/7160">https://github.com/huggingface/trl/pull/7160</a> 中@qgallouedec 的凹凸开发版本</li>
+<li>将模型配置 eos 代币 ID 与 <a href="https://github.com/huggingface/trl/pull/7127">https://github.com/huggingface/trl/pull/7127</a> 中 @albertvillanova 训练器中的分词器同步</li>
+<li>将tie_word_embeddings与@albertvillanova在<a href="https://github.com/huggingface/trl/pull/7130%E4%B8%AD%E7%9A%84%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%AF%B9%E9%BD%90">https://github.com/huggingface/trl/pull/7130中的参考模型对齐</a></li>
+<li>确保 <a href="https://github.com/huggingface/trl/pull/6770">https://github.com/huggingface/trl/pull/6770</a> 中的 @kaixuanliu 的示例/文档/模板与设备无关</li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7132">https://github.com/huggingface/trl/pull/7132</a> 中 @qgallouedec 的实验性 GRPO-with-replay-buffer 训练器</li>
+<li>将微小的 Qwen2.5-Coder 配置与 <a href="https://github.com/huggingface/trl/pull/7134">https://github.com/huggingface/trl/pull/7134</a> 中的 @albertvillanova 的 Qwen/Qwen2.5-Coder-0.5B 对齐</li>
+<li>通过 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7167">https://github.com/huggingface/trl/pull/7167</a> 中重写令牌同步注释来说明该行的作用</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7168">https://github.com/huggingface/trl/pull/7168</a> 中 @albertvillanova 的同步测试中涵盖了三代配置 eos 代币形状</li>
+<li>将微小的 DeepSeek-R1-Distill 配置与 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7135">https://github.com/huggingface/trl/pull/7135</a> 中的 deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B 对齐</li>
+<li>将微型 FalconMamba 生成器指向 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7138">https://github.com/huggingface/trl/pull/7138</a> 中的 FalconMamba 参考</li>
+<li>将微小的 FalconMamba 配置与 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7139">https://github.com/huggingface/trl/pull/7139</a> 中的 tiiuae/falcon-mamba-7b-instruct 对齐</li>
+<li>AsyncGRPO：PEFT/LoRA 支持 <a href="https://github.com/huggingface/trl/pull/7017">https://github.com/huggingface/trl/pull/7017</a> 中的 @AmineDiro 仅适配器 vLLM 同步</li>
+<li>@kashif 在 <a href="https://github.com/huggingface/trl/pull/7075">https://github.com/huggingface/trl/pull/7075</a> 中流式传输 KTO 日志概率</li>
+<li>跳过 @kashif 在 <a href="https://github.com/huggingface/trl/pull/7076">https://github.com/huggingface/trl/pull/7076</a> 中冻结的分块对数概率梯度</li>
+<li>取消 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7170">https://github.com/huggingface/trl/pull/7170</a> 测试工作流程中取代的 PR 运行</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7178">https://github.com/huggingface/trl/pull/7178</a> 中添加 @qgallouedec 对 vLLM 0.29.0 的支持</li>
+<li>跳过 <a href="https://github.com/huggingface/trl/pull/7171">https://github.com/huggingface/trl/pull/7171</a> 中 @albertvillanova 未更改任何测试文件的推送测试</li>
+<li>取消 <a href="https://github.com/huggingface/trl/pull/7172">https://github.com/huggingface/trl/pull/7172</a> 中 @albertvillanova 在主线程上取代的运行</li>
+<li>文档：修复 <a href="https://github.com/huggingface/trl/pull/7196">https://github.com/huggingface/trl/pull/7196</a> 中@mrchatam 的 DeepSpeed 指南中的“允许缩放”语法</li>
+<li>从 <a href="https://github.com/huggingface/trl/pull/7177">https://github.com/huggingface/trl/pull/7177</a> 中 @qgallouedec 的文档中删除过时的“正在建设”横幅</li>
+<li>@albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7184">https://github.com/huggingface/trl/pull/7184</a> 中将最新版本测试从 T4 移至 L40S</li>
+<li>使用 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7185">https://github.com/huggingface/trl/pull/7185</a> 中的小型 GPTNeoX 序列分类模型的规范 id</li>
+<li>在 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7187">https://github.com/huggingface/trl/pull/7187</a> 中的 SFT 测试中训练微型 DeepSeek-R1-Distill 模型</li>
+<li>修复 @kashif 在 <a href="https://github.com/huggingface/trl/pull/7195">https://github.com/huggingface/trl/pull/7195</a> 中 OffloadActivations 中的两个流竞赛</li>
+<li>仅在 <a href="https://github.com/huggingface/trl/pull/7193">https://github.com/huggingface/trl/pull/7193</a> 中@kashif 在流模式下对卸载的激活存储进行重复数据删除</li>
+<li>停止取消 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7201">https://github.com/huggingface/trl/pull/7201</a> 上主线程上的取代运行</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7174">https://github.com/huggingface/trl/pull/7174</a> 中 @albertvillanova 在拉取请求编号上键入文档构建并发组</li>
+<li>从 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7183">https://github.com/huggingface/trl/pull/7183</a> 的最新版本测试中删除 Slack 操作结帐解决方法</li>
+<li>停用 <a href="https://github.com/huggingface/trl/pull/7186">https://github.com/huggingface/trl/pull/7186</a> 中 @albertvillanova 没有测试消费者的三个微型模型生成器</li>
+<li>在标签推送上发布到 PyPI，并针对 <a href="https://github.com/huggingface/trl/pull/7165">https://github.com/huggingface/trl/pull/7165</a> 中 @albertvillanova 的标签保护 VERSION</li>
+<li>通过 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7166">https://github.com/huggingface/trl/pull/7166</a> 中的标签对自动生成的 release note 进行分区</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7205">https://github.com/huggingface/trl/pull/7205</a> 中自动标记 @albertvillanova 的文档和维护 PR</li>
+<li>杂务：通过 <a href="https://github.com/huggingface/trl/pull/7210">https://github.com/huggingface/trl/pull/7210</a> 中的 @hf-security-analysis[bot] 更新 labeler.yml</li>
+<li>将微小的 Mistral v0.1 配置与 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7203">https://github.com/huggingface/trl/pull/7203</a> 中的 Mistralai/Mistral-7B-Instruct-v0.1 对齐</li>
+<li>将微小的 Mistral v0.2 配置与 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7204">https://github.com/huggingface/trl/pull/7204</a> 中的 Mistralai/Mistral-7B-Instruct-v0.2 对齐</li>
+<li>[金牌] @kashif 在 <a href="https://github.com/huggingface/trl/pull/6388">https://github.com/huggingface/trl/pull/6388</a> 推荐 LFM2.5 和 Gemma 4 学生</li>
+<li>通过 @dependabot[bot] 在 <a href="https://github.com/huggingface/trl/pull/7192">https://github.com/huggingface/trl/pull/7192</a> 中跨多个生态系统进行 2 次更新，突破“github-actions-and-pre-commit”组</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7214">https://github.com/huggingface/trl/pull/7214</a> 中链接 @albertvillanova 的 trufflehog 摘要 pin 背后的上游问题</li>
+<li>等待 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7213">https://github.com/huggingface/trl/pull/7213</a> 中编写为可调用类的异步奖励函数</li>
+<li>通过 <a href="https://github.com/huggingface/trl/pull/7216">https://github.com/huggingface/trl/pull/7216</a> 中的 @albertvillanova 减少微型 Gemma 生成器中的 head_dim</li>
+<li>默认情况下，不要在蒸馏和 GOLD 入口点中量化老师，@behroozazarkhalili 在 <a href="https://github.com/huggingface/trl/pull/6769">https://github.com/huggingface/trl/pull/6769</a></li>
+<li>将微小的 Gemma 配置与 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7217">https://github.com/huggingface/trl/pull/7217</a> 中的 google/gemma-7b-it 对齐</li>
+<li>通过 <a href="https://github.com/huggingface/trl/pull/7227">https://github.com/huggingface/trl/pull/7227</a> 中的 @albertvillanova 减少小型 Gemma2 生成器中的 head_dim</li>
+<li>用 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7239">https://github.com/huggingface/trl/pull/7239</a> 中的 3 和 3.5 变体替换tiny-Phi3ForCausalLM 剩余部分</li>
+<li>通过 @itwangwang 在 <a href="https://github.com/huggingface/trl/pull/7230">https://github.com/huggingface/trl/pull/7230</a> 中使转弯结束丢失掩码警告可操作</li>
+<li>修复 <a href="https://github.com/huggingface/trl/pull/6670">https://github.com/huggingface/trl/pull/6670</a> 中 @SuryanshSS1011 对输入表进行切片时包装重复数据的问题</li>
+<li>当引用不是 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7238">https://github.com/huggingface/trl/pull/7238</a> 中的 safetensors 存储库时，跳过 dtype 检查</li>
+<li>由 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7226">https://github.com/huggingface/trl/pull/7226</a> 中记录 AsyncGRPO 工具必须是模块级函数</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7232">https://github.com/huggingface/trl/pull/7232</a> 中 @albertvillanova 在微型 OPT 生成器中传递 ffn_dim 而不是 middle_size</li>
+<li>将微小的 OPT 配置与 <a href="https://github.com/huggingface/trl/pull/7233">https://github.com/huggingface/trl/pull/7233</a> 中的 @albertvillanova 的 facebook/opt-1.3b 对齐</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7212">https://github.com/huggingface/trl/pull/7212</a> 中添加 @kashif 的 TailSFT 示例</li>
+<li>[AsyncGRPO] 在线程池上运行同步工具并支持<a href="https://github.com/huggingface/trl/pull/7175%E4%B8%AD@AmineDiro%E7%9A%84%E5%BC%82%E6%AD%A5%E5%B7%A5%E5%85%B7">https://github.com/huggingface/trl/pull/7175中@AmineDiro的异步工具</a></li>
+<li>当数据集缓存是节点本地时，由 <a href="https://github.com/huggingface/trl/pull/7241">https://github.com/huggingface/trl/pull/7241</a> 中的 @qgallouedec 为每个节点准备一次数据集</li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7136">https://github.com/huggingface/trl/pull/7136</a> 中 @qgallouedec 的实验性 BCO 训练器</li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7133">https://github.com/huggingface/trl/pull/7133</a> 中 @qgallouedec 的实验性 PRM 训练器</li>
+<li>记录一个功能如何离开 trl.experimental by @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7254">https://github.com/huggingface/trl/pull/7254</a></li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7256">https://github.com/huggingface/trl/pull/7256</a> 中 @albertvillanova 的实验性 XPO 训练器</li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7255">https://github.com/huggingface/trl/pull/7255</a> 中 @albertvillanova 的实验性 Nash-MD 训练器</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7258">https://github.com/huggingface/trl/pull/7258</a> 中播种@albertvillanova 的微型模型生成脚本</li>
+<li>将微小的 Gemma2 配置与 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7228">https://github.com/huggingface/trl/pull/7228</a> 中的 google/gemma-2-2b-it 对齐</li>
+<li>将微型 Phi-3 配置与 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7257">https://github.com/huggingface/trl/pull/7257</a> 中的 microsoft/Phi-3-mini-4k-instruct 对齐</li>
+<li>由 @kashif 在 <a href="https://github.com/huggingface/trl/pull/7266">https://github.com/huggingface/trl/pull/7266</a> 中将 TRL 损失内核移至 TRL</li>
+<li>通过 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7287">https://github.com/huggingface/trl/pull/7287</a> 中缩小测试工作流程中的令牌权限</li>
+<li>通过 @qgallouedec 在 <a href="https://github.com/huggingface/trl/pull/7247">https://github.com/huggingface/trl/pull/7247</a> 中 DDP 下的分布式包装器重定向 KTO liger 损失</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7288">https://github.com/huggingface/trl/pull/7288</a> 中 @albertvillanova 的测试中将 MODEL_REVISIONS 注入 PEFT 加载程序</li>
+<li>当 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7278">https://github.com/huggingface/trl/pull/7278</a> 中的工作流程发生变化时运行实验测试</li>
+<li>将代码质量检查移至 <a href="https://github.com/huggingface/trl/pull/7277">https://github.com/huggingface/trl/pull/7277</a> 中的 @albertvillanova 自己的工作流程</li>
+<li>停止运行对 <a href="https://github.com/huggingface/trl/pull/7281">https://github.com/huggingface/trl/pull/7281</a> 中的 @albertvillanova 不会影响的更改的测试</li>
+<li>@kashif 在 <a href="https://github.com/huggingface/trl/pull/7077">https://github.com/huggingface/trl/pull/7077</a> 中流式传输 GRPO 日志概率</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7321">https://github.com/huggingface/trl/pull/7321</a> 中 @albertvillanova 的测试之间恢复 ACCELERATE_MIXED_PRECISION</li>
+<li>通过 @dependabot[bot] 在 <a href="https://github.com/huggingface/trl/pull/7299">https://github.com/huggingface/trl/pull/7299</a> 中跨多个生态系统进行 2 次更新，突破“github-actions-and-pre-commit”组</li>
+<li>修复（ci）：通过 <a href="https://github.com/huggingface/trl/pull/7300">https://github.com/huggingface/trl/pull/7300</a> 中的 @hf-security-analysis[bot] 强化 GitHub 操作工作流程（#7299）</li>
+<li>停止依赖 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7262">https://github.com/huggingface/trl/pull/7262</a> 中的聊天模板测试中的微小 Bloom 模型</li>
+<li>在 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7275">https://github.com/huggingface/trl/pull/7275</a> 的 use_adapter 测试中使用非身份适配器</li>
+<li>当测试数据或发货包数据更改时运行测试 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7283">https://github.com/huggingface/trl/pull/7283</a> 中</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7292">https://github.com/huggingface/trl/pull/7292</a> 中 @albertvillanova 匹配重新运行过滤器中的内存不足消息而不是异常类型</li>
+<li>将 pytest-rerunfailures 下限提高到 16.7，以便重新运行过滤器与 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7325">https://github.com/huggingface/trl/pull/7325</a> 中包装的异常相匹配</li>
+<li>仅在火炬 2.7 或更高版本上通过 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7259">https://github.com/huggingface/trl/pull/7259</a> 上传递 FSDP2ignore_params kwarg</li>
+<li>保护 FSDP2 使用的火炬 2.6 API 和 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7260">https://github.com/huggingface/trl/pull/7260</a> 中的在线 DPO</li>
+<li>将微小的 Phi-3.5 配置与 <a href="https://github.com/huggingface/trl/pull/7276">https://github.com/huggingface/trl/pull/7276</a> 中的 @albertvillanova 的 microsoft/Phi-3.5-mini-instruct 对齐</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7332">https://github.com/huggingface/trl/pull/7332</a> 中 @albertvillanova 的小型 DeepSeek-R1-Distill 配置中镜像 use_mrope</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7333">https://github.com/huggingface/trl/pull/7333</a> 中 @albertvillanova 的小型 FalconMamba 配置中镜像 use_mambapy</li>
+<li>使用 @kashif 在 <a href="https://github.com/huggingface/trl/pull/7253">https://github.com/huggingface/trl/pull/7253</a> 中对 logprobs 和熵的融合内核</li>
+<li>在<a href="https://github.com/huggingface/trl/pull/7343%E4%B8%AD@qgallouedec%E5%9C%A8%E4%B8%AA%E4%BA%BA%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E4%B8%8B%E8%BF%90%E8%A1%8C%E5%86%85%E6%A0%B8%E5%8F%91%E5%B8%83%E4%BD%9C%E4%B8%9A">https://github.com/huggingface/trl/pull/7343中@qgallouedec在个人命名空间下运行内核发布作业</a></li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7334">https://github.com/huggingface/trl/pull/7334</a> 中 @albertvillanova 的小型 Gemma 配置中镜像 rod_scaling</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7335">https://github.com/huggingface/trl/pull/7335</a> 中@albertvillanova 的小型 Gemma2 配置中镜像 cache_implementation 和 hide_act</li>
+<li>在<a href="https://github.com/huggingface/trl/pull/7336%E4%B8%AD@albertvillanova%E5%9C%A8%E5%BE%AE%E5%9E%8BOPT%E9%85%8D%E7%BD%AE%E4%B8%AD%E9%95%9C%E5%83%8Factivation_dropout%E5%92%8C%E5%89%8D%E7%BC%80">https://github.com/huggingface/trl/pull/7336中@albertvillanova在微型OPT配置中镜像activation_dropout和前缀</a></li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7337">https://github.com/huggingface/trl/pull/7337</a> 中 @albertvillanova 的微型 Phi-3 配置中镜像注意力偏差</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7338">https://github.com/huggingface/trl/pull/7338</a> 中的 @albertvillanova 的小型 Phi-3.5 配置中镜像注意力偏差</li>
+<li>在<a href="https://github.com/huggingface/trl/pull/7318%E4%B8%AD@albertvillanova%E5%9C%A8%E6%96%87%E6%9C%AC%E9%85%8D%E7%BD%AE%E4%B8%8A%E8%AE%BE%E7%BD%AE%E5%A5%96%E5%8A%B1%E6%A8%A1%E5%9E%8B%E5%9E%AB%E4%BB%A4%E7%89%8C">https://github.com/huggingface/trl/pull/7318中@albertvillanova在文本配置上设置奖励模型垫令牌</a></li>
+<li>将对齐的令牌 ID 写入 <a href="https://github.com/huggingface/trl/pull/7315">https://github.com/huggingface/trl/pull/7315</a> 中 @albertvillanova 的文本配置</li>
+<li>从 <a href="https://github.com/huggingface/trl/pull/7301">https://github.com/huggingface/trl/pull/7301</a> 中 @kashif 的实验蒸馏训练器中删除融合的 Liger JSD 路径</li>
+<li>删除 <a href="https://github.com/huggingface/trl/pull/7331">https://github.com/huggingface/trl/pull/7331</a> 中 @albertvillanova 的实验性 GSPO 令牌训练器</li>
+<li>将 DPO 移至 <a href="https://github.com/huggingface/trl/pull/7243">https://github.com/huggingface/trl/pull/7243</a> 中 @kashif 的分块日志概率</li>
+<li>将请求的 pad 令牌应用于 <a href="https://github.com/huggingface/trl/pull/7352">https://github.com/huggingface/trl/pull/7352</a> 中@albertvillanova 中 DPO 中的视觉数据集</li>
+<li>减少 <a href="https://github.com/huggingface/trl/pull/7199">https://github.com/huggingface/trl/pull/7199</a> 中 @vladbataev 的 vLLM client 中的连接池警告</li>
+<li>从 <a href="https://github.com/huggingface/trl/pull/7248">https://github.com/huggingface/trl/pull/7248</a> 中 @qgallouedec 的模型配置中读取 MoE 辅助损耗系数</li>
+<li>修补程序 CI：预计 Llava 助理面罩测试能够通过，因为变形金刚已通过 <a href="https://github.com/huggingface/trl/pull/7373">https://github.com/huggingface/trl/pull/7373</a> 中的 @albertvillanova 修复了这些测试</li>
+<li>测试 <a href="https://github.com/huggingface/trl/pull/7350">https://github.com/huggingface/trl/pull/7350</a> 中 @albertvillanova 在文本配置上设置奖励模型垫令牌</li>
+<li>@albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7316">https://github.com/huggingface/trl/pull/7316</a> 中也为视觉数据集设置 pad token</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7366">https://github.com/huggingface/trl/pull/7366</a> 中删除 @qgallouedec 的 vLLM 0.19.1 支持</li>
+<li>通过 @qgallouedec 在 <a href="https://github.com/huggingface/trl/pull/7361">https://github.com/huggingface/trl/pull/7361</a> 中记录 use_liger_kernel 在每个训练器中实际执行的操作</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7365">https://github.com/huggingface/trl/pull/7365</a> 中添加 @qgallouedec 对 vLLM 0.30.0 的支持</li>
+<li>通过 <a href="https://github.com/huggingface/trl/pull/7363">https://github.com/huggingface/trl/pull/7363</a> 中的 @qgallouedec 将 logprob 和 entropy 内核运送到 trl 而不是 Hub 中</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7382">https://github.com/huggingface/trl/pull/7382</a> 中 @behroozazarkhalili 刷新 GRPO 和 RLOO 指标之前，就跨等级记录的密钥达成一致</li>
+<li>发布：v1.14 由 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/7392">https://github.com/huggingface/trl/pull/7392</a> 中
+<strong>完整 Changelog</strong>：<a href="https://github.com/huggingface/trl/compare/v1.13.0...v1.14.0">https://github.com/huggingface/trl/compare/v1.13.0…v1.14.0</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/huggingface/trl">huggingface/trl</a> · 🏷️ 版本：<code>v1.14.0</code> · 📅 发布：2026-09-25 · <a href="https://github.com/huggingface/trl/releases/tag/v1.14.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/trl/trl_v1.14.1"> <span class="k">← 下一个</span> <span class="t">v1.14.1</span> </a> <a href="/zh/release_note/trl/trl_v1.13.0"> <span class="k">上一个 →</span> <span class="t">v1.13.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/huggingface/trl/releases/tag/v1.14.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/huggingface/trl" target="_blank" rel="noopener"> <span>huggingface/trl</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#特点" class>特点</a><a href="#trllosses-消失了dpokto-和-grpo-流式传输自己的日志概率" class="lv3">trl.losses 消失了：DPO、KTO 和 GRPO 流式传输自己的日志概率</a><a href="#融合的-triton-logprob--熵内核现在在-trl-中提供" class="lv3">融合的 Triton logprob + 熵内核现在在 TRL 中提供</a><a href="#其他" class="lv3">其他</a><a href="#打破" class>打破</a><a href="#删除了六名实验训练员" class="lv3">删除了六名实验训练员</a><a href="#修复" class>修复</a><a href="#文档" class>文档</a><a href="#ci-和维护" class>CI 和维护</a><a href="#依赖关系" class>依赖关系</a><a href="#新贡献者" class>新贡献者</a><a href="#发生了什么变化" class>发生了什么变化</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/trl/trl_v1.18.2"> <span class="v">v1.18.2</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.18.1"> <span class="v">v1.18.1</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.18.0"> <span class="v">v1.18.0</span> <span class="d">26-11-13</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.17.1"> <span class="v">v1.17.1</span> <span class="d">26-10-30</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.17.0"> <span class="v">v1.17.0</span> <span class="d">26-10-29</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.16.0"> <span class="v">v1.16.0</span> <span class="d">26-10-15</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.15.0"> <span class="v">v1.15.0</span> <span class="d">26-10-08</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.14.2"> <span class="v">v1.14.2</span> <span class="d">26-10-06</span> </a> </li> </ul> <a href="/zh/releases/trl" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

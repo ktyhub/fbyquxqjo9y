@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>gstack v1.103.0.0 — STAGS NextStack</title><meta name="description" content="This release closes gaps in two of gstack's safety checks and its merge tool, fixes the /ship failures that were stopping pull requests from finishing, and renames /verify to /build-check so Claude Code's own /verify…"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/gstack/gstack_v1.103.0.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/gstack/1.103.0.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/gstack/gstack_v1.103.0.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/gstack/1.103.0.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="gstack v1.103.0.0 — STAGS NextStack"><meta property="og:description" content="This release closes gaps in two of gstack's safety checks and its merge tool, fixes the /ship failures that were stopping pull requests from finishing, and renames /verify to /build-check so Claude Code's own /verify…"><meta property="og:url" content="https://www.stags.cn/zh/release_note/gstack/gstack_v1.103.0.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/gstack/gstack_v1.103.0.0/#article","headline":"gstack v1.103.0.0 release notes","datePublished":"2026-11-23","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/garrytan/gstack"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/gstack/1.103.0.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/gstack/gstack_v1.103.0.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/gstack/1.103.0.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/gstack/1.103.0.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/gstack/1.103.0.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/gstack/1.103.0.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/gstack/1.103.0.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/gstack">gstack</a> </nav> <h1 class="detail-title"> <span class="p">gstack</span> v1.103.0.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年11月23日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/garrytan/gstack" target="_blank" rel="noopener"> <span class="k">来源</span>garrytan/gstack </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/gstack/1.103.0.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/gstack/gstack_v1.103.0.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="gstack-v110300">gstack v1.103.0.0</h1>
+<h1 id="gstack-v110300-1">gstack v1.103.0.0</h1>
+<p>此版本弥补了 gstack 的两个安全检查及其合并工具中的空白，修复了阻止拉取请求完成的 /ship 故障，并将 <code>/verify</code> 重命名为 <code>/build-check</code>，以便 Claude Code 自己的 <code>/verify</code> 再次工作。使用 <code>/gstack-upgrade</code> 升级。</p>
+<h2 id="需要采取的行动verify-现在是-build-check">需要采取的行动：<code>/verify</code> 现在是 <code>/build-check</code></h2>
+<ul>
+<li><code>/verify</code> 现在是 <code>/build-check</code>，因此输入 <code>/verify</code> 会再次打开 Claude Code 的内置 <code>/verify</code>。使用 <code>/build-check</code> 进行 gstack 的构建和检查循环，使用 <code>/build-check quick</code> 进行仅检查传递。 (#4714)</li>
+<li>如果您使用 <code>disabled_skills: verify</code> 关闭了该技能，请将该条目更改为 <code>build-check</code>。在此之前，gstack 将 <code>verify</code> 读取为 <code>build-check</code>，因此该技能在升级后会保持关闭状态。 (#4719)</li>
+<li>gstack 不再在每次提交之前自行运行检查过程，因此 <code>verify_before_commit</code> 设置已停用。设置它会打印一条注释并且不会改变任何内容，并且仍然包含它的配置文件继续工作。 (#4714)</li>
+<li>有关验证更改的提示现在转到 Claude Code 自己的技能：gstack 的提示路由器和 <code>/build-check</code> 的描述不再声明它们。 (#4719)</li>
+<li>升级删除了 gstack 的旧 <code>verify</code> 技能条目（以及其他主机上或 <code>--prefix</code> 上的 <code>gstack-verify</code>），但永远不会删除您自己的 <code>verify</code> 技能。 (#4714)</li>
+</ul>
+<h2 id="安全">安全</h2>
+<ul>
+<li><code>/careful</code> 和 <code>/guard</code> 后面的破坏性命令检查现在会阻止强制推送到缩写 <code>--no-dry-run</code>、实际上是推送选项值的 <code>-n</code> 或带有数字的标志组 (<code>-f4</code>) 后面的主隐藏，并在 <code>cd</code> 之后相对删除到系统文件夹或删除 <code>/dev</code> 下的设备之前询问。 (#4604)</li>
+<li>相同的检查不再询问安全的未引用的引用路径，或者 <code>gh issue</code> 或 <code>gh pr</code> 命令的引用标题或正文。 (#4604)</li>
+<li><code>gstack-ship-queue land</code> 现在在一次性克隆中运行存储库的合并树检查，并且如果检查更改了 git 或 gh 配置、后续 git 和 gh 调用将使用的挂钩或二进制文件，则拒绝继续。它执行的每个 git 调用都在关闭钩子的情况下运行。 (#4649)</li>
+<li>秘密检查现在将密钥标记为 Rust <code>let</code>、<code>const</code> 和 <code>static</code> 绑定，并停止标记 Rust 类型注释和匹配臂。 (#4675)</li>
+<li>秘密检查现在读取名称包含空格、重音符号或其他字符 git 引号的文件； <code>src/clé.rs</code>中的一把钥匙曾经可以通过。 (#4701)</li>
+<li>gstack 的秘密检查和浏览的 cookie 屏蔽可识别 Google AI Studio 现在发布的 Gemini 密钥，该密钥以 <code>AQ.</code> 开头。 (#4684)</li>
+<li>新的 gstack 安装不再包含从真实 SWE-rebench 基准测试任务复制的 63 个提示：路由器测试使用合成提示，如果基准任务 ID 再次出现，则测试失败。较早的提交仍然保留提示，因此具有完整 git 历史记录的安装仍然可以通过 <code>git log</code> 到达它们。 (#4642)</li>
+<li>对安全代码的审查发现，仅命名文件永远不会自动关闭，因此其位置无法到达公共拉取请求主体。 (#4700)</li>
+</ul>
+<h2 id="修复-ship-和合并">修复 /ship 和合并</h2>
+<ul>
+<li>两轮限制后经批准的额外审核检查可使用一次；第二次索赔被 <code>GRANT_SPENT</code> 拒绝。 (#4722)</li>
+<li>/ship’s finish 不再报告文档审核过时的文件，该文件经过干净的后续检查读取后没有任何变化。 (#4722)</li>
+<li>在拉取请求的第二轮审查后，所有者批准再进行一次检查现在可以让 /ship 完成，无论哪个命令记录了它。 (#4717)</li>
+<li>陈旧测试值检查不再标记共享已更改文件名的不同文件的测试；仅当测试的其中一个导入解析为该文件时，该测试才有效。 (#4723)</li>
+<li>堆叠在另一个分支上的分支上的 /ship 可以从绿色 CI 运行中清除其远程测试门。 (#4689)</li>
+<li>/ship 的最终 CI 检查接受绿色运行，当 main 没有更改任何行或它们旁边的行时，测试您的分支合并到较新的 main 上，因此繁忙的存储库停止重新运行 CI。 (#4728)</li>
+<li>崩溃的 <code>gstack-ship-queue land --pin</code> 不再阻塞以后的每次合并：其锁在最后一步后 90 分钟到期，进程消失的锁将被接管。 (#4712)</li>
+<li>停止或终止的 /ship 运行不再阻止下一个 /ship，并且新的 <code>gstack-ship-run</code> 命令显示运行的状态并结束停止工作的运行。 (#4654)</li>
+<li><code>review_exclude_paths</code> 列表破坏策略架构的基础分支不再停止每个 /ship：审查涵盖每个文件并打印警告，因此修复拉取请求可以落地。 (#4637)</li>
+<li>跳过或中立的 CI 运行不再阻止在同一提交上重用传递运行。 （＃4695，＃4713）</li>
+<li>仅通过可重用工作流程运行的 CI 作业现在仅根据测试您的确切提交的调用者运行进行计数。 (#4713)</li>
+<li>本地测试门重用在您的确切代码上运行的每个绿色 CI，而不仅仅是它检查的第一个。 (#4671)</li>
+<li>/ship 不再接受针对不同基础分支的测试门记录。 (#4706)</li>
+<li><code>gstack-ship-queue ready</code> 根据其目标分支（而不是存储库的默认分支）检查拉取请求。 (#4663)</li>
+<li><code>gstack-ship-queue ready</code> 一次性获取丢失的拉取请求头，打印进度并在 60 秒后停止，而不是沉默几分钟。 (#4668)</li>
+<li>当 /ship 的文档审核在最后一轮审核后更正已审核的文档时，/ship 即可完成。 (#4708)</li>
+<li>/ship 可以在保存其快照之前停止的文档审核之后完成。 (#4693)</li>
+<li>/ship 可以在从基础分支合并之前运行文档审核时完成。 (#4648)</li>
+<li>/ship 在仅重新记录共享线束引脚的基础合并后保留拉取请求的已完成审查，并且 /ship 在其审查者在没有记录审查的情况下运行时发出警告。 (#4669)</li>
+<li>一旦剩余的调查结果得到裁决，确认其阻止程序已修复的后续检查现在就开始计算。 (#4691)</li>
+<li>后续检查读取已批准的修复轮清理现在结束该轮修复的结果。 (#4664)</li>
+<li>即使其简介是在审查开始之前编写的，对已批准的修复进行彻底的重新检查也很重要。 (#4698)</li>
+<li>修复提交的 <code>Review-Finding:</code> 预告片仅在全面审查并完成其范围内的修复后才会结束其发现。 (#4700)</li>
+<li>/ship 的簿记在另外三种情况下仍然成立：变成符号链接的线束引脚需要重新审查，无法保存的声明如此说明，以及在新的描述后早期的运行仍被计数。 (#4703)</li>
+<li>/ship 的审查计划在具有非常大的数据或试用文件的存储库上完成，并且 <code>GSTACK_REVIEW_CONSUMER_SCAN_CAP</code> 提高了数据文件扫描限制。 （＃4651，＃4643）</li>
+<li><code>GSTACK_REVIEW_PLAN_TIMEOUT_MS</code> 现在提高了 /ship 每一步的审查计划时间限制，因此大型存储库可以完成。 (#4632)</li>
+<li>存储库自己的 <code>review_exclude_paths</code> 测试不再将排除的文件拉回审查。 (#4699)</li>
+<li>代码审查现在读取前端更改的设计清单（它之前指出了丢失的文件），第二个模型审查现在读取存储库自己的 <code>agents/</code> 文件夹中的代码。 (#4711)</li>
+<li>/ship 的评论不再将“HIGH 分支”之类的代号视为 HIGH 发现。 (#4678)</li>
+<li>以编号标题形式书写的法典审查结果保持了其严重性。 (#4681)</li>
+<li>对 /ship 辅助工具的七个小修复，包括不再将 <code>Review-Finding:</code> 拖车变成 <code>Refs</code> 线路的问题链接。 (#4672)</li>
+</ul>
+<h2 id="其他修复">其他修复</h2>
+<ul>
+<li>/cso 在拒绝提交后保持审核开放，以便接受更正的重新提交。 (#4692)</li>
+<li>当无法读取 <code>.env.example</code> 等类似机密的文件时，/cso 不再中止；它将文件列为未读并继续。 (#4688)</li>
+<li>默认 gstack 现在为您选择设计原型脚本中的当前模型、Gemini 成本标签和 <code>gstack-context-bill --exact</code>。 (#4678)</li>
+<li><code>browse --session &#x3C;name> &#x3C;command></code> 使用命令之前的标志。 (#4684)</li>
+<li><code>browse handoff</code> 窗口打开时不再带有杂散的空白选项卡。 (#4684)</li>
+<li><code>$D setup</code> 接受以 <code>AQ.</code> 开头的 Gemini 钥匙。 (#4684)</li>
+<li><code>/build-check</code> trust 存储库在其每个 git 工作树中进行检查，因此在新工作树中启动每个会话的代理应用程序将停止再次询问。 (#4684)</li>
+<li><code>/context-restore</code> 在 <code>CLAUDE_CONFIG_DIR</code> 下查找 Claude Code 转录本，在 <code>CODEX_HOME</code> 下查找 Codex 会话。 (#4684)</li>
+<li>当 Git Bash 留下未转换的路径（例如带有撇号的主文件夹）时，TypeScript 挂钩在 Windows 上启动。 (#4682)</li>
+<li><code>./setup --status</code> 传递 <code>--prefix</code> 安装并命名清除其报告的每一行的命令。 (#4682)</li>
+<li><code>./setup</code> 不再将所有者专用的文件保留在 Bun 的共享包缓存中。 (#4682)</li>
+<li>禁用 <code>/open-gstack-browser</code> 也会删除其 <code>/connect-chrome</code> 别名。 (#4682)</li>
+<li><code>gstack-doctor</code> 不再将 gstack 自己的 CLAUDE.md 标记为粘贴的技能列表。 (#4682)</li>
+<li>OpenClaw、Hermes 和 Dots 注册遗漏了 <code>disabled_skills</code> 关闭的技能。 (#4682)</li>
+<li>/autoplan 的阶段报告检查在远程控制从一开始就打开的会话中起作用。 (#4681)</li>
+<li>/ship 在选择版本时会看到存储库的每个 git 工作树，因此两个工作树不能采用相同的工作树。 (#4681)</li>
+<li>当 <code>origin/HEAD</code> 指向特征分支时，<code>gstack-pr-shots --path</code> 与真实基础分支进行比较。 (#4681)</li>
+<li>当审阅者的差异太大时，建议的修复仅命名审阅者实际上可以忽略的文件夹。 (#4681)</li>
+<li>文档链接检查和散文检查不再读取以内联代码开头的行作为代码块的开头。 (#4677)</li>
+<li>/learn prune 检查每个学习内容，而不仅仅是前 100 个。(#4677)</li>
+<li>/retro 将 <code>tests/</code> 中没有测试样式名称的测试运行程序计数为测试，并停止将 Godot 和 Unity sidecar 文件计数为测试。 (#4677)</li>
+<li>删除或重命名测试现在会检查仍然列出该测试的文件，即使另一个测试覆盖了它。 (#4702)</li>
+<li>从 <code>playwright test</code> 下运行的本地固定装置文件中获取 <code>test</code> 的剧作家规范。 (#4702)</li>
+<li>更改常量检查不再泛滥于一位和两位数字。 (#4683)</li>
+<li><code>gstack-gbrain-mcp-verify</code> 不再将大型或缓慢的服务器发送事件回复误读为已损坏。 (#4710)</li>
+<li>gbrain 内存查找找到它们的页面：不再有双重导入，“与内存相关”在克隆的大脑主机上命中工作，并且超大日志保留其最新行。 (#4685)</li>
+<li>用户报告的八项技能修复，包括要求您打开 Aside 的 Aside 检查、<code>/test-audit</code> 查找 eng-review 测试计划以及 <code>/design-shotgun</code> 通过每次选择的原因。 (#4686)</li>
+</ul>
+<h2 id="新消息">新消息</h2>
+<ul>
+<li>提示路由挂钩不再在错误报告中命名您的错误修复技能：在针对 183 个真实 Python 错误的预注册测试中，它遵循了该技能的步骤，但没有修复更多错误。它仍然路由 /review 和 /qa，并且从不路由来自另一个 Claude Code 会话或后台代理的回传的消息。 （#4707、#4674、#4694）</li>
+<li>审查可以忽略复制的开源文件，<code>gstack-vendored-verify</code> 证明逐字节等于固定的上游提交；列出 <code>review_vendored</code> 中的上游。 （#4646、#4665、#4690）</li>
+<li><code>gstack-ship-queue land</code> 可以在合并树上运行完整的 CI，然后再提交基础已移动的拉取请求 (<code>land.merged_ci</code>)，并且 main 的推送运行会重用该结果，而不是再次测试。 （＃4649，＃4655）</li>
+<li><code>gstack-ship-queue count</code> 打印有多少已完成的拉取请求正在等待合并。 (#4712)</li>
+<li>在 Capy 上，<code>/ship</code> 和 <code>/review</code> 中的第二个模型评论默认为 GPT-6.2 Sol。 (#4636)</li>
+<li>在 Capy 上，<code>/ship</code> 在拉取请求自己的线程中运行，并将其审阅者作为子代理启动，没有单独的帮助代理。 (#4670)</li>
+<li><code>/eval-plan</code> 在计划选择的每个角色中拒绝 gpt-4o 和老一代模型，并且计划在 2026 年 11 月 22 日或之后冻结，检查模型判断是否符合 100 个手牌标签。 (#4630)</li>
+<li><code>/eval-plan</code> 的试运行遵循计划自己的日期和声明的供应商模型，新计划命名了他们的分级机如何处理代理的存储库。 (#4673)</li>
+<li><code>/plan-ceo-review</code> 通过该模式能做什么而下一个最接近的模式不会做什么来解释其审阅模式推荐。 (#4730)</li>
+<li>声明 gbrain 上下文查询的技能在开始时加载它们； <code>gstack-config set gbrain_context_load off</code> 将其关闭。 (#4687)</li>
+<li>当安全带的技能列表失败时，<code>gstack-harness status</code> 会报告 <code>unknown</code> 错误，而不是将每个技能都列为缺失。 (#4687)</li>
+<li>测试选择遵循 TypeScript NodeNext <code>.js</code> 导入到其 <code>.ts</code> 源并将 Rails <code>app/</code> 和 <code>lib/</code> 文件映射到其规范。 (#4679)</li>
+<li>发布了 /ship 的两次测试结果：在拉取请求自己的线程中运行它在成本或捕获的错误方面没有明显的差异（#4680），并且它的审查面板击败了两个简单的审查读取，因此它保留了（#4676，#4732）。</li>
+</ul>
+<h2 id="维护者的更改">维护者的更改</h2>
+<ul>
+<li>每个 gstack 拉取请求都会获得已删除或跳过的测试的测试更改摘要、放宽的限制以及对其自身检查的编辑，作为为期两周的试用，拉取请求永远不会失败。 (#4645)</li>
+<li>每周的突变报告列出了 gstack 测试未能捕获的小错误编辑。 (#4652)</li>
+<li>不稳定且缓慢的测试修复：免费测试分片在清理期间退出的浏览器中幸存下来（#4666），夜间 Windows 分片保持在时间限制以下（#4661），每周测试运行状况再次通过（#4633），并且两个 git worktree 竞赛不再互相失败（#4710）。</li>
+<li>发布检查修复：推荐法官的校准包括两个真实问题（#4705），/autoplan 警卫测试保留其 Claude Haiku 4.5 actor（#4639），文档审计测试接受 /ship 的停止审计步骤（#4731）。</li>
+<li>引导保留测试跳过了套件以 root 身份运行时不会发生的五种情况。 (#4677)</li>
+<li>删除了恢复钻头添加到其自己的文档中的一句话。 (#4716)
+<strong>完整 changelog：</strong> <a href="https://github.com/garrytan/gstack/blob/v1.103.0.0/CHANGELOG.md">https://github.com/garrytan/gstack/blob/v1.103.0.0/CHANGELOG.md</a> · <strong>比较：</strong> <a href="https://github.com/garrytan/gstack/compare/v1.102.2.0...v1.103.0.0">https://github.com/garrytan/gstack/compare/v1.102.2.0…v1.103.0.0</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/garrytan/gstack">garrytan/gstack</a> · 🏷️ 版本：<code>v1.103.0.0</code> · 📅 发布：2026-11-23 · <a href="https://github.com/garrytan/gstack/releases/tag/v1.103.0.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <span></span> <a href="/zh/release_note/gstack/gstack_v1.102.2.0"> <span class="k">上一个 →</span> <span class="t">v1.102.2.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/garrytan/gstack/releases/tag/v1.103.0.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/garrytan/gstack" target="_blank" rel="noopener"> <span>garrytan/gstack</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#需要采取的行动verify-现在是-build-check" class>需要采取的行动：/verify 现在是 /build-check</a><a href="#安全" class>安全</a><a href="#修复-ship-和合并" class>修复 /ship 和合并</a><a href="#其他修复" class>其他修复</a><a href="#新消息" class>新消息</a><a href="#维护者的更改" class>维护者的更改</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/gstack/gstack_v1.103.0.0" aria-current="true"> <span class="v">v1.103.0.0</span> <span class="d">26-11-23</span> </a> </li><li> <a href="/zh/release_note/gstack/gstack_v1.102.2.0"> <span class="v">v1.102.2.0</span> <span class="d">26-11-21</span> </a> </li><li> <a href="/zh/release_note/gstack/gstack_v1.102.1.0"> <span class="v">v1.102.1.0</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/gstack/gstack_v1.102.0.0"> <span class="v">v1.102.0.0</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/gstack/gstack_v1.101.0.0"> <span class="v">v1.101.0.0</span> <span class="d">26-11-18</span> </a> </li><li> <a href="/zh/release_note/gstack/gstack_v1.100.0.0"> <span class="v">v1.100.0.0</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/gstack/gstack_v1.99.5.0"> <span class="v">v1.99.5.0</span> <span class="d">26-11-16</span> </a> </li><li> <a href="/zh/release_note/gstack/gstack_v1.99.4.0"> <span class="v">v1.99.4.0</span> <span class="d">26-11-15</span> </a> </li> </ul> <a href="/zh/releases/gstack" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 18 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

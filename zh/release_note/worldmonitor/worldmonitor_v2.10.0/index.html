@@ -1,0 +1,946 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>worldmonitor v2.10.0 — STAGS NextStack</title><meta name="description" content="chore(release): automate desktop release train (#6586) · docs(sources): reconcile provider and host counts (#6582) · docs: publish panel implementation count (#6584)"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/worldmonitor/worldmonitor_v2.10.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/worldmonitor/2.10.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/worldmonitor/worldmonitor_v2.10.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/worldmonitor/2.10.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="worldmonitor v2.10.0 — STAGS NextStack"><meta property="og:description" content="chore(release): automate desktop release train (#6586) · docs(sources): reconcile provider and host counts (#6582) · docs: publish panel implementation count (#6584)"><meta property="og:url" content="https://www.stags.cn/zh/release_note/worldmonitor/worldmonitor_v2.10.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/worldmonitor/worldmonitor_v2.10.0/#article","headline":"worldmonitor v2.10.0 release notes","datePublished":"2026-09-08","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/koala73/worldmonitor"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/worldmonitor/2.10.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/worldmonitor/worldmonitor_v2.10.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/worldmonitor/2.10.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/worldmonitor/2.10.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/worldmonitor/2.10.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/worldmonitor/2.10.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/worldmonitor/2.10.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/worldmonitor">worldmonitor</a> </nav> <h1 class="detail-title"> <span class="p">worldmonitor</span> v2.10.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年9月8日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/koala73/worldmonitor" target="_blank" rel="noopener"> <span class="k">来源</span>koala73/worldmonitor </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/worldmonitor/2.10.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/worldmonitor/worldmonitor_v2.10.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="worldmonitor-v2100">worldmonitor v2.10.0</h1>
+<h2 id="发生了什么变化">发生了什么变化</h2>
+<ul>
+<li>杂务（发布）：自动化桌面发布列车（＃6586）</li>
+<li>文档（来源）：协调提供者和主机计数（#6582）</li>
+<li>文档：发布面板实现计数 (#6584)</li>
+<li>修复（许可证）：将 AGPL 标题放在第一位进行检测 (#6576) (#6583)</li>
+<li>修复（文档）：将 Mintlify OpenAPI 下载到真实捆绑包（#6578）</li>
+<li>修复（许可证）：向扫描仪公开 AGPL 文本 (#6576) (#6579)</li>
+<li>文档（关于）：更新 GitHub 星星计数（#6580）</li>
+<li>修复（面板）：将启动数据传送到通过后安装的面板（#6567）</li>
+<li>修复（弹性）：在格式错误的混合输入上无法关闭（#6570）</li>
+<li>修复（弹性）：使整个指数对差距 CI 可见（#6572）</li>
+<li>修复（弹性）：安全地激活金融系统暴露（#6568）</li>
+<li>修复（弹性）：比较接受结果，而不是门配置（#6566）</li>
+<li>修复（种子）：种子包弹性永远推迟每个部分 - #6531 的预算低于每个部分的超时+宽限 (#6564)</li>
+<li>修复（哨兵）：允许每个应用程序服务主机进入allowUrls摄取门（＃6565）</li>
+<li>修复（csp-filter）：抑制 Google Fonts /l/font 子集化端点（TR 第 7 轮）(#6560)</li>
+<li>修复（哨兵）：匿名蹦床跳跃是“？”在运行时，而不是 ” (#6554)</li>
+<li>修复（铁路）：停止恢复批准电子邮件和重试失败（#6551）</li>
+<li>feat(i18n)：添加繁体中文 (zh-TW) 语言环境 (#6546)</li>
+<li>feat(i18n)：添加斯瓦希里语支持 (#5406)</li>
+<li>feat(webmcp)：公开安全的实时仪表板控件（#6516）</li>
+<li>修复（哨兵分类）：凸 OCC 冲突群 + Y4 蹦床门孔（#6547）</li>
+<li>ci：让接受工件验证器在提交一个的 PR 上运行 (#6544)</li>
+<li>重构（市场）：一个稳定币分类器而不是三个副本（#6541）</li>
+<li>文档（弹性）：提交教育翻转后接受工件（#6460）（#6542）</li>
+<li>壮举（弹性）：摄取美国农业部的粮食库存并暴露库存以供使用（#6531）</li>
+<li>修复（弹性）：根据母公司多样性调整金融系统集成溢价（#6529）</li>
+<li>壮举（公司监控）：密封离线预测托管（#6534）</li>
+<li>壮举（数据）：矿物生产和加工股份（USGS MCS / BGS）（#6527）</li>
+<li>壮举：预检系统依赖项而不是在构建过程中失败（#6387）</li>
+<li>修复（铁路）：绑定协调扇出和证据读取（#6539）</li>
+<li>修复（撰写）：有线中继共享秘密（#6540）</li>
+<li>壮举（军事）：添加国防工业情报（#6536）</li>
+<li>feat(markets)：将新闻量与市场回报相关联 (#6530)</li>
+<li>修复（操作）：将铁路漂移发布为独立检查（#6533）</li>
+<li>修复（弹性）：解锁教育接受捕获（#6532）</li>
+<li>修复（auth）：在 Clerk 模式中恢复可读的输入文本（#6535）</li>
+<li>修复（ops）：使铁路部署漂移警报携带信号（#6141）（#6522）</li>
+<li>修复（弹性）：激活非 DRS 债务估算 (#6526)</li>
+<li>修复（ci）：使过时的部署门状态无效（#6525）</li>
+<li>修复（铁路）：保持受保护的恢复可达（#6524）</li>
+<li>修复（文档）：修复 Mintlify 部署中断和错过它的 lint (#6521)</li>
+<li>修复（来源）：要求明确的提供商退休（#6514）</li>
+<li>文档（平台）：添加客户评估指南（#6518）</li>
+<li>修复（弹性）：停止缺席作为力量得分（#6515）</li>
+<li>修复（摄取）：发布军事基地种子元数据（#6471）</li>
+<li>修复（弹性）：重建健康教育群体（#6517）</li>
+<li>修复（来源）：显示可读的提供者名称（#6512）</li>
+<li>修复（ci）：从 API 故障中恢复部署门（#6513）</li>
+<li>修复（来源）：发布完整的提供商目录（#6509）</li>
+<li>修复（弹性）：阻止伪造死亡生产者而导致短暂的种子元读取失败（#6503）</li>
+<li>ci(e2e)：当variant-smoke-full失败时上传Playwright跟踪 (#6496) (#6497)</li>
+<li>修复（欢迎）：停止内部 CTA 铸造附属代码，并保护每条结帐路径 (#6493) (#6504)</li>
+<li>Chore(gitignore)：忽略 public/sources/ 并将规则与构建联系起来 (#6498) (#6506)</li>
+<li>文档（解决方案）：捕获自比较门故障形状 (#6487) (#6502)</li>
+<li>修复（源）：让归因漂移门看到参考漂移 (#6487) (#6499)</li>
+<li>文档（openapi）：文档计费验证 503 + 门控操作上的 ForbiddenError.code (#5496)</li>
+<li>修复(sentry): 过滤第6轮TR包-CDN webfonts (unpkg, jsDelivr) (#6495)</li>
+<li>文档（公司监控）：删除提供商批准声明（#6494）</li>
+<li>测试（公司监控）：添加密封证据管理门（#6488）</li>
+<li>文档（使用错误）：使 Retry-After 对退避计划具有权威性 (#6485)</li>
+<li>壮举（韧性）：激活教育维度（#6460）（#6473）</li>
+<li>文档（源）：域分段数据源目录 + /sources 营销页面 (#6491) (#6492)</li>
+<li>修复（能源）：让 IEA 国家密钥重新导出 seededAt，并为守卫测试提供可能失败的固定装置 (#6489) (#6490)</li>
+<li>修复（提要）：将 Tuoi Tre 指向其规范主机，以便提要验证停止阻止新闻健康发布 (#6484) (#6486)</li>
+<li>修复（高级）：在高级 RPC 上遵守可重试计费验证 503 (#6482)</li>
+<li>ops(webmcp)：注册仪表板源并强制执行安全门 (#6465)</li>
+<li>修复（ci）：让合并后监视器幸存下来并说出真正的原因（＃6479）（＃6481）</li>
+<li>修复（铁路）：让看门狗变红，重试读取路径，并提前停止门行走（#6474）（#6478）</li>
+<li>修复（市场）：订购间隙获取计时器，这样我们自己的截止就永远不是提供商的错（#6468）（#6476）</li>
+<li>修复（凸）：重命名admission-snapshot，使生产推送合法（#6480）</li>
+<li>壮举（公司监控）：分类并承认重大影响（#6470）</li>
+<li>文档（铁路）：更正分页修复附带的三个声明（#6477）</li>
+<li>文档（弹性）：记录教育探测接受度及其两个读取陷阱（#6472）</li>
+<li>修复（铁路）：看门狗永远不会分页 - GitHub 重写存储库 ID 路径的下一个链接 (#6378) (#6469)</li>
+<li>修复（健康）：注册 educationAttainment 探针 + 教育预翻转门（#6452，#6460）（#6467）</li>
+<li>ops(resilience)：注册 educationAttainment 健康探针 (#6452) (#6464)</li>
+<li>修复（弹性）：financialSystemExposure 反转排名 - 可执行校准门，然后重新调整 (#6459) (#6463)</li>
+<li>壮举（公司监控）：标准化范围内的证据候选（#6457）</li>
+<li>修复（哨兵）：组限制器按故障模式降级，而不是按路线降级 (#6454) (#6458)</li>
+<li>修复（sidecar）：固定仅 IPv6 的 RSS 获取（#6456）</li>
+<li>修复（速率限制）：确认 CF 防边缘盖 /api/* 并在停止时发出警告（#6435）</li>
+<li>修复（速率限制）：以 60/分钟计量网关反向地理编码 RPC (#6451)</li>
+<li>修复（提要）：删除已失效的 YC 博客发布者系列标签（#6455）</li>
+<li>壮举（复原力）：将旗帜黑暗教育维度添加到国家复原力指数中（#6450）</li>
+<li>修复（提要）：将仅服务器源恢复到仪表板（#6444）</li>
+<li>修复（简要）：验证门计算发布者家族，而不是 Feed 标签 (#6443)</li>
+<li>修复（ui）：强化面板字体缩放（#6453）</li>
+<li>壮举（公司监控）：摄取经过验证的 X 帖子 (#6424)</li>
+<li>修复：需要过期的运行状况探测切换（#6392）</li>
+<li>feat(ui)：添加全局和每个面板的字体缩放（#6445）</li>
+<li>修复（摄取）：围绕可抓取的零售商重建英国消费者价格名册（#6358）（#6442）</li>
+<li>feat(mcp)：向特工公开故事证实（#4925 第 3 项）（#6421）</li>
+<li>壮举（公司监控）：添加有界 Exa 队列发现（#6404）</li>
+<li>修复（警报）：为关键字峰值警报提供他们已持有的来源、标题和链接（#6414）（#6433）</li>
+<li>Chore(ci)：忽略边缘检查中生成的 sidecar 包 (#5926)</li>
+<li>ops(ci)：合并后生产部署失败的警报 (#6376) (#6406)</li>
+<li>修复（api）：对三个不受保护的公共代理进行速率限制（＃6234）（＃6412）</li>
+<li>修复（会话）：停止一个丢弃的薄荷请求，从而阻止匿名浏览（#6413）</li>
+<li>修复（设置）：通过身份验证重试保持计划验证挂起（#6423）</li>
+<li>修复（哨兵）：通过指纹将 Cloudflare 边缘 5xx 从原始 5xx 中分离出来 (#6370) (#6409)</li>
+<li>修复（分析）：使 Umami 保留勾选提交，并根据卷调整大小 (#6375) (#6407)</li>
+<li>修复（哨兵）：修复 alicdn 字体规则并过滤第 5 轮 TR 注入器 (#6408)</li>
+<li>修复（市场）：强化 Hyperliquid 和 FRED 实时数据（#6339）</li>
+<li>修复（速率限制）：停止测试上下文中止竞赛决策（#6236）（#6405）</li>
+<li>修复（gdelt-intel）：在获取排序和运行状况路径之间共享一个时间戳验证器 (#5858) (#6044)</li>
+<li>ops（铁路）：标记公司监控工人已计划，以便后#6397应用可以运行（#6402）（#6403）</li>
+<li>修复（摄取）：强化剧院姿势出版物（#6401）</li>
+<li>修复（能源）：阻止一个缺席国家扣留 JODI 数据集 (#6395) (#6400)</li>
+<li>修复（摄取）：拒绝空剧场姿势发布（#6393）</li>
+<li>修复（设置）：在关闭时将源切换应用到实时仪表板（#6380）（#6399）</li>
+<li>修复（分析）：根据收集器自身的基线而不是固定的 0.5 来判断收集器的健康状况 (#6026) (#6041)</li>
+<li>修复（铁路）：将部署闭包与构建输入对齐（#6397）</li>
+<li>修复（摄取）：容忍有限的消费者价格零售商损失（#6394）</li>
+<li>壮举（公司监控）：添加持久扫描编排（#6386）</li>
+<li>修复（ci）：对部署门的检查运行读取进行分页（#6389 的根本原因）（#6391）</li>
+<li>修复（英特尔）：停止在三个同级提示块中提供换行符伪造行（＃5881）（＃5897）</li>
+<li>测试（e2e）：等待降级摘要重试（＃5899）</li>
+<li>修复（ci）：当所需列表很长时，保持部署门发布状态（＃6389）（＃6390）</li>
+<li>修复：回放快照退出路径中的静音浮动承诺 (#5968)</li>
+<li>修复（相关性）：强化播种器输入读取（#6385）</li>
+<li>ops(monitor)：确认针对所有者问题的八个消费者价格覆盖部分（#6363）</li>
+<li>修复（分析）：保持 Umami 存储警告不致命（#6384）</li>
+<li>修复（监视器）：监视最新的门控主修订版，而不是在未定的头上失败（#6374）</li>
+<li>修复（仪表板）：应用面板设置而不重新加载（#6379）（#6382）</li>
+<li>feat(markets)：授权 Finnhub+AV 报价提供商链 (#6304) (#6350)</li>
+<li>修复（凸）：阻止单点测试助手在每个凸部署中失败（#6232 后续）（#6373）</li>
+<li>修复（铁路）：与租赁的围栏协调切换（#6326）（#6326）</li>
+<li>壮举（公司监控）：添加有界投资组合入职（#6232）</li>
+<li>测试（公司监控）：添加渐进式盲评估评分器（#6219）</li>
+<li>修复（铁路）：添加协调恢复控制平面（#6325）</li>
+<li>feat(mcp)：向代理公开 WTO 贸易流，命名覆盖崩溃原因 (#6323) (#6353)</li>
+<li>修复(sentry): 过滤仍然主导 TR 的两个扩展 webfonts (#6371 后续) (#6372)</li>
+<li>修复（分析）：解锁 Umami 存储监视器（#6354）</li>
+<li>feat(markets)：添加卢布报价表作为第三个外汇面板选项卡 (#6231) (#6352)</li>
+<li>修复（贸易）：为每个支持的关税趋势窗口提供服务并命名未覆盖的内容（#6316）（#6349）</li>
+<li>修复（哨兵）：缩小 CSP 规则以观察签名并修复空洞的守卫（#6369 的后续）（#6371）</li>
+<li>测试：用行为覆盖替换实现检查（#6368）</li>
+<li>修复（哨兵）：过滤主导 TR/J0 的 CSP 注入器，并缩小两个格式差距（#6369）</li>
+<li>修复（付款）：将欢迎电子邮件发送到帐户当前的登录地址（#6335）（#6364）</li>
+<li>修复：解锁 API 主机上的结帐并恢复两个失效的 iOS 过滤器 (#6365)</li>
+<li>修复（可观察性）：在 Sentry 错误级别停止两个非错误分页 (#6351)</li>
+<li>修复（权利）：修复 #6345 中提供的免费所有权模型（#6346）</li>
+<li>修复（见解）：哪个编辑门拒绝了世界简报的名称（＃5947）（＃6342）</li>
+<li>修复（权利）：恢复所有免费层拥有的首选项（#6345）</li>
+<li>修复（中国）：从未终止的锚点恢复日本 MOD 版本（#6344）</li>
+<li>修复（消费者价格）：八个部分市场的证据门控提取恢复（#6182）（#6343）</li>
+<li>修复（api）：将截断的凸响应体分类为瞬态（#6340）</li>
+<li>壮举：添加视觉股票/市场观察列表自定义（#1881）</li>
+<li>测试（ci）：消除观察到的时序和夹具碎片（#6327）</li>
+<li>修复（面板）：在每个用户切换上转移门所有权（查看 P1）（#6338）</li>
+<li>修复（面板）：停止将免费层计数上限设置为单向门（#6337）</li>
+<li>杂务（贸易）：删除 v1 贸易流切换桥（#6315）（#6329）</li>
+<li>修复（付款）：将生命周期电子邮件发送到帐户登录电子邮件，而不是结帐别名 (#6330) (#6336)</li>
+<li>修复（哨兵）：命名世界简短拒绝门，删除变异 CSP 噪声（#6333）</li>
+<li>修复（中国）：停止滚动重新启动走廊和即时预报面板的闪烁（#6328）</li>
+<li>修复（市场）：恢复参数化加密货币报价请求（#6320）</li>
+<li>修复（市场）：提供自定义观察列表符号的报价（#6318）</li>
+<li>修复（贸易）：为每个受支持的贸易流窗口提供服务并命名未发现的内容（#6309）（#6322）</li>
+<li>修复（rss）：通过上游故障保留过时的提要（#6312）</li>
+<li>修复（市场）：尊重稳定币过滤器并恢复自定义 ID（#6317）</li>
+<li>perf(tests)：减少单元 + Smoke CI 中的空闲等待和冗余解析 (#6324)</li>
+<li>修复（市场）：恢复参数化商品报价请求（#6307）（#6314）</li>
+<li>修复（海事）：停止 AIS 中继维持其自己的上游 IP 块（#6313）</li>
+<li>修复（新闻）：在摘要截止日期之前优先考虑中国提要（#6311）</li>
+<li>修复（消费者价格）：将覆盖范围损失归因于有限的失败原因（#6301）</li>
+<li>文档（健康）：将已发布的 /api/health 密钥计数固定到注册表 (#6300) (#6303)</li>
+<li>修复（中国）：通过代理重试 Japan MOD 空索引（#6302）</li>
+<li>修复（铁路）：按计划对未配置的播种机进行分类（#6278）</li>
+<li>测试（build-guards）：通过 WM_EXPECT_BUILT_OUTPUT 使 dist-gate 跳过显式（#6284）</li>
+<li>修复（健康）：阻止生产者错误掩盖消失的数据密钥（#6263）（#6299）</li>
+<li>杂务（deps）：将 postgres 从 17-alpine 提升到 18-alpine（#6293）</li>
+<li>feat(i18n)：向翻译人员提示产品的域术语表 (#6295)</li>
+<li>修复(webmcp)：将工具迁移到 document.modelContext (#6292)</li>
+<li>修复（分析）：保留收集器超时回退（#6088）</li>
+<li>i18n(de)：修复错误翻译的域术语并完成德语区域设置 (#6294)</li>
+<li>修复（市场）：LLM 未命中绑定的市场影响，而不是对每个市场发出警报（#6259）（#6266）</li>
+<li>修复（安全）：修补 js-yaml 并停止阻止 PR 的上游建议 (#6298)</li>
+<li>修复（消费者价格）：修复死提取回退和提示伪造价格（#6270）</li>
+<li>修复（市场）：通过轮换代理退出来恢复行业 ETF 估值（#6290）</li>
+<li>重构（中国）：从 SZSE 披露播种机中取消 Vercel 边缘出口跃点（#6274）</li>
+<li>修复（天气）：强化 #6269 审核中仅限美国的披露防护措施 (#6276)</li>
+<li>修复（天气）：在 50 上限之前按严重程度对 NWS 警报进行排名 (#6277)</li>
+<li>修复（军事）：通过标准化场种子陈旧快照飞行装置（#6291）</li>
+<li>修复（mcp）：将两个源失败原因附加到 get_airspace 错误 (#6085) (#6283)</li>
+<li>修复（军事）：绑定过时的航班恢复缓存（#6287）</li>
+<li>壮举（航空）：无钥匙 ADS-B 冗余 — adsb.lol 主要、盲点间隙填充、ODbL 归因 (#6273)</li>
+<li>修复（播种机）：恢复被拒绝的 Redis 出版物 (#6286)</li>
+<li>修复（航空）：跳过仅限 icao24 请求的退化 bbox 块 (#6275)</li>
+<li>修复（军事）：拒绝 Upstash 命令错误（#6258）</li>
+<li>修复（军事）：将全球航班覆盖范围提供给仪表板（#6261）</li>
+<li>修复（中国）：重试瞬态 NBS 获取，因此一个套接字 blip 无法使发布日历失效（#6264）</li>
+<li>修复（海事）：绑定的 AIS 重新连接并报告健康状况下降（#6268）</li>
+<li>修复（worktree）：推送时自我修复钩子路径（#6285）</li>
+<li>修复（速率限制）：关闭付费提供商市场路线失败（#6260）</li>
+<li>修复（采购）：在可访问的 IPv4 上保留 SAM 种子 (#6265)</li>
+<li>杂务（工作树）：验证依赖项安装（#6131）</li>
+<li>ci：为 bootstrap-tier-keys 添加生成文件漂移门 (#6282)</li>
+<li>ops（铁路）：修剪恢复的鲜味漂移抑制并停止空基线过期（#6064）（#6281）</li>
+<li>修复：披露仅限美国的天气警报覆盖范围（#6269）</li>
+<li>测试（军事）：关闭 OpenSky 冷却套件中的三个断言间隙 (#6241) (#6255)</li>
+<li>修复（军事）：持续 OpenSky 429 冷却时间，以便播种机停止重新发射 (#6241) (#6252)</li>
+<li>feat(markets)：在孤立的 fx:yoy 种子上选择加入 FX 面板 (#6199) (#6226)</li>
+<li>修复（文档）：对生成的归因标记使用 MDX 注释 (#6251)</li>
+<li>修复（架构）：关闭四个黄金标准偏差（#6235）（#6239）</li>
+<li>修复（军事）：每次运行一个全局 OpenSky 查询 — 每日信用配额的 86% → 43% (#6222) (#6244)</li>
+<li>feat(markets)：在中央银行选项卡中显示 CBR 关键利率 (#6202)</li>
+<li>文档（来源）：审核上游归因清单（#6250）</li>
+<li>perf(inp)：削减/仪表板交互时间工作并修复读数（#6221）</li>
+<li>修复（种子）：保留共享的 FX 后备来源（#6233）</li>
+<li>feat(railway)：为所有 41 个注册服务提供精确的监视路径闭合 (#6204) (#6218)</li>
+<li>修复（铁路）：协调 Deploy Gate 完成和静默车队警报 (#6203) (#6216)</li>
+<li>修复（seo）：使类别解释器回答优先（#6217）</li>
+<li>修复(seed-utils): 停止重试 Retry-After 运行不能等待 (#6110) (#6215)</li>
+<li>修复（brief-gates）：停止标记源已包含的句首普通名词（#6109）（#6201）</li>
+<li>修复（seo）：完整的数据集结构化数据（#6207）</li>
+<li>修复（铁路）：部分车队历史记录失败关闭（#6206）</li>
+<li>feat(china): 种子股沪港通北向成交额 + 上交所/深交所的保证金余额 (#6190)</li>
+<li>壮举（公司监控）：定义暗服务合约（#6188）</li>
+<li>测试（公司监控）：冻结可行性和评估合同（#6186）</li>
+<li>修复（市场）：保持重播的行业估值安全、诚实和可更新（#6197）</li>
+<li>修复（mcp）：在缓存信封上发布activationUnknown（#6198）</li>
+<li>文档（相关性）：记录 #5991 RRF 决策 (#6079)</li>
+<li>修复（消费者价格）：恢复部分零售商提取（#6185）</li>
+<li>壮举（市场）：添加俄罗斯银行 RUB 利率 + CBR 关键利率播种机 (#6154) (#6187)</li>
+<li>修复（航空）：保留 OpenSky 信用预算 (#6196)</li>
+<li>ops(railway)：触发从 CI 部署的播种器并根据服务关闭判断偏差 (#6142) (#6151)</li>
+<li>修复（健康）：绑定内容新鲜度激活宽限期（#6152）</li>
+<li>修复（市场）：稳定行业估值覆盖范围（#6183）</li>
+<li>修复（portwatch）：重试短暂的 ArcGIS 速率限制（#6184）</li>
+<li>修复（client）：在伪造的 WebGL 上下文上保留地图叠加 + 名称推送 400 秒（#6194）</li>
+<li>修复（付款）：捕获无法归因的 Dodo 事件而不是重试风暴 (#6191)</li>
+<li>测试（预测市场）：引脚夹具到期时钟（#6195）</li>
+<li>操作（分析）：激活 Umami 90 天保留运行器 (#6148) (#6189)</li>
+<li>ci(proto)：强制工作流程中的重大更改 (#6147)</li>
+<li>壮举（桌面）：在返回的浏览器中确认结账（#6136）</li>
+<li>修复（审核）：恢复在 rebase 中删除的桌面切换结果守卫（#5911、#6120）（#6145）</li>
+<li>修复（播种机）：让每个铁路入口点宣布它已完成（#6144）</li>
+<li>feat(ops)：检测 Railway 服务何时未运行合并提交 (#6143)</li>
+<li>修复（桌面）：将剩余链接迁移到共享开启器（#6137）</li>
+<li>修复（桌面）：将发布序列提交到一个交换二进制文件 (#5908) (#6124)</li>
+<li>修复（mcp）：种子洞察中的地面世界简介（＃6134）</li>
+<li>修复（见解）：不要在带有引用的首字母缩略词处拆分简短的引导语（#5947）（#6119）</li>
+<li>杂务（供应链）：将 FlowEstimate.source 提升为封闭枚举 (#6101) (#6122)</li>
+<li>修复（健康）：扩大 PortWatch 内容新鲜度预算（#6135）</li>
+<li>修复（selfhost）：允许 Docker LLM 起源通过 sidecar SSRF 防护（#6130）</li>
+<li>修复（健康）：表面发布中期军事饥饿（#6132）</li>
+<li>硬化（健康）：将不可读的激活标记视为未知，未确认不存在（＃6095）（＃6117）</li>
+<li>修复（哨兵分类）：支付、分析、会话复制和崩溃过滤器方面的五个实时问题（#6129）</li>
+<li>修复（安全）：清除生产依赖审核失败（#6140）</li>
+<li>修复（军事）：阻止种子军事航班在每次运行时崩溃（#6128）</li>
+<li>修复（安全）：将大括号扩展扩展到 GHSA-rgw5-rvv9-x895 (#6118) (#6123)</li>
+<li>修复（军事）：限制 Wingbits 飞机详细批次（#6099）</li>
+<li>修复（配额）：将仪表板 AI 限制与 MCP 分开（#6105）</li>
+<li>修复（面板）：水合后期安装的轮毂活动面板（#6100）</li>
+<li>修复（mcp）：在内容时钟上老化 #6080 固定防护，而不是旧版后备（#6080）（#6096）</li>
+<li>修复（导航）：在仪表板上保留变体链接（#6098）</li>
+<li>修复（china-nowcast）：发布观察到的中国能源需求变化（#6067）（#6081）</li>
+<li>ops(relay)：将戏剧姿势出版物归因于其实际来源 (#5945) (#6092)</li>
+<li>修复（mcp）：将新鲜度信封与健康的 PortWatch 内容新鲜度维度对齐（#6080）（#6094）</li>
+<li>修复（操作）：协调铁路配置漂移（#6091）</li>
+<li>修复（市场）：恢复雅虎摘要的 ETF 估值身份（#6090）</li>
+<li>修复（china-nowcast）：保留可比较的走廊历史（#6083）</li>
+<li>修复（china-nowcast）：诚实地命名每个 CCFI 排除项，并在未注明日期的观察结果上失败（#6066）（#6077）</li>
+<li>修复（中国）：在决策覆盖范围中将 PortWatch 内容新鲜度和健康安静组分开 (#6060) (#6073)</li>
+<li>杂务（供应链）：在 ShippingIndex 上声明 CCFI 周期更改字段 (#6078) (#6084)</li>
+<li>修复（中国）：接受同一出版商走廊证实（#6076）</li>
+<li>壮举（搜索）：建立情报指挥平台（#5971）</li>
+<li>修复（china-nowcast）：发布定向 CCFI 周期变更 (#6066) (#6074)</li>
+<li>修复（健康）：限制消费者价格覆盖推出窗口（#6059）（#6075）</li>
+<li>修复（feeds）：强制执行完整的地理分类（#6072）</li>
+<li>修复（健康）：取消过期的按需软化（#6071）</li>
+<li>修复（水合）：处理仪表板容器滚动（#5894）</li>
+<li>修复（新闻）：刷新过期的持久 RSS 响应 (#6069)</li>
+<li>修复（网络摄像头）：将 2x2 墙安装到短视口 (#6065)</li>
+<li>修复（经济）：接受完整的宏观压力 FRED 批次（#6062）</li>
+<li>修复（ui）：规范中国仪表板面板样式（#6063）</li>
+<li>修复（见解）：使世界简短可读（#6061）</li>
+<li>修复（分析）：限制鲜味池的获取等待，因此过载会快速失败（#6057）</li>
+<li>壮举（提要）：P3 — 加拿大 + 北极/北欧安全源包 (#5960) (#6054)</li>
+<li>修复（地图）：gate CMD+K 为免费用户锁定高级图层（#6045）（#6049）</li>
+<li>修复（地图）：使用 hasPremiumAccess 进行 GlobeMap 高级门控（#6050）</li>
+<li>修复（seo）：旋转 Bing 拒绝的 www IndexNow 密钥 (#6055) (#6056)</li>
+<li>feat(i18n)：为 UA feed 添加乌克兰语 (uk) 语言环境 + lang boost (#6052)</li>
+<li>修复（审查）：解决剧院预设的代码审查结果（#6023）</li>
+<li>修复（分析）：恢复 umami session_data 写入并在运行时写入探针上门控图像 (#6051)</li>
+<li>修复（摄取）：绑定提供者重试并公开覆盖范围（#6022）</li>
+<li>修复（摘要）：将重放读取快照的生命周期联系起来并证明它（#6039）</li>
+<li>修复（地图）：隐藏 SVG/移动选择器中的日落 iranAttacks 切换 (#6048)</li>
+<li>修复（feeds）：协调区域部署合同（#6031）</li>
+<li>文档：将公共副本与代码派生计数对齐 — CII 31 Tier-1、55 个免费层、41 个 MCP 工具 (#5488)</li>
+<li>feat(bootstrap)：将缓慢的公共层切换为 KV 服务（第 1 阶段，#5338）（#6035）</li>
+<li>修复（摘要）：页面重播日志读取并将上限重新锚定到 Upstash 的实际限制（#6033）</li>
+<li>修复（分析）：消除 Umami 会话数据写入竞争 (#6034)</li>
+<li>修复（付款）：通过有限的抖动重试吸收 Dodo 结帐 429，引脚 SDK 重试关闭（#6027）（#6032）</li>
+<li>修复（见解）：让领导引用合并声明中的每个故事（#6030）</li>
+<li>修复（评论）：强化地理覆盖门以防止静默通过失败（#6029）</li>
+<li>修复（中国）：通过日本联合参谋部主页恢复日本 MOD (#5904) (#6013)</li>
+<li>修复（新闻）：在限制摘要标题之前删除重复项（#5969）</li>
+<li>修复（bootstrap）：在沙盒 iframe 中生存，匹配别名获取包装器（#6028）</li>
+<li>测试（提要）：地理覆盖健康审计与地理关键国家（#5957）（#5999）</li>
+<li>feat(feeds)：添加与语言环境提升分开的策略默认权重 (#5958) (#6000)</li>
+<li>feat(correlation)：添加分阶段运行时关联模式 (#6020)</li>
+<li>修复（见解）：通过保留经过验证的引导槽来恢复世界简要合成（＃5947）（＃6019）</li>
+<li>修复（市场）：恢复完整的行业估值覆盖范围（#5997）</li>
+<li>修复（分析）：跨用户聚合收集器运行状况（#5998）</li>
+<li>壮举（提要）：P1 — 尼日利亚以外的非洲深度（霍恩、刚果民主共和国、西非）(#5980)</li>
+<li>修复（分析）：强化 Umami 收集器写入路径接受度（#5996）</li>
+<li>修复（分析）：聚合楼层上的无收据门 200 个收集器警报 (#5978) (#5979)</li>
+<li>壮举（饲料）：P1 - 东侧邻国包（罗马尼亚，波罗的海，土耳其黑海）（＃5952）（＃5975）</li>
+<li>壮举（提要）：P1 — 印度太平洋差距（台湾主流、巴基斯坦、东南亚安全）（#5954）（#5977）</li>
+<li>壮举（提要）：P1 — 高加索、中亚、白俄罗斯/摩尔多瓦剧院包 (#5953) (#5976)</li>
+<li>修复（小部件）：在身份验证和云刷新中保留自定义面板（#5924）</li>
+<li>壮举（提要）：P1 - 乌克兰深度包（当地机构+每日前线评估）（#5951）（#5972）</li>
+<li>修复（分析）：仅在可操作的收集器写入失败时发出警报（#5974）</li>
+<li>ops（摄取）：绑定航空/RSS 节流并暴露消费者价格部分覆盖（#5970）</li>
+<li>feat(feeds)：记录并强制执行 UA/RU EN 默认余额 (#5950) (#5966)</li>
+<li>feat(feeds)：默认启用乌克兰/波兰 EN 前线资源 (#5949) (#5963)</li>
+<li>修复（分析）：验证并发收集器写入（#5964）</li>
+<li>修复（市场）：在雅虎 401 事件后恢复行业估值丰富（#5962）</li>
+<li>修复（见解）：保持合成拒绝的新鲜度（#5947）（#5965）</li>
+<li>壮举（增长）：衡量内容到产品的交接（#5944）</li>
+<li>修复（操作）：将种子冲突英特尔铁路监视路径与 GDELT 批量合约注册表同步（#5961）</li>
+<li>合并来自 fork 的提交</li>
+<li>壮举（增长）：实施人工智能可见性证据循环（#5940）</li>
+<li>合并来自 fork 的提交</li>
+<li>修复（seo）：强制执行完整的元描述（#5943）</li>
+<li>壮举（移动）：添加 feed-first 主导航 (#5244)</li>
+<li>修复（auth）：补偿 Clerk 令牌缓存的 client 时钟偏差（#5938）</li>
+<li>测试（auth）：强化 Clerk 到期回归（#5937）（#5942）</li>
+<li>修复（seo）：添加并验证数据集描述（#5941）</li>
+<li>修复（auth）：会话切换后拒绝过时的 Clerk 回退（#5937）</li>
+<li>修复（ci）：用它解析为的提交 SHA 替换无效的 Actions pin（#5925）</li>
+<li>修复（桌面构建）：将 client VITE_ env 传递给 Tauri 构建并控制其完整性 (#5905) (#5919)</li>
+<li>修复（专业版）：在静态页面 HTML 中公开 H1 (#5939)</li>
+<li>修复（mcp）：向代理商公开商品新闻（#5914）</li>
+<li>测试（中国）：固定日本 MOD Cloudflare 后备合约（#5917）</li>
+<li>修复（市场）：恢复行业估值丰富（#5918）</li>
+<li>修复（安全）：将 tauri 撞到 2.11.5 并打开咨询楼层 (#5518) (#5934)</li>
+<li>修复（seo）：关闭站点地图和 IndexNow 覆盖范围差距（#5936）</li>
+<li>修复（种子）：恢复 OFAC 制裁的新鲜度（#5927）</li>
+<li>修复（市场）：空预测池警报（#5916）</li>
+<li>修复（auth）：当强制刷新失败时保留 Clerk 令牌（#5933）</li>
+<li>文档：记录最近的情报和计费功能（#5913）</li>
+<li>史诗（桌面）：建立奇偶校验基线和漂移门（＃5902）（＃5915）</li>
+<li>docs(mcp)：文档预测市场类别 (#5898)</li>
+<li>在一个用户菜单中显示帐户和计费 (#5901)</li>
+<li>i18n：在所有 23 个剩余语言环境中翻译 88 个新字符串 (#5882)</li>
+<li>修复（哨兵）：抑制 SnapTube WebView 桥 JSON.parse 噪音（#5900）</li>
+<li>修复（跨源信号）：打开种子信封并将提取器与其编写器对齐（＃5870）（＃5896）</li>
+<li>修复（高级）：观察权利不同步（#5879）</li>
+<li>重构（门控）：通过门分割 panel-gating.ts (#5813) (#5893)</li>
+<li>修复（新闻）：旋转自定义类别的上限提要窗口并显示其源覆盖范围 (#5873) (#5887)</li>
+<li>修复（中国）：区分决策组不可用（#5891）</li>
+<li>修复（英特尔）：停止在每个分析提示块中提供换行符伪造行（＃5857）（＃5884）</li>
+<li>修复（权利）：强制声明导出格式（#5880）</li>
+<li>修复（新闻）：阻止降级的 200 摘要污染最后的好缓存 (#5877) (#5883)</li>
+<li>修复（新闻）：验证缓存的分类值（#5553）</li>
+<li>修复（金融）：派生新闻/数据面板按键冲突，以便创建商品新闻 (#5871) (#5888)</li>
+<li>修复（ops）：修剪恢复的 gdeltIntel 新鲜度抑制（#5770）（#5867）</li>
+<li>修复（市场）：将每个预测市场准确地分类到一个池中（#5733）（#5872）</li>
+<li>修复（wildfire）：将规范火灾有效负载限制在 5MB 发布限制下（#5866）（#5869）</li>
+<li>修复（新闻）：停止 19 个无上限的 rss 代理获取和双倍的新闻负载 (#5376) (#5878)</li>
+<li>ci：将出处和 SBOM 证明附加到已发布的图像中 (#5788)</li>
+<li>修复（小部件）：在自定义小部件沙箱中阻止卸载之前（#5760）</li>
+<li>修复（gdelt）：将消费者转移到一个散装物化器（#5863）</li>
+<li>修复（ml）：停止缓存整个会话的被拒绝的模型加载承诺（#5678）</li>
+<li>测试（mcp-grant）：为 /mcp-grant 同意页面添加 Playwright E2E 规范 (#5658)</li>
+<li>重构（tech-events）：从缓存填充路径中删除死角缩小（#5834）</li>
+<li>修复（自托管）：支持可选的 AIS 和 Windows 播种器 (#5799)</li>
+<li>修复（gdelt）：在最后一次尝试时轮换种子-gdelt-intel 主题，以便一个稀缺的 DOC 成功不再垄断（#5848）（#5859）</li>
+<li>修复（签出）：保留提供商 429 端到端响应（#5862）</li>
+<li>docs(china): 记录完整的数据覆盖范围 (#5860)</li>
+<li>修复（英特尔）：从聊天分析器中的 Redis 读取具体化的 GDELT 主题 (#5850) (#5856)</li>
+<li>修复（llm-health）：隔离模型提供者拒绝，而不是在每次调用时重试（＃4949）（＃5458）</li>
+<li>修复（安全）：博客站点中的凹凸 >=0.35.0 (GHSA-f88m-g3jw-g9cj，高) (#5477)</li>
+<li>修复（冲突）：将 GDELT 批量导出设为主要，并将 DOC 国家/地区扫描降级为后备 (#5849) (#5855)</li>
+<li>修复（专业版）：权利重新加载防护时关闭失败（#5853）</li>
+<li>文档（代理）：澄清拉取请求权限（#5854）</li>
+<li>修复（中国）：关闭 SZSE 代理重试和边缘诊断差距（#5839）</li>
+<li>修复（auth）：容忍小的 Clerk JWT 时钟偏差（#5832）</li>
+<li>修复（消费者价格）：将不可信的推动者作为解析工件（#5445）（#5461）</li>
+<li>修复（专业版）：防止结账后权利重新加载循环（#5846）</li>
+<li>壮举（定价）：每个年度计划免费 3 个月 + API 商业年度 SKU (#5845)</li>
+<li>修复（代理）：匹配 Decodo curl 端点重写，不区分大小写（#5847）</li>
+<li>ci(gate)：为每个更改作业指定一个不同的检查运行名称 (#5822) (#5842)</li>
+<li>修复（ci）：恢复确定性主测试运行（#5840）</li>
+<li>壮举（市场）：将基本面融入分析股票评级中（#5598）</li>
+<li>修复（评论）：在粘性端口检测之前标准化 Decodo 主机（#5837）</li>
+<li>修复（专业版）：停止专业版用户升级横幅闪烁（#5836）</li>
+<li>修复（相关性）：抑制孤立的慢速运行警告（#5835）</li>
+<li>修复（中国）：使深交所代理退出多样化（#5833）</li>
+<li>修复（技术事件）：在冷启动回退时缓存最广泛的有效负载（＃5427）（＃5603）</li>
+<li>修复（gdelt）：减少速率限制的摄取扇出（#5830）</li>
+<li>ci(gate)：需要每个门控工作流作业，而不仅仅是 test.yml 的 (#5402) (#5825)</li>
+<li>测试（mcp）：拒绝额外的情报历史请求（#5831）</li>
+<li>修复（hooks）：修复共享绝对 core.hooksPath 而不是警告（#5810）（#5824）</li>
+<li>文档（api）：发布版本控制和弃用政策（＃5827）</li>
+<li>测试（mcp）：固定英特尔历史记录 POST 正文隐私（#5821）</li>
+<li>修复（ci）：保留门状态 API 顺序（#5828）</li>
+<li>修复（ci）：对门状态查找进行分页（#5826）</li>
+<li>i18n(hi)：跨仪表板功能翻译 90 个最近添加的字符串 (#5778)</li>
+<li>修复（ci）：验证铁路项目令牌上下文（#5816）</li>
+<li>修复（健康）：取消运费恢复异常（#5784）</li>
+<li>修复：将 GED 候选版本合并到年度 UCDP 基础上，而不是仅探测年度 (#5796)</li>
+<li>修复（ops）：由于摄取接受漂移而无法关闭（#5802）</li>
+<li>修复（哨兵）：将事件属性分配给已部署的版本（#5815）</li>
+<li>修复（高级）：停止将失败的查找和注销的呼叫者呈现为“免费计划”（＃5619）（＃5779）</li>
+<li>修复（hooks）：停止绿树缓存证明门从未运行过的树（＃5800）（＃5809）</li>
+<li>修复（仪表板）：权利的门播放，而不是死的职员字段（＃5812）</li>
+<li>修复（mcp）：在输出预算内保留冲突事件（#5807）</li>
+<li>修复（冲突）：回退到官方 HAPI 快照 (#5806)</li>
+<li>测试（文档）：对文档发布的 /api/bootstrap Cache-Control 值进行门控 (#5794) (#5808)</li>
+<li>修复（portwatch）：使端口活动恢复收敛（#5804）</li>
+<li>修复（中国）：需要深圳证券交易所持续复苏（#5803）</li>
+<li>修复（gdelt）：绑定摄取恢复（#5805）</li>
+<li>壮举（市场）：在股票分析中展示法学硕士新闻情绪分项（#5656）</li>
+<li>feat(market)：将每只股票的风险分析添加到股票分析中（#5649）</li>
+<li>修复（通知）：引导拒绝将用户推送到浏览器设置（#5764）</li>
+<li>修复（hooks）：将tests/dom/路由到vitest而不是node:test runner (#5795) (#5801)</li>
+<li>修复（中国）：添加有界的 SZSE 边缘回退（#5786）</li>
+<li>测试（checkout）：关闭#5380覆盖差距——错误通过幂等性测试、webhook回滚、边界（#5606）</li>
+<li>修复（bootstrap）：停止边缘从温暖天气缓存应答无效密钥（＃5386）（＃5791）</li>
+<li>修复（安全）：强化联系和本地秘密验证（#5787）</li>
+<li>修复（英特尔）：为历史摄取提供持久的健康信号（＃5736）（＃5792）</li>
+<li>修复（会话）：当 cookie 无法持久时恢复（#5798）</li>
+<li>修复（操作）：退出已恢复的中国覆盖异常（#5785）</li>
+<li>sec(intel): 决定 untrusted-text 姿势并添加回缩路径 (#5743) (#5781)</li>
+<li>修复（种子）：拒绝没有稳定 ID 的 ACLED 事件 (#5783)</li>
+<li>修复（china）：对日本 MOD 代理目标块进行分类（#5776）</li>
+<li>修复（api-keys）：容忍瞬时身份验证竞赛（#5780）</li>
+<li>修复（脚本）：识别 stripJsComments 中关键字前面的正则表达式（#5763）</li>
+<li>修复：在整个存储库范围内解码 HTML 实体一次 (#5436) (#5754)</li>
+<li>修复（auth）：通过令牌自身的到期时间绑定 Clerk 令牌缓存（#5753）</li>
+<li>修复（checkout）：处理一个 create-checkout 200，其主体将无法解析（#5761）</li>
+<li>sec(seed)：停止导入种子加载生产凭证 (#5767) (#5775)</li>
+<li>修复（ops）：强制摄取操作接受（#5756）</li>
+<li>feat(mcp)：将 client 侧分析复合材料公开为 MCP 工具 (#5696) (#5739)</li>
+<li>修复（测试）：停止中国宏观固定装置在日历日期上腐烂（#5762）（#5765）</li>
+<li>壮举（英特尔）：企业情报 — SEC EDGAR 文件、8-K 重大事件、收益惊喜、真正的公司致富 (#5695) (#5738)</li>
+<li>修复（启动）：处理变体样式表预加载拒绝（#5758）</li>
+<li>feat(intel)：历史情报记忆——语义搜索、时间线和先例匹配 (#5737)</li>
+<li>修复（首选项）：序列化云首选项写入（#5755）</li>
+<li>feat(mcp)：按需 NLP 智能实用程序 — 分类、提取实体、新闻集群、关键词峰值 (#5734)</li>
+<li>壮举（预测）：地缘政治赌注系列 — 长期市场切片 (#5735)</li>
+<li>修复（专业版）：停止为授权用户闪烁升级横幅 (#5728) (#5751)</li>
+<li>修复（研究）：拒绝不完整的每日报道（#5746）</li>
+<li>修复（文档）：将 API 元描述与运行时对齐（#5750）</li>
+<li>修复（分析）：验证收集器写入并重试身份（#5748）</li>
+<li>修复（seo）：通过 IndexNow 提交 apex MCP URL（#5749）</li>
+<li>修复（seo）：扩展可爬行元描述（#5747）</li>
+<li>修复：gitignore docker-compose.override.yml 和 Secrets/ (#5725)</li>
+<li>修复（auth）：避免负缓存瞬时用户密钥失败（#5599）</li>
+<li>修复（种子）：恢复 GDELT 时间线恢复（#5719）</li>
+<li>壮举（研究）：霍尔木兹海峡过境报告 - 来源支持的研究试点 (#5668) (#5721)</li>
+<li>修复（中国）：重试短暂的 SZSE 代理失败（#5722）</li>
+<li>修复（健康）：绑定降级源标记（#5717）</li>
+<li>修复（测试）：隔离浅 Git 固定装置（#5732）</li>
+<li>修复（中国）：对日本 MOD 代理失败进行分类 (#5718)</li>
+<li>修复（冲突）：从出口机器人块中恢复 HAPI (#5720)</li>
+<li>文档（法律）：澄清可选的 World Monitor 归属（#5716）</li>
+<li>修复（seo）：生成真实的站点地图新鲜度（#5711）</li>
+<li>壮举（增长）：建立 SEO 和 AI 引用记分卡（#5709）</li>
+<li>修复（速率限制）：将付费呼叫者与共享 IP 存储桶隔离（#5708）</li>
+<li>测试（中国）：锁定安静披露健康语义（#5710）</li>
+<li>文档（法律）：澄清订阅许可证级别 (#5702)</li>
+<li>Chore(mcp)：将 MCP-edge 和网关 Pro-MCP 门折叠到 server/_shared/pro-mcp-gate.ts (#5659)</li>
+<li>壮举（定价）：将 Pro Business 降低至每月 $49.99 和每年 499 美元 (#5688)</li>
+<li>修复（会话）：区分丢弃的 cookie 和拒绝的 cookie (#5687)</li>
+<li>perf(globe)：绑定 HTML 标记计数并检测字段 (#5368) (#5371)</li>
+<li>修复（e2e）：在 CI 中重试一次，以便 Playwright 协议故障停止红化门（#5686）</li>
+<li>修复（引导）：停止采用无凭据公共路径的非按需密钥（#5683）</li>
+<li>修复（会话）：将 wm-session 中断范围限制到失败的路由 (#5674) (#5677)</li>
+<li>修复（会话）：标记死会话路由并阻止高级 401 杀死它 (#5674) (#5680)</li>
+<li>修复（权利）：在 JSON 门中荣誉 Clerk Pro 角色（#5650）</li>
+<li>修复（权利）：完成计费验证扫描（#5661）</li>
+<li>壮举（欢迎）：添加博客导航和 Palantir 常见问题解答 (#5681)</li>
+<li>test(gates)：ExportGateControl、PDF click 循环、resolveGateAction 和 PanelTabBar 的锁定通知的 DOM 行为覆盖率 (#5660)</li>
+<li>杂务（i18n）：刷新所有 24 个 /pro 语言环境以进行定价重组 + 停止英文副本默默地腐烂翻译（#5655）</li>
+<li>壮举（入门）：在 Pro 设置中进行表面命令搜索</li>
+<li>测试（seo）：将定价断言与可见表面保持一致</li>
+<li>修复（csp）：将 script-src 哈希与重新生成的内联 JSON-LD 重新同步</li>
+<li>修复（ci）：删除过时的爬虫复制统计声明</li>
+<li>解决 PR 审核反馈问题 (#5676)</li>
+<li>修复（seo）：替换仅爬虫预渲染内容</li>
+<li>修复（comtrade）：执行 CI 和配额合同</li>
+<li>修复（中国）：通过代理回退恢复日本 MOD (#5657)</li>
+<li>修复（i18n）：停止广告查询区域设置替代</li>
+<li>修复（中国）：直接失败后代理深交所披露（#5651）</li>
+<li>杂务（中国）：给予决策平等审核牙齿（＃5643）（＃5648）</li>
+<li>修复（seo）：生成规范的公共产品事实（#5672）</li>
+<li>杂务（中国）：重复数据删除出处 OpenAPI 模式 (#5647)</li>
+<li>docs(comtrade)：记录经过验证的铁路 cron，而不是假设它</li>
+<li>修复（a11y）：为设置控件添加焦点可见指示器（#5059）（#5522）</li>
+<li>修复（comtrade）：制定周期策略、绑定配额和覆盖范围</li>
+<li>修复（hooks）：使用 PR 基础引用进行预推送提交提前防护（#5670）</li>
+<li>修复（博客）：跟踪规范主机转换（#5662）</li>
+<li>修复（博客）：属性产品转换clicks</li>
+<li>修复（comtrade）：回退到每个报告者的上一期，上限请求配额</li>
+<li>修复（审核）：更正 JSDoc 目标并给予 Comtrade 预算测试</li>
+<li>修复（文档）：重新计算第二个主要合并的统计信息（178 个组件，209 个服务）</li>
+<li>壮举（定价）：为 Pro Business 播种真实的 Dodo 产品 ID</li>
+<li>feat(china)：组成决策平等信号（#5639）</li>
+<li>修复（数据）：恢复人道主义、中国和 PortWatch 覆盖范围（#5640）</li>
+<li>修复（comtrade）：恢复双边 HS4 摄取连续性</li>
+<li>修复（激活）：强化 Day-0 结果所有权（#5638）</li>
+<li>修复（权利）：停止购买新的 Pro 以获得 15 分钟损坏的 Pro (#5600) (#5623)</li>
+<li>feat(activation)：在服务器端记录第 0 天的激活结果 (#5621) (#5626)</li>
+<li>壮举（市场）：将即将到来的收益纳入股票分析（#5636）</li>
+<li>feat(china)：添加抗不透明活动即时广播 (#5631)</li>
+<li>文档（解决方案）：捕获 npm 注册表中断，该中断默默地红了安全门（#5637）</li>
+<li>文档（概念）：正确的计划系列条目 - 层门是阈值</li>
+<li>文档（解决方案）：复合证书类别与计划家庭配额课程</li>
+<li>修复（文档）：重新计算合并树上的统计信息（176 个组件，207 个服务）</li>
+<li>修复（审核）：关闭 API 层 OAuth 配额泄漏 + 探测重试 + 弹出框陈旧</li>
+<li>重构（gates）：从简化过程中整合跨单元重复</li>
+<li>修复（导出）：使用文档后备成员加宽打印主机 contentWindow 切片</li>
+<li>测试（文档）：更新 Pro Business 措辞的许可证密钥指导引脚</li>
+<li>文档（定价）：使每个表面与新的阶梯和出口门控保持一致</li>
+<li>feat(pro)：定价页面重组——个人/商业轴标题、企业带、五列网格；重建公共/专业</li>
+<li>壮举（定价）：Pro Business 公开 — 目录副本、两个镜像、v3 缓存密钥（7 个站点）、许可证芯片奇偶校验保护、定价文档</li>
+<li>壮举（仪表板）：带有可见锁定添加控件的按计划选项卡上限 — Free 3 / Pro 10 / Pro Business 25，仅限创建，计费感知</li>
+<li>壮举（导出）：具有可见锁定状态、计费感知 CTA 和 PDF 数据报告的权利门控导出</li>
+<li>壮举（激活）：使拒绝队列可读，而不仅仅是记录（＃5617）（＃5630）</li>
+<li>壮举（计费）：专业业务生命周期 — 共享专业结帐系列，具有升级分拆、引导 409 副本、欢迎电子邮件、第 0 天激活</li>
+<li>修复（mcp）：设置配额小部件报告计划解决的限制 - 专业商业版为 250，企业版无限制，client 标准化器不再强制 null/0 到 50</li>
+<li>feat(activation)：在自己的持久存储桶中记录浏览器阻止的步骤 (#5617) (#5629)</li>
+<li>修复（总结）：停止记录 declined-by-design 链的“所有提供者均失败”（#5377）（#5605）</li>
+<li>修复（军事）：强化海峡两岸活动出版物（#5627）</li>
+<li>修复（ci）：阻止 npm 注册表因默默地红动安全门而中断（#5628）</li>
+<li>feat(mcp)：针对专业家庭呼叫者的计划驱动每日配额 — 250/天专业业务，null=无限制，user_key 保持 50</li>
+<li>壮举（计费）：Pro Business 目录基础 — 数据导出权利字段、双 PLAN_PRECEDENCE 条目、resolvePlanKey 目录后备</li>
+<li>壮举（中国）：组成区域物流走廊控制塔（#5593）</li>
+<li>文档（激活）：捕获拒绝许可的死胡同学习（#5609）（#5624）</li>
+<li>修复（设置）：夹紧不可用的 MCP 选项卡 (#5625)</li>
+<li>修复（高级）：当 client 说 Pro 时，停止将 403 渲染为“需要 Pro - 升级”（#5608）（#5618）</li>
+<li>修复（激活）：将拒绝的推送权限路由到阻止状态 (#5609) (#5615)</li>
+<li>修复（专业版）：在 MCP Clients 点激活步骤 3，而不是 API 追加销售 (#5607) (#5613)</li>
+<li>修复（军事）：阻止海峡两岸播种机在每次发布时崩溃（#5616）</li>
+<li>feat(china)：添加官方交易所披露信号（#5594）</li>
+<li>修复（中国）：强化策略摄取（#5610）</li>
+<li>feat(china)：添加官方宏观金融脉搏 (#5597)</li>
+<li>feat(china): 摄取官方政策执行事件 (#5595)</li>
+<li>壮举（军事）：添加海峡两岸活动基线（#5596）</li>
+<li>文档：添加日语自述文件 (#5410)</li>
+<li>feat(markets)：可扩展的终端价格图表 + fix(dev)：OpenSky 代理路径 (#5459)</li>
+<li>修复（sidecar）：在停滞/截断的响应上释放上游获取信号量（#5489）</li>
+<li>壮举（出处）：添加决策信号合约（#5592）</li>
+<li>修复（激活）：主要跟踪土地结果（#5590）</li>
+<li>修复（可观察性）：在 Sentry 覆盖审计中检测静默 catch 块（#5586）</li>
+<li>修复：注册缺少 Breaking Defense 英特尔源代码 (#5405)</li>
+<li>feat(business-seats)：为 API Business 添加域门控专业席位邀请 (#5563)</li>
+<li>壮举（激活）：加入未激活的第一周期 Pro 用户（#5564）</li>
+<li>修复（seo）：预检可抓取实时会话（#5589）</li>
+<li>壮举（市场）：在股票分析中添加结构化基本面+面板（#5467）</li>
+<li>perf(market)：从“实时”缓存层提供实时价格磁带（#5465）</li>
+<li>修复（rss-proxy）：当中继回退抛出时保留原始错误/响应（#5464）</li>
+<li>修复（出处）：需要明确的 feed 分类（#5571）</li>
+<li>测试：保护 Pro JSON-LD 定价免受目录漂移的影响 (#5451)</li>
+<li>修复（安全）：基线无法到达的大括号扩展建议（#5572）</li>
+<li>修复（冲突）：修复人道主义管道 - HAPI 每个标识符节流，而不是 IP (#5554) (#5568)</li>
+<li>壮举（监控）：每 15 分钟探测一次 Umami 分析收集器 (#5565) (#5567)</li>
+<li>文档：正确的 CII 国家/地区覆盖范围 (#5511)</li>
+<li>重构（预测）：提取市场结算加载程序（#5566）</li>
+<li>文档（架构）：将警报文档与有线生产者对齐（#5513）</li>
+<li>修复（标题）：保持登录在中宽桌面上可见（#5557）</li>
+<li>feat(forecast)：第 2 阶段 — LLM 集成 + 预测市场/FRED 校准切片 (#5525) (#5526)</li>
+<li>修复（新闻）：失败关闭源默认值（#5390）（#5556）</li>
+<li>修复（deps）：将 postcss 更改为 8.5.18+ 以清除 GHSA-r28c-9q8g-f849 (#5562)</li>
+<li>perf(gates)：修复过时的钩子交付 + 批量 esbuild 检查 + 增量 tsc（推送超时） (#5558)</li>
+<li>feat(seo)：缩小可爬行语料库审计差距——社交元、别名、trust 链接、部分风险呈现 (#5555)</li>
+<li>壮举（定价）：API Starter 重命名 + 商业许可分割 + 商务版 5 个 Pro 席位 ($299.99) (#5552)</li>
+<li>壮举（seo）：添加可爬行的实时情报工具（＃5546）</li>
+<li>修复（_crypto）：在格式错误的身份验证输入上关闭失败（#5550）</li>
+<li>修复（可更新）：用最后已知的良好数据替换硬编码的回退（#5551）</li>
+<li>壮举（激活）：第 0 天专业激活入门插页式广告 (#5534)</li>
+<li>修复（seo）：防止原始文本爬虫提取“WWorld Monitor”将装饰性“W”品牌标记从内联文本移动到 CSS ::after 伪元素。原始文本内容提取现在生成“World Monitor”而不是“WWorld Monitor”。视觉外观、可访问名称和首次绘制足迹均保持不变 - ::after 继承了 .sculpture-brand-mark 相同的字体大小和颜色。在deploy-config.test.mjs中添加集中回归测试，断言： - 原始文本不包含“WWorld” - 品牌标记范围没有文本内容 - “W”通过CSS内容渲染修复＃5541（＃5549）</li>
+<li>修复（docker）：保留本地 MCP 请求的调用者身份验证（#5537）</li>
+<li>修复（docker）：保留本地 MCP 请求的调用者身份验证（#5492）</li>
+<li>壮举(i18n): Hoàn thiện bản dịch tiếng Việt (vi.json) (#5539)</li>
+<li>修复（路由）：将定价重定向到规范部分（#5548）</li>
+<li>修复（付款）：经过验证的死信格式错误的 Webhook，而不是 401 (#5547)</li>
+<li>修复（给予）：披露已发布的基准来源（#5540）</li>
+<li>修复（付款）：持续失败的 Dodo webhook 事件 (#5533)</li>
+<li>合并来自 fork 的提交</li>
+<li>测试（bootstrap）：覆盖 DebugBear 采样边界（#5545）</li>
+<li>修复（seo）：删除不支持的模式映射机器人指令（#5544）</li>
+<li>杂务（bootstrap）：结束 R2 起源实验（DebugBear 采样 + KTD7 no-go）（#5536）</li>
+<li>修复（付款）：恢复失效的订阅者重新激活路径（#5532）</li>
+<li>修复（安全）：将 find-my-way 改为 9.7.0 — GHSA-c96f-x56v-gq3h (HTTP/2 DDoS) (#5527)</li>
+<li>壮举(api)：强制执行每日销售上限+信息丰富的上限 429 (#4635) (#4684)</li>
+<li>修复（预测）：延长 EIA 结算宽限期（#5524）</li>
+<li>修复（global-tenders）：传播 SAM.gov 请求预算，停止重试 429（#5444）（#5457）</li>
+<li>修复（auth）：关闭#5379对抗性扫描——资源耗尽、国家腐败、MCP权利差距和惰性直播套件（#5385）</li>
+<li>修复（auth）：将 Pro 的简短拒绝排除在会话恢复之外（#5516）</li>
+<li>修复（python-sdk）：避免秘密扫描文字（#5486）</li>
+<li>修复（mcp）：通过规范的 API 路由同级获取（#5517）</li>
+<li>修复（通知通道）：绑定有 15 秒超时的凸面中继（#5485）</li>
+<li>文档（解决方案）：复合 #4771 学习 — 覆盖语义 bug + i18n shell 约定 (#5495)</li>
+<li>ux（付款）：计费感知续订/失效状态而不是通用升级 CTA (#4771) (#5494)</li>
+<li>feat(homepage): 链接 Palantir 定位文章 (#5491)</li>
+<li>修复（auth）：在续订检查期间尊重当前的 API 访问（#5490）</li>
+<li>修复（seed-gdelt-intel）：降低簿记失败而不是崩溃；断电规模时间线 TTL；内容年龄选择加入 (#5478) (#5481)</li>
+<li>ci(deploy-gate)：在发布终端“待处理”之前重试检查运行轮询 (#5479) (#5482)</li>
+<li>修复（付款）：区分短暂的权利查找失败和确认的拒绝（#5483）</li>
+<li>壮举（博客）：加强 SEO 和 AI 的可发现性（#5475）</li>
+<li>修复（付款）：在过时订阅被拒绝之前重新检查 Dodo (#5447)</li>
+<li>文档（博客）：阐明 WorldMonitor 和 Palantir 的定位 (#5480)</li>
+<li>feat(agent-readiness): 在代理视图中广告 SDKs + 主页 rel=备用指针 (orrank round 2) (#5476)</li>
+<li>feat(agent-readiness)：沙箱、docs-MCP JSON-RPC 错误、模式映射、模块化 llms.txt (orrank round) (#5469)</li>
+<li>修复（内容）：用产品图像替换博客标题卡（#5452）</li>
+<li>壮举（博客）：固定帖子支持；将 Palantir 柱固定到索引顶部 (#5446)</li>
+<li>文档（解决方案）：实时产品目录的三层缓存驱逐操作手册（#5422）</li>
+<li>壮举（内容）：收据回合 — 重写 Palantir 帖子，打印真实记分卡，实时辐射 + 招标记录 (#5443)</li>
+<li>将博客文章更新为 6 个仪表板，修复变体计数，并添加能源……(#5408)</li>
+<li>修复（seed-utils）：在读取路径上重试瞬态 Redis blips + 跳过路径元操作 (#5437) (#5438)</li>
+<li>修复（feed-digest）：解码和最后，这样 RSS 实体就不会被解码两次（#5432）</li>
+<li>修复（deps）：清除所有 PR 上的清晰锐利 + fast-xml-parser 高建议，减少审核锁定文件（#5423）（#5424）</li>
+<li>修复（rss-proxy）：从白名单中删除失效的 rsshub.app (#5414)</li>
+<li>修复（定价）：在 API 入门级上调出“包含许可证/API 密钥”(#5419)</li>
+<li>壮举（内容）：13 篇博客文章 — 未记录的功能（招标、制裁、航空、辐射、能源仪表板……）+“非 Palantir”定位（#5403）</li>
+<li>修复（deps）：清除所有 PR 上的新的高级建议，重新添加审核锁定文件（#5417）（#5418）</li>
+<li>修复（种子研究）：隔离 arXiv 类别 + 重试 + TTL，因此单个 blip 无法清空产品 (#5409) (#5413)</li>
+<li>测试（专业版）：承诺/专业版的关键路径预算保护（＃5396）（＃5397）</li>
+<li>测试（rss-proxy）：将测试文件连接到 CI，锁定 SSRF/auth/rate-limit 防护，修复中继 www-tolerance (#5378) (#5399)</li>
+<li>杂务（lint）：安抚生物群系 2.4.9 跨脚本的升级规则/（解锁所有 PR）（#5400）</li>
+<li>修复（分析）：吞下 Umami 信标拒绝泄漏到 Sentry (#5393)</li>
+<li>修复（deps）：清除未通过安全审核门的高严重性 DoS 建议（#5395）</li>
+<li>修复（mcp）：使 GET /mcp 爬虫可读并修复发现缓存键（#5382）</li>
+<li>文档（解决方案）：从 KV 切换中捕获两个可重用的知识 (#5338) (#5383)</li>
+<li>修复（auth）：#5369 的后续 — 修复 Infinity-exp 测试并重置泄漏超时（#5370）</li>
+<li>修复（签出）：使用幂等密钥重试一次短暂的创建签出失败 (WORLDMONITOR-Q4) (#5374)</li>
+<li>修复（auth）：对抗性扫描——资源耗尽、边界验证、测试双重合约（#5369）</li>
+<li>修复（哨兵）：抑制注入脚本中的零帧“意外令牌”语法错误（#5367）</li>
+<li>修复（通知）：在所有警报类别中统一强制执行国家/地区范围 (#5359) (#5366)</li>
+<li>文档（解决方案）：播种器辅助 Redis 在 Upstash 超时时写入崩溃（#5365）</li>
+<li>修复（seed-utils）：重试 writeExtraKey/extendExistingTtl 中的瞬时 Redis 失败（#5364）</li>
+<li>文档（bootstrap）：通过 clean-24h 确认最终确定 U-K3 证据 (#5338) (#5363)</li>
+<li>文档（解决方案）：具有堆栈门控和签名匹配的哨兵噪声过滤（#5361）</li>
+<li>修复（哨兵）：抑制 Clerk UI 加载失败和扩展获取包装噪音（#5360）</li>
+<li>feat(bootstrap)：通过 Worker 从 KV 提供公共层（U-K4，#5338）（#5357）</li>
+<li>文档（解决方案）：桌面 CLS 受害者与移动者学习 + 面板安装词汇 (#5332) (#5356)</li>
+<li>i18n(it)：完整的意大利语翻译 — 翻译剩余的未翻译… (#5349)</li>
+<li>测试（dom）：涵盖消毒剂和建筑合同（#5348）</li>
+<li>修复（seo）：将 Mintlify 文档代理范围限定为 www + 重定向无前缀 /api-reference/* (#5345) (#5347)</li>
+<li>feat(bootstrap)：打开 KV 阴影测量（U-K3 门，#5338）（#5342）</li>
+<li>perf(cls)：为直接层面板保留网格插槽 - 为 top-8 安装架加壳 (#5332) (#5344)</li>
+<li>feat(bootstrap)：Workers KV 服务路径 — 发布者写入 + 影子测量（U-K1、U-K2、#5338）（#5341）</li>
+<li>修复（简短）：捕捉持续时间主导的历史解释（#5340）</li>
+<li>perf(bootstrap)：记录现有的 Redis 延迟 (#5339)</li>
+<li>feat(cls)：轮班时间移动者归因 - 命名生长的东西，而不是移动的东西 (#5332) (#5336)</li>
+<li>修复（comtrade）：恢复 HS 预览分类器（#5337）</li>
+<li>修复（简短）：排除历史解释器（#5335）</li>
+<li>perf(cls)：将始终填满的面板固定到确定的行高 (#5332) (#5333)</li>
+<li>修复（预测）：淘汰遗留基础设施级联预测（#5334）</li>
+<li>修复（bootstrap）：在边缘保留 R2 RUM CORS 标头（#5331）</li>
+<li>文档（解决方案）：复合 #5300 杠杆测试学习 + 种子 CONCEPTS.md (#5329)</li>
+<li>修复（bootstrap）：在 Vercel 上保留 R2 原始 RUM（#5328）</li>
+<li>修复（预测）：present() 在缺席时观察到 0（不是 NaN）——VOID 率回归 (#5327)</li>
+<li>修复（bootstrap）：在 Vercel 上安排 R2 影子工作（#5326）</li>
+<li>perf(bootstrap)：准备测量的 R2 原点部署 (#5325)</li>
+<li>修复（中国）：来自 AIS Relay 的种子国家索引（#5324）</li>
+<li>修复（新闻）：按语言环境审核中国源覆盖范围（#5323）</li>
+<li>修复（健康）：检测消失的紧凑投影（#5322）</li>
+<li>perf(seeders)：停止将 float64 转换噪声播种到市场迷你图中 (#5300) (#5319)</li>
+<li>测试（播种机）：审核 extraKey TTL — 并修复它发现的野火投影 (#5320)</li>
+<li>修复（中国）：保留铁路支持的国家索引审计缓存（#5318）</li>
+<li>测试（播种机）：在整个舰队中调整 TTL-outlives-staleness 不变量（#5317）</li>
+<li>修复（预测）：仪表板密钥传送 11.5MB 播种器跟踪，而不是投影 (#5311) (#5315)</li>
+<li>修复（中国）：强化覆盖审计合同（#5314）</li>
+<li>feat(mcp)：添加采购机会工具（#5312）</li>
+<li>perf(forecasts)：为仪表板提供预测列表，而不是档案 (#5300) (#5311)</li>
+<li>修复（中国）：完整覆盖审计合同（#5313）</li>
+<li>perf(bootstrap)：将 UCDP 用作仪表板投影，而不是 2,000 个原始事件 (#5300) (#5305)</li>
+<li>perf(bootstrap)：停止运送 17 层密钥，client 无法读取 (#5300) (#5308)</li>
+<li>修复（播种机）：吸收短暂的招标源信号而不是发出健康警告（#5310）</li>
+<li>perf(bootstrap)：将热升级作为仪表板大小的视图，而不是完整的视图 (#5300) (#5303)</li>
+<li>perf(bootstrap)：使 cyberThreats 成为按需密钥，而不是慢速货运 (#5300) (#5302)</li>
+<li>修复（种子）：为 ACLED 冲突密钥提供一个比其过时门更有效的 TTL (#5309)</li>
+<li>perf(health)：从紧凑判决快照中提供 ?compact=1 (#5300) (#5307)</li>
+<li>修复（预测）：为 DeepSeek-Flash 提供始终假定的路由超时 (#5304)</li>
+<li>壮举（中国）：添加专门的国家/地区摘要（#5297）</li>
+<li>修复（自然）：修正 HKO 健康状况和旋风回退（#5298）</li>
+<li>文档（解决方案）：从 2026 年 7 月 14 日的播种者/健康会议中获取三个经过验证的经验教训 (#5306)</li>
+<li>壮举（采购）：技术相关性过滤和记录的 AusTender 拦截器 (#5286) (#5299)</li>
+<li>修复（健康）：停止将未配置的可选源分级为 SEED_ERROR (#5295)</li>
+<li>壮举（自然）：添加太平洋气旋归因（#5296）</li>
+<li>feat(china)：添加当前宏并发布日历覆盖范围 (#5294)</li>
+<li>修复（哨兵）：关闭两个 beforeSend 间隙，重新显示已知的第三方噪音（#5293）</li>
+<li>修复（铁路）：防止跳过播种机部署（#5292）</li>
+<li>修复（播种机）：通过 USPTO ODP 恢复国防专利（#5284）</li>
+<li>修复（feeds）：绕过 Nature 重定向循环（#5291）</li>
+<li>修复（播种机）：当没有可用源时停止种子冲突英特尔崩溃循环（＃5256）（＃5290）
+-壮举（中国）：添加健康基础覆盖范围（#5283）</li>
+<li>壮举（中国）：深化战略贸易和能源覆盖（#5282）</li>
+<li>壮举（中国）：深化市场和服务器新闻报道（#5281）</li>
+<li>壮举（中国）：扩大航空和安全解放军识别（#5280）</li>
+<li>修复（seeders）：在scripts/package.json中声明papaparse + fast-xml-parser（#5266回归）（#5289）</li>
+<li>修复（api）：剥离路由器注入？rpc=，以便公共 RPC URL 受到 CDN 屏蔽（#5285）（#5287）</li>
+<li>壮举（采购）：添加全球招标情报（#5266）</li>
+<li>修复（e2e）：容忍独立的烟雾反应（#5267）</li>
+<li>修复（野火）：带有铁路播种机的包装压实机（#5270）</li>
+<li>修复（冲突）：恢复无钥匙 GDELT 回退（#5269）</li>
+<li>修复（安全）：整合运行时强化残差（#5260）</li>
+<li>修复（播种机）：当最后一个好的密钥消失时重试失败（#5258）</li>
+<li>perf(llm)：切断 DeepSeek Flash 失速尾部 (#5257)</li>
+<li>perf(redis): 屏蔽残留仪表板读取出口 (#5263)</li>
+<li>perf(health): 记忆 Redis 判决扫描 (#5262)</li>
+<li>文档：添加中文自述文件（#5265）</li>
+<li>修复（globe）：保护 OrbitControls 防止鼠标+触摸指针混合崩溃（#5252）</li>
+<li>修复（健康）：使用 LLEN 测量列表类型的数据键，而不是 STRLEN (#5254)</li>
+<li>修复（会话）：区分死恢复原因（#5253）</li>
+<li>perf(bootstrap): 恢复 CDN 缓存屏蔽以进行层读取 (#5249) (#5250)</li>
+<li>文档：修复不一致的破折号和实时连字（#5248）</li>
+<li>修复（哨兵）：跳过 client 合成的会话降级 503 秒（#5245）（#5247）</li>
+<li>壮举（预测）：快速解决商品价格赌注 — Gate-1 加速器 (#5233) (#5243)</li>
+<li>修复（安全）：强化 Turnstile client IP 身份（#5241）</li>
+<li>修复（安全）：强化 client-ip 证明比较（#5242）</li>
+<li>修复（播种机）：提取无依赖项的 client-ip.ts，以便 use.ts 停止将 @upstash 拉入播种机容器 (#5231) (#5236)</li>
+<li>壮举（预测）：赌注模板引擎+能源飞行员（第一阶段，#5233）（#5238）</li>
+<li>壮举（预测）：诚实桥梁 - 真技 Brier + 漏斗护栏（阶段 0，#5233）（#5237）</li>
+<li>修复（遥测）：验证 clients 的属性用法（#5229）</li>
+<li>修复（seo）：宣传本地化文档站点地图（#5226）</li>
+<li>修复（情报）：在边缘上限下限制扣除情况 LLM 预算（#5225）</li>
+<li>docs(i18n): 扩展中文 SEO 描述 (#5223)</li>
+<li>修复（auth）：抑制死匿名会话重试风暴（＃5219）</li>
+<li>修复（安全）：强化 webhook 注册边界（#5218）</li>
+<li>文档（i18n）：将 87 个 zh-Hans 页面重新同步到当前英语（#5215）（#5222）</li>
+<li>perf（移动）：分割水合后长任务波（#5220）</li>
+<li>修复（哨兵）：抑制 h5player 用户脚本框架-src CSP 噪音（#5221）</li>
+<li>文档：改进 zh 翻译的 SEO 标题和描述 (#5217)</li>
+<li>修复：修复 zh 翻译中损坏的链接 (#5216)</li>
+<li>修复（速率限制）：隔离付费汇总调用者（#5212）</li>
+<li>修复（启动）：容忍浏览器存储被阻止（#5211）</li>
+<li>feat(docs): 添加中文 (zh-Hans) 翻译，完全一致 (#5214)</li>
+<li>修复（凸）：在通知通道上强制执行 Pro 门（#5210）</li>
+<li>修复（cls）：为折叠地图群组创建已经折叠的#mapSection (#5159) (#5205)</li>
+<li>修复（构建）：将 ResilienceWidget 并置到 panel-intel 块中 (#5203) (#5204)</li>
+<li>perf(map): 门覆盖反比例变量写入真实缩放变化 (#5080 slice 2) (#5202)</li>
+<li>文档：改进 MCP 应用程序和概述页面的 SEO 标题 (#5200)</li>
+<li>feat(mcp-apps)：扩展交互式小部件舰队 5 → 10 (#4956) (#5199)</li>
+<li>修复（风险）：使规范 CII 成为唯一的产品来源 (#5197)</li>
+<li>修复（预测）：根据截止日期证据解决判断条目（#5196）</li>
+<li>修复（简短）：拒绝被截断的为什么重要的散文（#5184）</li>
+<li>文档：改进许可证页面的 SEO 标题 (#5182)</li>
+<li>修复（简短）：改变分析师的原因散文（#5175）</li>
+<li>修复（文档）：解释如何查找和替换 API 密钥 (#5181)</li>
+<li>文档（法律）：制定阿联酋管辖法律、澄清退款、迪拜的地面运营商 (#5180)</li>
+<li>文档：加强“关于”、“隐私”和“条款”页面上的 SEO 元数据 (#5179)</li>
+<li>修复（主页）：将《连线》引用指向全球连线.com 版本（#5178）</li>
+<li>feat(docs)：添加关于、隐私和条款 trust 页面 (#5177)</li>
+<li>修复：澄清国际货币基金组织实际 GDP 本地货币单位 (#4072)</li>
+<li>文档：修复管道表中的拼写错误和逃逸管道（#5176）</li>
+<li>修复（欢迎）：从主页 SameAs 中删除已死的维基数据 QID (#5174)</li>
+<li>perf(search): 将移动工作表数量推迟到第一次绘制之后 (#5167)</li>
+<li>修复（a11y）：恢复 Intel Feed 标签对比度（#5172）</li>
+<li>perf（移动）：配置文件面板工作和修剪字体预缓存（#5173）</li>
+<li>修复（cls）：保留折叠的地图启动足迹（＃5161）</li>
+<li>修复（欢迎）：支持遗留根清除（#5164）</li>
+<li>修复 Windows / CRLF 兼容性和测试套件错误 (#4358)</li>
+<li>壮举（航空公司）：添加自动 ICAO-IATA 代码生成器脚本 (#4309)</li>
+<li>ci（消费者价格）：运行 vitest 套件（#5154）</li>
+<li>修复（凸）：保护 JSON 对象请求主体（#5156）</li>
+<li>修复（edge）：允许更长的企业 wm_ 键通过机器人门（#5155）</li>
+<li>文档：在内联代码跨度内取消转义 HTML 实体 (#5152)</li>
+<li>文档：将指标和信号描述收紧在 160 个字符以下 (#5151)</li>
+<li>修复（文档）：防止内部计划发布偏差（#5149）</li>
+<li>修复（匹配器）：不要将缺失的类别视为精确的类别匹配（#5139）</li>
+<li>修复（可观测性）：过滤 Floot 自动化 + DebugBear 包装的获取 Sentry 噪音 (#5143)</li>
+<li>修复（预测）：重新分类骚乱计数规格以进行判断（＃5091）（＃5142）</li>
+<li>修复：桌面应用程序文档中正确的动词形式“time out”（#5146）</li>
+<li>修复：修复由薄荷损坏链接标记的损坏链接（#5144）</li>
+<li>文档：将 71 页的 SEO 描述收紧至 130-160 个字符 (#5145)</li>
+<li>杂务（部门）：从 7.0.1 到 9.0.0 的碰撞动作/github 脚本（#5122）</li>
+<li>杂务（部门）：碰撞动作/设置 - 从 5.6.0 到 6.5.0 (#5118)</li>
+<li>修复（种子）：时间盒种子冲突英特尔 GDELT 回退扫描以适应获取截止日期（＃5140）（＃5141）</li>
+<li>杂务（deps）：从 4.3.1 到 6.0.3 的碰撞操作/结帐（#5121）</li>
+<li>杂务（部门）：将 docker/build-push-action 从 7.0.0 提升到 7.2.0 (#5120)</li>
+<li>杂务（deps）：/consumer-prices-core 中的凹凸节点（#5117）</li>
+<li>perf(cls)：将缓存模式横幅从流程中取出以停止列推送 (#4580) (#5137)</li>
+<li>修复（预测）：重新分类冲突/ucdp_zone计数规格以进行判断（＃5136）（＃5138）</li>
+<li>修复（预测）：当 ACLED 信用缺失时，针对冲突事件回退到 GDELT (#5099) (#5134)</li>
+<li>perf(cls)：将移动启动骨架固定到真实地图足迹 (#4580) (#5133)</li>
+<li>perf（可观测性）：示例现场网络重要遥测，可减少 Sentry 体积约 80% (#5132)</li>
+<li>perf(lcp)：在面板构造中绘制缓存的 World Brief (#4890) (#5130)</li>
+<li>修复（仪表板）：稳定 CLS 倾向的深潜运动 (#5124)</li>
+<li>修复（lcp）：标签字段 LCP 元素选择器（#5123）</li>
+<li>修复（预测）：强化模拟关键字匹配（#5128）</li>
+<li>测试（预测）：锁定 ACLED 运行状况可见性 (#5127)</li>
+<li>杂务（perf-tooling）：强化渲染轴交互痕迹（#5125）</li>
+<li>修复（种子）：当 ACLED 信用不存在时，不要使种子冲突英特尔崩溃（#5126）</li>
+<li>修复（专业版）：在营销页面上收集 DebugBear RUM (#5116)</li>
+<li>修复（预测）：校准探测器概率（#5107）</li>
+<li>测试（预测）：加强模拟选择断言（#5112）</li>
+<li>修复（预测）：表面静默预测输入反馈间隙（#5109）</li>
+<li>修复（仪表板）：减少移动地图点击演示工作（#5111）</li>
+<li>修复（预测）：保护市场校准锚（#5105）</li>
+<li>修复（预测）：当主源不可用时 ACLED 种子失败 (#5106)</li>
+<li>修复（预测）：强化剧院模拟门控（#5108）</li>
+<li>修复（哨兵）：抑制 DebugBear RUM 信标的 Firefox 主机后缀的 NetworkError (#5110)</li>
+<li>修复（预测）：强制执行硬分辨率发布覆盖范围（#5096）</li>
+<li>修复（预测）：恢复 FRED 宏信号（#5104）</li>
+<li>修复（前端）：强化仪表板延迟加载和元数据（#5089）</li>
+<li>feat(api)：IETF RateLimit 标头 + 可验证的签名 Webhook 示例（orrank 可用性）(#5095)</li>
+<li>perf（仪表板）：添加移动点击渲染轴跟踪（#5088）</li>
+<li>修复（朗姆酒）：有线 LCP Web-vitals 报告（#5090）</li>
+<li>修复（预测）：解决判断的预测结果（#5087）</li>
+<li>修复（预测）：使用 ACLED 分辨率源进行硬计数 (#5085)</li>
+<li>perf(edge): 缓存顶点→www 301 + 点在 www 上发布的人工链接 (#5081) (#5086)</li>
+<li>修复（api）：冷却 Finnhub 符号搜索 429s (#5082)</li>
+<li>perf(wildfire): 限制仪表板火灾有效负载 (#5083)</li>
+<li>修复（中继）：停止双 TLS 包装 OpenSky 代理获取 (#5074) (#5084)</li>
+<li>修复预测硬分辨率覆盖范围 (#5072)</li>
+<li>修复（播种者）：当成员优雅地失败时，不要使捆绑包崩溃（＃5077）（＃5078）</li>
+<li>perf(forecast)：从解析分类账中删除存档的终端条目 (#5067) (#5073)</li>
+<li>修复 SPA 生命周期恢复 (#5064)</li>
+<li>修复播种机健康元数据漂移 (#5071)</li>
+<li>修复（航空）：避免缓存不可用的航班数据（#5070）</li>
+<li>修复 RPC 无存储缓存合约 (#5068)</li>
+<li>Harden Convex 权利生命周期竞赛 (#5065)</li>
+<li>测试（新闻）：稳定完整性选择归因夹具（#5069）</li>
+<li>修复容器运行状况检查：IPv6/localhost + 验证门控探测路径 (#5051)</li>
+<li>修复（预测）：避免过时的 UCDP 计数分辨率（#5063）</li>
+<li>修复（docker）：无钥匙健康检查 + 将 UCDP_ACCESS_TOKEN 连接到 ais-relay env (#5052)</li>
+<li>perf(map): 减少 INP 输入延迟 — 保护重建循环、限制悬停查询、yield-schedule 大量提交 (#5042) (#5045)</li>
+<li>perf(dashboard/INP)：通过底图几何缓存路由 flashLocation (#5049) (#5050)</li>
+<li>修复（结账）：安静的活跃订阅块（#5048）</li>
+<li>壮举（语料库）：使阻塞点/国家/地区页面变得有用+深入链接到实时地图（#5044）</li>
+<li>壮举（计费）：自助启动→商务API升级（#4634）（#4672）
+-壮举（api）：添加计划限制通知生命周期（＃4648）</li>
+<li>修复（新闻）：在边缘超时下保持摘要冷构建（#5047）</li>
+<li>perf（onboarding）：将任务预设自动打开延迟到绘制后空闲（#5046）</li>
+<li>壮举（内容）：添加可爬行的静态语料库（#5041）</li>
+<li>修复（摘要）：在预览中读取前缀故事轨道（#5040）</li>
+<li>文档（mcp）：文档端点公开工作流程（#5039）</li>
+<li>壮举（特工技能）：使用第 4 部分食谱扩展目录（#5033）</li>
+<li>feat(mcp-apps)：交互式仪表板舰队 - 4 个新的 ui:// 小部件 (#4959) (#5035)</li>
+<li>perf(map): 跳过缩放隐藏的 SVG 标记 DOM (#5036)</li>
+<li>修复（种子经济）：在 240 秒期限内绑定 FRED 获取并发 (#5037) (#5038)</li>
+<li>加强观察列表通知后续行动（#5034）</li>
+<li>修复（付款）：催款重新发送发送速度低于 10 个请求/秒限制 (#5032)</li>
+<li>壮举（市场）：摄取时的股票标记、市场时段意识、观察列表故事提醒 (#4922) (#5031)</li>
+<li>perf(pro)：保持信号条动画脱离布局（#5028）</li>
+<li>修复（管道）：强化 AIS 中继 Upstash 检测、屏蔽 Redis 信用、添加 EVALSHA-free 速率限制回退 (#5025)</li>
+<li>壮举（预测）：添加决议分类账和记分卡（#5024）</li>
+<li>修复（通知）：重复数据删除 SETNX 错误时打开失败 (#5026)</li>
+<li>修复（预测）：强化模拟结果写入（#5027）</li>
+<li>perf(pro)：将 @sentry 分割成自己的可缓存块 (#5019) (#5020)</li>
+<li>perf(map)：通过调整大小缓存路由启动路径容器几何形状 (#5017) (#5022)</li>
+<li>Chore(aeo)：品牌开发者资源可发现性页面 (#5023)</li>
+<li>杂务（perf）：删除过时的 protomaps.github.io dns-prefetch （＃5016）（＃5021）</li>
+<li>perf(pages)：不可变/pro资源缓存、延迟预览+按需Turnstile、WebP博客封面(#5013)(#5015)</li>
+<li>feat(agents)：Web Bot Auth 密钥目录 + /agent/auth WWW-Authenticate 挑战 (orank) (#5009)</li>
+<li>修复（预测）：分辨率规格发射修正 - 地平线可通约计数 + 可解析供应/GPS 窗口 (#5010) (#5012)</li>
+<li>修复（健康）：不存储紧凑状态响应，因此正常运行时间监视器永远不会读取过时的判决（＃5008）</li>
+<li>feat(forecast)：可解析性合约 - 每个预测的机器可检查分辨率规范 (#4976) (#5004)</li>
+<li>修复（预测）：为整个提供商链保留运行预算，以便 market_implications 的 groq 后备不会搁浅（#4978 后续）（#5003）</li>
+<li>壮举（内容）：免费与付费比较帖子 + 修复永不触发的 FAQPage JSON-LD (#4998, #5001) (#5002)</li>
+<li>修复（seo）：自我规范化变体子域仪表板+站点地图.md页面的规范链接标题（＃4996，＃4999）（＃5000）</li>
+<li>修复（seo）：恢复 WIRED/2M+ 元描述 — 将 VARIANT_META.full 与手动调整的 index.html + 漂移防护同步 (#5005) (#5006)</li>
+<li>修复（seed-bigmac）：并行化 50 个国家/地区的 EXA 循环以阻止 240 秒截止日期崩溃 (#4994) (#4995)</li>
+<li>feat(llm)：从不提供来自中国托管提供商的 OpenRouter 推理 (#4993)</li>
+<li>修复（付款）：协调错过的 Dodo 续订（#4794）</li>
+<li>修复（portwatch）：优先考虑冷获取上限中从未缓存的国家/地区，使覆盖范围达到 174（健康 COVERAGE_PARTIAL）（#4992）</li>
+<li>perf(brief)：将whyMatters路由到deepseek-v4-flash，与推理层解耦（#4983后续）（#4991）</li>
+<li>壮举（付款）：协调卡住的待付款（#4795）</li>
+<li>修复（fred）：管道批量种子读取（＃4989）</li>
+<li>修复（通知）：合并重复的警报事件（#4985）</li>
+<li>修复（gpsjam）：恢复免费的 gpsjam.org 源，取消 Wingbits 配额依赖（#4987）</li>
+<li>feat(iran-events)：标记整个伊朗事件域，默认关闭（战争结束的日落）（#4982）</li>
+<li>修复（中间件）：停止机器人控制 /favico/* — 公共品牌资产必须是世界可读的 (#4988)</li>
+<li>修复（llm）：短暂阶段的推理 - v4-pro 空内容 80% (#4983) (#4984)</li>
+<li>修复（预测）：当 market_implications 缺乏共享的 LLM 运行预算时，停止错误的 SEED_ERROR (#4978) (#4980)</li>
+<li>修复（小部件）：在重新加载时保留 Pro 小部件 HTML（#4981）</li>
+<li>文档(mcp)：mcp-远程桥接设置 + Cloudflare apex-redirect 豁免合同 (#4951)</li>
+<li>修复（llm）：两个未固定的 LLM 边缘路由上的固定区域 + 日志提供程序错误体（#4944 U7）（#4966）</li>
+<li>feat(llm)：OpenRouter DeepSeek V4 Flash 的核心链 + 输出形状强化 (#4944 U1+U2) (#4950)</li>
+<li>feat(llm)：DeepSeek V4 Flash 的播种者叙事层；引脚概率耦合的 Critical_signals (#4944 U6) (#4977)</li>
+<li>feat(telemetry)：遥测暗播种机传输的 llm_call 事件 (#4944 U5) (#4954)</li>
+<li>修复（定价）：从 API Business 中删除虚拟的“XLSX 出口”声明 (#4974) (#4975)</li>
+<li>修复（预测）：用于军事和国家预测的稳定语义槽 ID (#4933) (#4973)</li>
+<li>壮举（定价）：发布 API 商业层 — 可见、定价、自助 (#4945) (#4946)</li>
+<li>壮举（分析）：在规范的 www 主机上恢复 Umami + 端到端结帐漏斗事件 (#4931) (#4934)</li>
+<li>feat(billing)：付款失败和取消的催款 + 赢回电子邮件生命周期 (#4932) (#4935)</li>
+<li>修复（预测）：非有限概率守卫 — NaN 无法再进入或锚定概率脊柱 (#4933) (#4969)</li>
+<li>修复（feeds）：允许列入 war.gov + thenationalnews.com + trumpstruth.org — 解除阻止 feed-health 激活 (#4970) (#4971)</li>
+<li>feat(ux)：持久读取状态 - 新标签在重新加载后仍然存在（#4923，切片 a）（#4926）</li>
+<li>壮举（市场）：宏观打印实际情况、每日简报中的收益、财务降级接缝（#4922）（#4929）</li>
+<li>壮举（简短）：简短合约 - top-8 综合、验证引文、强制模式门、共享接地脊柱 (#4921) (#4928)</li>
+<li>壮举（新闻）：完整性测量 - 饲料健康状况，带静音零、覆盖分类账 + 出处、GDELT 召回基准 (#4920) (#4927)</li>
+<li>壮举（新闻）：统一的故事身份服务 - 聚类、重复数据删除、佐证的一种相似性定义 (#4919) (#4924)</li>
+<li>修复（预测）：单词边界术语匹配 - 停止子字符串国家误报破坏概率（＃4933）（＃4939）</li>
+<li>壮举（内容）：全球情报词汇表 — 20 个可抓取的 DefinedTerm 页面 (#4960) (#4968)</li>
+<li>feat(agent-readiness)：宣传实时文档 MCP 服务器 + real /agent.txt (#4958) (#4964)</li>
+<li>feat(agent-readiness)：robots.txt + real /agents.md 中的三层 AI 爬虫策略 (#4952) (#4955)</li>
+<li>修复（哨兵）：CSP 噪声过滤器 — Doubao KaTeX 字体、注入 Google Fonts CSS、内容过滤器框架供应商 (#4942) (#4943)</li>
+<li>feat(ci)：现场 MCP 烟雾 — 6 小时匿名严格-client 步行产品 (apex+www) — #4937/#4938 回归网 (#4941)</li>
+<li>修复（mcp）：匿名提供 ping + 提示/* + 日志记录/setLevel — gate 401 通过 mcp-remote 挂起 Claude Desktop (#4937) (#4940)</li>
+<li>杂务（摘要）：在非到期撰写标记上重复使用先前的信封散文（＃4917）（＃4918）</li>
+<li>Chore(llm)：缓存身份搅动批次 2 — 摘要对重复数据删除 v7、市场简要上下文量化、预测提示哈希缓存、whyMatters v8 交叉读取 (#4914) (#4916)</li>
+<li>修复（摘要）：摘要提供者链的权利门控 - 停止匿名 401 洪水 + 3x 扇出 (#4913) (#4915)</li>
+<li>杂务（llm）：区域卫生 - 叙事提示哈希缓存+简短的重试预算上限（#4911）</li>
+<li>修复（健康新鲜度）：重新验证每个民意调查 - CF 浏览器 TTL 重写会将合成的 OK 源振荡到陈旧（#4910）（#4912）</li>
+<li>杂务（摘要）：翻转 Brief_WHY_MATTERS_SHADOW 以选择加入 — 默认双子座支出 (#4909)</li>
+<li>perf(health)：崩溃健康轮询成本 - CDN 缓存紧凑健康、5 分钟节奏、空闲延迟首次水合作用 (#4907) (#4908)</li>
+<li>feat(observability)：从 callForecastLLM 发出 llm_call 事件 — 播种器路径 #4901 丢失 (#4906)</li>
+<li>修复（健康新鲜度）：读取无钥匙紧凑型健康端点 - 停止匿名每分钟 401 次洪水（#4902）（#4905）</li>
+<li>修复（情报）：停止 ISO 停用词代码（IN/US/AT/NO）过度匹配共享简短接地（#4904）</li>
+<li>perf(CLS)：属性字段移位类 — CLS 报告上的hiddenAtLoad/scrollY/viewport env (#4580) (#4903)</li>
+<li>feat(observability)：从每个服务器端 LLM 路径发出 llm_call 使用事件 (#4901)</li>
+<li>perf(forecasts)：market_implications LLM 阶段的输入哈希缓存保护 (#4900)</li>
+<li>perf(pwa)：将博客 OG 覆盖在仪表板 SW 预缓存之外 (#4891) (#4899)</li>
+<li>修复（智能）：共享每个国家+语言的匿名国家简要缓存 - 停止将调用者上下文哈希到密钥中（#4898）</li>
+<li>perf(map)：时间盒标记脉冲动画 — 6 秒后稳定为静态 (#4669) (#4897)
+<strong>完整 Changelog</strong>：<a href="https://github.com/koala73/worldmonitor/compare/sdk/go/v0.1.1...v2.10.0">https://github.com/koala73/worldmonitor/compare/sdk/go/v0.1.1…v2.10.0</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/koala73/worldmonitor">koala73/worldmonitor</a> · 🏷️ 版本：<code>v2.10.0</code> · 📅 发布：2026-09-08 · <a href="https://github.com/koala73/worldmonitor/releases/tag/v2.10.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/worldmonitor/worldmonitor_v2.11.0"> <span class="k">← 下一个</span> <span class="t">v2.11.0</span> </a> <a href="/zh/release_note/worldmonitor/worldmonitor_v2.5.23"> <span class="k">上一个 →</span> <span class="t">v2.5.23</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/koala73/worldmonitor/releases/tag/v2.10.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/koala73/worldmonitor" target="_blank" rel="noopener"> <span>koala73/worldmonitor</span> <span class="d">↗</span> </a> </li> </ul> </div>  <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/worldmonitor/worldmonitor_v2.11.8"> <span class="v">v2.11.8</span> <span class="d">26-11-04</span> </a> </li><li> <a href="/zh/release_note/worldmonitor/worldmonitor_v2.11.7"> <span class="v">v2.11.7</span> <span class="d">26-11-01</span> </a> </li><li> <a href="/zh/release_note/worldmonitor/worldmonitor_v2.11.6"> <span class="v">v2.11.6</span> <span class="d">26-10-25</span> </a> </li><li> <a href="/zh/release_note/worldmonitor/worldmonitor_v2.11.4"> <span class="v">v2.11.4</span> <span class="d">26-10-24</span> </a> </li><li> <a href="/zh/release_note/worldmonitor/worldmonitor_v2.11.3"> <span class="v">v2.11.3</span> <span class="d">26-10-23</span> </a> </li><li> <a href="/zh/release_note/worldmonitor/worldmonitor_v2.11.2"> <span class="v">v2.11.2</span> <span class="d">26-10-20</span> </a> </li><li> <a href="/zh/release_note/worldmonitor/worldmonitor_v2.11.1"> <span class="v">v2.11.1</span> <span class="d">26-10-19</span> </a> </li><li> <a href="/zh/release_note/worldmonitor/worldmonitor_v2.11.0"> <span class="v">v2.11.0</span> <span class="d">26-10-16</span> </a> </li> </ul> <a href="/zh/releases/worldmonitor" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

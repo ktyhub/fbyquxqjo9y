@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>openclaw v2026.10.8 — STAGS NextStack</title><meta name="description" content="Updates that finish and recover: an ordinary post-update Doctor failure restarts the Gateway instead of leaving it stopped, an orphaned maintenance worker no longer blocks every CLI command and Gateway start, and…"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/openclaw/openclaw_v2026.10.8/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/openclaw/2026.10.8"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/openclaw/openclaw_v2026.10.8/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/openclaw/2026.10.8"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="openclaw v2026.10.8 — STAGS NextStack"><meta property="og:description" content="Updates that finish and recover: an ordinary post-update Doctor failure restarts the Gateway instead of leaving it stopped, an orphaned maintenance worker no longer blocks every CLI command and Gateway start, and…"><meta property="og:url" content="https://www.stags.cn/zh/release_note/openclaw/openclaw_v2026.10.8/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/openclaw/openclaw_v2026.10.8/#article","headline":"openclaw v2026.10.8 release notes","datePublished":"2026-10-27","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/openclaw/openclaw"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/openclaw/2026.10.8/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/openclaw/openclaw_v2026.10.8/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/openclaw/2026.10.8/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/openclaw/2026.10.8/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/openclaw/2026.10.8/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/openclaw/2026.10.8/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/openclaw/2026.10.8/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/openclaw">openclaw</a> </nav> <h1 class="detail-title"> <span class="p">openclaw</span> v2026.10.8 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年10月27日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener"> <span class="k">来源</span>openclaw/openclaw </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/openclaw/2026.10.8"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/openclaw/openclaw_v2026.10.8/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="openclaw-v2026108">openclaw v2026.10.8</h1>
+<h2 id="2026108">2026.10.8</h2>
+<h3 id="亮点">亮点</h3>
+<ul>
+<li><strong>完成并恢复的更新：</strong> 普通的更新后 Doctor 故障会重新启动网关而不是使其停止，孤立的维护工作人员不再阻止每个 CLI 命令和网关启动，并且更新不再在 ACL 文件系统、Windows pnpm 可选依赖项链接、pnpm 10 全局安装、调试控制台日志记录或丢失的旧版 OAuth 目录上中止。 （#180668、#181695、#181141、#181596、#181456、#182850、#180174）感谢@hannesrudolph、@SMF12138、@rayluo88、@PonySlayer28 和@VN77-77VN。</li>
+<li><strong>网关服务安装在每个桌面上：</strong> macOS 恢复已加载的启动注册（其 plist 已被删除），Linux 在 Ubuntu 默认 umask 下安装，创建一个私有状态目录而不是被拒绝，并且 macOS 更新程序在 Doctor 运行之前等待服务网关释放其数据库。 （#180390、#179538、#182055）感谢@avnishkirnalli 和@XiaoPengYouCode。</li>
+<li><strong>对话继续接受消息：</strong> 被杀死的运行释放其重新启动恢复围栏，中断的和刚刚接受的子会话在网关重新启动后恢复，当回复运行时无法发布时，入站消息将永远停止重试，并且控制 UI 忘记发送重试会传递回复而不是创作错误。 （#181992、#178888、#181871、#181300、#182219）感谢@najef1979-code、@handcraftrc-pixel、@sukhdeepjohar 和@teddashh。</li>
+<li>**启动和数据库弹性：**启动工作不再继承封闭的 SQLite 读取器范围，因此模型、聊天元数据和频道回复保持可用；重试代理数据库启动期间的瞬时锁争用；模型目录在技能运行期间保持可用。 （#182615、#182446、#182385）</li>
+<li><strong>安全强化：</strong> 执行白名单模式需要批准 <code>test -v</code> 操作数扩展，通用节点调用拒绝浏览器代理命令，沙箱生成的子项无法运行主机 CLI 后端，秘密出口代理拒绝 distrusted eMudhra 链，Fish Audio 和 Gradium 错误不再暴露 API 密钥，深度嵌套的 Tlon 内容不再拖延通道。 （#180880、#179880、#178742、#179249、#178877、#177536）感谢@eleqtrizit 和@joshavant。</li>
+<li><strong>Windows exec 和插件：</strong> 代理 exec 在安装了 Store PowerShell 的情况下在 S4U 计划任务下工作，本机插件在具有 Endpoint DLP 的计算机上加载，并且 Doctor 恢复另一个文件系统上的悬空依赖项连接和插件。 （#182898、#179949、#179549、#179445）修复#182652 感谢@RomneyDa、@tre1d、@coaiMax、@paulcam206、@JIRBOY 和@ceckert。</li>
+<li><strong>提供程序和模型连续性：</strong> Codex 轮流使用较旧的运行时插件来保持预算，而不是默默地回退，Codex 本机子推理在启动后起作用，OpenAI OAuth 适用于过时的目录，人性化 PDF 分析适用于设置令牌 OAuth，超时的 MCP 会话关闭在下一回合不再失败，并且 CLI 历史记录所有者更改停止而不是在另一个提供程序上静默重播。 （#182995、#176311、#181356、#178420、#182189、#180075）修复#181619 感谢@RomneyDa、@kip-claw、@enki、@sasan1200、@sunlit-deng、@khensthoth、@aniketkrs、@goslingmanagment、@wr-web 和@teddash。</li>
+</ul>
+<h3 id="变化">变化</h3>
+<ul>
+<li><strong>全新 OpenAI 设置：</strong> 首次运行模型元数据不再将模型选择器限制为一个模型。 (#175945) 感谢@matthematics1137 和@jb-dev1。</li>
+</ul>
+<h3 id="修复">修复</h3>
+<ul>
+<li><strong>频道帐户：</strong> 默认 Slack、Google Chat、X、Nextcloud Talk 和 Zalo 帐户在添加命名帐户后继续启动并保守秘密。 （#176267、#180450、#182608）感谢@555aaditya、@progerjkd 和@masatohoshino。</li>
+<li><strong>Slack：</strong> 在禁用套接字模式通道之前重试隔离的 <code>invalid_auth</code>，并且静默中继网络会断开重新连接。 （＃181056，＃182368）感谢@mushuiyu886和@marns。</li>
+<li><strong>Matrix、Twitch、Zalo、iMessage 和飞书传送：</strong> 普通 Matrix 消息不再被视为文本命令，Twitch 发送标准化频道目标，处理带有 URL 的 Zalo DM，消息桥死亡后 iMessage 恢复，飞书快速操作卡再次发送。 （#179506、#178480、#178938、#180900、#79832）感谢@xiaopan-xydt、@doomy、@HeZ2z、@Takhoffman、@zzrs-xyr、@namchamvinhcuu 和@xiabee。</li>
+<li>**代理运行和提供程序：**当后台命令完成时，心跳循环停止，临时 Codex 探针工作程序不再累积，Codex 本机轮次在主机工作期间保持活动状态，Claude CLI 轮次在流输出达到限制时不再停滞 15 分钟，提供程序流错误立即浮出水面，并且会话准入竞争不再触发模型回退。 （#179060、#167390、#181839、#159931、#117397、#179347）修复#178937、#181805 和#178000 感谢@maxdjohnson、@sunlit-deng、@Terwox、@AINCHORS、@robertmsale 和@davidcittadini。</li>
+<li><strong>语音和会议：</strong> Discord 实时语音咨询初始化其运行时间，语音呼叫使用配置的代理模型，长会议对讲回复保留其音频。 （#179462、#181451、#178254）感谢@shoaibulhaque、@yagizkus、@potoior、@BeyonceBot 和@sukhdeepjohar。</li>
+<li><strong>远程访问和历史记录：</strong> Tailscale Serve 和 Funnel 在 tailscaled 重新启动后恢复，并且 cron 历史记录在提供程序更改后保持可读。 （#180081、#181311）感谢@enki、@saariuslystoned 和@xtimor。</li>
+<li><strong>医生修复：</strong> 标题修复后保留的成绩单进行验证，并且修复保留了 Codex 主机压缩模型。 （#179089、#179914）感谢@mr savingsblogspot-rgb 和@LiuwqGit。</li>
+<li>**插件和节点：**旧插件防抖回调继续工作，计算机使用接受来自旧 Mac 节点的输入结果，当 OKF 概念消失时，Memory Wiki 会保留用户注释。 （#118011、#137755、#179657）</li>
+<li><strong>秘密和挂钩：</strong> 1Password 秘密提供程序接受可组写的 OpenClaw 文件，并且并发会话内存捕获不再相互覆盖。 （#181127、#181081）感谢@jalehman、@jason-allen-oneal 和@yetval。</li>
+<li><strong>Doctor 恢复消息：</strong> 当 Doctor 无法恢复已停止的网关时，它会打印故障以及如何启动网关。 (#181941)</li>
+<li><strong>Codex 原生子项和回复：</strong> 已完成或无法交付的子项完成不再重播或楔入父项，回复在本机子项完成、被打断或完成后续操作后解锁，最终答案在短暂重试后仍然存在，没有镜像提示完成的已解决回合，本机工具声明保持稳定，排队聊天在插件重新加载后恢复，在终端发布之前提交转向提交，Codex 接受托管环回代理默认值。 （＃173018，＃175246，＃177577，＃179099，＃179050，＃183286，＃181779，＃183077，＃182104，＃184062，＃183232）谢谢@quqi1599，@Stronggenics，@linancn，@wtfichigo， @mmartoccia、@Marvinthebored、@sukhdeepjohar、@jjjhenriksen、@aatreya、@ermaxinc 和 @RomneyDa。</li>
+<li><strong>Claude CLI 会话：</strong> 不相关的本机任务不再保留最终答案，父级回复在嵌套后台代理后完成，停止的第一回合保持对话，房间事件不再重置会话，操作员可以保留本机代理和工作流程工具，恢复的会话查看对话更新，并且 Claude CLI 模型通过保存的订阅保持可用。 （＃170322，＃182267，＃181966，＃182273，＃183765，＃183059，＃179203）谢谢@cassthebandit，@VACInc，@goslingmanagment，@holgergruenhagen，@xiaopan-xydt，@Marvinthebored，@scarabone，@atomsmasher81， @josh-cornelius 和 @teddashh。</li>
+<li>**子代理和代理轮次：**模型回退在本地运行时故障后停止，恢复的子结果在会话重用后交付，私有完成收据在重新启动后协调，父级继续等待活动收集器，批处理工具调用在 <code>sessions_yield</code> 之前解决，延迟的 <code>sessions_send</code> 回复不再被削减为 4,096 个字符，轮次在工具结果恢复后完成，恢复在转录重建期间发送的消息，并释放已完成的尝试回调。 （＃180042，＃184069，＃184041，＃172959，＃184021，＃178271，＃175685，＃182666，＃164843，＃183884）谢谢@sunlit-deng，@danielsiemers，@johan-eilertsen，@jailbirt，@rjdotdev， @wr-web、@seriouslysean、@MSNexploder 和 @PollyBot13。</li>
+<li><strong>网关稳定性和流式传输：</strong> 长 HTML 和 JSX 答案、精心制作的 Teams HTML 以及看起来像工具调用的回复不再阻碍网关；推理标签在流式传输之前被保留；静音转弯不再发送丰富的有效负载；通道重新启动后仍会退出运行取消；强制插件停用后网关关闭；插件服务计划的寿命超出了创建它们的范围；冷工具库存不再增加内存。 （#175472、#183438、#183252、#182454、#129244、#182433、#181270、#182207、#178596）感谢@JasonBuildAI、@LeizhenZhang、@zax0rz、@JOY、@0xtc23、@bguliano， @obviyus 和@wuqxuan。</li>
+<li><strong>更新、安装和 Doctor：</strong> Windows 管理的更新不再将自己锁定在 TEMP 别名上，Windows 安装程序通过 <code>iex</code> 运行，更新在通道中断期间完成并保留接受的策略引脚，停止的数据库备份允许读者，Doctor 在 SIGHUP 后恢复网关，保留有效的重新播种配置和继承的登录，修复不受支持的节点运行时，删除日志丢失后恢复代理，恢复插件主机链接，处理非常大的保留历史记录，并使用更少的内存大型舰队。 （#183622、#183145、#179471、#180505、#180827、#182901、#183703、#179726、#181618、#181804、#181140、#180414、#180792、#181465）谢谢@ryandle、@duyufansh2008、@waynegault、@csabatatrai、@samueltardieu、@4140leal-cw、@rybing7、@RomneyDa、@LiuwqGit、@sukhdeepjohar 和 @teddashh。</li>
+<li>**会话和存储：**相对会话存储根据状态目录解析，会话通过符号链接状态路径存档，过时的重新启动恢复源不再楔入会话，cron 清理保留活动子会话，存档的 Discord 斜杠命令会话恢复到位，后台插件工作保留其 SQLite 读取器，会话删除重用热存档工作人员。 （#182444、#181554、#180853、#179057、#168596、#179031、#171156、#175091、#183410）感谢@erickj92、@Cloud-Ocean、@Oldrich333 和@PollyBot13。</li>
+<li>**身份验证和提供者：**只有在提供者要求时，速率受限的配置文件才会冷却，共享 OAuth 刷新过去已删除的对等体，并发代理在 OAuth 凭证租用时保持 MCP 工具访问权限，实用程序模型不再返回仅思考的回复，自定义 GLM 提供者生成会话标题，Kimi K3.1 Pro 获得 K3 思考和视频控制，Bedrock Mantle GPT 模型通过响应路由，Google 流恢复，并且本机对话在压缩后备模型中幸存。 （＃180280，＃179205，＃179997，＃169920，＃172580，＃181923，＃182437，＃117194，＃183282）谢谢@fuller-stack-dev，@WG-Mojo，@maliv2，@danielsiemers，@jacobtomlinson，@TommyLei666， @obviyus、@rayvader 和 @pstarkgit。</li>
+<li><strong>频道：</strong> Telegram 和 Mattermost 默认帐户在添加命名帐户后保留其令牌，可以管理和同步具有 capitalized 密钥的 X 帐户，iMessage 停止回答自己的自聊天回复，飞书在工具调用之间保持流式文本，Google Chat 以链接形式传送远程附件，Synology Chat 停止报告虚假传送失败，Tlon 在网络断开后恢复，并且重试无法读取的频道图像。 （＃183618，＃182706，＃183263，＃183461，＃183383，＃182438，＃182416，＃177654，＃178358，＃183390）谢谢@555aaditya，@rodricksz4h5，@wangmiao0668000666， @nxmxbbd、@sukhdeepjohar、@felirami、@kentuscn、@jailbirt、@HootRock、@masatohoshino、@yetval 和 @teddashh。</li>
+<li>**语音、应用程序和浏览器：**实时 Talk 能够承受早期输出和短暂的网关停顿，GPT-Live Talk 和 Bun 实时语音使用托管代理，超大 macOS 录音错误而不是断开节点连接，Android 聊天绑定到允许的代理，Tauri 应用程序在仪表板准备就绪之前不再崩溃，FaceTime 在断开连接后接受新呼叫，控制 UI 检测死网关链接，浏览器控件不再重写 trusted-proxy 网关超时后进行身份验证或保留配置文件租用。 （＃182919，＃180572，＃175886，＃176567，＃182593，＃182767，＃183841，＃154230，＃179101，＃181620，＃154246）谢谢@anmol0b，@StatsR4Losers，@kybrcore，@MertBasar0， @jalehman、@CheatosBu、@xiaopan-xydt、@dawidkulpa、@Solvely-Colin、@fuller-stack-dev 和 @LLagoon3。</li>
+<li><strong>配置、cron 和工作区：</strong> 控制 UI 保存接受完全屏蔽的 SecretRef、加载导航提示的短会话 URL、cron 作业在发送到自己的目标后以及替换挂钩插件后继续运行、配置的工作区无需模板即可工作、Windows 工作区同步在租约获取之前不再失败、trusted 代理准备就绪探测在没有转发标头的情况下成功，并且重新启动恢复通知不再要求网关重新启动。 （＃183571，＃183148，＃177518，＃177825，＃120943，＃183064，＃182823，＃172843）谢谢@lonexreb，@Valkster70，@xiaopan-xydt，@2991495215，@masatohoshino，@jlapenna， @shakkernerd、@ericcaiwx-star、@treez-admin 和 @obviyus。
+###完整贡献记录
+此审核记录涵盖完整的 v2026.10.7..fdd5997b8fa1c0b69159adcadd1d6ca191416e09 历史记录：162 个范围内 PR + 0 个保留的仅种子 PR = 162 个唯一 PR。生成清单还提供直接提交作为编辑输入；上面分组的注释优先考虑用户影响。
+已发送的基线排除：v2026.10.7（5 个 PR：#147085、#164823、#165982、#167459、#181801）。</li>
+</ul>
+<h4 id="拉取请求">拉取请求</h4>
+<ul>
+<li><strong>公关#181465</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #182898</strong> 相关#182652。感谢@RomneyDa 和@tre1d。</li>
+<li><strong>PR #178480</strong> 感谢@HeZ2z 和@Takhoffman。</li>
+<li><strong>PR #179506</strong> 相关#179441。感谢@xiaopan-xydt 和@doomy。</li>
+<li><strong>PR #180174</strong> 相关#179769。谢谢@VN77-77VN。</li>
+<li><strong>PR #179949</strong> 相关#179923。感谢@coaiMax 和@paulcam206。</li>
+<li><strong>PR #180880</strong> 谢谢@eleqtrizit。</li>
+<li><strong>PR #181456</strong> 相关#180688。谢谢@rayluo88。</li>
+<li><strong>PR #181056</strong> 相关#180942。感谢@mushuiyu886 和@marns。</li>
+<li><strong>PR #181127</strong> 相关#181115。谢谢@jalehman。</li>
+<li><strong>公关#176311</strong> 谢谢@enki。</li>
+<li><strong>PR #181356</strong> 相关#181353。谢谢@sasan1200。</li>
+<li><strong>PR #178420</strong> 相关#178387。感谢@sunlit-deng 和@khensthoth。</li>
+<li><strong>PR #182189</strong> 相关#182174。感谢@aniketkrs 和@goslingmanagment。</li>
+<li><strong>公关#182446</strong></li>
+<li><strong>PR #179089</strong> 相关#178960。感谢@LiuwqGit 和@mr savingsblogspot-rgb。</li>
+<li><strong>公关#182055</strong></li>
+<li><strong>公关#179445</strong> 谢谢@ceckert。</li>
+<li><strong>公关#179914</strong></li>
+<li><strong>公关#137755</strong></li>
+<li><strong>公关#179657</strong></li>
+<li><strong>PR #179462</strong> 相关#179398。谢谢@shoaibulhaque 和@yagizkus。</li>
+<li><strong>PR #181451</strong> 相关#181345。感谢@potoior 和@BeyonceBot。</li>
+<li><strong>PR #79832</strong> 相关#79824。谢谢@xiabee。</li>
+<li><strong>PR #178254</strong> 相关#178275。谢谢@sukhdeepjohar。</li>
+<li><strong>PR #179549</strong> 相关#179404。谢谢@JIRBOY。</li>
+<li><strong>PR #181300</strong> 相关#181152。谢谢@handcraftrc-pixel。</li>
+<li><strong>PR #181695</strong> 相关#181649。谢谢@PonySlayer28。</li>
+<li><strong>PR #181596</strong> 相关#181577。谢谢@SMF12138。</li>
+<li><strong>PR #181141</strong> 相关#181050。谢谢@hannesrudolph。</li>
+<li><strong>PR #182995</strong> Related #181619. Thanks @RomneyDa and @kip-claw.</li>
+<li><strong>PR #179880</strong> Thanks @eleqtrizit.</li>
+<li><strong>PR #178742</strong> Thanks @eleqtrizit.</li>
+<li><strong>PR #181081</strong> 相关#159826。 Thanks @jason-allen-oneal and @yetval.</li>
+<li><strong>PR #175945</strong> 相关#175533。感谢@mathematics1137 和@jb-dev1。</li>
+<li><strong>PR #181311</strong> 相关#180920。 Thanks @xtimor.</li>
+<li><strong>PR #180081</strong> 相关#148308。谢谢@enki 和@saariuslystoned。</li>
+<li><strong>PR #180900</strong></li>
+<li><strong>PR #180075</strong> Thanks @wr-web.</li>
+<li><strong>PR #181992</strong> Related #181952.谢谢@najef1979-code。</li>
+<li><strong>公关#182615</strong></li>
+<li><strong>公关#178888</strong></li>
+<li><strong>公关#181871</strong></li>
+<li><strong>PR #182385</strong></li>
+<li><strong>PR #182219</strong> 相关#182206。谢谢@sukhdeepjohar。</li>
+<li><strong>PR #180668</strong></li>
+<li><strong>PR #180390</strong> 相关#180301。 Thanks @avnishkirnalli.</li>
+<li><strong>PR #179538</strong> 相关#179493。 Thanks @XiaoPengYouCode.</li>
+<li><strong>公关#182850</strong></li>
+<li><strong>PR #181941</strong></li>
+<li><strong>PR #177536</strong> Thanks @eleqtrizit.</li>
+<li><strong>公关#179249</strong> 谢谢@joshawant。</li>
+<li><strong>公关#178877</strong></li>
+<li><strong>PR #178938</strong> 相关#175421。感谢@zzrs-xxxr 和@namchamvinhcuu。</li>
+<li><strong>公关#118011</strong></li>
+<li><strong>PR #176267</strong> 相关#121446。感谢@555aaditya 和@progerjkd。</li>
+<li><strong>公关#180450</strong> 谢谢@555aaditya。</li>
+<li><strong>PR #182608</strong> 相关#179472。 Thanks @555aaditya and @masatohoshino.</li>
+<li><strong>公关#182368</strong></li>
+<li><strong>PR #179060</strong> 相关#178937。谢谢@AINCHORS。</li>
+<li><strong>公关#167390</strong> 谢谢@maxdjohnson。</li>
+<li><strong>PR #159931</strong> 谢谢@Terwox。</li>
+<li><strong>公关#117397</strong></li>
+<li><strong>PR #181839</strong> 相关#181805。感谢@sunlit-deng 和@robertmsale。</li>
+<li><strong>PR #179347</strong> 相关#178000。谢谢@davidcittadini。</li>
+<li><strong>PR #180042</strong> 相关#179979。感谢@sunlit-deng 和@danielsiemers。</li>
+<li><strong>公关#171156</strong></li>
+<li><strong>公关#175091</strong></li>
+<li><strong>公关#183410</strong></li>
+<li><strong>PR #169920</strong> 谢谢@jacobtomlinson。</li>
+<li><strong>PR #172580</strong> 相关#171068。谢谢@TommyLei666。</li>
+<li><strong>PR #173018</strong> 感谢@quqi1599 和@Stronggenics。</li>
+<li><strong>PR #175246</strong> 感谢@quqi1599 和@Stronggenics。</li>
+<li><strong>PR #179050</strong> 相关#178395。谢谢@mmartoccia。</li>
+<li><strong>PR #179099</strong> 谢谢@wtfichigo。</li>
+<li><strong>PR #170322</strong> 感谢@cassthebandit 和@VACInc。</li>
+<li><strong>PR #182267</strong> 相关#182175。谢谢@goslingmanagement。</li>
+<li><strong>PR #181966</strong> 相关#181945。谢谢@holgergruenhagen。</li>
+<li><strong>PR #182273</strong> 相关#182177。感谢@xiaopan-xydt 和@goslingmanagment。</li>
+<li><strong>PR #183765</strong> 相关#183638。感谢@VACInc 和@holgergruenhagen。</li>
+<li><strong>PR #179726</strong> 谢谢@sukhdeepjohar。</li>
+<li><strong>公关#179471</strong> 谢谢@duyufansh2008。</li>
+<li><strong>公关#180827</strong></li>
+<li><strong>PR #182444</strong> 相关#181660。谢谢@erickj92。</li>
+<li><strong>公关#179031</strong></li>
+<li><strong>PR #181270</strong> 相关#181106。谢谢@0xtc23。</li>
+<li><strong>PR #179997</strong> 相关#179980。感谢@maliev2 和@danielsiemers。</li>
+<li><strong>PR #179205</strong> 相关#178908。谢谢@WG-Mojo。</li>
+<li><strong>PR #179203</strong> 相关#178549。谢谢@josh-cornelius。</li>
+<li><strong>PR #175472</strong> 相关#175439。感谢@JasonBuildAI 和@obviyus。</li>
+<li><strong>公关#129244</strong></li>
+<li><strong>PR #182454</strong> 相关#89473。谢谢@zax0rz。</li>
+<li><strong>PR #182433</strong> 相关#109659。谢谢@wuqxuan和@JOY。</li>
+<li><strong>PR #181620</strong> 感谢@fuller-stack-dev。</li>
+<li><strong>PR #180505</strong> 相关#180474。谢谢@waynegault。</li>
+<li><strong>公关#180792</strong></li>
+<li><strong>PR #177518</strong> 感谢@masatohoshino 和@obviyus。</li>
+<li><strong>公关#177825</strong> 谢谢@jlapenna。</li>
+<li><strong>PR #178271</strong> 相关#175597。感谢@rjdotdev、@wr-web 和@seriouslysean。</li>
+<li><strong>PR #175685</strong> 感谢@wr-web 和@rjdotdev。</li>
+<li><strong>公关#120943</strong></li>
+<li><strong>公关#182207</strong></li>
+<li><strong>公关#177654</strong> 谢谢@HootRock。</li>
+<li><strong>PR #178358</strong> 相关#178357。谢谢@rodricksz4h5。</li>
+<li><strong>公关#117194</strong></li>
+<li><strong>PR #154246</strong> 谢谢@LLagoon3。</li>
+<li><strong>PR #175886</strong> 相关#175794。感谢@MertBasar0、@jalehman 和@CheatosBu。</li>
+<li><strong>PR #180572</strong> 相关#180426。谢谢@kybrcore。</li>
+<li><strong>公关#179101</strong></li>
+<li><strong>公关#183622</strong></li>
+<li><strong>PR #183703</strong> 相关#183641。谢谢@csabatatrai。</li>
+<li><strong>PR #172959</strong> 谢谢@johan-eilertsen。</li>
+<li><strong>PR #182438</strong> 相关#84486。感谢@felirami 和@kentuscn。</li>
+<li><strong>公关#164843</strong> 谢谢@PollyBot13。</li>
+<li><strong>PR #183145</strong> 相关#183088。感谢@LiuwqGit 和@ryandle。</li>
+<li><strong>PR #182823</strong> 相关#182798。感谢@ericcaiwx-star 和@treez-admin。</li>
+<li><strong>公关#182901</strong></li>
+<li><strong>PR #182706</strong> 感谢@wangmiao0668000666 和@555aaditya。</li>
+<li><strong>PR #182416</strong> 相关#89430。谢谢@jailbirt。</li>
+<li><strong>PR #182437</strong> 相关#108216。谢谢@rayvader。</li>
+<li><strong>PR #182593</strong> 相关#127569。谢谢@anmol0b。</li>
+<li><strong>PR #182767</strong> 相关#182638。感谢@xiaopan-xydt 和@dawidkulpa。</li>
+<li><strong>PR #183064</strong> 谢谢@shakkernerd。</li>
+<li><strong>公关#183841</strong></li>
+<li><strong>PR #182919</strong> 相关#134798。感谢@anmol0b 和@StatsR4Losers。</li>
+<li><strong>PR #183618</strong> 相关#179369。感谢@555aaditya 和@rodricksz4h5。</li>
+<li><strong>PR #183263</strong> 相关#183262。谢谢@nxmxbbd。</li>
+<li><strong>PR #183461</strong> 谢谢@nxmxbbd。</li>
+<li><strong>PR #183282</strong> 相关#183273。谢谢@pstarkgit。</li>
+<li><strong>PR #183571</strong> 相关#183562。感谢@lonexreb 和@Valkster70。</li>
+<li><strong>PR #183148</strong> 相关#183056。感谢@xiaopan-xydt 和@2991495215。</li>
+<li><strong>PR #183390</strong> 相关#127968。谢谢@masatohoshino 和@yetval。</li>
+<li><strong>公关#183438</strong> 谢谢@LeizhenZhang。</li>
+<li><strong>公关#183252</strong> 谢谢@LeizhenZhang。</li>
+<li><strong>PR #184021</strong> 相关#128416。谢谢@jailbirt。</li>
+<li><strong>PR #184062</strong> 相关#181385。谢谢@aatreya。</li>
+<li><strong>公关#183884</strong></li>
+<li><strong>PR #182104</strong> 感谢@jjjhenriksen 和@RomneyDa。</li>
+<li><strong>公关#172843</strong></li>
+<li><strong>公关#177577</strong> 谢谢@linancn。</li>
+<li><strong>公关#183286</strong> 谢谢@Marvinthebored。</li>
+<li><strong>PR #183059</strong> 相关#182649、#182711。感谢@Marvinthebored、@scarabone 和@atomsmasher81。</li>
+<li><strong>PR #181779</strong> 谢谢@sukhdeepjohar。</li>
+<li><strong>公关#183077</strong></li>
+<li><strong>PR #182666</strong> 感谢@MSNexploder。</li>
+<li><strong>PR #183232</strong> 相关#180719。谢谢@ermaxinc。</li>
+<li><strong>公关#176567</strong> 谢谢@MertBasar0。</li>
+<li><strong>公关#183383</strong> 谢谢@sukhdeepjohar。</li>
+<li><strong>公关#184069</strong></li>
+<li><strong>公关#184041</strong></li>
+<li><strong>PR #154230</strong> 相关#154228。谢谢@Solvely-Colin。</li>
+<li><strong>公关#181923</strong> 谢谢@obviyus。</li>
+<li><strong>PR #181140</strong> 相关#180903。谢谢@rybing7。</li>
+<li><strong>PR #181618</strong> 相关#181611。谢谢@samueltardieu。</li>
+<li><strong>PR #181804</strong> 相关#181765。谢谢@4140leal-cw。</li>
+<li><strong>公关#180414</strong></li>
+<li><strong>PR #180853</strong> 相关#180802。谢谢@云海。</li>
+<li><strong>PR #179057</strong> 相关#178180。谢谢@Oldrich333。</li>
+<li><strong>公关#181554</strong></li>
+<li><strong>PR #178596</strong> 相关#178548。谢谢@bguliano。</li>
+<li><strong>PR #168596</strong> 相关#168540。谢谢@PollyBot13。</li>
+<li><strong>PR #180280</strong> 感谢@fuller-stack-dev。</li>
+</ul>
+<h3 id="发布验证">发布验证</h3>
+<ul>
+<li>npm 包：<a href="https://www.npmjs.com/package/openclaw/v/2026.10.8">https://www.npmjs.com/package/openclaw/v/2026.10.8</a></li>
+<li>注册表压缩包：<a href="https://registry.npmjs.org/openclaw/-/openclaw-2026.10.8.tgz">https://registry.npmjs.org/openclaw/-/openclaw-2026.10.8.tgz</a></li>
+<li>完整性：<code>sha512-fWOIOOyddIBqeuPz82DBCdY5kNl1yD51qebAHnxlTN7SmVoH5/WSIudR/N1zDhcIIksgJXe6ZgGy5ngSRxZOrQ==</code></li>
+<li>发布SHA：<code>dc2523e5a5c7a309517fd7fa834add938231d526</code></li>
+<li>完整发布 CI 报告：<a href="https://github.com/openclaw/releases/blob/main/evidence/2026.10.8/release-evidence.md">https://github.com/openclaw/releases/blob/main/evidence/2026.10.8/release-evidence.md</a></li>
+<li>发布发布：<a href="https://github.com/openclaw/openclaw/actions/runs/40496801542">https://github.com/openclaw/openclaw/actions/runs/40496801542</a></li>
+<li>npm 预检：<a href="https://github.com/openclaw/openclaw/actions/runs/40454683479">https://github.com/openclaw/openclaw/actions/runs/40454683479</a></li>
+<li>完整发布验证：<a href="https://github.com/openclaw/openclaw/actions/runs/40454025021">https://github.com/openclaw/openclaw/actions/runs/40454025021</a></li>
+<li>插件 npm 发布：<a href="https://github.com/openclaw/openclaw/actions/runs/40498130762">https://github.com/openclaw/openclaw/actions/runs/40498130762</a></li>
+<li>插件 ClawHub 提交：<a href="https://github.com/openclaw/openclaw/actions/runs/40498135406">https://github.com/openclaw/openclaw/actions/runs/40498135406</a>; 公开最终确定和精确工件验证遵循终端发布-父级完成</li>
+<li>插件 ClawHub 引导程序：不需要</li>
+<li>OpenClaw npm 发布：<a href="https://github.com/openclaw/openclaw/actions/runs/40491275202/attempts/1">https://github.com/openclaw/openclaw/actions/runs/40491275202/attempts/1</a></li>
+<li>npm Telegram beta E2E：未提供</li>
+<li>Android APK：跳过 — apps/android/version.json 是 2026.8.2，发布列车是 2026.10.8；在下一个标签之前运行 pnpm android:version:pin — —from-gateway 。</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/openclaw/openclaw">openclaw/openclaw</a> · 🏷️ 版本：<code>v2026.10.8</code> · 📅 发布：2026-10-27 · <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.10.8">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/openclaw/openclaw_v2026.9.35"> <span class="k">← 下一个</span> <span class="t">v2026.9.35</span> </a> <a href="/zh/release_note/openclaw/openclaw_v2026.9.34"> <span class="k">上一个 →</span> <span class="t">v2026.9.34</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.10.8" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener"> <span>openclaw/openclaw</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#2026108" class>2026.10.8</a><a href="#亮点" class="lv3">亮点</a><a href="#变化" class="lv3">变化</a><a href="#修复" class="lv3">修复</a><a href="#发布验证" class="lv3">发布验证</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.7"> <span class="v">v2026.11.7</span> <span class="d">26-11-23</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.6"> <span class="v">v2026.11.6</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.10.33"> <span class="v">v2026.10.33</span> <span class="d">26-11-18</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.5"> <span class="v">v2026.11.5</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.4"> <span class="v">v2026.11.4</span> <span class="d">26-11-16</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.9.37"> <span class="v">v2026.9.37</span> <span class="d">26-11-10</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.3"> <span class="v">v2026.11.3</span> <span class="d">26-11-10</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.2"> <span class="v">v2026.11.2</span> <span class="d">26-11-08</span> </a> </li> </ul> <a href="/zh/releases/openclaw" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>goose v1.41.0 — STAGS NextStack</title><meta name="description" content="iFlytek Spark and Astron MaaS providers (#9837) · edit session flag to edit conversation before forking (#9799) · Fireworks AI declarative provider (#9990) · OpenRouter request parameters support (#9276)"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/goose/goose_v1.41.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/goose/1.41.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/goose/goose_v1.41.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/goose/1.41.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="goose v1.41.0 — STAGS NextStack"><meta property="og:description" content="iFlytek Spark and Astron MaaS providers (#9837) · edit session flag to edit conversation before forking (#9799) · Fireworks AI declarative provider (#9990) · OpenRouter request parameters support (#9276)"><meta property="og:url" content="https://www.stags.cn/zh/release_note/goose/goose_v1.41.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/goose/goose_v1.41.0/#article","headline":"goose v1.41.0 release notes","datePublished":"2026-07-03","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/aaif-goose/goose"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/goose/1.41.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/goose/goose_v1.41.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/goose/1.41.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/goose/1.41.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/goose/1.41.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/goose/1.41.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/goose/1.41.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/goose">goose</a> </nav> <h1 class="detail-title"> <span class="p">goose</span> v1.41.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年7月3日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/aaif-goose/goose" target="_blank" rel="noopener"> <span class="k">来源</span>aaif-goose/goose </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/goose/1.41.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/goose/goose_v1.41.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="goose-v1410">goose v1.41.0</h1>
+<h2 id="-特点">✨ 特点</h2>
+<ul>
+<li>iFlytek Spark 和 Astron MaaS 提供商 (#9837)</li>
+<li><code>--edit</code> 会话标志用于在分叉之前编辑对话 (#9799)</li>
+<li>Fireworks AI 声明性提供程序 (#9990)</li>
+<li>OpenRouter 请求参数支持 (#9276)</li>
+<li>法语、德语、意大利语、葡萄牙语、印度尼西亚语、马来语、越南语和繁体中文桌面语言环境 (#10072)</li>
+<li>西班牙语 (es) 语言环境支持 (#9833)</li>
+<li>桌面应用程序的韩语本地化 (#9856)</li>
+<li>日语语言环境支持 (#9768)</li>
+<li>印地语桌面区域设置 (#9733)</li>
+<li>桌面中的语言选择功能（#9405）</li>
+<li>CLI 中的 <code>/status</code> 斜杠命令 (#9845)</li>
+<li>深层链接生成器中的流式 HTTP 支持 (#9954)</li>
+<li>GLM-5.2 型号支持 (#9967)</li>
+<li>从 <code>~/.agents/AGENTS.md</code> 加载全局提示 (#9736)</li>
+<li>通过 <code>AZURE_OPENAI_AD_TOKEN</code> 进行 Azure Entra ID 不记名令牌身份验证 (#9716)</li>
+<li>Together AI 声明性提供商 (#9545)</li>
+<li>OrcaRouter 作为声明式 OpenAI 兼容提供商 (#9515)</li>
+<li>EmpirioLabs AI 声明性提供商 (#9771)</li>
+<li>对本地推理提供程序的 MLX 模型支持 (#9154)</li>
+<li>为异步后台任务召唤窥视模式（#9519）</li>
+<li>为委托任务调用上下文参数 (#9518)</li>
+<li>为委托任务召唤工作目录覆盖 (#9520)</li>
+<li>召唤任务加载结果的结构化元数据 (#9521)</li>
+<li>ACP 服务的 TLS 支持 (#10088)</li>
+<li>OpenAI 响应 API 存储参数可配置性 (#10040)</li>
+<li>公开 ACP 模式中的可用工具 (#10097)</li>
+<li>ACP 思考工作配置选项 (#10711)</li>
+<li>ACP 会话的最后消息片段 (#9798)</li>
+<li>用于跨工具检测的 OTLP 日志模式 (#9713)</li>
+<li>禁用自动更新下载的选项 (#9872)</li>
+<li>缓存令牌跟踪以实现准确的成本报告（#9752）</li>
+<li>会话导入功能（#9474）</li>
+<li>xAI SuperGrok OAuth 订阅提供商 (#9420)</li>
+<li>Perplexity 作为声明式 OpenAI 兼容提供商 (#9324)</li>
+<li>阿里巴巴（Qwen，通过 DashScope）声明性提供商（#9443）</li>
+<li>通过 <code>GOOSE_MAX_TOOL_RESPONSE_SIZE</code> 可配置工具输出尺寸限制 (#9256)</li>
+<li>用于会话模型切换的 <code>/model</code> 斜杠命令 (#8747)</li>
+<li>Databricks AI 网关提供商 (#9274)</li>
+<li>俄语支持 (#9406)</li>
+<li>土耳其桌面语言环境 (#9392)</li>
+<li>NEAR 人工智能云提供商 (#9352)</li>
+<li>Scaleway 提供商 (#9254)</li>
+<li>港口评估跑步者 (#9138)</li>
+<li><code>/goal</code> 命令用于在完成之前进行代理自我评估（#9069）</li>
+<li>召唤子代理指令 (#9325)</li>
+<li>开放插件泛化+技能（#9112）</li>
+<li>PreToolUse 拒绝钩子 (#9304)</li>
+<li>声明式 openai-engine 提供程序的可选 api_key 配置 (#9202)</li>
+<li><code>goose review</code> 本地代码审查命令 (#9114)</li>
+<li>TUI 差异查看器 (#9260)</li>
+<li>ACP 中的分页会话列表 (#9199)</li>
+<li>结构化的每个提供商配置块，具有非破坏性提供商切换功能（#8977）</li>
+<li>goose-cli 上的 <code>tui</code> 命令 (#9385)</li>
+<li>可通过环境变量配置 <code>MAX_CODE_BLOCK_LINES</code> (#9301)</li>
+<li><code>goose://resume</code> 会话深层链接 (#9343)</li>
+<li><code>GOOSE_FAST_MODEL</code> 环境变量支持 (#9296)</li>
+<li>Vercel AI 网关提供商 (#9144)</li>
+<li>调度程序的季度选项 (#9076)</li>
+<li>挂钩功能 (#9093)</li>
+<li>项目作为具有系统提示注入的后端源（#8739）</li>
+<li>工作树感知目录切换器 (#8450)</li>
+<li>聊天记录搜索功能（#8448）</li>
+<li>可选的 <code>--parameters</code> 用于预定食谱 (#8741)</li>
+<li>GitHub 副驾驶 <code>/responses</code> API (#9043)</li>
+<li>所有提供商的统一思维工作控制（#9242）</li>
+<li>ACP 服务器中的斜线命令（内置、技能、配方）（#9238）</li>
+<li>Nushell 终端和完成支持 (#8628)</li>
+<li>简体中文 (zh-CN) 翻译 (#8765)</li>
+<li>Atomic Chat 作为声明式 OpenAI 兼容提供商 (#9210)</li>
+<li><code>GOOSE_OAUTH_CALLBACK_PORT</code> 用于稳定的 OAuth redirect_uri (#9209)</li>
+<li>主动 OAuth 令牌刷新以避免在每个会话上重新身份验证 (#8386)</li>
+<li>用于新鲜聊天的 <code>goose://new-session</code> 深层链接 (#9196)</li>
+<li>Routstr 作为声明性提供者 (#9175)</li>
+<li>FuturMix 提供商 (#8840)</li>
+<li>oMLX 声明性提供程序 (#9177)</li>
+<li>goose-providers 箱中的声明性提供程序支持 (#9992)</li>
+<li>ACP 启发改进 (#9797)</li>
+<li>图像读取工具（#9607）</li>
+<li>ChatGPT Codex 提供商的 <code>gpt-5.5</code> 模型支持 (#9292)</li>
+</ul>
+<h2 id="-错误修复">🐛 错误修复</h2>
+<ul>
+<li>规范模型输出路径 (#10196)</li>
+<li>ACP 代理清理错误在会话删除时传播 (#10112)</li>
+<li><code>claude-sonnet-5</code> 添加到规范模型注册表中 (#10183)</li>
+<li>MCP-app-guest 请求正文限制增加 (#10180)</li>
+<li>容忍部分响应输出项 (#10108)</li>
+<li>用于 OpenAI 兼容性的 Databricks 工具参数 (#10101)</li>
+<li>Unescape shell 转义的图像路径 (#10098)</li>
+<li>Mac 桌面自动更新配置播种 (#10132)</li>
+<li><code>/edit</code> 提示已保存到历史记录 (#10011)</li>
+<li>使用 <code>session.message_count</code> 安排会话列表 (#10026)</li>
+<li>提供者/模型更新和思考工作更新后的会话存储同步（#10060）</li>
+<li>在 ACP 模式下删除后备 REST API 调用以进行就地编辑 (#10034)</li>
+<li>不要重试确定性永久 400 秒（思维块不变性）（#10005）</li>
+<li><code>goose serve</code> 模式下 OTLP 导出的异步请求 client (#10100)</li>
+<li>拒绝非对象工具调用参数而不是恐慌 (#9832)</li>
+<li>Databricks 定价分辨率和成本显示 (#9925)</li>
+<li>删除了未使用的 SubagentStart/SubagentStop 挂钩事件 (#9960)</li>
+<li>取消参数表单时配方模式关闭 (#9195)</li>
+<li>工具请求时间戳早于工具响应时间戳 (#9462)</li>
+<li>在 macOS 上激活隐士，以便 STDIO 扩展解析节点 (#9482)</li>
+<li>自动可视化器 JSON 编码字符串处理 (#9838)</li>
+<li>在 URL 图像获取上发送的用户代理 (#9927)</li>
+<li>不要将温度传递给 ChatGPT Codex 提供商 (#9931)</li>
+<li>Nostr 会话深层链接导入重复数据删除 (#9918)</li>
+<li>会话工作目录更改时提供程序刷新 (#9883)</li>
+<li>GCP 在重新验证后刷新了 gcloud 令牌（在 401/403 上重试 Vertex AI）(#9849)</li>
+<li>当设置 <code>/goal</code> 或 <code>/grind</code> 时开始转动 (#9801)</li>
+<li>处理简历深层链接 (#9298)</li>
+<li>插件挂钩命令的路径修复 (#9615)</li>
+<li>Cmd/Ctrl+T 恢复新的聊天快捷方式 (#9614)</li>
+<li>提及菜单图标打开侧边栏（#9643）</li>
+<li>Dedupe React 以防止渲染器中出现多个实例 (#9631)</li>
+<li>Hermit 清理添加到 uvx 和 jbang 脚本中 (#9616)</li>
+<li>阻止 OTLP HTTP 导出器 (#9599)</li>
+<li>当与不可用的提供商恢复会话时，回退到默认提供商 (#9547)</li>
+<li>为 OTLP HTTP 导出器批处理线程提供 Tokio 运行时 (#9541)</li>
+<li>OpenAI meta.n_ctx 从 <code>/v1/models</code> 读取本地服务器上下文限制 (#9530)</li>
+<li>会话历史记录滚动条与窗口边缘对齐（#9601）</li>
+<li>重命名后侧边栏中的会话名称刷新 (#9543)</li>
+<li>已解决的技能支持显示的文件路径（#9584）</li>
+<li>通过 ConverseStream API 进行基岩实时流传输 (#9579)</li>
+<li>OpenAI 原生的 cached_tokens 记录在使用计量中 (#9829)</li>
+<li>Moonshot 提供程序 API URL 覆盖选项 (#9819)</li>
+<li>检测到空格的图像路径 (#9387)</li>
+<li>恢复新的聊天快捷导航（#9528）</li>
+<li>陈旧的已完成任务在召唤中被驱逐（#9514）</li>
+<li>WSL 中的 OAuth 回调超时而不是挂起 (#9536)</li>
+<li>委托中出现不匹配的扩展名警告 (#9513)</li>
+<li>引出 decline 并取消端到端传播的操作 (#9437)</li>
+<li>在 Converse 上发送的基岩推理配置（max_tokens、温度）（#9889）</li>
+<li>禁用扩展时显示乐观切换状态 (#9882)</li>
+<li>自定义扩展命令中保留的 Windows 反斜杠路径 (#9741)</li>
+<li>ACP 取消竞争条件已修复 (#9804)</li>
+<li>删除了关闭窗口时出现的窗口问题 (#9818)</li>
+<li>上下文超出检查器变得更加精确（#9831）</li>
+<li>在生成的子代理中继承的登录 shell 路径 (#9737)</li>
+<li><code>GOOSE_CONTEXT_LIMIT</code> 接受的字符串值 (#9738)</li>
+<li>刷新后清除拒绝的 OAuth 凭据 (#9694)</li>
+<li>在人为输出上限内保留扩展思维（#9814）</li>
+<li>禁用 RPM build-id 链接 (#9671)</li>
+<li>OpenAI base_url 派生中保留的自定义 API 路径 (#9649)</li>
+<li>Bedrock ValidationException 分类为 ExecutionError (#9735)</li>
+<li>在配置刷新期间保留不可解析的扩展条目 (#9439)</li>
+<li>会话信息 ACP 方法 (#9729)</li>
+<li>人为流拒绝作为可见错误出现（#9724）</li>
+<li>Ollama_cloud 正确映射到规范提供商 (#9639)</li>
+<li>更正了 Groq 提供程序最大令牌值 (#9790)</li>
+<li>流解码错误标记为可重试 (#9723)</li>
+<li>Databricks AI Gateway v2 端点分页 (#9753)</li>
+<li>调整基于模式的提示注入检测置信度分数（#9690）</li>
+<li>TUI 中的 ACP 兼容性用于配置扩展 (#9683)</li>
+<li>考虑跨流块缓冲的内容以供 DeepSeek/Kimi 工具调用 (#9704)</li>
+<li>截断的工具调用参数出现了可操作的错误 (#9946)</li>
+<li>删除最近创建的会话并创建新会话不再显示已删除的内容 (#9351)</li>
+<li>省略 URL 方案时保留自定义 OpenAI 提供程序端口 (#9730)</li>
+<li>ACP agentInfo 包含在初始化响应中 (#9765)</li>
+<li>用于视觉提示的本地推理媒体标记部分（#9452）</li>
+<li>切换会话后扩展图标可见（#9787）</li>
+<li>召唤中跳过非配方项目配置文件 (#9808)</li>
+<li>在一个回合内删除重复的工具调用 ID (#9792)</li>
+<li>通过发现解决了捆绑的扩展 (#9759)</li>
+<li>思维配置传递给基岩人类模型 (#9794)</li>
+<li><code>/model/info</code> 中针对自定义模型的 LiteLLM 上下文限制 (#9303)</li>
+<li>为提供者上下文保留的思考内容（#9314）</li>
+<li>Ollama 流停顿错误中提到的可配置超时环境变量 (#9246)</li>
+<li>加载/发现输出中包含完整的配方参数详细信息 (#9233)</li>
+<li>删除了未使用的获取元数据 IPC 处理程序 (SSRF) (#9340)</li>
+<li>网关尊重 <code>GOOSE_MAX_TURNS</code> (#9354)</li>
+<li>为 tool_use 输入发送人为空对象而不是 null (#9355)</li>
+<li>跨项目聊天保留选定的分支（#9010）</li>
+<li>容忍缺少响应输出（#9449）</li>
+<li>Azure api 版本查询参数变为可选 (#9221)</li>
+<li>以添加扩展形式保留待处理的环境变量 (#9285)</li>
+<li>在 Manylinux_2_28 内构建 Linux x86_64，用于 glibc 2.28+ 兼容 (#9415)</li>
+<li>每次启动时主窗口都会停止变高（#9409）</li>
+<li>桌面聊天搜索会话限制（#9366）</li>
+<li>每个会话代理创建被序列化以停止重复的 MCP init (#9357)</li>
+<li>当协议 = grpc 时跳过 OTLP 信号以避免后台线程恐慌 (#9512)</li>
+<li>阻塞时停止钩子决定（#9468）</li>
+<li>ACP 服务器上下文窗口大小转发到 clients (#9455)</li>
+<li>Switch 型号选择器中的提供商列表刷新 (#9408)</li>
+<li>新的聊天在当前窗口中从配方参数模式开始（#9422）</li>
+<li>Trace_output 作为 span 属性而不是事件发出（#9255）</li>
+<li>当密钥环没有条目时检查文件回退（#9279）</li>
+<li>ScheduleModal 错误消息样式 (#9278)</li>
+<li>侧边栏汉堡包在 macOS 全屏中对齐 (#9257)</li>
+<li>生成鹅时使用 <code>current_exe()</code> 代替 PATH 查找 (#9236)</li>
+<li>在可流传输的 HTTP clients 上设置 TCP_USER_TIMEOUT (#9207)</li>
+<li>通过配置添加后激活自定义提供程序（#9213）</li>
+<li>OTLP 跟踪在退出时可靠地刷新，并具有可配置的超时 (#9228)</li>
+<li>减少了后备区域设置的过多 MISSING_TRANSLATION 警告 (#9294)</li>
+<li>消除跨窗口深度链接污染（#9273）</li>
+<li>改进了 Telegram 网关错误报告和连接可靠性 (#9223)</li>
+<li>在 Windows 控制台主机上启用 VT 处理 (#9248)</li>
+<li>本地提供商的成本归零（ollama，本地）（#9222）</li>
+<li>toolshim 输出中防止工具使用标记泄漏 (#8310)</li>
+<li>当委托覆盖模型时重新应用规范限制 (#9183)</li>
+<li>CLI 累积tokens 在流-json/json 输出中报告（#8910）</li>
+<li>GCP 元数据服务器令牌在过期时刷新（#8929）</li>
+<li>通过删除基于 PWD 的 Windows 覆盖来纠正 WSL2 操作系统检测 (#8869)</li>
+<li>优雅地处理基岩推理内容块 (#8843)</li>
+<li>在对话中按时间顺序插入的工具对摘要（#9087）</li>
+<li>在会话池中启用 SQLite 外键强制 (#9121)</li>
+<li>删除的聊天会话仍然出现在侧边栏列表中（#8674）</li>
+<li>read_resource 需要 Extension_name (#8989)</li>
+<li>SACP 通知 clients 生成的会话名称 (#8983)</li>
+<li>如果需要的话，引用的数字配置值会转换为数字（#8844）</li>
+<li>SSE 重新连接循环在长时间断开连接时保持活动状态 (#8717)</li>
+<li>OpenAI request_params 应用于传出 API 有效负载 (#9151)</li>
+<li>Gemini 3.xknown_location 全局路由和 KNOWN_MODELS 条目 (#9142)</li>
+<li>Anthropic Retry-After 因 429 条回复而获奖 (#9161)</li>
+<li>流思维增量合并 + 未找到列出的可用工具 (#9162)</li>
+<li>为基于配方的聊天保留用户设置的会话名称（#9079）</li>
+<li>OIDC-proxy exp 执行独立于 MAX_TOKEN_AGE_SECONDS (#8832)</li>
+<li>浅色主题中的内联代码对比度得到改善 (#9058)</li>
+<li>未设置时，OpenAI 兼容请求会省略 Max_tokens (#9123)</li>
+<li>MCP-app 主机功能设置正确 (#9116)</li>
+<li>针对 Vertex Gemini 兼容性标准化的可空模式 (#8930)</li>
+<li>GitHub 配方临时路径隔离 (#8878)</li>
+<li>GitHub Copilot 请求上设置的 X-Initiator 标头 (#8809)</li>
+<li>Dynamic_models：声明性提供程序配置中支持 false (#8795)</li>
+<li>前端扩展会话状态和工具路由 (#8464)</li>
+<li>缓存基岩尾随消息，以确保跨代理轮次的稳定前缀 (#8916)</li>
+<li>context_limit 的不区分大小写的模型名称查找 (#8906)</li>
+<li>流 json/json 完成事件中发出的累积代币使用量 (#8870)</li>
+<li>返回 400，而不是因无效的 CSP 标头值而恐慌 (#8810)</li>
+<li>ACP 流媒体块合并在一个消息 ID 下 (#8788)</li>
+<li>Goose2 vite 服务器在端口冲突时重用 (#8722)</li>
+<li>Python3 用于开发人员扩展说明以实现 macOS/Linux 兼容性 (#8784)</li>
+<li>ACP 子进程同步收割以避免 SIGCHLD 竞争 (#9023)</li>
+<li>Goose2 小窗口聊天和设置布局 (#9019)</li>
+<li>诱导修复（#8999）</li>
+<li>OpenAI 在流数据块中接受 null tool_call 参数 (#9035)</li>
+<li>在 CLI 中使用普通的“>”提示代替鹅表情符号 (#9305)</li>
+<li>窗口关闭时 Goosed 不会被杀死 (#9302)</li>
+<li>Databricks 并行工具图像响应不会交错工具结果 (#9241)</li>
+<li>累积成本保留在会话数据库中以维持重新加载（#9191）</li>
+<li>根据当前 SHA + 兼容性检查构建的 Publish-npm 二进制文件 (#9212)</li>
+<li>会话标题生成中排除了预先提示 (#8793)</li>
+<li>登录 shell 路径探测阻止在启动时挂起 goose (#8804)</li>
+<li>Venice 替换为声明性配置 (#9234)</li>
+<li>MOIM 许可名单扩大了预期的 fix_conversation 警告 (#9226)</li>
+<li>mkdir -p 用于自测试工作区初始化 (#9247)</li>
+<li>批准提示中显示工具名称 (#9216)</li>
+<li>ACP 图像在会话加载时重播 (#9496)</li>
+<li>使用 az.cmd 在 Windows 上解决 Azure CLI (#9215)</li>
+<li>在 Windows 上的 goose 配置中处理非交互式终端 (#9214)</li>
+<li>在会话加载和分叉期间应用 ACP 配方状态 (#9998)</li>
+<li>本地推理 GGUF 要求更严格，自动检测工具调用支持，思维输出解析修复（#9442）</li>
+<li>Databricks v2 库存首选 Goose 别名 (#9430)</li>
+<li>不支持索引的流式工具调用 (#10023)</li>
+<li>允许本地文件 ACP 来源 (#10194)</li>
+<li>MCP 应用程序沙盒桥生命周期已修复 (#10064)</li>
+</ul>
+<h2 id="-改进">🔧 改进</h2>
+<ul>
+<li>重构本地推理提供程序箱 (#10169)</li>
+<li>ACP 身份验证和原始默认值改进 (#9886)</li>
+<li>UI 直接连接到 ACP，而不是 goosed (#10081)</li>
+<li>回合上下文不包含在 Anthropic 前缀缓存中 (#10030)</li>
+<li>禁用快速模型操作的扩展思维（#9815）</li>
+<li>诊断迁移到 JSON 报告 (#9964)</li>
+<li>通过工具流路由 MCP 引出 (#9943)</li>
+<li>提供程序重构：创建提供程序不需要模型配置（#9953）</li>
+<li>会话名称作为显示会话标题的真实来源 (#9841)</li>
+<li>提供商库存从提供商中分离出来（#9826）</li>
+<li>开放插件支持 MCP 扩展 (#9471)</li>
+<li>Databricks 响应 API 支持检查 (#9347)</li>
+<li>使用 <code>goose://new-session</code> 进行初始提示 (#9427)</li>
+<li>查看模型交互（#9806）</li>
+<li>API Client 移至 goose-providers (#9869)</li>
+<li>请求记录器从提供者中重构（#9847）</li>
+<li>提供者特征移至鹅提供者中（#9860）</li>
+<li>全局配置访问已移出 ModelConfig (#9769)</li>
+<li>删除了开发配置文件中依赖项的调试信息 (#9843)</li>
+<li>Formats/openai.rs 移至 goose-providers 箱中 (#9633)</li>
+<li>使用规范模型、对话和其他类型创建的 Goose-providers 箱 (#9588)</li>
+<li>声明性提供者的通用验证器（#10010）</li>
+<li>UI 类型与生成的 OpenAPI 类型解耦（#10149、#10109）</li>
+<li>ACP SDK 升级到新的 HTTP/WS 箱 (#10082)</li>
+<li>删除了 MCP 采样支持 (#10087)</li>
+<li>删除了旧版 MCP-UI 代理支持 (#10086)</li>
+<li>Session_id 从提供商流特征方法中删除（#9984）</li>
+<li>Ollama 提供商移至 goose-providers (#9986)</li>
+<li>人类提供者转移到鹅提供者中（#9985）</li>
+<li>OpenAI 提供商移至 goose-providers (#9880)</li>
+<li>用于令牌计数的 LRU 缓存 (#9586)</li>
+<li>Hugging Face OAuth 支持在设置中添加了 auth 选项卡 (#9552)</li>
+<li>审核子流程超时替换为回合限制 (#9571)</li>
+<li>基准测试改进（#9465，#9637）</li>
+<li>添加了规范思维模式（#9743）</li>
+<li>技能指令每回合动态刷新（#9217）</li>
+<li>粘贴的 HTML 可以更好地解析为 markdown (#9190)</li>
+<li>改进了依赖卫生（#9360）</li>
+<li>每回合构建的召唤指令（#9329）</li>
+<li>协议清理（#9147）</li>
+<li>设置移至应用外壳 (#9047)</li>
+<li>扩展页面重新设计（#8940）</li>
+<li>提供商目录移至 goose2 中的 ACP 层后面 (#9030)</li>
+<li>重新设计的技能库（#8868）</li>
+<li>侧边栏导航和项目图标已完善 (#8896)</li>
+<li>提供程序解析并行化和 SQLite 池急切初始化 (#8899)</li>
+<li>删除技能类别（#9008）</li>
+<li>连续的工具调用分组为汇总链卡（#8995）</li>
+<li>工件启发式/正则表达式替换为协议消息（#8996）</li>
+<li>更新了 <code>--session-id</code> 的 CLI 帮助文本 (#10077)</li>
+<li>刷新规范模型注册表（#10709、#9551、#9331）</li>
+<li>EmpirioLabs 提供商显示名称已更新 (#10126)</li>
+</ul>
+<h2 id="-文档">📚 文档</h2>
+<ul>
+<li>自定义代理指南 (#9293)</li>
+<li>自定义代理指南修正（#9947）</li>
+<li>hooks 有效负载指南中命名的消息字段 (#9913)</li>
+<li>更新了发布测试说明 (#10122)</li>
+<li>ACP clients 文档更新 (#9772)</li>
+<li>会话历史记录导航/删除文档已修复（#9727）</li>
+<li>远程服务器连接指南 (#9275)</li>
+<li>SaladCloud AI 网关文档 (#9253)</li>
+<li>为委托和加载工具记录了召唤扩展要求 (#9231)</li>
+<li>挂钩指南 (#9288)</li>
+<li>Hooks 专题博客文章 (#9227)</li>
+<li>重新组织文档 (#9310)</li>
+<li>Scaleway 提供商文档 (#9423)</li>
+<li>自我提升代理博客文章 (#9846)</li>
+<li>AAIF 迁移博客文章 (#9866)</li>
+<li>使用 goose 博客文章进行编排 (#9104)</li>
+<li>Minimax 和 Office QA 基准测试结果博客文章 (#8984)</li>
+<li>Goose with peekaboo 博客文章 (#8884)</li>
+<li>内置本地推理博客文章 (#8808)</li>
+<li>删除了 DCO 参考 (#9864)</li>
+<li>修复内部文档锚点（#9094）</li>
+<li>Ophis MCP 服务器添加到扩展注册表中 (#9861)</li>
+<li>学者助手教程页面 (#9477)</li>
+<li>安装空白修复 (#9867)</li>
+<li>统计数据更新（#9410）</li>
+<li>MCP 博客文章拼写错误修复 (#9641)</li>
+<li>更新分析扩展指令 (#9585)</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/aaif-goose/goose">aaif-goose/goose</a> · 🏷️ 版本：<code>v1.41.0</code> · 📅 发布：2026-07-03 · <a href="https://github.com/aaif-goose/goose/releases/tag/v1.41.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/goose/goose_v1.42.0"> <span class="k">← 下一个</span> <span class="t">v1.42.0</span> </a> <a href="/zh/release_note/goose/goose_v1.40.0"> <span class="k">上一个 →</span> <span class="t">v1.40.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/aaif-goose/goose/releases/tag/v1.41.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/aaif-goose/goose" target="_blank" rel="noopener"> <span>aaif-goose/goose</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#-特点" class>✨ 特点</a><a href="#-错误修复" class>🐛 错误修复</a><a href="#-改进" class>🔧 改进</a><a href="#-文档" class>📚 文档</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/goose/goose_v1.60.2"> <span class="v">v1.60.2</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/goose/goose_v1.60.1"> <span class="v">v1.60.1</span> <span class="d">26-11-18</span> </a> </li><li> <a href="/zh/release_note/goose/goose_v1.60.0"> <span class="v">v1.60.0</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/goose/goose_v1.59.2"> <span class="v">v1.59.2</span> <span class="d">26-11-16</span> </a> </li><li> <a href="/zh/release_note/goose/goose_1.59.0"> <span class="v">v1.59.0</span> <span class="d">26-11-10</span> </a> </li><li> <a href="/zh/release_note/goose/goose_1.58.1"> <span class="v">v1.58.1</span> <span class="d">26-11-10</span> </a> </li><li> <a href="/zh/release_note/goose/goose_1.58.0"> <span class="v">v1.58.0</span> <span class="d">26-11-09</span> </a> </li><li> <a href="/zh/release_note/goose/goose_1.57.0"> <span class="v">v1.57.0</span> <span class="d">26-10-28</span> </a> </li> </ul> <a href="/zh/releases/goose" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 77 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

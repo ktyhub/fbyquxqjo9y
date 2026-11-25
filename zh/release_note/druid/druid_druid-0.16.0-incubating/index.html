@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>druid 0.16.0-incubating — STAGS NextStack</title><meta name="description" content="Apache Druid 0.16.0-incubating contains over 350 new features, performance enhancements, bug fixes, and major documentation improvements from 50 contributors."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/druid/druid_druid-0.16.0-incubating/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/druid/0.16.0-incubating"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/druid/druid_druid-0.16.0-incubating/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/druid/0.16.0-incubating"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="druid 0.16.0-incubating — STAGS NextStack"><meta property="og:description" content="Apache Druid 0.16.0-incubating contains over 350 new features, performance enhancements, bug fixes, and major documentation improvements from 50 contributors."><meta property="og:url" content="https://www.stags.cn/zh/release_note/druid/druid_druid-0.16.0-incubating/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/druid/druid_druid-0.16.0-incubating/#article","headline":"druid 0.16.0-incubating release notes","datePublished":"2019-09-25","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/apache/druid"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/druid/0.16.0-incubating/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/druid/druid_druid-0.16.0-incubating/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/druid/0.16.0-incubating/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/druid/0.16.0-incubating/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/druid/0.16.0-incubating/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/druid/0.16.0-incubating/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/druid/0.16.0-incubating/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/druid">druid</a> </nav> <h1 class="detail-title"> <span class="p">druid</span> 0.16.0-incubating </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2019年9月25日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/apache/druid" target="_blank" rel="noopener"> <span class="k">来源</span>apache/druid </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/druid/0.16.0-incubating"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/druid/druid_druid-0.16.0-incubating/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <p>Apache Druid 0.16.0-incubating 包含来自 50 个贡献者的 350 多个新功能、性能增强、错误修复和主要文档改进。查看<a href="https://github.com/apache/incubator-druid/compare/0.15.1-incubating...0.16.0-incubating">完整的更改列表</a> 和<a href="https://github.com/apache/incubator-druid/milestone/32">标记到里程碑的所有内容</a>。</p>
+<h1 id="亮点">亮点</h1>
+<h2 id="-性能"><a name="perf" href="#perf">#</a> 性能</h2>
+<h3 id="矢量化查询处理"><a name="vector" href="#vector">#</a>“矢量化”查询处理</h3>
+<p>0.16.0 中新增了一个实验性“矢量化”查询执行引擎，它可以在 1.3-3x 范围内为时间序列和 group by v2 查询提供速度提升。它的运行原理是对行进行批处理操作，而不是一次处理一行，例如批量迭代位图而不是每行，批量读取列值，批量过滤，批量聚合值等等。这会显着减少方法调用、更好的内存局部性并提高缓存效率。
+这是一个实验性功能，但我们将其视为 Druid 查询处理的前进之路，并且随着我们继续改进和填补即将发布的版本中缺失的功能，我们很高兴收到反馈。</p>
+<ul>
+<li>只有 timeseries 和 groupBy 有矢量化引擎。</li>
+<li>GroupBy 尚不处理除“全部”之外的多值维度或粒度。</li>
+<li>矢量游标无法处理虚拟列或降序。</li>
+<li>任何地方都不支持表达式：不作为聚合器、虚拟函数或过滤器的输入。</li>
+<li>只有一些聚合器具有矢量化实现：“count”、“doubleSum”、“floatSum”、“longSum”、“hyperUnique”和“filtered”。</li>
+<li>只有某些过滤器具有矢量化匹配器：“selector”、“bound”、“in”、“like”、“regex”、“search”、“and”、“or”和“not”。</li>
+<li>“默认”以外的尺寸规格尚不工作（无提取功能或过滤尺寸规格）。
+可以通过将查询上下文设置为 <code>"vectorize": true</code> 来启用该功能（默认为 <code>false</code>）。这适用于 Druid SQL 和本机查询。当设置为<code>true</code>时，如果可能的话将使用矢量化；否则，Druid 将回退到其非矢量化查询引擎。您还可以将其设置为 <code>"force"</code>，如果查询无法完全矢量化，则会返回错误。这有助于确认确实正在使用矢量化。
+您可以通过设置 <code>vectorSize</code> 查询上下文参数（默认为 <code>1000</code>）来控制执行期间的块大小。
+<a href="https://github.com/apache/incubator-druid/issues/7093">https://github.com/apache/incubator-druid/issues/7093</a>
+<a href="https://github.com/apache/incubator-druid/pull/6794">https://github.com/apache/incubator-druid/pull/6794</a></li>
+</ul>
+<h3 id="-groupby-基于数组的结果行"><a name="array-group" href="#array-group">#</a> GroupBy 基于数组的结果行</h3>
+<p>groupBy v2 查询现在使用结果行的基于数组的表示，而不是 Druid 之前版本使用的基于映射的表示。这可以更快地生成和处理结果集。开箱即用后，此更改是不可见的并且向后兼容；您无需更改任何配置即可获得这种更高效格式的好处，并且不会对缓存结果产生影响。在内部，代理将_始终_在向历史记录发出的查询中自动使用此格式。默认情况下，结果将被转换回代理处现有的基于“地图”的格式，然后再将其发送回 client。
+但是，如果您想避免这种转换的开销，并获得更快的结果，可以在查询上下文上设置 <code>resultAsArray</code> 以直接传递基于新数组的结果行格式。架构如下，按顺序排列：</p>
+<ul>
+<li>时间戳（可选；仅当粒度！= ALL 时）</li>
+<li>尺寸（按顺序排列）</li>
+<li>聚合器（按顺序）</li>
+<li>后聚合器（可选；按顺序，如果存在）
+<a href="https://github.com/apache/incubator-druid/issues/8118">https://github.com/apache/incubator-druid/issues/8118</a>
+<a href="https://github.com/apache/incubator-druid/pull/8196">https://github.com/apache/incubator-druid/pull/8196</a></li>
+</ul>
+<h3 id="-其他性能增强"><a name="perf-misc" href="#perf-misc">#</a> 其他性能增强</h3>
+<p>可以在<a href="https://github.com/apache/incubator-druid/issues?q=is%3Aclosed+label%3APerformance+milestone%3A0.16.0">此处</a> 找到标记为 0.16 性能增强的完整拉取请求集。</p>
+<h2 id="-次要压缩"><a name="minor-compaction" href="#minor-compaction">#</a> “次要”压缩</h2>
+<p>Kafka 索引服务和压缩的用户以及获得少量最新数据的用户可以通过称为“次要”压缩的新概念形式找到_巨大_改进。通过对数据段的版本控制方式进行内部更改，次要压缩基于索引时基于“段”的锁定的思想，而不是当前的 Druid 锁定行为（现在称为“时间块”锁定）。正如您所期望的，段锁定仅允许锁定正在压缩的段，同时仍然允许新的“附加”索引任务（如 Kafka 索引任务）继续运行并同时创建新段。如果您获得大量延迟数据，这将是一件大事，因为当前的行为会导致压缩任务匮乏，因为更高优先级的实时任务会占用锁。这种阻止压缩任务优化数据源段大小的行为会导致整体性能下降。
+要启用段锁定，您需要在任务上下文中将 <code>forceTimeChunkLock</code> 设置为 <code>false</code>，或在 Overlord 配置中设置 <code>druid.indexer.tasklock.forceTimeChunkLock=false</code>。不过，<em>注意</em>，启用此功能后，由于段版本控制的变化，内置<strong>没有回滚</strong>路径，因此一旦升级到0.16，就无法降级到旧版本的Druid。因此，我们“强烈建议”在启用此功能之前确认 Druid 0.16 在您的集群中稳定。
+它有一个不起眼的名字，但次要压缩的变化是深入的，并且不可能充分描述在这些 release note 中驱动此变化的机制，因此请查看提案和 PR 以获取更多详细信息。
+<a href="https://github.com/apache/incubator-druid/issues/7491">https://github.com/apache/incubator-druid/issues/7491</a>
+<a href="https://github.com/apache/incubator-druid/pull/7547">https://github.com/apache/incubator-druid/pull/7547</a></p>
+<h2 id="-druid索引器流程"><a name="indexer" href="#indexer">#</a> Druid“索引器”流程</h2>
+<p>新的Indexer进程是MiddleManager + Peon任务执行系统的替代方案。索引器不是为每个任务分叉一个单独的 JVM 进程，而是在单个 JVM 进程中将任务作为单独的线程运行。 Indexer 的设计比 MiddleManager + Peon 系统更容易配置和部署，并且能够更好地实现跨任务的资源共享。
+索引器的优点在于，它允许在所有正在运行的索引任务线程之间共享查询处理资源、查找、缓存的身份验证/授权信息等，从而使每个单独的任务可以访问更大的资源池，并且比 Peon 执行模型（每个任务在其自己的进程中隔离）执行的冗余操作要少得多。
+使用 Indexer 确实有一个缺点：Peon 进程提供的进程隔离的丢失意味着单个任务可能会影响该 Indexer 上所有正在运行的索引任务。 <code>druid.worker.globalIngestionHeapLimitBytes</code> 和 <code>druid.worker.numConcurrentMerges</code> 配置旨在帮助最大限度地减少这种情况。此外，索引器进程的任务日志将与索引器进程日志内联，并且不会持久保存到深度存储中。
+您可以在启动服务时通过将 <code>server indexer</code> 作为命令行参数提供给 <code>org.apache.druid.cli.Main</code> 来开始使用索引。要使用 Indexer 代替 MiddleManager 和 Peon，您应该能够将配置中的值调整到 Indexer 配置中，将 <code>druid.indexer.fork.property.</code> 配置直接提升到 Indexer，并根据 Peon 大小乘以任务槽数来调整堆和直接内存的大小（与 MiddleManager 不同，它不接受配置 <code>druid.indexer.runner.javaOpts</code> 或 <code>druid.indexer.runner.javaOptsArray</code>）。有关详细信息，请参阅<a href="https://druid.staged.apache.org/docs/latest/design/indexer.html">索引器文档</a>。
+<a href="https://github.com/apache/incubator-druid/pull/8107">https://github.com/apache/incubator-druid/pull/8107</a></p>
+<h2 id="-使用-shuffle-的本机并行批量索引"><a name="shuffle" href="#shuffle">#</a> 使用 shuffle 的本机并行批量索引</h2>
+<p>在 0.16.0 中，Druid 的 <code>index_parallel </code> 本机并行批量索引任务现在支持“完美”汇总，并实现了 2 阶段洗牌过程。
+第 1 阶段的任务在基于标准时间的段粒度分区之上执行行的辅助分区，为每个分区创建一个中间数据段。第 2 阶段任务分别分配一组在第 1 阶段创建的分区，并将收集并组合属于该分区的中间数据段集，使其在构建最终段时实现完整的汇总。目前，仅支持基于哈希的分区。
+这可以通过在 <code> tuningConfig</code> 中将 <code>forceGuaranteedRollup</code> 设置为 <code>true</code> 来启用；还必须设置 <code>partitionsSpec</code> 中的 <code>numShards</code> 和 <code>granularitySpec</code> 中的 <code>intervals</code>。
+Druid MiddleManager（或新的 Indexer）进程对这些索引任务承担了新的责任，将阶段 1 的中间分区段输出提供给阶段 2 任务，因此根据配置和集群大小，可能需要调整 MiddleManager jvm 配置以增加堆分配和 http 线程。这些数字预计会随着集群大小而扩展，因为参与洗牌的所有 MiddleManager 或 Indexer 进程都需要能够相互通信，但我们预计占用空间不会比当前大得多。乐观的是，我们建议尝试使用现有配置，并仅在遇到问题时增加堆和 http 线程计数。
+<a href="https://github.com/apache/incubator-druid/issues/8061">https://github.com/apache/incubator-druid/issues/8061</a></p>
+<h3 id="-web-控制台"><a name="web" href="#web">#</a> Web 控制台</h3>
+<h4 id="-数据加载器"><a name="web-loader" href="#web-loader">#</a> 数据加载器</h4>
+<p>0.15 中引入的控制台数据加载器在 0.16 中得到了扩展，支持 Kafka、Kinesis、段重新索引，甚至可以直接粘贴的“内联”数据。
+<img src="https://user-images.githubusercontent.com/1577461/64417869-bf7a4a80-d04e-11e9-97fe-820d2c8c2997.gif" alt="DataLoaderKafka">
+<a href="https://github.com/apache/incubator-druid/pull/7643">https://github.com/apache/incubator-druid/pull/7643</a>
+<a href="https://github.com/apache/incubator-druid/pull/8181">https://github.com/apache/incubator-druid/pull/8181</a>
+<a href="https://github.com/apache/incubator-druid/pull/8056">https://github.com/apache/incubator-druid/pull/8056</a>
+<a href="https://github.com/apache/incubator-druid/pull/7947">https://github.com/apache/incubator-druid/pull/7947</a></p>
+<h4 id="-sql-查询视图"><a name="web-sql" href="#web-sql">#</a> SQL 查询视图</h4>
+<p>0.16 Web 控制台上的查询视图已获得重大升级，转变为交互式点对点 click SQL 编辑器。有一个新的列选择器侧边栏和结果输出表，让您可以直接操作 SQL 查询，而无需实际键入 SQL。
+<img src="https://user-images.githubusercontent.com/1577461/64595040-02e1fb00-d366-11e9-9db3-4607e20386fa.gif" alt="rn_sql_query_view">
+还有查询历史记录视图和完全编辑查询上下文的功能。
+<a href="https://github.com/apache/incubator-druid/pull/7905">https://github.com/apache/incubator-druid/pull/7905</a>
+<a href="https://github.com/apache/incubator-druid/pull/7934">https://github.com/apache/incubator-druid/pull/7934</a>
+<a href="https://github.com/apache/incubator-druid/pull/8251">https://github.com/apache/incubator-druid/pull/8251</a>
+<a href="https://github.com/apache/incubator-druid/pull/7816">https://github.com/apache/incubator-druid/pull/7816</a></p>
+<h4 id="-服务器视图"><a name="web-servers" href="#web-servers">#</a> 服务器视图</h4>
+<p>“数据服务器”视图已重命名为“服务器”，现在使用 <code>sys.servers</code> 系统表显示作为集群一部分发现的所有 Druid 进程的列表。
+<img src="https://user-images.githubusercontent.com/1577461/64595059-0bd2cc80-d366-11e9-99ce-3b486ee85bf6.png" alt="rn_servers_view">
+这应该可以更方便地一目了然地确保所有 Druid 服务器均已启动并向集群的其余部分报告。
+<a href="https://github.com/apache/incubator-druid/pull/7770">https://github.com/apache/incubator-druid/pull/7770</a>
+<a href="https://github.com/apache/incubator-druid/pull/7654">https://github.com/apache/incubator-druid/pull/7654</a></p>
+<h4 id="-数据源视图"><a name="web-datasources" href="#web-datasources">#</a> 数据源视图</h4>
+<p>数据源视图添加了新的分段时间线可视化，允许直观地衡量分段大小和分布。
+<img src="https://user-images.githubusercontent.com/1577461/64595097-20af6000-d366-11e9-99e2-ca91e8a6f51f.png" alt="rn_datasources_view">
+如果您以前使用过现在的旧版协调器控制台，请不要惊慌，时间线已反转，最新的片段现在位于可视化的右侧！
+<a href="https://github.com/apache/incubator-druid/pull/8202">https://github.com/apache/incubator-druid/pull/8202</a></p>
+<h4 id="-任务视图"><a name="web-tasks" href="#web-tasks">#</a> 任务视图</h4>
+<p>任务视图得到了显着改进，以帮助集群操作员管理 Druid 管理程序和索引任务的能力。主管显示屏现在包含状态信息，以便确定其整体状态并在主管出错时显示错误消息。
+<a href="https://github.com/apache/incubator-druid/pull/7428">https://github.com/apache/incubator-druid/pull/7428</a>
+<a href="https://github.com/apache/incubator-druid/pull/7799">https://github.com/apache/incubator-druid/pull/7799</a></p>
+<h2 id="-sql-和本机查询增强"><a name="sql" href="#sql">#</a> SQL 和本机查询增强</h2>
+<h3 id="-对多值字符串列的-sql-和本机表达式支持"><a name="sql-multi-value" href="#sql-multi-value">#</a> 对多值字符串列的 SQL 和本机表达式支持</h3>
+<p>Druid SQL 和本机查询表达式“虚拟列”现在可以正确利用多值字符串列，可以将它们作为单独的 <code>VARCHAR</code> 值进行操作，以与本机 Druid 查询行为进行奇偶校验，或者作为数组类型，使用一组新的多值字符串函数。请注意，到目前为止，仅在查询时表达式中支持此功能；未来版本将提供通过 <code>transformSpec</code> 在摄取时使用多值表达式的功能。添加的函数和行为更改的完整列表太大，无法在此列出，因此请查看 <a href="https://druid.staged.apache.org/docs/latest/querying/sql.html#multi-value-string-functions">SQL</a> 和 <a href="https://druid.staged.apache.org/docs/latest/misc/math-expr.html#array-functions">表达式</a> 文档以了解更多详细信息。
+<a href="https://github.com/apache/incubator-druid/issues/7525">https://github.com/apache/incubator-druid/issues/7525</a>
+<a href="https://github.com/apache/incubator-druid/pull/7588">https://github.com/apache/incubator-druid/pull/7588</a>
+<a href="https://github.com/apache/incubator-druid/pull/7950">https://github.com/apache/incubator-druid/pull/7950</a>
+<a href="https://github.com/apache/incubator-druid/pull/7973">https://github.com/apache/incubator-druid/pull/7973</a>
+<a href="https://github.com/apache/incubator-druid/pull/7974">https://github.com/apache/incubator-druid/pull/7974</a>
+<a href="https://github.com/apache/incubator-druid/pull/8011">https://github.com/apache/incubator-druid/pull/8011</a></p>
+<h3 id="-timestampdiff"><a name="sql-timestampdiff" href="#sql-timestampdiff">#</a> TIMESTAMPDIFF</h3>
+<p>为了补充可以按时间单位修改时间戳的 <code>TIMESTAMPADD</code>，可以计算两个时间戳之间的有符号时间单位数的 <code>TIMESTAMPDIFF</code>。有关语法信息，请查看 <a href="https://druid.staged.apache.org/docs/latest/querying/sql.html#time-functions">SQL 文档</a>
+<a href="https://github.com/apache/incubator-druid/pull/7695">https://github.com/apache/incubator-druid/pull/7695</a></p>
+<h3 id="-time_ceil"><a name="sql-time-ceil" href="#sql-time-ceil">#</a> TIME_CEIL</h3>
+<p><code>TIME_CEIL</code> 是 <code>CEIL</code> 功能的特定时间、更灵活的版本，也已添加到 Druid 0.16.0 中。此函数可以将时间戳按 ISO8601 周期向上舍入，例如 P3M（季度）或 PT12H（半天），可选地针对特定时区。 <a href="https://druid.staged.apache.org/docs/latest/querying/sql.html#time-functions">请参阅 SQL 文档</a> 了解更多信息。
+<a href="https://github.com/apache/incubator-druid/pull/8027">https://github.com/apache/incubator-druid/pull/8027</a></p>
+<h3 id="-ipv4"><a name="sql-ipv4" href="#sql-ipv4">#</a> IPv4</h3>
+<p>Druid 0.16.0 还添加了专门的 SQL 运算符和本机表达式，用于处理点分十进制字符串或整数格式的 IPv4 互联网地址。新的运算符是 <code>IPV4_MATCH(address, subnet)</code>、<code>IPV4_PARSE(address)</code> 和 <code>IPV4_STRINGIFY(address)</code>，它们分别可以将 IP 地址与 CIDR 表示法的子网进行匹配、将点分十进制字符串格式转换为整数格式、将整数格式转换为点分十进制字符串格式。 <a href="https://druid.staged.apache.org/docs/latest/querying/sql.html#ip-address-functions">请参阅 SQL 文档</a> 了解详细信息。
+<a href="https://github.com/apache/incubator-druid/pull/8223">https://github.com/apache/incubator-druid/pull/8223</a></p>
+<h3 id="-nvl"><a name="sql-nvl" href="#sql-nvl">#</a> NVL</h3>
+<p>为了提高对具有其他数据库经验的 Druid 用户的宽容度和 SQL 兼容性，以 <code>NVL</code> 的形式添加了 <code>COALESCE</code> 函数的别名，某些 SQL 方言会使用该别名。 <a href="https://druid.staged.apache.org/docs/latest/querying/sql.html#other-functions">详细信息请参阅 SQL 文档</a>
+<a href="https://github.com/apache/incubator-druid/pull/7965">https://github.com/apache/incubator-druid/pull/7965</a></p>
+<h3 id="-对字符串列的-longdoublefloat-summinmax-聚合器支持"><a name="string-sum" href="#string-sum">#</a> 对字符串列的 long/double/float sum/min/max 聚合器支持</h3>
+<p>Long、double 和 float sum、min 和 max 聚合器现在可以在与字符串列一起使用时正常工作，执行尽力解析以尝试将它们转换为正确的数字类型。
+<a href="https://github.com/apache/incubator-druid/pull/8243">https://github.com/apache/incubator-druid/pull/8243</a>
+<a href="https://github.com/apache/incubator-druid/pull/8319">https://github.com/apache/incubator-druid/pull/8319</a></p>
+<h2 id="-docker-官方图片"><a name="docker" href="#docker">#</a> Docker 官方图片</h2>
+<p>现在将为从 0.16 开始的每个版本提供官方“便捷二进制”Docker 映像，可在 <a href="https://hub.docker.com/r/apache/incubator-druid">https://hub.docker.com/r/apache/incubator-druid</a>. 上获取</p>
+<h2 id="-更新了网站文档"><a name="docs" href="#docs">#</a> 更新了网站文档</h2>
+<p>Druid 网站的文档部分进行了重大升级，过渡到使用 <a href="https://docusaurus.io/">Docusaurus</a>，这创建了比我们当前更美观、更实用的页面。现在，每个文档页面都有一个左侧可折叠目录，显示整个文档的概要，右侧目录则显示该特定文档页面的概要，从而极大地提高了导航性。
+除此之外，摄取文档也已完全更新，从新的 <code>ingestion/index.md</code> 文档开始，该文档介绍了所有关键的摄取规范概念，并描述了最流行的摄取方法。这是对许多现有文档页面进行的急需的返工，这些文档页面随着时间的推移而有机增长，并且变得难以遵循，变成一组更简单、更少、更大、更多交叉引用的页面。他们也更加“固执己见”，推动新人转向 Kafka、Kinesis、Hadoop 和本机批量摄取。他们讨论了宁静，但没有将其作为强烈推荐的东西来呈现，因为它在最小维护模式下有效。
+查看这些改进（以及更多）<a href="https://druid.staged.apache.org/docs/latest/design/index.html">此处</a>。
+<a href="https://github.com/apache/incubator-druid/pull/8311">https://github.com/apache/incubator-druid/pull/8311</a></p>
+<h2 id="扩展">扩展</h2>
+<h3 id="-druid-datasketches"><a name="datasketches" href="#datasketches">#</a> druid-datasketches</h3>
+<p><code>druid-datasketches</code> 扩展建立在 Apache Datasketches（正在孵化）之上，已扩展为 3 个新的后聚合器：<code>quantilesDoublesSketchToRank</code> 计算给定值的排名近似值，即分布中小于该值的分数；<code>quantilesDoublesSketchToCDF</code> 计算给定定义箱边缘的分割点数组的累积分布函数的近似值。
+添加了另一个后期聚合 <code>thetaSketchToString</code>，它将打印草图摘要以协助调试。请参阅<a href="https://druid.staged.apache.org/docs/latest/development/extensions-core/datasketches-theta.html#sketch-summary">Datasketches 扩展文档</a> 了解更多信息。
+<a href="https://github.com/apache/incubator-druid/pull/7550">https://github.com/apache/incubator-druid/pull/7550</a>
+<a href="https://github.com/apache/incubator-druid/pull/7937">https://github.com/apache/incubator-druid/pull/7937</a>
+<a href="https://druid.staged.apache.org/docs/latest/development/extensions-core/datasketches-hll.html"><code>HLLSketch</code> 聚合器</a> 已通过仅查询时的 <code>round</code> 选项进行了改进，以支持将值舍入为整数，从而使其与内置的 <code>cardinality</code> 和 <code>hyperUnique</code> 聚合器具有相同的功能。
+<a href="https://github.com/apache/incubator-druid/pull/8023">https://github.com/apache/incubator-druid/pull/8023</a>
+最后，<code>HllSketch</code> 的用户还应该看到性能的提高，因为所做的一些更改允许 Druid 预先计算空草图并将其复制到聚合缓冲区中，从而大大减少查询处理期间初始化聚合器的时间。
+<a href="https://github.com/apache/incubator-druid/pull/8194">https://github.com/apache/incubator-druid/pull/8194</a></p>
+<h3 id="-德鲁伊统计"><a name="stats" href="#stats">#</a> 德鲁伊统计</h3>
+<p><code>druid-stats</code> 核心扩展已通过 SQL 支持得到增强，公开 <code>VAR_POP</code> 和 <code>VAR_SAMP</code> 来使用方差聚合器计算方差总体和样本，以及 <code>STDDEV_POP</code> 和 <code>STDDEV_SAMP</code> 来使用标准差后聚合器计算标准差总体和样本。此外，<code>VARIANCE</code> 和 <code>STDDEV</code> 函数分别添加为 <code>VAR_SAMP</code> 和 <code>STDDEV_SAMP</code> 的别名。有关更多详细信息，请参阅<a href="https://druid.staged.apache.org/docs/latest/querying/sql.html#aggregation-functions">SQL 文档</a> 和<a href="https://druid.staged.apache.org/docs/latest/development/extensions-core/stats.html">统计扩展文档</a>。
+<a href="https://github.com/apache/incubator-druid/pull/7801">https://github.com/apache/incubator-druid/pull/7801</a></p>
+<h3 id="-德鲁伊直方图"><a name="histogram" href="#histogram">#</a> 德鲁伊直方图</h3>
+<p><code>druid-histogram</code> 扩展的“固定存储桶”直方图聚合器新增了一个属性 <code>finalizeAsBase64Binary</code>，可以将生成的直方图序列化为 Base64 字符串，而不是人类可读的 JSON 摘要，使其与同一扩展的近似直方图聚合器一致。有关详细信息，请参阅<a href="https://druid.staged.apache.org/docs/latest/development/extensions-core/approximate-histograms.html#properties">文档</a>。
+<a href="https://github.com/apache/incubator-druid/pull/7784">https://github.com/apache/incubator-druid/pull/7784</a></p>
+<h3 id="-statsd-emitter"><a name="statsd" href="#statsd">#</a> statsd-emitter</h3>
+<p><code>statsd-emitter</code> 扩展有一个新选项 <code>druid.emitter.statsd.dogstatsdServiceAsTag</code>，它允许将 Druid 服务名称作为“标签”发出，例如 <code>druid_service:druid/broker</code>，而不是 <code>druid.broker.query.time</code> 中的度量名称的一部分。使用 <code>druid</code> 作为前缀。因此，<code>druid.broker.query.time</code> 的示例将改为 <code>druid.query.time</code>，从而允许跨 Druid 服务类型整合指标并通过标签进行区分。 <code>druid.emitter.statsd.dogstatsd</code> 必须设置为 <code>true</code> 才能使该设置生效。有关更多详细信息，请参阅<a href="https://druid.staged.apache.org/docs/latest/development/extensions-contrib/statsd.html#configuration">文档</a>。
+<a href="https://github.com/apache/incubator-druid/pull/8238">https://github.com/apache/incubator-druid/pull/8238</a>
+<a href="https://github.com/apache/incubator-druid/pull/8472">https://github.com/apache/incubator-druid/pull/8472</a></p>
+<h3 id="-新扩展druid-tdigestsketch"><a name="tdigest" href="#tdigest">#</a> 新扩展：druid-tdigestsketch</h3>
+<p>Druid 0.16 中添加了一组新的基于 <a href="https://github.com/tdunning/t-digest">t-digest</a> 的近似草图聚合器，用于计算分位数等。 T-digest 专为并行编程用例（例如分布式聚合或映射缩减作业）而设计，通过使两个中间 t-digest 的组合变得简单而高效。它可以补充 Apache Datasketches 扩展和 moment sketch 扩展提供的现有算法。有关更多详细信息，请参阅<a href="https://druid.staged.apache.org/docs/latest/development/extensions-contrib/tdigestsketch-quantiles.html">扩展文档</a>。
+<a href="https://github.com/apache/incubator-druid/issues/7303">https://github.com/apache/incubator-druid/issues/7303</a>
+<a href="https://github.com/apache/incubator-druid/pull/7331">https://github.com/apache/incubator-druid/pull/7331</a></p>
+<h3 id="-新扩展druid-influxdb-emitter"><a name="influxdb" href="#influxdb">#</a> 新扩展：druid-influxdb-emitter</h3>
+<p>0.16 中还添加了一个新的 Druid 发射器扩展，允许通过 HTTP 将 Druid 指标发送到 <a href="https://github.com/influxdata/influxdb">influxdb</a>。目前，此发射器仅向 InfluxDB 发送服务指标事件（有关指标列表，请参阅 <a href="https://druid.staged.apache.org/docs/latest/operations/metrics.html">Druid 指标</a>）。当触发指标事件时，它会被添加到事件队列中。经过可配置的时间后，队列上的事件将转换为 InfluxDB 的线路协议并 POST 到 InfluxDB HTTP API。此时整个队列都被刷新。当发射器关闭时，队列也会被刷新。有关详细信息，请参阅<a href="https://druid.staged.apache.org/docs/latest/development/extensions-contrib/influxdb-emitter.html">扩展文档</a>。
+<a href="https://github.com/apache/incubator-druid/pull/7717">https://github.com/apache/incubator-druid/pull/7717</a></p>
+<h2 id="-微调您的工作负载"><a name="tuning" href="#tuning">#</a> 微调您的工作负载</h2>
+<p>除了实验性矢量化查询引擎和新的索引器进程类型之外，0.16 还具有一些附加功能，可通过实验对索引和查询性能进行潜在的微调。</p>
+<h3 id="-控制索引中间段压缩"><a name="intermediary-compression" href="#intermediary-compression">#</a> 控制索引中间段压缩</h3>
+<p>首先，在索引过程中保留中间段时能够独立控制使用（或禁用）压缩方式。此配置可用于 <code>indexSpec</code> 属性，并且可以添加到 <code>tuningConfig</code> 中，如下所示：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>"indexSpecForIntermediatePersists": {</span></span>
+<span class="line"><span>  "dimensionCompression": "uncompressed",</span></span>
+<span class="line"><span>  "metricCompression": "none"</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>例如，完全禁用中间段的压缩。考虑“未压缩”中间段的一个潜在原因是，在发布中间段并将其推送到深度存储之前，减少执行中间段最终合并所需的 Java“直接”内存量，因为从未压缩列读取数据不需要用于解码 lz4 和其他编码列的 64kb 直接缓冲区。当然，这是存储空间和页面缓存占用空间的权衡，因此我们建议在确定用于生产工作负载的配置之前进行试验。
+<a href="https://github.com/apache/incubator-druid/pull/7919">https://github.com/apache/incubator-druid/pull/7919</a></p>
+<h3 id="-控制过滤器位图索引利用率"><a name="filter-bitmaps" href="#filter-bitmaps">#</a> 控制过滤器位图索引利用率</h3>
+<p>位图索引通常可以极大地提升 Druid 的性能，但在某些情况下可能会导致查询速度变慢，特别是在基数维度非常高的过滤器的计算成本很高的情况下。在 Druid 0.16 中，一种新机制可以对何时使用位图索引以及何时执行过滤器作为行扫描进行手动控制，并且现在可以在每个过滤器、每个查询的基础上使用。大多数过滤器都会接受新属性 <code>filterTuning</code>，它可能看起来像这样：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>"filterTuning": {</span></span>
+<span class="line"><span>  "useBitmapIndex": true</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p><code>useBitmapIndex</code> 如果设置为 false 将不允许过滤器使用位图索引。此属性是可选的，如果未提供 <code>filterTuning</code>，则默认行为保持不变。请注意，此功能_未_记录在面向用户的文档中，被视为实验性的，并且可能在任何未来版本中发生更改。
+<a href="https://github.com/apache/incubator-druid/pull/8209">https://github.com/apache/incubator-druid/pull/8209</a></p>
+<h2 id="-请求日志记录"><a name="request-logging" href="#request-logging">#</a> 请求日志记录</h2>
+<p>如果您想启用 Druid 请求日志记录，但使用 Druid SQL 并发现它们由于所有元数据查询而有点过于繁琐，那么 0.16 很幸运，因为新的配置选项允许有选择地从请求日志记录中屏蔽特定类型的查询。该选项 <code>druid.request.logging.mutedQueryTypes</code> 接受由 Druid 的 <a href="https://druid.staged.apache.org/docs/latest/querying/querying.html">本机 JSON 查询 API</a> 定义的“queryType”字符串列表，并且默认为空列表（因此不会忽略任何内容）。例如，</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>druid.request.logging.mutedQueryTypes=["segmentMetadata", "timeBoundary"]</span></span></code></pre>
+<p>将静音 <code>segmentMetadata</code> 和 <code>timeBoundary</code> 查询的所有请求日志。
+<a href="https://github.com/apache/incubator-druid/pull/7562">https://github.com/apache/incubator-druid/pull/7562</a></p>
+<h1 id="-升级到-druid-0160"><a name="upgrading" href="#upgrading">#</a> 升级到 Druid 0.16.0</h1>
+<h2 id="-s3任务日志存储"><a name="upgrading-s3" href="#upgrading-s3">#</a> S3任务日志存储</h2>
+<p>升级到 0.16.0 后，任务日志将需要与将段推送到深度存储相同的 S3 权限，其中有一些额外的逻辑可能会获取存储桶所有者（通过获取存储桶 ACL）并设置段对象的 ACL 以授予存储桶所有者完全访问权限。如果您希望避免提供这些附加权限，可以通过设置 <code>druid.indexer.logs.disableAcl=true</code> 保留现有行为。
+<a href="https://github.com/apache/incubator-druid/pull/7907">https://github.com/apache/incubator-druid/pull/7907</a></p>
+<h3 id="-druid-sql"><a name="upgrading-sql" href="#upgrading-sql">#</a> Druid SQL</h3>
+<p>Druid SQL 现在默认在路由器上启用。请注意，这可能会给代理进程带来一些额外的压力，因为需要额外的元数据查询来维护查询计划的数据源模式，并且可以通过设置 <code>druid.sql.enable=false</code> 来禁用它以保留以前的行为。
+<a href="https://github.com/apache/incubator-druid/pull/7808">https://github.com/apache/incubator-druid/pull/7808</a></p>
+<h3 id="-druid-sql查找函数"><a name="upgrading-lookup" href="#upgrading-lookup">#</a> Druid SQL查找函数</h3>
+<p>使用 <code>LOOKUP</code> 函数的 Druid SQL 查询现在将利用作为一对一转换的 <code>injective</code> 查找，这允许执行优化，避免将查找评估下推到历史进程，而是允许稍后完成转换。此更改的缺点是，被错误定义为一对一但实际上在评估时并非一对一转换的查找将产生不正确的查询结果。
+<a href="https://github.com/apache/incubator-druid/pull/7655">https://github.com/apache/incubator-druid/pull/7655</a></p>
+<h3 id="-协调器元数据-api-更改"><a name="upgrading-api" href="#upgrading-api">#</a> 协调器元数据 API 更改</h3>
+<p>协调器提供的元数据 API 已被修改，以提供更一致的 HTTP 响应。这些更改很小，但如果您依赖于特定的 API，则向后不兼容。</p>
+<ul>
+<li><strong>发布</strong> <code>/druid/coordinator/v1/datasources/{dataSourceName}</code></li>
+<li><strong>删除</strong> <code>/druid/coordinator/v1/datasources/{dataSourceName}</code></li>
+<li><strong>发布</strong> <code>/druid/coordinator/v1/datasources/{dataSourceName}/markUnused</code></li>
+<li><strong>发布</strong> <code>/druid/coordinator/v1/datasources/{dataSourceName}/markUsed</code>
+现在，当没有更改任何段时，返回 <code>{"numChangedSegments": N}</code> 形式的 JSON 对象，而不是 204（空响应）。另一方面
+另一方面，不会返回 500（服务器错误），而是返回 204（空响应）。</li>
+<li><strong>发布</strong> <code>/druid/coordinator/v1/datasources/{dataSourceName}/segments/{segmentId}</code></li>
+<li><strong>删除</strong> <code>/druid/coordinator/v1/datasources/{dataSourceName}/segments/{segmentId}</code>
+现在返回 <code>{"segmentStateChanged": true/false}</code> 形式的 JSON 对象。
+<code>/druid/coordinator/v1/metadata/datasources?includeDisabled</code> 现在是 <code>/druid/coordinator/v1/metadata/datasources?includeUnused</code>。 <code>includeDisabled</code> 仍然被接受，但在日志中发出警告。
+<a href="https://github.com/apache/incubator-druid/pull/7653">https://github.com/apache/incubator-druid/pull/7653</a></li>
+</ul>
+<h3 id="-压缩任务"><a name="upgrading-compaction" href="#upgrading-compaction">#</a> 压缩任务</h3>
+<p><code>keepSegmentGranularity</code> 选项将创建压缩任务，在压缩之前忽略段的间隔边界，但已被弃用，因为它在大多数情况下不是很有用。如果您确实发现此行为有用，仍然可以通过将 <code>segmentGranularity</code> 设置为 <code>ALL</code> 来实现。
+<a href="https://github.com/apache/incubator-druid/pull/7747">https://github.com/apache/incubator-druid/pull/7747</a>
+通过协调器支持“自动”压缩的所有 Druid 版本都存在一个已知问题，其中自动压缩可能会因重复尝试相同的时间间隔而陷入困境。现在可以通过设置 <code>targetCompactionSizeBytes</code> 在 0.16 中缓解此问题，但在使用 <code>maxRowsPerSegment</code> 或 <code>maxTotalRows</code> 时仍然存在。 Druid 的未来版本将彻底解决这个问题。
+<a href="https://github.com/apache/incubator-druid/issues/8481">https://github.com/apache/incubator-druid/issues/8481</a>
+<a href="https://github.com/apache/incubator-druid/pull/8495">https://github.com/apache/incubator-druid/pull/8495</a></p>
+<h3 id="-索引规范"><a name="upgrading-spec" href="#upgrading-spec">#</a> 索引规范</h3>
+<p>所有本机索引任务类型现在都使用 <code>PartitonsSpec</code> 来定义辅助分区，以与其他索引任务类型保持一致。这些更改并非向后不兼容，但用户应考虑将 ZZPH100​​ZZ、<code>maxTotalRows</code>、<code>numShards</code> 和 <code>partitionDimensions</code> 迁移到本机、kafka 和 kinesis 索引任务的分区规范。
+<a href="https://github.com/apache/incubator-druid/pull/8141">https://github.com/apache/incubator-druid/pull/8141</a></p>
+<h3 id="-kafka-索引"><a name="upgrading-kafka" href="#upgrading-kafka">#</a> Kafka 索引</h3>
+<p>Druid 0.12 中引入了 Apache Kafka 索引服务的分段增量发布，此时现有的 Kafka 索引服务被保留为“遗留”格式，以允许从旧版本的 Druid 进行滚动更新。这个“遗留”代码库现已在 Druid 0.16.0 中删除，这意味着不支持从早于 0.12.0 的 Druid 版本进行滚动更新。
+<a href="https://github.com/apache/incubator-druid/pull/7735">https://github.com/apache/incubator-druid/pull/7735</a></p>
+<h3 id="-avro-扩展"><a name="upgrading-avro" href="#upgrading-avro">#</a> Avro 扩展</h3>
+<p>为了清理依赖关系，<code>fromPigAvroStorage</code> 选项已从 Druid 0.16 的 Apache Avro 扩展中删除。此选项提供了 <code>GenericData.Array</code> 的特殊转换，但此列类型现在将由默认的 <code>List</code> 实现处理。
+<a href="https://github.com/apache/incubator-druid/pull/7810">https://github.com/apache/incubator-druid/pull/7810</a></p>
+<h3 id="-kerberos-扩展"><a name="upgrading-kerberos" href="#upgrading-kerberos">#</a> Kerberos 扩展</h3>
+<p><code>druid.auth.authenticator.kerberos.excludedPaths</code> 被 <code>druid.auth.unsecuredPaths</code> 取代，适用于所有身份验证器/授权器，因此请改用此配置属性。
+<a href="https://github.com/apache/incubator-druid/pull/7745">https://github.com/apache/incubator-druid/pull/7745</a></p>
+<h3 id="-zookeeper"><a name="upgrading-zk" href="#upgrading-zk">#</a> Zookeeper</h3>
+<p>设置 <code>druid.zk.service.terminateDruidProcessOnConnectFail</code> 已被删除，这是现在的默认行为 - 当发生未处理的 Curator client 异常时，Druid 进程将退出，而不是继续在“僵尸”状态下运行。
+此外，新的可选设置 <code>druid.zk.service.connectionTimeoutMs</code> 已连接到 Curator client <code>connectionTimeoutMs</code>，现在可以进行自定义设置。默认情况下，它将继续使用 Curator 默认值 <code>15000</code> 毫秒。
+<a href="https://github.com/apache/incubator-druid/pull/8458">https://github.com/apache/incubator-druid/pull/8458</a></p>
+<h3 id="-实时进程"><a name="upgrading-realtime" href="#upgrading-realtime">#</a> 实时进程</h3>
+<p>已弃用的独立“实时”进程已从 Druid 中删除。一段时间以来，人们一直不鼓励使用此功能，但现在 <code>middleManager</code> 和新的 <code>index</code> 进程应该可以处理所有实时索引任务。
+<a href="https://github.com/apache/incubator-druid/pull/7915">https://github.com/apache/incubator-druid/pull/7915</a>
+<a href="https://github.com/apache/incubator-druid/pull/8020">https://github.com/apache/incubator-druid/pull/8020</a></p>
+<h1 id="学分">学分</h1>
+<h2 id="感谢所有为此版本做出贡献的人a2l007abssert亚历山大赛达科夫亚历山大杨andrewluotechnologiesasdf2014awelsh93blugowskicapistrantccaominhclintropolisdclimdene14丁索迪伦1312esevastyanovfjy福科ginmgocho1himanshugilhanadiyamanjennyzzzjihoonson金星辰jon-weijustinborromeokamacikhwjlegoscialeventovlitao91lml2468麦克布鲁斯特nierodanishantmonu51pjain1pphustsamathjainsandishkumarhnsashidhar萨蒂巴尔德sekingme舒琪7surekhasaharanviongpanzi沃吉维茨基xueyumusicxvrlyurmix">感谢所有为此版本做出贡献的人！
+@a2l007
+@abssert
+@亚历山大赛达科夫
+@亚历山大杨
+@andrewluotechnologies
+@asdf2014
+@awelsh93
+@blugowski
+@capistrant
+@ccaominh
+@clintropolis
+@dclim
+@dene14
+@丁索
+@迪伦1312
+@esevastyanov
+@fjy
+@福科
+@ginm
+@gocho1
+@himanshug
+@ilhanadiyaman
+@jennyzzz
+@jihoonson
+@金星辰
+@jon-wei
+@justinborromeo
+@kamaci
+@khwj
+@legoscia
+@leventov
+@litao91
+@lml2468
+@麦克布鲁斯特
+@nieroda
+@nishantmonu51
+@pjain1
+@pphust
+@samathjain
+@SandishKumarHN
+@sashidhar
+@萨蒂巴尔德
+@sekingme
+@舒琪7
+@surekhasaharan
+@viongpanzi
+@沃吉维茨基
+@xueyumusic
+@xvrl
+@yurmix</h2>
+<blockquote>
+<p><strong>来源</strong> <a href="https://github.com/apache/druid">apache/druid</a> · <code>druid-0.16.0-incubating</code> · 2019-09-25 · <a href="https://github.com/apache/druid/releases/tag/druid-0.16.0-incubating">上游版本</a>
+<em>逐字镜像以进行索引。所有权利属于上游项目。</em></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/apache/druid">apache/druid</a> · 🏷️ 版本：<code>druid-0.16.0-incubating</code> · 📅 发布：2019-09-25 · <a href="https://github.com/apache/druid/releases/tag/druid-0.16.0-incubating">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/druid/druid_druid-0.16.1-incubating"> <span class="k">← 下一个</span> <span class="t">0.16.1-incubating</span> </a> <a href="/zh/release_note/druid/druid_druid-0.15.1-incubating"> <span class="k">上一个 →</span> <span class="t">0.15.1-incubating</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/apache/druid/releases/tag/0.16.0-incubating" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/apache/druid" target="_blank" rel="noopener"> <span>apache/druid</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#-性能" class># 性能</a><a href="#矢量化查询处理" class="lv3">#“矢量化”查询处理</a><a href="#-groupby-基于数组的结果行" class="lv3"># GroupBy 基于数组的结果行</a><a href="#-其他性能增强" class="lv3"># 其他性能增强</a><a href="#-次要压缩" class># “次要”压缩</a><a href="#-druid索引器流程" class># Druid“索引器”流程</a><a href="#-使用-shuffle-的本机并行批量索引" class># 使用 shuffle 的本机并行批量索引</a><a href="#-web-控制台" class="lv3"># Web 控制台</a><a href="#-sql-和本机查询增强" class># SQL 和本机查询增强</a><a href="#-对多值字符串列的-sql-和本机表达式支持" class="lv3"># 对多值字符串列的 SQL 和本机表达式支持</a><a href="#-timestampdiff" class="lv3"># TIMESTAMPDIFF</a><a href="#-time_ceil" class="lv3"># TIME_CEIL</a><a href="#-ipv4" class="lv3"># IPv4</a><a href="#-nvl" class="lv3"># NVL</a><a href="#-对字符串列的-longdoublefloat-summinmax-聚合器支持" class="lv3"># 对字符串列的 long/double/float sum/min/max 聚合器支持</a><a href="#-docker-官方图片" class># Docker 官方图片</a><a href="#-更新了网站文档" class># 更新了网站文档</a><a href="#扩展" class>扩展</a><a href="#-druid-datasketches" class="lv3"># druid-datasketches</a><a href="#-德鲁伊统计" class="lv3"># 德鲁伊统计</a><a href="#-德鲁伊直方图" class="lv3"># 德鲁伊直方图</a><a href="#-statsd-emitter" class="lv3"># statsd-emitter</a><a href="#-新扩展druid-tdigestsketch" class="lv3"># 新扩展：druid-tdigestsketch</a><a href="#-新扩展druid-influxdb-emitter" class="lv3"># 新扩展：druid-influxdb-emitter</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/druid/druid_druid-39.0.0"> <span class="v">39.0.0</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-38.0.0"> <span class="v">38.0.0</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-37.0.0"> <span class="v">37.0.0</span> <span class="d">26-05-08</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-36.0.0"> <span class="v">36.0.0</span> <span class="d">26-02-09</span> </a> </li><li> <a href="/zh/release_note/druid/druid_35.0.1"> <span class="v">35.0.1</span> <span class="d">25-12-15</span> </a> </li><li> <a href="/zh/release_note/druid/druid_35.0.0"> <span class="v">35.0.0</span> <span class="d">25-11-18</span> </a> </li><li> <a href="/zh/release_note/druid/druid_34.0.0"> <span class="v">34.0.0</span> <span class="d">25-08-11</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-33.0.0"> <span class="v">33.0.0</span> <span class="d">25-04-29</span> </a> </li> </ul> <a href="/zh/releases/druid" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 71 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>nocodb 2026.10.2 — STAGS NextStack</title><meta name="description" content="Fields and formulas - Changing a field type on PostgreSQL keeps every value that fits, renaming a field updates the formulas that use it, and a math error blanks only its own row."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/nocodb/nocodb_2026.10.2/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/nocodb/2026.10.2"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/nocodb/nocodb_2026.10.2/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/nocodb/2026.10.2"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="nocodb 2026.10.2 — STAGS NextStack"><meta property="og:description" content="Fields and formulas - Changing a field type on PostgreSQL keeps every value that fits, renaming a field updates the formulas that use it, and a math error blanks only its own row."><meta property="og:url" content="https://www.stags.cn/zh/release_note/nocodb/nocodb_2026.10.2/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/nocodb/nocodb_2026.10.2/#article","headline":"nocodb 2026.10.2 release notes","datePublished":"2026-11-19","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/nocodb/nocodb"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/nocodb/2026.10.2/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/nocodb/nocodb_2026.10.2/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/nocodb/2026.10.2/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/nocodb/2026.10.2/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/nocodb/2026.10.2/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/nocodb/2026.10.2/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/nocodb/2026.10.2/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/nocodb">nocodb</a> </nav> <h1 class="detail-title"> <span class="p">nocodb</span> 2026.10.2 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年11月19日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/nocodb/nocodb" target="_blank" rel="noopener"> <span class="k">来源</span>nocodb/nocodb </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/nocodb/2026.10.2"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/nocodb/nocodb_2026.10.2/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="nocodb-2026102">nocodb 2026.10.2</h1>
+<img width="1865" height="1147" alt="2026.10.2：错误修复版本" src="https://github.com/user-attachments/assets/df5a8f63-c53b-45e2-b664-e78df076595d">
+## 修复了什么
+- **字段和公式** - 更改 PostgreSQL 上的字段类型会保留每个适合的值，重命名字段会更新使用它的公式，数学错误只会将其自己的行清空。
+- **过滤器** - *是否*与精确选择选项匹配，删除空过滤器组，并且日期过滤器用于查找日期公式和汇总。
+- **更多过滤器** - 保存时会拒绝具有错误值的日期过滤器，跨库链接上的过滤器适用于可以查看链接表的人员。
+- **网格和记录** - 转义会取消单元格编辑，粘贴不适合的值会保留旧值，一次编辑会生成一个修订条目。
+- **扩展记录** - Ctrl/Cmd+F 在扩展记录时使用浏览器的查找功能，并且在保存时从新记录*创建并链接* 会创建链接记录。
+- **打字** - 使用中文或日文输入法输入的第一个键到达单元格，链接选择器中的条形码扫描仪链接扫描的记录。
+- **日期和数字** - 100 年之前的日期保留其年份，来自外部数据库的小数字段使用列的比例，日历工作日遵循 UI 语言。
+- **富文本** - 富文本和代码块在保存和重新加载后保留其内容和缩进。 [了解更多](/docs/product/tables/fields/field-types/text-based/rich-text)
+- **注释** - 尖括号中的文本（例如 `Name <a@b class="com">`）保留在注释中。
+- **链接** - 在自链接上*创建并链接* 以正确的方式链接，从废纸篓中删除表会删除其链接字段。
+- **查找** - 通过多对多链接的查找保留链接记录的显示值，嵌套查找上的过滤器应用查找自身的条件。 [了解更多](/docs/product/tables/fields/field-types/links-based/lookup#applying-filters)
+- **外部数据库** - PostgreSQL 生成的列是只读的，MySQL 日期时间汇总显示正确的时间，并且在创建任何内容之前，到具有复合主键的表的链接将被拒绝。
+- **垃圾箱** - 删除或恢复记录会保留已在垃圾箱中列出的链接记录。 [了解更多](/docs/product/projects/project-trash#restoring-an-entry)
+- **复制** - 复制项目或表会跳过它不复制的跨库链接上的过滤器，并使用包含 `?` 的列默认值。 [了解更多](/docs/product/projects/actions-on-project#duplicate-project)
+- **导入和导出** - Excel 导入保留工作表名称，导出写入链接显示值。
+- **CSV 导入** - 在 Id 上合并 CSV 会更新现有记录，导入记录的 Webhook 和工作流程会看到其链接。
+- **看板** - 超过 25 个堆栈的板在*全部折叠*后显示每个堆栈。 [了解更多](/docs/product/tables/views/view-types/kanban#collapse-stack)
+- **日历** - 日期汇总上的日历将记录显示为全天事件。
+- **经典应用程序** - 仪表板组过滤器适用于每个小部件，表单页面发送*电子邮件响应*，人员选择器仅列出有权访问的人员，表格页面显示数字分隔符。
+- **表单** - 需要登录的表单在登录后打开，没有重定向循环。
+- **工作流程** - 发送电子邮件接受逗号分隔的列表，运行历史记录显示运行在第一步之前失败的原因，使用 NocoAI 集成运行的脚本，以及永远无法运行的工作流程不会保持活动状态。 [了解更多](/docs/workflows/nodes/action-nodes/send-email)
+- **Webhooks** - 示例有效负载显示链接字段，就像真实的有效负载一样。 [了解更多](/docs/product/tables/table-operations/webhook/create-webhook#configuring-webhook)
+- **表同步** - 来自受密码保护的共享视图的粘贴链接同步接受密码。 [了解更多](/docs/product/sync/nocodb-sync#source)
+- **安全性** - 共享视图和共享仪表板仅返回它们显示的字段，表单仅写入自己的字段，编辑者不再看到工作流步骤中存储的机密，工作流 Webhook 接受最多 1 MB 的请求正文。
+- **脚本** - `table.selectRecordsAsync({ recordIds })` 仅返回请求的记录。 [了解更多](/docs/workflows/scripts/api-reference/table#selectrecordsasync)
+- **团队** - 添加或删除团队成员会立即更新其项目角色。 [了解更多](/docs/product/collaboration/teams#assign-roles-to-teams)
+- **文档** - 拖动文档表中的列可调整该表的大小。
+- **网格列** - 拖动列标题可以为每列保存唯一的位置。
+- **手机和平板电脑** - 点击按钮字段会运行其操作，并且侧边栏开始在平板电脑上折叠。
+- **错误消息** - 服务器错误再次显示为 toast，失败的 SQL 操作指出了连接问题。
+- **计划标签** - 再次登录后侧边栏会显示正确的计划。
+## 自托管注意事项
+- **SCIM 组** - 来自 Entra ID 和 Okta 的组授予其团队的工作区角色。 [了解更多](/docs/product/account-settings/authentication/scim#group-provisioning)
+- **气隙许可证** - *刷新许可证* 更新气隙许可证。 [了解更多](/docs/self-hosting/license-activation#refresh-license)
+- **MariaDB** - `REGEX_REPLACE` 和 `REGEX_EXTRACT` 在 MariaDB 上工作，MariaDB 作为元数据数据库。 [了解更多](/docs/product/tables/fields/field-types/formula/string-functions#regex_replace)
+- **外部数据库** - 超级管理员登录会关闭外部数据库连接，直到使用它们为止。
+- **支持聊天** - `NC_DISABLE_SUPPORT_CHAT` 还会阻止浏览器加载聊天脚本。 [了解更多](/docs/self-hosting/environment-variables#support-chat)
+- **SSO** - 通过 `NC_SSO=oidc` 登录再次有效。对于 `NC_SSO=saml`，IdP 发起的登录会从 NocoDB 重新启动一次，因此 IdP 必须返回未更改的 RelayState。 [了解更多](/docs/self-hosting/environment-variables#authentication)
+- **Windows** - CSV 和文档导出可在 Windows 上使用本地存储。
+- **AI 网关** - AI 功能与 OpenAI 兼容网关配合使用，在代码围栏内返回 JSON。
+- **更快的链接写入** - 在社区版上，使用链接进行写入不再再次读取每个链接的记录。删除和添加链接的速度要快几倍，插入和更新链接的速度要快三分之一。
+- **时区** - 当 PostgreSQL 报告旧时区名称（例如 `Asia/Calcutta`）时，日期公式起作用。
+---
+有关上一版本中的更改，请参阅 [2026.10.1 changelog](/docs/changelog/2026.10.1)。
+---
+- [**已关闭**] v3 数据 API：由于写入后重新加载，链接写入需要 8-50 秒 [#15069](https://github.com/nocodb/nocodb/issues/15069)
+- [**已关闭**] 🐛 Bug：富文本单元格在保存时更改代码块、前导空格和转义文本 [#15054](https://github.com/nocodb/nocodb/issues/15054)
+- [**已关闭**] 🐛 Bug：富文本 Markdown 序列化会泄漏受隔离代码块上的前导空格，在每个编辑/保存周期中去除代码缩进 [#15049](https://github.com/nocodb/nocodb/issues/15049)
+- [**已关闭**] 🐛 Bug：由于泄漏的前导空格，富文本 Markdown 序列化会损坏空行 (<br>) 后的嵌套有序列表 [#15043](https://github.com/nocodb/nocodb/issues/15043)
+- [**已关闭**] 🐛 Bug：convertMS2Duration 回合没有进入下一个单位 (00:60, 00:00:59.10) [#15035](https://github.com/nocodb/nocodb/issues/15035)
+- [**已关闭**] 🐛 Bug：升级到 2026.10.1 后，API v2 `where=(checkbox,is,true)` 被忽略（返回所有行）[#15005](https://github.com/nocodb/nocodb/issues/15005)
+- [**已关闭**] 建议：HN 徽章会有所帮助 [#15000](https://github.com/nocodb/nocodb/issues/15000)
+- [**已关闭**] 🐛 Bug：无法从 get.nocodb.com 下载 NocoDB 二进制文件 [#14996](https://github.com/nocodb/nocodb/issues/14996)
+- [**已关闭**] 请求 GHSA-2ggp-wwhj-f84q 的 CVE 分配 [#14994](https://github.com/nocodb/nocodb/issues/14994)
+- [**已关闭**] Bug：带有内联链接字段的 v3 记录/更新插入使 Postgres 事务处于打开状态（“事务中空闲”）并且请求永远不会响应 [#14993](https://github.com/nocodb/nocodb/issues/14993)
+- [**关闭**] 🔦 功能：鼠标中键在新选项卡中打开 [#14989](https://github.com/nocodb/nocodb/issues/14989)
+- [**已关闭**] 🐛 Bug：新的个人访问令牌在所有 API v2 端点上返回“无效令牌”（ERR_AUTHENTICATION_REQUIRED） - 自托管 CE、2026.10.0 和 2026.10.1 [#14959](https://github.com/nocodb/nocodb/issues/14959)
+- [**已关闭**] 🐛 Bug：扩展记录失败，加载程序失败。当目标表有自己的 Links 字段的 Links 字段上存在 Lookup 时，必须使用值调用 load() [#14951](https://github.com/nocodb/nocodb/issues/14951)
+- [**已关闭**] 🐛 Bug：单选悬停问题 (linux) [#14949](https://github.com/nocodb/nocodb/issues/14949)
+- [**已关闭**] 🐛 Bug：接口组过滤器不适用于所有组小部件 [#14948](https://github.com/nocodb/nocodb/issues/14948)
+- [**已关闭**] 🐛 Bug：富文本 Markdown 序列化会损坏图像后的标题和代码块 [#14943](https://github.com/nocodb/nocodb/issues/14943)
+- [**闭合**] 公式(pg)：带有数字表达式和布尔值的 SWITCH WHEN 案例转换为 ::text 而不是 1/0 [#14932](https://github.com/nocodb/nocodb/issues/14932)
+- [**已关闭**] 🐛 Bug：（自托管）具有折叠堆栈的大型看板视图不可见且不可搜索 [#14930](https://github.com/nocodb/nocodb/issues/14930)
+- [**关闭**] TablesService：getTableNameLengthLimit 和resolveFreePhysicalTableName 检查字符串.length，而不是pg 和oracledb 的UTF-8 字节长度[#14929](https://github.com/nocodb/nocodb/issues/14929)
+- [**关闭**] MultiSelectCellRenderer 悬停突出显示边界从渲染标签位置漂移 [#14928](https://github.com/nocodb/nocodb/issues/14928)
+- [**关闭**] 附件 RenameFile 模式中的取消按钮缺少 @click="onCancel" 并使用无效的 html-type="back" [#14927](https://github.com/nocodb/nocodb/issues/14927)
+- [**已关闭**] 🔦 功能：工作流程：“更新视图过滤器”操作 [#14875](https://github.com/nocodb/nocodb/issues/14875)
+- [**已关闭**] [文档]：9 个翻译自述文件中的 Dead Travis CI 徽章（travis-ci.org/dwyl/esta.svg 404，图像 URL 指向 dwyl/esta）[#14806](https://github.com/nocodb/nocodb/issues/14806)
+- [**已关闭**] 🐛 Bug：使用非 UTC 时区时，`DATETIME_FORMAT(NOW())` 可能会返回与 `NOW()` 不同的日期 [#14785](https://github.com/nocodb/nocodb/issues/14785)
+- [**已关闭**] 🐛 Bug：未导出 url 字段 [#14765](https://github.com/nocodb/nocodb/issues/14765)
+- [**🔦 类型：功能**] 🔦 功能：在所有 NocoDocs 中进行全文搜索 [#14576](https://github.com/nocodb/nocodb/issues/14576)
+- [**已关闭**] `convertDateTime` 应用固定的类似欧洲/柏林的偏移量，无论容器 `TZ` 为何 — 影响 `CreatedTime`/`UpdatedTime` （自 #8593/#10835 起）并默默地破坏常规 `DateTime` 列的原始存储 [#14471](https://github.com/nocodb/nocodb/issues/14471)
+- [**🔦 类型：功能**] 🔦 功能：当它是查找字段时，URL 格式保持不变 [#14450](https://github.com/nocodb/nocodb/issues/14450)
+- [**已关闭**] 🐛 Bug：仪表板数字小部件 - 无时区选择器 [#14312](https://github.com/nocodb/nocodb/issues/14312)
+- [**已关闭**] 🐛 Bug：Git 存储库在 Windows 下无法使用 [#14287](https://github.com/nocodb/nocodb/issues/14287)
+- [**已关闭**] 🐛 Bug：使用 openai 兼容的 AI_NoObjectGeneratedError [#14268](https://github.com/nocodb/nocodb/issues/14268)
+- [**已关闭**] 🐛 Bug：如果提供了引用字段的“名称”内容，则引用字段的 xlsx 导入会失败 [#14240](https://github.com/nocodb/nocodb/issues/14240)
+- [**已关闭**] 🐛 Bug：在链接记录中搜索非常慢且不可靠 [#14232](https://github.com/nocodb/nocodb/issues/14232)
+- [**已关闭**] 🐛 Bug：在自托管部署上的 API、网格视图和 CSV 导出中，某些查找字段解析为“null”值 [#14229](https://github.com/nocodb/nocodb/issues/14229)
+- [**已关闭**] 🐛 Bug：数据库字段名称应显示在显示名称旁边 [#14136](https://github.com/nocodb/nocodb/issues/14136)
+- [**已关闭**] 🐛 Bug：V3 list vue 需要许可证，V1/V2 不需要 [#14062](https://github.com/nocodb/nocodb/issues/14062)
+- [**🔦类型：功能**] 🔦功能：日期小部件日期输入必须由 ENTER + TAB 终止 [#13999](https://github.com/nocodb/nocodb/issues/13999)
+- [**已关闭**] 🐛 Bug：通知不起作用 [#13922](https://github.com/nocodb/nocodb/issues/13922)
+- [**已关闭**] 🐛 Bug：共享/内部视图中自引用 LTAR 字段上的 __nc_deleted 不明确列错误 [#13853](https://github.com/nocodb/nocodb/issues/13853)
+- [**关闭**] V2 LinkToAnotherRecord (om) 排序使用显示值查找而不是计数 [#13811](https://github.com/nocodb/nocodb/issues/13811)
+- [**已关闭**] 🐛 Bug：无法复制基础 - “预期 1 个绑定，看到 X”[#13763](https://github.com/nocodb/nocodb/issues/13763)
+- [**已关闭**] 🐛 Bug：[ExternalDB][MariaDB] CAST(... AS JSON) 破坏了 MariaDB 上的所有表（错误 1064）[#13614](https://github.com/nocodb/nocodb/issues/13614)
+- [**已关闭**] 🐛 Bug：本地部署模式导出文档时出现错误。 [本地部署模式下，导出文档提示报错] [#13605](https://github.com/nocodb/nocodb/issues/13605)
+- [**已关闭**] 🐛Noco AI 自动建议在创建新表时错误地报告重复的表别名“Sample Views”[#13577](https://github.com/nocodb/nocodb/issues/13577)
+- [**关闭**] [自托管] 记录更新失败：网络错误 [#13559](https://github.com/nocodb/nocodb/issues/13559)
+- [**已关闭**] 🐛 Bug：无法连接到自定义 DNS 数据库 [#13504](https://github.com/nocodb/nocodb/issues/13504)
+- [**已关闭**] 🐛 Bug：我们认为错误 500 [#13490](https://github.com/nocodb/nocodb/issues/13490)
+- [**已关闭**] 🐛 Bug：nocodb 不会从 Homebrew 更新 [#13480](https://github.com/nocodb/nocodb/issues/13480)
+- [**已关闭**] 🐛 Bug：NocoAI 仍停留在加载状态，推荐、询问、分析和构建选项卡中没有内容 [#13456](https://github.com/nocodb/nocodb/issues/13456)
+- [**已关闭**] 🐛 Bug：禁用无限滚动时，BelongsTo 字段链接/取消链接不会更新网格 UI [#13307](https://github.com/nocodb/nocodb/issues/13307)
+- [**已关闭**] 🐛 Bug：即使拥有所有者许可，跨基础链接也会阻止基础选择 [#13283](https://github.com/nocodb/nocodb/issues/13283)
+- [**🔦类型：功能**] 🔦功能：为富文本编辑器添加切换列表/可折叠列表支持 [#13281](https://github.com/nocodb/nocodb/issues/13281)
+- [**👋 适用于：社区或 Good First Issue**][**✈️ 类型：i18n 翻译**] 🐛 Bug：法语翻译 (fr.json) 损坏 — NULL 字节替换重音字符（受影响的 126 个键）[#13172](https://github.com/nocodb/nocodb/issues/13172)
+- [**已关闭**] 🐛 Bug：当 NC_DISABLE_SUPPORT_CHAT 为 true 时，Chatwoot 仍在加载 [#13157](https://github.com/nocodb/nocodb/issues/13157)
+- [**已关闭**] 🐛 Bug：从浏览器中的 URL 导入基本上无法为最终用户工作 [#13111](https://github.com/nocodb/nocodb/issues/13111)
+- [**已关闭**] 🐛 Bug：无法从 UI 中删除附件 - FileReference.delete 中的“无法读取未定义的属性（读取“id”）”[#13096](https://github.com/nocodb/nocodb/issues/13096)
+- [**已关闭**] 🐛 Bug：表单预览显示额外字段，但共享表单隐藏它们（显示“-”）+附件图像未显示 [#13030](https://github.com/nocodb/nocodb/issues/13030)
+- [**已关闭**] 🐛 Bug：外部 PostgreSQL 上的 M2M 关系生成无效 SQL（缺少 FROM 子句）[#12987](https://github.com/nocodb/nocodb/issues/12987)
+- [**已关闭**] 🐛 错误：[自托管] 重置电子邮件设置导致错误 [#12865](https://github.com/nocodb/nocodb/issues/12865)
+- [**已关闭**] 🐛 Bug：[自托管]containrrr/watchtower 在服务器更新升级后不断重新启动 [#12735](https://github.com/nocodb/nocodb/issues/12735)
+- [**🔦类型：功能**] 🔦功能：提高表单的可访问性[#12691](https://github.com/nocodb/nocodb/issues/12691)
+- [**已关闭**] 🐛 Bug: 分组后找不到展开所有组的按钮 [#12688](https://github.com/nocodb/nocodb/issues/12688)
+- [**已关闭**] 🐛 Bug：配置 S3 存储后本地磁盘映像的缩略图和下载损坏 [#12685](https://github.com/nocodb/nocodb/issues/12685)
+- [**已关闭**] 🐛 Bug：[自托管] 自动安装使用的 Traefik 版本不再适用于最新的 Docker [#12655](https://github.com/nocodb/nocodb/issues/12655)
+- [**已关闭**] 🐛 Bug：[自托管] 错误：~/utils/globals 中没有导出成员 BaseVersion [#12650](https://github.com/nocodb/nocodb/issues/12650)
+- [**已关闭**] 🐛 Bug：词典编纂非常严格 [#12573](https://github.com/nocodb/nocodb/issues/12573)
+- [**已关闭**] 🐛 Bug：[外部数据库] 当任何用户访问 NocoDB 时实例化所有外部数据库连接 [#12554](https://github.com/nocodb/nocodb/issues/12554)
+- [**已关闭**] [自托管] 尝试在 Alpine 容器内运行 NocoDB [#12534](https://github.com/nocodb/nocodb/issues/12534)
+- [**🔦 类型：功能**] 🔦 功能：看板视图卡中的图像缩略图 [#12510](https://github.com/nocodb/nocodb/issues/12510)
+- [**已关闭**] 🐛 Bug：[自托管] 在开发模式下 - CSV 导出始终失败并显示“未找到”[#12373](https://github.com/nocodb/nocodb/issues/12373)
+- [**🔦 类型：功能**] 🔦 功能：添加对表和字段权限 CRUD API 的支持 [#12085](https://github.com/nocodb/nocodb/issues/12085)
+- [**已关闭**] 🐛 Bug：网格视图中的字体渲染不令人满意 [#12047](https://github.com/nocodb/nocodb/issues/12047)
+- [**🦭 DB : MariaDB**] 🐛 Bug: [external db] MariaDb View Decimal Values 四舍五入 [#11887](https://github.com/nocodb/nocodb/issues/11887)
+- [**已关闭**] 🐛 Bug：在 iPhone 12 上查看页面错误 [#11720](https://github.com/nocodb/nocodb/issues/11720)
+- [**已关闭**] 🐛 Bug：[外部数据库] 在 MariaDB 10.11 上：REGEX_REPLACE 对于简单的 Hello World 测试失败 [#11675](https://github.com/nocodb/nocodb/issues/11675)
+- [**已关闭**] 🐛 Bug：创建新字段时删除了对其他字段的更改 [#11577](https://github.com/nocodb/nocodb/issues/11577)
+- [**已关闭**] 🐛 Bug：[外部数据库] MySQL 汇总列在 execAndParse 期间未格式化 [#11425](https://github.com/nocodb/nocodb/issues/11425)
+- [**已关闭**] 🐛 Bug：[外部数据库]更新后元数据同步问题 [#11333](https://github.com/nocodb/nocodb/issues/11333)
+- [**已关闭**] 🐛 Bug: 丢失了使用中文输入法的第一个按钮 - 使用中文输入法丢失了第一个按键 [#11038](https://github.com/nocodb/nocodb/issues/11038)
+- [**已关闭**] 🐛 Bug：Webhook 示例有效负载与链接不同 [#11028](https://github.com/nocodb/nocodb/issues/11028)
+- [**已关闭**] 🐛 Bug: [external db] 删除带有链接的记录时出错 [#11021](https://github.com/nocodb/nocodb/issues/11021)
+- [**已关闭**] 🐛 Bug：CTRL+F 在项目视图/看板中不再起作用 [#10970](https://github.com/nocodb/nocodb/issues/10970)
+- [**🔦 类型：功能**] 🔦 功能：支持多个日期范围的日历视图 [#10703](https://github.com/nocodb/nocodb/issues/10703)
+- [**已关闭**] 🐛 功能：组不尊重排序 [#10609](https://github.com/nocodb/nocodb/issues/10609)
+- [**已关闭**] 🐛 Bug：全部展开不适用于多个级别 [#10565](https://github.com/nocodb/nocodb/issues/10565)
+- [**已关闭**] 🐛 Bug：[外部数据库] 在 GUI 中重新排列列会产生相同的列顺序索引 [#10386](https://github.com/nocodb/nocodb/issues/10386)
+- [**🔦 类型：功能**] 🔦 功能：支持公式列中的换行符以进行多行格式设置 [#10299](https://github.com/nocodb/nocodb/issues/10299)
+- [**已关闭**] 🐛 Bug：重新导入 CSV [#10223](https://github.com/nocodb/nocodb/issues/10223)
+- [**已关闭**] 🐛 Bug：日历标题支持 i18n [#10176](https://github.com/nocodb/nocodb/issues/10176)
+- [**已关闭**] 🐛 Bug：[外部数据库] 复合 PK 记录的 PATCH 系统性失败 [#10078](https://github.com/nocodb/nocodb/issues/10078)
+- [**已关闭**] 🐛 Bug：公式字段的格式已更改以适应公式 [#10073](https://github.com/nocodb/nocodb/issues/10073)
+- [**🔦类型：功能**]🔦功能：表单提交者能够通过电子邮件将提交的内容发送给自己[#9978](https://github.com/nocodb/nocodb/issues/9978)
+- [**🐛 类型：Bug**] 🐛 Bug：[外部数据库] 当表具有不同类型的主键时，关系更新失败 [#9951](https://github.com/nocodb/nocodb/issues/9951)
+- [**🐛 类型：Bug**] 🐛 Bug：[外部数据库] 当外部键指向字母数字键时无法更新记录 [#9881](https://github.com/nocodb/nocodb/issues/9881)
+- [**🐛 类型：Bug**] 🐛 Bug：[自托管]：无法插入行：此记录已存在。 [#9837](https://github.com/nocodb/nocodb/issues/9837)
+- [**🐛 类型：Bug**] 🐛 Bug：[自托管]：Postgres 17 更新失败 [#9704](https://github.com/nocodb/nocodb/issues/9704)
+- [**🐛 类型：Bug**] 🐛 Bug：[外部数据库] 级联删除和与复合 pk 的链接 [#9583](https://github.com/nocodb/nocodb/issues/9583)
+- [**🐛 类型：Bug**] 🐛 Bug：[外部数据库]：当 PK 绑定到函数时无法直接添加记录 [#9490](https://github.com/nocodb/nocodb/issues/9490)
+- [**🐛 类型：Bug**] 🐛 Bug：[外部数据库] 无法通过表单视图将行添加到只有外键的表中 [#9365](https://github.com/nocodb/nocodb/issues/9365)
+- [**🐛 类型：Bug**] 🐛 Bug：富文本 API 响应不是 Markdown 语法 [#9338](https://github.com/nocodb/nocodb/issues/9338)
+- [**🐛 类型：Bug**] 🐛 Bug：[外部数据库] 带有 `GENERATED ALWAYS AS (generation_expr) STORED PRIMARY KEY` 或 `NOT NULL GENERATED ALWAYS AS (generation_expr) STORED` 列的表无法从 NocoDB 填充 [#9278](https://github.com/nocodb/nocodb/issues/9278)
+- [**🐛 类型：Bug**] 🐛 Bug：[外部数据库] 使用具有波斯语字段名称的外部 Postgresql 数据源会导致问题。  [#9207](https://github.com/nocodb/nocodb/issues/9207)
+- [**🔦 类型：功能**] 🔦 功能：表单验证 - 添加对 `{{today}}` 作为动态变量的支持 [#9122](https://github.com/nocodb/nocodb/issues/9122)
+- [**已关闭**] 🐛 Bug: [外部数据库] 通过表单视图创建记录时无法直接填写“有很多”字段 [#8768](https://github.com/nocodb/nocodb/issues/8768)
+- [**🔦 类型：功能**] 🔦 功能：支持图库视图中的分组 [#8754](https://github.com/nocodb/nocodb/issues/8754)
+- [**已关闭**] 🐛 Bug：[外部数据库] `date` 类型的 PostgreSQL 列被误解为日期 &#x3C; `0100-01-01` [#8753](https://github.com/nocodb/nocodb/issues/8753)
+- [**已关闭**] 🐛 Bug：[外部数据库] 无法以只读访问权限连接到 MySQL 数据库。 [#8727](https://github.com/nocodb/nocodb/issues/8727)
+- [**已关闭**] 🐛 Bug：查找字段的输入不会使用条形码扫描仪更新 [#8625](https://github.com/nocodb/nocodb/issues/8625)
+- [**已关闭**] 🐛 Bug：[外部数据库] 无法创建新记录。可能与 PK 相关，而不是自动递增、自动填充。 [#7514](https://github.com/nocodb/nocodb/issues/7514)
+- [**已关闭**] 🐛 Bug: [external db] 0.204.0 升级后提交具有多对多关系的表单时违反约束 [#7472](https://github.com/nocodb/nocodb/issues/7472)
+- [**已关闭**] 🐛 Bug：[外部数据库] Safari 上的地理位置列问题 [#7416](https://github.com/nocodb/nocodb/issues/7416)
+- [**已关闭**] 🐛 Bug：[外部数据库] 无法更新以时间戳和毫秒为主键的条目 [#6551](https://github.com/nocodb/nocodb/issues/6551)
+- [**🟣 优先级：低**] 🐛 错误：创建 2 个 M2M 关系不会反映在 ERD 视图中 [#4607](https://github.com/nocodb/nocodb/issues/4607)
+- [**🐛 类型：Bug**] 🐛 Bug：[外部数据库] 如果存在多个具有相同名称的约束的多对多关系，NocoDB 无法同步数据 [#4442](https://github.com/nocodb/nocodb/issues/4442)
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/nocodb/nocodb">nocodb/nocodb</a> · 🏷️ 版本：<code>2026.10.2</code> · 📅 发布：2026-11-19 · <a href="https://github.com/nocodb/nocodb/releases/tag/2026.10.2">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p></a@b>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <span></span> <a href="/zh/release_note/nocodb/nocodb_2026.10.1"> <span class="k">上一个 →</span> <span class="t">2026.10.1</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/nocodb/nocodb/releases/tag/2026.10.2" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/nocodb/nocodb" target="_blank" rel="noopener"> <span>nocodb/nocodb</span> <span class="d">↗</span> </a> </li> </ul> </div>  <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/nocodb/nocodb_2026.10.2" aria-current="true"> <span class="v">2026.10.2</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/nocodb/nocodb_2026.10.1"> <span class="v">2026.10.1</span> <span class="d">26-10-29</span> </a> </li><li> <a href="/zh/release_note/nocodb/nocodb_2026.10.0"> <span class="v">2026.10.0</span> <span class="d">26-10-23</span> </a> </li><li> <a href="/zh/release_note/nocodb/nocodb_2026.09.1"> <span class="v">2026.09.1</span> <span class="d">26-09-29</span> </a> </li><li> <a href="/zh/release_note/nocodb/nocodb_2026.09.0"> <span class="v">2026.09.0</span> <span class="d">26-09-10</span> </a> </li><li> <a href="/zh/release_note/nocodb/nocodb_2026.08.2"> <span class="v">2026.08.2</span> <span class="d">26-09-03</span> </a> </li><li> <a href="/zh/release_note/nocodb/nocodb_2026.08.1"> <span class="v">2026.08.1</span> <span class="d">26-08-19</span> </a> </li><li> <a href="/zh/release_note/nocodb/nocodb_2026.08.0"> <span class="v">2026.08.0</span> <span class="d">26-08-05</span> </a> </li> </ul> <a href="/zh/releases/nocodb" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

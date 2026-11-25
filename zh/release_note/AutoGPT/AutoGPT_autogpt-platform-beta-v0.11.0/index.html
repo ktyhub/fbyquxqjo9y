@@ -1,0 +1,270 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AutoGPT autogpt-platform-beta-v0.11.0 — STAGS NextStack</title><meta name="description" content="#16459 - Payment enforcement is now the backend setting ENABLE_PLATFORM_PAYMENT (default off) instead of the enable-platform-payment feature flag."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/autogpt/autogpt-platform-beta-v0.11.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/autogpt/autogpt-platform-beta-v0.11.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="AutoGPT autogpt-platform-beta-v0.11.0 — STAGS NextStack"><meta property="og:description" content="#16459 - Payment enforcement is now the backend setting ENABLE_PLATFORM_PAYMENT (default off) instead of the enable-platform-payment feature flag."><meta property="og:url" content="https://www.stags.cn/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.0/#article","headline":"AutoGPT autogpt-platform-beta-v0.11.0 release notes","datePublished":"2026-11-04","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/Significant-Gravitas/AutoGPT"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/autogpt/autogpt-platform-beta-v0.11.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/autogpt/autogpt-platform-beta-v0.11.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/autogpt/autogpt-platform-beta-v0.11.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/autogpt/autogpt-platform-beta-v0.11.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/autogpt/autogpt-platform-beta-v0.11.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/autogpt/autogpt-platform-beta-v0.11.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/autogpt">AutoGPT</a> </nav> <h1 class="detail-title"> <span class="p">AutoGPT</span> autogpt-platform-beta-v0.11.0 </h1> <div class="detail-meta"> <span class="chip chip--pre">预发布</span> <span><span class="k">发布时间</span>2026年11月4日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener"> <span class="k">来源</span>Significant-Gravitas/AutoGPT </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/autogpt/autogpt-platform-beta-v0.11.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="autogpt-autogpt-platform-beta-v0110">AutoGPT autogpt-platform-beta-v0.11.0</h1>
+<h2 id="-有什么新内容">🔥 有什么新内容？</h2>
+<h3 id="️-重大变更">⚠️ 重大变更</h3>
+<ul>
+<li><strong>#16459</strong> - 付款强制现在是后端设置 <code>ENABLE_PLATFORM_PAYMENT</code>（默认关闭）而不是 <code>enable-platform-payment</code> 功能标志。收费的自托管安装必须设置它； <code>FORCE_FLAG_ENABLE_PLATFORM_PAYMENT</code> 和 <code>NEXT_PUBLIC_FORCE_FLAG_ENABLE_PLATFORM_PAYMENT</code> 不再执行任何操作（by @Pwuts）</li>
+<li><strong>#16474</strong> - 平台 API 在非上传路由或 Webhook 入口的任何路由上通过 <code>MAX_REQUEST_BODY_MB</code>（默认 10 MiB）向请求正文应答 <code>413</code>。如果您内联传递较大的文件，则提高它或配置媒体存储（由@Pwuts）</li>
+<li><strong>#16522</strong> - 在 <code>X-Forwarded-For</code> 携带多个地址的代理链后面，在新的 <code>TRUSTED_PROXIES</code> 设置（IP 地址或 CIDR 范围）中列出您的代理。如果未设置，每个访问者限制将不会获得 client IP，而是不会获得标头最左侧的条目。不是 IP 地址或 CIDR 范围的条目会阻止前端启动（作者：@Pwuts）</li>
+<li><strong>#15853</strong> - LaunchDarkly 支持已删除，每个功能标志均从 PostHog 读取。 <code>LAUNCH_DARKLY_SDK_KEY</code>、<code>FEATURE_FLAG_BACKEND</code>、<code>NEXT_PUBLIC_LAUNCHDARKLY_ENABLED</code>、<code>NEXT_PUBLIC_LAUNCHDARKLY_CLIENT_ID</code> 和 <code>NEXT_PUBLIC_FEATURE_FLAG_BACKEND</code> 被忽略；没有 PostHog，每个标志都是默认值（由 @kcze 提供）</li>
+<li><strong>#16026</strong> - AutoPilot 对话不再追踪到 Langfuse，它现在仅用于提示管理。 AutoPilot 跟踪记录转到 PostHog（作者：@kcze）</li>
+</ul>
+<h3 id="新功能">新功能</h3>
+<ul>
+<li><strong>#16310</strong> - 添加并行决策块（基于网络的是/否、选择、分数）（由@Torantulino）</li>
+<li><strong>#16326</strong> - 在登录“新增功能”面板中显示真实的 changelog 条目（由 @Torantulino 提供）</li>
+<li><strong>#16316</strong> - 在连接服务对话框中首先显示流行的服务（由@Torantulino）</li>
+<li><strong>#16306</strong> - 为 Connect 提供@提及列表中的集成（由 @Torantulino 提供）</li>
+<li><strong>#16279</strong> - 重新设计“确认您的电子邮件地址”电子邮件（由@Torantulino）</li>
+<li><strong>#16268</strong> - 一个用于邮件、日历、文件、Teams、Copilot 和 Work IQ 的 Microsoft 连接（由 @ntindle）</li>
+<li><strong>#15087</strong> - 将 Gemini 3.5 Flash、3.5 Flash Lite 和 3.1 Flash Lite 添加到 LLM 目录（由 @Bentlybro）</li>
+<li><strong>#16407</strong> - 将反馈链接到此人的 PostHog 重播（由 @kcze 提供）</li>
+<li><strong>#16398</strong> - 在回答其步骤时保留入职角色，而不是在最后（作者：@kcze）</li>
+<li><strong>#16527</strong> - 在五个回答提示后向自托管用户询问 GitHub 星号（由 @ntindle）</li>
+<li><strong>#14545</strong> - 对 v1 外部 API 进行速率限制（由 @Jia-ben00 提供）</li>
+<li><strong>#16459</strong> - 付款强制执行是 ENABLE_PLATFORM_PAYMENT 设置（由@Pwuts）</li>
+<li><strong>#16522</strong> - 通过运营商列出的 trusted 代理解析 client IP（由 @Pwuts 提供）</li>
+<li><strong>#16554</strong> - 通过小型合成市场进行种子预览（@ntindle）</li>
+<li><strong>#16569</strong> - 将负载测试帐户路由到虚拟引擎或脚本模型（由@ntindle）</li>
+<li><strong>#15733</strong> - 选择加入后台子任务后唤醒奥托（@ntindle）</li>
+</ul>
+<h3 id="增强功能">增强功能</h3>
+<ul>
+<li><strong>#16352</strong> - 带有积极语气的紧凑型支出审批卡（作者：@0ubbe）</li>
+<li><strong>#16280</strong> - 澄清 Otto 中的应用程序连接（由 @0ubbe 提供）</li>
+<li><strong>#16314</strong> - 注册面板描述了人工智能专家团队，而不是代理构建（由@Torantulino）</li>
+<li><strong>#16394</strong> - 设计系统护栏作为具有每个文件基线的 lint 规则（SECRT-3097 波 0）（由 @Abhi1992002 提供）</li>
+<li><strong>#13676</strong> - 当有效负载已经适合时跳过 truncate() 探测网格（由 @dexhunter 提供）</li>
+<li><strong>#16225</strong> - 在最新回合结束时说“完成”（由@kcze）</li>
+<li><strong>#16226</strong> - 简单语言压缩副本和长时间运行步骤的时钟（由@kcze）</li>
+<li><strong>#16227</strong> - 在一个 click 中从聊天横幅打开通知（由 @kcze）</li>
+<li><strong>#16228</strong> - 对刚刚完成的回复表示赞同/反对（@kcze）</li>
+<li><strong>#16250</strong> - 给一个 Discord 频道提及最近的频道消息作为上下文（由 @Bentlybro）</li>
+</ul>
+<h3 id="uiux-改进">UI/UX 改进</h3>
+<ul>
+<li><strong>#16401</strong> - 设计令牌、块菜单芯片、LegacyButton 重构（作者：@Abhi1992002）</li>
+<li><strong>#16404</strong> - 设计标记、文本和字体比例；副驾驶零严格违规（@Abhi1992002）</li>
+<li><strong>#16399</strong> - Shadcn 为角色命名别名；令牌上的文本和按钮内部结构；一个深色选择器（作者：@Abhi1992002）</li>
+<li><strong>#16406</strong> - 设计令牌、文本、LegacyButton；管理、团队中的严格零违规行为（作者：@Abhi1992002）</li>
+<li><strong>#16405</strong> - 设计令牌、文本、状态徽章、个人资料侧边栏、LegacyButton；库、配置文件中的零严格违规（作者：@Abhi1992002）</li>
+<li><strong>#16400</strong> - 设计令牌的上下文、布局、渲染器和身份验证；零严格违规（@Abhi1992002）</li>
+<li><strong>#16403</strong> - 设计标记、文本、字体比例、搜索芯片和排序菜单；设置、市场、工件中的严格零违规行为（作者：@Abhi1992002）</li>
+<li><strong>#16402</strong> - 设计代币上的原子、分子、有机体、旅游和公共页面；零严格违规（@Abhi1992002）</li>
+<li><strong>#16411</strong> - 删除遗留层；设计系统 lint 到处都是错误（SECRT-3153、DS4b、DS3a tail）（作者：@Abhi1992002）</li>
+<li><strong>#16429</strong> - Tailwind 4 上的 CSS 第一主题（由 @Abhi1992002 提供）</li>
+<li><strong>#16428</strong> - 通过图标原子的图标（由@Abhi1992002）</li>
+<li><strong>#16513</strong> - 文本、图标和按钮变体而不是调用站点重新样式（作者：@Abhi1992002）</li>
+<li><strong>#16556</strong> - 一种文本大小的比例； Tailwind 的尺寸重置 (SECRT-3152)（作者：@Abhi1992002）</li>
+<li><strong>#16511</strong> - 将颜色折叠为一个角色令牌集 (SECRT-3154)（由 @Abhi1992002 提供）</li>
+<li><strong>#16256</strong> - 在手机上显示每个入职角色（由 @Pwuts 提供）</li>
+</ul>
+<h3 id="错误修复">错误修复</h3>
+<ul>
+<li><strong>#16053</strong> - Websocket 服务器读取数据库管理器，因此套接字打开并实时运行更新流（由 @Pwuts 提供）</li>
+<li><strong>#16267</strong> - Microsoft 365 Copilot 登录代码发送应用程序的机密（由 @ntindle）</li>
+<li><strong>#16303</strong> - 在聊天中显示每个暂停运行的批准，而不仅仅是最新的（由@Pwuts）</li>
+<li><strong>#16265</strong> - 保留 MCP 工具的结构化结果（由 @ntindle 提供）</li>
+<li><strong>#16311</strong> - 算法与密钥不匹配的登录令牌会得到 401，而不是 500（由 @Pwuts 提供）</li>
+<li><strong>#15492</strong> - 在一波而不是两波中对候选记忆进行评分（由@ntindle）</li>
+<li><strong>#16349</strong> - 将 list_workspace_files 保留在模型的工具列表中（由 @0ubbe 提供）</li>
+<li><strong>#15162</strong> - 在 run_agent 中执行经过验证的图形版本（由 @siye566 提供）</li>
+<li><strong>#16342</strong> - 当作曲家安装在菜单下方时保持菜单打开（由@Pwuts）</li>
+<li><strong>#16360</strong> - 将工具拒绝 MCP client 报告为失败的调用（由 @Pwuts 提供）</li>
+<li><strong>#16351</strong> - 保持 50-75 KB 工具结果可从 bash_exec 访问（由 @0ubbe 提供）</li>
+<li><strong>#15298</strong> - 在重复数据删除/差异/交集中保留具有相同键的不同列表项（由@ntindle）</li>
+<li><strong>#16350</strong> - 将代理指向工作区存储以上传和保存的文件（由@0ubbe）</li>
+<li><strong>#16369</strong> - 在长间隙中保留一个简单的聊天沙箱，并说明何时替换它（由@0ubbe）</li>
+<li><strong>#16365</strong> - 在对主机工具结果文件夹的任何引用上重定向 bash_exec （由@0ubbe）</li>
+<li><strong>#16340</strong> - 假设公共邮件提供商的相关帐户通过共享 IP 链接（由 @Pwuts 提供）</li>
+<li><strong>#15386</strong> - 通过网络 blip 保持用户登录并部署（由 @ntindle）</li>
+<li><strong>#16410</strong> - 使用 OpenRouter 重新同步 Mistral Large 4 显示价格（由 @ntindle）</li>
+<li><strong>#12896</strong> - 防止选择受控/不受控开关警告 (#11093)（由 @SymbolStar 提供）</li>
+<li><strong>#13234</strong> - 处理空的 jina 搜索结果（由 @RykerFeng 提供）</li>
+<li><strong>#13244</strong> - 澄清无效模型和绑定重试令牌预算（由@RykerFeng）</li>
+<li><strong>#15027</strong> - 防止时区格式中的无效日期引发 RangeError （由 @sentry[bot] 提供）</li>
+<li><strong>#15841</strong> - 通过 OpenRouter 的优先级发送内存调用的重新排序（由 @ntindle）</li>
+<li><strong>#15849</strong> - 在回合设置时读取新聊天的第一条消息上下文（由@ntindle）</li>
+<li><strong>#15866</strong> - 在构建查询时调用新聊天的记忆（由@ntindle）</li>
+<li><strong>#16370</strong> - 按照模型的顺序运行文件写入工具调用（由@0ubbe）</li>
+<li><strong>#16312</strong> - 当部署后块无法加载时重新加载一次（由@posthog-eu[bot]）</li>
+<li><strong>#16383</strong> - 处理 validateSession 服务器操作中缺少的 currentPath（由 @sentry[bot] 提供）</li>
+<li><strong>#16396</strong> - 当 declined 或撤回同意时删除分析和广告 cookie（由 @kcze）</li>
+<li><strong>#16432</strong> - 为镜像 Sentry 消息提供一个例外 PostHog 可以分组（by @kcze）</li>
+<li><strong>#16435</strong> - 根据交货订单停止两个哨兵报告测试（由@kcze）</li>
+<li><strong>#15079</strong> - 说明机器人转向失败的原因，并在 client 超时后重播 Codex 重新发送（由 @Bentlybro）</li>
+<li><strong>#16262</strong> - 标准化 Ollama 消息有效负载（由 @Bentlybro）</li>
+<li><strong>#16264</strong> - 处理无效的 PDF 工件响应（由 @Bentlybro）</li>
+<li><strong>#15330</strong> - 将商店评论分数限制为 1-5（由 @ntindle）</li>
+<li><strong>#15600</strong> - 自动充值的 declined 卡说明了原因，而不是失败了 500（作者：@Bentlybro）</li>
+<li><strong>#16440</strong> - 恢复动态嵌套输出句柄（由@ntindle）</li>
+<li><strong>#16443</strong> - 将专家名册测试更新到已发布的技能目录（由@Bentlybro）</li>
+<li><strong>#16419</strong> - 在 11 月 3 日安全发布之前转向更好的身份验证 1.7.12（由 @ntindle）</li>
+<li><strong>#16448</strong> - 按平台每美元 150 个积分向 DataForSEO 和 Exa 收费（由 @ntindle）</li>
+<li><strong>#16444</strong> - 对登录和重置密码操作应用尝试限制（由@Pwuts）</li>
+<li><strong>#16466</strong> - 聊天链接到应用程序页面，没有打开前导斜杠，而不是显示 [blocked]（由 @kcze）</li>
+<li><strong>#16467</strong> - 搜索服务器上的“收藏夹”选项卡（由 @kcze 提供）</li>
+<li><strong>#16468</strong> - 从 Prisma 的真实错误中识别重复的聊天消息 ID（由 @kcze 提供）</li>
+<li><strong>#15326</strong> - 使 OAuth 授权代码兑换在竞赛中一次性使用（by @ntindle）</li>
+<li><strong>#15788</strong> - 在 mv_agent_run_counts 中对每次运行进行一次计数（由@ntindle）</li>
+<li><strong>#16478</strong> - 转换整数字符串时保留精度（基于 #16415）（由 @ntindle 提供）</li>
+<li><strong>#15783</strong> - 将 /link/<token> 页面保留在入门重定向之外（由 @ntindle）</token></li>
+<li><strong>#16494</strong> - 限制视频帧大小和 VideoConcatBlock 输入计数（由 @Bentlybro）</li>
+<li><strong>#16496</strong> - 将文本替换和组合文本输出限制为 10M 个字符（由 @Bentlybro）</li>
+<li><strong>#15083</strong> - 第一轮线程上下文、其他人的提及、重复和无操作设置卡（由@Bentlybro）</li>
+<li><strong>#16470</strong> - 使用反压和绑定 Sentry 的框架局部变量进行流式病毒扫描（由 @Pwuts 提供）</li>
+<li><strong>#16472</strong> - 数据迁移失败时完成 REST API 启动（by @Pwuts）</li>
+<li><strong>#16474</strong> - 限制平台 API 上的请求正文大小（由 @Pwuts 提供）</li>
+<li><strong>#16499</strong> - 在具有时间和内存限制的子进程中渲染工作区预览（由@Bentlybro）</li>
+<li><strong>#16487</strong> - 读取文件夹列表并运行一次凭据，并在其事务上保留文件夹写入读取（由@Pwuts）</li>
+<li><strong>#16476</strong> - 读取每个图形链接和节点一次，并绑定运行输入（由@Bentlybro）</li>
+<li><strong>#16481</strong> - 在服务器循环之外运行直接块执行并绑定块工作（由@Bentlybro）</li>
+<li><strong>#16473</strong> - 每个 WebSocket 和上限订阅的每个分片共享一个 Redis 连接（由 @Pwuts 提供）</li>
+<li><strong>#16490</strong> - 绑定图、审查和技能请求处理以及响应压缩（由 @Bentlybro）</li>
+<li><strong>#16483</strong> - 限制预设和运行可以保存多少个命名输入，以及一个帐户保存多少个预设（由 @Pwuts 提供）</li>
+<li><strong>#16177</strong> - 显示内存聊天付费专区的计划指南（由 @posthog-eu[bot] 提供）</li>
+<li><strong>#16497</strong> - 在预览、技能上传和电子表格读取中限制存档成员解压的字节数（由 @Bentlybro）</li>
+<li><strong>#16510</strong> - 加载图书馆工作流程的每一页，以便简报统计整个图书馆（由@kcze）</li>
+<li><strong>#16518</strong> - 仅在发送事件时为每个选项卡写入一次 PostHog 标记（由 @kcze 提供）</li>
+<li><strong>#16520</strong> - 在分析视图和操作警报中通过 ID（而不是电子邮件）命名用户（由 @kcze）</li>
+<li><strong>#16524</strong> - 将交换代理更新为 mitmproxy 12.3.1 并停止解码 Brotli 主体（由 @kcze 提供）</li>
+<li><strong>#16523</strong> - 重新启动的回合到达模型，而不是死在我们自己的 409 上（by @Pwuts）</li>
+<li><strong>#16424</strong> - 在一个执行器 Pod 上同时启动的两个聊天回合都获得其沙箱（由 @Pwuts 提供）</li>
+<li><strong>#16260</strong> - 固定咨询 escaping 的报价处理和输入剪切（由 @ntindle）</li>
+<li><strong>#16079</strong> - 当 ConditionBlock 省略 false 值时传递 value1 (by @saivinaypotluri)</li>
+<li><strong>#15553</strong> - 如果输入匹配则拒绝有损比较（由@cindykrafft）</li>
+<li><strong>#16453</strong> - 重复使用设置卡的凭证快照（由@ntindle）</li>
+<li><strong>#15535</strong> - 保护桌面流全屏请求（由@sentry[bot]）</li>
+<li><strong>#16545</strong> - 并排阅读聊天列表页面及其总数（作者：@ntindle）</li>
+<li><strong>#16548</strong> - 并排读取订阅状态的独立部分（由 @ntindle 提供）</li>
+<li><strong>#16551</strong> - 在列表预取旁边读取访问者会话（由@ntindle）</li>
+<li><strong>#15911</strong> - 验证存储的工作流程输入深度（由@troyan-dy）</li>
+<li><strong>#16145</strong> - 保留显式响应工具的严格性（由 @sxl-lucky7 提供）</li>
+<li><strong>#16549</strong> - 一起读取新运行的用户、设置和工作区（由@ntindle）</li>
+<li><strong>#16547</strong> - 阅读市场、专家、库并并排运行页面的独立查询（由@ntindle）</li>
+<li><strong>#16546</strong> - 并排读取 AI 连接、聊天的共享状态和专家的工作区（作者：@ntindle）</li>
+<li><strong>#16534</strong> - 立即通过 DatabaseManager 应答拒绝的图形激活（由 @Pwuts 提供）</li>
+<li><strong>#15659</strong> - 保留空的anyOf对象输入（由@sentry[bot]）</li>
+<li><strong>#16552</strong> - 仅在运行已删除会话的进程中关闭它的浏览器（由@ntindle）</li>
+<li><strong>#16550</strong> - 将节点输出的链接并排注册到不同的节点（由@ntindle）</li>
+<li><strong>#15742</strong> - 一次读取即可解析请求的个人组织及其成员资格（由 @ntindle）</li>
+<li><strong>#16417</strong> - 将 docker-compose.yml 在容器内保持只读（由 @ntindle 提供）</li>
+<li><strong>#16462</strong> - 阻止首选项更新更改帐户的电子邮件（由@ntindle）</li>
+<li><strong>#16465</strong> - 一次付费结帐，无论多少履行都在争夺它（由@ntindle）</li>
+<li><strong>#16571</strong> - 停止大脑转储循环检查，拒绝真正的印度语脚本和长答案（由@ntindle）</li>
+<li><strong>#16493</strong> - 在内存和时间限制下在工作进程中渲染模板（由@Pwuts）</li>
+<li><strong>#16581</strong> - 标准化共享聊天编辑中的键名称分隔符（由@Pwuts）</li>
+<li><strong>#16344</strong> - 通过是否回答来判断打字脑转储，而不是通过语音规则（由@Pwuts）</li>
+<li><strong>#16409</strong> - 决定每个文件行提交的工作区存储配额（由@Pwuts）</li>
+<li><strong>#16495</strong> - 在读取沙箱、工具和块输出时应用大小限制（由 @Pwuts 提供）</li>
+<li><strong>#16557</strong> - 立即回答通过 RPC 故意引发的错误（由 @Pwuts 提供）</li>
+<li><strong>#16577</strong> - 将 11 月 3 日安全版本的更好身份验证提升到 1.7.16（由 @ntindle）</li>
+<li><strong>#16334</strong> - 不存在的市场列表版本回答 404，而不是 500（由 @Pwuts）</li>
+<li><strong>#16388</strong> - 十个 X 块接受用户实际拥有的 X 连接（作者：@Pwuts）</li>
+<li><strong>#16390</strong> - 关闭期间完成的运行不再中止执行程序的优雅停止（由@Pwuts）</li>
+<li><strong>#16488</strong> - 限制每个帐户的计划和执行工作人员，并拒绝从不触发的 cron（由 @Pwuts 提供）</li>
+<li><strong>#15638</strong> - 使 DELETE /graphs/{id} 起作用，而不是在 FK 违规时进行 500 处理（由 @ntindle）</li>
+<li><strong>#16358</strong> - 让 Platform MCP 调用读取调用者自己的工作区文件（由 @Pwuts 提供）</li>
+<li><strong>#16485</strong> - 绑定存储的请求文本，以及将其加载回来的读取（由@Pwuts）</li>
+<li><strong>#16570</strong> - 强化恢复批准的块调用和沙箱（由@ntindle）</li>
+<li><strong>#16389</strong> - browser_screenshot 保留每个未命名的捕获并说明保存失败的原因（由 @Pwuts 提供）</li>
+<li><strong>#16391</strong> - 自己聘请专家完成钱包的市场任务（作者：@Pwuts）</li>
+<li><strong>#16191</strong> - 将已退休的 Claude 别名的工作流程移至同一家族的继任者（由 @Pwuts 提供）</li>
+</ul>
+<h3 id="文档">文档</h3>
+<ul>
+<li><strong>#16020</strong> - Changelog v0.9.0（由@itsababseh）</li>
+<li><strong>#16304</strong> - 告诉 v1 迁移者创建一个新的 API 密钥，因为密钥无法编辑（由 @Pwuts 提供）</li>
+</ul>
+<h3 id="依赖关系和维护">依赖关系和维护</h3>
+<ul>
+<li><strong>#16266</strong> - 添加一个在机器之间同步选定环境密钥的帮助程序（由@ntindle）</li>
+<li><strong>#16296</strong> - 在 /autogpt_platform/frontend 中将 dotenv 从 17.2.3 提升到 18.0.8 (by @dependabot[bot])</li>
+<li><strong>#16301</strong> - 将 /autogpt_platform/frontend 中的 uuid 从 11.1.1 更改为 14.0.3 (by @dependabot[bot])</li>
+<li><strong>#16295</strong> - 将 /autogpt_platform/frontend 中的 @sentry/nextjs 从 10.27.0 切换到 11.8.0 (by @dependabot[bot])</li>
+<li><strong>#16298</strong> - 将 /autogpt_platform/frontend 中的 ai 从 6.0.134 提升到 7.0.143 (by @dependabot[bot])</li>
+<li><strong>#16371</strong> - 通过 8 个更新在 1 个目录中生成生产依赖项组（由 @dependabot[bot] 提供）</li>
+<li><strong>#16297</strong> - 在 /autogpt_platform/frontend 中将 lucide-react 从 0.552.0 提升到 1.59.0 (by @dependabot[bot])</li>
+<li><strong>#16283</strong> - 在 /autogpt_platform/backend 中将 ruff 从 0.17.1 凹凸到 0.17.2 (by @dependabot[bot])</li>
+<li><strong>#16282</strong> - 在 /autogpt_platform/autogpt_libs 中将 ruff 从 0.17.1 凹凸到 0.17.2 (by @dependabot[bot])</li>
+<li><strong>#16300</strong> - 将/autogpt_platform/frontend中的react-day-picker从9.11.1提升到10.0.2（由@dependabot[bot]）</li>
+<li><strong>#16281</strong> - 将 /autogpt_platform/single-container 中的节点从 <code>1681862</code> 凹凸到 <code>55fb5f5</code> （由 @dependabot[bot] 提供）</li>
+<li><strong>#16286</strong> - 将 /autogpt_platform/autogpt_libs 中的证书从 2025.7.14 提升到 2026.10.18 （由 @dependabot[bot] 提供）</li>
+<li><strong>#16289</strong> - 在 /autogpt_platform/frontend 中从 13.2.0 到 14.4.0 的凹凸运动（由 @dependabot[bot] 提供）</li>
+<li><strong>#16291</strong> - 在 /autogpt_platform/frontend 中将 shiki 从 3.21.0 提升到 4.5.0 (by @dependabot[bot])</li>
+<li><strong>#16000</strong> - 将 /autogpt_platform/frontend 中的 msw 从 2.11.6 提升到 2.15.0 (by @dependabot[bot])</li>
+<li><strong>#16001</strong> - 将 /autogpt_platform/frontend 中的 eslint-plugin-storybook 从 9.1.5 提升到 10.6.3 (by @dependabot[bot])</li>
+<li><strong>#16433</strong> - 将 posthog 更新为 7.80.3 (by @kcze)</li>
+<li><strong>#15853</strong> - 删除 LaunchDarkly 并读取 PostHog 中的每个标志（作者：@kcze）</li>
+<li><strong>#16026</strong> - 删除 AutoPilot 对话的 Langfuse 跟踪（由 @kcze 提供）</li>
+<li><strong>#14369</strong> - 将冲突标签操作升级到 Node.js 24 (by @QiuLsG)</li>
+<li><strong>#16070</strong> - 缓存 Prisma CLI 并在后端和全栈 CI 中重试下载（由 @Pwuts 提供）</li>
+<li><strong>#16418</strong> - 运行 Classic 的 Python 仅检查 classic/ 下的更改（由 @Pwuts 提供）</li>
+<li><strong>#16508</strong> - 在 ubuntu-24.04 上运行 Playwright 浏览器作业（由 @Pwuts 提供）</li>
+<li><strong>#16423</strong> - 构建前端镜像后启动 e2e 后端服务（by @Pwuts）</li>
+<li><strong>#16477</strong> - 部署工作流程调度他们迁移的提交，而不是分支名称（由@Pwuts）</li>
+<li><strong>#16489</strong> - 删除 MCP 测试的存储凭证固定装置（由 @Pwuts 提供）</li>
+<li><strong>#16544</strong> - 保护每个测试免受真实 iframe 导航的影响（由 @Pwuts 提供）</li>
+<li><strong>#16463</strong> - 仅计算 PR-close 扫描中的 trusted !deploy/!undeploy 注释（由 @ntindle 提供）</li>
+<li><strong>#16232</strong> - 跨容器重新构建保持 FalkorDB 的内存图（由 @Pwuts 提供）</li>
+</ul>
+<hr>
+<h2 id="-感谢我们的贡献者">🎉 感谢我们的贡献者！</h2>
+<p>向所有为此版本做出贡献的人致以深深的谢意。特别感谢我们的新贡献者：</p>
+<ul>
+<li>@siye566</li>
+<li>@saivinaypotluri</li>
+<li>@cindykrafft</li>
+<li>@Jia-ben00</li>
+<li>@troyan-dy</li>
+<li>@sxl-lucky7
+以及我们的回归贡献者：</li>
+<li>@Pwuts</li>
+<li>@ntindle</li>
+<li>@Torantulino</li>
+<li>@0ubbe</li>
+<li>@kcze</li>
+<li>@Bentlybro</li>
+<li>@Abhi1992002</li>
+<li>@itsababseh</li>
+<li>@SymbolStar</li>
+<li>@RykerFeng</li>
+<li>@dexhunter</li>
+<li>@QiuLsG</li>
+</ul>
+<hr>
+<h2 id="-如何获取此更新">📥 如何获取此更新</h2>
+<p>要更新到此版本，请运行：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6F42C1">git</span><span style="color:#032F62"> pull</span><span style="color:#032F62"> origin</span><span style="color:#032F62"> autogpt-platform-beta-v0.11.0</span></span></code></pre>
+<h2 id="或者直接从发布页面下载有关更改的完整列表请参阅完整-changelog">或者直接从<a href="https://github.com/Significant-Gravitas/AutoGPT/releases">发布页面</a>下载。
+有关更改的完整列表，请参阅<a href="https://github.com/Significant-Gravitas/AutoGPT/compare/autogpt-platform-beta-v0.10.0...autogpt-platform-beta-v0.11.0">完整 Changelog</a>。</h2>
+<h2 id="-反馈和问题">📝 <strong>反馈和问题</strong></h2>
+<p>如果您遇到任何问题或有建议，请<a href="https://discord.gg/autogpt">加入我们的 Discord</a> 告诉我们！</p>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/Significant-Gravitas/AutoGPT">Significant-Gravitas/AutoGPT</a> · 🏷️ 版本：<code>autogpt-platform-beta-v0.11.0</code> · 📅 发布：2026-11-04 · <a href="https://github.com/Significant-Gravitas/AutoGPT/releases/tag/autogpt-platform-beta-v0.11.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.1"> <span class="k">← 下一个</span> <span class="t">autogpt-platform-beta-v0.11.1</span> </a> <a href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.10.0"> <span class="k">上一个 →</span> <span class="t">autogpt-platform-beta-v0.10.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/Significant-Gravitas/AutoGPT/releases/tag/autogpt-platform-beta-v0.11.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" rel="noopener"> <span>Significant-Gravitas/AutoGPT</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#-有什么新内容" class>🔥 有什么新内容？</a><a href="#️-重大变更" class="lv3">⚠️ 重大变更</a><a href="#新功能" class="lv3">新功能</a><a href="#增强功能" class="lv3">增强功能</a><a href="#uiux-改进" class="lv3">UI/UX 改进</a><a href="#错误修复" class="lv3">错误修复</a><a href="#文档" class="lv3">文档</a><a href="#依赖关系和维护" class="lv3">依赖关系和维护</a><a href="#-感谢我们的贡献者" class>🎉 感谢我们的贡献者！</a><a href="#-如何获取此更新" class>📥 如何获取此更新</a><a href="#或者直接从发布页面下载有关更改的完整列表请参阅完整-changelog" class>或者直接从发布页面下载。
+有关更改的完整列表，请参阅完整 Changelog。</a><a href="#-反馈和问题" class>📝 反馈和问题</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.12.0"> <span class="v">autogpt-platform-beta-v0.12.0</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.3"> <span class="v">autogpt-platform-beta-v0.11.3</span> <span class="d">26-11-15</span> </a> </li><li> <a href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.2"> <span class="v">autogpt-platform-beta-v0.11.2</span> <span class="d">26-11-11</span> </a> </li><li> <a href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.1"> <span class="v">autogpt-platform-beta-v0.11.1</span> <span class="d">26-11-06</span> </a> </li><li> <a href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.11.0" aria-current="true"> <span class="v">autogpt-platform-beta-v0.11.0</span> <span class="d">26-11-04</span> </a> </li><li> <a href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.10.0"> <span class="v">autogpt-platform-beta-v0.10.0</span> <span class="d">26-10-27</span> </a> </li><li> <a href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.9.0"> <span class="v">autogpt-platform-beta-v0.9.0</span> <span class="d">26-10-23</span> </a> </li><li> <a href="/zh/release_note/AutoGPT/AutoGPT_autogpt-platform-beta-v0.8.4"> <span class="v">autogpt-platform-beta-v0.8.4</span> <span class="d">26-10-14</span> </a> </li> </ul> <a href="/zh/releases/autogpt" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 105 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

@@ -1,0 +1,1107 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>activepieces 0.93.0 — STAGS NextStack</title><meta name="description" content="fix(dev): dev-piece rebuild clears the cache without scanning every piece folder (#17221) @kishanprmr · fix(engine): raise the disk-pressure threshold to 90% and the idle wi… (#17232) @MrChaker"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/activepieces/activepieces_0.93.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/activepieces/0.93.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/activepieces/activepieces_0.93.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/activepieces/0.93.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="activepieces 0.93.0 — STAGS NextStack"><meta property="og:description" content="fix(dev): dev-piece rebuild clears the cache without scanning every piece folder (#17221) @kishanprmr · fix(engine): raise the disk-pressure threshold to 90% and the idle wi… (#17232) @MrChaker"><meta property="og:url" content="https://www.stags.cn/zh/release_note/activepieces/activepieces_0.93.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/activepieces/activepieces_0.93.0/#article","headline":"activepieces 0.93.0 release notes","datePublished":"2026-11-08","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/activepieces/activepieces"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/activepieces/0.93.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/activepieces/activepieces_0.93.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/activepieces/0.93.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/activepieces/0.93.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/activepieces/0.93.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/activepieces/0.93.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/activepieces/0.93.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/activepieces">activepieces</a> </nav> <h1 class="detail-title"> <span class="p">activepieces</span> 0.93.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年11月8日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/activepieces/activepieces" target="_blank" rel="noopener"> <span class="k">来源</span>activepieces/activepieces </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/activepieces/0.93.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/activepieces/activepieces_0.93.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="activepieces-0930">activepieces 0.93.0</h1>
+<ul>
+<li>修复（dev）：dev-piece重建清除缓存而不扫描每个piece文件夹（＃17221）@kishanprmr</li>
+<li>修复（引擎）：将磁盘压力阈值提高到 90%，空闲状态… (#17232) @MrChaker</li>
+<li>修复（webhook）：阻止失败的返回响应导致 API 进程崩溃（#17063）@fabio-kozlowski，@claude</li>
+<li>修复（web）：侧边栏中锁定的添加项目按钮显示加号，而不是 gem (#17176) @moaaz-ae</li>
+<li>feat(workers): 向无法使用它的用户显示工作组页面，以及如何获取它 (#17151) @moaaz-ae</li>
+<li>修复（authn）：拒绝 ZeroBounce do_not_mail/阻止注册（#16994）@AhmadTash，@claude</li>
+<li>修复（服务器）：在云版本上禁用硬编码工作组（#16745）@MrChaker</li>
+<li>feat(apache-kafka)：添加一个片段来发布和消费消息 (#16291) @eliseukadesh67, @OdaiAhmed99</li>
+<li>壮举：MCP client OAuth2 (#15699) @danielpoonwj</li>
+<li>修复（web）：解析受众：渲染放置步骤时的“ai”操作（#15598）@ibrahim-abuznaid，@claude</li>
+<li>docs(pieces)：交互式检查器，用于检查自托管版本收到的片段版本 (#16213) @Code-a-Genie、@AbdulTheActivePiecer、@claude</li>
+<li>文档：添加 fabio-kozlowski 作为插件的贡献者 (#16333) <a href="https://github.com/apps/allcontributors">@allcontributors[bot]</a>, @kishanprmr</li>
+<li>文档：添加 james-novino 作为代码贡献者 (#16328) <a href="https://github.com/apps/allcontributors">@allcontributors[bot]</a></li>
+<li>文档：添加 JuampiHernandez 作为代码贡献者 (#16195) <a href="https://github.com/apps/allcontributors">@allcontributors[bot]</a></li>
+<li>杂务（deps）：碰撞服务器和片段依赖项（#16096）@KhaledR57</li>
+<li>docs(pieces): 推荐用于构建片段的片段构建者技能 (#15997) <a href="https://github.com/apps/mintlify">@mintlify[bot]</a></li>
+</ul>
+<h2 id="-碎片">🔌 碎片</h2>
+<ul>
+<li>feat(rendex)：渲染页面、提取内容并监视页面以了解代理的更改 (#17237) @OdaiAhmed99</li>
+<li>feat(letmepost)：发布、安排和管理来自代理的帖子 (#17236) @OdaiAhmed99</li>
+<li>feat(photoroom)：修复删除背景并添加具有输出模式的编辑、生成和帐户操作 (#17207) @OdaiAhmed99、@claude</li>
+<li>feat(goodmem)：添加具有输出模式、列表空间和修复过滤器参数的 AI 操作 (#17206) @OdaiAhmed99、@claude</li>
+<li>feat(quickzu)：从 AI 代理创建折扣和促销代码，部分更新产品，并从触发器获取订单 (#16932) @OdaiAhmed99</li>
+<li>feat(letta)：添加 28 个 AI 代理工具、输出模式并修复新消息触发器 (#17032) @OdaiAhmed99
+*修复（trello）：当更新卡（代理）离开存档时保留卡存档（＃17078）@OdaiAhmed99</li>
+<li>feat(bigin-by-zoho)：让 AI 代理搜索、创建、更新和删除 Bigin 记录 (#17091) @OdaiAhmed99</li>
+<li>feat(gender-api)：从电子邮件中检测性别，查找姓名的原籍国，并尊重国家/地区提示 (#17125) @OdaiAhmed99</li>
+<li>修复（claude）：在 Anthropic 淘汰旧模型后，保持 Ask Claude 和 Extract Structured Data 工作（#17107）@OdaiAhmed99</li>
+<li>feat(pdf)：填写 PDF 表单并检查其字段 (#17112) @ibrahim-abuznaid, @claude</li>
+<li>feat(loops)：让 AI 代理查找联系人、管理列表和属性以及发送事件和电子邮件 (#17164) @OdaiAhmed99</li>
+<li>feat(mem)：让 AI 代理搜索、阅读和组织 Mem 笔记和收藏 (#17165) @OdaiAhmed99</li>
+<li>feat(leexi)：让人工智能代理搜索通话、阅读文字记录和笔记以及管理会议活动 (#17158) @OdaiAhmed99</li>
+<li>feat(help-scout)：让 AI 代理管理对话和客户，并修复 webhook 签名 (#17129) @OdaiAhmed99</li>
+<li>feat(knack)：让人工智能代理读取、搜索、创建和更新 Knack 记录 (#17157) @OdaiAhmed99</li>
+<li>feat(base44)：让人工智能代理获取、更新、删除和列出实体记录 (#17102) @OdaiAhmed99</li>
+<li>feat(podio)：让人工智能代理处理项目、应用程序、任务、文件和空间 (#17222) @kishanprmr, @claude</li>
+<li>feat(twitch)：为频道、聊天、审核和安排添加 51 个操作，并修复 Stream Started (#17031) @OdaiAhmed99</li>
+<li>修复（gistly）：弃用片段，Gistly 现在是 Supadata (#17127) @OdaiAhmed99</li>
+<li>feat(pushbullet)：让 AI 代理发送、列出、驳回和删除推送，并在新推送上触发 (#16991) @OdaiAhmed99</li>
+<li>feat(streak)：让人工智能代理更新盒子并查找管道、阶段、字段、团队和任务 (#16993) @OdaiAhmed99</li>
+<li>feat(bexio)：添加 103 个 AI 代理工具和输出模式，修复联系人更新和产品触发器 (#17034) @OdaiAhmed99</li>
+<li>修复（todoist）：当 Is favorite 保持不变时，保持项目和标签的收藏（#17079）@OdaiAhmed99</li>
+<li>修复（不和谐）：解释当查找频道由于缺少查看频道权限而无法看到频道时（#17090）@OdaiAhmed99</li>
+<li>feat(doctly)：让 AI 代理转换文档、运行提取器并检查使用情况 (#17220) @kishanprmr</li>
+<li>feat(parseur)：让 AI 代理管理 Parseur 文档、邮箱和模板 (#17219) @kishanprmr</li>
+<li>feat(millionverifier)：让人工智能代理验证电子邮件、运行批量验证并检查信用 (#17218) @kishanprmr</li>
+<li>feat(pocketbase)：让 AI 代理管理集合、设置、日志、备份和 cron (#17217) @kishanprmr</li>
+<li>feat(filetopdf)：让 AI 代理将文件、HTML 和 Markdown 转换为 PDF (#17216) @kishanprmr
+*修复（google-slides）：让代理更改一种文本样式而不清除粗体，斜体，下划线或删除线（＃17080）@OdaiAhmed99</li>
+<li>feat(microsoft-sharepoint)：让 AI 代理管理文件、列表、页面和权限 (#17058) @kishanprmr
+*壮举（folk）：让人工智能代理以folk方式管理人员、公司、笔记、任务和交易（#16725）@OdaiAhmed99</li>
+<li>feat(formbricks)：让 AI 代理使用签名的 Webhook 触发器管理调查、响应和联系人 (#16671) @OdaiAhmed99</li>
+<li>feat(hunter)：添加 AI 操作、输出模式和引导/列表/活动操作 (#16902) @OdaiAhmed99</li>
+<li>feat(chargekeep)：让 AI 代理管理 ChargeKeep 联系人、发票和产品 (#16726) @OdaiAhmed99</li>
+<li>feat(quickbooks-sandbox)：让 AI 代理管理 QuickBooks 交易、列表和报告 (#17170) @kishanprmr</li>
+<li>feat(zoho-books)：让 AI 代理管理联系人、客户付款和发票 (#17166) @kishanprmr</li>
+<li>feat(amazon-bedrock)：让 AI 代理调用模型、管理提示和会话 (#17190) @kishanprmr</li>
+<li>feat(figma)：读取文件大纲、导出图像、管理评论反应并触发文件、版本和库事件 (#16826) @OdaiAhmed99</li>
+<li>feat(actualbudget)：添加 AI 操作、输出模式和新交易触发器 (#16870) @OdaiAhmed99</li>
+<li>修复（嵌入）：批准链接使用平台的嵌入子域 (GIT-2025) (#17153) @lina-alomari, @claude
+*修复（deps）：修补undici，MCP SDK，系统信息，tiptap和vite，并限制MCP请求（＃17163）@KhaledR57</li>
+<li>壮举(mattermost)：让 AI 代理管理 Mattermost 帖子、频道、团队、用户和机器人 (#17162) @kishanprmr</li>
+<li>feat(webflow)：让 AI 代理管理 Webflow 站点、CMS、页面、资产和表单 (#17069) @kishanprmr</li>
+<li>壮举(amazon-redshift)：添加 Amazon Redshift 部分 (#17140) @kishanprmr</li>
+<li>修复(gmail): 在转发消息的 AI 描述中说附件被转发 (#17120) @kishanprmr, @claude</li>
+<li>feat(groq)：让 AI 代理聊天、说话、转录和翻译音频，以及查找模型 (#17048) @kishanprmr</li>
+<li>壮举（microsoft-teams）：让人工智能代理与团队、频道、聊天和消息一起工作（#17051）@kishanprmr</li>
+<li>feat(microsoft-sql-server)：让 AI 代理探索模式、查询并安全地写入行 (#17075) @kishanprmr</li>
+<li>feat(postgres)：让 AI 代理探索模式、查询并安全地写入行 (#17073) @kishanprmr</li>
+<li>feat(mysql)：让 AI 代理探索模式、查询并安全地写入行 (#17072) @kishanprmr</li>
+<li>feat(perplexity-ai)：让人工智能代理运行代理响应、网络搜索、技能和批次 (#17047) @kishanprmr</li>
+<li>feat(gravityforms)：让人工智能代理管理表单、条目、提交和提要 (#17046) @kishanprmr</li>
+<li>feat(duckdb)：让人工智能代理查询、分析和比较 JSON 数据集 (#17074) @kishanprmr, @claude</li>
+<li>feat(mongodb)：让 AI 代理查询、写入和管理集合和索引 (#17070) @kishanprmr</li>
+<li>feat(surrealdb)：让人工智能代理探索、查询、编写和链接 SurrealDB 记录 (#17076) @kishanprmr</li>
+<li>feat(sendfox)：让人工智能代理管理联系人并阅读列表、活动和表单 (#17071) @kishanprmr</li>
+<li>修复(groq)：再次运行使用关闭 Groq 模型的 Ask AI 流程 (#17123) @sanket-a11y, @claude
+*杂务（docker）：将面包升级到1.4.4（＃17064）@KhaledR57</li>
+<li>feat(ai-providers): 添加 meta 和 nvidia 作为 AI 提供商 (#17037) @Louai-Zokerburg</li>
+<li>feat(rabbitmq)：发布、检查和发现来自流和 AI 代理的队列和交换 (#16927) @OdaiAhmed99</li>
+<li>feat(microsoft-outlook-calendar)：让 AI 代理管理日历、活动和邀请 (#17009) @kishanprmr</li>
+<li>feat(microsoft-onenote)：让 AI 代理管理 OneNote 笔记本、分区和页面 (#16999) @kishanprmr、@claude</li>
+<li>修复（webhook）：清理响应头名称以防止进程崩溃（#17003）@MrChaker
+*修复（缩放，概念，不和谐）：停止人工智能更新操作重置代理未提及的设置（＃17000）@OdaiAhmed99</li>
+<li>feat(raindrop)：让人工智能代理管理书签、突出显示、收藏、共享和标签 (#16980) @kishanprmr
+*壮举（可行）：管理候选人并对流程和人工智能代理的阶段变化做出反应（＃16825）@OdaiAhmed99</li>
+<li>feat(iloveapi)：编辑、转换和水印图像并让代理运行 PDF 工具和签名 (#16827) @OdaiAhmed99</li>
+<li>feat(send-it)：添加 AI 操作、输出模式和 webhook 签名检查 (#16869) @OdaiAhmed99</li>
+<li>feat(pastefy)：添加 AI 操作、输出模式和列表/搜索操作 (#16903) @OdaiAhmed99</li>
+<li>feat(smartlead)：管理来自流程和人工智能代理的营销活动和潜在客户，并触发营销活动事件流程 (#16928) @OdaiAhmed99</li>
+<li>feat(canva)：创建、导出和导入设计并管理来自流程和 AI 代理的资产和文件夹 (#16956) @OdaiAhmed99</li>
+<li>feat(ninjapipe)：让人工智能代理与 NinjaPipe 联系人、交易和任务一起工作，每一步都有输入输出 (#16860) @OdaiAhmed99</li>
+<li>壮举（活动监控）：管理列表、订阅者、活动报告和智能交易电子邮件 (#16771) @OdaiAhmed99</li>
+<li>feat(bannerbear)：使用 V5 键可靠地渲染图像，浏览模板和图像，并在完成的图像上触发 (#16772) @OdaiAhmed99，<a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a></li>
+<li>修复(millionverifier): 从验证电子邮件而不是网站页面返回验证结果 (#16914) @majewskibartosz, @kishanprmr</li>
+<li>feat(freshsales)：管理联系人、帐户、交易、任务和约会，并触发新记录和更新记录的流程 (#16770) @OdaiAhmed99</li>
+<li>feat(amazon-sqs)：接收、删除和批量发送队列消息并触发新消息流 (#16766) @OdaiAhmed99</li>
+<li>feat(apache-kafka)：在一秒内响应新的 Kafka 消息并在一个请求中发布批次 (#16732) @OdaiAhmed99</li>
+<li>feat(pandadoc)：让 AI 代理使用签名的 webhook 触发器创建、发送和跟踪文档 (#16691) @OdaiAhmed99</li>
+<li>feat(cognito-forms)：让 AI 代理创建、读取、更新和删除条目并获取文档 (#16673) @OdaiAhmed99</li>
+<li>feat(mindee)：运行 Mindee v2 提取、OCR、分类、裁剪并从流程和 AI 代理中分割 (#16690) @OdaiAhmed99</li>
+<li>feat(alai)：让特工列出、构建、导出和注释 Alai 套牌 (#16728) @OdaiAhmed99</li>
+<li>feat(tarvent)：让代理安全地管理 Tarvent 联系人，并在 Tarvent 错误时失败 (#16730) @OdaiAhmed99</li>
+<li>feat(pieces)：查看另外 7 个片段中每个连接属于哪个帐户 (#16897) @kishanprmr, @OdaiAhmed99</li>
+<li>feat(google-workspace)：添加 Google Workspace 部分 (#16295) @fabio-kozlowski、@claude、@kishanprmr</li>
+<li>修复（触发器）：通过片段升级重新发布保持轮询状态 (#16719) @amrdb, amr, @claude, @kishanprmr</li>
+<li>feat(databricks)：查询和加载 Unity Catalog 表、将文件上传到卷并从流程中询问 Genie (#16750) @kishanprmr</li>
+<li>feat(zoho-invoice)：添加 AI 操作和输出模式 (#16815) @kishanprmr</li>
+<li>feat(zoho-campaigns)：添加 AI 操作和输出模式 (#16811) @kishanprmr</li>
+<li>feat(emailoctopus)：添加 AI 操作和输出模式 (#16803) @kishanprmr</li>
+<li>feat(20)：添加 AI 操作和输出模式 (#16807) @kishanprmr</li>
+<li>feat(qdrant)：添加 AI 操作和输出模式 (#16812) @kishanprmr</li>
+<li>feat(zoho-bookings)：添加 AI 操作和输出模式 (#16813) @kishanprmr</li>
+<li>feat(metabase)：添加 AI 操作和输出模式 (#16814) @kishanprmr</li>
+<li>feat(zoho-desk)：添加 AI 操作和输出模式 (#16817) @kishanprmr</li>
+<li>修复(pieces)：在每个轮询触发器中将整个上下文传递给 pollingHelper (#16695) @amrdb, amr, @claude, @kishanprmr</li>
+<li>修复（件）：恢复 Gemini、Excel 365、Tally、Airtable 等中缺失的日语和法语翻译 (#16795) @majewskibartosz、@AhmadTash</li>
+<li>壮举（google-contacts）：用户界面改进（#16595）@Talaljaber</li>
+<li>修复（google-docs）：逃避云端硬盘搜索并停止加载每个文件夹（#16450）@Talaljaber
+*壮举（dropbox）：用户界面改进（＃16805）@Talaljaber
+*壮举（mistral-ai）：用户界面改进（＃16704）@Talaljaber
+*壮举（体式）：用户界面改进（＃16710）@Talaljaber
+*壮举（行）：用户界面改进（＃16706）@Talaljaber
+*壮举（cal-com）：用户界面改进（＃16781）@Talaljaber</li>
+<li>壮举（批准）：ui 改进 (#16790) @Talaljaber
+*壮举（qrcode）：用户界面改进（＃16791）@Talaljaber
+*壮举（乳齿象）：用户界面改进（＃16793）@Talaljaber
+*壮举（perplexity-ai）：用户界面改进（＃16752）@Talaljaber</li>
+<li>壮举（google-my-business）：用户界面改进（#16755）@Talaljaber
+*壮举（apitable）：用户界面改进（＃16756）@Talaljaber</li>
+<li>壮举（salesforce）：ui 改进（#16804）@Talaljaber
+*壮举（http-oauth2）：用户界面改进（＃16802）@Talaljaber
+*壮举（克劳德）：用户界面改进（＃16757）@Talaljaber
+*壮举（mysql）：用户界面改进（＃16801）@Talaljaber
+*壮举（sendfox）：用户界面改进（＃16784）@Talaljaber
+*壮举（postgres）：用户界面改进（＃16783）@Talaljaber</li>
+<li>修复（件）：重新发布时保持 gmail、google-contacts 和 Wonderchat 的轮询状态 (#16694) @amrdb、amr、@claude、@kishanprmr</li>
+<li>feat(word-documents): 填充 Word 模板 (#16779) @kishanprmr</li>
+<li>feat(word-documents)：从 Word 文档中提取文本 (#16778) @kishanprmr</li>
+<li>修复(sendinblue)：当代理更新联系人时，将联系人列入黑名单并保持模板处于活动状态 (#16741) @kishanprmr</li>
+<li>修复（clickup）：当代理编辑项目时，保持项目已解决、按时间计费和多个受让人（#16737）@kishanprmr</li>
+<li>修复（nocodb）：当代理在视图中重新排序列时，保持列可见（#16736）@kishanprmr</li>
+<li>修复（google-drive）：当代理重命名文件时，保持文件加星标（#16735）@kishanprmr</li>
+<li>修复（google-sheets）：当代理调整大小或重新样式时，隐藏隐藏的行、列和工作表（#16734）@kishanprmr
+*修复（github）：停止更新存储库（代理）将私有存储库公开（＃16727）@ibrahim-abuznaid，@claude</li>
+<li>feat(microsoft-365-planner)：让人工智能代理管理计划、存储桶、任务和受让人 (#16720) @kishanprmr</li>
+<li>修复（表）：即使导入表的副本，关闭流程现在也会删除其表触发器 (#16465) @majewskibartosz, @hazemadelkhalel</li>
+<li>feat(ai)：从共享模型选择器中选择 ai 文本步骤，包括层 (#16603) @Louai-Zokerburg</li>
+<li>修复（shopify）：产品状态、客户切换和触发可靠性（#16507）@Talaljaber</li>
+<li>feat(pastebin)：让 AI 代理列出并删除粘贴并读取帐户详细信息 (#16711) @kishanprmr</li>
+<li>feat(youform)：让 AI 代理读取表单并列出提交内容 (#16703) @kishanprmr</li>
+<li>feat(sender)：添加 AI 操作和输出模式 (#16674) @kishanprmr</li>
+<li>feat(clockify)：让 AI 代理跟踪时间并管理项目、任务、clients 和报告 (#16699) @kishanprmr</li>
+<li>feat(posthog)：让代理查询见解、标记、队列和调查 (#16628) @OdaiAhmed99</li>
+<li>修复（件）：FTP 新文件不再在每次轮询中启动同一文件的运行 (#16669) @hazemadelkhalel</li>
+<li>feat(pdfmonkey)：让 AI 代理生成、查找和管理 PDF 文档 (#16570) @OdaiAhmed99</li>
+<li>feat(netlify)：让 AI 代理管理站点、部署、表单和环境变量 (#16567) @OdaiAhmed99</li>
+<li>修复（件）：FTP/SFTP 新文件触发器现在报告登录失败，而不是默默地找不到文件 (#16467) @majewskibartosz，Hazem Adel
+*壮举（invoiceninja）：让人工智能代理管理发票、clients、付款和报告（#16523）@OdaiAhmed99</li>
+<li>feat(gotify)：让代理管理消息、应用程序和 clients (#16522) @OdaiAhmed99</li>
+<li>feat(discourse)：使用 webhook 触发器和 SSRF 修复从流和 AI 代理管理主题、帖子、用户和组 (#16460) @OdaiAhmed99</li>
+<li>壮举（矩阵）：让 AI 代理发送消息、做出反应并管理房间和成员 (#16524) @OdaiAhmed99</li>
+<li>feat(foreplay-co)：让代理搜索广告、品牌、面板和 Spyder 数据 (#16633) @OdaiAhmed99</li>
+<li>feat(close)：让代理管理线索、交易、任务、活动和序列 (#16629) @OdaiAhmed99</li>
+<li>feat(lemlist)：管理来自流程和 AI 代理的活动、线索、联系人、公司和任务 (#16459) @OdaiAhmed99</li>
+<li>feat(snowflake)：查询、管理和加载来自流程和 AI 代理的数据，并修复 SQL 安全问题 (#16458) @OdaiAhmed99
+*壮举（bettermode）：管理来自流程和人工智能代理的帖子、回复、成员、空间和徽章（#16461）@OdaiAhmed99</li>
+<li>壮举（google-ads）：添加 Google Ads 部分 (#16294) @fabio-kozlowski、@claude、@kishanprmr</li>
+<li>feat(pinecone)：添加 AI 操作和输出模式 (#16665) @kishanprmr</li>
+<li>feat(pdfcrowd)：让 AI 代理转换、合并和分割 PDF (#16565) @OdaiAhmed99, <a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a></li>
+<li>feat(retell-ai)：通过签名的 webhook 触发器，从流程和 AI 代理运行语音呼叫、聊天、代理和知识库 (#16462) @OdaiAhmed99</li>
+<li>feat(magical-api)：从 AI 代理获取超时作业并免费检查连接 (#16521) @OdaiAhmed99
+*壮举（条纹）：用户界面改进（＃16636）@Talaljaber
+*壮举（开放路由器）：用户界面改进（＃16614）@Talaljaber
+*壮举（groq）：用户界面改进（＃16615）@Talaljaber
+*壮举（hubspot）：用户界面改进（＃16641）@Talaljaber
+*壮举（youtube）：用户界面改进（＃16631）@Talaljaber
+*壮举（tally）：用户界面改进（＃16634）@Talaljaber
+*壮举（linkedin）：用户界面改进（＃16637）@Talaljaber
+*壮举（表格）：用户界面改进（＃16448）@Talaljaber
+*壮举（typeform）：ui改进（＃16500）@Talaljaber</li>
+<li>修复（wordpress）：当字段为空时，在更新帖子上保留类别和标签（#16622）@Talaljaber
+*壮举（wordpress）：用户界面改进（＃16618）@Talaljaber
+*壮举（shopify）：用户界面改进（＃16499）@Talaljaber
+*壮举（calendly）：ui改进（＃16441）@Talaljaber</li>
+<li>壮举（概念）：ui 改进 (#16454) @Talaljaber
+*壮举（jira-cloud）：用户界面改进（＃16597）@Talaljaber
+*壮举（不和谐）：用户界面改进（＃16453）@Talaljaber
+*壮举（谷歌日历）：用户界面改进（＃16455）@Talaljaber</li>
+<li>壮举（instagram-business）：ui 改进（#16600）@Talaljaber</li>
+<li>壮举（flow-helper）：ui 改进（#16438）@Talaljaber
+*壮举（tidycal）：用户界面改进（＃16498）@Talaljaber
+*壮举（facebook-leads）：用户界面改进（#16598）@Talaljaber</li>
+<li>壮举（pushover）：ui 改进（#16594）@Talaljaber
+*壮举（加密）：用户界面改进（＃16440）@Talaljaber
+*壮举（trello）：用户界面改进（＃16596）@Talaljaber</li>
+<li>壮举（连接）：ui 改进 (#16607) @Talaljaber
+*壮举（apify）：用户界面改进（＃16503）@Talaljaber
+*壮举（serp-api）：用户界面改进（＃16599）@Talaljaber
+*壮举（重新发送）：用户界面改进（＃16610）@Talaljaber
+*壮举（mailer-lite）：用户界面改进（＃16608）@Talaljaber
+*壮举（数学助手）：用户界面改进（＃16624）@Talaljaber
+*壮举（firecrawl）：用户界面改进（＃16601）@Talaljaber
+*壮举（文件助手）：用户界面改进（＃16613）@Talaljaber
+*壮举（twitter）：用户界面改进（＃16623）@Talaljaber
+*壮举（baserow）：用户界面改进（＃16609）@Talaljaber</li>
+<li>壮举(pdf): ui 改进 (#16625) @Talaljaber</li>
+<li>feat(pieces)：像 Text Helper 这样的核心作品名称现在以您的语言显示 (#16653) @hazemadelkhalel
+*壮举（woocommerce）：用户界面改进（＃16442）@Talaljaber</li>
+<li>feat(confluence)：添加 AI 操作和输出模式 (#16649) @kishanprmr</li>
+<li>feat(amazon-lambda)：添加 AWS Lambda 片段 (#16286) @eliseukadesh67, @claude, @cursoragent, @OdaiAhmed99</li>
+<li>feat(workday)：通过 Workday Web 服务搜索、获取和观看 15 个 Workday 对象 (#16564) @kishanprmr</li>
+<li>修复（件）：22 件的文件上传和表单帖子再次完好无损地到达 API (#16582) @kishanprmr</li>
+<li>feat(amazon-textract)：使用 IAM 角色而不是访问密钥连接 AWS Textract (#16555) @majewskibartosz、@kishanprmr</li>
+<li>修复（表）：创建记录在网络故障后不再保存相同的行两次（#16464）@majewskibartosz，@AbdulTheActivePiecer</li>
+<li>feat(pieces)：查看每个连接属于哪个 Canva、SurveyMonkey、Typeform 或 Facebook 帐户 (#16551) @kishanprmr</li>
+<li>修复（google-drive）：新文件和新文件夹触发器在重新发布后不再丢失项目（#16550）@kishanprmr</li>
+<li>feat(scrapegraphai)：添加 AI 操作和输出模式 (#16360) @kishanprmr</li>
+<li>修复（工作日）：通过 RaaS 运行获取报告、添加集成系统用户连接、修复损坏的操作 (#16526) @kishanprmr、@claude</li>
+<li>修复（amazon-textract）：直接上传单页 PDF 和 TIFF 文件，无需 S3 (#16538) @OdaiAhmed99</li>
+<li>feat(firecrawl)：捕获浏览器操作输出并添加 storeInCache 切换 (#15258) @chiadayy, @OdaiAhmed99</li>
+<li>feat(smartsuite)：代理就绪操作、批量记录、成员和评论；修复 webhook 触发循环 (#16426) @OdaiAhmed99
+*壮举（emailit）：让人工智能代理发送、跟踪和管理电子邮件、受众和抑制（#16429）@OdaiAhmed99</li>
+<li>feat(agents)：运行代理步骤从共享模型选择器中选择，包括层（#16444）@Louai-Zokerburg</li>
+<li>feat(google-document-ai)：添加 Google Document AI 片段 (#16251) @fabio-kozlowski、@claude、@kishanprmr</li>
+<li>feat(lemon-squeezy)：管理客户、订阅、折扣和许可证密钥；验证 webhooks (#16423) @OdaiAhmed99</li>
+<li>feat(short-io)：代理就绪链接、文件夹、QR 和统计操作；修复 TTL 并触发密码泄露 (#16420) @OdaiAhmed99</li>
+<li>feat(jumpcloud)：添加 JumpCloud 部分来管理用户、设备、组和应用程序 (#16292) @eliseukadesh67、@OdaiAhmed99</li>
+<li>feat(slack)：将可选的块输入添加到请求操作 (#16418) @AdamSelene、@claude、@kishanprmr
+*壮举（openai）：用户界面改进（＃16366）@Talaljaber
+*壮举（google-drive）：用户界面改进（＃16367）@Talaljaber
+*壮举（延迟）：用户界面改进（＃16403）@Talaljaber</li>
+<li>feat(pieces-common)：将自定义 API 呼叫表单分组为请求和数据以发送卡片 (#16383) @Talaljaber
+*壮举（google-gemini）：用户界面改进（＃16406）@Talaljaber
+*壮举（松弛）：用户界面改进（＃16405）@Talaljaber
+*壮举（日期助手）：用户界面改进（＃16364）@Talaljaber
+*壮举（telegram-bot）：用户界面改进（＃16365）@Talaljaber
+*壮举（todoist）：用户界面改进（＃16372）@Talaljaber
+*壮举（google-docs）：用户界面改进（＃16404）@Talaljaber
+*壮举（sendinblue）：用户界面改进（＃16375）@Talaljaber</li>
+<li>壮举(gitlab)：从流程和 AI 代理管理项目、组、标签、webhooks 和 CI/CD 管道 (#16396) @OdaiAhmed99</li>
+<li>feat(vtiger)：管理来自流程和 AI 代理的记录、关系、标签和线索 (#16399) @OdaiAhmed99</li>
+<li>feat(pieces-common)：将请求正文保留在 http 错误日志之外的选项 (#16419) @OdaiAhmed99</li>
+<li>feat(gitlab)：管理来自流程和 AI 代理的问题、合并请求、存储库文件和用户 (#16395) @OdaiAhmed99</li>
+<li>feat(nuelink)：管理来自流程和 AI 代理的帖子、集合和自动化 (#16386) @OdaiAhmed99
+*壮举（对讲机）：让人工智能代理管理联系人、对话和票证（#16385）@OdaiAhmed99</li>
+<li>feat(deepgram)：转录、分析文本并从流和 AI 代理生成语音 (#16384) @OdaiAhmed99
+*壮举（gmail）：用户界面改进（＃16359）@Talaljaber
+*壮举（google-sheets）：用户界面改进（＃16361）@Talaljaber
+*壮举（谷歌任务）：用户界面改进（＃16377）@Talaljaber
+*壮举（ai）：用户界面改进（＃16362）@Talaljaber
+*壮举（http）：用户界面改进（＃16358）@Talaljaber
+*壮举（github）：用户界面改进（＃16379）@Talaljaber</li>
+<li>修复（chaindesk）：Chaindesk 品牌重塑后将基本 URL 指向 app.askli.co (#16413) @sanket-a11y, @claude
+*壮举（twilio）：用户界面改进（＃16357）@Talaljaber</li>
+<li>feat(teable)：使用 AI 代理操作和轮询触发器管理表、字段和批次记录 (#16319) @OdaiAhmed99</li>
+<li>feat(webscraping-ai)：添加 AI 操作和输出模式 (#16349) @kishanprmr</li>
+<li>feat(flowise)：添加 AI 操作和输出模式 (#16340) @kishanprmr</li>
+<li>feat(opnform)：添加 AI 操作和输出模式 (#16339) @kishanprmr
+*壮举（谷歌翻译）：添加谷歌翻译片段（＃16232）@fabio-kozlowski，@claude，@kishanprmr</li>
+<li>修复（google）：显示 Google 的真实 401/403，而不是“无法确定 client ID”（#16314）@james-novino、@claude、@kishanprmr</li>
+<li>feat(mailjet)：添加 AI 操作和输出模式 (#16324) @kishanprmr</li>
+<li>feat(toggl-track)：从流程和 AI 代理跟踪 Toggl Track 和 Toggl 2.0 上的时间 (#16318) @OdaiAhmed99</li>
+<li>feat(softr)：从流程和 AI 代理管理数据库、表格、字段、记录和应用程序用户 (#16300) @OdaiAhmed99</li>
+<li>feat(localai)：在 LocalAI 服务器上列出模型、创建嵌入、生成语音并转录音频 (#16296) @OdaiAhmed99</li>
+<li>feat(image-router)：添加 AI 操作和输出模式 (#16293) @kishanprmr</li>
+<li>feat(robolly)：添加 AI 动作和输出模式 (#16297) @kishanprmr</li>
+<li>feat(mautic)：添加 AI 操作和输出模式 (#16316) @kishanprmr, @claude</li>
+<li>feat(square)：管理来自流程和 AI 代理的客户、目录、库存、订单和付款 (#16219) @OdaiAhmed99、@odai-commits</li>
+<li>feat(totalcms)：连接 Total CMS 3 站点并管理来自流和 AI 代理的集合和对象 (#16212) @OdaiAhmed99、@odai-commits</li>
+<li>feat(google-search-console)：查询性能、检查 URL 并管理 AI 代理的站点地图 (#16227) @OdaiAhmed99、@odai-commits</li>
+<li>feat(taskade)：从流程和 AI 代理管理项目、任务和 AI 代理，并触发任务和项目事件 (#16172) @OdaiAhmed99</li>
+<li>壮举（无浏览器）：从流程和 AI 代理中抓取、搜索、抓取和捕获页面 (#16215) @OdaiAhmed99、@odai-commits</li>
+<li>feat(bika)：从流程和 AI 代理中查找、创建和更新记录 (#16217) @OdaiAhmed99、@odai-commits</li>
+<li>feat(drip)：让 AI 代理管理订阅者、标签、订单和电子邮件系列，并触发订阅者事件 (#16180) @OdaiAhmed99</li>
+<li>feat(heartbeat)：管理来自流和 AI 代理的成员、组、通道、线程和事件 (#16169) @OdaiAhmed99</li>
+<li>feat(coda)：管理来自流程和 AI 代理的文档、页面、行和共享 (#16160) @OdaiAhmed99</li>
+<li>修复（microsoft-copilot）：Microsoft 365 Copilot 连接在大约 90 分钟后不再停止工作（#16221）@majewskibartosz</li>
+<li>修复（openai）：将 Ask Assistant 标记为已弃用，并引导用户询问 ChatGPT (#16263) @kishanprmr</li>
+<li>feat(zoom)：列出、获取、更新和删除会议，并列出流程中的云录音 (#16137) @OdaiAhmed99</li>
+<li>feat(facebook-leads)：添加人工智能动作和输出模式 (#16209) @kishanprmr
+*修复（microsoft-excel-365）：解决新行中的无效URL并更新…（＃16206）@sanket-a11y，@claude</li>
+<li>feat(amazon-s3)：添加 AI 操作和输出模式 (#16204) @kishanprmr</li>
+<li>feat(rss)：添加 AI 操作和输出模式 (#16202) @kishanprmr</li>
+<li>feat(firecrawl)：从搜索 Web 返回页面内容，添加新闻/图像源和时间过滤器 (#16173) @JuampiHernandez, @kishanprmr</li>
+<li>feat(microsoft-outlook): 在邮件文件夹下拉列表中显示子文件夹 (#16192) @kishanprmr</li>
+<li>feat(pieces)：查看每个连接属于哪个 GitLab、Salesforce 或 QuickBooks 帐户 (#16041) @ibrahim-abuznaid、@claude</li>
+<li>feat(xero)：连接新的 Xero 应用程序并添加 AI 操作、报告和发票工具 (#16136) @OdaiAhmed99</li>
+<li>feat(shopify)：让人工智能代理管理营销、批量运营、市场和分析 (#16091) @OdaiAhmed99</li>
+<li>feat(shopify)：让人工智能代理管理博客、页面、主题、元字段和元对象 (#16090) @OdaiAhmed99</li>
+<li>feat(shopify)：让 AI 代理管理履行、运输、折扣和礼品卡 (#16089) @OdaiAhmed99</li>
+<li>feat(shopify)：让人工智能代理管理产品、系列、库存和位置 (#16088) @OdaiAhmed99</li>
+<li>feat(shopify)：让人工智能代理管理订单、退款、草稿订单和客户 (#16087) @OdaiAhmed99</li>
+<li>feat(asana)：为用户、团队、附件和付费计划功能添加 59 个 AI 代理操作 (#16072) @OdaiAhmed99</li>
+<li>feat(fathom)：列出会议类型和用户、下载录音并为 AI 代理提供会议工具 (#16133) @OdaiAhmed99</li>
+<li>feat(nifty)：管理任务、项目和里程碑，并触发新任务或已完成任务的流程 (#16128) @OdaiAhmed99</li>
+<li>feat(bluesky)：关注、静音和列出人员，阅读通知并在提及时触发 (#16125) @OdaiAhmed99</li>
+<li>feat(hugging-face)：让代理读取数据集、写入 Hub 并管理 webhooks 和通知 (#16074) @OdaiAhmed99</li>
+<li>feat(mastodon)：为流程构建者添加触发器和更丰富的帖子状态 (#16073) @OdaiAhmed99</li>
+<li>feat(odoo)：让 AI 代理搜索、创建和更新 Odoo 记录、线索、订单、发票和任务 (#16070) @OdaiAhmed99</li>
+<li>feat(pdf-co)：合并、分割、压缩、保护和转换 PDF，并将结果保存为文件 (#16134) @OdaiAhmed99</li>
+<li>修复（pieces-common）：仅当自定义 API 调用发送表单正文时加载表单数据（#16135）@OdaiAhmed99</li>
+<li>feat(0codekit)：添加 PDF、QR 码、文件存储、代码、AI 文本、加密和短链接操作 (#16071) @OdaiAhmed99</li>
+<li>feat(microsoft-outlook)：“收件人”/“抄送”/“密件抄送”选项卡、正文格式卡以及更清晰的电子邮件和文件夹选择器 (#15829) @Talaljaber</li>
+<li>壮举（引线连接器）：ui 改进 (#16104) @Talaljaber</li>
+<li>修复（microsoft-outlook）：使新附件过滤器可靠并添加文件扩展名过滤器（#16108）@alexandronic、@claude、@kishanprmr
+*壮举（google-forms）：用户界面改进（＃16078）@Talaljaber
+*壮举（smtp）：用户界面改进（＃16080）@Talaljaber
+*壮举（telegram-bot）：用户界面改进（#16083）@Talaljaber
+*壮举（clickup）：用户界面改进（＃16112）@Talaljaber
+*壮举（facebook-pages）：用户界面改进（#16101）@Talaljaber
+*壮举（linkedin）：用户界面改进（＃16081）@Talaljaber</li>
+<li>壮举（hackernews）：让人工智能代理浏览故事、物品和用户个人资料（#16129）@kishanprmr
+*壮举（supabase）：用户界面改进（＃16103）@Talaljaber</li>
+<li>feat(pieces)：查看另外 20 个片段中每个连接属于哪个帐户 (#16025) @ibrahim-abuznaid, @claude</li>
+<li>feat(moxie-crm)：让 AI 代理管理 clients、项目、任务、发票等 (#16097) @OdaiAhmed99
+*壮举（线性）：让人工智能代理管理线性问题、评论、项目和团队（#16069）@OdaiAhmed99</li>
+<li>feat(queue)：查看并计算排队的项目，并带有输入的步骤输出 (#16002) @OdaiAhmed99</li>
+<li>feat(attio)：添加 AI 操作和输出模式 (#16105) @kishanprmr</li>
+<li>feat(reddit)：添加 AI 操作和输出模式 (#16100) @kishanprmr</li>
+<li>feat(ai)：使用排名后备模型运行平台层流程步骤 (#16003) @Louai-Zokerburg</li>
+<li>feat(cloudinary)：添加 AI 操作和输出模式 (#16077) @kishanprmr</li>
+<li>壮举（演示）：添加 AI 操作和输出模式 (#16045) @kishanprmr</li>
+<li>feat(supadata)：添加 AI 操作和输出模式 (#16044) @kishanprmr</li>
+<li>feat(grist)：添加 AI 操作和输出模式 (#16047) @kishanprmr</li>
+<li>feat(ticktick)：添加 AI 操作和输出模式 (#16049) @kishanprmr</li>
+<li>feat(zendesk)：添加 AI 操作和输出模式 (#16079) @kishanprmr</li>
+<li>feat(microsoft-todo)：添加 AI 操作和输出模式 (#16099) @kishanprmr</li>
+<li>壮举（google-my-business）：用户界面改进（#16062）@Talaljaber
+*壮举（条纹）：用户界面改进（＃16063）@Talaljaber
+*壮举（apitable）：用户界面改进（＃16061）@Talaljaber
+*壮举（perplexity-ai）：用户界面改进（＃16060）@Talaljaber
+*壮举（线性）：用户界面改进（＃16052）@Talaljaber
+*壮举（ai）：用户界面改进（＃16032）@Talaljaber
+*壮举（克劳德）：用户界面改进（＃16031）@Talaljaber
+*壮举(rss)：用户界面改进(#16029)@Talaljaber
+*壮举（google-gemini）：更清晰的形式、宽高比卡和更短的创建视频步骤（#15826）@Talaljaber</li>
+<li>feat(imap)：更清晰的连接设置、完整文件夹路径和删除警告 (#15822) @Talaljaber</li>
+<li>feat(hubspot)：高级下的可读属性注释、简单语言标签和可选字段 (#15814) @Talaljaber</li>
+<li>feat(youtube)：更短的搜索表单、选项卡式频道和播放列表查找以及纯字段帮助 (#15813) @Talaljaber
+*壮举（groq）：用户界面改进（＃16048）@Talaljaber
+*壮举（twilio）：用户界面改进（＃16030）@Talaljaber
+*壮举（twitter）：用户界面改进（＃16050）@Talaljaber
+*壮举（openai）：用户界面改进（＃16051）@Talaljaber</li>
+<li>feat(flowlu)：使用新记录触发器管理 CRM 帐户、机会、任务和项目 (#16015) @OdaiAhmed99</li>
+<li>feat(google-slides)：构建和编辑幻灯片、文本、形状、表格和图像，以及导出幻灯片 (#16007) @OdaiAhmed99</li>
+<li>feat(binance)：添加价格、24 小时统计数据、订单簿、交易、蜡烛和交易对 (#16006) @OdaiAhmed99</li>
+<li>feat(asana)：查看每个连接属于哪个 Asana 帐户 (#16020) @ibrahim-abuznaid, @claude</li>
+<li>feat(jina-ai)：添加 AI 操作和输出模式 (#16011) @kishanprmr</li>
+<li>feat(maileroo)：添加 AI 操作和输出模式 (#16005) @kishanprmr</li>
+<li>feat(odoo)：新记录、潜在客户和销售订单触发器，以及针对潜在客户、报价、发票和聊天的操作 (#15949) @OdaiAhmed99
+*壮举（线性）：添加问题查找、搜索、标签、删除、链接和项目状态更新（#15944）@OdaiAhmed99</li>
+<li>feat(csv)：读取、创建、过滤、排序、重复数据删除、合并和分割 CSV 文件，以及将 CSV 转换为 Excel (#15942) @OdaiAhmed99</li>
+<li>feat(systeme-io)：管理课程、社区和订阅；对选择加入和取消销售做出反应 (#15979) @OdaiAhmed99</li>
+<li>feat(zoho-crm)：处理任何模块中的记录，观察新的和更新的记录，并添加代理操作 (#15982) @OdaiAhmed99</li>
+<li>feat(exa)：运行 Exa 代理，使用监视器触发器监视搜索，并为 AI 代理提供搜索、内容和回答操作 (#15983) @OdaiAhmed99
+*壮举（jsm-操作）：添加 Jira 服务管理操作部分（Opsgenie 后继者）（＃15900）@OdaiAhmed99</li>
+<li>修复(xml): 在将 XML 转换为 JSON 中保留前导零 (#15856) @OdaiAhmed99</li>
+<li>feat(convertkit)：让 AI 代理管理 Kit 订阅者、标签、表单、序列和广播 (#15902) @OdaiAhmed99</li>
+<li>feat(customer-io): 添加过滤 Reporting Webhook 触发器 (#15658) @AdamSelene, @claude, @kishanprmr</li>
+<li>feat(ghostcms)：让 AI 代理管理 Ghost 帖子、页面、成员、时事通讯等 (#15901) @OdaiAhmed99</li>
+<li>feat(0codekit)：验证业务数据并处理日期和转换（第 1/3 部分）(#15857) @OdaiAhmed99</li>
+<li>feat(convertapi)：使用 ConvertAPI 合并、分割和转换文件 (#15855) @OdaiAhmed99</li>
+<li>feat(ntfy)：更新、清除和删除通知、发送文件并触发新消息 (#15969) @OdaiAhmed99</li>
+<li>feat(xml)：添加创建 XML 操作 (#15884) @OdaiAhmed99</li>
+<li>feat(elevenlabs)：添加 AI 操作和输出模式 (#15981) @kishanprmr</li>
+<li>feat(duckdb)：可用性增强 (#15584) @danielpoonwj, @kishanprmr</li>
+<li>feat(pieces)：向 Postgres、MySQL 和 SQL Server 添加插入多行 (#15946) @kishanprmr</li>
+<li>feat(ai)：当迁移到更新的模型时，托管人工智能步骤遵循其层级（#15866）@Louai-Zokerburg</li>
+<li>feat(slack)：在频道下拉列表中仅列出机器人的频道 (#15907) @kishanprmr</li>
+<li>feat(google-slides): 添加服务帐户身份验证 (#15648) @OdaiAhmed99</li>
+<li>feat(pieces)：按实际使用情况回填 226 个以上的动作分类 (#15848) @ibrahim-abuznaid, @claude</li>
+<li>feat(forms)：更清晰的人类输入步骤表单，以及托管表单和聊天修复 (#15256) @Talaljaber</li>
+<li>feat(jotform)：添加 AI 操作和输出模式 (#15879) @kishanprmr</li>
+<li>修复（ai）：模型下拉列表仅提供步骤可以调用的模型（#15497）@othmanemad</li>
+<li>修复（概念）：解决 lint 错误 (#15880) @kishanprmr
+*修复（straico）：弃用片段，服务关闭（＃15875）@kishanprmr</li>
+<li>feat(tavily)：添加 AI 操作和输出模式 (#15870) @kishanprmr</li>
+<li>feat(nocodb)：添加 AI 操作和输出模式 (#15865) @kishanprmr</li>
+<li>修复（reoon-verifier）：停止电子邮件验证操作被错误标记为在代理工具选择器中写入（#15863）@kishanprmr</li>
+<li>feat(apitemplate-io)：添加 AI 操作和输出模式 (#15862) @kishanprmr</li>
+<li>feat(cal-com)：添加 AI 操作和输出模式 (#15816) @kishanprmr</li>
+<li>壮举（instagram-business）：在 Graph v23.0 上复兴，有 27 个经过验证的操作（#15618）@OdaiAhmed99</li>
+<li>feat(dropbox)：为文件和批处理作业添加 AI 就绪的原子操作 (#15661) @OdaiAhmed99</li>
+<li>feat(asana)：为任务、项目、部分和标签添加 65 个 AI 代理操作 (#15757) @OdaiAhmed99</li>
+<li>feat(whatsapp)：19 个新操作、4 个 webhook 触发器、输出模式和图 v23.0 (#15585) @OdaiAhmed99、@claude</li>
+<li>壮举(pieces)：将 AI 代理原子添加到 pipelinedrive 和 mailer-lite (#15725) @OdaiAhmed99
+*壮举（microsoft-outlook）：让代理阅读、发送和组织邮件（#15696）@OdaiAhmed99</li>
+<li>feat(date-helper)：围绕简单语言副本重建步骤表单 (#15281) @Talaljaber
+*壮举（概念）：改进步骤形式（#15397）@Talaljaber</li>
+<li>feat(whatsapp)：更清晰的消息设置、模板预览和分页下拉菜单 (#15752) @Talaljaber</li>
+<li>feat(tally)：改进连接和新的提交步骤表单 (#15396) @Talaljaber
+*壮举（OpenRouter）：步骤形式（＃15484）@Talaljaber</li>
+<li>feat(hugging-face)：让代理搜索 Hub，阅读存储库和论文，并运行聊天和嵌入 (#15793) @OdaiAhmed99</li>
+<li>feat(pieces)：将 AI 代理原子添加到乳齿象并将输出模式加密 (#15756) @OdaiAhmed99</li>
+<li>feat(monday)：添加 AI 操作和输出模式 (#15798) @kishanprmr</li>
+<li>feat(baserow)：添加 AI 操作和输出模式 (#15797) @kishanprmr</li>
+<li>feat(gmail)：收件人选项卡、富文本正文、消息选择器和查找电子邮件的过滤器构建器 (#15753) @Talaljaber
+*壮举（microsoft-onedrive）：让代理管理文件、共享、版本和相册（#15781）@OdaiAhmed99</li>
+</ul>
+<h2 id="️-重大变更">⛓️‍💥 重大变更</h2>
+<ul>
+<li>feat(rendex)：渲染页面、提取内容并监视页面以了解代理的更改 (#17237) @OdaiAhmed99</li>
+<li>feat(letmepost)：发布、安排和管理来自代理的帖子 (#17236) @OdaiAhmed99</li>
+<li>feat(goodmem)：添加具有输出模式、列表空间和修复过滤器参数的 AI 操作 (#17206) @OdaiAhmed99、@claude</li>
+<li>feat(quickzu)：从 AI 代理创建折扣和促销代码，部分更新产品，并从触发器获取订单 (#16932) @OdaiAhmed99</li>
+<li>feat(letta)：添加 28 个 AI 代理工具、输出模式并修复新消息触发器 (#17032) @OdaiAhmed99
+*修复（trello）：当更新卡（代理）离开存档时保留卡存档（＃17078）@OdaiAhmed99</li>
+<li>feat(bigin-by-zoho)：让 AI 代理搜索、创建、更新和删除 Bigin 记录 (#17091) @OdaiAhmed99</li>
+<li>feat(gender-api)：从电子邮件中检测性别，查找姓名的原籍国，并尊重国家/地区提示 (#17125) @OdaiAhmed99</li>
+<li>修复（claude）：在 Anthropic 淘汰旧模型后，保持 Ask Claude 和 Extract Structured Data 工作（#17107）@OdaiAhmed99</li>
+<li>feat(loops)：让 AI 代理查找联系人、管理列表和属性以及发送事件和电子邮件 (#17164) @OdaiAhmed99</li>
+<li>feat(leexi)：让人工智能代理搜索通话、阅读文字记录和笔记以及管理会议活动 (#17158) @OdaiAhmed99</li>
+<li>feat(help-scout)：让 AI 代理管理对话和客户，并修复 webhook 签名 (#17129) @OdaiAhmed99</li>
+<li>feat(knack)：让人工智能代理读取、搜索、创建和更新 Knack 记录 (#17157) @OdaiAhmed99</li>
+<li>feat(base44)：让人工智能代理获取、更新、删除和列出实体记录 (#17102) @OdaiAhmed99</li>
+<li>feat(twitch)：为频道、聊天、审核和安排添加 51 个操作，并修复 Stream Started (#17031) @OdaiAhmed99</li>
+<li>feat(pushbullet)：让 AI 代理发送、列出、驳回和删除推送，并在新推送上触发 (#16991) @OdaiAhmed99</li>
+<li>feat(streak)：让人工智能代理更新盒子并查找管道、阶段、字段、团队和任务 (#16993) @OdaiAhmed99</li>
+<li>feat(bexio)：添加 103 个 AI 代理工具和输出模式，修复联系人更新和产品触发器 (#17034) @OdaiAhmed99
+*壮举（folk）：让人工智能代理以folk方式管理人员、公司、笔记、任务和交易（#16725）@OdaiAhmed99</li>
+<li>feat(formbricks)：让 AI 代理使用签名的 Webhook 触发器管理调查、响应和联系人 (#16671) @OdaiAhmed99</li>
+<li>feat(hunter)：添加 AI 操作、输出模式和引导/列表/活动操作 (#16902) @OdaiAhmed99</li>
+<li>feat(chargekeep)：让 AI 代理管理 ChargeKeep 联系人、发票和产品 (#16726) @OdaiAhmed99</li>
+<li>feat(figma)：读取文件大纲、导出图像、管理评论反应并触发文件、版本和库事件 (#16826) @OdaiAhmed99</li>
+<li>feat(actualbudget)：添加 AI 操作、输出模式和新交易触发器 (#16870) @OdaiAhmed99
+*修复（deps）：补丁undici，MCP SDK，系统信息，tiptap和vite，并限制MCP请求（＃17163）@KhaledR57</li>
+<li>feat(webflow)：让 AI 代理管理 Webflow 站点、CMS、页面、资产和表单 (#17069) @kishanprmr</li>
+<li>feat(audit-logs)：使用所使用的方法记录每次登录 (#17061) @lina-alomari, @claude, <a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a></li>
+<li>feat(rabbitmq)：发布、检查和发现来自流和 AI 代理的队列和交换 (#16927) @OdaiAhmed99
+*壮举（可行）：管理候选人并对流程和人工智能代理的阶段变化做出反应（＃16825）@OdaiAhmed99</li>
+<li>feat(iloveapi)：编辑、转换和水印图像并让代理运行 PDF 工具和签名 (#16827) @OdaiAhmed99</li>
+<li>feat(send-it)：添加 AI 操作、输出模式和 webhook 签名检查 (#16869) @OdaiAhmed99</li>
+<li>feat(pastefy)：添加 AI 操作、输出模式和列表/搜索操作 (#16903) @OdaiAhmed99</li>
+<li>feat(smartlead)：管理来自流程和人工智能代理的营销活动和潜在客户，并触发营销活动事件流程 (#16928) @OdaiAhmed99</li>
+<li>feat(canva)：创建、导出和导入设计并管理来自流程和 AI 代理的资产和文件夹 (#16956) @OdaiAhmed99</li>
+<li>feat(ninjapipe)：让人工智能代理与 NinjaPipe 联系人、交易和任务一起工作，每一步都有输入输出 (#16860) @OdaiAhmed99</li>
+<li>壮举（活动监控）：管理列表、订阅者、活动报告和智能交易电子邮件 (#16771) @OdaiAhmed99</li>
+<li>feat(bannerbear)：使用 V5 键可靠地渲染图像，浏览模板和图像，并在完成的图像上触发 (#16772) @OdaiAhmed99，<a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a></li>
+<li>feat(apache-kafka)：在一秒内响应新的 Kafka 消息并在一个请求中发布批次 (#16732) @OdaiAhmed99</li>
+<li>feat(pandadoc)：让 AI 代理使用签名的 webhook 触发器创建、发送和跟踪文档 (#16691) @OdaiAhmed99</li>
+<li>feat(cognito-forms)：让 AI 代理创建、读取、更新和删除条目并获取文档 (#16673) @OdaiAhmed99</li>
+<li>feat(mindee)：运行 Mindee v2 提取、OCR、分类、裁剪并从流程和 AI 代理中分割 (#16690) @OdaiAhmed99</li>
+<li>feat(alai)：让特工列出、构建、导出和注释 Alai 套牌 (#16728) @OdaiAhmed99</li>
+<li>feat(tarvent)：让代理安全地管理 Tarvent 联系人，并在 Tarvent 错误时失败 (#16730) @OdaiAhmed99
+*壮举（体式）：用户界面改进（＃16710）@Talaljaber</li>
+<li>feat(web): 重新设计工作组页面 (#16672) @moaaz-ae, @claude, @MrChaker, <a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a>
+*修复（github）：停止更新存储库（代理）将私有存储库公开（＃16727）@ibrahim-abuznaid，@claude</li>
+<li>修复（shopify）：产品状态、客户切换和触发可靠性（#16507）@Talaljaber</li>
+<li>feat(posthog)：让代理查询见解、标记、队列和调查 (#16628) @OdaiAhmed99</li>
+<li>feat(pdfmonkey)：让 AI 代理生成、查找和管理 PDF 文档 (#16570) @OdaiAhmed99</li>
+<li>feat(netlify)：让 AI 代理管理站点、部署、表单和环境变量 (#16567) @OdaiAhmed99
+*壮举（invoiceninja）：让人工智能代理管理发票、clients、付款和报告（#16523）@OdaiAhmed99</li>
+<li>feat(gotify)：让代理管理消息、应用程序和 clients (#16522) @OdaiAhmed99</li>
+<li>feat(discourse)：使用 webhook 触发器和 SSRF 修复从流和 AI 代理管理主题、帖子、用户和组 (#16460) @OdaiAhmed99</li>
+<li>壮举（矩阵）：让 AI 代理发送消息、做出反应并管理房间和成员 (#16524) @OdaiAhmed99</li>
+<li>feat(close)：让代理管理线索、交易、任务、活动和序列 (#16629) @OdaiAhmed99</li>
+<li>feat(snowflake)：查询、管理和加载来自流程和 AI 代理的数据，并修复 SQL 安全问题 (#16458) @OdaiAhmed99</li>
+<li>feat(pdfcrowd)：让 AI 代理转换、合并和分割 PDF (#16565) @OdaiAhmed99, <a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a></li>
+<li>feat(retell-ai)：通过签名的 webhook 触发器，从流程和 AI 代理运行语音呼叫、聊天、代理和知识库 (#16462) @OdaiAhmed99</li>
+<li>修复（wordpress）：当字段为空时，在更新帖子上保留类别和标签（#16622）@Talaljaber</li>
+<li>修复（迁移）：用于后台迁移的专用 POSTGRES_MIGRATION_URL (#16531) @amrdb</li>
+<li>feat(engine)：默认在 deno 上运行代码步骤并记录失败的代码步骤 (#16573) @MrChaker
+*壮举（代理）：每个聊天都选择自己的模型和密钥，没有单一的聊天密钥（＃16474）@Louai-Zokerburg</li>
+<li>feat(firecrawl)：捕获浏览器操作输出并添加 storeInCache 切换 (#15258) @chiadayy, @OdaiAhmed99</li>
+<li>feat(smartsuite)：代理就绪操作、批量记录、成员和评论；修复 webhook 触发循环 (#16426) @OdaiAhmed99
+*壮举（sendinblue）：用户界面改进（＃16375）@Talaljaber</li>
+<li>feat(square)：管理来自流程和 AI 代理的客户、目录、库存、订单和付款 (#16219) @OdaiAhmed99、@odai-commits</li>
+<li>feat(totalcms)：连接 Total CMS 3 站点并管理来自流和 AI 代理的集合和对象 (#16212) @OdaiAhmed99、@odai-commits
+*修复（ai）：在运行时强制执行密钥的模型列表并保护功能和输入的模型密钥（＃16207）@Louai-Zokerburg</li>
+<li>feat(xero)：连接新的 Xero 应用程序并添加 AI 操作、报告和发票工具 (#16136) @OdaiAhmed99
+*壮举（telegram-bot）：用户界面改进（#16083）@Talaljaber</li>
+<li>修复(helm): OpenShift 覆盖，以及未设置时集群的默认存储类别 (#16033) @amrdb, amr, @claude</li>
+<li>feat(zoho-crm)：处理任何模块中的记录，观察新的和更新的记录，并添加代理操作 (#15982) @OdaiAhmed99</li>
+<li>壮举（instagram-business）：在 Graph v23.0 上复活，有 27 个经过验证的操作（#15618）@OdaiAhmed99</li>
+<li>feat(whatsapp)：19 个新操作、4 个 webhook 触发器、输出模式和图 v23.0 (#15585) @OdaiAhmed99、@claude</li>
+</ul>
+<h2 id="-令人兴奋的新功能">✨ 令人兴奋的新功能</h2>
+<ul>
+<li>feat(audit-logs)：记录发送、接受和删除的邀请 (#17241) @lina-alomari, @claude</li>
+<li>feat(auth)：在云上强制执行管理平台的登录方法 (ENG-492) (#17227) @lina-alomari, @claude</li>
+<li>feat(mcp)：整理 Connect 页面并添加 5 个 AI clients (#17197) @moaaz-ae、@claude、@othmanemad</li>
+<li>feat(rendex)：渲染页面、提取内容并监视页面以了解代理的更改 (#17237) @OdaiAhmed99</li>
+<li>feat(letmepost)：发布、安排和管理来自代理的帖子 (#17236) @OdaiAhmed99</li>
+<li>feat(photoroom)：修复删除背景并添加具有输出模式的编辑、生成和帐户操作 (#17207) @OdaiAhmed99、@claude</li>
+<li>feat(goodmem)：添加具有输出模式、列表空间和修复过滤器参数的 AI 操作 (#17206) @OdaiAhmed99、@claude</li>
+<li>feat(quickzu)：从 AI 代理创建折扣和促销代码，部分更新产品，并从触发器获取订单 (#16932) @OdaiAhmed99</li>
+<li>feat(letta)：添加 28 个 AI 代理工具、输出模式并修复新消息触发器 (#17032) @OdaiAhmed99</li>
+<li>feat(bigin-by-zoho)：让 AI 代理搜索、创建、更新和删除 Bigin 记录 (#17091) @OdaiAhmed99</li>
+<li>feat(gender-api)：从电子邮件中检测性别，查找姓名的原籍国，并尊重国家/地区提示 (#17125) @OdaiAhmed99</li>
+<li>feat(pdf)：填写 PDF 表单并检查其字段 (#17112) @ibrahim-abuznaid, @claude</li>
+<li>feat(loops)：让 AI 代理查找联系人、管理列表和属性以及发送事件和电子邮件 (#17164) @OdaiAhmed99</li>
+<li>feat(mem)：让 AI 代理搜索、阅读和组织 Mem 笔记和收藏 (#17165) @OdaiAhmed99</li>
+<li>feat(leexi)：让人工智能代理搜索通话、阅读文字记录和笔记以及管理会议活动 (#17158) @OdaiAhmed99</li>
+<li>feat(help-scout)：让 AI 代理管理对话和客户，并修复 webhook 签名 (#17129) @OdaiAhmed99</li>
+<li>feat(knack)：让人工智能代理读取、搜索、创建和更新 Knack 记录 (#17157) @OdaiAhmed99</li>
+<li>feat(base44)：让人工智能代理获取、更新、删除和列出实体记录 (#17102) @OdaiAhmed99
+*壮举（网络）：每个模型复选框都起作用的ai关键页面（＃17240）@Louai-Zokerburg</li>
+<li>feat(twitch)：为频道、聊天、审核和安排添加 51 个操作，并修复 Stream Started (#17031) @OdaiAhmed99</li>
+<li>feat(pushbullet)：让 AI 代理发送、列出、驳回和删除推送，并在新推送上触发 (#16991) @OdaiAhmed99</li>
+<li>feat(streak)：让人工智能代理更新盒子并查找管道、阶段、字段、团队和任务 (#16993) @OdaiAhmed99</li>
+<li>feat(bexio)：添加 103 个 AI 代理工具和输出模式，修复联系人更新和产品触发器 (#17034) @OdaiAhmed99</li>
+<li>feat(ai-providers): 添加 cohere 作为人工智能提供商 (#17209) @Louai-Zokerburg
+*壮举（聊天）：一次性任务更快地完成第一个动作（#17203）@hazemadelkhalel</li>
+<li>feat(chat)：聊天在删除之前询问“旧”意味着什么，并更仔细地选择操作 (#17204) @hazemadelkhalel</li>
+<li>feat(mcp)：一项研究标记了哪些动作是为 AI 编写的 (#17202) @hazemadelkhalel
+*壮举（folk）：让人工智能代理以folk方式管理人员、公司、笔记、任务和交易（#16725）@OdaiAhmed99</li>
+<li>feat(formbricks)：让 AI 代理使用签名的 Webhook 触发器管理调查、响应和联系人 (#16671) @OdaiAhmed99</li>
+<li>feat(hunter)：添加 AI 操作、输出模式和引导/列表/活动操作 (#16902) @OdaiAhmed99</li>
+<li>feat(chargekeep)：让 AI 代理管理 ChargeKeep 联系人、发票和产品 (#16726) @OdaiAhmed99</li>
+<li>feat(figma)：读取文件大纲、导出图像、管理评论反应并触发文件、版本和库事件 (#16826) @OdaiAhmed99</li>
+<li>feat(actualbudget)：添加 AI 操作、输出模式和新交易触发器 (#16870) @OdaiAhmed99</li>
+<li>feat(builder)：在连接开关清除步骤输入之前进行确认 (#17132) @AbdulTheActivePiecer, @claude</li>
+<li>feat(builder)：替换构建器标题中连接按钮的连接 (#17106) @AbdulTheActivePiecer, @claude</li>
+<li>feat(embed)：添加 hideReplaceConnection 以隐藏嵌入式应用程序中的替换连接 (#16878) @AbdulTheActivePiecer, @claude</li>
+<li>feat(connections)：添加用于替换连接的专用权限 (#16846) @AbdulTheActivePiecer, @claude</li>
+<li>feat(connections)：替换构建器中一个流程中的连接 (#16765) @AbdulTheActivePiecer, @claude</li>
+<li>feat(connections): 重建项目替换连接对话框 (#16875) @AbdulTheActivePiecer, @claude</li>
+<li>feat(connections)：替换所选流程中的连接并修复项目替换 (#16874) @AbdulTheActivePiecer, @claude</li>
+<li>feat(connections)：替换代理步骤中片段工具的连接 (#16873) @AbdulTheActivePiecer, @claude</li>
+<li>壮举（迁移）：后台迁移实时报告进度并在放弃时呼叫呼叫 (#17016) @amrdb, Amr Elmohamady, @claude</li>
+<li>feat(audit-logs)：使用所使用的方法记录每次登录 (#17061) @lina-alomari, @claude, <a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a>
+*壮举（ai）：ai中心路线接受平台api密钥（＃17040）@Louai-Zokerburg</li>
+<li>feat(web)：更清晰的人工智能中心功能页面和操作反馈 (#17039) @Louai-Zokerburg</li>
+<li>feat(web)：可扩展到 18 个提供商的提供商页面 (#17038) @Louai-Zokerburg</li>
+<li>feat(ai-providers): 添加 meta 和 nvidia 作为 AI 提供商 (#17037) @Louai-Zokerburg</li>
+<li>feat(rabbitmq)：发布、检查和发现来自流和 AI 代理的队列和交换 (#16927) @OdaiAhmed99</li>
+<li>feat(web)：ai 使用页面，在发布之前隐藏 (#16988) @Louai-Zokerburg</li>
+<li>feat(ai): ai 使用读取 api 的使用页面 (#16981) @Louai-Zokerburg</li>
+<li>feat(ai)：人工智能使用分析，将秋季的每个人工智能调用的使用情况复制到我们的汇总中（#16974）@Louai-Zokerburg</li>
+<li>修复（邀请）：在平台级别重新邀请会更新邀请，对话框会说明原因 (#16320) @lina-alomari、@claude
+*壮举（项目）：没有人可以从他们的上一个项目中删除（＃15975）@lina-alomari，@claude
+*壮举（项目）：关闭个人项目是企业控制（＃15974）@lina-alomari，@claude
+*壮举（项目）：邀请命名一个项目，个人项目移至角色和访问（#15973）@lina-alomari，@claude</li>
+<li>feat(projects)：新成员作为编辑加入默认项目 (#15976) @lina-alomari, @claude</li>
+<li>feat(projects)：让管理员在角色和访问权限上选择默认项目 (#15972) @lina-alomari, @claude
+*壮举（可行）：管理候选人并对流程和人工智能代理的阶段变化做出反应（＃16825）@OdaiAhmed99</li>
+<li>feat(auth)：查找域的所有者平台及其登录方法 (ENG-491) (#16973) @lina-alomari</li>
+<li>feat(iloveapi)：编辑、转换和水印图像并让代理运行 PDF 工具和签名 (#16827) @OdaiAhmed99</li>
+<li>feat(send-it)：添加 AI 操作、输出模式和 webhook 签名检查 (#16869) @OdaiAhmed99</li>
+<li>feat(pastefy)：添加 AI 操作、输出模式和列表/搜索操作 (#16903) @OdaiAhmed99</li>
+<li>feat(smartlead)：管理来自流程和人工智能代理的营销活动和潜在客户，并触发营销活动事件流程 (#16928) @OdaiAhmed99</li>
+<li>feat(canva)：创建、导出和导入设计并管理来自流程和 AI 代理的资产和文件夹 (#16956) @OdaiAhmed99</li>
+<li>feat(ninjapipe)：让人工智能代理与 NinjaPipe 联系人、交易和任务一起工作，每一步都有输入输出 (#16860) @OdaiAhmed99</li>
+<li>壮举（活动监控）：管理列表、订阅者、活动报告和智能交易电子邮件 (#16771) @OdaiAhmed99</li>
+<li>feat(bannerbear)：使用 V5 键可靠地渲染图像，浏览模板和图像，并在完成的图像上触发 (#16772) @OdaiAhmed99，<a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a></li>
+<li>feat(audit-logs)：记录谁更改了身份验证设置 (ENG-495) (#16867) @lina-alomari, @claude</li>
+<li>feat(sso)：给待处理域名 7 天的时间来验证，而不是 3 小时 (#16844) @lina-alomari, @claude</li>
+<li>feat(freshsales)：管理联系人、帐户、交易、任务和约会，并触发新记录和更新记录的流程 (#16770) @OdaiAhmed99</li>
+<li>feat(amazon-sqs)：接收、删除和批量发送队列消息并触发新消息流 (#16766) @OdaiAhmed99</li>
+<li>feat(apache-kafka)：在一秒内响应新的 Kafka 消息并在一个请求中发布批次 (#16732) @OdaiAhmed99</li>
+<li>feat(pandadoc)：让 AI 代理使用签名的 webhook 触发器创建、发送和跟踪文档 (#16691) @OdaiAhmed99</li>
+<li>feat(cognito-forms)：让 AI 代理创建、读取、更新和删除条目并获取文档 (#16673) @OdaiAhmed99</li>
+<li>feat(mindee)：运行 Mindee v2 提取、OCR、分类、裁剪并从流程和 AI 代理中分割 (#16690) @OdaiAhmed99</li>
+<li>feat(alai)：让特工列出、构建、导出和注释 Alai 套牌 (#16728) @OdaiAhmed99</li>
+<li>feat(tarvent)：让代理安全地管理 Tarvent 联系人，并在 Tarvent 错误时失败 (#16730) @OdaiAhmed99
+*壮举（网络）：云管理员在侧边栏中找到人工智能层页面并搜索（＃16889）@Louai-Zokerburg</li>
+<li>feat(mcp)：AI 代理可以将一个步骤升级到更新版本 (#16843) @ziyadev</li>
+<li>feat(web)：Radix 灰度上更柔和的中性暗模式 (#16701) @moaaz-ae</li>
+<li>壮举（google-contacts）：用户界面改进（#16595）@Talaljaber</li>
+<li>feat(flow-runs)：从服务器端队列作业调度屏障的子级 (#14890) @othmanemad
+*壮举（dropbox）：用户界面改进（＃16805）@Talaljaber
+*壮举（mistral-ai）：用户界面改进（＃16704）@Talaljaber
+*壮举（体式）：用户界面改进（＃16710）@Talaljaber
+*壮举（行）：用户界面改进（＃16706）@Talaljaber
+*壮举（cal-com）：用户界面改进（＃16781）@Talaljaber</li>
+<li>壮举（批准）：ui 改进 (#16790) @Talaljaber
+*壮举（qrcode）：用户界面改进（＃16791）@Talaljaber
+*壮举（乳齿象）：用户界面改进（＃16793）@Talaljaber
+*壮举（perplexity-ai）：用户界面改进（＃16752）@Talaljaber</li>
+<li>壮举（google-my-business）：用户界面改进（#16755）@Talaljaber
+*壮举（apitable）：用户界面改进（＃16756）@Talaljaber</li>
+<li>壮举（salesforce）：ui 改进（#16804）@Talaljaber
+*壮举（http-oauth2）：用户界面改进（＃16802）@Talaljaber
+*壮举（克劳德）：用户界面改进（＃16757）@Talaljaber
+*壮举（mysql）：用户界面改进（＃16801）@Talaljaber
+*壮举（sendfox）：用户界面改进（＃16784）@Talaljaber
+*壮举（postgres）：用户界面改进（＃16783）@Talaljaber</li>
+<li>feat(job-broker): 记录出队时的拾取等待指标 (#16794) @lina-alomari, @AdamSelene, @claude</li>
+<li>feat(builder)：就地刷新打开的选项卡，并将资源锁定给一个选项卡 (#16497) @othmanemad, @claude</li>
+<li>feat(flows)：当流程草稿更改时通知打开的构建器选项卡 (#16496) @othmanemad, @claude</li>
+<li>feat(chat)：按照发生的顺序实时查看代理的想法 (#16705) @ziyadev, @hazemadelkhalel</li>
+<li>feat(web)：重新设计工作组页面 (#16672) @moaaz-ae, @claude, @MrChaker, <a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a></li>
+<li>feat(web): 每个流程的工作组分配视图 (#16547) @MrChaker</li>
+<li>feat(server): 流级工作组 (#16483) @MrChaker, <a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a></li>
+<li>feat(web)：重新设计 MCP 选项卡 (#16616) @moaaz-ae, @othmanemad</li>
+<li>feat(ai)：从共享模型选择器中选择 ai 文本步骤，包括层 (#16603) @Louai-Zokerburg</li>
+<li>feat(posthog)：让代理查询见解、标记、队列和调查 (#16628) @OdaiAhmed99</li>
+<li>feat(pdfmonkey)：让 AI 代理生成、查找和管理 PDF 文档 (#16570) @OdaiAhmed99</li>
+<li>feat(netlify)：让 AI 代理管理站点、部署、表单和环境变量 (#16567) @OdaiAhmed99
+*壮举（invoiceninja）：让人工智能代理管理发票、clients、付款和报告（#16523）@OdaiAhmed99</li>
+<li>feat(gotify)：让代理管理消息、应用程序和 clients (#16522) @OdaiAhmed99</li>
+<li>feat(discourse)：使用 webhook 触发器和 SSRF 修复从流和 AI 代理管理主题、帖子、用户和组 (#16460) @OdaiAhmed99</li>
+<li>壮举（矩阵）：让 AI 代理发送消息、做出反应并管理房间和成员 (#16524) @OdaiAhmed99</li>
+<li>feat(foreplay-co)：让代理搜索广告、品牌、面板和 Spyder 数据 (#16633) @OdaiAhmed99</li>
+<li>feat(close)：让代理管理线索、交易、任务、活动和序列 (#16629) @OdaiAhmed99</li>
+<li>feat(lemlist)：管理来自流程和 AI 代理的活动、线索、联系人、公司和任务 (#16459) @OdaiAhmed99</li>
+<li>feat(snowflake)：查询、管理和加载来自流程和 AI 代理的数据，并修复 SQL 安全问题 (#16458) @OdaiAhmed99
+*壮举（bettermode）：管理来自流程和人工智能代理的帖子、回复、成员、空间和徽章（#16461）@OdaiAhmed99</li>
+<li>feat(chat)：从共享模型选择器中选择聊天，加上默认 AI 密钥和嵌入密钥 + 模型 (#16533) @Louai-Zokerburg</li>
+<li>feat(pdfcrowd)：让 AI 代理转换、合并和分割 PDF (#16565) @OdaiAhmed99, <a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a></li>
+<li>feat(retell-ai)：通过签名的 webhook 触发器，从流程和 AI 代理运行语音呼叫、聊天、代理和知识库 (#16462) @OdaiAhmed99</li>
+<li>feat(magical-api)：从 AI 代理获取超时作业并免费检查连接 (#16521) @OdaiAhmed99</li>
+<li>feat(web)：通过 SAML 设置演练将 SSO 重新设计为身份验证 (#16557) @lina-alomari、@claude
+*壮举（条纹）：用户界面改进（＃16636）@Talaljaber
+*壮举（开放路由器）：用户界面改进（＃16614）@Talaljaber
+*壮举（groq）：用户界面改进（＃16615）@Talaljaber
+*壮举（hubspot）：用户界面改进（＃16641）@Talaljaber
+*壮举（youtube）：用户界面改进（＃16631）@Talaljaber
+*壮举（tally）：用户界面改进（＃16634）@Talaljaber
+*壮举（linkedin）：用户界面改进（＃16637）@Talaljaber
+*壮举（表格）：用户界面改进（＃16448）@Talaljaber
+*壮举（typeform）：ui改进（＃16500）@Talaljaber
+*壮举（wordpress）：用户界面改进（＃16618）@Talaljaber
+*壮举（shopify）：用户界面改进（＃16499）@Talaljaber
+*壮举（calendly）：ui改进（＃16441）@Talaljaber</li>
+<li>壮举（概念）：ui 改进 (#16454) @Talaljaber
+*壮举（jira-cloud）：用户界面改进（＃16597）@Talaljaber
+*壮举（不和谐）：用户界面改进（＃16453）@Talaljaber
+*壮举（谷歌日历）：用户界面改进（＃16455）@Talaljaber</li>
+<li>壮举（instagram-business）：ui 改进（#16600）@Talaljaber</li>
+<li>壮举（flow-helper）：ui 改进（#16438）@Talaljaber
+*壮举（tidycal）：用户界面改进（＃16498）@Talaljaber
+*壮举（facebook-leads）：用户界面改进（#16598）@Talaljaber</li>
+<li>壮举（pushover）：ui 改进（#16594）@Talaljaber
+*壮举（加密）：用户界面改进（＃16440）@Talaljaber
+*壮举（trello）：用户界面改进（＃16596）@Talaljaber</li>
+<li>壮举（连接）：ui 改进 (#16607) @Talaljaber
+*壮举（apify）：用户界面改进（＃16503）@Talaljaber
+*壮举（serp-api）：用户界面改进（＃16599）@Talaljaber
+*壮举（重新发送）：用户界面改进（＃16610）@Talaljaber
+*壮举（mailer-lite）：用户界面改进（＃16608）@Talaljaber
+*壮举（数学助手）：用户界面改进（＃16624）@Talaljaber
+*壮举（firecrawl）：用户界面改进（＃16601）@Talaljaber
+*壮举（文件助手）：用户界面改进（＃16613）@Talaljaber
+*壮举（twitter）：用户界面改进（＃16623）@Talaljaber
+*壮举（baserow）：用户界面改进（＃16609）@Talaljaber</li>
+<li>壮举(pdf): ui 改进 (#16625) @Talaljaber</li>
+<li>feat(pieces)：像 Text Helper 这样的核心作品名称现在以您的语言显示 (#16653) @hazemadelkhalel
+*壮举（woocommerce）：用户界面改进（＃16442）@Talaljaber</li>
+<li>feat(flow-runs)：将子运行归因于等待它的屏障 (#14888) @othmanemad</li>
+<li>feat(amazon-lambda)：添加 AWS Lambda 片段 (#16286) @eliseukadesh67, @claude, @cursoragent, @OdaiAhmed99</li>
+<li>feat(engine)：默认在 deno 上运行代码步骤并记录失败的代码步骤 (#16573) @MrChaker
+*壮举（代理）：每个聊天都选择自己的模型和密钥，没有单一的聊天密钥（＃16474）@Louai-Zokerburg</li>
+<li>feat(amazon-textract)：使用 IAM 角色而不是访问密钥连接 AWS Textract (#16555) @majewskibartosz、@kishanprmr</li>
+<li>壮举（聊天）：每个主题由一名研究人员进行深入研究 (#16171) @hazemadelkhalel</li>
+<li>壮举（聊天）：观看任务代理在侧面板中工作 (#16170) @hazemadelkhalel
+*壮举（聊天）：将重点目标交给任务代理（#16130）@hazemadelkhalel，@ziyadev</li>
+<li>feat(firecrawl)：捕获浏览器操作输出并添加 storeInCache 切换 (#15258) @chiadayy, @OdaiAhmed99
+*壮举（网络）：提供商关键页面改版（＃16485）@Louai-Zokerburg</li>
+<li>feat(smartsuite)：代理就绪操作、批量记录、成员和评论；修复 webhook 触发循环 (#16426) @OdaiAhmed99
+*壮举（emailit）：让人工智能代理发送、跟踪和管理电子邮件、受众和抑制（#16429）@OdaiAhmed99</li>
+<li>feat(agents)：运行代理步骤从共享模型选择器中选择，包括层（#16444）@Louai-Zokerburg</li>
+<li>feat(migrations)：回滚后台迁移的协调锁（重新登陆＃16469）（＃16493）@othmanemad，@amrdb</li>
+<li>feat(web)：从共享管理构建块构建每个管理页面 (#16198) @moaaz-ae, @claude</li>
+<li>feat(lemon-squeezy)：管理客户、订阅、折扣和许可证密钥；验证 webhooks (#16423) @OdaiAhmed99</li>
+<li>feat(ai)：添加 OpenAI 兼容密钥时建议模型 (#16382) @Louai-Zokerburg</li>
+<li>feat(short-io)：代理就绪链接、文件夹、QR 和统计操作；修复 TTL 并触发密码泄露 (#16420) @OdaiAhmed99</li>
+<li>feat(jumpcloud)：添加 JumpCloud 部分来管理用户、设备、组和应用程序 (#16292) @eliseukadesh67、@OdaiAhmed99</li>
+<li>feat(web)：将应用程序和管理侧边栏统一为一个组件 (#16200) @moaaz-ae, @claude</li>
+<li>feat(web)：应用程序中的一种类型、高度、半径和间距比例 (#16196) @moaaz-ae, @claude</li>
+<li>feat(mcp)：列出文件夹并将流程移至一个 (#16327) @alexandronic、@claude、@hazemadelkhalel、@ziyadev
+*壮举（openai）：用户界面改进（＃16366）@Talaljaber
+*壮举（google-drive）：用户界面改进（＃16367）@Talaljaber
+*壮举（延迟）：用户界面改进（＃16403）@Talaljaber</li>
+<li>feat(pieces-common)：将自定义 API 呼叫表单分组为请求和数据以发送卡片 (#16383) @Talaljaber
+*壮举（google-gemini）：用户界面改进（＃16406）@Talaljaber
+*壮举（松弛）：用户界面改进（＃16405）@Talaljaber
+*壮举（日期助手）：用户界面改进（＃16364）@Talaljaber
+*壮举（telegram-bot）：用户界面改进（＃16365）@Talaljaber
+*壮举（todoist）：用户界面改进（＃16372）@Talaljaber
+*壮举（google-docs）：用户界面改进（＃16404）@Talaljaber
+*壮举（sendinblue）：用户界面改进（＃16375）@Talaljaber</li>
+<li>壮举(gitlab)：从流程和 AI 代理管理项目、组、标签、webhook 和 CI/CD 管道 (#16396) @OdaiAhmed99</li>
+<li>feat(vtiger)：管理来自流程和 AI 代理的记录、关系、标签和线索 (#16399) @OdaiAhmed99</li>
+<li>feat(pieces-common)：将请求正文保留在 http 错误日志之外的选项 (#16419) @OdaiAhmed99</li>
+<li>feat(ai)：具有层、积分和密钥的共享模型选择器 (#16264) @Louai-Zokerburg
+*壮举（gitlab）：管理问题、合并请求、存储库文件以及来自流程和人工智能代理的用户（#16395）@OdaiAhmed99</li>
+<li>feat(nuelink)：管理来自流程和 AI 代理的帖子、集合和自动化 (#16386) @OdaiAhmed99
+*壮举（对讲机）：让人工智能代理管理联系人、对话和票证（#16385）@OdaiAhmed99</li>
+<li>feat(deepgram)：转录、分析文本并从流和 AI 代理生成语音 (#16384) @OdaiAhmed99
+*壮举（gmail）：用户界面改进（＃16359）@Talaljaber
+*壮举（google-sheets）：用户界面改进（＃16361）@Talaljaber
+*壮举（谷歌任务）：用户界面改进（＃16377）@Talaljaber
+*壮举（ai）：用户界面改进（＃16362）@Talaljaber
+*壮举（http）：用户界面改进（＃16358）@Talaljaber
+*壮举（github）：用户界面改进（＃16379）@Talaljaber</li>
+<li>feat(migrations)：非阻塞后台迁移轨道 (#15903) @amrdb, @claude
+*壮举（twilio）：用户界面改进（＃16357）@Talaljaber</li>
+<li>feat(teable)：使用 AI 代理操作和轮询触发器管理表、字段和批次记录 (#16319) @OdaiAhmed99</li>
+<li>feat(toggl-track)：从流程和 AI 代理跟踪 Toggl Track 和 Toggl 2.0 上的时间 (#16318) @OdaiAhmed99</li>
+<li>feat(softr)：从流程和 AI 代理管理数据库、表格、字段、记录和应用程序用户 (#16300) @OdaiAhmed99</li>
+<li>feat(localai)：在 LocalAI 服务器上列出模型、创建嵌入、生成语音并转录音频 (#16296) @OdaiAhmed99
+*壮举（网络）：人工智能中心的管理层选项卡（＃16116）@Louai-Zokerburg</li>
+<li>feat(square)：管理来自流程和 AI 代理的客户、目录、库存、订单和付款 (#16219) @OdaiAhmed99、@odai-commits
+*壮举（聊天）：回复读起来就像一个人写的一样（＃16132）@hazemadelkhalel</li>
+<li>feat(totalcms)：连接 Total CMS 3 站点并管理来自流和 AI 代理的集合和对象 (#16212) @OdaiAhmed99、@odai-commits</li>
+<li>feat(google-search-console)：查询性能、检查 URL 并管理 AI 代理的站点地图 (#16227) @OdaiAhmed99、@odai-commits</li>
+<li>feat(taskade)：从流程和 AI 代理管理项目、任务和 AI 代理，并触发任务和项目事件 (#16172) @OdaiAhmed99</li>
+<li>feat(agents)：更精简的聊天系统提示和流程构建指南 (#16167) @ziyadev, @hazemadelkhalel
+*壮举（代理）：聊天并保存代理通过具有固定核心工具列表的技能加载工具（＃16166）@ziyadev，@hazemadelkhalel</li>
+<li>壮举（无浏览器）：从流程和 AI 代理中抓取、搜索、抓取和捕获页面 (#16215) @OdaiAhmed99、@odai-commits</li>
+<li>feat(bika)：从流程和 AI 代理中查找、创建和更新记录 (#16217) @OdaiAhmed99、@odai-commits</li>
+<li>feat(drip)：让 AI 代理管理订阅者、标签、订单和电子邮件系列，并触发订阅者事件 (#16180) @OdaiAhmed99</li>
+<li>feat(heartbeat)：管理来自流和 AI 代理的成员、组、通道、线程和事件 (#16169) @OdaiAhmed99</li>
+<li>feat(coda)：管理来自流程和 AI 代理的文档、页面、行和共享 (#16160) @OdaiAhmed99</li>
+<li>feat(audit-logs)：将每个审核日志保留更改记录为审核事件 (#16076) @othmanemad, @claude</li>
+<li>feat(audit-logs)：将审计事件保留一段时间，每小时清理一次 (#16004) @othmanemad, @claude</li>
+<li>feat(ai)：平台层遵循关键项目范围 (#16197) @Louai-Zokerburg</li>
+<li>feat(zoom)：列出、获取、更新和删除会议，并列出流程中的云录音 (#16137) @OdaiAhmed99</li>
+<li>feat(ai)：运行代理并聊天打开带有步骤边界回退的平台层 (#16093) @Louai-Zokerburg</li>
+<li>feat(worker)：允许工作人员在本地覆盖 SANDBOX_MEMORY_LIMIT (#16165) @amrdb, amr</li>
+<li>feat(pieces)：查看每个连接属于哪个 GitLab、Salesforce 或 QuickBooks 帐户 (#16041) @ibrahim-abuznaid、@claude</li>
+<li>feat(xero)：连接新的 Xero 应用程序并添加 AI 操作、报告和发票工具 (#16136) @OdaiAhmed99</li>
+<li>feat(shopify)：让人工智能代理管理营销、批量运营、市场和分析 (#16091) @OdaiAhmed99</li>
+<li>feat(shopify)：让人工智能代理管理博客、页面、主题、元字段和元对象 (#16090) @OdaiAhmed99</li>
+<li>feat(shopify)：让 AI 代理管理履行、运输、折扣和礼品卡 (#16089) @OdaiAhmed99</li>
+<li>feat(shopify)：让人工智能代理管理产品、系列、库存和位置 (#16088) @OdaiAhmed99</li>
+<li>feat(shopify)：让人工智能代理管理订单、退款、草稿订单和客户 (#16087) @OdaiAhmed99</li>
+<li>feat(asana)：为用户、团队、附件和付费计划功能添加 59 个 AI 代理操作 (#16072) @OdaiAhmed99</li>
+<li>feat(fathom)：列出会议类型和用户、下载录音并为 AI 代理提供会议工具 (#16133) @OdaiAhmed99</li>
+<li>feat(nifty)：管理任务、项目和里程碑，并触发新任务或已完成任务的流程 (#16128) @OdaiAhmed99</li>
+<li>feat(bluesky)：关注、静音和列出人员，阅读通知并在提及时触发 (#16125) @OdaiAhmed99</li>
+<li>feat(hugging-face)：让代理读取数据集、写入 Hub 并管理 webhooks 和通知 (#16074) @OdaiAhmed99</li>
+<li>feat(mastodon)：为流程构建者添加触发器和更丰富的帖子状态 (#16073) @OdaiAhmed99</li>
+<li>feat(odoo)：让 AI 代理搜索、创建和更新 Odoo 记录、线索、订单、发票和任务 (#16070) @OdaiAhmed99</li>
+<li>feat(pdf-co)：合并、分割、压缩、保护和转换 PDF，并将结果保存为文件 (#16134) @OdaiAhmed99</li>
+<li>feat(0codekit)：添加 PDF、QR 码、文件存储、代码、AI 文本、加密和短链接操作 (#16071) @OdaiAhmed99</li>
+<li>feat(microsoft-outlook)：“收件人”/“抄送”/“密件抄送”选项卡、正文格式卡以及更清晰的电子邮件和文件夹选择器 (#15829) @Talaljaber
+*壮举（引线连接器）：用户界面改进（＃16104）@Talaljaber
+*壮举（google-forms）：用户界面改进（＃16078）@Talaljaber
+*壮举（smtp）：用户界面改进（＃16080）@Talaljaber
+*壮举（telegram-bot）：用户界面改进（#16083）@Talaljaber
+*壮举（clickup）：用户界面改进（＃16112）@Talaljaber
+*壮举（facebook-pages）：用户界面改进（#16101）@Talaljaber
+*壮举（linkedin）：用户界面改进（＃16081）@Talaljaber
+*壮举（supabase）：用户界面改进（＃16103）@Talaljaber</li>
+<li>feat(pieces)：查看另外 20 个片段中每个连接属于哪个帐户 (#16025) @ibrahim-abuznaid, @claude</li>
+<li>feat(moxie-crm)：让 AI 代理管理 clients、项目、任务、发票等 (#16097) @OdaiAhmed99
+*壮举（线性）：让人工智能代理管理线性问题、评论、项目和团队（#16069）@OdaiAhmed99</li>
+<li>feat(queue)：查看并计算排队的项目，并带有输入的步骤输出 (#16002) @OdaiAhmed99</li>
+<li>feat(event-streaming)：OpenTelemetry 工具和 webhooks 的目标优先设置页面 (#15874) @othmanemad, @claude</li>
+<li>feat(event-streaming)：加密的自定义标头和报告结果的测试端点 (#15873) @othmanemad, @claude</li>
+<li>壮举（事件流）：按计划进行交付，添加启用标志和 OTLP 日志格式 (#15872) @othmanemad、@claude</li>
+<li>feat(chat)：将多个作业构建为小流程文件夹的请求 (#16115) @hazemadelkhalel</li>
+<li>feat(builder)：在发布之前询问所需的操作 (#15954) @AbdulTheActivePiecer, @claude</li>
+<li>feat(piece-sets)：所需操作的管理 UI (#15953) @AbdulTheActivePiecer, @claude</li>
+<li>feat(piece-sets)：流程必须包含发布所需的操作 (#15952) @AbdulTheActivePiecer, @claude</li>
+<li>feat(web)：更新鲜、中性的颜色系统，带有生成的颜色渐变 (#16098) @moaaz-ae</li>
+<li>feat(chat)：检查解决方案的流程和表格是否匹配 (#16102) @hazemadelkhalel</li>
+<li>feat(chat)：将解决方案的流程和表格放在一个文件夹中 (#16095) @hazemadelkhalel</li>
+<li>feat(ai)：使用排名后备模型运行平台层流程步骤 (#16003) @Louai-Zokerburg</li>
+<li>feat(web)：报告管理员使用哪些平台管理页面和按钮，以及他们的计划在哪里阻止他们 (#15640) @AhmadTash</li>
+<li>feat(web)：围绕四个工具层重新设计 MCP 管理页面 (#15908) @moaaz-ae</li>
+<li>重构（web）：颜色是编号的步骤，每个调用站点都移到它上面（#15839）@moaaz-ae</li>
+<li>feat(ai)：平台模型层数据和 api (#15995) @Louai-Zokerburg</li>
+<li>壮举（google-my-business）：用户界面改进（#16062）@Talaljaber
+*壮举（条纹）：用户界面改进（＃16063）@Talaljaber
+*壮举（apitable）：用户界面改进（＃16061）@Talaljaber
+*壮举（perplexity-ai）：用户界面改进（＃16060）@Talaljaber
+*壮举（线性）：用户界面改进（＃16052）@Talaljaber
+*壮举（ai）：用户界面改进（＃16032）@Talaljaber
+*壮举（克劳德）：用户界面改进（＃16031）@Talaljaber
+*壮举(rss)：用户界面改进(#16029)@Talaljaber
+*壮举（google-gemini）：更清晰的形式、宽高比卡和更短的创建视频步骤（#15826）@Talaljaber</li>
+<li>feat(imap)：更清晰的连接设置、完整文件夹路径和删除警告 (#15822) @Talaljaber</li>
+<li>feat(hubspot)：高级下的可读属性注释、简单语言标签和可选字段 (#15814) @Talaljaber</li>
+<li>feat(csv)：简单语言步骤表单，JSON 到 CSV 保留每一列 (#15821) @Talaljaber</li>
+<li>feat(youtube)：更短的搜索表单、选项卡式频道和播放列表查找以及纯字段帮助 (#15813) @Talaljaber
+*壮举（groq）：用户界面改进（＃16048）@Talaljaber
+*壮举（twilio）：用户界面改进（＃16030）@Talaljaber
+*壮举（twitter）：用户界面改进（＃16050）@Talaljaber
+*壮举（openai）：用户界面改进（＃16051）@Talaljaber
+*壮举（代理）：运行和配置面板顺利打开和关闭，按钮保持在原位（＃16035）@hazemadelkhalel</li>
+<li>feat(flowlu)：使用新记录触发器管理 CRM 帐户、机会、任务和项目 (#16015) @OdaiAhmed99</li>
+<li>feat(google-slides)：构建和编辑幻灯片、文本、形状、表格和图像，以及导出幻灯片 (#16007) @OdaiAhmed99</li>
+<li>feat(binance)：添加价格、24 小时统计数据、订单簿、交易、蜡烛和交易对 (#16006) @OdaiAhmed99</li>
+<li>feat(agents)：代理在聊天旁边的侧面板中打开，如流程构建器 (#16034) @hazemadelkhalel</li>
+<li>feat(chat)：云聊天遵循计划，而不是 200 个用户的测试上限 (#16016) @hazemadelkhalel</li>
+<li>feat(asana)：查看每个连接属于哪个 Asana 帐户 (#16020) @ibrahim-abuznaid, @claude</li>
+<li>feat(sandbox)：使用 sucrase 将 deno 代码步骤转译为草率的 CommonJS (#16009) @MrChaker</li>
+<li>feat(agents)：当您尝试删除或移动代理时，链接仍然使用代理的流 (#16010) @hazemadelkhalel</li>
+<li>feat(odoo)：新记录、潜在客户和销售订单触发器，以及针对潜在客户、报价、发票和聊天的操作 (#15949) @OdaiAhmed99</li>
+<li>feat(agents)：在“自动化”页面上的流程和表格旁边查看并组织您的代理 (#15994) @hazemadelkhalel
+*壮举（线性）：添加问题查找、搜索、标签、删除、链接和项目状态更新（#15944）@OdaiAhmed99</li>
+<li>feat(csv)：读取、创建、过滤、排序、重复数据删除、合并和分割 CSV 文件，以及将 CSV 转换为 Excel (#15942) @OdaiAhmed99</li>
+<li>feat(systeme-io)：管理课程、社区和订阅；对选择加入和取消销售做出反应 (#15979) @OdaiAhmed99</li>
+<li>feat(worker): AP_SKIP_PREWARM_CODES 从预热范围中排除代码步骤 (#15836) @MrChaker</li>
+<li>feat(zoho-crm)：处理任何模块中的记录，观察新的和更新的记录，并添加代理操作 (#15982) @OdaiAhmed99</li>
+<li>feat(exa)：运行 Exa 代理，使用监视器触发器监视搜索，并为 AI 代理提供搜索、内容和回答操作 (#15983) @OdaiAhmed99
+*壮举（jsm-操作）：添加 Jira 服务管理操作部分（Opsgenie 后继者）（＃15900）@OdaiAhmed99</li>
+<li>feat(convertkit)：让 AI 代理管理 Kit 订阅者、标签、表单、序列和广播 (#15902) @OdaiAhmed99</li>
+<li>feat(ghostcms)：让 AI 代理管理 Ghost 帖子、页面、成员、时事通讯等 (#15901) @OdaiAhmed99</li>
+<li>feat(0codekit)：验证业务数据并处理日期和转换（第 1/3 部分）(#15857) @OdaiAhmed99</li>
+<li>feat(convertapi)：使用 ConvertAPI 合并、分割和转换文件 (#15855) @OdaiAhmed99</li>
+<li>feat(ntfy)：更新、清除和删除通知、发送文件并触发新消息 (#15969) @OdaiAhmed99</li>
+<li>feat(xml)：添加创建 XML 操作 (#15884) @OdaiAhmed99</li>
+<li>feat(duckdb)：可用性增强 (#15584) @danielpoonwj, @kishanprmr</li>
+<li>壮举（平台）：将 AI Center 锁定在 Plus 计划后面，如 SSO (#15958) @Louai-Zokerburg</li>
+<li>feat(ai)：当迁移到更新的模型时，代理遵循他们的等级（#15871）@Louai-Zokerburg</li>
+<li>feat(ai)：选择用于搜索和图像的 AI 提供商和图像模型聊天 (#15886) @hazemadelkhalel</li>
+<li>feat(ai)：当迁移到更新的模型时，托管人工智能步骤遵循其层级（#15866）@Louai-Zokerburg</li>
+<li>feat(ai)：将发布的模型层提供给聊天和代理选择器 (#15838) @Louai-Zokerburg</li>
+<li>feat(google-slides): 添加服务帐户身份验证 (#15648) @OdaiAhmed99</li>
+<li>feat(pieces)：按实际使用情况回填 226 个以上的动作分类 (#15848) @ibrahim-abuznaid, @claude</li>
+<li>feat(forms)：更清晰的人类输入步骤表单，以及托管表单和聊天修复 (#15256) @Talaljaber</li>
+<li>feat(mcp)：在自己的主机名上运行 MCP，并修复 SSO 丢失 MCP 登录的问题 (#15376) @othmanemad</li>
+<li>feat(ai)：聊天和代理从已发布的文件中解析模型层 (#15825) @Louai-Zokerburg</li>
+<li>壮举（instagram-business）：在 Graph v23.0 上复活，有 27 个经过验证的操作（#15618）@OdaiAhmed99</li>
+<li>feat(dropbox)：为文件和批处理作业添加 AI 就绪的原子操作 (#15661) @OdaiAhmed99</li>
+<li>feat(asana)：为任务、项目、部分和标签添加 65 个 AI 代理操作 (#15757) @OdaiAhmed99
+*壮举（聊天）：编辑对话中已有的图像（#15845）@hazemadelkhalel</li>
+<li>feat(ai)：从已发布的文件中读取模型层，包含聊天列表和流列表 (#15823) @Louai-Zokerburg</li>
+<li>feat(whatsapp)：19 个新操作、4 个 webhook 触发器、输出模式和图 v23.0 (#15585) @OdaiAhmed99、@claude</li>
+<li>壮举(pieces)：将 AI 代理原子添加到 pipelinedrive 和 mailer-lite (#15725) @OdaiAhmed99
+*壮举（microsoft-outlook）：让代理阅读、发送和组织邮件（#15696）@OdaiAhmed99</li>
+<li>feat(mcp)：将 MCP 页面指向平台服务器，并将 Pieces 折叠到 Tools 中 (#15652) @othmanemad, @claude</li>
+<li>feat(mcp)：让项目成员使用平台 MCP 服务器，在 READ_MCP 上门禁 (#15649) @othmanemad、@claude</li>
+<li>壮举（聊天）：与您的 AI 提供商一起生成图像，不需要额外的密钥 (#15841) @hazemadelkhalel</li>
+<li>壮举（聊天）：在网络上搜索每个 AI 提供商 (#15837) @hazemadelkhalel</li>
+<li>feat(web)：围绕查看/编辑权限和人员重建角色对话框 (#15698) @lina-alomari, @claude</li>
+<li>feat(web)：重命名角色选项卡并重建角色卡 (#15697) @lina-alomari, @claude</li>
+<li>feat(date-helper)：围绕简单语言副本重建步骤表单 (#15281) @Talaljaber
+*壮举（概念）：改进步骤形式（#15397）@Talaljaber</li>
+<li>feat(whatsapp)：更清晰的消息设置、模板预览和分页下拉菜单 (#15752) @Talaljaber</li>
+<li>feat(tally)：改进连接和新的提交步骤表单 (#15396) @Talaljaber
+*壮举（OpenRouter）：步骤形式（＃15484）@Talaljaber</li>
+<li>feat(hugging-face)：让代理搜索 Hub，阅读存储库和论文，并运行聊天和嵌入 (#15793) @OdaiAhmed99</li>
+<li>feat(pieces)：将 AI 代理原子添加到乳齿象并将输出模式加密 (#15756) @OdaiAhmed99</li>
+<li>feat(gmail)：收件人选项卡、富文本正文、消息选择器和查找电子邮件的过滤器构建器 (#15753) @Talaljaber
+*壮举（microsoft-onedrive）：让代理管理文件、共享、版本和相册（#15781）@OdaiAhmed99</li>
+</ul>
+<h2 id="-错误修复">🐞 错误修复</h2>
+<ul>
+<li>修复（ai）：在 Claude Opus 5.5、Sonnet 5.5 和 Fable 5.1 上提取数据和代理再次工作（#17295）@hazemadelkhalel、@james-novino</li>
+<li>修复（平台）：限制每个人在云上拥有一个平台 (#17242) @lina-alomari, @claude
+*修复（trello）：当更新卡（代理）离开存档时保留卡存档（＃17078）@OdaiAhmed99</li>
+<li>修复（claude）：在 Anthropic 淘汰旧模型后，保持 Ask Claude 和 Extract Structured Data 工作（#17107）@OdaiAhmed99</li>
+<li>修复（表）：编辑记录的单元格现在会移动记录的更新时间 (#16527) @majewskibartosz, @MrChaker</li>
+<li>修复（表）：当更新没有更改任何内容时，更新的记录不再运行流程 (#16468) @majewskibartosz</li>
+<li>修复（api）：永远停止重复回收的作业（#17187）@MrChaker</li>
+<li>修复(web)：将入职卡字段保留在一行上 (#17084) @AhmadTash</li>
+<li>修复（ai）：将 API 密钥和令牌排除在 AI 痕迹之外（#17244）@hazemadelkhalel</li>
+<li>修复（app-webhooks）：保留应用程序事件侦听器另一个触发源仍然使用（#17212）@othmanemad，@claude</li>
+<li>修复（测试触发）：在每个触发测试 click 上再次开始监听（#17211）@othmanemad、@claude</li>
+<li>修复（gistly）：弃用片段，Gistly 现在是 Supadata (#17127) @OdaiAhmed99</li>
+<li>修复（todoist）：当 Is favorite 保持不变时，保持项目和标签的收藏（#17079）@OdaiAhmed99</li>
+<li>修复（不和谐）：解释当查找频道由于缺少查看频道权限而无法看到频道时（#17090）@OdaiAhmed99</li>
+<li>修复（连接）：更新未找到的已删除或未知的全局连接答案，而不是服务器错误（#16489）@majewskibartosz</li>
+<li>修复(web): 在任何模块块之前运行 crypto.randomUUID polyfill (#17233) @MrChaker, @claude</li>
+<li>修复（auth）：将通过电子邮件发送的代码受邀者放在姓名步骤之后的邀请平台上（#17225）@lina-alomari，@claude
+*修复（google-slides）：让代理更改一种文本样式而不清除粗体，斜体，下划线或删除线（＃17080）@OdaiAhmed99</li>
+<li>修复(workers): 通过 job.failed 签名中的代码对 JSON 形状的引擎错误进行分组 (#16777) @abuaboud, @amrdb, @claude, Mo AbuAboud</li>
+<li>修复（引擎）：一旦磁盘使用率超过 80%，就逐出过时的代码步骤缓存 (#17196) @MrChaker</li>
+<li>修复（mcp）：piece props 保留调用者已经传递的输入（#17201）@hazemadelkhalel
+*修复（聊天）：当公司研究完成时，创始用户获得公司的卡片（＃17199）@hazemadelkhalel</li>
+<li>修复（成员）：当所有席位均已使用时，将现有平台用户添加到项目中 (#17198) @othmanemad</li>
+<li>修复（嵌入）：批准链接使用平台的嵌入子域 (GIT-2025) (#17153) @lina-alomari, @claude</li>
+<li>修复（运行）：按失败步骤过滤时批量重试和存档不再失败 (#15909) @majewskibartosz, @othmanemad</li>
+<li>修复（构建器）：当编辑流程在嵌入中为 clicked 时离开运行视图 (#17181) @othmanemad、@claude</li>
+<li>修复（聊天）：当您滚动聊天侧边栏时，旧的对话会加载（#17178）@hazemadelkhalel
+*修复（聊天）：更改您的角色会刷新您建议的用例（＃17167）@hazemadelkhalel</li>
+<li>修复（连接）：保持整个连接的流锁替换（#16972）@AbdulTheActivePiecer，@claude</li>
+<li>修复（flows）：当 versionState 为 LOCKED 时，过滤已发布版本上的 connectionExternalIds (#16856) @AbdulTheActivePiecer, @claude
+*修复（代理）：编辑片段工具保留其片段版本（＃17175）@hazemadelkhalel</li>
+<li>修复（聊天）：失败的回复会显示一次错误，并带有重试按钮 (#17174) @hazemadelkhalel</li>
+<li>修复（聊天）：另一个选项卡中已完成的聊天显示为未读 (#17172) @hazemadelkhalel</li>
+<li>修复（代理）：失败的工具调用在代理时间线中标记为失败 (#17171) @hazemadelkhalel</li>
+<li>修复（聊天）：重新连接 MCP 服务器会打开一个登录窗口，而不是两个 (#17169) @hazemadelkhalel
+*修复（聊天）：当旧的研究完成时，清除的个性化保持清除（＃17168）@hazemadelkhalel</li>
+<li>修复（代理）：当工作人员短暂断开连接时，AI 代理步骤不再失败 (#16896) @ziyadev、@claude、@hazemadelkhalel
+*修复（deps）：修补undici，MCP SDK，系统信息，tiptap和vite，并限制MCP请求（＃17163）@KhaledR57</li>
+<li>修复（表格）：选定单元格中的长文本保留在其单元格内 (#16655) @majewskibartosz, Bartosz Majewski, @MrChaker</li>
+<li>修复（api）：防止每个流程版本重叠轮询触发执行（#17150）@MrChaker</li>
+<li>修复(pieces)：自托管实例再次从云注册表获取片段翻译 (#16968) @amrdb, Amr Elmohamady, @claude</li>
+<li>修复（聊天）：按 Enter 键选择中文、日文或韩文单词不再发送消息 (#17134) @hazemadelkhalel</li>
+<li>修复（聊天）：跳过滑块或颜色问题不再将其默认值发送为您的答案（#17135）@hazemadelkhalel</li>
+<li>修复（聊天）：显示为应用程序图标的选择问题可让您输入自己的答案或再次跳过 (#17136) @hazemadelkhalel</li>
+<li>修复（聊天）：聊天回复中的代码块不再在每个 # 评论之前出现空行 (#17137) @hazemadelkhalel</li>
+<li>修复（平台管理）：使管理页面适合手机屏幕（#17138）@othmanemad</li>
+<li>修复（沙盒）：停止杀死引擎繁忙 45 秒的运行 (#16698) @abuaboud, @amrdb, @claude, mo</li>
+<li>修复（构建器）：每当构建器为只读时，将流程名称设为只读 (#17085) @lina-alomari, @claude</li>
+<li>修复（翻译）：同步期间主要更改时翻译更新不再卡住或丢失（#16796）@majewskibartosz</li>
+<li>修复(gmail): 在转发消息的 AI 描述中说附件被转发 (#17120) @kishanprmr, @claude</li>
+<li>修复（自动化）：使自动化页面适合小屏幕（#17083）@othmanemad</li>
+<li>修复(groq)：再次运行使用关闭 Groq 模型的 Ask AI 流程 (#17123) @sanket-a11y, @claude</li>
+<li>修复（平台）：从平台项目表中打开项目，而不是聊天 (#17082) @lina-alomari, @claude</li>
+<li>修复（代理）：当代理加载失败时，在代理页面上显示重试 (#15938) @majewskibartosz, @hazemadelkhalel</li>
+<li>修复（聊天）：失败的聊天消息上的重试按钮现在可以重新发送（#15899）@majewskibartosz</li>
+<li>修复（聊天）：失败后重试再次发送附件（#17095）@hazemadelkhalel
+*修复（聊天）：公共聊天链接不再发送过去的访问者登录（＃17097）@hazemadelkhalel</li>
+<li>修复（代理）：删除流程工具在添加另一个流程后会保留其删除状态 (#17089) @hazemadelkhalel</li>
+<li>修复（代理）：新代理可以在新的云帐户上回答（#17087）@hazemadelkhalel</li>
+<li>修复（auth）：当通过电子邮件发送的代码被拒绝时，显示“电子邮件登录已禁用”（#17081）@lina-alomari，@claude</li>
+<li>修复（web）：使内联项目在数据选择器的友好视图中工作（＃15971）@AhmadTash，@claude
+*杂务（docker）：将面包升级到1.4.4（＃17064）@KhaledR57
+*修复（聊天）：快速删除记忆不再恢复已删除的记忆（#16989）@hazemadelkhalel</li>
+<li>修复（auth）：拒绝关闭服务器上最后一个有效的登录方法（ENG-1053）（＃17008）@lina-alomari，@claude</li>
+<li>修复（代理）：保存代理不再撤消某人同时所做的更改（#16990）@hazemadelkhalel</li>
+<li>修复（云）：在正常运行中检查通过时启动审批 (#17017) @othmanemad</li>
+<li>修复（webhook）：清理响应头名称以防止进程崩溃（#17003）@MrChaker
+*修复（缩放，概念，不和谐）：停止人工智能更新操作重置代理未提及的设置（＃17000）@OdaiAhmed99
+*修复（聊天）：失败的工具调用显示为失败并且不再收费（＃16952）@hazemadelkhalel
+*修复（聊天）：在运行操作之前聊天遵循片段自己的读取或写入标签（＃16962）@hazemadelkhalel
+*修复（聊天）：在一批操作更改您的数据之前聊天会询问（＃16951）@hazemadelkhalel</li>
+<li>修复（ai）：新平台的第一个 AI 调用不再因“找不到用户”而失败（#16935）@hazemadelkhalel</li>
+<li>修复(millionverifier): 从验证电子邮件而不是网站页面返回验证结果 (#16914) @majewskibartosz, @kishanprmr</li>
+<li>修复（代理）：AI 代理在其作业延迟交付时不再运行两次 (#16898) @hazemadelkhalel</li>
+<li>修复（workers）：工作人员重新连接后工作不再卡住（#16893）@hazemadelkhalel</li>
+<li>修复（代理）：工作人员重新连接后，AI 代理步骤不再失败 (#16880) @hazemadelkhalel, @claude, mo</li>
+<li>修复（web）：字段不再看起来被禁用，可读的工具提示，可见的队列环，温暖的计划卡（＃16714）@moaaz-ae，@claude</li>
+<li>修复（worker）：将空的 AP_SANDBOX_MEMORY_LIMIT 视为未设置（#16887）@othmanemad</li>
+<li>修复（触发器）：通过片段升级重新发布保持轮询状态 (#16719) @amrdb, amr, @claude, @kishanprmr</li>
+<li>修复（代理）：删除无法读取图像的模型的图像附件 (#16816) @abuaboud, @claude, Mo AbuAboud, @ziyadev</li>
+<li>修复（代理）：来自您自己的 AI 端点的错误不再因系统错误而导致运行失败 (#16821) @abuaboud, @claude, @hazemadelkhalel, Mo AbuAboud</li>
+<li>修复(pieces)：在每个轮询触发器中将整个上下文传递给 pollingHelper (#16695) @amrdb, amr, @claude, @kishanprmr</li>
+<li>修复（触发器）：在重新发布时保持不变的轮询触发器运行 (#16543) @amrdb, amr, @claude
+*修复（聊天）：清除个性化隐藏公司卡（＃16859）@hazemadelkhalel</li>
+<li>修复（聊天）：在实时测试之前询问写入检查无法运行的情况 (#16855) @hazemadelkhalel
+*修复（mcp）：通过聊天编辑跳过的步骤使其保持跳过（＃16858）@hazemadelkhalel</li>
+<li>修复（聊天）：循环聊天回合现在在其使用限制处停止（#16838）@hazemadelkhalel</li>
+<li>修复（件）：恢复 Gemini、Excel 365、Tally、Airtable 等中缺失的日语和法语翻译 (#16795) @majewskibartosz、@AhmadTash</li>
+<li>修复（流程运行）：对于未失败的运行，拒绝从失败的步骤重试 (ENG-949) (#16707) @lina-alomari、@claude</li>
+<li>修复（google-docs）：逃避云端硬盘搜索并停止加载每个文件夹（#16450）@Talaljaber</li>
+<li>修复（嵌入）：从平台的嵌入子域构建人工输入表单和聊天链接 (#16744) @lina-alomari, @claude</li>
+<li>修复（件）：重新发布时保持 gmail、google-contacts 和 Wonderchat 的轮询状态 (#16694) @amrdb、amr、@claude、@kishanprmr</li>
+<li>修复（代理）：用户无法手动设置代理中的工件工具的值 (#16722) @ziyadev, @AbdulTheActivePiecer, @claude</li>
+<li>修复（流）：轮询触发器在重新发布后不再跳过新项目（#16742）@hazemadelkhalel</li>
+<li>修复（构建器）：停止在保存失败、快速发布或离开时丢失编辑（#16495）@othmanemad、@claude</li>
+<li>修复（连接）：空的 OAuth2 令牌回复不再中断连接刷新 (#16490) @majewskibartosz、@claude、@lina-alomari</li>
+<li>修复（core-utils）：告诉用户当 /tmp 权限拒绝触发时只有 os.tmpdir() 是可写的（#16718）@MrChaker</li>
+<li>修复(sendinblue)：当代理更新联系人时，将联系人列入黑名单并保持模板处于活动状态 (#16741) @kishanprmr</li>
+<li>修复（流）：当重新发布被批准时，轮询触发器保留其位置（#16717）@hazemadelkhalel</li>
+<li>修复（clickup）：当代理编辑项目时，保持项目已解决、按时间计费和多个受让人（#16737）@kishanprmr</li>
+<li>修复（nocodb）：当代理在视图中重新排序列时，保持列可见（#16736）@kishanprmr</li>
+<li>修复（google-drive）：当代理重命名文件时，保持文件加星标（#16735）@kishanprmr</li>
+<li>修复（google-sheets）：当代理调整大小或重新样式时，隐藏隐藏的行、列和工作表（#16734）@kishanprmr</li>
+<li>修复（github）：停止更新存储库（代理）将私有存储库公开（#16727）@ibrahim-abuznaid，@claude</li>
+<li>修复（聊天）：当提供者奇怪地失败时，聊天会尝试另一种模型（#16668）@hazemadelkhalel</li>
+<li>修复（流）：在没有触发器的情况下打开流现在会完全失败，而不是半发布它（＃16514）@majewskibartosz，@claude，@lina-alomari</li>
+<li>修复（表）：即使导入表的副本，关闭流程现在也会删除其表触发器 (#16465) @majewskibartosz, @hazemadelkhalel</li>
+<li>修复（流）：当打开或测试流时触发器挂起时显示超时错误 (#16482) @majewskibartosz、@lina-alomari</li>
+<li>修复（shopify）：产品状态、客户切换和触发可靠性（#16507）@Talaljaber</li>
+<li>修复（core-utils）：不要因结果后到达的拒绝而导致代码步骤失败（#16688）@MrChaker</li>
+<li>修复（件）：FTP 新文件不再在每次轮询中启动同一文件的运行 (#16669) @hazemadelkhalel</li>
+<li>修复（件）：FTP/SFTP 新文件触发器现在报告登录失败，而不是默默地找不到文件 (#16467) @majewskibartosz，Hazem Adel</li>
+<li>修复（worker）：使用 pidtree + pidusage 读取沙箱内存 (#16562) @AbdulTheActivePiecer, @claude</li>
+<li>修复（worker）：以 PID 1 运行 tini，这样沙箱僵尸就会被收割（#16561）@AbdulTheActivePiecer，@claude</li>
+<li>修复（wordpress）：当字段为空时，在更新帖子上保留类别和标签（#16622）@Talaljaber</li>
+<li>修复（连接）：失败的托管 OAuth2 连接现在快速失败并记录真正原因 (#16040) @ibrahim-abuznaid, @claude</li>
+<li>修复（模板）：在没有互联网访问的自托管实例上探索和自动化加载 (#16480) @majewskibartosz, @hazemadelkhalel
+*修复（影响）：影响仪表板不再错过延迟保存或来自暂停项目的运行（＃16657）@hazemadelkhalel</li>
+<li>修复（影响）：影响仪表板上的运行计数在刷新后不再分裂或下降（#16466）@majewskibartosz
+*修复（件）：其他语言的件选择器现在加载速度几乎与英语一样快（＃16626）@hazemadelkhalel</li>
+<li>修复（流程）：触发图标工具提示说明了时间表的含义 (#16571) @AbdulTheActivePiecer, @claude</li>
+<li>修复（迁移）：用于后台迁移的专用 POSTGRES_MIGRATION_URL (#16531) @amrdb
+*修复（件）：件选择器在英语以外的语言中加载速度更快（＃16620）@hazemadelkhalel</li>
+<li>修复（流）：同时进行的编辑不再丢失（#16518）@hazemadelkhalel</li>
+<li>修复（聊天）：聊天会在进行其他更改之前等待您的答复（#16519）@hazemadelkhalel</li>
+<li>修复（聊天）：聊天总是以回复结束（#16517）@hazemadelkhalel</li>
+<li>修复(piece-sets)：集合名称过滤器搜索每个集合，而不仅仅是加载的页面 (#16612) @lina-alomari, @claude</li>
+<li>修复（构建器）：在 Safari 中分支标签点、拖动选择和添加按钮悬停 (#16611) @AbdulTheActivePiecer、@claude</li>
+<li>修复（件）：22 件的文件上传和表单帖子再次完好无损地到达 API (#16582) @kishanprmr</li>
+<li>修复（流）：打开一个从未发布过的流，现在表示要先发布它（#16481）@majewskibartosz，@AbdulTheActivePiecer，@claude</li>
+<li>修复（表）：创建记录在网络故障后不再保存相同的行两次（#16464）@majewskibartosz，@AbdulTheActivePiecer</li>
+<li>修复（聊天）：失败的任务步骤在任务面板中显示为失败 (#16556) @hazemadelkhalel</li>
+<li>修复（google-drive）：新文件和新文件夹触发器在重新发布后不再丢失项目（#16550）@kishanprmr</li>
+<li>修复（工作日）：通过 RaaS 运行获取报告、添加集成系统用户连接、修复损坏的操作 (#16526) @kishanprmr、@claude</li>
+<li>修复（app）：记录接收到的关闭信号并在文件清理迭代之间暂停（#16516）@MrChaker</li>
+<li>修复（amazon-textract）：直接上传单页 PDF 和 TIFF 文件，无需 S3 (#16538) @OdaiAhmed99</li>
+<li>修复（core-utils）：通过显式判别比较缩小 deno 结果消息（#16515）@MrChaker</li>
+<li>修复（模板）：搜索模板库现在会过滤模板卡（#15897）@majewskibartosz，@Louai-Zokerburg</li>
+<li>修复（流）：无法启动运行的 webhook 和轮询触发器现在记录原因 (#15450) @majewskibartosz、@Louai-Zokerburg
+*修复（生成器）：当没有测试面板显示时，为步骤设置提供完整的面板高度（＃16506）@othmanemad</li>
+<li>修复（聊天）：短连接断开不再导致“代理已在运行”回复失败 (#16492) @hazemadelkhalel</li>
+<li>修复（引擎）：循环迭代之间的收益并停止重新遍历循环输出以获取日志大小（＃16431）@amrdb，amr</li>
+<li>修复（代理）：代理运行服务器时不再显示为系统故障（#16452）@hazemadelkhalel</li>
+<li>修复（代理）：Claude Opus 5.5 和其他较新的 Claude 模型上的代理不再失败 (#16451) @hazemadelkhalel</li>
+<li>修复(mcp)：通过与列表或 JSON 字段中的整个引用聊天构建的步骤现在打开 (#16341) @alexandronic、@claude、@hazemadelkhalel、@ziyadev</li>
+<li>修复（pieces）：来自 POST /v1/pieces/options 的表面引擎错误 (#14711) @amrdb、@claude、@Louai-Zokerburg</li>
+<li>修复（流）：芯片不再隐藏变量后表达式的其余部分 (#14937) @majewskibartosz, @Louai-Zokerburg</li>
+<li>修复（沙箱）：使用磁盘锁定、强制依赖安装重建代码步骤（#16435）@MrChaker
+*修复（ai）：gpt-5.6现在可以在代理和聊天中使用，并且OpenAI和Azure不再存储对话（＃16381）@Louai-Zokerburg</li>
+<li>修复（模板）：编辑自定义模板的详细信息不再删除其工作流程（#16415）@Louai-Zokerburg</li>
+<li>修复（引擎）：匹配 deno 代码步骤的旧版每模式内存语义 (#16400) @MrChaker</li>
+<li>修复(ai)：取消订阅的用户可以删除其 AI BYOK 密钥，但不能添加或编辑它们 (#15948) @majewskibartosz、@AbdulTheActivePiecer、@claude</li>
+<li>修复(mcp): 仅当 AppSumo 积分用完时不要拒绝 ap_run_action (#16168) @AbdulTheActivePiecer, @claude</li>
+<li>修复（auth）：在 Google 注册上也运行注册滥用门，并拒绝死域（#15591）@AhmadTash</li>
+<li>修复（表）：导入错误的 JSON 文件不再清空你的表 (#15711) @majewskibartosz, @AbdulTheActivePiecer, @claude</li>
+<li>修复（聊天）：拼写错误的操作名称找到正确的操作（#16390）@hazemadelkhalel</li>
+<li>修复（聊天）：当您未回复卡片时，聊天会询问一次（#16394）@hazemadelkhalel
+*修复（聊天）：长时间聊天保留他们的工具（＃16393）@hazemadelkhalel</li>
+<li>修复（聊天）：应用程序查找仅完整描述匹配的操作（#16389）@hazemadelkhalel</li>
+<li>修复（聊天）：新流程说明了为什么每个步骤无效 (#16388) @hazemadelkhalel</li>
+<li>修复（聊天）：聊天构建流程中的公式不再显示为缺失步骤 (#16387) @hazemadelkhalel</li>
+<li>修复（聊天）：额外的参数不再使聊天工具调用失败（#16391）@hazemadelkhalel
+*修复（聊天）：聊天在需要时加载技能并首先创建文件夹（＃16392）@hazemadelkhalel</li>
+<li>修复（沙箱）：崩溃时使用前导空语句重试蔗糖酶转译（#16376）@MrChaker
+*修复（worker）：安装片段不再依赖于worker到达公共URL（＃16037）@AhmadTash，@amrdb，@claude</li>
+<li>修复（google）：显示 Google 的真实 401/403，而不是“无法确定 client ID”（#16314）@james-novino、@claude、@kishanprmr</li>
+<li>修复（builder）：步骤信息面板中的长链接不再被切断（#14933）@majewskibartosz，@MrChaker</li>
+<li>修复（可观察性）：发送到 Loki 的日志会在短暂的 Loki 中断期间重试而不是丢失（#15913）@majewskibartosz</li>
+<li>修复（计费）：现在每页的行数会更改使用表显示的项目数量 (#15915) @majewskibartosz、@MrChaker</li>
+<li>修复（代理）：模式感知工具调用修复、缓存入职说明、连接卡防护 (#16162) @ziyadev、@hazemadelkhalel</li>
+<li>修复（microsoft-copilot）：Microsoft 365 Copilot 连接在大约 90 分钟后不再停止工作（#16221）@majewskibartosz</li>
+<li>perf(engine)：在一个持久 Deno 进程中运行共享脚本会话 (#16208) @MrChaker
+*修复（ai）：在运行时强制执行密钥的模型列表并保护功能和输入的模型密钥（＃16207）@Louai-Zokerburg</li>
+<li>修复（openai）：将 Ask Assistant 标记为已弃用，并引导用户询问 ChatGPT (#16263) @kishanprmr</li>
+<li>修复（dev-pieces）：片段编辑在下一个测试步骤中生效，无需重新启动开发服务器（＃16043）@kishanprmr</li>
+<li>修复（builder）：将示例数据发送到 webhook 触发器不再永远旋转（#16139）@majewskibartosz</li>
+<li>修复（引擎）：故障分支中的步骤测试解决了父级的错误消息 (#16216) @othmanemad</li>
+<li>修复（流程）：重命名步骤不再将其标记为需要重新测试（#15443）@majewskibartosz，@MrChaker</li>
+<li>修复(engine): 当 require 失败时强制重新安装组件 (#16106) @MrChaker</li>
+<li>修复（流）：构建器内导入会清除流的每个缓存查询，包括其示例数据 (#15381) @majewskibartosz、@Louai-Zokerburg、@othmanemad</li>
+<li>修复(web): 崩溃页面再次显示错误详细信息 (#15778) @majewskibartosz, @MrChaker</li>
+<li>修复(projects): 在项目设置中显示项目的外部 ID (#15776) @majewskibartosz
+*修复（流）：测试触发器在测试运行并重新打开测试面板时保持clickable（＃15475）@majewskibartosz，@MrChaker</li>
+<li>修复（构建器）：通过“发送示例数据”测试基本身份验证 Webhook 现在可以工作 (#16138) @majewskibartosz、@MrChaker</li>
+<li>修复（项目）：项目替换不再报告未能发布的流程成功（#15769）@majewskibartosz</li>
+<li>修复（生成器）：“AI 复制错误”不再复制步骤 URL 中保存的 API 密钥 (#15706) @majewskibartosz</li>
+<li>文档（变量）：将变量端点添加到 API 参考 (#16161) @othmanemad</li>
+<li>修复（git-sync）：连接 git 命名 ssh 连接失败的原因 (#16155) @othmanemad</li>
+<li>修复（ai）：阻止托管 AI 信用密钥在 OpenRouter 上泄漏（#15704）@majewskibartosz、@othmanemad</li>
+<li>修复（helm）：pod 仅在 Activepieces 可以到达其数据库时报告就绪（#15947）@majewskibartosz，@MrChaker</li>
+<li>修复（pieces-common）：仅当自定义 API 调用发送表单正文时才加载表单数据（#16135）@OdaiAhmed99</li>
+<li>修复（日志）：停止发出后警告泛滥并保留最新错误（#14955）@majewskibartosz</li>
+<li>修复（构建器）：打开缺少连接的导入步骤不再擦除其值 (#16131) @othmanemad</li>
+<li>修复(web): 保持聚焦环和运行状态中性而不是品牌颜色 (#16117) @moaaz-ae</li>
+<li>修复（聊天）：聊天构建的步骤使用实际值运行其动态字段 (#16120) @hazemadelkhalel</li>
+<li>修复（流）：跳过的父级内部的步骤不再阻止发布（#15951）@AbdulTheActivePiecer，@claude</li>
+<li>修复（聊天）：阻止聊天卡在已删除的设置上（#16111）@hazemadelkhalel</li>
+<li>修复（文件）：将上传文件名作为 ASCII 安全标头发送 (#15959) @amrdb、@claude、@Copilot</li>
+<li>修复(helm): OpenShift 覆盖，以及未设置时集群的默认存储类别 (#16033) @amrdb, amr, @claude</li>
+<li>修复（连接）：搜索 OAuth2 权限再次过滤列表 (#15811) @majewskibartosz, @othmanemad</li>
+<li>修复（连接）：替换连接会保留草稿编辑并禁用已禁用的流程 (#15812) @majewskibartosz、@othmanemad</li>
+<li>修复（聊天）：在总结旧消息时，长聊天不再失败（#16085）@hazemadelkhalel</li>
+<li>修复（代理）：您自己的 AI 提供商的中断不再显示为平台故障 (#16086) @hazemadelkhalel</li>
+<li>修复(web)：收紧角色和访问副本 (#16082) @lina-alomari, @claude</li>
+<li>修复(worker): 在 job.execute 事件上记录运行状态和引擎错误 (#15960) @amrdb, @claude
+*修复（ai）：停止提供新的Google项目无法使用的Google模型（＃16022）@hazemadelkhalel</li>
+<li>修复（构建器）：当不再提供该值时，步骤会显示其保存的下拉值（#16018）@hazemadelkhalel
+*修复（聊天）：将每个回合的工具调用保留在历史记录中，因此聊天永远不会声明它没有做出的更改（＃16021）@hazemadelkhalel</li>
+<li>修复（mcp）：AI clients 在流程编辑和发布工具上看到准确的安全标签（#16014）@hazemadelkhalel</li>
+<li>修复（代理）：在发布使用代理的流程时删除代理不再破坏该流程 (#15932) @hazemadelkhalel</li>
+<li>修复（知识库）：上传的文件现在可以由代理搜索（#15930）@hazemadelkhalel</li>
+<li>修复（事件流）：保存或删除目标失败时显示错误而不是成功 (#15893) @majewskibartosz</li>
+<li>修复（流）：将 Oracle 数据库 0.1.11/0.1.12 迁移到 0.1.15（流模式 v28）（#15957）@AhmadTash</li>
+<li>修复(xml): 在将 XML 转换为 JSON 中保留前导零 (#15856) @OdaiAhmed99</li>
+<li>修复（聊天）：在聊天后更改已保存的代理读取您的数据现在需要您的批准（#15927）@hazemadelkhalel</li>
+<li>修复（沙箱）：代码步骤可以再次导入节点：内置函数（#15980）@MrChaker</li>
+<li>修复：Activepieces AI 积分现在仅运行选择器中提供的模型 (#15928) @hazemadelkhalel
+*修复（聊天）：聊天完成长时间的工作而不是中途停止（＃15925）@hazemadelkhalel</li>
+<li>修复（聊天）：显示回复失败的原因并让用户重试 (#15931) @hazemadelkhalel</li>
+<li>修复（聊天）：长对话不再因上下文长度错误而失败 (#15923) @hazemadelkhalel</li>
+<li>修复：当每周 AI 模型目录更新失败时收到警报 (#15929) @hazemadelkhalel</li>
+<li>修复（聊天）：在打开它构建的自动化之前询问（#15926）@hazemadelkhalel</li>
+<li>修复（引擎）：将因进程死亡而截断的结果行分类为退出，而不是格式错误的结果（#15918）@MrChaker</li>
+<li>修复（代理）：AI 构建的代理步骤仅使用 AI 积分可以运行的模型，并在不能运行时解释失败 (#15885) @hazemadelkhalel</li>
+<li>修复（聊天）：一条消息中读取的数据仍然保护下一条消息，并且在首先读取询问后内存会保存（#15883）@hazemadelkhalel</li>
+<li>修复（引擎）：通过 require Fallback 在 Deno 下运行旧版 CommonJS 代码步骤 (#15877) @MrChaker
+*修复（docker）：在修剪安装之前剥离引擎的核心部分devDependencies（＃15882）@Louai-Zokerburg</li>
+<li>修复（聊天）：代码工具仅从其自己的对话中读取文件（#15878）@hazemadelkhalel</li>
+<li>修复（ai）：模型下拉列表仅提供步骤可以调用的模型（#15497）@othmanemad</li>
+<li>修复（聊天）：删除表、记录、字段或流之前询问 (#15881) @hazemadelkhalel</li>
+<li>修复（聊天）：当平台积分用完时停止消息（#15869）@hazemadelkhalel</li>
+<li>修复(web): 以与其他徽章相同的中性风格显示破坏性行动徽章 (#15843) @ibrahim-abuznaid, @claude</li>
+<li>修复(mcp)：工具开关现在绑定每个 MCP 服务器，双向 (#15651) @othmanemad, @claude</li>
+<li>修复（服务器）：项目角色名称在每个平台上都是唯一的 (#15705) @lina-alomari, @claude</li>
+<li>修复（builder）：可以再次添加注释并拖动预览跟随光标（#15760）@AhmadTash</li>
+<li>修复（引擎）：删除每个沙箱块 LRU (#15786) @amrdb, @claude</li>
+</ul>
+<blockquote>
+<p>📌 <strong>升级自托管实例？</strong> 查看<a href="https://www.activepieces.com/docs/install/reference/breaking-changes">重大更改</a> 页面，了解升级之前所需的任何操作。</p>
+</blockquote>
+<h2 id="谢谢️">谢谢❤️</h2>
+<p>@AbdulTheActivePiecer、@abuaboud、@AdamSelene、@AhmadTash、@alexandronic、@amrdb、@chiadayy、@Code-a-Genie、@danielpoonwj、@eliseukadesh67、@fabio-kozlowski、@hazemadelkhalel、@ibrahim-abuznaid、@james-novino、@JuampiHernandez、 @KhaledR57、@kishanprmr、@lina-alomari、@Louai-Zokerburg、@majewskibartosz、@moaaz-ae、@MrChaker、@OdaiAhmed99、@othmanemad、@sanket-a11y、@Talaljaber、@ziyadev、<a href="https://github.com/apps/allcontributors">@allcontributors[bot]</a>、 <a href="https://github.com/apps/mintlify">@mintlify[bot]</a>、amr、Amr Elmohamady、Bartosz Majewski、@claude、@Copilot、@cursoragent、Hazem Adel、mo、Mo AbuAboud、@odai-commits 和 <a href="https://github.com/apps/greptile-apps">@greptile-apps[bot]</a></p>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/activepieces/activepieces">activepieces/activepieces</a> · 🏷️ 版本：<code>0.93.0</code> · 📅 发布：2026-11-08 · <a href="https://github.com/activepieces/activepieces/releases/tag/0.93.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <span></span> <a href="/zh/release_note/activepieces/activepieces_0.87.3-hotfix.1"> <span class="k">上一个 →</span> <span class="t">0.87.3-hotfix.1</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/activepieces/activepieces/releases/tag/0.93.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/activepieces/activepieces" target="_blank" rel="noopener"> <span>activepieces/activepieces</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#-碎片" class>🔌 碎片</a><a href="#️-重大变更" class>⛓️‍💥 重大变更</a><a href="#-令人兴奋的新功能" class>✨ 令人兴奋的新功能</a><a href="#-错误修复" class>🐞 错误修复</a><a href="#谢谢️" class>谢谢❤️</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/activepieces/activepieces_0.93.0" aria-current="true"> <span class="v">0.93.0</span> <span class="d">26-11-08</span> </a> </li><li> <a href="/zh/release_note/activepieces/activepieces_0.87.3-hotfix.1"> <span class="v">0.87.3-hotfix.1</span> <span class="d">26-10-29</span> </a> </li><li> <a href="/zh/release_note/activepieces/activepieces_0.86.3-hotfix.3"> <span class="v">0.86.3-hotfix.3</span> <span class="d">26-10-29</span> </a> </li><li> <a href="/zh/release_note/activepieces/activepieces_0.82.0-hotfix.2"> <span class="v">0.82.0-hotfix.2</span> <span class="d">26-10-29</span> </a> </li><li> <a href="/zh/release_note/activepieces/activepieces_0.92.3-hotfix.2"> <span class="v">0.92.3-hotfix.2</span> <span class="d">26-10-28</span> </a> </li><li> <a href="/zh/release_note/activepieces/activepieces_0.90.4-hotfix.1"> <span class="v">0.90.4-hotfix.1</span> <span class="d">26-10-28</span> </a> </li><li> <a href="/zh/release_note/activepieces/activepieces_0.89.0-hotfix.1"> <span class="v">0.89.0-hotfix.1</span> <span class="d">26-10-28</span> </a> </li><li> <a href="/zh/release_note/activepieces/activepieces_0.91.4-hotfix.1"> <span class="v">0.91.4-hotfix.1</span> <span class="d">26-10-27</span> </a> </li> </ul> <a href="/zh/releases/activepieces" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 40 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

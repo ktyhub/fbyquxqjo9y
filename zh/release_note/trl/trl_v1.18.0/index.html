@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>trl v1.18.0 — STAGS NextStack</title><meta name="description" content="AsyncGRPOTrainer runs GRPO with generation decoupled from training. A rollout worker in a background process streams completions from a vLLM server, scores them and queues them, while the training loop pulls from the…"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/trl/trl_v1.18.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/trl/1.18.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/trl/trl_v1.18.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/trl/1.18.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="trl v1.18.0 — STAGS NextStack"><meta property="og:description" content="AsyncGRPOTrainer runs GRPO with generation decoupled from training. A rollout worker in a background process streams completions from a vLLM server, scores them and queues them, while the training loop pulls from the…"><meta property="og:url" content="https://www.stags.cn/zh/release_note/trl/trl_v1.18.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/trl/trl_v1.18.0/#article","headline":"trl v1.18.0 release notes","datePublished":"2026-11-13","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/huggingface/trl"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/trl/1.18.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/trl/trl_v1.18.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/trl/1.18.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/trl/1.18.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/trl/1.18.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/trl/1.18.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/trl/1.18.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/trl">trl</a> </nav> <h1 class="detail-title"> <span class="p">trl</span> v1.18.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年11月13日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/huggingface/trl" target="_blank" rel="noopener"> <span class="k">来源</span>huggingface/trl </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/trl/1.18.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/trl/trl_v1.18.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="trl-v1180">trl v1.18.0</h1>
+<img width="1672" height="941" alt="TRL v1 18 摩托车版本" src="https://github.com/user-attachments/assets/701191f4-46e1-45ea-95ad-60a18f19497a">
+## 特点
+> [!警告]
+> `trl.experimental.async_grpo` 的子模块消失了。 `from trl.experimental.async_grpo.async_grpo_config import AsyncGRPOConfig`，以及从该包中的 `async_rollout_worker`、`packing`、`vllm_client` 或 `weight_transfer` 导入，不再起作用。从 `trl` 导入训练器，从 `trl.trainer.async_grpo_trainer` 导入 rollout 循环，从 `trl.generation.async_vllm_client`（重命名为 `AsyncVLLMClient`）导入 vLLM client。 `from trl.experimental.async_grpo import AsyncGRPOConfig, AsyncGRPOTrainer` 仍然可以与 `FutureWarning` 一起使用，直到 v2.0.0。
+### :mortar_board: `AsyncGRPOTrainer` 现在是稳定的训练器
+`AsyncGRPOTrainer` 运行 GRPO，生成与训练分离。后台进程中的推出工作人员从 vLLM 服务器流式传输完成数据，对它们进行评分并排队，同时训练循环从队列中提取数据并更新模型。生成和梯度更新重叠而不是交替，并且训练器在每个 `weight_sync_steps` 步骤通过 NCCL 将其新权重发送到服务器。
+在 v1.17 中，它位于 `trl.experimental.async_grpo` 中：七个文件、三种批处理和绑定生成的方法、两个用于交换内部的构造函数参数以及与 GRPO 不匹配的指标名称。这个周期用大约 40 个 PR 清理了这个问题，在 https://github.com/huggingface/trl/issues/7841: 配置重命名、一个超时而不是三个、一种批处理模式、生成保持为 `max_staleness`、GRPO 的指标名称和初始化检查、公共推出循环以及每个稳定训练器都有的两个文件布局中进行了跟踪。然后https://github.com/huggingface/trl/pull/8288将其移至顶层包。
+```python
+# Before
+from trl.experimental.async_grpo import AsyncGRPOConfig, AsyncGRPOTrainer
+<h1 id="now">Now</h1>
+<p>from trl import AsyncGRPOConfig, AsyncGRPOTrainer</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>旧路径仍然有效并发出 `FutureWarning`（在 v2.0.0 中删除）。转出循环扩展点位于训练器 `from trl.trainer.async_grpo_trainer import AsyncRolloutLoop, Rollout` 旁边，并且不从 `trl` 导出。 OpenEnv / Harbor 线束仍处于实验阶段，如 `trl.experimental.async_grpo.openenv_harness` 中的 `HarnessAsyncGRPOTrainer`。记录的指标名称在不同版本之间仍然可能发生变化。</span></span>
+<span class="line"><span>快速入门，从 [文档](https://huggingface.co/docs/trl/async_grpo_trainer)。使用 `pip install trl[vllm,kernels,math_verify]` 安装，然后在 GPU 0 上启动 vLLM 服务器：</span></span>
+<span class="line"><span>```bash</span></span>
+<span class="line"><span>CUDA_VISIBLE_DEVICES=0 VLLM_SERVER_DEV_MODE=1 vllm serve Qwen/Qwen3.5-2B \</span></span>
+<span class="line"><span>    --weight-transfer-config '{"backend": "nccl"}' \</span></span>
+<span class="line"><span>    --logprobs-mode processed_logprobs \</span></span>
+<span class="line"><span>    --api-server-count 8 \</span></span>
+<span class="line"><span>    --max-model-len 4096</span></span></code></pre>
+<p>然后使用 <code>CUDA_VISIBLE_DEVICES=1 python train_async_grpo.py</code> 在 GPU 1 上进行训练：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># train_async_grpo.py</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> datasets </span><span style="color:#D73A49">import</span><span style="color:#24292E"> load_dataset</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> trl </span><span style="color:#D73A49">import</span><span style="color:#24292E"> AsyncGRPOTrainer</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> trl.rewards </span><span style="color:#D73A49">import</span><span style="color:#24292E"> accuracy_reward</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#005CC5"> __name__</span><span style="color:#D73A49"> ==</span><span style="color:#032F62"> "__main__"</span><span style="color:#24292E">:  </span><span style="color:#6A737D"># the rollout worker is a spawned process that re-imports this script</span></span>
+<span class="line"><span style="color:#24292E">    dataset </span><span style="color:#D73A49">=</span><span style="color:#24292E"> load_dataset(</span><span style="color:#032F62">"trl-lib/DeepMath-103K"</span><span style="color:#24292E">, </span><span style="color:#E36209">split</span><span style="color:#D73A49">=</span><span style="color:#032F62">"train"</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">    trainer </span><span style="color:#D73A49">=</span><span style="color:#24292E"> AsyncGRPOTrainer(</span></span>
+<span class="line"><span style="color:#E36209">        model</span><span style="color:#D73A49">=</span><span style="color:#032F62">"Qwen/Qwen3.5-2B"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">        reward_funcs</span><span style="color:#D73A49">=</span><span style="color:#24292E">accuracy_reward,</span></span>
+<span class="line"><span style="color:#E36209">        train_dataset</span><span style="color:#D73A49">=</span><span style="color:#24292E">dataset,</span></span>
+<span class="line"><span style="color:#24292E">    )</span></span>
+<span class="line"><span style="color:#24292E">    trainer.train()</span></span></code></pre>
+<p>这个例子是端到端运行的。这是健全性检查，而不是加速比较：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型/数据/奖励</td>
+<td><code>Qwen/Qwen3.5-2B</code>、<code>trl-lib/DeepMath-103K</code>、<code>accuracy_reward</code></td>
+</tr>
+<tr>
+<td>硬件</td>
+<td>2x B200：一个 GPU 上的 vLLM，另一个 GPU 上的训练器</td>
+</tr>
+<tr>
+<td>配置</td>
+<td>默认 <code>AsyncGRPOConfig</code>：fp32 权重，bf16 自动投射，每个提示 8 代，最多 2048 个完成标记，<code>token_budget</code> 从 <code>--max-model-len 4096</code> 读取</td>
+</tr>
+<tr>
+<td>步数时间</td>
+<td>约 7 秒/步，约 5 分钟热身后</td>
+</tr>
+<tr>
+<td>吞吐量</td>
+<td>~7k 个经过训练的令牌/秒</td>
+</tr>
+<tr>
+<td>培训师与 vLLM 对数概率差距</td>
+<td>0.007 至 0.02</td>
+</tr>
+<tr>
+<td>培训师涵盖的内容均记录在<a href="https://huggingface.co/docs/trl/async_grpo_trainer">培训师页面</a> 上：</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>树包装</strong>：每个微批次行都是一个前缀特里树，因此组的卷展共享的提示或多轮卷展的每一轮重复的历史记录都会转发一次。支持门控 DeltaNet 混合网络（Qwen3.5、Qwen3.6、Qwen3-Next）。</li>
+<li><strong>代理培训</strong>：<code>tools</code>、<code>environment_factory</code> 和多轮部署。</li>
+<li><strong>以屏蔽重要性采样为中心的得分</strong>作为默认目标 (<code>score_centering=True</code>)。 <code>score_centering=False</code> 为 GRPO 的 clipped 物镜提供了相同的遮蔽比。</li>
+<li><strong>零优势群体过滤</strong>：奖励全部相等的群体在向前和向后花费之前被丢弃，并且他们的份额被记录为<code>frac_zero_std_groups</code>。</li>
+<li><strong>Top-k / top-p 重新归一化</strong>：使用 <code>top_p</code> 或 <code>min_p</code>，设置 <code>top_k > 0</code>，并且训练器在从中采样的候选集 vLLM 上归一化其对数概率。</li>
+<li><strong>LoRA 适配器同步</strong>：使用 <code>--enable-lora</code> 启动 vLLM，每个权重同步仅发送适配器（<code>r=32</code> 时约为 160 MB）而不是合并的权重。</li>
+<li><strong>自定义推出循环</strong>：子类 <code>AsyncRolloutLoop</code>，覆盖 <code>filter_prompt</code>、<code>generate_one</code>、<code>generate_one_turn</code>、<code>compute_advantages</code>、<code>setup</code> 或 <code>close</code>，并将其设置为训练器子类上的 <code>loop_cls</code>。训练器的构造函数不会改变。</li>
+<li><strong>带有阅读指南的指标</strong>：每个记录的指标都有一行定义，以及关于运行是受生成限制还是受训练者限制以及是否是饱和或采样重复的指南。</li>
+<li><strong>VLM 检查点的纯文本训练</strong>（Qwen3.5、Qwen3.6、Qwen3-VL），视觉塔冻结。
+<strong>：繁荣：这对您来说有什么变化。</strong> 如果您在 v1.17 中使用实验性 <code>AsyncGRPOTrainer</code>，则重大更改都在促销之前发生，因此不必在促销之后发生。 <code>AsyncDistillationTrainer</code>（仍处于实验阶段）在相同的 PR 中获得了相同的构造函数删除、配置重命名、超时合并、批处理和陈旧性更改以及度量约定。
+构造函数参数：</li>
+<li><code>weight_transfer=</code> 已删除。权重同步是根据配置构建的：NCCL 通过 vLLM 的权重传输 API，或 LoRA 的适配器同步。服务器是普通的 <code>vllm serve</code>。</li>
+<li><code>rollout_worker=</code> 已删除。要更改卷展栏的生成方式，请子类化 <code>AsyncRolloutLoop</code> 并设置 <code>loop_cls</code>（参见上文）。</li>
+<li>对于 OpenEnv / Harbor，<code>HarnessAsyncGRPOTrainer</code> 取代了您自己构建 <code>HarnessRolloutWorker</code> 并将其作为 <code>rollout_worker=</code> 传递。
+配置：
+| v1.17（实验）| v1.18 |
+| --- | --- |
+| <code>max_inflight_tasks</code>（<code>-1</code> = 自动）| <code>max_concurrent_rollouts</code>，固定吊顶，默认<code>512</code> |
+| <code>heartbeat_stale_after_s</code> | <code>rollout_worker_timeout</code>（含义相同，默认300秒）|
+| <code>request_timeout</code>、<code>weight_sync_timeout</code> |删除：<code>vllm_server_timeout</code>（默认 1800 秒，原为 240 秒）现在涵盖服务器准备情况、每个请求和每个权重同步调用 |
+| <code>queue_maxsize</code> |删除：生成保留为 <code>max_staleness</code>，以代币计 |
+| <code>fork_threshold_tokens</code> |删除：多轮部署总是在重新标记化漂移上分叉，因此生成的标记不会丢失其训练信号 |
+| <code>token_budget &#x3C;= 0</code>（固定计数配料）|已删除：令牌预算批量器是唯一的模式。使用 <code>None</code>（从服务器读取 <code>max_model_len</code>）或正 int |
+| <code>repetition_penalty</code> |删除：采样器的对数概率包含它，而训练器的不包含它，这会导致重要性比 |
+| <code>remove_unused_columns=True</code>（忽略）|默认为 <code>False</code>，<code>True</code> 引发：每个数据集列都进入奖励函数 |
+升级后要检查的行为：</li>
+<li>就绪状态用于等待 240 秒，请求等待 600 秒。现在两者都等待 <code>vllm_server_timeout</code>（1800 秒）。</li>
+<li><code>max_concurrent_rollouts</code> 不再派生自 <code>per_device_train_batch_size</code>。使用 OpenEnv / Harbor，环境服务器的 <code>MAX_CONCURRENT_ENVS</code> 必须至少为 <code>max_concurrent_rollouts + 1</code>：提高它，或降低 <code>max_concurrent_rollouts</code>。 Harbor 示例的 <code>--max-inflight</code> 标志现在为 <code>--max-concurrent-rollouts</code>。</li>
+<li><code>rollout/backpressure_s</code> 用于测量满队列的等待时间。它现在测量等待陈旧限制的时间。
+指标：AsyncGRPO 和 GRPO 记录相同数量，AsyncGRPO 现在主要使用 GRPO 名称。仅异步指标保留其命名空间（<code>rollout/</code>、<code>sample/</code>、<code>batch/</code>、<code>perf/</code>、<code>tools/</code>、<code>env/</code>），每个后缀都有一个含义：<code>_count</code> 是对日志记录窗口的计数，<code>_s</code> 是持续时间，<code>_per_s</code> 是速率，ZZPH100​​ZZ 是分数。读取旧名称的仪表板和脚本需要新名称。
+| v1.17（实验）| v1.18 |
+| --- | --- |
+| <code>rewards/&#x3C;func></code> | <code>rewards/&#x3C;func>/mean</code>，加上<code>rewards/&#x3C;func>/group_std</code> |
+| <code>reward_std</code> | <code>reward_group_std</code>（组内，与 GRPO 的批次范围 <code>reward_std</code> 不同）|
+| <code>ratio</code> | <code>sampling/importance_sampling_ratio/{mean,min,max}</code> |
+| <code>kl</code>（针对采样器的 k3 估计）|已删除。 <code>sampling/sampling_logp_difference/{mean,max}</code> 是 GRPO 对相同间隙的测量，<code>kl</code> 保留免费作为参考模型 KL |
+| <code>frac_reward_zero_std</code> | <code>frac_zero_std_groups</code>（GRPO 和 RLOO 保留 <code>frac_reward_zero_std</code>）|
+| <code>reward_kept</code> | <code>reward_trained</code> |
+| <code>rollout/inflight</code>、<code>rollout/inflight_cap</code> | <code>rollout/concurrency</code>、<code>rollout/concurrency_cap</code> |
+| <code>rollout/kv_cache_usage</code> | <code>rollout/vllm_kv_cache_usage_frac</code> |
+| <code>sample/rollout_queue_size</code> | <code>rollout/queue_size</code> |
+| <code>rollout/generated_tok_s</code> | <code>rollout/generated_tokens_per_s</code> |
+| <code>perf/forwarded_tok_s_fwd_bwd</code>、<code>perf/forwarded_tok_s_wall_clock</code>、<code>perf/trained_tok_s_wall_clock</code> | <code>perf/fwd_bwd_forwarded_tokens_per_s</code>、<code>perf/wall_clock_forwarded_tokens_per_s</code>、<code>perf/wall_clock_trained_tokens_per_s</code> |
+| <code>perf/mfu_fwd_bwd</code>、<code>perf/mfu_wall_clock</code> | <code>perf/fwd_bwd_mfu</code>、<code>perf/wall_clock_mfu</code> |
+| <code>sample/dropped_stale_total</code>、<code>batch/dropped_oversize_total</code>、<code>rollout/vllm_retry_total</code>、<code>tools/&#x3C;name>/call_total</code>、<code>tools/&#x3C;name>/failure_total</code>、<code>tools/unknown_name_total</code> |以 <code>_count</code> 结尾的相同名称 |
+| <code>rollout/vllm_preemptions_total</code> | <code>rollout/vllm_preemption_count</code> |
+| <code>rollout/realign_frac</code> |已删除，带有 <code>fork_threshold_tokens</code> |
+新增：<code>num_tokens</code>、<code>completions/{mean,min,max}_length</code>、<code>completions/{mean,min,max}_terminated_length</code>、<code>completions/clipped_ratio</code>、<code>reward_zero_std_groups</code>（掉落组的平均奖励）和<code>completions/duplicate_frac</code>。已修复：<code>tools/call_frequency</code> 和 <code>tools/failure_frequency</code> 现在对每次推出进行计数，如 GRPO 中一样，而 <code>rewards/&#x3C;func>/mean</code> 对每个计分推出进行计数。
+除非另有说明，PR 由 @AmineDiro、@qgallouedec 和 @lewtun 提供：</li>
+<li><strong>构造函数和扩展点。</strong> 删除 <code>weight_transfer</code> 协议 (<a href="https://github.com/huggingface/trl/pull/8065">https://github.com/huggingface/trl/pull/8065</a>) 和 AsyncDistillation 的 <code>rollout_worker</code> 参数 (<a href="https://github.com/huggingface/trl/pull/8066)%EF%BC%8C%E5%B0%86%E6%8E%A8%E5%87%BA%E5%BE%AA%E7%8E%AF%E5%88%86%E4%B8%BA%E7%94%9F%E6%88%90%E3%80%81%E5%A5%96%E5%8A%B1%E5%92%8C%E4%BC%98%E5%8A%BF%E9%98%B6%E6%AE%B5">https://github.com/huggingface/trl/pull/8066)，将推出循环分为生成、奖励和优势阶段</a> (<a href="https://github.com/huggingface/trl/pull/8073)%EF%BC%8C%E5%B0%86%E5%85%B6%E5%85%AC%E5%BC%80%E4%B8%BA">https://github.com/huggingface/trl/pull/8073)，将其公开为</a> <code>loop_cls</code> (<a href="https://github.com/huggingface/trl/pull/8096)%EF%BC%8C%E5%88%A0%E9%99%A4">https://github.com/huggingface/trl/pull/8096)，删除</a> <code>rollout_worker</code> (<a href="https://github.com/huggingface/trl/pull/8107)%EF%BC%8C%E5%B9%B6%E5%B0%86">https://github.com/huggingface/trl/pull/8107)，并将</a> <code>HarnessRolloutWorker</code> 替换为 <code>HarnessAsyncGRPOTrainer</code> (<a href="https://github.com/huggingface/trl/pull/8105)%EF%BC%8C%E5%85%A8%E9%83%A8%E7%94%B1">https://github.com/huggingface/trl/pull/8105)，全部由</a> @AmineDiro 提供。</li>
+<li><strong>配置。</strong> 重命名 <code>max_inflight_tasks</code> 和 <code>heartbeat_stale_after_s</code> 并合并 vLLM 超时 (<a href="https://github.com/huggingface/trl/pull/8063)%EF%BC%8C%E5%A7%8B%E7%BB%88%E5%9C%A8%E9%87%8D%E6%96%B0%E4%BB%A3%E5%B8%81%E5%8C%96%E6%BC%82%E7%A7%BB">https://github.com/huggingface/trl/pull/8063)，始终在重新代币化漂移</a> (<a href="https://github.com/huggingface/trl/pull/8159">https://github.com/huggingface/trl/pull/8159</a>) 上分叉，仅保留代币预算批处理程序 (<a href="https://github.com/huggingface/trl/pull/8168)%EF%BC%8C%E5%B0%86%E4%BB%A3%E5%B8%81%E4%B8%AD%E7%9A%84%E7%94%9F%E6%88%90%E4%BF%9D%E6%8C%81%E4%B8%BA">https://github.com/huggingface/trl/pull/8168)，将代币中的生成保持为</a> <code>max_staleness</code> (<a href="https://github.com/huggingface/trl/pull/8170">https://github.com/huggingface/trl/pull/8170</a>, <a href="https://github.com/huggingface/trl/pull/8243)%EF%BC%8C%E5%85%A8%E9%83%A8%E7%94%B1@AmineDiro">https://github.com/huggingface/trl/pull/8243)，全部由@AmineDiro</a> 提供。 @qgallouedec 删除 <code>repetition_penalty</code> (<a href="https://github.com/huggingface/trl/pull/8139">https://github.com/huggingface/trl/pull/8139</a>) 并将 <code>remove_unused_columns</code> 默认为 <code>False</code> (<a href="https://github.com/huggingface/trl/pull/8281)%E3%80%82">https://github.com/huggingface/trl/pull/8281)。</a></li>
+<li><strong>指标。</strong> GRPO 名称 (<a href="https://github.com/huggingface/trl/pull/8064)%E3%80%81%60_count%60">https://github.com/huggingface/trl/pull/8064)、`_count`</a> 和 <code>_per_s</code> 后缀 (<a href="https://github.com/huggingface/trl/pull/8186">https://github.com/huggingface/trl/pull/8186</a>) 和命名空间 (<a href="https://github.com/huggingface/trl/pull/8188">https://github.com/huggingface/trl/pull/8188</a>) 由 @AmineDiro 提供。终止长度指标 (<a href="https://github.com/huggingface/trl/pull/8247">https://github.com/huggingface/trl/pull/8247</a>) 和每次推出奖励手段 (<a href="https://github.com/huggingface/trl/pull/8250)%EF%BC%8C%E4%BD%9C%E8%80%85%EF%BC%9A@qgallouedec%E3%80%82%E9%A5%B1%E5%92%8C%E5%BA%A6%E5%92%8C%E9%87%8D%E5%A4%8D%E6%8E%A8%E5%87%BA%E6%8C%87%E6%A0%87">https://github.com/huggingface/trl/pull/8250)，作者：@qgallouedec。饱和度和重复推出指标</a> (<a href="https://github.com/huggingface/trl/pull/7901">https://github.com/huggingface/trl/pull/7901</a>) 以及 @lewtun 的零标准和经过训练的奖励重命名 (<a href="https://github.com/huggingface/trl/pull/8309)%E3%80%82">https://github.com/huggingface/trl/pull/8309)。</a></li>
+<li><strong>布局和升级。</strong> 清理注释和<code>accelerator_config</code>代码（<a href="https://github.com/huggingface/trl/pull/8191%EF%BC%89%EF%BC%8C%E5%86%85%E8%81%94rollout%E5%B7%A5%E4%BD%9C%E5%99%A8%E5%B9%B6%E6%89%93%E5%8C%85%E5%88%B0%E8%AE%AD%E7%BB%83%E5%99%A8%E4%B8%AD%EF%BC%8C%E5%B9%B6%E5%B0%86vLLM">https://github.com/huggingface/trl/pull/8191），内联rollout工作器并打包到训练器中，并将vLLM</a> client和权重转移到<code>trl.generation</code>（<a href="https://github.com/huggingface/trl/pull/8274%EF%BC%89%EF%BC%8C%E5%8D%87%E7%BA%A7%E5%88%B0%E7%A8%B3%E5%AE%9A%E7%9A%84API%EF%BC%88https://github.com/huggingface/trl/pull/8288%EF%BC%89%E5%B9%B6%E5%9C%A8README%E4%B8%AD%E5%85%AC%E5%B8%83%EF%BC%88https://github.com/huggingface/trl/pull/8292%EF%BC%89%EF%BC%8C%E4%BD%9C%E8%80%85%EF%BC%9A@AmineDiro%E3%80%82%E9%87%8D%E5%86%99%E7%A8%B3%E5%AE%9A%E8%AE%AD%E7%BB%83%E5%99%A8%E9%A1%B5%E9%9D%A2">https://github.com/huggingface/trl/pull/8274），升级到稳定的API（https://github.com/huggingface/trl/pull/8288）并在README中公布（https://github.com/huggingface/trl/pull/8292），作者：@AmineDiro。重写稳定训练器页面</a> (<a href="https://github.com/huggingface/trl/pull/8131">https://github.com/huggingface/trl/pull/8131</a>) 布局上的文档，使用 <code>trl</code> 和 <code>async-grpo</code> (<a href="https://github.com/huggingface/trl/pull/8209">https://github.com/huggingface/trl/pull/8209</a>) 标记模型，并针对 Transformer 支持的 vLLM 服务器 (<a href="https://github.com/huggingface/trl/pull/8137">https://github.com/huggingface/trl/pull/8137</a>) 运行训练测试，作者：@qgallouedec。
+＃＃＃ 其他
+<strong>GRPO 服务器模式现在对 vLLM 的候选集进行重新规范化。</strong> 使用 <code>top_p</code>、<code>min_p</code> 或结构化输出，vLLM 的日志概率对过滤后留下的标记进行规范化。共置模式已经处理了这个问题。在服务器模式下，训练器对整个词汇进行标准化，因此 GRPO 警告重要性采样比率存在偏差，或者拒绝结构化输出。以 <code>--return-sampling-mask</code> 启动的 vLLM 服务器 (>= 0.28) 现在返回每个采样令牌的候选集，<code>VLLMClient.generate(return_sampling_mask=True)</code> 读取它，GRPO 在服务器报告标志时将其打开。使用 Qwen2.5-0.5B-Instruct、<code>top_k=10</code> 和 vLLM 0.32 服务器时，结构化输出的比率保持在 0.85 和 1.27 之间，而对于没有候选集的结构化输出，比率保持在 <code>top_p=0.9</code> 之间，即 1e-13 到 1e-31。默认情况下，<code>trl vllm-serve</code> 不会添加该标志，因为服务器会拒绝每个带有 <code>top_k=0</code> 或 <code>temperature=0</code> 的请求。作者：@albertvillanova，<a href="https://github.com/huggingface/trl/pull/8235">https://github.com/huggingface/trl/pull/8235</a>
+<strong>嘈杂偏好的 UDPO 损失。</strong> <code>DPOTrainer</code> 得到 <code>loss_type="udpo"</code>，这是来自<a href="https://huggingface.co/papers/2607.03248">具有嘈杂偏好的大型语言模型的无偏对齐</a> 的归一化无偏 DPO 损失。它纠正以概率 ε 翻转的偏好标签，从 <code>[0.0, 0.5)</code> 中的 <code>label_smoothing</code> 读取，并且与 <code>"robust"</code> 不同，当 ε 被高估时，它保持无偏。</li>
+</ul>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> trl </span><span style="color:#D73A49">import</span><span style="color:#24292E"> DPOConfig</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">training_args </span><span style="color:#D73A49">=</span><span style="color:#24292E"> DPOConfig(</span><span style="color:#E36209">loss_type</span><span style="color:#D73A49">=</span><span style="color:#032F62">"udpo"</span><span style="color:#24292E">, </span><span style="color:#E36209">label_smoothing</span><span style="color:#D73A49">=</span><span style="color:#005CC5">0.4</span><span style="color:#24292E">)</span></span></code></pre>
+<p>作者：@cswjl，<a href="https://github.com/huggingface/trl/pull/8211">https://github.com/huggingface/trl/pull/8211</a>
+<strong>GOLD 中的特权上下文蒸馏。</strong> 老师会看到每个示例的额外上下文，而学生则保留其原始提示，并且两者都获得相同的完成标记。用<code>use_privileged_context=True</code>将其打开，并根据需要设置<code>privileged_context_column</code>和<code>teacher_prompt_template</code>。它仅支持文本、离策略 (<code>lmbda=0</code>) 标准 JSD 蒸馏。请参阅<a href="https://huggingface.co/docs/trl/gold_trainer#privileged-context">黄金文档</a>。作者：@eshwanthkartitr，<a href="https://github.com/huggingface/trl/pull/6437">https://github.com/huggingface/trl/pull/6437</a>
+<strong>MXFP4 和 FP8 检查点负载反量化。</strong> 安装 <code>kernels</code> 后，任何名为 <code>openai/gpt-oss-20b</code> 的训练器都拒绝训练：Transformers 拒绝对量化模型进行全面微调，PEFT 在打包的 MXFP4 专家中找不到任何可适应的内容。训练器现在加载反量化的 MXFP4 和 FP8 检查点。 <code>model_init_kwargs</code> 中的 <code>quantization_config</code> 仍然获胜。 FP8 需要变压器 >=5.0.0，DeepSeek-V3/R1 仍然无法对上游进行反量化 (huggingface/transformers#49873)，并且在变压器 5.23 MXFP4 专家返回 bfloat16 之前，无论 dtype 是什么。作者：@qgallouedec，<a href="https://github.com/huggingface/trl/pull/8070">https://github.com/huggingface/trl/pull/8070</a>
+<strong><code>import trl</code> 不再扫描每个已安装的软件包。</strong> 它使用 <code>importlib.metadata.packages_distributions()</code> 构建了一个软件包到发行版的映射，该映射统计每个已安装发行版的每个文件，而无需 <code>top_level.txt</code>（火炬 2.14 不附带任何文件）。地图不见了。在网络文件系统上测量，8 次交替运行：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>之前</th>
+<th>之后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>import trl</code></td>
+<td>13.1</td>
+<td>0.08</td>
+</tr>
+<tr>
+<td><code>from trl import SFTTrainer</code></td>
+<td>40.7</td>
+<td></td>
+</tr>
+<tr>
+<td>第二行增益较少，因为 Transformer 仍然进行自己的调用 (huggingface/transformers#49591)。作者：@qgallouedec，<a href="https://github.com/huggingface/trl/pull/7947">https://github.com/huggingface/trl/pull/7947</a></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>更多用于工具调用和仅助理丢失的聊天模板。</strong> SFT 中的 <code>add_response_schema</code>（因此带有工具的 <code>GRPOTrainer</code>）和 <code>assistant_only_loss=True</code> 现在可以在更多检查点上使用。全部由@albertvillanova 提供：</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>工具调用：DeepSeek-V3 / DeepSeek-R1 (#7961)、GLM-5.3-Flash (#7957)、GLM-4.7、GLM-5、GLM-5.1、GLM-5.2 和 GLM-5.3 (#7958)、Qwen3-Coder (#7964)、Qwen3-Thinking-2507 (#7968)、Qwen2.5 基础版 (#7972)、每个 Gemma 4 31B、26B-A4B 和 12B 修订版 (#8041)，以及自 2026 年 11 月 7 日起发布的具有生成标签的 Qwen3.6 和 Qwen3.8 修订版 (#8181、#8183)</li>
+<li>仅助理损失：DeepSeek-R1-0528 (#7963)、DeepSeek-V3 和 DeepSeek-V3-0324 (#7978)、Qwen3-Thinking-2507 (#7967)、Qwen2.5 基础 (#7971)</li>
+<li>两者：原始 Qwen3 模板，Qwen3 检查点在 2025 年 5 月之前发布，基础检查点仍在发布 (#7974)，以及 Muse Spark Open (#8224、#8225)</li>
+<li>SFT 被识别用于响应解析后，使用 TRL 的训练模板之一保存的标记器，因此它适用于工具调用和 AsyncGRPO (#8027)</li>
+<li><code>get_training_chat_template</code> 获得 <code>require_prefix_preservation</code>，并且 SFT 使用 TRL 存储的训练模板，即使聊天模板具有自己的 <code>{% generation %}</code> 标记 (#8184)
+<strong><code>trl &#x3C;cmd></code> 使用 torchrun 启动。</strong> 脚本不知道的参数转到 torchrun（<code>--nproc_per_node</code>、<code>--nnodes</code>，…），并且 DeepSpeed 和 FSDP 通过训练参数（<code>--deepspeed zero3.json</code>、<code>--fsdp</code>）设置，就像任何 <code>Trainer</code> 一样。 <code>accelerate launch</code> 继续工作：直到 v2.0.0，<code>trl</code> 仍然使用它，与 <code>FutureWarning</code> 一起使用，参数仅加速知道（<code>--num_processes</code>，<code>--accelerate_config</code>）并且当 <code>accelerate config</code> 默认文件存在时。 <code>examples/accelerate_configs/</code> 被 <code>examples/deepspeed_configs/*.json</code> 和 <code>examples/fsdp_configs/fsdp2.json</code> 取代。请参阅 <a href="https://huggingface.co/docs/trl/clis">CLI 文档</a>。作者：@qgallouedec，<a href="https://github.com/huggingface/trl/pull/7180">https://github.com/huggingface/trl/pull/7180</a>
+<strong><code>padding_free=True</code> 在 SFT 中与 <code>max_length</code> 配合使用。</strong> 每当 <code>padding_free=True</code> 遇到未打包的 <code>max_length</code>（包括默认的 1024）时，SFT 就会引发。现在，在数据集准备无填充期间也会发生截断，因此防护程序仅阻止有效的配置。作者：@qgallouedec，<a href="https://github.com/huggingface/trl/pull/8077">https://github.com/huggingface/trl/pull/8077</a></li>
+<li>在遥测中报告 Unsloth 运行和训练师子类，而不是 <code>trl/other</code>，由 @qgallouedec 在 <a href="https://github.com/huggingface/trl/pull/7926">https://github.com/huggingface/trl/pull/7926</a> 中</li>
+<li>在 TRL 的 Triton 内核启动时显式禁用 FP 融合，因此它们在 Triton 3.9 和 3.10 上给出相同的结果（在 fp32 舍入级别，输出最多移动 3.1e-05），@albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/8143">https://github.com/huggingface/trl/pull/8143</a>, <a href="https://github.com/huggingface/trl/pull/8164">https://github.com/huggingface/trl/pull/8164</a> 和 <a href="https://github.com/huggingface/trl/pull/8185">https://github.com/huggingface/trl/pull/8185</a> 中</li>
+<li>在变压器 5.23 上使用 <code>activation_checkpointing_*</code> 方法，因此 GRPO、RLOO、DPO、KTO 和 Distillation 停止发出 <code>FutureWarning</code>，作者：<a href="https://github.com/huggingface/trl/pull/8194">https://github.com/huggingface/trl/pull/8194</a> 中的@albertvillanova</li>
+<li>仅在 <a href="https://github.com/huggingface/trl/pull/8120">https://github.com/huggingface/trl/pull/8120</a> 中通过 @cm8908 在 DeepSpeed &#x3C; 0.19.3 上强制执行 PEFT + ZeRO-3 的可重入检查点</li>
+<li>仅在处理它的变压器 5.0 之前调用 <code>enable_input_require_grads()</code>，通过 <a href="https://github.com/huggingface/trl/pull/8252">https://github.com/huggingface/trl/pull/8252</a> 中的 @qgallouedec 和 <a href="https://github.com/huggingface/trl/pull/8266">https://github.com/huggingface/trl/pull/8266</a> 中的 @albertvillanova</li>
+<li>从 Blackwell 上的 <code>flash-attn4</code> 版本 1 加载 AsyncGRPO 树注意力内核，该内核在 B200 / B300 上训练 Qwen3.8-27B，作者：<a href="https://github.com/huggingface/trl/pull/7987">https://github.com/huggingface/trl/pull/7987</a> 中的 @younesbelkada</li>
+</ul>
+<h3 id="删除和要求提升">删除和要求提升</h3>
+<p>vLLM 支持遵循 5 个月窗口：最小值从 0.22.0 到 0.23.0，现在支持 0.33.x，因此范围是 <code>vllm>=0.23.0,&#x3C;0.34.0</code>。 vLLM 0.33.0 需要割炬 2.14.0，因此 <code>pip install -U "trl[vllm]"</code> 拉动它。</p>
+<ul>
+<li>在 <a href="https://github.com/huggingface/trl/pull/7801">https://github.com/huggingface/trl/pull/7801</a> 中删除 @qgallouedec 的 vLLM 0.22.0 支持</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/8075">https://github.com/huggingface/trl/pull/8075</a> 中添加 @qgallouedec 对 vLLM 0.33.x 的支持</li>
+<li>在 <a href="https://github.com/huggingface/trl/pull/8133">https://github.com/huggingface/trl/pull/8133</a> 中删除 @qgallouedec 的 vLLM 0.22.1 支持</li>
+</ul>
+<h2 id="修复">修复</h2>
+<p>其中一些改变了跑步训练的内容。第一个需要对您已保存的模型执行操作。
+<strong>由 <code>SFTTrainer</code> v1.7.0 保存到 v1.17.1 的 MoE 模型在每次转发时计算路由器 logits，包括推理。</strong> SFT 将 <code>output_router_logits=True</code> 和 <code>router_aux_loss_coef</code> 写入模型配置中并保存它们，因此微调后的 MoE 模型不断返回其路由器 logits，并且覆盖的 coef 会转移到下一次微调。与 GRPO、RLOO、DPO 和 KTO 一样，SFT 现在不考虑配置。不过，它保留了模型加载的配置，因此即使在另一次微调之后，这些版本之一保存的模型也会保留该标志。要重置它，请将其设置回 <code>False</code> 并再次保存：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#24292E">model </span><span style="color:#D73A49">=</span><span style="color:#24292E"> AutoModelForCausalLM.from_pretrained(</span><span style="color:#032F62">"path/to/model"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">model.config.output_router_logits </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> False</span><span style="color:#6A737D">  # model.config.text_config.output_router_logits for a VLM</span></span>
+<span class="line"><span style="color:#24292E">model.save_pretrained(</span><span style="color:#032F62">"path/to/model"</span><span style="color:#24292E">)</span></span></code></pre>
+<p>作者：@qgallouedec，<a href="https://github.com/huggingface/trl/pull/8103">https://github.com/huggingface/trl/pull/8103</a>
+<strong>默认情况下，CISPO 梯度小 5 倍。</strong> CISPO clip 重要性权重本身，但未设置的 <code>epsilon_high</code> 回落到 <code>epsilon=0.2</code>，因此每个策略权重都从 cli 映射到 0.2。对于 <code>loss_type="cispo"</code>，未设置的 <code>epsilon_high</code> 现在默认为 <code>5.0</code>，这是文档字符串已经推荐的值。在复制品中，<code>grad_norm</code> 从 0.0539 变为 0.2693，<code>cispo_clip_ratio</code> 从 0.375 变为 0。作者：<a href="https://github.com/huggingface/trl/pull/7917">https://github.com/huggingface/trl/pull/7917</a> 中的 @qgallouedec
+<strong>仅辅助损失训练的令牌生成提示已结束。</strong> 多个训练模板将回合开启器或预填充思维块放入 <code>{% generation %}</code> 中，因此模型永远不会生成 SFT 训练令牌。渲染的文本不会改变，只有遮罩：Qwen3 (#8072)、GLM-4-MoE (#8122)、DeepSeek-R1/V3 和 R1-Distill (#8060)、Nemotron 3 (#8217)、gpt-oss (#8219)、Muse Glimmer (#8221) 以及自此发布的 Qwen3.6 和 Qwen3.8 修订版2026-11-07，带有自己的标记（#8199，#8187）。 DeepSeek-R1/V3 训练模板还删除了助手从目标转向的推理 (#8061)。全部由@albertvillanova 创作。
+<strong>AsyncGRPO 和 AsyncDistillation 重用了由旧权重计算的前缀缓存 KV。</strong> 每次权重同步都会暂停 vLLM，而不清除其前缀缓存，因此许多提示（系统提示、少数样本示例、工具模式）共享的前缀会保留在整个运行中首先为其提供服务的权重的 KV。推出请求现在按模型版本进行加盐。在具有约 2.4k 代币共享前缀的 Qwen3.5-35B-A3B LoRA 运行中，步骤 11-20 的平均训练奖励从 0.726 变为 0.781。作者：@AmineDiro，<a href="https://github.com/huggingface/trl/pull/8300">https://github.com/huggingface/trl/pull/8300</a>
+<strong>GKD 将其损失除以它丢弃的答案的长度。</strong> 在策略和 <code>seq_kd</code> 步骤在数据集标签上计算 <code>num_items_in_batch</code>，然后用生成的补全替换它们。在重现中，<code>num_items_in_batch</code> 从 172 变为 16，即损失总和的代币数量。作者：@qgallouedec，<a href="https://github.com/huggingface/trl/pull/7925">https://github.com/huggingface/trl/pull/7925</a>
+<strong>一个被拒绝的令牌否决了整个 VESPO 序列。</strong> 对于 <code>loss_type="vespo"</code> 和 <code>vllm_importance_sampling_mode="token_mask"</code>，比率范围之外的令牌得到的比率为 0，其钳位日志将序列权重折叠到 ~0，而令牌本身保持其梯度。现在，被拒绝的令牌将从序列权重和损失中删除。作者：@yusufozdil 在 <a href="https://github.com/huggingface/trl/pull/8108">https://github.com/huggingface/trl/pull/8108</a>
+没有进行任何训练且没有错误的 GRPO 配置现在会引发：</p>
+<ul>
+<li><code>repetition_penalty</code> 具有 vLLM 重要性采样校正：vLLM 将惩罚应用于它返回的对数概率，因此比率下降到 ~1e-28，梯度下降到 0。作者：<a href="https://github.com/huggingface/trl/pull/7915">https://github.com/huggingface/trl/pull/7915</a> 中的 @qgallouedec</li>
+<li>具有重要性采样校正的结构化输出现在需要 <code>top_k > 0</code>：比率降至约 1e-17。作者：@albertvillanova，<a href="https://github.com/huggingface/trl/pull/8145">https://github.com/huggingface/trl/pull/8145</a></li>
+<li>PEFT 使用 vLLM 训练绑定嵌入的单独副本：vLLM >= 0.29 在权重同步期间引发，而旧版本则根据训练器没有的权重默默生成。作者：@albertvillanova，<a href="https://github.com/huggingface/trl/pull/8144">https://github.com/huggingface/trl/pull/8144</a>
+崩溃和挂起：</li>
+<li><strong>当部署工作线程死亡时，异步训练器挂起</strong>，而不是提升 <code>Rollout worker child has failed</code>。作者：@sergiopaniego，<a href="https://github.com/huggingface/trl/pull/8038">https://github.com/huggingface/trl/pull/8038</a></li>
+<li>AsyncGRPO 和 AsyncDistillation 在大多数 MoE 系列和 Gemma 4 上的第一步结束时崩溃，并为 Qwen3.5 等混合系统记录了错误的 MFU。现在仅针对公式描述的模型类型估计 FLOP，否则忽略 MFU。作者：@qgallouedec，<a href="https://github.com/huggingface/trl/pull/8236">https://github.com/huggingface/trl/pull/8236</a></li>
+<li>在 Qwen3.5/3.6 混合系统上，模型在加载时分片 (<code>model_init_kwargs={"distributed_config": DistributedConfig(...)}</code>) 的 AsyncGRPO 在初始化时失败，并且其合并的 LoRA 权重同步在 DTensor 基本权重上崩溃。作者：@AmineDiro，<a href="https://github.com/huggingface/trl/pull/8294">https://github.com/huggingface/trl/pull/8294</a> 和 <a href="https://github.com/huggingface/trl/pull/8295">https://github.com/huggingface/trl/pull/8295</a></li>
+<li>门控 DeltaNet 模型上的 AsyncGRPO 在具有 <code>AttributeError</code> 的 AMD 上失败，作者：<a href="https://github.com/huggingface/trl/pull/8290">https://github.com/huggingface/trl/pull/8290</a> 中的 @qgallouedec</li>
+<li>在没有 <code>num_experts</code> 的 MoE 配置（Granite MoE、花岗岩-4.0-h、PhiMoE）上提出的融合 LM 头和 AsyncDistillation，由 @qgallouedec 在 <a href="https://github.com/huggingface/trl/pull/7919">https://github.com/huggingface/trl/pull/7919</a> 中</li>
+<li>GRPO (<code>beta != 0</code>) 和 RLOO 带有预训练适配器，<code>modules_to_save</code> 在第一次 vLLM 权重同步时失败，作者：<a href="https://github.com/huggingface/trl/pull/8079">https://github.com/huggingface/trl/pull/8079</a> 中的 @qgallouedec</li>
+<li><code>DPOTrainer</code> 与 <code>use_weighting=True</code> 和 <code>"sft"</code> 损失在第一步中提高了 <code>RuntimeError</code>，由 @Sergasgr 在 <a href="https://github.com/huggingface/trl/pull/7651">https://github.com/huggingface/trl/pull/7651</a> 中</li>
+<li>Qwen-VL 对变压器的政策&#x3C;5.3.0 可能会结束与 <code>&#x3C;|vision_start|></code> 的完成并使前锋崩溃，作者：<a href="https://github.com/huggingface/trl/pull/8166">https://github.com/huggingface/trl/pull/8166</a> 中的 @albertvillanova</li>
+<li>DeepSeek 训练模板在没有 <code>content</code> 密钥（变压器 5.23 生成）的工具调用消息上崩溃，作者：<a href="https://github.com/huggingface/trl/pull/8228">https://github.com/huggingface/trl/pull/8228</a> 中的 @albertvillanova
+其余的：</li>
+<li>GLM-4-MoE 响应将 <code>&#x3C;|observation|></code> 停止令牌保留为内容，遗留模式（转换器 &#x3C; 5.13）以纯文本形式返回工具调用，由 @albertvillanova 在 <a href="https://github.com/huggingface/trl/pull/8030">https://github.com/huggingface/trl/pull/8030</a> 和 <a href="https://github.com/huggingface/trl/pull/8032">https://github.com/huggingface/trl/pull/8032</a> 中编写</li>
+<li>实验性 SDFT 和 SDPO 培训师在 <a href="https://github.com/huggingface/trl/pull/7654">https://github.com/huggingface/trl/pull/7654</a> 中记录了 @ucalyptus 的跨等级有偏差的蒸馏损失指标</li>
+<li>培训师将 peft 0.21.3 视为具有 MoE 密集层和共享层修复，但事实并非如此，因此他们在共享专家未经培训时停止发出警告，作者：<a href="https://github.com/huggingface/trl/pull/8323">https://github.com/huggingface/trl/pull/8323</a> 中的 @qgallouedec</li>
+</ul>
+<h3 id="更清晰的错误">更清晰的错误</h3>
+<p><strong>AsyncGRPO 在 init 时检查 GRPO 检查的内容。</strong> 所有内容均由 @qgallouedec 提供：不支持的 <code>train_dataset</code> 类型 (#8204)、图像数据集，因为训练器仅在文本上进行训练 (#8208)，根本没有奖励源 (#8249)、GRPO 的 <code>tools</code> 或 <code>environment_factory</code> 工具要求 (#8206)、响应解析器仅当有工具时（#8242），奖励才会计数，当每个奖励为 <code>None</code> 时会发出警告（#8205），并且通过的 <code>PeftModel</code> 不再在第一步崩溃，而提示学习适配器被拒绝（#8207）。
+<strong>异步训练器立即在 vLLM 4xx 上提出，并带有服务器的消息</strong>，而不是重试大约 90 次错误请求并以 <code>400, message='Bad Request'</code> 失败，由 <a href="https://github.com/huggingface/trl/pull/8190">https://github.com/huggingface/trl/pull/8190</a>. 中的 @AmineDiro <strong>当教师没有空间对序列进行评分时，AsyncDistillation 会快速失败</strong>，而不是在重试的 <code>400 Bad Request</code> 上停滞，由 @sergiopaniego 中<a href="https://github.com/huggingface/trl/pull/8015">https://github.com/huggingface/trl/pull/8015</a>.</p>
+<h2 id="文档">文档</h2>
+<p><strong>以故事形式讲述示例。</strong> 围绕国际象棋谜题重写 gpt-oss 示例：在 1,000 个测试谜题中，gpt-oss-20b 在完全微调后从 14.8% 变为 71.8%，并在 MXFP4 中恢复 69.9% (#8085)，作者：@qgallouedec。添加带有 SFT 和 GRPO 的 LFM2.5-8B-A1B 研究代理示例，其中保留的精确匹配从 35.8% 到 47.8% (#7754)，作者：@qgallouedec。从具有形状奖励的 SFT 模型中启动 Wordle (#7932) 和数独 (#8097) 示例，添加 <code>examples/sft_agent_traces</code> 以在编码代理的轨迹上微调小模型 (#8222)，在 MOPD 示例 (#8014) 中使用已发布的 Open-MOPD 专家，并将其移动到自己的文件夹 (#8101)，作者：@sergiopaniego。将 AsyncGRPO Harbor 示例固定到 OpenEnv 0.7.0 版本 (#8034)，并在 @albertvillanova 的在线 DPO 视觉数学示例 (#8268) 中使用不可重入检查点。</p>
+<ul>
+<li>记录异步训练器需要<a href="https://github.com/huggingface/trl/pull/8012,%E4%B8%AD@sergiopaniego%E7%9A%84%60kernels%60%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%BC%82%E6%AD%A5%E8%AE%AD%E7%BB%83%E5%99%A8%E6%96%87%E6%A1%A3%E7%89%87%E6%AE%B5%E5%8C%85%E8%A3%85%E5%9C%A8https://github.com/huggingface/trl/pull/8282%E4%B8%AD@sergiopaniego%E7%9A%84%60__main__%60%E4%BF%9D%E6%8A%A4%E4%B8%AD">https://github.com/huggingface/trl/pull/8012,中@sergiopaniego的`kernels`，并将异步训练器文档片段包装在https://github.com/huggingface/trl/pull/8282中@sergiopaniego的`__main__`保护中</a></li>
+<li>OpenEnv 文档：<code>openenv>=0.7.0</code> 对线束的要求 (#8035) 和删除的 <code>core</code> 额外功能 (#8083)，作者：@albertvillanova</li>
+<li>由 @AmineDiro 修复 <a href="https://github.com/huggingface/trl/pull/8202">https://github.com/huggingface/trl/pull/8202</a> 中的 <code>max_tool_calling_iterations</code> 文档字符串
+*较小的修复：@albertvillanova 的 GLM-4-MoE 和 Qwen3 训练模板文档 (#7975) 和带普通大括号的 Jinja 标签 (#8128)、@qgallouedec 的 GRPO 和 RLOO 奖励示例 (#8132) 以及论文索引中的 DPO 部分标题 (#8277)</li>
+</ul>
+<h2 id="ci">CI</h2>
+<p><strong>Flash Attention 兼容微型模型。</strong> 使微型 Llama-3、Llama-3.1、Llama-3.2、Mistral-0.1、Mistral-0.2、Qwen2-R1-Distill、Qwen2SeqCls-2.5、Gemma、Gemma2、Cohere、Olmo3 和 SmolLM3 模型闪存注意兼容（#8155、#8156、#8157、#8158、#8160、#8196、#8197、#8198、#8200、#8304、#8305、#8306）（@albertvillanova），以及小型 Qwen2.5、Qwen2.5-VL、Cohere2、GLM-4 MoE、GraniteMoE 和PhiMoE 的（#8147、#8148、#8169、#8283、#8284、#8285、#8286），作者：@qgallouedec。在 Flash Attention 下使用图像在小型 VLM 上测试 SFT (#8201)，并跳过泄漏检查点挂钩的 torch 版本上的 SFT Flash Attention xfails (#8303)，作者：@albertvillanova。
+<strong>看起来像参考文献的微小模型。</strong> 添加微小的 GraniteMoe、PhiMoE 和 GraniteMoeHybrid 模型 (#7920、#7921、#7922)，并量化微小的 DeepSeek-V3 和 GPT-OSS 模型，就像它们的参考文献 (#8058)，作者：@qgallouedec。添加一个微小的 GLM-5.3-Flash 脚本 (#8068、#8119、#8125、#8069)，将微小模型 dtypes 与仅提供合并安全张量的引用进行比较 (#8238)，在参考布局中写入微小的 Mistral Large 4 FP8 检查点 (#8239)，将微小的 DeepSeek-V3 FP8 块缩放到 32x32 (#8240)，删除合并的微型模型的固定修订版 (#8241)，并将保存的检查点与 @albertvillanova 的 <code>check_dtype_pattern</code> (#8118) 中的参考进行比较。
+<strong>聊天模板测试。</strong> 根据 Hub 检查每个存储模板的下载次数最多的检查点 (#7956)，在响应解析测试中导出训练模板对 (#8084)，测试辅助掩码是否在生成提示结束的地方开始，有或没有推理 (#8110、#8124)，断言训练模板会像原始模板一样失败而不是跳过 (#8141)，并让 Transformer 上的 DeepSeek 辅助掩码测试失败5.23.0.dev0 直到 #8228 (#8215)，作者：@albertvillanova。
+<strong>运行用户运行内容的测试。</strong> 在 GRPO 和 RLOO 测试中使用函数而不是奖励模型进行奖励 (#8193)，在训练器测试中训练会话数据 (#8195)，测试作为纯文本因果 LM 加载的 Qwen3.5 (#7763)，在步骤 4 处停止 <code>sft_fa2</code> 不变类 (#8106)，并在以下情况下跳过 AsyncGRPO 测试<code>requests</code> 缺失 (#8291)，作者：@qgallouedec。使用其真正的构造函数构建 OpenEnv 线束循环 (#7988)，允许在 OpenEnv 会话失败测试中删除组 ID (#8029)，当 GOLD 测试资产未加载时失败而不是跳过 (#8090)，从 Countdown-Task-GOLD 加载 GOLD 倒计时示例 (#8091)，从树打包拒绝测试中删除 Llama4 案例 (#8138)，并跳过实验Qwen3-VL、Gemma4 和 LFM2.5-VL 对旧变压器进行测试（#8086、#8087、#8088），作者：@albertvillanova。
+<strong>工作流程。</strong> 使用 uv 安装、构建和发布（#7883、#7884）、当 pytest 未完成时使自托管测试作业失败（#8006）、在支持范围的两端测试 vLLM（#7872）、在草稿 PR 标记为就绪时运行 CI（#8100）、跳过 Dependabot PR 上的聊天模板检查（#8152）、将 ruff-pre-commit 固定到将 SHA (#8165) 和文档生成器提交到 v0.6.0 (#8154)，然后缩小范围，然后恢复 Mistral Large 4 FP8 xfail (#8037、#8092)，作者：@albertvillanova。 @mishig25 为机器翻译文档（#8013）增加了文档构建器，@dependabot[bot]（#8151、#8153、#8179）增加了依赖项。变压器 5.23 上的选择性激活检查点被包装，然后在变压器恢复旧行为后解开包装（#8094，#8098），作者：@albertvillanova。
+**死代码。**删除 <code>is_unsloth_available</code> (#8043)、<code>OnlineDPOTrainer.process_vision_row</code> (#8044)、<code>IS_SAGEMAKER_MP_POST_1_10</code> (#8045)、SDPO 和 SDFT <code>config_cls</code> 属性 (#8046)、异步部署工作人员的 <code>_generation_start_time</code> (#8047)、<code>WeaveCallback._eval_logger</code> (#8048)、未使用的 GOLD (#8049) 和 <code>adjusted_mfu</code> (#8245) 解包，作者：@qgallouedec。</p>
+<h2 id="新贡献者">新贡献者</h2>
+<ul>
+<li>@eshwanthkartitr 在 <a href="https://github.com/huggingface/trl/pull/6437">https://github.com/huggingface/trl/pull/6437</a> 中做出了第一个贡献</li>
+<li>@Sergasgr 在 <a href="https://github.com/huggingface/trl/pull/7651">https://github.com/huggingface/trl/pull/7651</a> 中做出了第一个贡献</li>
+<li>@yusufozdil 在 <a href="https://github.com/huggingface/trl/pull/8108">https://github.com/huggingface/trl/pull/8108</a> 中做出了第一个贡献</li>
+<li>@cm8908 在 <a href="https://github.com/huggingface/trl/pull/8120">https://github.com/huggingface/trl/pull/8120</a> 中做出了第一个贡献</li>
+<li>@cswjl 在 <a href="https://github.com/huggingface/trl/pull/8211">https://github.com/huggingface/trl/pull/8211</a> 中做出了第一个贡献</li>
+</ul>
+<h2 id="发生了什么变化">发生了什么变化</h2>
+<p><strong>完整 Changelog</strong>：<a href="https://github.com/huggingface/trl/compare/v1.17.0...v1.18.0">https://github.com/huggingface/trl/compare/v1.17.0…v1.18.0</a></p>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/huggingface/trl">huggingface/trl</a> · 🏷️ 版本：<code>v1.18.0</code> · 📅 发布：2026-11-13 · <a href="https://github.com/huggingface/trl/releases/tag/v1.18.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/trl/trl_v1.18.1"> <span class="k">← 下一个</span> <span class="t">v1.18.1</span> </a> <a href="/zh/release_note/trl/trl_v1.17.1"> <span class="k">上一个 →</span> <span class="t">v1.17.1</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/huggingface/trl/releases/tag/v1.18.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/huggingface/trl" target="_blank" rel="noopener"> <span>huggingface/trl</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#删除和要求提升" class="lv3">删除和要求提升</a><a href="#修复" class>修复</a><a href="#更清晰的错误" class="lv3">更清晰的错误</a><a href="#文档" class>文档</a><a href="#ci" class>CI</a><a href="#新贡献者" class>新贡献者</a><a href="#发生了什么变化" class>发生了什么变化</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/trl/trl_v1.18.2"> <span class="v">v1.18.2</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.18.1"> <span class="v">v1.18.1</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.18.0" aria-current="true"> <span class="v">v1.18.0</span> <span class="d">26-11-13</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.17.1"> <span class="v">v1.17.1</span> <span class="d">26-10-30</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.17.0"> <span class="v">v1.17.0</span> <span class="d">26-10-29</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.16.0"> <span class="v">v1.16.0</span> <span class="d">26-10-15</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.15.0"> <span class="v">v1.15.0</span> <span class="d">26-10-08</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.14.2"> <span class="v">v1.14.2</span> <span class="d">26-10-06</span> </a> </li> </ul> <a href="/zh/releases/trl" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

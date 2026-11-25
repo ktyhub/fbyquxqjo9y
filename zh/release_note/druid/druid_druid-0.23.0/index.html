@@ -1,0 +1,397 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>druid 0.23.0 — STAGS NextStack</title><meta name="description" content="Apache Druid 0.23.0 contains over 450 new features, bug fixes, performance enhancements, documentation improvements, and additional test coverage from 81 contributors."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/druid/druid_druid-0.23.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/druid/0.23.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/druid/druid_druid-0.23.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/druid/0.23.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="druid 0.23.0 — STAGS NextStack"><meta property="og:description" content="Apache Druid 0.23.0 contains over 450 new features, bug fixes, performance enhancements, documentation improvements, and additional test coverage from 81 contributors."><meta property="og:url" content="https://www.stags.cn/zh/release_note/druid/druid_druid-0.23.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/druid/druid_druid-0.23.0/#article","headline":"druid 0.23.0 release notes","datePublished":"2022-06-23","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/apache/druid"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/druid/0.23.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/druid/druid_druid-0.23.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/druid/0.23.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/druid/0.23.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/druid/0.23.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/druid/0.23.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/druid/0.23.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/druid">druid</a> </nav> <h1 class="detail-title"> <span class="p">druid</span> 0.23.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2022年6月23日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/apache/druid" target="_blank" rel="noopener"> <span class="k">来源</span>apache/druid </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/druid/0.23.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/druid/druid_druid-0.23.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <p>Apache Druid 0.23.0 包含超过 450 个新功能、错误修复、性能增强、文档改进以及来自 81 个贡献者的额外测试覆盖范围。 <a href="https://github.com/apache/druid/milestone/45?closed=1">有关其他详细信息，请参阅完整的更改集</a>。</p>
+<h1 id="-新功能"><a name="0.23.0-new-features" href="#0.23.0-new-features">#</a> 新功能</h1>
+<h2 id="-查询引擎"><a name="0.23.0-new-features-query-engine" href="#0.23.0-new-features-query-engine">#</a> 查询引擎</h2>
+<h3 id="-对数组进行分组而不分解数组"><a name="0.23.0-new-features-query-engine-grouping-on-arrays-without-exploding-the-arrays" href="#0.23.0-new-features-query-engine-grouping-on-arrays-without-exploding-the-arrays">#</a> 对数组进行分组而不分解数组</h3>
+<p>您现在可以将多值维度分组为数组。对于名为“test”的数据源：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>{"timestamp": "2011-01-12T00:00:00.000Z", "tags": ["t1","t2","t3"]}  #row1</span></span>
+<span class="line"><span>{"timestamp": "2011-01-13T00:00:00.000Z", "tags": ["t3","t4","t5"]}  #row2</span></span>
+<span class="line"><span>{"timestamp": "2011-01-14T00:00:00.000Z", "tags": ["t5","t6","t7"]}  #row3</span></span>
+<span class="line"><span>{"timestamp": "2011-01-14T00:00:00.000Z", "tags": []}                #row4</span></span></code></pre>
+<p>以下查询：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">  "queryType"</span><span style="color:#24292E">: </span><span style="color:#032F62">"groupBy"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "dataSource"</span><span style="color:#24292E">: </span><span style="color:#032F62">"test"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">  "intervals"</span><span style="color:#24292E">: [</span></span>
+<span class="line"><span style="color:#032F62">    "1970-01-01T00:00:00.000Z/3000-01-01T00:00:00.000Z"</span></span>
+<span class="line"><span style="color:#24292E">  ],</span></span>
+<span class="line"><span style="color:#005CC5">  "granularity"</span><span style="color:#24292E">: {</span></span>
+<span class="line"><span style="color:#005CC5">    "type"</span><span style="color:#24292E">: </span><span style="color:#032F62">"all"</span></span>
+<span class="line"><span style="color:#24292E">  },</span></span>
+<span class="line"><span style="color:#005CC5">  "virtualColumns"</span><span style="color:#24292E"> : [ {</span></span>
+<span class="line"><span style="color:#005CC5">    "type"</span><span style="color:#24292E"> : </span><span style="color:#032F62">"expression"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">    "name"</span><span style="color:#24292E"> : </span><span style="color:#032F62">"v0"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">    "expression"</span><span style="color:#24292E"> : </span><span style="color:#032F62">"mv_to_array(</span><span style="color:#005CC5">\"</span><span style="color:#032F62">tags</span><span style="color:#005CC5">\"</span><span style="color:#032F62">)"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">    "outputType"</span><span style="color:#24292E"> : </span><span style="color:#032F62">"ARRAY&#x3C;STRING>"</span></span>
+<span class="line"><span style="color:#24292E">  } ],</span></span>
+<span class="line"><span style="color:#005CC5">  "dimensions"</span><span style="color:#24292E">: [</span></span>
+<span class="line"><span style="color:#24292E">    {</span></span>
+<span class="line"><span style="color:#005CC5">      "type"</span><span style="color:#24292E">: </span><span style="color:#032F62">"default"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "dimension"</span><span style="color:#24292E">: </span><span style="color:#032F62">"v0"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "outputName"</span><span style="color:#24292E">: </span><span style="color:#032F62">"tags"</span></span>
+<span class="line"><span style="color:#032F62">      "outputType"</span><span style="color:#B31D28;font-style:italic">:</span><span style="color:#032F62">"ARRAY&#x3C;STRING>"</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">  ],</span></span>
+<span class="line"><span style="color:#005CC5">  "aggregations"</span><span style="color:#24292E">: [</span></span>
+<span class="line"><span style="color:#24292E">    {</span></span>
+<span class="line"><span style="color:#005CC5">      "type"</span><span style="color:#24292E">: </span><span style="color:#032F62">"count"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "name"</span><span style="color:#24292E">: </span><span style="color:#032F62">"count"</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">  ]</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<p>返回以下内容：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[</span></span>
+<span class="line"><span> {</span></span>
+<span class="line"><span>    "timestamp": "1970-01-01T00:00:00.000Z",</span></span>
+<span class="line"><span>    "event": {</span></span>
+<span class="line"><span>      "count": 1,</span></span>
+<span class="line"><span>      "tags": "[]"</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  {</span></span>
+<span class="line"><span>    "timestamp": "1970-01-01T00:00:00.000Z",</span></span>
+<span class="line"><span>    "event": {</span></span>
+<span class="line"><span>      "count": 1,</span></span>
+<span class="line"><span>      "tags": "["t1","t2","t3"]"</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  {</span></span>
+<span class="line"><span>    "timestamp": "1970-01-01T00:00:00.000Z",</span></span>
+<span class="line"><span>    "event": {</span></span>
+<span class="line"><span>      "count": 1,</span></span>
+<span class="line"><span>      "tags": "[t3","t4","t5"]"</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  {</span></span>
+<span class="line"><span>    "timestamp": "1970-01-01T00:00:00.000Z",</span></span>
+<span class="line"><span>    "event": {</span></span>
+<span class="line"><span>      "count": 2,</span></span>
+<span class="line"><span>      "tags": "["t5","t6","t7"]"</span></span>
+<span class="line"><span>    }</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span>]</span></span></code></pre>
+<p>(#12078)
+(#12253)</p>
+<h3 id="-为第一个最后一个聚合器中的行比较指定除-__time-列之外的列"><a name="0.23.0-new-features-query-engine-specify-a-column-other-than-__time-column-for-row-comparison-in-first%2Flast-aggregators" href="#0.23.0-new-features-query-engine-specify-a-column-other-than-__time-column-for-row-comparison-in-first%2Flast-aggregators">#</a> 为第一个/最后一个聚合器中的行比较指定除 __time 列之外的列</h3>
+<p>您可以使用 <code>LATEST_BY</code> / <code>EARLIEST_BY</code> SQL 函数在 <code>*first</code>/<code>*last</code> 聚合器中传递时间列。这为时间存储为与“__time”不同的列的一部分的情况提供了支持。您还可以指定另一个逻辑时间列。
+(#11949)
+(#12145)</p>
+<h3 id="-查询用户体验的改进"><a name="0.23.0-new-features-query-engine-improvements-to-querying-user-experience" href="#0.23.0-new-features-query-engine-improvements-to-querying-user-experience">#</a> 查询用户体验的改进</h3>
+<p>此版本包括多项查询改进：</p>
+<ul>
+<li>在失败的 SQL 查询的响应标头中添加了 SQL 查询 ID，以帮助定位错误消息 (#11756)</li>
+<li>添加了 DataSketches HLL 的输入类型验证 (#12131)</li>
+<li>改进了 JDBC 日志记录 (#11676)</li>
+<li>添加了 SQL 函数 MV_FILTER_ONLY 和 MV_FILTER_NONE 来过滤多值字符串维度的行，以分别仅包含提供的值列表或不包含任何值 (#11650)</li>
+<li>添加了 ARRAY_CONCAT_AGG 将数组输入聚合到单个数组中 (#12226)</li>
+<li>添加了授权使用查询上下文参数的功能 (#12396)</li>
+<li>改进了查询 ID，可以更轻松地链接查询和子查询以实现端到端查询可见性 (#11809)</li>
+<li>添加了安全除法功能以防止除以 0 (#11904)</li>
+<li>您现在可以将查询上下文添加到内部生成的 <code>SegmentMetadata</code> 查询中 (#11429)</li>
+<li>在本机表达式处理系统中添加了对 Druid 复杂类型的支持，以使所有 Druid 数据在表达式中可用（#11853、#12016）</li>
+<li>当对没有预先存在的字典的字符串或数组值表达式进行分组时，您可以通过 <code>druid.query.groupBy.maxSelectorDictionarySize</code> 控制堆上段级字典的大小。</li>
+<li>在 CNF 转换过程中，您可以更好地防止过滤器爆炸 (#12314) (#12324)</li>
+<li>您可以通过在查询上下文中将 <code>useNativeQueryExplain</code> 设置为 true 来获得解释 SQL 查询的完整本机查询 (#11908)</li>
+<li>您可以让代理忽略实时节点或特定的历史层。 (#11766) (#11732)</li>
+</ul>
+<h2 id="-流媒体摄取"><a name="0.23.0-new-features-streaming-ingestion" href="#0.23.0-new-features-streaming-ingestion">#</a> 流媒体摄取</h2>
+<h3 id="-用于解析标头和密钥的-kafka-输入格式"><a name="0.23.0-new-features-streaming-ingestion-kafka-input-format-for-parsing-headers-and-key" href="#0.23.0-new-features-streaming-ingestion-kafka-input-format-for-parsing-headers-and-key">#</a> 用于解析标头和密钥的 Kafka 输入格式</h3>
+<p>我们引入了 Kafka 输入格式，以便您除了消息内容之外还可以提取标头数据。例如：</p>
+<ul>
+<li>事件键字段</li>
+<li>事件标题</li>
+<li>Kafka事件时间戳</li>
+<li>存储有效负载的 Kafka 事件值。
+(#11630)</li>
+</ul>
+<h3 id="-kinesis-摄取---改进"><a name="0.23.0-new-features-streaming-ingestion-kinesis-ingestion---improvements" href="#0.23.0-new-features-streaming-ingestion-kinesis-ingestion---improvements">#</a> Kinesis 摄取 - 改进</h3>
+<p>我们在运动摄取方面做出了以下改进</p>
+<ul>
+<li>重新分片可能会影响并减慢摄取速度，因为会创建许多中间空分片。这些分片被分配给导致负载分配不平衡的任务。您可以在 kinesis 摄取调整配置中将 <code>skipIgnorableShards</code> 设置为 <code>true</code> 以忽略此类分片。 (#12235)</li>
+<li>目前，kinesis 摄取使用 <code>DescribeStream</code> 来获取分片列表。此调用已被弃用并且速度较慢。在此版本中，您可以通过在 kinesis 摄取调整配置中将 <code>useListShards</code> 设置为 <code>true</code> 来切换到较新的 API <code>listShards</code>。 (#12161)</li>
+</ul>
+<h2 id="-本机批量摄取"><a name="0.23.0-new-features-native-batch-ingestion" href="#0.23.0-new-features-native-batch-ingestion">#</a> 本机批量摄取</h2>
+<h3 id="-多维度范围分区"><a name="0.23.0-new-features-native-batch-ingestion-multi-dimension-range-partitioning" href="#0.23.0-new-features-native-batch-ingestion-multi-dimension-range-partitioning">#</a> 多维度范围分区</h3>
+<p>多维度范围分区允许用户在任意数量的维度范围上对数据进行分区。它进一步发展了“single-dim”分区背后的概念，现在可以说是最优选的辅助分区，无论是对于查询性能还是存储效率。
+(#11848)
+(#11973)</p>
+<h3 id="-改进的替换数据行为"><a name="0.23.0-new-features-native-batch-ingestion-improved-replace-data-behavior" href="#0.23.0-new-features-native-batch-ingestion-improved-replace-data-behavior">#</a> 改进的替换数据行为</h3>
+<p>在之前版本的 Druid 中，如果摄取带有 <code>dropExisting</code> 标志的数据来替换数据，如果没有新数据来替换，Druid 会保留现有数据一段时间。现在，如果您在 <code>ioSpec</code> 中将 <code>dropExisting</code> 设置为 <code>true</code> 并在包含没有数据的时间块的时间范围内摄取数据，则 Druid 使用逻辑删除来掩盖空时间块中的现有数据。
+(#12137)
+此版本包括对本机批量摄取的多项改进：</p>
+<ul>
+<li>当批处理任务完成等待段可用性时，Druid 现在会发出新的指标。 (#11090)</li>
+<li>添加了 <code>segmentAvailabilityWaitTimeMs</code>，即任务等待其段被移交给历史节点的持续时间（以毫秒为单位）到 <code>IngestionStatsAndErrorsTaskReportData</code> (#11090)</li>
+<li>添加了在摄取过程中保留现有指标的功能 (#12185)</li>
+<li>并行本机批处理任务现在可以提供顺序和单相模式的任务报告（例如，与动态分区一起使用）以及单相模式子任务（#11688）</li>
+<li>在 <code>druid/indexer/v1/task/{task_id}/reports</code> API 中添加了对 <code>RowStats</code> 的支持，以实现多阶段并行索引任务 (#12280)</li>
+<li>修复了并行索引维度分配阶段 OOM 失败的问题 (#12331)</li>
+<li>添加了对创建分区边界时处理空维度值的支持 (#11973)</li>
+</ul>
+<h2 id="-总体摄取方面的改进"><a name="0.23.0-new-features-improvements-to-ingestion-in-general" href="#0.23.0-new-features-improvements-to-ingestion-in-general">#</a> 总体摄取方面的改进</h2>
+<p>此版本总体上包括多项摄取改进：</p>
+<ul>
+<li>从 <code>IncrementalIndex&#x3C;AggregatorType></code> 中删除了模板修饰符，因为不再需要它</li>
+<li>您现在可以在摄取期间在 <code>JsonPath</code> 表达式中使用 <code>JsonPath</code> 函数 (#11722)</li>
+<li>Druid 不再创建段文件的具体化列表并消除文件循环以减少 OOM 问题 (#11903)</li>
+<li>在 <code>IndexMerger</code> 的主要“合并”方法中添加了中间持久 <code>IndexSpec</code> (#11940)</li>
+<li>如果您传入 ALL，<code>Granularity.granularitiesFinerThan</code> 现在会返回 ALL (#12003)</li>
+<li>添加了用于附加任务的配置参数，以允许它们使用共享锁 (#12041)</li>
+<li>当无法检索模式时，<code>SchemaRegistryBasedAvroBytesDecoder</code> 现在会抛出 <code>ParseException</code> 而不是 RE (#12080)</li>
+<li>将 <code>includeAllDimensions</code> 添加到 <code>dimensionsSpec</code>，以将所有显式维度首先放入 <code>InputRow</code> 中，然后将输入数据中找到的任何其他维度放在首位 (#12276)</li>
+<li>添加了在段中存储空列的功能（#12279）</li>
+</ul>
+<h2 id="-压缩"><a name="0.23.0-new-features-compaction" href="#0.23.0-new-features-compaction">#</a> 压缩</h2>
+<p>此版本包括多项压缩改进：</p>
+<ul>
+<li>自动压缩现在支持复杂的维度（#11924）</li>
+<li>自动压缩现在支持重叠段间隔（#12062）</li>
+<li>您现在可以配置自动压缩，以根据最大插槽计算可用于压缩任务的插槽比率，包括自动缩放器最大工作节点数 (#12263)</li>
+<li>您现在可以将协调器自动压缩工作周期与其他索引职责分开配置（#12263）</li>
+<li>默认 inputSegmentSizeBytes 现在更改为 ~ 100 TB (#12534)</li>
+<li>您可以更改查询粒度、更改维度架构、过滤数据、通过自动压缩添加指标 (#11856) (#11874) (#11922) (#12125)</li>
+<li>您还可以控制自动和手动压实的卷起（#11850）</li>
+</ul>
+<h2 id="-sql"><a name="0.23.0-new-features-sql" href="#0.23.0-new-features-sql">#</a> SQL</h2>
+<h3 id="-人类可读且可操作的-sql-错误消息"><a name="0.23.0-new-features-sql-human-readable-and-actionable-sql-error-messages" href="#0.23.0-new-features-sql-human-readable-and-actionable-sql-error-messages">#</a> 人类可读且可操作的 SQL 错误消息</h3>
+<p>在 0.22.1 版本之前，如果您发出不受支持的 SQL 查询，Druid 会抛出非常神秘且无用的错误消息。通过此更改，错误消息恰好包含 Druid 不支持的 SQL 查询部分。例如，如果您运行按时间列以外的维度排序的扫描查询。
+(#11911)</p>
+<h3 id="-取消-sql-查询的-api"><a name="0.23.0-new-features-sql-cancel-api-for-sql-queries" href="#0.23.0-new-features-sql-cancel-api-for-sql-queries">#</a> 取消 SQL 查询的 API</h3>
+<p>我们添加了一个新的 API 来取消 SQL 查询，因此您现在可以像取消本机查询一样取消 SQL 查询。您可以从 Web 控制台使用 API。在以前的版本中，从控制台取消只会关闭 client 连接，而 SQL 查询继续在 Druid 上运行。
+(#11643)
+(#11738)
+(#11710)</p>
+<h3 id="-改进了-sql-兼容性"><a name="0.23.0-new-features-sql-improved-sql-compatibility" href="#0.23.0-new-features-sql-improved-sql-compatibility">#</a> 改进了 SQL 兼容性</h3>
+<p>我们对表达式进行了更改，使表达式计算更加符合 SQL 标准。默认情况下禁用此新行为。可以通过将 <code>druid.expressions.useStrictBooleans</code> 设置为 <code>true</code> 来启用它。我们建议启用此行为，因为在某些情况下它的性能也更高。
+(#11184)</p>
+<h3 id="-sql-用户体验的改进"><a name="0.23.0-new-features-sql-improvements-to-sql-user-experience" href="#0.23.0-new-features-sql-improvements-to-sql-user-experience">#</a> SQL 用户体验的改进</h3>
+<p>此版本包括对 SQL 的几项额外改进：</p>
+<ul>
+<li>与 Druid 的 JDBC 连接不再需要包含尾部斜杠 <code>/</code> (#11737)</li>
+<li>您现在可以使用扫描作为外部查询（#11831）</li>
+<li>添加了一个类来清理 JDBC 异常并记录它们 (#11843)</li>
+<li>在响应格式中添加了类型标头，使 clients 更容易解释 SQL 查询的结果 (#11914)</li>
+<li>改进了 <code>DruidRexExecutor</code> 处理数值数组的方式 (#11968)</li>
+<li>Druid 现在将 GROUP BY 查询优化为时间序列查询后返回空结果 (#12065)</li>
+<li>作为管理员，您现在可以在近似模式下配置 APPROX_COUNT_DISTINCT 和 COUNT(DISTINCT expr) 的实现 (#11181)</li>
+</ul>
+<h2 id="-协调员霸主"><a name="0.23.0-new-features-coordinator%2Foverlord" href="#0.23.0-new-features-coordinator%2Foverlord">#</a> 协调员/霸主</h2>
+<ul>
+<li>协调器可能会因其他德鲁伊服务的连接而不堪重负，尤其是在启用 TLS 时。您可以通过在公共运行时属性中将 <code>druid.global.http.eagerInitialization</code> 设置为 <code>false</code> 来缓解此问题。</li>
+</ul>
+<h2 id="-web-控制台"><a name="0.23.0-new-features-web-console" href="#0.23.0-new-features-web-console">#</a> Web 控制台</h2>
+<ul>
+<li>查询视图现在可以取消从中发出的所有查询 (#11738)</li>
+<li>自动刷新功能现在将仅在前台运行（#11750），这可以防止忘记的后台控制台选项卡给集群带来任何负载。</li>
+<li>将 <code>Segment size</code>（以字节为单位）列添加到数据源视图 (#11797)
+<img width="264" alt="图片" src="https://user-images.githubusercontent.com/177816/167921423-b6ca2a24-4af7-4b48-bff7-3c16e3e9c398.png">
+</li>
+<li>在查询视图中使用逗号格式化数字 (#12031)</li>
+<li>为主管规格添加 JSON Diff 视图 (#12085)
+<img src="https://user-images.githubusercontent.com/177816/167922122-32466a67-0364-4f7e-93d0-0675abc29158.png" alt="图片"></li>
+<li>改进代码自动建议文档的格式和信息内容 (#12085)
+<img src="https://user-images.githubusercontent.com/177816/167922311-99c79f49-0aa1-4ae4-903d-097fae7ee3f4.png" alt="图片"></li>
+<li>将分片详细信息列添加到分段视图 (#12212)
+<img src="https://user-images.githubusercontent.com/177816/167922493-8e621a41-631c-4eae-9005-359c5aab7473.png" alt="图片"></li>
+<li>如果菜单打开，避免刷新表格 (#12435)</li>
+<li>其他错误修复和可用性改进</li>
+</ul>
+<h2 id="-指标"><a name="0.23.0-new-features-metrics" href="#0.23.0-new-features-metrics">#</a> 指标</h2>
+<h3 id="-查询指标现在默认也设置-vectorized-维度这有助于理解查询的性能概况"><a name="0.23.0-new-features-metrics-query-metrics-now-also-set-the-%60vectorized%60-dimension-by-default.-this-can-be-helpful-in-understanding-performance-profile-of-queries." href="#0.23.0-new-features-metrics-query-metrics-now-also-set-the-%60vectorized%60-dimension-by-default.-this-can-be-helpful-in-understanding-performance-profile-of-queries.">#</a> 查询指标现在默认也设置 <code>vectorized</code> 维度。这有助于理解查询的性能概况。</h3>
+<p><a href="https://github.com/apache/druid/pull/12464">12464</a></p>
+<h3 id="-自动压缩职责现在也报告职责指标还添加了指示职责组的维度"><a name="0.23.0-new-features-metrics-auto-compaction-duty-also-report-duty-metrics-now.-指示还添加了职责组的维度。" href="#0.23.0-new-features-metrics-auto-compaction-duty-also-report-duty-metrics-now.-a-dimension-to-indicate-the-duty-group-has-also-been-added.">#</a> 自动压缩职责现在也报告职责指标。还添加了指示职责组的维度。</h3>
+<p><a href="https://github.com/apache/druid/pull/12352">12352</a>
+此版本包括多项指标的额外改进：</p>
+<ul>
+<li>Druid 默认包含 Prometheus 发射器 (#11812)</li>
+<li>修复了 Prometheus 发射器中缺失的 <code>conversionFactor</code> (12338)</li>
+<li>修复了 <code>ingest/events/messageGap</code> 指标的问题 (#12337)</li>
+<li>添加了 Shenandoah GC 的指标 (#12369)</li>
+<li>添加了如下指标：<code>Cpu</code> 和 <code>CpuSet</code> 到 <code>java.util.metrics.cgroups</code>、<code>ProcFsUtil</code> 到 <code>procfs</code> 信息，以及 <code>CgroupCpuMonitor</code> 和 <code>CgroupCpuSetMonitor</code> (#11763)</li>
+<li>添加了通过 HTTP 代理路由数据的支持 (#11891)</li>
+<li>添加了更多关于 Jetty 服务器线程池使用情况的指标 (#11113)</li>
+<li>添加了工作类别作为索引服务的维度 TaskSlot 指标 (#11554)</li>
+<li>在 <code>segment/added/bytes</code> 指标中添加了 <code>partitioningType</code> 维度，以跟踪不同分区方案的使用情况 (#11902)</li>
+<li>添加了查询车道指标以可视化车道分配（#12111）</li>
+</ul>
+<h2 id="-云集成"><a name="0.23.0-new-features-cloud-integrations" href="#0.23.0-new-features-cloud-integrations">#</a> 云集成</h2>
+<h3 id="-允许通过-azure-存储的共享访问资源进行身份验证"><a name="0.23.0-new-features-cloud-integrations-allow-authenticating-via-shared-access-resource-for-azure-storage" href="#0.23.0-new-features-cloud-integrations-allow-authenticating-via-shared-access-resource-for-azure-storage">#</a> 允许通过 Azure 存储的共享访问资源进行身份验证</h3>
+<p><a href="https://github.com/apache/druid/pull/12266">12266</a></p>
+<h2 id="-其他更改"><a name="0.23.0-new-features-other-changes" href="#0.23.0-new-features-other-changes">#</a> 其他更改</h2>
+<ul>
+<li>Druid 现在可以更快地处理查找加载失败 (#12397)</li>
+<li><code>BalanceSegments#balanceServers</code> 现在在没有平衡工作要做时提前退出 (#11768)</li>
+<li><code>DimensionHandler</code> 现在允许您定义适合要处理的尺寸类型的 <code>DimensionSpec</code> (#11873)</li>
+<li>为 Druid SQL 添加了外部模式提供者的接口 (#12043)</li>
+</ul>
+<h1 id="-安全修复"><a name="0.23.0-security-fixes" href="#0.23.0-security-fixes">#</a> 安全修复</h1>
+<h2 id="-支持设置查询上下文的访问控制"><a name="0.23.0-security-fixes-support-for-access-control-on-setting-query-contexts" href="#0.23.0-security-fixes-support-for-access-control-on-setting-query-contexts">#</a> 支持设置查询上下文的访问控制</h2>
+<p>如今，用户可以使用任何上下文参数。这可能会导致 1) 如果上下文参数尚未成熟，则会导致糟糕的用户体验；或者 2) 如果敏感参数被滥用，在最坏的情况下甚至会导致查询失败或系统故障，例如 maxSubqueryRows。 Druid 现在能够限制每个用户角色的上下文参数。这意味着，如果您在查询中设置了不允许的上下文参数，则查询将会失败。
+可以使用 Druid.<code>auth.authorizeQueryContextParam</code>s 启用上下文参数授权。默认情况下禁用此功能，以实现更流畅的升级体验。
+(#12396)</p>
+<h2 id="-其他安全改进"><a name="0.23.0-security-fixes-other-security-improvements" href="#0.23.0-security-fixes-other-security-improvements">#</a> 其他安全改进</h2>
+<p>此版本包括几项额外的安全改进：</p>
+<ul>
+<li>您现在可以选择在 Druid 系统表上启用授权 (#11720)</li>
+<li>Log4j2 已升级到 2.17.1 (#12106)</li>
+</ul>
+<h1 id="-性能改进"><a name="0.23.0-security-fixes-performance-improvements" href="#0.23.0-security-fixes-performance-improvements">#</a> 性能改进</h1>
+<h3 id="-摄取"><a name="0.23.0-security-fixes-performance-improvements-ingestion" href="#0.23.0-security-fixes-performance-improvements-ingestion">#</a> 摄取</h3>
+<ul>
+<li>构建堆增量索引时更准确的内存估计。 Druid 现在可以使用（基于任务上下文标志）对聚合行的实际堆占用空间进行更接近的估计，而不是使用最大可能的聚合行大小。这使得索引器能够在执行中间持久之前在内存中容纳更多行。 (#12073)</li>
+</ul>
+<h3 id="-sql-1"><a name="0.23.0-security-fixes-performance-improvements-sql" href="#0.23.0-security-fixes-performance-improvements-sql">#</a> SQL</h3>
+<ul>
+<li>默认情况下启用矢量化虚拟列处理。它将提高大多数查询的性能。 (#12520)</li>
+<li>改进了具有大型 IN 过滤器的 SQL 查询的性能。您可以通过减少 SQL 查询上下文中的 <code>inSubQueryThreshold</code> 来获得更好的性能。 (#12357)</li>
+<li><code>time_shift</code> 现在已矢量化（#12254）</li>
+</ul>
+<h1 id="-错误修复"><a name="0.23.0-bug-fixes" href="#0.23.0-bug-fixes">#</a> 错误修复</h1>
+<p>Druid 0.23.0 包含超过 68 个错误修复。您可以在[此处]找到完整列表(<a href="https://github.com/apache/druid/issues?q=milestone%3A0.23.0+label%3ABug">https://github.com/apache/druid/issues?q=milestone%3A0.23.0+label%3ABug</a>)</p>
+<h1 id="-升级到-0230"><a name="0.23.0-upgrading-to-0.23.0" href="#0.23.0-upgrading-to-0.23.0">#</a> 升级到 0.23.0</h1>
+<p>从 Druid 0.22.x 升级到 0.23.0 时请考虑以下更改和更新。如果您要从 0.22.1 之前的版本进行更新，请参阅相关中间版本的 release note。</p>
+<h2 id="-自动删除段"><a name="0.23.0-upgrading-to-0.23.0-autokill" href="#0.23.0-upgrading-to-0.23.0-autokill">#</a> 自动删除段</h2>
+<p>在 <code>0.23.0</code> 中，现在默认启用段自动终止 (#12187)。新的默认设置应杀死所有超过 90 天的未使用段。如果用户不希望升级时出现此行为，则应明确禁用此行为。这是一个危险的更改，因为根据时间间隔，段在被标记为未使用后将立即被终止。此行为将在下一个德鲁伊版本中恢复或更改。请参阅 (#12693) 了解更多详细信息。</p>
+<h2 id="-其他更改-1"><a name="0.23.0-upgrading-to-0.23.0-other-changes" href="#0.23.0-upgrading-to-0.23.0-other-changes">#</a> 其他更改</h2>
+<ul>
+<li>Kinesis 摄取需要对流进行 <code>listShards</code> API 访问。</li>
+<li>Kafka clients 库已升级到 <code>3.0.0</code> (#11735)</li>
+<li>动态协调器配置，percentOfSegmentsToConsiderPerMove 已被弃用，并将在 Druid 的未来版本中删除。它正在被 (#11257) 中引入的新分段拣选策略所取代。目前，此新策略默认处于关闭状态，但如果将动态协调器配置 useBatchedSegmentSampler 设置为 true，则可以打开该策略。如此设置将禁用已弃用的percentOfSegmentsToConsiderPerMove。在未来的版本中，useBatchedSegmentSampler 将永久变为 true。 (#11960)</li>
+</ul>
+<h1 id="-开发者通知"><a name="0.23.0-developer-notices" href="#0.23.0-developer-notices">#</a> 开发者通知</h1>
+<h2 id="-将航空公司依赖项更新为-2x"><a name="0.23.0-developer-notices-updated-airline-dependency-to-2.x" href="#0.23.0-developer-notices-updated-airline-dependency-to-2.x">#</a> 将航空公司依赖项更新为 2.x</h2>
+<p><a href="https://github.com/airlift/airline">https://github.com/airlift/airline</a> 不再维护，因此 druid 已升级到 <a href="https://github.com/rvesse/airline%EF%BC%88%E8%88%AA%E7%A9%BA%E5%85%AC%E5%8F%B8">https://github.com/rvesse/airline（航空公司</a> 2）以主动使用
+维护版本，同时最大限度地减少重大更改。
+这是向后不兼容的更改，依赖于 CliCommandCreator 扩展点的自定义扩展也需要更新。
+<a href="https://github.com/apache/druid/pull/12270">12270</a></p>
+<h2 id="-对于未知的主管或任务返回-404-而不是-400"><a name="0.23.0-developer-notices-return-404-instead-of-400-for-unknown-supervisors-or-tasks" href="#0.23.0-developer-notices-return-404-instead-of-400-for-unknown-supervisors-or-tasks">#</a> 对于未知的主管或任务返回 404 而不是 400</h2>
+<p>当未找到主管或任务时，较早的主管/任务端点返回 400。这个状态码对于第三个系统来说并不友好且令人困惑。根据HTTP状态码的定义，404就是这种情况的正确代码。因此，我们将状态代码从 400 更改为 404 以消除歧义。这些端点的任何 clients 应相应地更改响应代码处理。
+<a href="https://github.com/apache/druid/pull/11724">11724</a></p>
+<h2 id="-当sql查询无法规划时返回400而不是500"><a name="0.23.0-developer-notices-return-400-instead-of-500-when-sql-query-cannot-be-planned" href="#0.23.0-developer-notices-return-400-instead-of-500-when-sql-query-cannot-be-planned">#</a> 当SQL查询无法规划时返回400而不是500</h2>
+<p>任何无法被 Druid 规划的 SQL 查询都不会被视为错误请求。对于此类查询，我们现在返回 400。使用 SQL API 的开发人员应根据需要更改响应代码处理。
+<a href="https://github.com/apache/druid/pull/12033">12033</a></p>
+<h2 id="-responsecontext-重构"><a name="0.23.0-developer-notices-responsecontext-refactoring" href="#0.23.0-developer-notices-responsecontext-refactoring">#</a> ResponseContext 重构</h2>
+<p><code>0.23.0</code> 以突破性的方式改变了 <code>ResponseContext</code> 及其按键。响应上下文的先前版本建议在枚举中定义键，然后注册。此版本建议将键定义为对象，然后注册。有关详细信息，请参阅 <code>ResponseContext</code> 类本身。
+(#11828)</p>
+<h2 id="-其他更改-2"><a name="0.23.0-developer-notices-other-changes" href="#0.23.0-developer-notices-other-changes">#</a> 其他更改</h2>
+<ul>
+<li><code>SingleServerInventoryView</code> 已被删除。 (#11770)</li>
+<li><code>LocalInputSource</code> 不允许多次摄取同一文件。 (#11965)</li>
+<li><code>PostAggregator</code> 中的 <code>getType()</code> 已弃用，取而代之的是 <code>getType(ColumnInspector)</code> (#11818)</li>
+</ul>
+<h1 id="-已知问题"><a name="0.23.0-known-issues" href="#0.23.0-known-issues">#</a> 已知问题</h1>
+<p>有关未解决问题的完整列表，请参阅 <a href="https://github.com/apache/druid/labels/Bug">Bug</a>。</p>
+<h1 id="-制作人员"><a name="0.23.0-credits" href="#0.23.0-credits">#</a> 制作人员</h1>
+<h2 id="感谢所有为此版本做出贡献的人2bethere317布莱恩a2l007abhishekagarwal87adarshsanjeevaggarwalakshay亚历山大赛达科夫amatyaavadhanulaandreacycapoorvguptaaiarunramaniasdf2014阿什什卡普尔本克鲁格capistrant卡罗琳1000cheddar陈慧叶churromoralesclintropoliscryptoe大卫费莱dbardbardependabot机器人迪迪普dkoepkedungdm93ektravel埃米罗特弗兰克陈021ginmhqx871imichkaimply-cheddarisandeep41伊万万jacobtolarjasonk000jgozjihoonsonjon-wei约瑟夫格兰维尔joyking7kfaraz克拉罗斯lakshsinglaliran-funarolokesh-lingarajanloquisgonmark-暗示maytasmmchadesnikhil-ddu保罗-罗杰斯彼得马沙利奥pjain1pjfanningrohangargsamathjainsergioferragutshalladasomu-暗示sthetlandsuneet-ssyacobovitz塔萨图克斯techdocsmithtejaswini-暗示themarcelortsfenwickuschindlerv-vishwa维斯皮拉沃吉维茨基vtlimwangxiaobaidu11williamhyunwjhypoxvrlyuanlihanzachjsh">感谢所有为此版本做出贡献的人！
+@2bethere
+@317布莱恩
+@a2l007
+@abhishekagarwal87
+@adarshsanjeev
+@aggarwalakshay
+@亚历山大赛达科夫
+@AmatyaAvadhanula
+@andreacyc
+@ApoorvGuptaAi
+@arunramani
+@asdf2014
+@阿什什卡普尔
+@本克鲁格
+@capistrant
+@卡罗琳1000
+@cheddar
+@陈慧叶
+@churromorales
+@clintropolis
+@cryptoe
+@大卫费莱
+@dbardbar
+@dependabot[机器人]
+@迪迪普
+@dkoepke
+@dungdm93
+@ektravel
+@埃米罗特
+@弗兰克陈021
+@ginm
+@hqx871
+@iMichka
+@imply-cheddar
+@isandeep41
+@伊万万
+@jacobtolar
+@jasonk000
+@jgoz
+@jihoonson
+@jon-wei
+@约瑟夫格兰维尔
+@joyking7
+@kfaraz
+@克拉罗斯
+@LakshSingla
+@liran-funaro
+@lokesh-lingarajan
+@loquisgon
+@mark-暗示
+@maytasm
+@mchades
+@nikhil-ddu
+@保罗-罗杰斯
+@彼得马沙利奥
+@pjain1
+@pjfanning
+@rohangarg
+@samathjain
+@sergioferragut
+@shallada
+@somu-暗示
+@sthetland
+@suneet-s
+@syacobovitz
+@塔萨图克斯
+@techdocsmith
+@tejaswini-暗示
+@themarcelor
+@TSFenwick
+@uschindler
+@v-vishwa
+@维斯皮拉
+@沃吉维茨基
+@vtlim
+@wangxiaobaidu11
+@williamhyun
+@wjhypo
+@xvrl
+@yuanlihan
+@zachjsh</h2>
+<blockquote>
+<p><strong>来源</strong> <a href="https://github.com/apache/druid">apache/druid</a> · <code>druid-0.23.0</code> · 2022-06-23 · <a href="https://github.com/apache/druid/releases/tag/druid-0.23.0">上游版本</a>
+<em>逐字镜像以进行索引。所有权利属于上游项目。</em></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/apache/druid">apache/druid</a> · 🏷️ 版本：<code>druid-0.23.0</code> · 📅 发布：2022-06-23 · <a href="https://github.com/apache/druid/releases/tag/druid-0.23.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/druid/druid_druid-24.0.0"> <span class="k">← 下一个</span> <span class="t">24.0.0</span> </a> <a href="/zh/release_note/druid/druid_druid-0.22.1"> <span class="k">上一个 →</span> <span class="t">0.22.1</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/apache/druid/releases/tag/0.23.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/apache/druid" target="_blank" rel="noopener"> <span>apache/druid</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#-查询引擎" class># 查询引擎</a><a href="#-对数组进行分组而不分解数组" class="lv3"># 对数组进行分组而不分解数组</a><a href="#-为第一个最后一个聚合器中的行比较指定除-__time-列之外的列" class="lv3"># 为第一个/最后一个聚合器中的行比较指定除 __time 列之外的列</a><a href="#-查询用户体验的改进" class="lv3"># 查询用户体验的改进</a><a href="#-流媒体摄取" class># 流媒体摄取</a><a href="#-用于解析标头和密钥的-kafka-输入格式" class="lv3"># 用于解析标头和密钥的 Kafka 输入格式</a><a href="#-kinesis-摄取---改进" class="lv3"># Kinesis 摄取 - 改进</a><a href="#-本机批量摄取" class># 本机批量摄取</a><a href="#-多维度范围分区" class="lv3"># 多维度范围分区</a><a href="#-改进的替换数据行为" class="lv3"># 改进的替换数据行为</a><a href="#-总体摄取方面的改进" class># 总体摄取方面的改进</a><a href="#-压缩" class># 压缩</a><a href="#-sql" class># SQL</a><a href="#-人类可读且可操作的-sql-错误消息" class="lv3"># 人类可读且可操作的 SQL 错误消息</a><a href="#-取消-sql-查询的-api" class="lv3"># 取消 SQL 查询的 API</a><a href="#-改进了-sql-兼容性" class="lv3"># 改进了 SQL 兼容性</a><a href="#-sql-用户体验的改进" class="lv3"># SQL 用户体验的改进</a><a href="#-协调员霸主" class># 协调员/霸主</a><a href="#-web-控制台" class># Web 控制台</a><a href="#-指标" class># 指标</a><a href="#-查询指标现在默认也设置-vectorized-维度这有助于理解查询的性能概况" class="lv3"># 查询指标现在默认也设置 vectorized 维度。这有助于理解查询的性能概况。</a><a href="#-自动压缩职责现在也报告职责指标还添加了指示职责组的维度" class="lv3"># 自动压缩职责现在也报告职责指标。还添加了指示职责组的维度。</a><a href="#-云集成" class># 云集成</a><a href="#-允许通过-azure-存储的共享访问资源进行身份验证" class="lv3"># 允许通过 Azure 存储的共享访问资源进行身份验证</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/druid/druid_druid-39.0.0"> <span class="v">39.0.0</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-38.0.0"> <span class="v">38.0.0</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-37.0.0"> <span class="v">37.0.0</span> <span class="d">26-05-08</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-36.0.0"> <span class="v">36.0.0</span> <span class="d">26-02-09</span> </a> </li><li> <a href="/zh/release_note/druid/druid_35.0.1"> <span class="v">35.0.1</span> <span class="d">25-12-15</span> </a> </li><li> <a href="/zh/release_note/druid/druid_35.0.0"> <span class="v">35.0.0</span> <span class="d">25-11-18</span> </a> </li><li> <a href="/zh/release_note/druid/druid_34.0.0"> <span class="v">34.0.0</span> <span class="d">25-08-11</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-33.0.0"> <span class="v">33.0.0</span> <span class="d">25-04-29</span> </a> </li> </ul> <a href="/zh/releases/druid" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 71 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

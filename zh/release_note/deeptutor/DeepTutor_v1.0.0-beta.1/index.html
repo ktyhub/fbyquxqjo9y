@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>DeepTutor v1.0.0-beta.1 — STAGS NextStack</title><meta name="description" content="We're thrilled to announce DeepTutor v1.0.0-beta1 — the first beta of the brand new DeepTutor architecture. This is a ground-up rewrite that transforms DeepTutor from a monolithic RAG tutor into an agent-native learning…"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/deeptutor/DeepTutor_v1.0.0-beta.1/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/deeptutor/1.0.0-beta.1"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/deeptutor/DeepTutor_v1.0.0-beta.1/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/deeptutor/1.0.0-beta.1"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="DeepTutor v1.0.0-beta.1 — STAGS NextStack"><meta property="og:description" content="We're thrilled to announce DeepTutor v1.0.0-beta1 — the first beta of the brand new DeepTutor architecture. This is a ground-up rewrite that transforms DeepTutor from a monolithic RAG tutor into an agent-native learning…"><meta property="og:url" content="https://www.stags.cn/zh/release_note/deeptutor/DeepTutor_v1.0.0-beta.1/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/deeptutor/DeepTutor_v1.0.0-beta.1/#article","headline":"DeepTutor v1.0.0-beta.1 release notes","datePublished":"2026-04-04","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/HKUDS/DeepTutor"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/deeptutor/1.0.0-beta.1/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/deeptutor/DeepTutor_v1.0.0-beta.1/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/deeptutor/1.0.0-beta.1/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/deeptutor/1.0.0-beta.1/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/deeptutor/1.0.0-beta.1/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/deeptutor/1.0.0-beta.1/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/deeptutor/1.0.0-beta.1/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/deeptutor">DeepTutor</a> </nav> <h1 class="detail-title"> <span class="p">DeepTutor</span> v1.0.0-beta.1 </h1> <div class="detail-meta"> <span class="chip chip--pre">预发布</span> <span><span class="k">发布时间</span>2026年4月4日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/HKUDS/DeepTutor" target="_blank" rel="noopener"> <span class="k">来源</span>HKUDS/DeepTutor </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/deeptutor/1.0.0-beta.1"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/deeptutor/DeepTutor_v1.0.0-beta.1/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="deeptutor-v100-beta1">DeepTutor v1.0.0-beta.1</h1>
+<h1 id="-deeptutor-v100-beta1-release-notes">🚀 DeepTutor v1.0.0-beta1 Release Notes</h1>
+<p><strong>发布日期：</strong> 2026.04.04
+我们很高兴地宣布<strong>DeepTutor v1.0.0-beta1</strong>——全新 DeepTutor 架构的第一个测试版。这是一次彻底的重写，将 DeepTutor 从单一的 RAG 导师转变为一个<strong>代理原生学习平台</strong>，具有两层插件模型（工具 + 功能）、三个统一入口点（CLI / WebSocket / Python SDK）和完全重建的 Web 应用程序 shell。更多惊喜等你来发现！</p>
+<blockquote>
+<p>⚠️ <strong>测试版通知：</strong> 这是 v1.0.0 的 <strong>测试版 1</strong>。核心架构是稳定的，但一些 <strong>UI 交互和边缘情况工作流程可能仍然包含错误</strong>。感谢您的耐心等待，并欢迎通过<a href="https://github.com/HKUDS/DeepTutor/issues">问题</a> 报告错误。
+📌 <strong>知识库注释：</strong> 在此版本中，RAG 管道已 <strong>简化为仅 LlamaIndex</strong>。 LightRAG 和 RAG-Anything 管道及其相关知识库内容已被 <strong>暂时删除</strong> 以专注于稳定性。它们将在即将发布的版本中重新引入。
+[!提示]
+<strong>征求反馈：</strong> 据了解，一些旧功能未包含在最新版本中。如果您有任何有用的意见、遇到任何错误或有任何功能请求，请<a href="https://github.com/HKUDS/DeepTutor/issues">打开问题</a>！也欢迎 PR——请参阅我们的<a href="https://github.com/HKUDS/DeepTutor/blob/main/CONTRIBUTING.md">贡献指南</a>。
+<strong>差异范围：</strong> <code>main...dev</code>（更改了 903 个文件，插入了 92,701 个，删除了 73,749 个）</p>
+</blockquote>
+<hr>
+<h2 id="快速总结">快速总结</h2>
+<ul>
+<li><strong>架构</strong> — 使用代理本机运行时（工具 + 功能）从 <code>src/</code> 完全重写为 <code>deeptutor/</code> + <code>deeptutor_cli/</code>。</li>
+<li><strong>入口点</strong> — 三个统一入口点：独立 CLI (<code>deeptutor</code>)、WebSocket API (<code>/api/v1/ws</code>) 和 Python SDK 外观。</li>
+<li><strong>功能</strong> — 五种内置功能：<code>chat</code>、<code>deep_solve</code>、<code>deep_question</code>、<code>deep_research</code>、<code>math_animator</code>。</li>
+<li><strong>工具</strong> — 七个 LLM 可调用工具：<code>rag</code>、<code>web_search</code>、<code>code_execution</code>、<code>reason</code>、<code>brainstorm</code>、<code>paper_search</code>、<code>geogebra_analysis</code>。</li>
+<li><strong>Web 应用程序</strong> — 使用工作区/实用程序路由组、新的 Playground、Co-Writer、Agents 和 Guide 页面重建 Next.js 应用程序。</li>
+<li><strong>TutorBot</strong> — 支持 12 个消息平台的多渠道机器人代理。</li>
+<li><strong>基础设施</strong> — SQLite 支持的会话持久性、转向运行时、提供商级 LLM 流量控制和遥测。</li>
+</ul>
+<hr>
+<h2 id="-亮点">✨ 亮点</h2>
+<h3 id="️-代理本机运行时工具--功能">🏗️ 代理本机运行时（工具 + 功能）</h3>
+<p>引入了一个两层插件模型，将工具执行与高级代理工作流程分离：</p>
+<ul>
+<li><strong>核心合约：</strong> <code>ToolProtocol</code>、<code>CapabilityProtocol</code>、<code>UnifiedContext</code>、<code>StreamEvent</code> 和 <code>StreamBus</code> — 所有运行时执行的基础。</li>
+<li><strong>ChatOrchestrator：</strong> 具有两个注册表的中央协调器：
+<ul>
+<li><code>ToolRegistry</code> — 工具发现、OpenAI 风格的模式导出和执行。</li>
+<li><code>CapabilityRegistry</code> — 功能路由、清单管理和阶段感知流。</li>
+</ul>
+</li>
+</ul>
+<h3 id="️统一入口点cli--websocket--python-sdk">🖥️统一入口点：CLI / WebSocket / Python SDK</h3>
+<p>三个入口点共享一个 <code>ChatOrchestrator</code> 运行时：</p>
+<table>
+<thead>
+<tr>
+<th align="left">切入点</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>CLI</strong> (<code>deeptutor</code>)</td>
+<td align="left">基于打字机的 CLI，带有子命令：<code>run</code>、<code>chat</code>、<code>bot</code>、<code>kb</code>、<code>memory</code>、<code>session</code>、<code>notebook</code>、<code>plugin</code>、<code>config</code>、<code>provider</code>、<code>serve</code></td>
+</tr>
+<tr>
+<td align="left"><strong>WebSocket</strong> (<code>/api/v1/ws</code>)</td>
+<td align="left">具有回合生命周期的统一端点：<code>start_turn</code>、<code>subscribe_turn</code>、<code>subscribe_session</code>、<code>resume_from</code>、<code>cancel_turn</code></td>
+</tr>
+<tr>
+<td align="left"><strong>Python SDK</strong> (<code>deeptutor.app.facade</code>)</td>
+<td align="left">SDK 式集成的程序化外观</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-能力层">🧠 能力层</h3>
+<p>五种内置功能，每种功能都有一个多步骤代理管道：</p>
+<table>
+<thead>
+<tr>
+<th align="left">能力</th>
+<th align="left">阶段</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>chat</code></td>
+<td align="left">回应</td>
+<td align="left">默认工具增强对话</td>
+</tr>
+<tr>
+<td align="left"><code>deep_solve</code></td>
+<td align="left">计划→推理→写作</td>
+<td align="left">多阶段问题解决</td>
+</tr>
+<tr>
+<td align="left"><code>deep_question</code></td>
+<td align="left">构思→评估→生成→验证</td>
+<td align="left">具有跟进模式的智能问题生成</td>
+</tr>
+<tr>
+<td align="left"><code>deep_research</code></td>
+<td align="left">搜索→分析→综合→报告</td>
+<td align="left">具有报告生成功能的多主体研究</td>
+</tr>
+<tr>
+<td align="left"><code>math_animator</code></td>
+<td align="left">分析 → 设计 → 代码生成 → 审查 → 渲染</td>
+<td align="left">基于Manim的数学概念视频生成</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-工具系统">🔧 工具系统</h3>
+<p>七个统一的 LLM 可调用工具，带有双语提示提示（en/zh）：</p>
+<table>
+<thead>
+<tr>
+<th align="left">工具</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>rag</code></td>
+<td align="left">通过 LlamaIndex 进行知识库检索</td>
+</tr>
+<tr>
+<td align="left"><code>web_search</code></td>
+<td align="left">10 个搜索提供商：Tavily、Exa、Jina、Serper、Perplexity、Brave、Baidu、SearXNG、DuckDuckGo、OpenRouter</td>
+</tr>
+<tr>
+<td align="left"><code>code_execution</code></td>
+<td align="left">沙盒 Python 执行与基于 AST 的安全防护</td>
+</tr>
+<tr>
+<td align="left"><code>reason</code></td>
+<td align="left">专门的深度推理LLM电话</td>
+</tr>
+<tr>
+<td align="left"><code>brainstorm</code></td>
+<td align="left">具有结构化原理的广度优先的想法探索</td>
+</tr>
+<tr>
+<td align="left"><code>paper_search</code></td>
+<td align="left">arXiv 学术论文搜索</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-tutorbot--多渠道机器人代理">🤖 TutorBot — 多渠道机器人代理</h3>
+<p>新的自主机器人系统 (<code>deeptutor/tutorbot/</code>) 将 DeepTutor 引入消息传递平台：</p>
+<ul>
+<li><strong>12 个渠道：</strong> Telegram、Discord、Slack、企业微信 (WeCom)、飞书、钉钉、WhatsApp、Matrix、QQ、电子邮件、MoChat</li>
+<li><strong>代理循环：</strong> 工具增强的 LLM 循环，具有内存、子代理生成和团队协作功能</li>
+<li><strong>内置工具：</strong> Shell、文件系统、Web、MCP、cron 和消息工具</li>
+<li><strong>后台服务：</strong> 心跳健康检查和基于 cron 的计划任务</li>
+</ul>
+<h3 id="-web-应用程序重构">🌐 Web 应用程序重构</h3>
+<p>使用新路由组完全重建 Next.js 前端：
+<strong>工作区路线 (<code>(workspace)/</code>)：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">页</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>首页</strong> (<code>/</code>)</td>
+<td align="left">带有工具增强对话的主聊天界面</td>
+</tr>
+<tr>
+<td align="left"><strong>指南</strong> (<code>/guide</code>)</td>
+<td align="left">交互式学习指南，包含课程历史记录、进度跟踪和完成摘要</td>
+</tr>
+<tr>
+<td align="left"><strong>游乐场</strong> (<code>/playground</code>)</td>
+<td align="left">统一深度能力UI（deep_solve、deep_question、deep_research、math_animator）</td>
+</tr>
+<tr>
+<td align="left"><strong>联合编剧</strong> (<code>/co-writer</code>)</td>
+<td align="left">人工智能辅助编辑和叙述者代理协作写作</td>
+</tr>
+<tr>
+<td align="left"><strong>代理</strong> (<code>/agents</code>)</td>
+<td align="left">TutorBot 管理 — 创建、配置自定义机器人并与其聊天</td>
+</tr>
+<tr>
+<td align="left"><strong>公用设施路线（<code>(utility)/</code>）：</strong></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">页</td>
+<td align="left">描述</td>
+</tr>
+<tr>
+<td align="left">:---</td>
+<td align="left">:---</td>
+</tr>
+<tr>
+<td align="left"><strong>知识</strong> (<code>/knowledge</code>)</td>
+<td align="left">使用 LlamaIndex 管道进行知识库管理</td>
+</tr>
+<tr>
+<td align="left"><strong>内存</strong> (<code>/memory</code>)</td>
+<td align="left">用户记忆和偏好管理</td>
+</tr>
+<tr>
+<td align="left"><strong>设置</strong> (<code>/settings</code>)</td>
+<td align="left">LLM、嵌入、TTS 和搜索服务的统一配置</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-服务基础设施重建">🏭 服务基础设施重建</h3>
+<p>将服务重构为更清晰的领域：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>deeptutor/services/</span></span>
+<span class="line"><span>├── config/       # Environment store, model catalog, provider runtime</span></span>
+<span class="line"><span>├── llm/          # Multi-provider LLM: factory, registry, traffic control, telemetry</span></span>
+<span class="line"><span>├── embedding/    # Adapter-based: OpenAI-compatible, Cohere, Jina, Ollama</span></span>
+<span class="line"><span>├── rag/          # LlamaIndex pipeline with component-based architecture</span></span>
+<span class="line"><span>├── search/       # 10 web search providers with result consolidation</span></span>
+<span class="line"><span>├── session/      # SQLite store, turn runtime, context builder</span></span>
+<span class="line"><span>├── memory/       # User memory persistence</span></span>
+<span class="line"><span>├── notebook/     # Notebook management</span></span>
+<span class="line"><span>├── prompt/       # Bilingual prompt template manager (en/zh)</span></span>
+<span class="line"><span>├── settings/     # Interface settings</span></span>
+<span class="line"><span>├── setup/        # Application initialization</span></span>
+<span class="line"><span>├── tutorbot/     # TutorBot management</span></span>
+<span class="line"><span>└── path_service  # Centralized data path resolution</span></span></code></pre>
+<h3 id="-安全与稳定">🔒 安全与稳定</h3>
+<ul>
+<li><strong>代码执行安全：</strong> 基于 AST 的导入/调用防护，具有可配置的允许列表。</li>
+<li><strong>LLM 流量控制：</strong> 提供商级断路器、错误率跟踪和重试机制。</li>
+<li><strong>启动验证：</strong> 启动时检查功能与工具的一致性。</li>
+</ul>
+<h3 id="-测试覆盖率">🧪 测试覆盖率</h3>
+<h2 id="跨所有主要层的-53-个以上新测试文件运行时工具功能注册表协调器服务llm-提供程序工厂路由遥测rag-管道嵌入搜索会话内存笔记本配置代理聊天解决问题math_animatorapi知识内存解决websocket-运行时cli-和工具代码执行器安全">跨所有主要层的 53 个以上新测试文件：运行时（工具/功能注册表、协调器）、服务（LLM 提供程序/工厂/路由/遥测、RAG 管道、嵌入、搜索、会话、内存、笔记本、配置）、代理（聊天、解决、问题、math_animator）、API（知识、内存、解决、WebSocket 运行时）、CLI 和工具（代码执行器）安全）。</h2>
+<h2 id="️-重大变更">⚠️ 重大变更</h2>
+<ul>
+<li><strong>封装布局：</strong> <code>src/</code> → <code>deeptutor/</code> + <code>deeptutor_cli/</code>。旧的 <code>src/</code> 目录完全删除（140 个文件）。</li>
+<li><strong>软件包重命名：</strong> <code>ai-tutor</code> → <code>deeptutor</code>，版本 <code>1.0.0</code>。</li>
+<li><strong>运行时模型：</strong> 能力原生编排。默认为<code>chat</code>；通过 <code>run</code> 命令或 WebSocket 显式选择深度模式。</li>
+<li><strong>网页路线：</strong> 所有页面均在 <code>(workspace)/</code> 和 <code>(utility)/</code> 下重新组织。旧页面（<code>/solver</code>、<code>/question</code>、<code>/research</code>、<code>/ideagen</code>、<code>/notebook</code>、<code>/history</code>）已删除。</li>
+<li><strong>RAG 管道：</strong> 仅 LlamaIndex 可用。 LightRAG 和 RAG - 暂时删除的任何内容。</li>
+<li><strong>数据布局：</strong> 运行时数据集中在 <code>data/user/workspace/...</code> 下。</li>
+<li><strong>依赖关系：</strong> 分为分层需求：<code>cli.txt</code>、<code>server.txt</code>、<code>dev.txt</code>、<code>math-animator.txt</code>、<code>tutorbot.txt</code>。</li>
+</ul>
+<hr>
+<h2 id="-发生了什么变化">📦 发生了什么变化</h2>
+<ul>
+<li>使用代理本机架构完成代码库重写（DeepTutor 2.0）。</li>
+<li>带有 <code>ChatOrchestrator</code> 协调器的两层插件模型（工具 + 功能）。</li>
+<li>独立的 CLI 包 (<code>deeptutor_cli/</code>) 通过 Typer 具有 11 个子命令。</li>
+<li>具有回合生命周期和会话流的统一 WebSocket 端点。</li>
+<li>5个内置功能和7个LLM可调用工具，带有双语提示提示。</li>
+<li>TutorBot 多渠道机器人代理，具有 12 个平台集成。</li>
+<li>使用工作区/实用路线组和新的 Playground、Co-Writer、Agents 和 Guide 页面重建 Web 应用程序。</li>
+<li>服务基础设施重建：LLM 提供商注册表、嵌入适配器、SQLite 会话存储、内存、笔记本和搜索整合。</li>
+<li>基于 AST 的代码执行安全、LLM 流量控制和提供商遥测。</li>
+<li>跨运行时、服务、代理、API、CLI 和工具的 53 个以上测试文件。</li>
+<li>更新了 Docker 配置和分层依赖管理。</li>
+</ul>
+<ul>
+<li>修复：<a href="https://github.com/HKUDS/DeepTutor/pull/175">https://github.com/HKUDS/DeepTutor/pull/175</a> 中 @Frant1cc 的 CoWriterEditor 滚动同步</li>
+<li>@Frant1cc 在 <a href="https://github.com/HKUDS/DeepTutor/pull/176">https://github.com/HKUDS/DeepTutor/pull/176</a> 中修复/i18n 改进</li>
+<li>特性/llm 硬化核心超薄 (#52)，作者：@scrrlt，<a href="https://github.com/HKUDS/DeepTutor/pull/183">https://github.com/HKUDS/DeepTutor/pull/183</a></li>
+<li>文档：更新 @oshliaer 在 <a href="https://github.com/HKUDS/DeepTutor/pull/184">https://github.com/HKUDS/DeepTutor/pull/184</a> 中的 ru 翻译</li>
+<li>壮举：在 <a href="https://github.com/HKUDS/DeepTutor/pull/194">https://github.com/HKUDS/DeepTutor/pull/194</a> 中添加 @infstellar 的 OpenRouter 搜索提供商</li>
+<li>限制代码执行范围并通过<a href="https://github.com/HKUDS/DeepTutor/pull/196%E4%B8%AD%E7%9A%84@RinZ27%E5%BC%BA%E5%88%B6%E6%89%A7%E8%A1%8C%E5%AF%BC%E5%85%A5%E7%99%BD%E5%90%8D%E5%8D%95">https://github.com/HKUDS/DeepTutor/pull/196中的@RinZ27强制执行导入白名单</a></li>
+<li>feat/vision_slover by @kms9 在 <a href="https://github.com/HKUDS/DeepTutor/pull/191">https://github.com/HKUDS/DeepTutor/pull/191</a></li>
+<li>让我们来认识一下DeepTutor 1.0.0！  通过 @pancacake 在 <a href="https://github.com/HKUDS/DeepTutor/pull/238">https://github.com/HKUDS/DeepTutor/pull/238</a></li>
+</ul>
+<h2 id="新贡献者">新贡献者</h2>
+<ul>
+<li>@Frant1cc 在 <a href="https://github.com/HKUDS/DeepTutor/pull/175">https://github.com/HKUDS/DeepTutor/pull/175</a> 中做出了第一个贡献</li>
+<li>@infstellar 在 <a href="https://github.com/HKUDS/DeepTutor/pull/194">https://github.com/HKUDS/DeepTutor/pull/194</a> 中做出了第一个贡献</li>
+<li>@kms9 在 <a href="https://github.com/HKUDS/DeepTutor/pull/191">https://github.com/HKUDS/DeepTutor/pull/191</a> 中做出了第一个贡献
+<strong>完整 Changelog</strong>：<a href="https://github.com/HKUDS/DeepTutor/compare/v0.6.0...v1.0.0-beta.1">https://github.com/HKUDS/DeepTutor/compare/v0.6.0…v1.0.0-beta.1</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/HKUDS/DeepTutor">HKUDS/DeepTutor</a> · 🏷️ 版本：<code>v1.0.0-beta.1</code> · 📅 发布：2026-04-04 · <a href="https://github.com/HKUDS/DeepTutor/releases/tag/v1.0.0-beta.1">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/deeptutor/DeepTutor_v1.0.0-beta.2"> <span class="k">← 下一个</span> <span class="t">v1.0.0-beta.2</span> </a> <a href="/zh/release_note/deeptutor/DeepTutor_v0.6.0"> <span class="k">上一个 →</span> <span class="t">v0.6.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/HKUDS/DeepTutor/releases/tag/v1.0.0-beta.1" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/HKUDS/DeepTutor" target="_blank" rel="noopener"> <span>HKUDS/DeepTutor</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#快速总结" class>快速总结</a><a href="#-亮点" class>✨ 亮点</a><a href="#️-代理本机运行时工具--功能" class="lv3">🏗️ 代理本机运行时（工具 + 功能）</a><a href="#️统一入口点cli--websocket--python-sdk" class="lv3">🖥️统一入口点：CLI / WebSocket / Python SDK</a><a href="#-能力层" class="lv3">🧠 能力层</a><a href="#-工具系统" class="lv3">🔧 工具系统</a><a href="#-tutorbot--多渠道机器人代理" class="lv3">🤖 TutorBot — 多渠道机器人代理</a><a href="#-web-应用程序重构" class="lv3">🌐 Web 应用程序重构</a><a href="#-服务基础设施重建" class="lv3">🏭 服务基础设施重建</a><a href="#-安全与稳定" class="lv3">🔒 安全与稳定</a><a href="#-测试覆盖率" class="lv3">🧪 测试覆盖率</a><a href="#跨所有主要层的-53-个以上新测试文件运行时工具功能注册表协调器服务llm-提供程序工厂路由遥测rag-管道嵌入搜索会话内存笔记本配置代理聊天解决问题math_animatorapi知识内存解决websocket-运行时cli-和工具代码执行器安全" class>跨所有主要层的 53 个以上新测试文件：运行时（工具/功能注册表、协调器）、服务（LLM 提供程序/工厂/路由/遥测、RAG 管道、嵌入、搜索、会话、内存、笔记本、配置）、代理（聊天、解决、问题、math_animator）、API（知识、内存、解决、WebSocket 运行时）、CLI 和工具（代码执行器）安全）。</a><a href="#️-重大变更" class>⚠️ 重大变更</a><a href="#-发生了什么变化" class>📦 发生了什么变化</a><a href="#新贡献者" class>新贡献者</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/deeptutor/DeepTutor_v1.7.4"> <span class="v">v1.7.4</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/deeptutor/DeepTutor_v1.7.3"> <span class="v">v1.7.3</span> <span class="d">26-11-15</span> </a> </li><li> <a href="/zh/release_note/deeptutor/deeptutor_1.7.2"> <span class="v">v1.7.2</span> <span class="d">26-11-06</span> </a> </li><li> <a href="/zh/release_note/deeptutor/deeptutor_1.7.1"> <span class="v">v1.7.1</span> <span class="d">26-10-31</span> </a> </li><li> <a href="/zh/release_note/deeptutor/deeptutor_1.7.0"> <span class="v">v1.7.0</span> <span class="d">26-10-28</span> </a> </li><li> <a href="/zh/release_note/deeptutor/DeepTutor_v1.6.15"> <span class="v">v1.6.15</span> <span class="d">26-10-18</span> </a> </li><li> <a href="/zh/release_note/deeptutor/deeptutor_1.6.14"> <span class="v">v1.6.14</span> <span class="d">26-10-08</span> </a> </li><li> <a href="/zh/release_note/deeptutor/deeptutor_1.6.13"> <span class="v">v1.6.13</span> <span class="d">26-10-04</span> </a> </li> </ul> <a href="/zh/releases/deeptutor" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 92 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

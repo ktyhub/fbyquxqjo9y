@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>accelerate v1.14.0 — STAGS NextStack</title><meta name="description" content="This release brings a large batch of FSDP2 fixes and quality-of-life improvements: correct dtype handling on load, sharding of embeddings/norms, QLoRA crash prevention, and a more robust auto-wrap policy."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/accelerate/accelerate_v1.14.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/accelerate/1.14.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/accelerate/accelerate_v1.14.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/accelerate/1.14.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="accelerate v1.14.0 — STAGS NextStack"><meta property="og:description" content="This release brings a large batch of FSDP2 fixes and quality-of-life improvements: correct dtype handling on load, sharding of embeddings/norms, QLoRA crash prevention, and a more robust auto-wrap policy."><meta property="og:url" content="https://www.stags.cn/zh/release_note/accelerate/accelerate_v1.14.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/accelerate/accelerate_v1.14.0/#article","headline":"accelerate v1.14.0 release notes","datePublished":"2026-06-11","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/huggingface/accelerate"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/accelerate/1.14.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/accelerate/accelerate_v1.14.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/accelerate/1.14.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/accelerate/1.14.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/accelerate/1.14.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/accelerate/1.14.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/accelerate/1.14.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/accelerate">accelerate</a> </nav> <h1 class="detail-title"> <span class="p">accelerate</span> v1.14.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年6月11日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/huggingface/accelerate" target="_blank" rel="noopener"> <span class="k">来源</span>huggingface/accelerate </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/accelerate/1.14.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/accelerate/accelerate_v1.14.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="accelerate-v1140">accelerate v1.14.0</h1>
+<h2 id="fsdp2-改进">FSDP2 改进</h2>
+<p>此版本带来了大量 FSDP2 修复和生活质量改进：加载时正确的数据类型处理、嵌入/规范的分片、QLoRA 崩溃预防以及更强大的自动换行策略。</p>
+<ul>
+<li>@SunMarc 在 #4015 中的 Fsdp2 full_shard 嵌入和规范</li>
+<li>修复了 @SunMarc 在 #4021 中的 fsdp2 加载完整状态字典 dtype 不匹配的问题</li>
+<li>修复@SunMarc 在 #4022 中的区域编译 fsdpv2</li>
+<li>[FSDP2] 在 full_shard 之前将模型转换为统一数据类型，以修复 @roycho96 在 #3985 中的混合数据类型断言错误</li>
+<li>[FSDP2] 从 full_shard 中自动排除非浮动冻结 Params4bit 以防止 QLoRA 崩溃，@roycho96 在 #3987 中</li>
+<li>修复（FSDP2）：自动换行策略忽略 _no_split_modules 回退由 @JohnGiorgi 在 #3999</li>
+<li>修复：在 #3982 中 @roycho96 在 fsdp2_load_full_state_dict 中使用基于键的匹配</li>
+<li>修复：将缺失的 model_has_params4bit 保护添加到 #3981 中@roycho96 的 fsdp2_load_full_state_dict 调用中</li>
+<li>修复 to-fsdp2：删除 REMOVED / NOT_YET_IMPLMENTED FSDP1 密钥，而不是通过 @lollinng 在 #4065 中泄漏它们</li>
+<li>防止在 #3977 中@joshuaswanson 在prepare_model() 中出现双重包装模型</li>
+</ul>
+<h2 id="amd-rocm-支持">AMD ROCm 支持</h2>
+<p>Accelerate 现在可以在 AMD ROCm 设备上端到端运行。谢谢@Abdennacer-Badaoui！</p>
+<ul>
+<li>通过 @Abdennacer-Badaoui 在 #4025 中对 AMD ROCm 进行端到端加速工作</li>
+</ul>
+<h2 id="神经元">神经元</h2>
+<p>进一步改进 Neuron 以减少重新编译并覆盖丢失的设备情况。</p>
+<ul>
+<li>为 Neuron 设备添加填充的全收集和广播，以减少 @czkkkkkk 在 #4000 中的重新编译</li>
+<li>修复：在 #4042 中添加@michaelbenayoun 缺失的神经元设备案例</li>
+</ul>
+<h2 id="量化和卸载">量化和卸载</h2>
+<p>我们改进了对量化模型的卸载支持，包括 Torchao、int8 和捆绑重量处理。</p>
+<ul>
+<li>@SunMarc 在 #3973 中卸载 Torchao</li>
+<li>修复@jiqing-feng 在 #4044 中的 int8 offload hook 分离统计恢复</li>
+<li>修复了 keep_in_fp32_modules 对 load_and_quantize_model 中的绑定权重不起作用的问题，作者为 @jiqing-feng， #4043</li>
+<li>通过 @lollinng 在 #4063 中修复 FP8 fnuz / e8m0fnu dtypes 的 dtype_byte_size</li>
+</ul>
+<h2 id="数据加载">数据加载</h2>
+<ul>
+<li>功能：在 BatchSamplerShard 中支持动态批量大小，其中 @yuxinyuan 在 #3969 中使用 Even_batches</li>
+<li>修复@SunMarc 在 #3958 中 n_shards == num_processes 时的可迭代数据集分片条件</li>
+<li>修复 #4052 中 @3manifold 的 apply_padding=False 且 num_samples &#x3C; num_processes 时 split_ Between_processes 中的隐式填充</li>
+</ul>
+<h2 id="小修复">小修复</h2>
+<ul>
+<li>[DeepSpeed] 允许@kashif 在 SP 中使用内核 flash-attn #3959</li>
+<li>修复：在 #3962 中通过@0xDELUXA 有条件地导入在 Accelerator.py 中的 torch.distributed.algorithms.join</li>
+<li>修复了 @SunMarc 在 #3976 中的 is_hf_initialized 属性</li>
+<li>feat(utils)：在#4027中添加@imstevenpmwork的最大缩减类型</li>
+<li>修复（状态）：使 MLU 后端成为 _prepare_backend elif 链的一部分（@Anai-Guo 在 #4057 中）</li>
+<li>修复@SunMarc 在 #4059 中的笔记本启动器 cuda init</li>
+<li>pytorch-triton-xpu 由 @sywangyi 在 #4007 中重命名为 triton-xpu</li>
+<li>在 #4001 中 @YangKai0616 放宽 test_big_modeling 中 XPU 的数值容差</li>
+<li>修复 XPU 上 test_load_checkpoint_and_dispatch_with_broadcast 中的 gloo 后端错误，由 @kaixuanliu 在 #4056 中修复</li>
+<li>在 #4064 中 @lollinng 在 ParallelismConfig.get_device_mesh 中引发 ValueError 而不是裸字符串</li>
+<li>测试：在 #4028 中由 @booxter 优雅地处理 mps 丢失的 set_device</li>
+<li>测试：为 no_split_module_classes 添加回归测试，接受 #4048 中 @UFO0506 的设置类型</li>
+<li>修复@SunMarc 在 #4072 中的所有测试
+<ul>
+<li>文档：在 #4054 中添加 @aryanputta 的聚合分析器内存示例</li>
+<li>DOC：由 @kratos0718 在 #4051 中记录 load_accelerator_state、find_executable_batch_size 和 send_to_device 中缺少的参数</li>
+<li>文档：在 #4037 中修复 @slocoro 的 fsdp2_prepare_auto_wrap_policy 文档字符串</li>
+<li>在 #3980 中修复 @3manifold 的 DistributedType 文档</li>
+<li>修复 @cihandemir 在 #3961 中的文档和示例中的语法、拼写和一致性问题</li>
+<li>文档：修复 @mokashang 在 #4040 中的文档字符串、评论和用户文档中的拼写错误</li>
+<li>杂务：在 #4009 中由 @rtrompier 更新文档构建器工作流程 SHA</li>
+<li>杂务：在 #4018 中为 @rtrompier 的主文档构建工作流程碰撞 doc-builder SHA</li>
+<li>[CI] Bump style-bot SHA + 切换到 GitHub 应用程序，作者：@paulinebm，#4031</li>
+<li>修复 TrackioTracker.log() 忽略 #3975 中 @joshuaswanson 的步骤参数</li>
+<li>修复：#3970 中 @liuyun7345 在 TrackioTracker.log() 中传递步骤参数</li>
+<li>修复（跟踪）：tracker.log 上的默认步骤=None 并接受@1fanwang 在#4039 中的 MLflowTracker 中的额外 kwargs</li>
+<li>修复 MLflowTracker.store_init_configuration 通过 @ATOM00blue 在 #4046 中改变调用者的配置字典</li>
+<li>修复（tracker）：保护 init_trackers 并记录 None kwargs by @xodn348 in #4026</li>
+<li>🔒 在 #3992 中固定 GitHub 操作以提交 @paulinebm 的 SHA</li>
+<li>杂务：通过@hf-security-analysis[bot]在#4069中更新build-docker-images-release.yml</li>
+<li>杂务：启用 Dependabot 每周 GitHub 操作碰撞，由 @hf-dependantbot-rollout[bot] 在 #4049 中实现</li>
+<li>通过 @dependabot[bot] 在 #4068 中对操作组进行 8 项更新
+完整 Changelog: <a href="https://github.com/huggingface/accelerate/compare/v1.13.0...v1.14.0">https://github.com/huggingface/accelerate/compare/v1.13.0…v1.14.0</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/huggingface/accelerate">huggingface/accelerate</a> · 🏷️ 版本：<code>v1.14.0</code> · 📅 发布：2026-06-11 · <a href="https://github.com/huggingface/accelerate/releases/tag/v1.14.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/accelerate/accelerate_v1.15.0"> <span class="k">← 下一个</span> <span class="t">v1.15.0</span> </a> <a href="/zh/release_note/accelerate/accelerate_v1.13.0"> <span class="k">上一个 →</span> <span class="t">v1.13.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/huggingface/accelerate/releases/tag/v1.14.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/huggingface/accelerate" target="_blank" rel="noopener"> <span>huggingface/accelerate</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#fsdp2-改进" class>FSDP2 改进</a><a href="#amd-rocm-支持" class>AMD ROCm 支持</a><a href="#神经元" class>神经元</a><a href="#量化和卸载" class>量化和卸载</a><a href="#数据加载" class>数据加载</a><a href="#小修复" class>小修复</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/accelerate/accelerate_v1.16.0"> <span class="v">v1.16.0</span> <span class="d">26-11-16</span> </a> </li><li> <a href="/zh/release_note/accelerate/accelerate_v1.15.0"> <span class="v">v1.15.0</span> <span class="d">26-09-09</span> </a> </li><li> <a href="/zh/release_note/accelerate/accelerate_v1.14.0" aria-current="true"> <span class="v">v1.14.0</span> <span class="d">26-06-11</span> </a> </li><li> <a href="/zh/release_note/accelerate/accelerate_v1.13.0"> <span class="v">v1.13.0</span> <span class="d">26-03-04</span> </a> </li><li> <a href="/zh/release_note/accelerate/accelerate_v1.12.0"> <span class="v">v1.12.0</span> <span class="d">25-11-21</span> </a> </li><li> <a href="/zh/release_note/accelerate/accelerate_v1.11.0"> <span class="v">v1.11.0</span> <span class="d">25-10-20</span> </a> </li><li> <a href="/zh/release_note/accelerate/accelerate_v1.10.1"> <span class="v">v1.10.1</span> <span class="d">25-08-25</span> </a> </li><li> <a href="/zh/release_note/accelerate/accelerate_v1.10.0"> <span class="v">v1.10.0</span> <span class="d">25-08-07</span> </a> </li> </ul> <a href="/zh/releases/accelerate" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

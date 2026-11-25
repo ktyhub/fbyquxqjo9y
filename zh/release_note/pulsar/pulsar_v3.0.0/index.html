@@ -1,0 +1,466 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>pulsar v3.0.0 — STAGS NextStack</title><meta name="description" content="Upgrade the RocksDB version to 7.9.2 to keep sync with BookKeeper's RocksDB dependency in #20072 · Introduce consistent hash ring to distribute the load of multiple topics subscription in #19502"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/pulsar/pulsar_v3.0.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/pulsar/3.0.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/pulsar/pulsar_v3.0.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/pulsar/3.0.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="pulsar v3.0.0 — STAGS NextStack"><meta property="og:description" content="Upgrade the RocksDB version to 7.9.2 to keep sync with BookKeeper's RocksDB dependency in #20072 · Introduce consistent hash ring to distribute the load of multiple topics subscription in #19502"><meta property="og:url" content="https://www.stags.cn/zh/release_note/pulsar/pulsar_v3.0.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/pulsar/pulsar_v3.0.0/#article","headline":"pulsar v3.0.0 release notes","datePublished":"2023-05-03","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/apache/pulsar"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/pulsar/3.0.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/pulsar/pulsar_v3.0.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/pulsar/3.0.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/pulsar/3.0.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/pulsar/3.0.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/pulsar/3.0.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/pulsar/3.0.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/pulsar">pulsar</a> </nav> <h1 class="detail-title"> <span class="p">pulsar</span> v3.0.0 </h1> <div class="detail-meta"> <span class="chip chip--major">大版本</span> <span><span class="k">发布时间</span>2023年5月3日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/apache/pulsar" target="_blank" rel="noopener"> <span class="k">来源</span>apache/pulsar </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/pulsar/3.0.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/pulsar/pulsar_v3.0.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="pulsar-v300">pulsar v3.0.0</h1>
+<h3 id="重要通知">重要通知</h3>
+<ul>
+<li>将 RocksDB 版本升级到 7.9.2，以与 <a href="https://github.com/apache/pulsar/pull/20072">#20072</a> 中 BookKeeper 的 RocksDB 依赖项保持同步</li>
+<li>在<a href="https://github.com/apache/pulsar/pull/19502">#19502</a>中引入一致的哈希环来分配多个主题订阅的负载</li>
+<li>在 <a href="https://github.com/apache/pulsar/pull/19486">#19486</a> 中对 java 消费者设置 DLQ 策略时删除默认的 30 秒 ackTimeout</li>
+<li>需要 authRole 是 proxyRole 才能在 <a href="https://github.com/apache/pulsar/pull/19455">#19455</a> 中设置originalPrincipal</li>
+<li>在 <a href="https://github.com/apache/pulsar/pull/19377">#19377</a> 中将 Elasticsearch 接收器空闲 cnx 超时更新为 30 秒</li>
+<li>当 newTransaction 时将检查的异常移至构建器中。在 <a href="https://github.com/apache/pulsar/pull/19356">#19356</a></li>
+<li>TokenAuthenticationState：仅在 <a href="https://github.com/apache/pulsar/pull/19314">#19314</a> 中验证令牌一次</li>
+<li>OneStageAuth State：将authn移出<a href="https://github.com/apache/pulsar/pull/19295">#19295</a>中的构造函数</li>
+<li>更新 AuthenticationProvider 以简化 <a href="https://github.com/apache/pulsar/pull/19197">#19197</a> 中的 HTTP Authn</li>
+<li>删除 <a href="https://github.com/apache/pulsar/pull/19182">#19182</a> 中 2.7 和 2.9 中已弃用的 AuthorizationProvider 方法</li>
+<li>弃用 <a href="https://github.com/apache/pulsar/pull/19180">#19180</a> 中的阻塞 AuthorizationService、AuthorizationProvider 方法</li>
+<li>拒绝创建不存在的持久分区。在 <a href="https://github.com/apache/pulsar/pull/19086">#19086</a></li>
+<li>当 <a href="https://github.com/apache/pulsar/pull/18997">#18997</a> 中没有代理拦截器时，省略 CommandAck 的副本</li>
+<li>在 <a href="https://github.com/apache/pulsar/pull/18712">#18712</a> 中为 tls trust 证书使用正确的文件路径</li>
+<li>在 <a href="https://github.com/apache/pulsar/pull/18097">#18097</a> 中为 Quorum 和 Netty 服务器启用证书刷新</li>
+<li>从 <a href="https://github.com/apache/pulsar/pull/17419">#17419</a> 中的 Prometheus 指标中删除时间戳</li>
+<li>恢复 5895：修复 <a href="https://github.com/apache/pulsar/pull/17060">#17060</a> 中的 redeliveryCount</li>
+<li>修复生产者/消费者权限无法在 <a href="https://github.com/apache/pulsar/pull/16018">#16018</a> 中获取 v1/schema</li>
+<li>自动恢复默认 reppDnsResolverClass 到 <a href="https://github.com/apache/pulsar/pull/15640">#15640</a> 中的 ZkBookieRackAffinityMapping</li>
+<li>允许在 <a href="https://github.com/apache/pulsar/pull/19432">#19432</a> 中构建和推送多架构 Docker 图像</li>
+</ul>
+<h3 id="点子">点子</h3>
+<ul>
+<li>事务缓冲写入器的 PIP-160 指标统计 <a href="https://github.com/apache/pulsar/issues/15370">#15370</a></li>
+<li>PIP-167 使其可配置为需要订阅权限 <a href="https://github.com/apache/pulsar/pull/15576">#15576</a></li>
+<li>PIP-169 支持按流量或 qps 分割捆绑 <a href="https://github.com/apache/pulsar/pull/16782">#16782</a></li>
+<li>PIP-188：Pulsar 中的集群迁移或蓝绿集群部署支持 <a href="https://github.com/apache/pulsar/pull/16551">#16551</a></li>
+<li>PIP-192：新的 Pulsar Broker 负载均衡器 <a href="https://github.com/apache/pulsar/pull/16691">#16691</a></li>
+<li>PIP-214：添加代理级别指标统计并公开给 prometheus <a href="https://github.com/apache/pulsar/pull/18056">#18056</a></li>
+<li>PIP-218：消费者batchReceive()每次接收单个分区<a href="https://github.com/apache/pulsar/pull/18182">#18182</a></li>
+<li>PIP-229：添加通用接口来获取 MessageIdData 的字段 #18950(<a href="https://github.com/apache/pulsar/pull/18950">https://github.com/apache/pulsar/pull/18950</a>)</li>
+<li>PIP-250：将代理版本添加到 CommandConnect #19623(<a href="https://github.com/apache/pulsar/pull/19623">https://github.com/apache/pulsar/pull/19623</a>)</li>
+<li>PIP-257：向服务器组件添加 Open ID Connect 支持 <a href="https://github.com/apache/pulsar/pull/19771">#19771</a></li>
+</ul>
+<h3 id="经纪人">经纪人</h3>
+<ul>
+<li>[代理] 不完整的 PIP-97：异步身份验证提供程序 <a href="https://github.com/apache/pulsar/pull/12105">#12105</a>
+<ul>
+<li>由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19409">#19409</a> 中实现 ServerCnx</li>
+<li>由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19292">#19292</a> 中实现 ProxyConnection</li>
+</ul>
+</li>
+<li>[Broker] 不完整的 PIP-180：影子主题，支持只读主题所有权的替代方法。 <a href="https://github.com/apache/pulsar/pull/16153">#16153</a>
+<ul>
+<li>在 <a href="https://github.com/apache/pulsar/pull/18265">#18265</a> 中添加 @Jason918 的 ShadowManagedLedgerImpl</li>
+<li>支持影子主题创建。作者：@Jason918 <a href="https://github.com/apache/pulsar/pull/17711">#17711</a></li>
+<li>在 <a href="https://github.com/apache/pulsar/pull/17371">#17371</a> 中添加 @Jason918 的 Shadow Replicator</li>
+</ul>
+</li>
+<li>[代理] PIP-192：新的 Pulsar Broker 负载均衡器 <a href="https://github.com/apache/pulsar/pull/16691">#16691</a>
+<ul>
+<li>修复压缩有效负载的 getLastMessageId（并为负载平衡系统主题添加压缩和 maxBatchSize），由 @heesung-sn 在 <a href="https://github.com/apache/pulsar/pull/20087">#20087</a> 中</li>
+</ul>
+</li>
+<li>通过 @heesung-sn 在 <a href="https://github.com/apache/pulsar/pull/20059">#20059</a> 中改进 TransferSheder 以解决大型集群的过载异常值
+<ul>
+<li>更新查找数据路径以支持@Demogorgon314在<a href="https://github.com/apache/pulsar/pull/19999">#19999</a>中的部署和回滚</li>
+<li>在<a href="https://github.com/apache/pulsar/pull/19958">#19958</a>中通过@Demogorgon314过滤传输目标经纪人</li>
+<li>由 @heesung-sn 在 <a href="https://github.com/apache/pulsar/pull/19945">#19945</a> 中更新了指标和清理代理选择器</li>
+<li>支持通过@Demogorgon314在<a href="https://github.com/apache/pulsar/pull/19851">#19851</a>中删除命名空间捆绑管理API</li>
+<li>@heesung-sn 在 <a href="https://github.com/apache/pulsar/pull/19813">#19813</a> 中改进了自动卸载逻辑</li>
+<li>在 <a href="https://github.com/apache/pulsar/pull/19592">#19592</a> 中@Demogorgon314 支持代理隔离策略</li>
+<li>通过@Demogorgon314在<a href="https://github.com/apache/pulsar/pull/19613">#19613</a>中添加大主题计数过滤器</li>
+<li>@heesung-sn 在 <a href="https://github.com/apache/pulsar/pull/19620">#19620</a> 中的 ServiceUnitStateData 中添加了 VersionId</li>
+<li>在 <a href="https://github.com/apache/pulsar/pull/19546">#19546</a> 中@heesung-sn 在 ServiceUnitState 中添加了删除和初始化状态</li>
+<li>在 <a href="https://github.com/apache/pulsar/pull/19471">#19471</a> 中添加@heesung-sn 的代理和顶级包加载报告器</li>
+<li>@heesung-sn 在 <a href="https://github.com/apache/pulsar/pull/18865">#18865</a> 中添加了 TransferShedder</li>
+<li>@heesung-sn 在 <a href="https://github.com/apache/pulsar/pull/19045">#19045</a> 中添加了 ServiceUnitStateCompactionStrategy</li>
+<li>为StrategyTwoPhaseCompactor 和TableView 添加了TopicCompactionStrategy。作者：@heesung-sn 在 <a href="https://github.com/apache/pulsar/pull/18195">#18195</a></li>
+<li>通过@Demogorgon314在<a href="https://github.com/apache/pulsar/pull/18777">#18777</a>中实现加载数据存储</li>
+<li>通过@Demogorgon314在<a href="https://github.com/apache/pulsar/pull/18810">#18810</a>中为新的负载管理器实现代理注册表</li>
+<li>@heesung-sn 在 <a href="https://github.com/apache/pulsar/pull/18489">#18489</a> 中添加了 ServiceUnitStateChannelImpl</li>
+</ul>
+</li>
+<li>[经纪人] Pip-257：由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19849">#19849</a> 中添加 AuthenticationProviderOpenID</li>
+<li>[Broker] 通过 @lifepuzzlefun 在 <a href="https://github.com/apache/pulsar/pull/20159">#20159</a> 中使 <code>LeastResourceUsageWithWeight</code> 线程安全</li>
+<li>[Broker] 支持禁用延迟桶合并。作者：@mattisonchao <a href="https://github.com/apache/pulsar/pull/20155">#20155</a></li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/20144">#20144</a> 中@michaeljmarshall 为 k8s 运行时提供下载验证参数时提供下载验证参数</li>
+<li>[Broker] AuthenticationProviderOpenID k8s 错误日志，作者：@michaeljmarshall，位于 <a href="https://github.com/apache/pulsar/pull/20135">#20135</a></li>
+<li>[Broker] 通过@michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/20132">#20132</a> 中为 AuthenticationProviderList 实现authenticateAsync</li>
+<li>[Broker] 由@wolfstudy 在 <a href="https://github.com/apache/pulsar/pull/20113">#20113</a> 中修复代理重启逻辑</li>
+<li>[Broker] 确保先前的延迟索引从 snapshotSegmentLastIndexTable 中删除，并通过 <a href="https://github.com/apache/pulsar/pull/20086">#20086</a> 中的 @coderzc 使加载操作异步</li>
+<li>[Broker] 修复了<a href="https://github.com/apache/pulsar/pull/20075">#20075</a>中@coderzc无法完成的清除延迟消息的未来</li>
+<li>[Broker] 如果 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/20067">#20067</a> 中发出 ProxyLookupRequests，则刷新身份验证数据</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/20037">#20037</a> 中通过 @BewareMyPower 修复不稳定的 testCreateTopicWithZombieReplicatorCursor</li>
+<li>[Broker] 当 TCP/IP 连接被 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/20026">#20026</a> 中孤立时，防止与密钥共享粘性消费者发生范围冲突</li>
+<li>[经纪商] 修复@nicoloboschi 的领导者经纪商日志 <a href="https://github.com/apache/pulsar/pull/19987">#19987</a></li>
+<li>[Broker] 使 LedgerOffloaderFactory 可以加载旧的 nar。作者：@horizonzy <a href="https://github.com/apache/pulsar/pull/19913">#19913</a></li>
+<li>[Broker] <a href="https://github.com/apache/pulsar/pull/19972">#19972</a> 中的@BewareMyPower 在远程集群不存在时忽略并删除复制器光标</li>
+<li>[Broker] 修复 DeadLetterProducer 创建回调阻塞 client io 线程。作者：@lifepuzzlefun <a href="https://github.com/apache/pulsar/pull/19930">#19930</a></li>
+<li>[Broker] 通过 @coderzc 在 <a href="https://github.com/apache/pulsar/pull/19927">#19927</a> 中一次合并多个存储桶</li>
+<li>[Broker] 修复当 @lord Cheng10 在 <a href="https://github.com/apache/pulsar/pull/19887">#19887</a> 中执行 updateStats 方法时，报告给 zookeeper 的捆绑统计数据丢失的问题</li>
+<li>[Broker] 取消订阅时清除延迟消息并通过@coderzc 在 <a href="https://github.com/apache/pulsar/pull/19901">#19901</a> 中使清除操作异步</li>
+<li>[Broker] 修复@coderzc 在 <a href="https://github.com/apache/pulsar/pull/19899">#19899</a> 中消息为空值时无法发送 ErrorCommand</li>
+<li>[Broker] PIP-240：@poorbarcode 在 <a href="https://github.com/apache/pulsar/pull/19737">#19737</a> 中的 PersistentTopic 中新的公共方法 unloadSubscription</li>
+<li>[Broker] PIP-250：由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19618">#19618</a> 中将 proxyVersion 添加到 CommandConnect</li>
+<li>[Broker] 通过@coderzc 在 <a href="https://github.com/apache/pulsar/pull/19873">#19873</a> 中使存储桶合并操作异步</li>
+<li>[Broker] 当消息过期失败时，由@massakam 在 <a href="https://github.com/apache/pulsar/pull/19778">#19778</a> 中抑制错误日志记录</li>
+<li>[Broker] 允许代理通过 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19557">#19557</a> 中为 authRole 和 originRole 传递相同的角色</li>
+<li>[Broker] 通过 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19506">#19506</a> 中使身份验证刷新线程安全</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19777">#19777</a> 中修复 @nodece 的 RetentionPolicies 构造函数</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19716">#19716</a> 中添加 @coderzc 的存储桶延迟消息跟踪器指标</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19802">#19802</a> 中为@coderzc 的存储桶快照的账本元数据添加 topicName 和cursorName</li>
+<li>[Broker] 当所有消费者在 <a href="https://github.com/apache/pulsar/pull/19801">#19801</a> 中通过 @coderzc 断开连接时，不要清理 BucketDelayedDeliveryTracker</li>
+<li>[Broker] 修复了 @nodece 在 <a href="https://github.com/apache/pulsar/pull/19762">#19762</a> 中使用空 url 创建集群的问题</li>
+<li>[Broker] 修复潜在异常导致策略服务初始化失败的问题。作者：@Technoboy- <a href="https://github.com/apache/pulsar/pull/19746">#19746</a></li>
+<li>[Broker] 之前在 ServerCnx 中通过 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19270">#19270</a> 中验证originalPrincipal</li>
+<li>[Broker] 修复了 @massakam 在 <a href="https://github.com/apache/pulsar/pull/19759">#19759</a> 中 msgRateExpired 可能不会永远刷新的问题</li>
+<li>[Broker] 修复索引生成器在添加条目失败后不回滚的问题。作者：@gaozhangmin <a href="https://github.com/apache/pulsar/pull/19727">#19727</a></li>
+<li>[Broker] 根据 @coderzc 在 <a href="https://github.com/apache/pulsar/pull/19706">#19706</a> 中的 maxIndexesPerBucketSnapshotSegment 切断快照段</li>
+<li>[Broker] 将 <a href="https://github.com/apache/pulsar/pull/18814">#18814</a> 中的 @yuruguo 的 <code>allowAutoTopicCreationType</code> 类型更改为 TopicType</li>
+<li>[Broker] 将@nodece的原始认证数据存储在<a href="https://github.com/apache/pulsar/pull/19519">#19519</a>中</li>
+<li>[Broker] 如果在 <a href="https://github.com/apache/pulsar/pull/18877">#18877</a> 中启用 @poorbarcode 压缩读取，则 GetLastMessageId 返回最后一条消息的错误批次索引</li>
+<li>[Broker] PIP-188 支持蓝绿集群迁移 [part-1] by @rdhabalia in <a href="https://github.com/apache/pulsar/pull/17962">#17962</a></li>
+<li>[Broker] 在日志消息中的占位符中嵌入字符串化异常，由 @massakam 在 <a href="https://github.com/apache/pulsar/pull/19633">#19633</a> 中</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19615">#19615</a> 中修复 @coderzc 的 BucketDelayedDeliveryTracker 合并问题</li>
+<li>[Broker] 让 BucketDelayedDeliveryTracker 可以重试快照操作并通过 @coderzc 在 <a href="https://github.com/apache/pulsar/pull/19577">#19577</a> 中改进日志</li>
+<li>[Broker] 事务缓冲区恢复被 @poorbarcode 在 <a href="https://github.com/apache/pulsar/pull/18833">#18833</a> 中的 readNext 阻止</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19548">#19548</a> 中通过 @nodece 修复异地复制管理</li>
+<li>[Broker] 如果 <a href="https://github.com/apache/pulsar/pull/19242">#19242</a> 中的 @poorbarcode 未完成架构未来，则 Replicator 中待发送消息的计数器不正确</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19595">#19595</a> 中通过 @coderzc 在订阅级别导出 <code>pulsar_delayed_message_index_size_bytes</code></li>
+<li>[Broker] 将@michaeljmarshall 包含空格的非空白 clientVersions 存储在 <a href="https://github.com/apache/pulsar/pull/19616">#19616</a> 中</li>
+<li>[Broker] 需要 authRole 是 proxyRole 才能通过@michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19455">#19455</a> 中设置originalPrincipal</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19593">#19593</a> 中 @wangjialing218 在 ServerCnx 中获取异常时打印堆栈跟踪</li>
+<li>[Broker] 使 PulsarWebResource 的服务名称解析器缓存在 <a href="https://github.com/apache/pulsar/pull/19532">#19532</a> 中的 @poorbarcode 访问后过期</li>
+<li>[Broker] OneStageAuth State：由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19295">#19295</a> 中将 authn 从构造函数中移出</li>
+<li>[Broker] 禁止通过@labuladong 在 <a href="https://github.com/apache/pulsar/pull/18995">#18995</a> 中使用管理员 API 上传 BYTES 模式</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19430">#19430</a> 中添加测试以验证 @michaeljmarshall 无法更改 authRole</li>
+<li>[Broker] 主题加载因 <a href="https://github.com/apache/pulsar/pull/19444">#19444</a> 中@poorbarcode 丢失的账本而失败</li>
+<li>[Broker] 当 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/19541">#19541</a> 中重置游标的条件不满足时，终止异步调用链</li>
+<li>[Broker] 通过 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19507">#19507</a> 中使 ServerCnx#originalAuthData 易失性</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19497">#19497</a> 中@AnonHxy 清理 asyncFindPosition 中的 FinalPosition 空检查</li>
+<li>[Broker] ServerCnx：当@michaeljmarshall在<a href="https://github.com/apache/pulsar/pull/19312">#19312</a>中验证失败时，进入失败状态</li>
+<li>[Broker] 重构更新主题分区端点。作者：@mattisonchao <a href="https://github.com/apache/pulsar/pull/19166">#19166</a></li>
+<li>[Broker] 修复了 <a href="https://github.com/apache/pulsar/pull/17911">#17911</a> 中@315157973 修剪时互斥体从未释放的问题</li>
+<li>[经纪商] PIP-214 添加经纪商级别指标统计信息并通过@yyj8 在 <a href="https://github.com/apache/pulsar/pull/19047">#19047</a> 中向 prometheus 公开</li>
+<li>[Broker] 修复删除系统主题清理主题策略，由 @liangyepianzhou 在 <a href="https://github.com/apache/pulsar/pull/18823">#18823</a></li>
+<li>[经纪商] 支持zookeeper只读配置。作者：@horizonzy <a href="https://github.com/apache/pulsar/pull/19156">#19156</a></li>
+<li>[Broker] 修改检查 waitingForPingResponse 为 volatile (#12615)” by @michaeljmarshall in <a href="https://github.com/apache/pulsar/pull/19439">#19439</a></li>
+<li>[Broker] 服务器在 <a href="https://github.com/apache/pulsar/pull/19446">#19446</a> 中@michaeljmarshall 启动 CloseProducer 后期待消息</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19157">#19157</a> 中@tjiuming 在 MessageDeduplication#checkStatus 失败后关闭 transactionBuffer</li>
+<li>[Broker] 如果 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/19129">#19129</a> 中删除失败，主题可能会永远处于隔离状态</li>
+<li>[Broker] 实现 BucketDelayedDeliveryTrackerFactory 并加载 BucketDelayedDeliveryTracker - 第 6 部分由 @coderzc 在 <a href="https://github.com/apache/pulsar/pull/17756">#17756</a> 中</li>
+<li>[Broker] 修复<a href="https://github.com/apache/pulsar/pull/19404">#19404</a>中@poorbarcode使用ML拦截器时总大小不正确的问题</li>
+<li>[Broker] 修复 BucketDelayedDeliveryTracker#recoverBucketSnapshot 中的货币错误，作者为 @lhotari，位于 <a href="https://github.com/apache/pulsar/pull/19394">#19394</a></li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19341">#19341</a> 中的 @heesung-sn 在 ManagedCursorImpl 中添加了 isActive</li>
+<li>[Broker] 在<a href="https://github.com/apache/pulsar/pull/19398">#19398</a>中用@lhotari替换internalSetBacklogQuota异步调用链中的同步方法</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19399">#19399</a> 中用 @lhotari 替换 AdminResource#internalCreatePartitionedTopic 异步调用链中的同步调用</li>
+<li>[Broker] 减少对 <a href="https://github.com/apache/pulsar/pull/19388">#19388</a> 中 @lhotari 的 PersistentTopic 中元数据存储/ZK 事件线程和 Netty 线程的调用</li>
+<li>[Broker] 在 ServerCnx#handleLastMessageIdFromCompactedLedger 中释放 Netty 缓冲区，作者为 @lhotari，位于 <a href="https://github.com/apache/pulsar/pull/19395">#19395</a></li>
+<li>[Broker] 将 NamespacesBase#internalDeleteNamespaceBundleAsync 中的同步方法替换为 <a href="https://github.com/apache/pulsar/pull/19391">#19391</a> 中的 @lhotari</li>
+<li>[Broker] 修复 @lhotari 中的 PersistentTopicsBase#internalGetReplicatedSubscriptionStatus 中的并发错误 <a href="https://github.com/apache/pulsar/pull/19389">#19389</a></li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19387">#19387</a> 中 @lhotari 删除 PersistentTopicsBase 中异步调用链中的同步方法调用</li>
+<li>[Broker] 通过 @tuteng 在 <a href="https://github.com/apache/pulsar/pull/18940">#18940</a> 中更新拦截器处理程序异常</li>
+<li>[Broker] 通过 @crossoverJie 在 <a href="https://github.com/apache/pulsar/pull/19351">#19351</a> 中添加 lowerBoundarySheddingEnabled conf</li>
+<li>[Broker] 修复 <a href="https://github.com/apache/pulsar/pull/18824">#18824</a> 中 @liangyepianzhou 获取已删除主题的主题策略时未完成的 future</li>
+<li>[Broker] 通过@lifepuzzlefun 简化 <a href="https://github.com/apache/pulsar/pull/18729">#18729</a> 中的filterEntriesForConsumer 中提取entryMetadata 代码</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19147">#19147</a> 中捕获@aloyszhang 的brokerInterceptor 异常</li>
+<li>[Broker] 修复 RetentionPolicies 类型不匹配的问题。作者：@Technoboy- <a href="https://github.com/apache/pulsar/pull/18114">#18114</a></li>
+<li>[经纪人] @Shawyeok 在 <a href="https://github.com/apache/pulsar/pull/18662">#18662</a> 中使 Consumer#equals 更有效</li>
+<li>[Broker] TokenAuthenticationState：仅由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19314">#19314</a> 中验证令牌一次</li>
+<li>[Broker] 如果 @nicoloboschi 尚未在 <a href="https://github.com/apache/pulsar/pull/18804">#18804</a> 中创建 __change_events 主题，则修复名称空间删除问题</li>
+<li>[Broker] 修复 <a href="https://github.com/apache/pulsar/pull/18307">#18307</a> 中@liangyepianzhou 无法强制删除命名空间的问题</li>
+<li>[Broker] 替换 PulsarService Mockito 间谍解决方案，用于在 @lhotari 的测试中覆盖 getter <a href="https://github.com/apache/pulsar/pull/19323">#19323</a></li>
+<li>[Broker] 修复了 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/17401">#17401</a> 中 10 分钟后无法获得领导者经纪人信息的问题</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18211">#18211</a> 中通过 @315157973 为每个线程池添加 UncaughtExceptionHandler</li>
+<li>[Broker] 将身份验证替换为@michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19313">#19313</a> 中的authenticateAsync</li>
+<li>[Broker] 主题统计显示 msgBacklog，但实际上 @poorbarcode 在 <a href="https://github.com/apache/pulsar/pull/19275">#19275</a> 中没有积压</li>
+<li>[Broker] 仅在 <a href="https://github.com/apache/pulsar/pull/17349">#17349</a> 中通过 @AnonHxy 更新分区号时创建扩展分区</li>
+<li>[Broker] 让 TokenAuthState 通过@michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19282">#19282</a> 中更新authenticationDataSource</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/17915">#17915</a> 中@dlg99 急切地删除主题删除中的卸载片段</li>
+<li>[经纪人] @michaeljmarshall 的 AuthenticationState 合约文档 <a href="https://github.com/apache/pulsar/pull/19283">#19283</a></li>
+<li>[Broker] 允许在 <a href="https://github.com/apache/pulsar/pull/18385">#18385</a> 中通过 @coderzc 使用 io_uring 而不是 epoll</li>
+<li>[Broker] 使用 TopicName 而不是 String 作为 <code>getTopic</code> 的参数。作者：@Technoboy- <a href="https://github.com/apache/pulsar/pull/17416">#17416</a></li>
+<li>[Broker] 如果 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/16618">#16618</a> 中的代理上激活主题后没有发布任何消息，则跳过创建订阅复制快照</li>
+<li>[Broker] 避免将捆绑卸载目标代理设置为非活动代理。作者：@Nicklee007 <a href="https://github.com/apache/pulsar/pull/19244">#19244</a></li>
+<li>[Broker] 通过@michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19197">#19197</a> 中更新 AuthenticationProvider 以简化 HTTP Authn</li>
+<li>[Broker] 减少 <a href="https://github.com/apache/pulsar/pull/16946">#16946</a> 中 @AnonHxy 的 GetReplicatedSubscriptionStatus 本地 REST 调用</li>
+<li>[Broker] 通过@nodece 在 <a href="https://github.com/apache/pulsar/pull/17295">#17295</a> 中改进复制 client 和集群 cli 的 tls 配置</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18237">#18237</a> 中@michaeljmarshall 坚持正确的 markDeletePosition 以防止消息丢失</li>
+<li>[Broker] 实现延迟消息索引桶快照（合并/删除） - 第 8 部分 by @coderzc in <a href="https://github.com/apache/pulsar/pull/19138">#19138</a></li>
+<li>[Broker] 弃用 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19180">#19180</a> 中的阻塞 AuthorizationService、AuthorizationProvider 方法</li>
+<li>[Broker] 允许用户在 <a href="https://github.com/apache/pulsar/pull/19171">#19171</a> 中查找带有 <code>-partition-</code> 的主题名称，但没有 @mattisonchao 的元数据</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19167">#19167</a> 中为粘性哈希添加引用计数，以优化 @codelipenghui 的 Key_Shared 订阅的性能</li>
+<li>[Broker] 将 proto 命令字段复制到 ServerCnx 中的最终变量中，由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/18987">#18987</a> 中</li>
+<li>[Broker] 添加创建/更新集群的参数检查。作者：@mattisonchao <a href="https://github.com/apache/pulsar/pull/19151">#19151</a></li>
+<li>[Broker] 在trimDeletedEntries方法中，释放@lord Cheng10在<a href="https://github.com/apache/pulsar/pull/18305">#18305</a>中删除的条目</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18197">#18197</a> 中 @leizhiyuan 删除 Ownership 时删除 localAcquiredLock</li>
+<li>[Broker] 支持通过@Technoboy-在<a href="https://github.com/apache/pulsar/pull/18192">#18192</a>中动态设置<code>forceDeleteTenantAllowed</code></li>
+<li>[Broker] 使用 ChannelVoidPromise 避免 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/19141">#19141</a> 中创建无用的 Promise 对象</li>
+<li>[Broker] 修复 ClusterDataImpl#clone 并在 <a href="https://github.com/apache/pulsar/pull/19126">#19126</a> 中添加 @michaeljmarshall 的测试</li>
+<li>[Broker] 修复了 @coderzc 在 <a href="https://github.com/apache/pulsar/pull/18129">#18129</a> 中无效的度量类型“gauge”</li>
+<li>[Broker] 修复由于不可恢复的异常而导致的 ttl 过期块，即使 autoSkipNonRecoverableData=true by @aloyszhang in <a href="https://github.com/apache/pulsar/pull/19132">#19132</a></li>
+<li>[Broker] 更新<a href="https://github.com/apache/pulsar/pull/18024">#18024</a>中@Pomelongan的createSubscriptions的日志打印内容</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18000">#18000</a> 中@coderzc 修复了 InMemoryDelayedDeliveryTracker 中资源关闭的顺序</li>
+<li>[Broker] 修复了 @Shawyeok 在 <a href="https://github.com/apache/pulsar/pull/17970">#17970</a> 中不正确的捆绑拆分计数指标</li>
+<li>[Broker] 更新@tuteng 在 <a href="https://github.com/apache/pulsar/pull/17787">#17787</a> 中的身份验证失败指标报告</li>
+<li>[Broker] ManagedLedger：在 <a href="https://github.com/apache/pulsar/pull/17736">#17736</a> 中 @eolivelli 发生 BadVersionException 时，转移到 FENCED 状态</li>
+<li>[Broker] 不要通过 @codelipenghui 在 <a href="https://github.com/apache/pulsar/pull/19130">#19130</a> 中打印 404 的堆栈跟踪错误日志</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/17694">#17694</a> 中@coderzc 修复了executeWithRetry 结果为空的问题</li>
+<li>[Broker] 修复@coderzc 在 <a href="https://github.com/apache/pulsar/pull/19124">#19124</a> 中跳过读取的光标</li>
+<li>[Broker] 修复<a href="https://github.com/apache/pulsar/pull/17393">#17393</a>中@TakaHiR07更新主题分区后无法撤销权限的问题</li>
+<li>[Broker] 添加 oshi 库以帮助控制操作系统资源。作者：@mattisonchao <a href="https://github.com/apache/pulsar/pull/18990">#18990</a></li>
+<li>[Broker] 实现过滤掉所有延迟消息并在从 bookie 读取消息时跳过它们 - 第 7 部分 by @coderzc in <a href="https://github.com/apache/pulsar/pull/19035">#19035</a></li>
+<li>[Broker] 修复 <a href="https://github.com/apache/pulsar/pull/19054">#19054</a> 中@HQebupt 的内部GetReplicatedSubscriptionStatus 时丢失返回的问题</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/19055">#19055</a> 中 @codelipenghui 向已关闭的元数据存储请求时抛出 AlreadyClosedException</li>
+<li>[Broker] 修复信息内部管理 api 中 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/19021">#19021</a> 中分区主题的线程安全问题</li>
+<li>[Broker] 只有当拦截器不为空时，@michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19022">#19022</a> 中才获得消费者未来</li>
+<li>[Broker] 在所有情况下都使用 validateTopicOperationAsync 方法，由 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/19016">#19016</a> 中提供</li>
+<li>[Broker] 通过@nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/18989">#18989</a> 中修复 PendingAckHandleImpl 中的死锁</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18998">#18998</a> 中为 @lhotari 添加 PulsarDecoder 句柄*方法参数生命周期的 javadoc</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18928">#18928</a> 中由 @lhotari 修复 RawReaderImpl 中的直接内存泄漏</li>
+<li>[Broker] 使其可配置为需要@michaeljmarshall 的订阅权限 <a href="https://github.com/apache/pulsar/pull/15576">#15576</a></li>
+<li>[Broker] 通过 @coderzc 在 <a href="https://github.com/apache/pulsar/pull/18801">#18801</a> 中为 <code>RocksdbMetadataStore</code> 添加配置 <code>fsyncEnable</code></li>
+<li>[Broker] 实现延迟消息桶快照恢复 - 第 5 部分，由 @coderzc 在 <a href="https://github.com/apache/pulsar/pull/18420">#18420</a> 中实现</li>
+<li>[Broker] 从 <a href="https://github.com/apache/pulsar/pull/18775">#18775</a> 中的@codelipenghui 从 PersistentTopicsBase 中删除未使用的方法internalGetList</li>
+<li>[Broker] 修复了@codelipenghui 在 <a href="https://github.com/apache/pulsar/pull/18701">#18701</a> 中创建的重复模式</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18712">#18712</a> 中使用 @michaeljmarshall 的 tls trust 证书的正确文件路径</li>
+<li>[Broker] 计划任务的间隔应大于 0 by @yuruguo in <a href="https://github.com/apache/pulsar/pull/18728">#18728</a></li>
+<li>[Broker] 改进 @labuladong 在 <a href="https://github.com/apache/pulsar/pull/18709">#18709</a> 中的影子主题错误消息</li>
+<li>[Broker] 自动创建+强制删除分区主题与活动消费者的组合使主题元数据不一致。由 @dlg99 在 <a href="https://github.com/apache/pulsar/pull/18193">#18193</a></li>
+<li>[Broker] <a href="https://github.com/apache/pulsar/pull/18603">#18603</a> 中@yuruguo 未计算系统主题写入器/读取器连接</li>
+<li>[Broker] <a href="https://github.com/apache/pulsar/pull/18681">#18681</a>中@yuruguo首先判断单机启动时config是否为空</li>
+<li>[Broker] 通过 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/17868">#17868</a> 中修复了 currentLedgerEntries 和 currentLedgerSize 字段的线程安全问题</li>
+<li>[Broker] 修复命名空间未找到将导致请求超时的问题，@labuladong 在 <a href="https://github.com/apache/pulsar/pull/18512">#18512</a></li>
+<li>[Broker] 由于 @Shawyeok 在 <a href="https://github.com/apache/pulsar/pull/18660">#18660</a> 中的性能问题，避免在多线程中共享相同的随机数</li>
+<li>[Broker] 系统主题写入器/读取器连接不计算在内。作者：@Technoboy- <a href="https://github.com/apache/pulsar/pull/18369">#18369</a></li>
+<li>[Broker] 实现 BookkeeperBucketSnapshotStorage - 第 3 部分，由 @coderzc 在 <a href="https://github.com/apache/pulsar/pull/17677">#17677</a> 中实现</li>
+<li>[Broker] 支持内部游标属性 - 第 4 部分 by @coderzc in <a href="https://github.com/apache/pulsar/pull/17712">#17712</a></li>
+<li>[Broker] 避免@lord Cheng10 在 <a href="https://github.com/apache/pulsar/pull/17998">#17998</a> 中不必要地创建 BitSetRecyclable 对象</li>
+<li>[Broker] 修复了 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/17273">#17273</a> 中由活动游标读取的条目的代理缓存逐出问题</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/17816">#17816</a> 中添加@Pomelongan 对 PersistentMessageExpiryMonitor#findEntryFailed 的返回</li>
+<li>[Broker] 修复了 <a href="https://github.com/apache/pulsar/pull/17864">#17864</a> 中 @nodece 创建 ns 的问题</li>
+<li>[Broker] DnsResolverUtil.TTL 应大于零（@Technoboy- in <a href="https://github.com/apache/pulsar/pull/18565">#18565</a>）</li>
+<li>[Broker] 通过@ethqunzhong 在 <a href="https://github.com/apache/pulsar/pull/17803">#17803</a> 中使 ManagedLedgerOffloadedReadPriority 与 Broker 属性兼容</li>
+<li>[Broker] 删除 <a href="https://github.com/apache/pulsar/pull/18330">#18330</a> 中 @aloyszhang 的遗留代码</li>
+<li>[Broker] 删除重复代码以改进 @nodece 在 <a href="https://github.com/apache/pulsar/pull/15347">#15347</a> 中的删除订阅</li>
+<li>[Broker] 修复了 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/17589">#17589</a> 中使用 Runtime.halt 终止进程时日志被截断的问题</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18528">#18528</a> 中添加 @michaeljmarshall 缺少的 @Test 注释</li>
+<li>[Broker] @zzccctv 在 <a href="https://github.com/apache/pulsar/pull/18502">#18502</a> 中引用了不合理的 AuthenticationException</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18473">#18473</a> 中通过 @poorbarcode 删除 PersistentTopicBase.internalSkipAllMessagesForNonPartitionedTopicAsync 的无用参数</li>
+<li>[Broker] 使用 <code>handle</code> 而不是 <code>handleAsync</code> 来避免 @Technoboy- 在 <a href="https://github.com/apache/pulsar/pull/17403">#17403</a> 中使用公共池线程</li>
+<li>[Broker] 在 OverloadShedder 中，通过 <a href="https://github.com/apache/pulsar/pull/18463">#18463</a> 中的 @lord Cheng10 重复过滤本地包</li>
+<li>[Broker] 通过 @labuladong 在 <a href="https://github.com/apache/pulsar/pull/18337">#18337</a> 中修复独立使用 zk 时的 OutOfDirectMemoryError</li>
+<li>[Broker] @coderzc 在 <a href="https://github.com/apache/pulsar/pull/18402">#18402</a> 中的 ENABLE_IO_URING 属性名称</li>
+<li>[Broker] 通过 @rdhabalia 在 <a href="https://github.com/apache/pulsar/pull/14251">#14251</a> 中提供可读的消费者统计时间</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18283">#18283</a> 中 @codelipenghui 修复了在拥有活跃消费者时删除_when_subscriptions_caught_up 不起作用的问题</li>
+<li>[经纪人] 在<a href="https://github.com/apache/pulsar/pull/17720">#17720</a>中@yuruguo在主题级别支持<code>autoSubscriptionCreation</code></li>
+<li>[Broker] 避免在 <a href="https://github.com/apache/pulsar/pull/18352">#18352</a> 中 @lifepuzzlefun 在 <code>RedeliveryTracker.getRedeliveryCount</code> 中创建对象</li>
+<li>[Broker] 删除 <a href="https://github.com/apache/pulsar/pull/18333">#18333</a> 中@AnonHxy 对累积确认的 ack.getMessageIdsCount() == 1 检查</li>
+<li>[Broker] 修复了 <a href="https://github.com/apache/pulsar/pull/18289">#18289</a> 中 @poorbarcode 共享流调度程序的重复消息</li>
+<li>[Broker] 清理未使用的方法：isSlowestReader by @lord Cheng10 in <a href="https://github.com/apache/pulsar/pull/18306">#18306</a></li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18278">#18278</a> 中通过 @lifepuzzlefun 从 NavigableSet 获取最低 PositionImpl</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18250">#18250</a> 中通过 @lifepuzzlefun 删除 PulsarCommandSender 中重复的 sendSuccess 和 sendError</li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/18258">#18258</a> 中通过@AnonHxy 从 NamespaceResources 中清理 localStore</li>
+<li>[Broker] 由 @AnonHxy 在 <a href="https://github.com/apache/pulsar/pull/18259">#18259</a> 中清理命名空间服务</li>
+<li>[Broker] 通过@poorbarcode 在 <a href="https://github.com/apache/pulsar/pull/17976">#17976</a> 中使 CompactedTopicImpl.findStartPointLoop 更高效地工作</li>
+<li>[Broker] 不要在 <a href="https://github.com/apache/pulsar/pull/18150">#18150</a> 中通过@thetumbled 序列化字段bundleStats</li>
+<li>[Broker] 实现延迟消息索引存储桶快照（创建/加载） - 第 2 部分，作者：@coderzc，位于 <a href="https://github.com/apache/pulsar/pull/17611">#17611</a></li>
+<li>[Broker] 修复片状测试：PrometheusMetricsTest.testDuplicateMetricTypeDefinitions by @nicoloboschi in <a href="https://github.com/apache/pulsar/pull/18077">#18077</a></li>
+<li>[Broker] 避免在 <a href="https://github.com/apache/pulsar/pull/18066">#18066</a> 中@AnonHxy 在 EntryFilterSupport 中进行运行时检查 hasFilter</li>
+<li>[Broker] 删除 <a href="https://github.com/apache/pulsar/pull/17969">#17969</a> 中的@Pomelongan 在 AdminResource #7 中不再使用的方法</li>
+<li>[Broker] 删除<a href="https://github.com/apache/pulsar/pull/17505">#17505</a>中@liangyuanpeng未使用的zk_write_latency和zk_read_latency指标</li>
+<li>[Broker] ServerCnx：当 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/16225">#16225</a> 中找不到主题时，以警告级别记录</li>
+<li>[Broker] 当主题策略读取器发生 AlreadyClosedException 时，@Technoboy- 在 <a href="https://github.com/apache/pulsar/pull/17841">#17841</a> 中将日志级别设置为 <code>warn</code></li>
+<li>[Broker] 添加配置以对@michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/17686">#17686</a> 中的速率限制计算过滤条目</li>
+<li>[Broker] 修复 <a href="https://github.com/apache/pulsar/pull/17573">#17573</a> 中@dragonls 未及时更新游标最后活跃时间导致的意外订阅删除问题</li>
+<li>[Broker] 通过 <a href="https://github.com/apache/pulsar/pull/17511">#17511</a> 中的 @poorbarcode 删除 PersistentTopic 中不必要的变量</li>
+<li>[Broker] 使游标属性支持同时修改单个值。由 @coderzc 在 <a href="https://github.com/apache/pulsar/pull/17164">#17164</a></li>
+<li>[Broker] 不要在 <a href="https://github.com/apache/pulsar/pull/17432">#17432</a> 中记录@eolivelli 的“无法刷新标记删除位置”情况的堆栈跟踪</li>
+<li>[Broker] 基于新存储桶的延迟消息跟踪器 - 接口&#x26;配置&#x26;原型 - 第 1 部分，作者：@coderzc，位于 <a href="https://github.com/apache/pulsar/pull/17344">#17344</a></li>
+<li>[Broker] 在 <a href="https://github.com/apache/pulsar/pull/17347">#17347</a> 中@HQebupt 重构延迟和服务模块中的反射方法</li>
+<li>[Broker] 在<a href="https://github.com/apache/pulsar/pull/17378">#17378</a>中通过@Pomelongan删除不必要的参数(reusefuture)和相关逻辑</li>
+<li>[Broker] 修复@Flowermin 在 <a href="https://github.com/apache/pulsar/pull/17352">#17352</a> 中更新主题属性时的 NPE</li>
+<li>[Broker] <a href="https://github.com/apache/pulsar/pull/17313">#17313</a> 中的 @HQebupt 重构负载均衡模块中的反射方法</li>
+<li>[Broker] 通过 @Pomelongan 在 <a href="https://github.com/apache/pulsar/pull/17206">#17206</a> 中使 deletePersistence 方法在命名空间中异步</li>
+<li>[Broker] PIP-169：支持按流量或 qps 拆分捆绑包，由 @lord Cheng10 在 <a href="https://github.com/apache/pulsar/pull/16557">#16557</a> 中提供</li>
+<li>[Broker] 在 pulsar-broker 中添加 Maven Modernizer 插件，并修复 @youzipi 在 <a href="https://github.com/apache/pulsar/pull/16993">#16993</a> 中的 <code>test: broker/admin</code> 中的违规问题</li>
+<li>[经纪商] 删除@lord Cheng10在<a href="https://github.com/apache/pulsar/pull/17036">#17036</a>中未使用的代码</li>
+</ul>
+<h3 id="pulsar-io-和-pulsar-函数">Pulsar IO 和 Pulsar 函数</h3>
+<ul>
+<li>[功能] 当 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/20144">#20144</a> 中为 k8s 运行时提供下载验证参数时，提供下载验证参数</li>
+<li>[功能] 让 /version 返回正确的版本，由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/20047">#20047</a> 中完成</li>
+<li>[功能] 在 <a href="https://github.com/apache/pulsar/pull/19975">#19975</a> 中 @michaeljmarshall 的 Function Worker API 中更多地使用 AuthorizationServer</li>
+<li>[功能] 允许通过@vanhtuan0409在<a href="https://github.com/apache/pulsar/pull/19750">#19750</a>中进行基本身份验证的下载链接</li>
+<li>[功能]修复@michaeljmarshall在<a href="https://github.com/apache/pulsar/pull/19481">#19481</a>中的k8s合并运行时选择错误</li>
+<li>[功能] 支持@lhotari 在 <a href="https://github.com/apache/pulsar/pull/19304">#19304</a> 中没有显式目录条目的 .nar 文件</li>
+<li>[功能] 如果 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/19290">#19290</a> 中禁用了身份验证，则修复 fn Worker 的 TLS 配置以进行代理</li>
+<li>[功能] 支持从 <a href="https://github.com/apache/pulsar/pull/18951">#18951</a> 中的@tpiperatgod 的 Function Python Runner 中的文件中读取配置选项</li>
+<li>[功能] 支持@tpiperatgod 在 <a href="https://github.com/apache/pulsar/pull/18929">#18929</a> 中的 python 函数中处理保证“EFFECTIVELY_ONCE”</li>
+<li>[功能] <a href="https://github.com/apache/pulsar/pull/18844">#18844</a> 中 @tisonkun 的方法名称拼写错误</li>
+<li>[功能] 在<a href="https://github.com/apache/pulsar/pull/18738">#18738</a>中@jianpeng Cheng支持python实例中的e2e加密</li>
+<li>[功能] 支持 <a href="https://github.com/apache/pulsar/pull/18432">#18432</a> 中 @jianpeng Cheng 的 python 实例中的 schema</li>
+<li>[功能] 支持python实例中的SubscriptionPosition，作者：<a href="https://github.com/apache/pulsar/pull/18431">#18431</a></li>
+<li>[功能] KCA 连接器：修复@nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/18370">#18370</a> 中缺少的运行时依赖项</li>
+<li>[功能] 修复<a href="https://github.com/apache/pulsar/pull/18111">#18111</a>中@freeznet在<code>FunctionDetails</code>中没有提供<code>typeClassName</code>时功能无法启动的问题</li>
+<li>[功能] 在 <a href="https://github.com/apache/pulsar/pull/18030">#18030</a> 中@jianpeng Cheng 删除功能时不删除托管包</li>
+<li>[功能] 修复@cbornet 在 <a href="https://github.com/apache/pulsar/pull/18019">#18019</a> 中对 k8s 的内置接收器转换</li>
+<li>[功能] JDBC Sink：添加一个标志以排除@nicoloboschi在<a href="https://github.com/apache/pulsar/pull/18008">#18008</a>中未声明的字段</li>
+<li>[Functions] 修复了 <a href="https://github.com/apache/pulsar/pull/17877">#17877</a> 中@cbornet 内置函数的下载</li>
+<li>[功能] 修复<a href="https://github.com/apache/pulsar/pull/17597">#17597</a>中@nicoloboschi启用auth的K8S下载功能方法</li>
+<li>[功能] 添加 admin CLI 命令以通过@cbornet在<a href="https://github.com/apache/pulsar/pull/16822">#16822</a>中获取可用的内置功能</li>
+<li>[功能] 删除<a href="https://github.com/apache/pulsar/pull/16472">#16472</a>中@cbornet未使用的代码</li>
+<li>[连接器] 删除 <a href="https://github.com/apache/pulsar/pull/19468">#19468</a> 中@tisonkun 的 kafka-connect-avro-converter-shaded</li>
+<li>[连接器] 在 <a href="https://github.com/apache/pulsar/pull/19082">#19082</a> 中@aymkhalil 更新接收器配置时保留新的输入规范</li>
+<li>[连接器] 升级 Kafka client，将运行时连接到 2.8.2，将 Confluence 版本连接到 6.2.8，由 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/19010">#19010</a> 中</li>
+<li>[连接器] 减少@nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/19000">#19000</a> 中对 pulsar-io-common 模块的依赖</li>
+<li>[连接器] Elasticsearch接收器：支持从<a href="https://github.com/apache/pulsar/pull/18986">#18986</a>中的@alpreu的秘密加载配置</li>
+<li>[连接器] KCA 连接器：修复@nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/18370">#18370</a> 中缺少的运行时依赖项</li>
+<li>[连接器] JDBC 接收器：由 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/18017">#18017</a> 中实现 JDBC Batch API</li>
+<li>[连接器] 在 <a href="https://github.com/apache/pulsar/pull/17829">#17829</a> 中添加 @aymkhalil 将 Kafka 标头复制到 Pulsar 属性的选项</li>
+<li>[连接器] 由@codelipenghui 在 <a href="https://github.com/apache/pulsar/pull/17727">#17727</a> 中将 hadoop client 升级到 3.3.3 和 2.10.2</li>
+<li>[连接器] 支持 @cbornet 中的 LocalRunner 的转换功能 <a href="https://github.com/apache/pulsar/pull/17445">#17445</a></li>
+<li>[Connectors] 在 <a href="https://github.com/apache/pulsar/pull/17434">#17434</a> 中通过 @cbornet 修复 OutputRecordSinkRecord getValue 和 getSchema</li>
+<li>[连接器] ElasticSearch 接收器：添加一个选项，用于将关键字段复制到 <a href="https://github.com/apache/pulsar/pull/17117">#17117</a> 中@nicoloboschi 的值中</li>
+<li>[连接器] 在 <a href="https://github.com/apache/pulsar/pull/16740">#16740</a> 中@cbornet 添加对 Sinks 中转换函数的支持</li>
+<li>[连接器] KCA：通过<a href="https://github.com/apache/pulsar/pull/16485">#16485</a>中的@dlg99处理kafka的逻辑模式</li>
+<li>[连接器] 在<a href="https://github.com/apache/pulsar/pull/16003">#16003</a>中添加@shink对完整消息同步的支持</li>
+</ul>
+<h3 id="可观察性">可观察性</h3>
+<ul>
+<li>[Metrics] 修复了@heesung-sn 在 <a href="https://github.com/apache/pulsar/pull/18807">#18807</a> 中的分区发布者主题统计聚合错误</li>
+<li>[指标] 修复@aymkhalil 在 <a href="https://github.com/apache/pulsar/pull/18621">#18621</a> 中报告 pulsar_subscription_blocked_on_unacked_messages 指标</li>
+<li>[指标] 在 <a href="https://github.com/apache/pulsar/pull/18451">#18451</a> 中@pgier 正确设置每个订阅的字节和消息输出总数</li>
+<li>[Metrics] 当 @poorbarcode 在 <a href="https://github.com/apache/pulsar/pull/17704">#17704</a> 中指定 label_cluster 时生成错误的指标文本</li>
+<li>[指标] 从 <a href="https://github.com/apache/pulsar/pull/17419">#17419</a> 中的@michaeljmarshall 的 Prometheus 指标中删除时间戳</li>
+<li>[Metrics] 在 <a href="https://github.com/apache/pulsar/pull/17072">#17072</a> 中为 @tjiuming 添加 BatchMetadataStore 的指标</li>
+<li>[指标] 通过 @tjiuming 在 <a href="https://github.com/apache/pulsar/pull/17041">#17041</a> 中添加元数据存储指标</li>
+<li>[指标] <a href="https://github.com/apache/pulsar/pull/16758">#16758</a> 中 @poorbarcode 的事务缓冲编写器的 PIP-160 指标统计</li>
+<li>[Metrics] 在 <a href="https://github.com/apache/pulsar/pull/16734">#16734</a> 中 @TakaHiR07 启用 bookkeeperClientExposeStatsToPrometheus 时添加 limitStatsLogging 配置</li>
+<li>[指标] 确保 prometheus 指标按类型 (#8407, #13865) 由 @marksilcox 在 <a href="https://github.com/apache/pulsar/pull/15558">#15558</a> 中分组</li>
+<li>[Metrics] 在 <a href="https://github.com/apache/pulsar/pull/15140">#15140</a> 中添加 @tjiuming 的交易指标</li>
+</ul>
+<h3 id="cli">CLI</h3>
+<ul>
+<li>[Pulsar 管理员] 在 <a href="https://github.com/apache/pulsar/pull/20046">#20046</a> 中使用 @michaeljmarshall 为其余生产者使用 AuthenticationParameters</li>
+<li>[Pulsar 管理员] 在 <a href="https://github.com/apache/pulsar/pull/19975">#19975</a> 中 @michaeljmarshall 在 Function Worker API 中更多地使用 AuthorizationServer</li>
+<li>[Pulsar Admin] 修复了 <a href="https://github.com/apache/pulsar/pull/19942">#19942</a> 中 @poorbarcode 的 API 分区主题统计上不正确的状态复制。</li>
+<li>[Pulsar Admin] 修复了 <a href="https://github.com/apache/pulsar/pull/19925">#19925</a> 中 @nodece 删除租户的问题</li>
+<li>[Pulsar Admin] 在 <a href="https://github.com/apache/pulsar/pull/19719">#19719</a> 中通过 @gaoran10 删除命名空间时过滤待处理的 ack 主题</li>
+<li>[Pulsar Admin] 修复了 @yangl 中的 create-subscription 命令 —subscription 描述 <a href="https://github.com/apache/pulsar/pull/19591">#19591</a></li>
+<li>[Pulsar Admin] 允许代理通过 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19557">#19557</a> 中为 authRole 和 originRole 传递相同的角色</li>
+<li>[Pulsar Admin] 修复管理员 client 的 NamespacesImpl 中的异步方法组合，由 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/19397">#19397</a> 中</li>
+<li>[Pulsar Admin] 通过@poorbarcode 在 <a href="https://github.com/apache/pulsar/pull/19302">#19302</a> 中将管理 API 主题统计信息的参数 —get-subscription-backlog-size 的默认值设为 true</li>
+<li>[Pulsar Admin] 在 <a href="https://github.com/apache/pulsar/pull/19199">#19199</a> 中通过 @mattisonchao 修复更新分区号时的竞争条件</li>
+<li>[Pulsar Admin] 通过@gaozhangmin 在 <a href="https://github.com/apache/pulsar/pull/19015">#19015</a> 中改进分区主题条件评估</li>
+<li>[Pulsar Admin] 在 <a href="https://github.com/apache/pulsar/pull/19013">#19013</a> 中 @gaozhangmin 的分区主题上不应允许 InternalGetMessageById</li>
+<li>[Pulsar Admin] <a href="https://github.com/apache/pulsar/pull/18666">#18666</a> 中@Pomelongan 优化了internalCreatePartitionedTopic 的逻辑</li>
+<li>[Pulsar Admin] 在 <a href="https://github.com/apache/pulsar/pull/18358">#18358</a> 中@onobc 在 client 和 admin client 中使用 loadConf 时设置身份验证</li>
+<li>[Pulsar Admin] 在 <a href="https://github.com/apache/pulsar/pull/18218">#18218</a> 中添加 @tjiuming 的卸载 ManagedLedgerOffloadThreshold RestAPI 和 CLI 工具</li>
+<li>[Pulsar Admin] 在 <a href="https://github.com/apache/pulsar/pull/18153">#18153</a> 中通过 @coderzc 删除命名空间时将 <code>force</code> 参数传递给 <code>deleteNamespaceBundle</code></li>
+<li>[Pulsar Admin] 当 pulsar-worker-service 被禁用并尝试通过 <a href="https://github.com/apache/pulsar/pull/17901">#17901</a> 中的 @heesung-sn 访问它时，返回 4xx 错误</li>
+<li>[Pulsar Admin] 在 <a href="https://github.com/apache/pulsar/pull/17522">#17522</a> 中添加 @nicoloboschi 列出事务协调器的命令</li>
+<li>[Pulsar Admin] 命名空间 CLI set-offload-policy 的阈值字节支持负数和 0 by @ethqunzhong in <a href="https://github.com/apache/pulsar/pull/17502">#17502</a></li>
+<li>[Pulsar Admin] 通过 @Pomelongan 在 <a href="https://github.com/apache/pulsar/pull/17421">#17421</a> 中使 setPersistence 方法在命名空间中异步</li>
+<li>[Pulsar 管理员] 通过 @Technoboy- 在 <a href="https://github.com/apache/pulsar/pull/17402">#17402</a> 中使 <code>getBundleRange</code> 异步</li>
+<li>[Pulsar Admin] 将 <code>backlogQuota</code> 端点改进为纯异步。作者：@mattisonchao <a href="https://github.com/apache/pulsar/pull/17383">#17383</a></li>
+<li>[Pulsar Admin] 将 <code>replicatorDispacherRate</code> 端点改进为纯异步。作者：@mattisonchao <a href="https://github.com/apache/pulsar/pull/17377">#17377</a></li>
+<li>[Pulsar Admin] PulsarAdminBuilderImpl 覆盖了 @Technoboy- 在 <a href="https://github.com/apache/pulsar/pull/17375">#17375</a> 中通过配置映射传递的超时属性</li>
+<li>[Pulsar Admin] 修复@gaozhangmin 在 <a href="https://github.com/apache/pulsar/pull/17370">#17370</a> 中 splitBundle 抛出的 Npe</li>
+<li>[Pulsar Admin] 在 <a href="https://github.com/apache/pulsar/pull/17337">#17337</a> 中添加 @yuruguo 删除主题属性的 cmd</li>
+<li>[Pulsar Admin] 通过 @AnonHxy 在 <a href="https://github.com/apache/pulsar/pull/17238">#17238</a> 中添加 api 以更新主题属性</li>
+<li>[Pulsar Admin] 通过 @gaozhangmin 在 <a href="https://github.com/apache/pulsar/pull/17230">#17230</a> 中使 deleteNamesapce api 异步</li>
+<li>[Pulsar Admin] 通过@AnonHxy 在 <a href="https://github.com/apache/pulsar/pull/17156">#17156</a> 中清理 ProvisionPartitionedTopicPath 中未使用的参数</li>
+<li>[Pulsar Admin] 减少管理 client 中的代码重复，作者：@andrasbeni <a href="https://github.com/apache/pulsar/pull/16377">#16377</a></li>
+<li>[Pulsar Admin] Pulsar Admin：减少代码重复 - 第 4 部分，作者：@eolivelli，位于 <a href="https://github.com/apache/pulsar/pull/13086">#13086</a></li>
+<li>[Pulsar CLI] 修复 Pulsar 管理工具在 <a href="https://github.com/apache/pulsar/pull/19696">#19696</a> 中忽略 @rdhabalia 的 tls-trust-cert 路径参数</li>
+<li>[Pulsar CLI] 通过 @massakam 在 <a href="https://github.com/apache/pulsar/pull/19298">#19298</a> 中向 pulsar-client-tools 添加读取命令</li>
+<li>[Pulsar CLI] Pulsar cli：@pgier 在 <a href="https://github.com/apache/pulsar/pull/18946">#18946</a> 中使用返回代码 1 来处理一般错误</li>
+<li>[Pulsar CLI] Pulsar-perf 在 <a href="https://github.com/apache/pulsar/pull/18806">#18806</a> 中@nicoloboschi 在 jdk17 上失败</li>
+<li>[Pulsar CLI] 在 <a href="https://github.com/apache/pulsar/pull/17882">#17882</a> 中修复 @labuladong 的阅读器性能超时行为</li>
+<li>[Pulsar CLI] 在 <a href="https://github.com/apache/pulsar/pull/17426">#17426</a> 中@nodece 在压缩器上使用单独的 TLS 配置</li>
+<li>[Client 工具] Pulsar shell：确保 admin client 被 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/17619">#17619</a> 中回收或处置</li>
+<li>[Client 工具] Pulsar-perf 增加了在 <a href="https://github.com/apache/pulsar/pull/17189">#17189</a> 中@eolivelli 的消息上设置 eventTime 的可能性</li>
+<li>[Client 工具] Pulsar-perf 使用，在 <a href="https://github.com/apache/pulsar/pull/17160">#17160</a> 中@eolivelli 读取超过 10 天的数据时不会失败</li>
+</ul>
+<h3 id="其他">其他</h3>
+<ul>
+<li>[代理] 如果 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/20067">#20067</a> 中发出 ProxyLookupRequests，则刷新身份验证数据</li>
+<li>[代理] 仅在 <a href="https://github.com/apache/pulsar/pull/20062">#20062</a> 中@michaeljmarshall 需要时创建 ConnectionPool</li>
+<li>[Proxy] 修复 Pulsar Proxy 中的连接读取超时处理，作者为 @lhotari，位于 <a href="https://github.com/apache/pulsar/pull/20014">#20014</a></li>
+<li>[代理] ProxyConnection 不应调用 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19990">#19990</a> 中的 super.exceptionCaught</li>
+<li>[Proxy] 删除不必要的执行器回调；在 <a href="https://github.com/apache/pulsar/pull/19670">#19670</a> 中使用 @michaeljmarshall 的断言</li>
+<li>[代理] PIP-250：由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19618">#19618</a> 中将 proxyVersion 添加到 CommandConnect</li>
+<li>[代理] ProxyWithAuthorizationTest 从测试证书中删除 SAN，由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19594">#19594</a> 中</li>
+<li>[代理]允许代理通过@michaeljmarshall在<a href="https://github.com/apache/pulsar/pull/19557">#19557</a>中为authRole和originalRole传递相同的角色</li>
+<li>[代理] 修复@RobertIndie 在 pulsar 代理中使用错误的 client 版本 <a href="https://github.com/apache/pulsar/pull/19540">#19540</a></li>
+<li>[代理] 在 <a href="https://github.com/apache/pulsar/pull/19485">#19485</a> 中修复 @nodece 的 JKS TLS 传输</li>
+<li>[代理] 修改检查 waitingForPingResponse 为 volatile (#12615)” by @michaeljmarshall in <a href="https://github.com/apache/pulsar/pull/19439">#19439</a></li>
+<li>[代理] 仅通过 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19331">#19331</a> 中进入连接状态一次</li>
+<li>[代理] PIP 97：由 @michaeljmarshall 在 <a href="https://github.com/apache/pulsar/pull/19292">#19292</a> 中实现 ProxyConnection</li>
+<li>[代理] 在 <a href="https://github.com/apache/pulsar/pull/19278">#19278</a> 中删除 @michaeljmarshall 未使用的 AuthenticationDataSource 变量</li>
+<li>[代理] 使用 ChannelVoidPromise 避免 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/19141">#19141</a> 中创建无用的 Promise 对象</li>
+<li>[代理] 当物理地址是 IP 地址时防止 DNS 反向查找，@lhotari 在 <a href="https://github.com/apache/pulsar/pull/19028">#19028</a> 中</li>
+<li>[代理] 修复了 <a href="https://github.com/apache/pulsar/pull/18622">#18622</a> 中 @coderzc 关闭代理时登录关闭的问题</li>
+<li>[代理]修复@nodece在<a href="https://github.com/apache/pulsar/pull/17831">#17831</a>中刷新client身份验证</li>
+<li>[代理]更新代理查找抛出异常类型由@tuteng在<a href="https://github.com/apache/pulsar/pull/17600">#17600</a></li>
+<li>[Proxy] 修复了当 proxyLogLevel > 0 时生产者信息日志记录失败的问题，作者为 @zengguan in <a href="https://github.com/apache/pulsar/pull/17175">#17175</a></li>
+<li>[代理] 支持代理限制每个 IP 的最大连接数，@mattisonchao 在 <a href="https://github.com/apache/pulsar/pull/17167">#17167</a></li>
+<li>[Proxy] 在 <a href="https://github.com/apache/pulsar/pull/17122">#17122</a> 中@aloyszhang 初始化 setMetadataStoreUrl 时删除空的 else 代码块</li>
+<li>[代理] 在 <a href="https://github.com/apache/pulsar/pull/16045">#16045</a> 中使用 @michaeljmarshall 的 HAProxyMessage 目标的正确地址</li>
+<li>[Schema] 修复@congbobo184 的删除 schema 命令文档 <a href="https://github.com/apache/pulsar/pull/19411">#19411</a></li>
+<li>[Schema] 修复 @congbobo184 在 <a href="https://github.com/apache/pulsar/pull/17740">#17740</a> 中的 schema 获取值文档问题</li>
+<li>[Schema] 修复生产者/消费者权限无法获取 v1/schema by @yuruguo <a href="https://github.com/apache/pulsar/pull/16018">#16018</a></li>
+</ul>
+<h3 id="库更新">库更新</h3>
+<ul>
+<li>通过 <a href="https://github.com/apache/pulsar/pull/20127">#20127</a> 中的 @hangc0276 将 BookKeeper 依赖项升级到 4.16.1</li>
+<li>由@Technoboy-在<a href="https://github.com/apache/pulsar/pull/20085">#20085</a>中将snakeyaml版本升级到2.0</li>
+<li>通过 <a href="https://github.com/apache/pulsar/pull/20072">#20072</a> 中的 @hangc0276 将 RocksDB 版本升级到 7.9.2 以与 BookKeeper 的 RocksDB 依赖项保持同步</li>
+<li>通过@dlg99在<a href="https://github.com/apache/pulsar/pull/20070">#20070</a>中升级Vertx以匹配BK的版本（否则BK不起作用）</li>
+<li>将 Spring 依赖项升级到 5.3.26 以修复 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/20029">#20029</a> 中进行的 OWASP 依赖项检查</li>
+<li>由 @merlimat 在 <a href="https://github.com/apache/pulsar/pull/19426">#19426</a> 中将 lombok 升级到 1.8.26</li>
+<li>由 @dlg99 在 <a href="https://github.com/apache/pulsar/pull/19425">#19425</a> 中升级到 zk 3.8.1</li>
+<li>升级wildfly-elytron（由debezium使用）以修复@dlg99在[#19333]（<a href="https://github.com/apache/pulsar/pull/19333%EF%BC%89%E4%B8%AD%E7%9A%84CVE-2022-3143">https://github.com/apache/pulsar/pull/19333）中的CVE-2022-3143</a></li>
+<li>由 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/19417">#19417</a> 中将 Netty 升级到 4.1.87.Final</li>
+<li>由 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/19315">#19315</a> 中将 Spotbugs 升级到与 JDK 17 兼容的版本</li>
+<li>将 kafka client 升级到 3.4.0 以修复 @massakam 在 <a href="https://github.com/apache/pulsar/pull/19527">#19527</a> 中的 CVE-2023-25194</li>
+<li>升级 dependency-check-maven 插件以修复 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/19170">#19170</a> 中损坏的 OWASP 检查</li>
+<li>由 @sekikn 在 <a href="https://github.com/apache/pulsar/pull/19249">#19249</a> 中将 HBase 升级到 2.4.15</li>
+<li>由 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/19165">#19165</a> 中将 ASF Maven 父 pom 版本升级到 29</li>
+<li>由 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/19041">#19041</a> 中将 woodstox 升级到 5.4.0</li>
+<li>升级 scala-library 以摆脱 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/18021">#18021</a> 中的 CVE-2022-36944</li>
+<li>由 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/19038">#19038</a> 中将抛弃升级到 1.5.3</li>
+<li>由 @dlg99 在 <a href="https://github.com/apache/pulsar/pull/18465">#18465</a> 中将 Debezium 升级到 1.9.7</li>
+<li>由 @lhotari 在 <a href="https://github.com/apache/pulsar/pull/19010">#19010</a> 中将 Confluence 版本升级到 6.2.8</li>
+<li>由 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/18020">#18020</a> 中将 JacksonXML 升级到 2.13.4</li>
+<li>由 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/18093">#18093</a> 中将 kinesis-sink 中的 commons-text 升级为 1.10.0</li>
+<li>由 @nicoloboschi 在 <a href="https://github.com/apache/pulsar/pull/17716">#17716</a> 中升级文件系统卸载程序中的 reload4j</li>
+<li>由 @RobertIndie 在 <a href="https://github.com/apache/pulsar/pull/17538">#17538</a> 中将 OpenSSL 升级到版本 1.1.1n</li>
+<li>升级到@maxsxu 在 <a href="https://github.com/apache/pulsar/pull/17266">#17266</a> 中的最新 docbot 操作</li>
+<li>由 @codelipenghui 在 <a href="https://github.com/apache/pulsar/pull/17727">#17727</a> 中将 hadoop client 升级到 3.3.3 和 2.10.2</li>
+<li>由 @tisonkun 在 <a href="https://github.com/apache/pulsar/pull/16683">#16683</a> 中将 PrestoSQL 升级到第一个 Trino 版本</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/apache/pulsar">apache/pulsar</a> · 🏷️ 版本：<code>v3.0.0</code> · 📅 发布：2023-05-03 · <a href="https://github.com/apache/pulsar/releases/tag/v3.0.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/pulsar/pulsar_v2.11.2"> <span class="k">← 下一个</span> <span class="t">v2.11.2</span> </a> <a href="/zh/release_note/pulsar/pulsar_v2.9.5"> <span class="k">上一个 →</span> <span class="t">v2.9.5</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/apache/pulsar/releases/tag/v3.0.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/apache/pulsar" target="_blank" rel="noopener"> <span>apache/pulsar</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#重要通知" class="lv3">重要通知</a><a href="#点子" class="lv3">点子</a><a href="#经纪人" class="lv3">经纪人</a><a href="#pulsar-io-和-pulsar-函数" class="lv3">Pulsar IO 和 Pulsar 函数</a><a href="#可观察性" class="lv3">可观察性</a><a href="#cli" class="lv3">CLI</a><a href="#其他" class="lv3">其他</a><a href="#库更新" class="lv3">库更新</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/pulsar/pulsar_v5.0.1"> <span class="v">v5.0.1</span> <span class="d">26-10-26</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_v5.0.0"> <span class="v">v5.0.0</span> <span class="d">26-10-05</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_v4.2.5"> <span class="v">v4.2.5</span> <span class="d">26-10-05</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_4.0.14"> <span class="v">v4.0.14</span> <span class="d">26-10-05</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_5.0.0-m2"> <span class="v">v5.0.0-M2</span> <span class="d">26-09-16</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_4.2.4"> <span class="v">v4.2.4</span> <span class="d">26-08-03</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_4.0.13"> <span class="v">v4.0.13</span> <span class="d">26-08-03</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_v4.2.3"> <span class="v">v4.2.3</span> <span class="d">26-07-06</span> </a> </li> </ul> <a href="/zh/releases/pulsar" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 100 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

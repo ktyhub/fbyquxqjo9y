@@ -1,0 +1,2534 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OmniRoute v3.8.50 — STAGS NextStack</title><meta name="description" content="By commits in ed2db6cb19..v3.8.50, author identities consolidated via .mailmap. Bots excluded."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.50/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/omniroute/3.8.50"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.50/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/omniroute/3.8.50"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="OmniRoute v3.8.50 — STAGS NextStack"><meta property="og:description" content="By commits in ed2db6cb19..v3.8.50, author identities consolidated via .mailmap. Bots excluded."><meta property="og:url" content="https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.50/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.50/#article","headline":"OmniRoute v3.8.50 release notes","datePublished":"2026-08-26","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/cheaper-inference/OmniRoute"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/omniroute/3.8.50/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/OmniRoute/OmniRoute_v3.8.50/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/omniroute/3.8.50/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/omniroute/3.8.50/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/omniroute/3.8.50/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/omniroute/3.8.50/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/omniroute/3.8.50/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/omniroute">OmniRoute</a> </nav> <h1 class="detail-title"> <span class="p">OmniRoute</span> v3.8.50 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年8月26日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/cheaper-inference/OmniRoute" target="_blank" rel="noopener"> <span class="k">来源</span>cheaper-inference/OmniRoute </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/omniroute/3.8.50"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.50/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="omniroute-v3850">OmniRoute v3.8.50</h1>
+<h3 id="-按数字发布">📊 按数字发布</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>👥 贡献者</td>
+<td align="right"><strong>248</strong></td>
+</tr>
+<tr>
+<td>📝 在循环中提交</td>
+<td align="right"><strong>1,714</strong></td>
+</tr>
+<tr>
+<td>🔀 引用的拉取请求</td>
+<td align="right"><strong>1,666</strong></td>
+</tr>
+<tr>
+<td>📋 Changelog 条目</td>
+<td align="right"><strong>1,182</strong></td>
+</tr>
+<tr>
+<td>🙌 贡献者计入条目</td>
+<td align="right"><strong>256</strong></td>
+</tr>
+<tr>
+<td>🤖 自动依赖项提交</td>
+<td align="right">22</td>
+</tr>
+<tr>
+<td><strong>按类型分类的条目</strong></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>类型</td>
+<td align="right">计数</td>
+</tr>
+<tr>
+<td>---</td>
+<td align="right">---:</td>
+</tr>
+<tr>
+<td>🐛 修复</td>
+<td align="right">779</td>
+</tr>
+<tr>
+<td>✨ 特点</td>
+<td align="right">169</td>
+</tr>
+<tr>
+<td>📚 文档</td>
+<td align="right">29</td>
+</tr>
+<tr>
+<td>🧹 家务活</td>
+<td align="right">27</td>
+</tr>
+<tr>
+<td>🧪 测试</td>
+<td align="right">15</td>
+</tr>
+<tr>
+<td>♻️ 重构</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td>⚡ 性能</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td>供应商</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>🔒 安全</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>⚙️ CI</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>部门</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td>维护</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-本周期前-25-位贡献者">🏆 本周期前 25 位贡献者</h3>
+<p><em>通过 <code>ed2db6cb19..v3.8.50</code> 中的提交，作者身份通过 <code>.mailmap</code> 进行合并。机器人除外。</em></p>
+<table>
+<thead>
+<tr>
+<th align="right">＃</th>
+<th>贡献者</th>
+<th align="right">承诺</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">🥇</td>
+<td>迭戈苏扎普</td>
+<td align="right">738</td>
+</tr>
+<tr>
+<td align="right">🥈</td>
+<td>后台</td>
+<td align="right">88</td>
+</tr>
+<tr>
+<td align="right">🥉</td>
+<td>眩晕</td>
+<td align="right">66</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td>拉维·塔鲁玛</td>
+<td align="right">52</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td>马库斯·哈同</td>
+<td align="right">48</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td>侯鲍勃</td>
+<td align="right">42</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td>鲁兹贝†</td>
+<td align="right">38</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td>向哲</td>
+<td align="right">31</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td>帕科·卡托内斯</td>
+<td align="right">28</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td>10阮青达</td>
+<td align="right">23</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td>11安缦</td>
+<td align="right">22</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td>12威尔·戈登</td>
+<td align="right">19</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td>小妍儿 ✨</td>
+<td align="right">17</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td>14有目的的开发</td>
+<td align="right">16</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td>15安德鲁·B。 10</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td>16 NOXX - 提交者</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td>17伊格纳米兰达</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td>18乔纳森·贝利</td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td>19柯进</td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td>刘奥斯汀</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td align="right">21</td>
+<td>21楚吉</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td align="right">22</td>
+<td>22普鲁德维·乌达</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td align="right">23</td>
+<td>23奔驰科技</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td align="right">24</td>
+<td>冲洗剂</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td align="right">25</td>
+<td>25斯坦利</td>
+<td align="right">7</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>Living 部分 — 于 2026 年 8 月 12 日从所有周期提交中重新生成（周期打开 <code>ed2db6cb19</code> → 提示）。项目符号包含合并后的 PR 及其作者；直接推送单独列出.</em></p>
+<h3 id="-新功能">✨ 新功能</h3>
+<ul>
+<li>**壮举（搜索）：**一流的 X 搜索提供商 (<code>x-search</code>)…#10985</li>
+<li><strong>feat(core):</strong> 在路由器上添加 A 层功能过滤器 #5696</li>
+<li><strong>壮举（提供商）：</strong> 添加 DeepAI 作为付费 API-key 图像提供商 #6671</li>
+<li><strong>壮举（提供商）：</strong> 添加 Naga.ac 和…#6674 — 感谢@chirag127</li>
+<li><strong>feat(api):</strong> 添加响应内容编码验证 —… #6736</li>
+<li><strong>feat(api):</strong> 添加插件市场安装端点…#6752</li>
+<li><strong>feat(chatgpt-web):</strong> 强化提示模拟…#7679 — 感谢@horacecar</li>
+<li><strong>文档：</strong> 添加管理身份验证术语指南 #7786</li>
+<li>壮举(a2a)：导体桥 - 长寿的 SSE 消费者……#8080</li>
+<li>壮举(a2a)：特工卡(<code>/.well-known/agent.json</code>)现在…#8119</li>
+<li>壮举（仪表板）：“指挥”面板 — OmniConductor 舰队…#8221</li>
+<li>壮举（仪表板）：Faro 在 Conductor 面板上用语音聊天 —… #8222</li>
+<li>feat(a2a)：OmniConductor 舰队的入站代表团 — `POST…#8223</li>
+<li><strong>文档：</strong> 添加低内存/小型 VPS 优化指南 #8237</li>
+<li><strong>壮举（提供者）：</strong> 添加连接级别… #8369 — 感谢@Benson-mk</li>
+<li>壮举（副驾驶）：为 runOmniRouteCli 命令添加批准门 #8461</li>
+<li>feat(ci)：将 windows-latest 分支添加到 test-bun-sqlite 作业 #8468</li>
+<li><strong>壮举（电子）：</strong> 桌面应用程序现在可以附加… #8799 — 感谢@soulhakr</li>
+<li><strong>数据库</strong> <code>node:sqlite</code> 现在后备…#8870 — 感谢@artickc</li>
+<li><strong>feat(models):</strong> 添加精确的每个模型…#8908 — 感谢@xz-dev</li>
+<li><strong>Providers</strong> 扩展了 Novita AI 目录…#8913 — 感谢 @jax-novita</li>
+<li><strong>壮举（提供商）：</strong> 本机 xAI 代理工具直通… #8964</li>
+<li><strong>壮举（提供者）：添加 UnoRouter 提供者</strong> UnoRouter 是一个…#8978</li>
+<li><strong>feat(sse)：</strong> 弃用了旧版 <code>gemini-cli</code> ** 上游… #7034 #8980</li>
+<li>为 Codex、OpenAI 和……添加默认关闭连接设置</li>
+<li>忽略持久调用日志中不透明的加密推理值…#9000</li>
+<li><strong>壮举（提供商）：</strong> 添加 Regolo AI OpenAI 兼容提供商 #9031</li>
+<li><strong>feat(db):</strong> 添加提供者范围内的模型别名，并保留下来… #9068</li>
+<li>壮举（光标）：显示一个可关闭的仪表板横幅，建议… #9173
+-壮举（光标）：在〜24小时之前主动更新光标会话…＃9173</li>
+<li><strong>feat(codex):</strong> 接受括号… #9208 — 感谢@seakleangnhak</li>
+<li>**壮举（用法）：**表面克劳德思维令牌… #9214 — 感谢@luoyide</li>
+<li><strong>feat(ollama)：</strong> 添加 Ollama 本地嵌入…#9225 — 感谢 @HaoNgo232</li>
+<li>壮举（图像）：执行完整的组合策略+后备……#9239
+添加 open-sse/services/imageCombo.ts，用于扩展组合目标、过滤到支持图像、使用每个目标的 handleImageGeneration 执行优先级策略，并返回第一次成功或最后一次失败。路由补丁在模型解析之前检测组合名称并转移到新的执行路径。</li>
+<li>壮举：使转发的上游响应标头预算可配置… #9243</li>
+<li><strong>feat(providers):</strong> 过滤提供商详细信息… #9247 — 感谢@RobertsXML</li>
+<li>**壮举（提供商）：**制作 video_url…#9248 — 感谢@HellFiveOsborn</li>
+<li>**壮举（双子座）：**递归类型：模式中的对象注入…#9268</li>
+<li><strong>壮举（仪表板）：</strong> 在…上渲染一个条件“获取 API 密钥”链接…#9270</li>
+<li>**壮举（提供商）：**接受 JSON cookie…#9284 — 感谢@AIB1TAL0S</li>
+<li><strong>壮举（提供者）：</strong> 支持 opencode-zen 的最大推理努力… #9318</li>
+<li>**壮举（提供商）：**扩展了 NanoGPT (<code>nano-gpt.com</code>) 上游…#9322</li>
+<li>**feat(sse)：**组合 <code>system_message</code> 支持服务器端…#5501</li>
+<li><strong>feat(sse):</strong> 模板扩展… #5501 #9414 — 感谢@maxmad64bis</li>
+<li><strong>feat(sse)：</strong> New-API/One-API/Sub2API 聚合器平衡检测…#9415</li>
+<li>**壮举（目录）：**添加了选择加入设置 <code>hideAutoCombos</code> 和…#9418</li>
+<li><strong>壮举（opencode-plugin）：</strong> 添加… #9473 — 感谢@omniroute</li>
+<li><strong>壮举（提供商）：</strong> 添加本机 DeepSeek V4 Flash 和 Pro…#9485</li>
+<li>壮举（opencode-plugin）：从磁盘快照热目录启动+…#9490
+config-shim 挂钩现在会在获取之前读取最后一个磁盘快照，因此提供程序会立即向最后一次已知的良好目录进行注册（<del>1-2 秒 vs 在热网关上的</del>30 秒）。所有六个获取器通过 Promise.allSettled 同时运行，而不是顺序运行。刷新失败会保留快照（不覆盖）。运行中防护可防止同一缓存键的并发刷新。 features.diskCache: false 选择退出完全禁用热读取。</li>
+<li><strong>壮举（模型）：</strong> 测试所有的“自动隐藏失败模型”不再… #9511</li>
+<li>将咨询性的遗忘兄弟测试报告添加到拉取请求…#9530</li>
+<li>壮举（提供商）：添加 Muse 代码 CLI 提供商预设 #9544</li>
+<li>壮举（插件）：在插件中公开 client 请求标头…#9570</li>
+<li><strong>feat（插件）：</strong> 添加 onStreamComplete 内置事件暴露… #9571
+添加一个新的 <code>onStreamComplete</code> 插件事件，该事件在 SSE 流完全加载后触发
+消耗，携带使用令牌计数和计时指标（延迟、TTFT）。内置
+事件现在包括 <code>onStreamComplete</code> 作为“即发即忘”生命周期挂钩。
+有效负载：<code>status</code>、<code>usage</code>（prompt_tokens、completion_tokens、reasoning_tokens、
+cache_read_input_tokens、cache_creation_input_tokens)、<code>timing</code> (latencyMs、ttft)、
+<code>model</code>、<code>provider</code>、<code>errorCode</code>。
+不易断裂 — 现有的 <code>onResponse</code> 挂钩与 <code>{ streamed: true }</code> 保持不变。</li>
+<li><strong>壮举（音频）：</strong> Soniox STT + TTS 提供商 (<code>sx</code>) — 异步…#9579</li>
+<li>在请求日志行中显示缓存读取和缓存写入令牌计数……
+报告他们。 (#9620)</li>
+<li>壮举（内存）：支持自定义 OpenAI 兼容端点……#9622</li>
+<li>壮举（弹性）：添加一个选择加入的看门狗以防止持续缓慢…#9709</li>
+<li>**入职：**为符合条件的…添加明确的、可审查的 one-click 设置
+具有每个提供商的警告链接、可选择的确认、幂等创建和安全部分
+重试。现有的提供者连接永远不会改变，并且设置完成永远不会启用
+提供商默默地。 (#9752)</li>
+<li>**壮举（设置）：**添加专用的模态桥设置页面…#9782</li>
+<li><strong>壮举（模态桥）：</strong> 将聊天音频转录为纯文本… #9807</li>
+<li><strong>壮举（记忆）：</strong> <code>PROVIDERS_SYSTEM_MUST_BE_FIRST</code>（… #6135 #7293 #9924</li>
+<li><strong>feat(api):</strong> API 键可以禁用提示…#10001 — 感谢@shixi-li</li>
+<li><strong>添加 cliproxy 提供商暴露控制和清单注入</strong> #7329 — 感谢 @KooshaPari</li>
+<li><strong>feat(infra)：为 Linux 添加一个 systemd 自动启动单元</strong> #8635</li>
+<li><strong>feat(db)：添加节点 sqlite 适配器奇偶校验</strong> #8871 — 感谢 @epsilonode</li>
+<li><strong>壮举（阿里巴巴）：具有实时配额同步的免费层路由</strong> #8893 — 感谢@AndrianBalanescu</li>
+<li><strong>feat(oauth)：添加具有本地自动导入功能的 Raycast Pro 提供程序</strong> #8895 — 感谢 @AndrianBalanescu</li>
+<li><strong>壮举（执行者）：在 Devin ACP 上添加隔离的 Claude Code 桥</strong> #8914 — 感谢 @McLuck</li>
+<li><strong>壮举：改进提供商配额布局</strong> #8916 — 感谢@apoapostolov</li>
+<li><strong>feat(mcp)：添加omniroute_create_combo 工具</strong> #8925 — 感谢@lucasmellos</li>
+<li><strong>feat(ci)：在全新安装和升级上一个版本上控制发布</strong> #8953</li>
+<li><strong>feat(providers)：添加 Conol (conol.ai) 网络会话提供商</strong> #8974 — 感谢 @artickc</li>
+<li><strong>壮举/组合提供商明智的模型测试</strong> #9011 — 感谢@JoshimOfficial</li>
+<li><strong>feat(model-alias)：添加运行时模型别名解析器中间件</strong> #9020 — 感谢 @Egorich-print</li>
+<li><strong>feat(i18n)：压缩引擎和仪表板 UI 的完整 zh-CN 本地化</strong> #9038 — 感谢 @qianze0628</li>
+<li><strong>壮举：更便宜的推理提供商（聊天 + 本地响应 + 图像，赞助商铁路第二）</strong> #9043</li>
+<li><strong>feat(providers)：通过 FIRECRAWL_BASE_URL 和自定义基本 URL 添加对自托管 Firecrawl 的全面支持</strong> #9052 — 感谢 @mad-gooze</li>
+<li><strong>feat(dahl)：添加手动 API 密钥选项以及自动生成的令牌</strong> #9077 — 感谢 @pizzav-xyz</li>
+<li><strong>壮举(ci)：G0 — reforça o trilho PR→release/</strong> ** #9108</li>
+<li><strong>壮举（提供者）：/v1/responses</strong> 的本机 xAI 代理工具直通 #9111 — 感谢 @VXNCXNX</li>
+<li><strong>feat(.50)：完整的内容 — G13、G14、gap34、文档、R0.2</strong> #9126</li>
+<li><strong>feat(g1)：将组合策略检查重写为运行时导入方法</strong> #9131</li>
+<li><strong>feat(test:scoped)：基于 TIA 的本地测试运行程序 (#8084 D1)</strong> #9143</li>
+<li><strong>壮举（docker）：从活跃的发布分支中发布下一个</strong>＃9181 - 感谢@Zartharas</li>
+<li><strong>壮举（用法）：显示 Grok Build 计费限制</strong> #9205 — 感谢 @xz-dev</li>
+<li><strong>壮举（模型）：功能网关镜像 + 修复同步替换</strong> #9217</li>
+<li><strong>壮举（入学）：为 LLM 路线添加自适应过载保护</strong> #9262 — 感谢 @xz-dev</li>
+<li><strong>feat(i18n)：更新意大利语翻译</strong> #9280 — 感谢@Gecky2102</li>
+<li><strong>feat(dashboard)：将提供商屏幕过滤器保留到 URL 以进行书签</strong> #9307 — 感谢 @swingtempo</li>
+<li><strong>feat(api-manager)：添加提供者级模型权限</strong> #9313 — 感谢@xz-dev</li>
+<li><strong>壮举（热身）：主动克劳德热身调度程序（＃8848）</strong>＃9449 - 感谢@HouMinXi</li>
+<li><strong>feat(infra)：为 Linux 添加 systemd 自动启动单元 (#8635)</strong> #9466</li>
+<li><strong>feat(lib)：使 MODELS_DEV_SYNC_ENABLED 真正控制同步</strong> #9483 — 感谢 @HouMinXi</li>
+<li><strong>壮举（雷达）：标志门控签名自由模型目录覆盖</strong> #9515</li>
+<li><strong>壮举（压缩）：添加俄语语言包</strong> #9581 — 感谢@vinogradovnet</li>
+<li><strong>壮举（提供商）：集成 wave4 免费层网关</strong> #9584</li>
+<li><strong>壮举（提供商）：添加 Zylo UnoRouter 和 Poolside 注册表</strong> #9585</li>
+<li><strong>壮举（提供商）：添加 FastRouter AnyAPI 和 ElectronHub 注册表</strong> #9586</li>
+<li><strong>壮举（提供商）：添加 LLMGateway 和 LLM Kiwi 注册表</strong> #9587</li>
+<li><strong>壮举（提供商）：添加 FreeInference 注册表</strong> #9594</li>
+<li><strong>壮举（雷达）：激活屏幕上的贡献者+支持者声明按钮（F4/T7）</strong> #9710</li>
+<li><strong>功能（雷达）：在激活屏幕上粘贴键输入（F4）</strong> #9758</li>
+<li><strong>壮举（护栏）：模态桥核心 - 视觉模式/任务感知/缓存/输入图像 + modalityBridge 设置</strong> #9759</li>
+<li><strong>feat(radar)：来自独立 /v1/referrals feed 的推荐（无 30 天延迟）</strong> #9762</li>
+<li><strong>壮举：通用 OpenAI 兼容视频自定义提供商</strong> #9844 #9818 — 感谢 @oyi77</li>
+<li><strong>feat(logging)：使聊天日志截断限制可配置，默认为 128x</strong> #9863 #9738 — 感谢 @hartmark</li>
+<li><strong>壮举（日志记录）：碰撞 CHAT_LOG_ARRAY_TAIL_ITEMS 默认 24 -> 128</strong> #9864 #9735 — 感谢 @hartmark</li>
+<li><strong>feat(oauth)：添加 Openference OAuth 和 API 密钥提供程序集成</strong> #9869 #9722 — 感谢 @AnhLead</li>
+<li><strong>壮举（src）：代理池工具栏次要改进</strong>＃9870＃9718 - 感谢@AgnesRiber</li>
+<li><strong>壮举（弹性）：通过 /api/resilience</strong> 暴露providerQuotaOverrides #9871 #9714 — 感谢@herjarsa</li>
+<li><strong>壮举（响应）：添加加密推理重播选择加入</strong> #9876 #9601 — 感谢@jackjinke</li>
+<li><strong>壮举（弹性）：添加每个帐户的弹性连接视图（API + 仪表板）</strong> #9880 #9510 — 感谢@HouMinXi</li>
+<li><strong>feat(db)：为预定的后台工作添加作业注册表</strong> #9886 #9631 — 感谢@HouMinXi</li>
+<li><strong>feat(telegram)：迷你应用程序聊天桥 — initData auth、更新 webhook、聊天代理</strong> #9907 #9812 — 感谢 @benzntech</li>
+<li><strong>壮举（光标）：独家实时列表 + 逐字 AgentRun 模型 ID</strong> #9911 — 感谢 @yansigit</li>
+<li><strong>壮举（用法）：添加命令代码配额跟踪</strong> #9921 — 感谢@yansigit</li>
+<li><strong>feat(combo)：添加仅配额优先级回退</strong> #9983 — 感谢 @xz-dev</li>
+<li><strong>壮举（入门）：添加一个-click 免费提供商设置</strong> #10014</li>
+<li>**壮举（入场）-直接推动：**自适应过载/压力…</li>
+<li><strong>feat(agentrouter) — 直接推送：</strong> 支持 Claude 和 Codex…</li>
+<li><strong>feat(providers) — 直接推送：</strong> ChatGPT Web 会话凭证…</li>
+<li><strong>feat(sse):</strong> 荣誉代理路由器的提供者规则锁定范围…#10419</li>
+<li><strong>feat(ocr)：</strong> Vertex AI DeepSeek-OCR 提供商 #10398</li>
+<li><strong>feat(providers):</strong> 从 OCR 注册表导出 imageToText +…#10400</li>
+<li><strong>feat(ocr)：</strong> 带有转换层的多提供商 /v1/ocr…#10283</li>
+<li><strong>壮举（提供商）：</strong> 在主要…上声明 imageToText 服务种类…#10275</li>
+<li>**壮举（桥）：**本机视觉跳过防护+可配置描述…#10289</li>
+<li><strong>壮举（桥）：</strong> 在…之前将图像标准化为 2048px 长边 #10287</li>
+<li><strong>feat(sse)：</strong> 将代理路由器配额 403/400 重新声明为可重试 429…#10335</li>
+<li><strong>feat(sse):</strong> 将 i-have-adhd 输出样式添加到压缩目录 #10271</li>
+<li><strong>feat(codex):</strong> 添加 OAuth 指纹…#10243 — 感谢 @xz-dev</li>
+<li>**壮举（i18n）：**完整的葡萄牙语…#10250 — 感谢@DarkEsteves</li>
+<li><strong>壮举（提供商）：</strong> 发布 Poolside 的…#10216 — 感谢 @pacocartones</li>
+<li><strong>feat(crof):</strong> 广告推理… #10062 — 感谢@excessivechaos</li>
+<li>**壮举（open-sse）：**暴露…＃10040＃10046 - 感谢@tiangao88</li>
+<li><strong>壮举（仪表板）：</strong> Kimi 15% 首次充值活动 — 专用…#10240</li>
+<li><strong>壮举（提供商）：</strong> 集成经过审核的免费层网关 #9210</li>
+</ul>
+<!-- 协调传递 2（阶段 0a.1）：在没有项目符号的情况下进入周期的提交 -->
+<ul>
+<li><strong>壮举（雷达）：</strong> <strong>OmniRoute Radar</strong> — 签名的自由模型… #10826</li>
+<li><strong>壮举（视频）：</strong> Video Bridge 获得了完整的…#10483 — 感谢@backryun</li>
+<li><strong>壮举（volcengine）：</strong> Volcengine **方舟计划…＃11333 - 感谢@rengaryang</li>
+<li><strong>壮举（提供商）：</strong> #10722 #10184 #10174 — 感谢 @hgaib @megamen32 @MeRezaRezaei</li>
+<li><strong>壮举（提供商）：</strong> #9909 #10804 — 感谢@yansigit @tuandinh0801</li>
+<li><strong>壮举（提供者）：</strong> 工具需要…#10948 — 感谢@acc0mplish</li>
+<li><strong>壮举（提供者）：</strong> 每个连接… #10885 — 感谢@maxmad64bis</li>
+<li><strong>壮举（提供商）：</strong> #10226 #10195 #10942 — 感谢@backryun @oyi77</li>
+<li><strong>feat(providers):</strong> 网络会话凭证… — 感谢@benzntech</li>
+<li>**壮举（sse）：**明确的 <code>glm-5.3-max</code>…#11415 — 感谢@phuongddx</li>
+<li>**壮举（sse）：**发现人类合作伙伴模型…＃11279 - 感谢@maci0</li>
+<li><strong>feat(sse):</strong> 选择加入… #10965 — 感谢@mymusicmyspace</li>
+<li><strong>feat(sse):</strong> Kimi Web 代币生命周期…#10944 — 感谢@MeRezaRezaei</li>
+<li>**壮举（sse）：**通过特工CLI的光标计划图像…＃10842＃10425</li>
+<li><strong>壮举（api）：</strong>＃10819＃10977＃10771 - 感谢@RaviTharuma @maxmad64bis</li>
+<li><strong>壮举（api）：</strong> #10568 #11076 — 感谢@RaviTharuma @ntdatt812</li>
+<li>**壮举（音频）：**本机… #11312 #11315 #10822 — 感谢@RaviTharuma</li>
+<li>**壮举（gemini-web）：**图像生成…#10494 — 感谢@Abhishek4512009</li>
+<li>**壮举（cli）：**本机Bun后端… #11039 #11168 — 感谢@rqzbeh</li>
+<li>**壮举（cli）：**托盘… #11230 #10830 #11372 — 感谢@tuandinh0801 @ziuus</li>
+<li>**壮举（cli）：**类似继电器的CLI闭合 - 一个目标… - 感谢@backryun</li>
+<li><strong>壮举（仪表板）：</strong> #11228 #11227 #11224 #11215 #11195 #11206 — 感谢@ignamiranda</li>
+<li><strong>壮举（仪表板）：</strong> #10263 #10900 #10520 #11196 #11329 #10354 — 感谢@hartmark @swingtempo</li>
+<li><strong>壮举（路由）：</strong> #10126 #10362 #10881 #10927 — 感谢@benzntech @KaspaPulse @Egorich-print</li>
+<li><strong>壮举（组合）：</strong> 不透明… #10730 — 感谢@stanleytejakusuma</li>
+<li><strong>壮举（入场）：</strong> #11268 #10814 #10437 — 感谢@RaviTharuma @xz-dev</li>
+<li><strong>壮举（压缩）：</strong> 采用… #10647 #11318 — 感谢@RaviTharuma</li>
+<li><strong>壮举（模型）：</strong> #11252 #10883 #10884 — 感谢@maxmad64bis @excessivechaos</li>
+<li><strong>壮举（搜索）：</strong> <code>context7</code> 添加为…#11140 — 感谢@HouMinXi</li>
+<li><strong>feat(mcp):</strong> 动态运行时工具模式…#11155 — 感谢@rqzbeh</li>
+<li><strong>壮举（a2a）：</strong> A2A v1.0 client兼容性 - … #10839 - 感谢@wpec</li>
+<li><strong>壮举（服务器）：</strong> 本机 systemd…#10662 — 感谢 @maxmad64bis</li>
+<li>**壮举（redis）：**可配置键…＃11042 - 感谢@MeRezaRezaei</li>
+<li>**壮举（docker）：**强化Linux VPS…#10623 — 感谢@freudantunes</li>
+<li><strong>壮举（代理）：</strong> #10876 #10342 — 感谢@maxmad64bis @Gi99lin</li>
+<li><strong>壮举（服务）：</strong> 消毒 CLIProxyAPI…#11314 — 感谢@RaviTharuma</li>
+<li><strong>feat(db):</strong> 现在进行数据库健康检查…#10652 — 感谢@maxmad64bis</li>
+<li><strong>feat(codex):</strong> 与 Codex v178 身份同步…#10716 — 感谢 @xz-dev</li>
+<li><strong>壮举（用法）：</strong> Kimi 编码“额外用法”是… #10712 — 感谢@xz-dev</li>
+<li><strong>壮举（oauth）：</strong> <code>gemini-3.7-flash</code> 型号…#10305 — 感谢@Chewji9875</li>
+<li><strong>壮举（cli-tools）：</strong> Prime Agent 添加到…#11166 — 感谢@arminanton</li>
+<li>**壮举（护栏）：**针对视觉的集中视频分析模式…</li>
+<li>**壮举（操作）：**带有出处门的金丝雀部署路径，… #10446 #10444</li>
+<li><strong>壮举（api）：</strong> 列表嵌入… #11249 #11213 — 感谢@rafapti23</li>
+<li><strong>壮举（响应）：</strong> <code>previous_response_id</code>…#10262 — 感谢@hartmark</li>
+</ul>
+<h3 id="-错误修复">🐛 错误修复</h3>
+<ul>
+<li>**修复（构建）：**每条路由不再响应 HTTP…#11343 #6344 #10060</li>
+<li><strong>安全（搜索）</strong> 通过 <code>/v1/search</code> 阻止 SSRF… — 感谢 @zmf963</li>
+<li><strong>提供商</strong>尊重 <code>PATCH /api/providers/[id]</code> 所以`全向…#10366</li>
+<li><strong>cli</strong> 通过配置的连接路由提供程序测试命令…#10570</li>
+<li><strong>执行器</strong>修复内部超时错误分类为 client…#8197</li>
+<li>测试（组合）：保护自动/最佳免费永远不会将组合名称泄漏为…#7754</li>
+<li>修复（vision-bridge）：描述模型不再返回无法访问的…#8430</li>
+<li>修复（vision-bridge）：根据可用凭据验证固定模型…#8430</li>
+<li>修复（vision-bridge）：在组合描述路径中，替换原始图像…#8430</li>
+<li>修复（质量）：添加基本相对文件大小检查，以便继承漂移…#8522</li>
+<li>修复（ci）：将所有快速门聚合到非快速失败循环中，所以…#8542</li>
+<li>修复（测试）：通过存根使 machineId 测试 macOS 兼容…#8577</li>
+<li>修复（脚本）：用兼容的 while-read 替换 bash 4+ readarray…#8577</li>
+<li>修复（cli）：在 Windows 上为诺顿友好托盘启用 systray2 #8609</li>
+<li>修复（执行者）：保护克劳德/人性化的 buildHeaders 免受空…#8653</li>
+<li>修复（提供商）：gate premium opencode-zen/opencode-go 模型…#8681</li>
+<li>**修复（api）：**使<code>/v1/models</code>过时刷新响应安全…＃8728＃8697</li>
+<li>修复(yuanbao-web): 在SSE文本事件中接受<code>content</code>字段…#8739</li>
+<li>修复（构建）：删除误导性的 open-sse/package.json 外观并添加…#8781</li>
+<li>修复（errorClassifier）：将 ChatGPT Web SENTINEL_BLOCKED 403 分类为…#8813</li>
+<li>修复（cli）：当 better-sqlite3 构造函数时回退到节点：sqlite…#8826</li>
+<li>修复（opencode）：在身份验证登录时使用“opencode-”前缀提供商 ID…#8830</li>
+<li>修复（opencode-zen）：将当前的免费层模型添加到注册表中…#8841</li>
+<li>**修复（api）：**让图像和视频提供商… #8843 — 感谢@artickc</li>
+<li>修复（构建）：在独立包中包含更好的 sqlite3 预构建…#8847</li>
+<li>修复（代理健康）：在代理健康检查 URL 中包含凭据 #8853</li>
+<li><strong>修复（构建）：</strong> <code>prepublish</code> 没有…#8858 — 感谢@omniroute @maisdesign</li>
+<li>**修复（opencode）：**生成…#8869 — 感谢@xiaoyaner0201</li>
+<li>**修复（cli）：**默认省略Codex CLI…#8876 — 感谢@xiaoyaner0201</li>
+<li>**修复（代理）：**隔离新代理… #8883 — 感谢@xiaoyaner0201</li>
+<li>修复（db）：当提供商连接…时使陈旧的 LKGP 引脚无效…#8887</li>
+<li>修复（测试）：将陈旧的夜间兼容装置和金色更新为…#8901</li>
+<li><strong>修复（配额）：</strong> 现在删除配额池… #8906 — 感谢@xiaoyaner0201</li>
+<li><strong>修复（执行者）：</strong> Vertex AI 现在路由…#8909 — 感谢@wgordon17</li>
+<li><strong>修复（提供商）：</strong> 公开 OAuth…#8921 — 感谢 @Llliao1113</li>
+<li>修复（压缩）：删除孤儿…#8946</li>
+<li>修复（auth）：设置第一个仪表板登录密码不再失败…#8950</li>
+<li>修复（github）：将 targetFormat 添加到 GPT-5.6 Sol/Terra/Luna 模型 #8951</li>
+<li>修复（自动更新）：跳过合成的 Next.js 独立包。json…#8956</li>
+<li>修复（opencode）：将视觉功能从实时目录传播到…#8960</li>
+<li>修复（提供商）：切换反重力配额 RPC 进行迭代…#8965</li>
+<li><strong>修复（oauth）：</strong> GHE Copilot OAuth 生命周期 - 连接帐户…</li>
+<li>**修复（健康检查）：**仅访问令牌… #8970 — 感谢@hppsc1215</li>
+<li>修复（提供商）：copilot-m365-web enterprise 轮流发送…#8971</li>
+<li>**修复（ci）：**协调助手不再限制其扫描…#8985</li>
+<li>**修复（ci）：<strong>修复了实时自动更新缺陷，其中</strong>英特尔Mac…#8988</li>
+<li><strong>修复（sse）：</strong> <code>stripResponsesLifecycleEcho</code> 不再剥离…#8990</li>
+<li>修复（顶点）：将 Claude 模型路由到本机 rawPredict 端点和…#8994</li>
+<li>修复（代理）：resolveProxyForConnection 现在返回代理…#8995</li>
+<li><strong>修复（译者）：</strong> Responses-to-Chat 推广路径称为…#8997</li>
+<li>**修复（sse）：**克劳德推理努力后缀ID…
+正确地在任何服务于真正的 Claude 模型的提供者上，而不仅仅是直接的 Anthropic 提供者上
+(#9006)</li>
+<li>**修复（sse）：**无思考（<code>no-think/</code>）目录变体的…
+使其在直接提供者之外无法使用，无论是在发现目录还是仪表板中
+游乐场 - 已修复（#9006）</li>
+<li><strong>修复（sse）：</strong> Vertex 连接上的单个无法识别的模型 ID …
+该连接上的其他模型持续 2 分钟 — Vertex 404 现在的范围仅限于每个模型
+通过 <code>passthroughModels</code> 进行锁定，而不是连接范围内的冷却
+(#9006)</li>
+<li><strong>修复（sse）：</strong> Vertex <code>PERMISSION_DENIED</code> 403 现已消除歧义…
+记录的错误格式 - 真正的连接范围原因（API 已禁用、项目级 IAM
+denial）仍然会冷却整个连接，而特定于模型的拒绝仅会锁定该连接
+模型（#9006）</li>
+<li>**修复（sse）：**仅错误流现在保留…#9022 - 感谢@shixi-li</li>
+<li>修复（光标）：在多轮对话中保留工具上下文…#9029</li>
+<li>修复（sse）：将Antigravity client系统内容移至第一个用户…＃9030</li>
+<li>修复（auth）：IP 黑名单现在阻止通过…的直接连接#9033</li>
+<li>修复（api）：使用配置的前缀而不是原始节点 UUID…#9034</li>
+<li><strong>修复（弹性）：</strong> 检测并重置空闲容量速率限制…#9041</li>
+<li>修复（db）：流式数据库备份导出而不是缓冲整个文件…＃9045</li>
+<li>修复（ui）：标准化免费池 API 响应有效负载以读取…#9046</li>
+<li>**修复（译者）：**通过… #9053 — 感谢@ikelvingo</li>
+<li>修复（api/analytics）：停止充电：任意免费模型…＃9054</li>
+<li>修复（api）：自动/*路由别名绕过API-key…#9057</li>
+<li>修复（提供者）：人类剥离代码执行/技能测试标志，…#9064</li>
+<li><strong>修复（批次）：</strong> <code>GET /v1/batches</code> 现在验证 <code>limit</code> 查询… #9073</li>
+<li><strong>修复（a2a）：</strong> A2A JSON-RPC 路由器现在比较不记名令牌…#9083</li>
+<li><strong>修复（api/技能）：</strong> <code>/api/skills/**</code> 路线现在被捕获… #9088</li>
+<li>修复（提供商）：承认音频语音/音频转录 api 输入…#9096</li>
+<li>修复（提供者）：当 Base…#9102 时，modal.com 验证返回明显错误</li>
+<li><strong>修复（提供商）：</strong> GitHub Copilot 不再重新导入或路由…#9103</li>
+<li>修复（提供者）：解析音频转录路径中的组合名称…#9134</li>
+<li>修复（vscode）：允许在 VS Code 模型中内置自动路由模型…#9140</li>
+<li>修复（背景）：检测 Anthropic 顶级系统提示… #9142</li>
+<li><strong>修复（仪表板）：</strong> 提供商“自动同步”切换现在适用于… #9149</li>
+<li>修复（cli）：使用 process.execPath 进行 macOS launchd 自动启动 #9156</li>
+<li>修复（管理）：授权 mcp：环回/LAN 上的仅连接密钥…#9159</li>
+<li>修复（模型发现）：同步的摄取功能.effort_tiers…#9160</li>
+<li><strong>修复（译者）：</strong> 尊重配置的聊天… #9161 — 感谢@Zartharas</li>
+<li>修复（翻译）：缓冲并规范化上游工具调用参数…#9168</li>
+<li>修复（光标）：现在光标连接上的手动“刷新”按钮…#9173</li>
+<li>修复（翻译）：避免在…中双重规范化工具名称#9177</li>
+<li><strong>修复（仪表板）：</strong> OpenAI 兼容的“默认模型”… #9179</li>
+<li>**修复（db）：**纪念<code>ENABLE_REQUEST_LOGS</code>…#9187 - 感谢@RobertsXML</li>
+<li><strong>修复（模型）：</strong> 规范化 client…#9193 — 感谢 @b1nhm1nh</li>
+<li>修复（目录）：修复死守和同步优先排序… #9195</li>
+<li>修复（路由）：咨询 Combo 中的 customModelssupportsVision 标志…#9195</li>
+<li><strong>修复（模型）：</strong> 保留已发布的模型… #9199 — 感谢@xz-dev</li>
+<li><strong>修复（模型）：</strong> 重用一个本地构建…#9199 — 感谢@xz-dev</li>
+<li><strong>修复（模型）：</strong> 解决代币限制和模型…#9199 — 感谢@xz-dev</li>
+<li><strong>修复（模型）：</strong> 读取并解析 models.dev…#9199 — 感谢 @xz-dev</li>
+<li><strong>修复（压缩）：</strong> 尊重全球… #9200 — 感谢@joachimBrindeau</li>
+<li>修复（网络搜索）：将每个搜索提供程序尝试绑定到其… #9201</li>
+<li>修复（auth）：使反重力和 agy 在凭证中等效…#9204</li>
+<li><strong>fix(cli):</strong> prefer IPv4 DNS for spawned… #9209 — thanks @dsitmilis</li>
+<li><strong>fix(pricing):</strong> stop billing reasoning… #9212 — thanks @yidecode</li>
+<li><strong>修复（模型）：</strong> <code>/v1/models</code> 现在…#4164 #9215 — 感谢@nguyenha935</li>
+<li><strong>fix(combo):</strong> the Combo “Add model”… #9218 — thanks @szzhoujiarui</li>
+<li>**修复（codex）：**标准化additional_tools…#9219 - 感谢@SalyyS1</li>
+<li><strong>fix(codex):</strong> preserve quota window… #9222 — thanks @HectorBernstorff</li>
+<li><strong>fix(azure):</strong> normalize GPT-5 chat… #9223 — thanks @royanrosyad85</li>
+<li><strong>fix(codex):</strong> strip orphaned tool outputs… #9228 — thanks @raflyazf</li>
+<li>**修复（i18n）：**完成了法语 UI…#9235 — 感谢 @alex-jordan547</li>
+<li><strong>fix(nvidia):</strong> normalize tool names and… #9236 — thanks @minhnhat166</li>
+<li>修复（lmarena）：发出 Uint8Array SSE 块而不是字符串到…#9237</li>
+<li><strong>fix(db):</strong> <code>validateRegisteredKey</code> no longer rejects the first… #9241</li>
+<li>**修复（i18n）：**本地化硬编码网络…#9245 - 感谢@alex-jordan547</li>
+<li><strong>fix(db):</strong> deleting a provider connection… #9246 — thanks @maxmad64bis</li>
+<li><strong>fix(cli-tools):</strong> keep Apply enabled… #9250 — thanks @lazysaltyfish</li>
+<li><strong>fix(translator):</strong> harden Claude format… #9253 — thanks @ervareza</li>
+<li><strong>修复（minimax）：</strong> 添加所需的空… #9256 — 感谢@rixzkiye</li>
+<li><strong>fix(resilience):</strong> Enforce RPM limits with rolling leases and… #9259</li>
+<li><strong>fix(classify429):</strong> add missing <code>have exhausted their quota</code>… #9269</li>
+<li>修复（克劳德）：删除无条件“总是”返回… #9276</li>
+<li>fix(qoder): include actionable CLI_QODER_BIN hint in connection… #9277</li>
+<li>**修复（提供商）：**网络搜索回退检测器… #9279</li>
+<li><strong>fix(docker):</strong> the bundled Redis sidecar no longer publishes on… #9286</li>
+<li>fix(credential-health): scheduler never retries failed connections… #9289</li>
+<li>**修复（db）：**保留帐户出口IP…#9291 — 感谢@maxmad64bis</li>
+<li>修复（api）：专业模型目录忽略隐藏的 OpenRouter 模型…#9293</li>
+<li>fix(mcp): break circular import between googApiKeyAuth.ts and… #9297</li>
+<li>fix(catalog): cache getModelsDevPricing to prevent OOM at startup #9300</li>
+<li>修复（提供商）：将 qwen-web SPA 版本标头从 0.2.66 更改为…#9304</li>
+<li>fix(sse): broaden OMNIROUTE_SSE_COMMENTS to accept… #9305</li>
+<li>修复（lmarena）：将 SSE 流块编码为 Uint8Array 以防止…#9306</li>
+<li><strong>修复（claude）：</strong> 协调压缩工具…#9308 — 感谢@ryanngit</li>
+<li><strong>fix(kiro):</strong> validate completed nested… #9314 — thanks @SemonCat</li>
+<li>修复（后端）：使用累积的responseBody作为提供者有效负载…#9315</li>
+<li>fix(qoder): surface qodercli stderr in error message instead of… #9319</li>
+<li>修复（安全）：当管理身份验证为…时，需要对 /v1/models 进行身份验证…#9320</li>
+<li><strong>fix(claude):</strong> normalize nested Claude… #9332 — thanks @AlanSyue</li>
+<li>fix(providers): map kimi-web/K3 to K2D5 scenario instead of OK… #9338</li>
+<li>修复（安全）：需要明确的工具包络以防止裸露的 JSON…#9343</li>
+<li>修复（api）：参考 LiteLLM 定价_同步层…#9364</li>
+<li>修复（提供商）：将 claude-web 429 视为不健康并转发…#9406</li>
+<li>修复（提供商）：将 muse-spark-web 429 视为不健康 #9406</li>
+<li>修复（提供商）：通过…检测过期的 Gemini-Web 会话#9407</li>
+<li>修复（提供者）：将 tool_use 块处理添加到 claude-web 流…#9408</li>
+<li>修复（api）：当前缀为…时，回退到slugified提供者名称#9416</li>
+<li><strong>修复（提供商）：</strong> Codex GPT-5.6 模型元数据报告 1M…#9431</li>
+<li>修复（oauth）：Kiro 导入令牌端点不再覆盖…#9435</li>
+<li>**修复（sse）：**提升中间对话 <code>system</code>/<code>developer</code>…#9436</li>
+<li>修复（后端）：在 Linux 上强制系统 MITM CA 证书为 0644…#9442</li>
+<li><strong>修复（路由）：</strong> Codex 原生裸模型 ID（<code>gpt-5.5</code>，… #9447</li>
+<li>修复（docker）：运送 MITM <code>_internal/</code> 垫片和 <code>selfsigned</code> 包…#9451</li>
+<li>修复（cli）：在 Windows 上探测 claude.exe/codex.exe 的路径…#9454</li>
+<li>修复（cli）：在孩子之前停止主管，以便全向停止…＃9455</li>
+<li>修复（cli）：将克劳德代码 OAuth 路由到 Anthropic <code>claude</code>…#9474</li>
+<li>修复（cli）：在`omniroute之后重新验证正在运行的二进制版本…#9475</li>
+<li>修复（提供商）：将 400 个额外使用分类为配额耗尽…#9486</li>
+<li>**修复（auth）：**从…重定向活动会话#9491 - 感谢@DaDecky</li>
+<li>修复（api）：使 800 条消息聊天历史记录上限选择太长…#9494</li>
+<li>修复（翻译）：保留真实的 K3 响应推理……#9496</li>
+<li>修复（翻译）：用换行符连接推理摘要片段…#9500</li>
+<li>修复（muse-spark-web）：记录 ecto1：WS 身份验证令牌要求…#9502</li>
+<li>修复（sse）：停止通过…强制注入高级工具使用测试版…#9505</li>
+<li>修复（sse）：阻止推理令牌缓冲区扩大…#9507</li>
+<li>修复（ci）：在测试集成作业中包含组合矩阵测试#9531</li>
+<li>**修复（ci）：**将单元套房上限从 100 分钟收紧到 80 分钟，作为…#9532</li>
+<li>**修复（速率限制）：**添加了队列等待超时测试和…＃9533</li>
+<li>修复（测试）：防止不稳定的模型DevSync定时器断言…#9534</li>
+<li>修复（后端）：将 OpenAI 中的缓存令牌映射到 Claude 非流媒体…#9536</li>
+<li>修复（db）：向损坏探针添加瞬态错误重试以防止…＃9541
+-修复（搜索）：将searxng-search标记为fallbackOnly以防止…＃9543</li>
+<li>修复（提供者）：将 getModelTargetFormat 中的提供者前缀剥离为…#9545</li>
+<li>修复（模型）：为 amazon-q 提供商添加“aq”别名，以便 parseModel…#9550</li>
+<li>修复（代理）：NO_PROXY 现在绕过上下文级代理…#9551</li>
+<li><strong>修复（构建）：</strong> <code>npm run build:cli</code>…#8858 #9553 — 感谢@omniroute</li>
+<li><strong>修复（质量）：</strong> #8522 #9024 #9324 #9329 #9193 #9332 #9228 #9260 #8934 #9196 #9163 #9554</li>
+<li>修复（构建）：直接在预发布中执行本机 esbuild 二进制文件 —…#9558</li>
+<li><strong>修复（mcp）：</strong> 3 <code>audit.test.ts</code> 关闭/回退测试… #8959 #9559</li>
+<li>修复（构建）：延迟解析模块级 fs 路径以避免 Turbopack…#9560</li>
+<li>修复（sse）：用轮询替换基于计时器的等待以修复不稳定的问题…#9567</li>
+<li>**修复（翻译）：**恢复原始工具名称大小写… #9568</li>
+<li>修复（翻译）：为上游工具添加不区分大小写的后备…#9575</li>
+<li>**修复（独立）：**分段上传（`POST…#9580</li>
+<li>**修复（docker）：**现在独立托管…#9615 - 感谢@atjsh</li>
+<li>修复（弹性）：失败的连接测试现在设置较短的冷却时间…＃9623</li>
+<li>修复（db）：Next.js 启动路径中的线遥测清理调度程序 #9624</li>
+<li>修复（db）：将domain_cost_history清理截止时间与毫秒对齐…＃9625</li>
+<li>修复（游乐场）：表面提供者模型加载错误并提供…#9626</li>
+<li>修复（组合）：区分预调度跳过和真正的失败…#9630</li>
+<li>修复（构建）：将 build-next-isolated.mjs 同级导入添加到…#9633</li>
+<li>**修复（提供商）：**新的每个提供商… #9675</li>
+<li><strong>修复（docker）：</strong> <code>--build-arg OMNIROUTE_USE_TURBOPACK=0</code> 现在…#9695</li>
+<li>**修复（译者）：**恢复 Claude 上的 TitleCase 工具名称 →… #9713</li>
+<li>修复（db）：当提供者时清除陈旧的组合连接引脚…#9719</li>
+<li>修复（压缩）：坚持 <code>enableRenderers</code> 通过…#9730</li>
+<li>修复了 <code>GET</code>/<code>PUT</code>/<code>DELETE /api/memory/[id]</code> 总是失败的问题……#9737</li>
+<li>用 Zod 验证替换了手卷身体类型检查… #7 #9737</li>
+<li>实体规范化后恢复越南语言环境平价… #9737</li>
+<li>**修复（雷达）：**刷新签名目录/推荐缓存时… #9776</li>
+<li><strong>翻译器</strong>保留响应命名空间…#9783 — 感谢@VXNCXNX</li>
+<li>**修复（api）：**模型目录不再公开…#9788 - 感谢@xz-dev</li>
+<li><strong>修复（执行者）：</strong> 保留命令代码…#9826 — 感谢@MrShitFox</li>
+<li><strong>修复（执行者）：</strong> 防止间歇性 Codex…#9828</li>
+<li><strong>修复（光标）：</strong> SelectedImage 使用… #9834 — 感谢@yansigit</li>
+<li><strong>修复（测试）：</strong> 协调偏离…的测试期望#9874</li>
+<li>修复（搜索）：嵌套 Exa 内容选项（文本/突出显示）… #9914</li>
+<li>修复（i18n）：重新转义 CC discovery-alias…#8747 #9917 — 感谢 @yansigit</li>
+<li>修复（加密）：名称失败的凭据+恢复路径…#9927</li>
+<li>**修复（执行器）：**保留非严格的函数工具语义… #9931</li>
+<li>修复（迁移）：不要在仅使用 001…#9934 的情况下中止全新安装</li>
+<li><strong>修复（入场）：</strong> 每个连接… #9654 #9940 — 感谢@branben</li>
+<li>修复区域设置和环境中的发布扫描回归…#9945</li>
+<li>让绿色发布验证器完成测试屏蔽门…#9964</li>
+<li>修复（聊天）：不要错误分类无内容思维/编辑的克劳德…#9971</li>
+<li>修复（图像）：通过…标准化终端上游错误#9981</li>
+<li>修复（质量）：绿色版本/v3.8.50 基础红色 — 同步 4 环境变量…#9985</li>
+<li><strong>修复（sse）：在直接 Claude→Gemini 路径上重播 Gemini <code>thought_signature</code></strong> #3440 #2504 — 感谢 @csoftware-arigpt</li>
+<li><strong>修复（安全）：凹凸 adm-zip >=0.6.0 + mitm DNS 测试中的精确主机匹配</strong> #7733</li>
+<li><strong>修复（i18n）：完善 zh-CN/zh-TW 翻译并修复专有名词的过度翻译</strong> #8872 — 感谢 @ikelvingo</li>
+<li><strong>修复（构建）：支持 npm v11 allowedScripts 用于可选的本机 deps</strong> #8877 — 感谢 @configurowebmax</li>
+<li><strong>修复（组合）：从目录和调度中排除隐藏的叶子</strong> #8878 — 感谢@ahmet-cetinkaya</li>
+<li><strong>修复（反重力）：为缺少 Cloud Code 项目的帐户添加 onboardUser 后备</strong> #8886 — 感谢 @HouMinXi</li>
+<li><strong>修复（sse）：品牌中立的保活框架</strong> #8888 — 感谢@AndrianBalanescu</li>
+<li><strong>修复（deepseek-web）：在所有型号上启用工具调用</strong> #8889 — 感谢@AndrianBalanescu</li>
+<li><strong>修复（组合）：快速失败并发门和执行模式溢出</strong> #8890 — 感谢@AndrianBalanescu</li>
+<li><strong>修复（反重力）：配额感知帐户选择和projectId持久性</strong> #8891 — 感谢@AndrianBalanescu</li>
+<li><strong>修复（用法）：SQL 中的聚合提供程序窗口成本</strong> #8892 — 感谢 @AndrianBalanescu</li>
+<li><strong>修复（组合）：最少使用的配额策略和通配符 UI 保留</strong> #8894 — 感谢 @AndrianBalanescu</li>
+<li><strong>修复（测试）：停止自动启动测试禁用开发人员的真实 systemd 服务</strong> #8900 — 感谢@nosolosoft</li>
+<li><strong>修复（组合）：在 getCombos 查询中包含 id 列</strong> #8905 — 感谢 @HouMinXi</li>
+<li><strong>修复：添加提供商时防止出现错误的“无法保存连接”错误</strong> #8912 — 感谢@ziuus</li>
+<li>**修复：添加对 playwright-core 和 better-sqlite3 ** 的 Termux/Android 支持 #8922 — 感谢 @Kaedo17</li>
+<li><strong>修复（i18n）：本地化 SubscriptionTab UI 字符串而不是硬编码的中文</strong> #8930 — 感谢 @Hdiaktoros</li>
+<li><strong>修复（kiro）：保持交错工具结果分组而不删除辅助文本（#8903）</strong> #8931 - 感谢@xiaoyaner0201</li>
+<li><strong>修复上下文压缩期间的自定义工具输出配对</strong> #8933 — 感谢@JxnLexn</li>
+<li><strong>修复（路由）：活动 OAuth 会话的帐户</strong> #8940 — 感谢 @JxnLexn</li>
+<li><strong>修复（愿景）：防止桥接流并规范 OMP 工作</strong> #8945 — 感谢 @rinseaid</li>
+<li><strong>修复（ci）：阻止一个失败的平台导致整个桌面频道瘫痪</strong> #8957</li>
+<li><strong>修复（api）：别名支持的模型在 /v1/models 中泄漏原始节点 UUID 前缀（#8958）</strong> #8961 — 感谢 @Rahulsharma0810</li>
+<li><strong>修复（sse）：省略流时默认 OpenAI 聊天完成为非流</strong> #8976 — 感谢 @HouMinXi</li>
+<li><strong>修复（缓存）：为语义缓存添加延迟标记+每键旁路</strong> #8984 — 感谢@HouMinXi</li>
+<li><strong>修复（perplexity-web）：更新目录以使用“副驾驶”模式并修复模型 ID</strong> #8989</li>
+<li><strong>修复（docker）：将入口点脚本移动到 /app 以避免 tmpfs 屏蔽</strong> #8999 — 感谢 @yutuknown</li>
+<li><strong>修复（执行程序）：回填 Kimi K3 和严格 BYOK 提供商缺少的工具消息名称</strong> #9005 — 感谢 @Zenlyte</li>
+<li><strong>修复（命令代码）：为 CC 模型启用视觉标志并修复视觉桥重新路由</strong> #9007 — 感谢 @Stazyu</li>
+<li><strong>修复（sse）：通过 DefaultExecutor 路由 Poe API-key 流量（#8969）</strong> #9014 — 感谢 @Prudhvivuda</li>
+<li><strong>修复（sse）：在克劳德桌面工具上保留 Geminithought_signature</strong> #9015 — 感谢@Prudhvivuda</li>
+<li><strong>修复（sse）：通过 Gemini/Antigravity 保留 Claude Code 工具名称大小写</strong> #9016 — 感谢 @Prudhvivuda</li>
+<li><strong>修复（仪表板）：使配额提供程序可扩展</strong> #9025 — 感谢@jktan0504</li>
+<li><strong>修复（聊天）：在图像模型验证之前解析存储的组合名称（#8986）</strong> #9027 - 感谢@xiaoyaner0201</li>
+<li><strong>修复（kiro）：从 Kiro 实际发送的帧中读取用法</strong> #9035 — 感谢 @ddarkr</li>
+<li><strong>修复（kiro）：保留有关多轮请求的重新定位工具文档</strong> #9036 — 感谢@ddarkr</li>
+<li><strong>修复（愿景）：保留纯文本路线的图像</strong> #9037 — 感谢@rinseaid</li>
+<li><strong>修复（db）：捆绑并验证 sql.js 后备</strong> #9044 — 感谢 @nguyenha935</li>
+<li><strong>修复（open-sse）：将 GitHub Copilot gpt-5.6 sol/terra/luna 路由到 /responses</strong> #9050 — 感谢 @marchlhw</li>
+<li><strong>修复：技能和记忆 - 工具名称编码、模式规范化、热缓存、组合 ID、马尾辫目录</strong> #9058 - 感谢@Egorich-print</li>
+<li><strong>修复（分类）：将 Modal“达到使用限制”识别为配额耗尽</strong> #9079 — 感谢@HouMinXi</li>
+<li><strong>修复/问题 #8656</strong> #9095 — 感谢@infinit-X</li>
+<li><strong>修复（adobe-firefly）：打开浏览器登录并解析 /login</strong> 中的提供程序 slug #9097 — 感谢 @artickc</li>
+<li><strong>修复（提供者）：使模型检查/测试尊重节点 apiType，并显示上游模型名称</strong> #9099 — 感谢 @zhiru</li>
+<li><strong>修复（音频）：让音频路由使用音频类型的提供者节点，并在默认关闭标志后面控制远程节点</strong> #9101 — 感谢@zhiru</li>
+<li><strong>修复（反重力）：将gemini-3.1-pro-high别名为gemini-pro-agent</strong> #9106 — 感谢@HouMinXi</li>
+<li><strong>修复（api）：将单行嵌入向量展平为 OpenAI 形状</strong> #9148 — 感谢 @aniketshukla1</li>
+<li><strong>修复（代理）：恢复代理/中继路径上的连接池（#9100）</strong> #9158 — 感谢@oyi77</li>
+<li><strong>修复（速率限制）：将队列等待与执行超时分开</strong> #9164 — 感谢@Zartharas</li>
+<li><strong>修复（翻译者）：翻译 Codex 代理消息以进行聊天</strong> #9171 — 感谢 @Gioxaa</li>
+<li><strong>修复（设置）：允许 hidePaidModels 更新</strong> #9182 — 感谢@Zartharas</li>
+<li><strong>修复（路由）：终端流 EOF 后驱逐亲和力</strong> #9184 — 感谢@Zartharas</li>
+<li><strong>修复（docker）：捆绑 LLMLingua 可选依赖项</strong> #9185 — 感谢@Zartharas</li>
+<li><strong>修复（健康）：跳过禁用的提供商连接</strong> #9186 — 感谢@Zartharas</li>
+<li><strong>修复（claude）：保留独立的空白增量</strong> #9189 — 感谢@Zartharas</li>
+<li><strong>修复(sse)：在另一个主体的之前驱逐主体自己的 CCR 块 (#9146)</strong> #9191 — 感谢 @fajarhide</li>
+<li><strong>修复（响应）：标准化 Codex 的终端使用</strong> #9192</li>
+<li><strong>修复(sse)：使用持久层支持 CCR 块存储 (#9061)</strong> #9198 — 感谢 @fajarhide</li>
+<li>**修复（组合）：成功时从 HALF_OPEN 恢复提供商断路器 #9207 — 感谢 @HouMinXi</li>
+<li><strong>修复（vision-bridge）：提高与人类图像块和自循环描述请求的兼容性</strong> #9226 — 感谢@Stazyu</li>
+<li><strong>修复（图像）：刷新 OAuth 凭据并在 401</strong> #9231 之后轮换帐户 — 感谢 @Bl0ck154</li>
+<li><strong>修复（ci）：构建的合并队列容差（咨询），删除付费层批处理</strong> #9233 - 感谢@wgordon17</li>
+<li><strong>修复（令牌刷新）：免除指数退避的瞬态错误</strong> #9242 — 感谢@HouMinXi</li>
+<li><strong>修复（弹性）：将 STREAM_EARLY_EOF 计为组合路由中的提供者故障</strong> #9251 — 感谢 @TechNickAI</li>
+<li><strong>修复（命令代码）：为命令代码提供者保留文字最大努力</strong> #9257 — 感谢@Chewji9875</li>
+<li><strong>修复（仪表板）：在编辑模式下打开 Webhook 向导</strong> #9272 — 感谢 @khoazero123</li>
+<li><strong>修复（mcp）：从omniroute_test_combo主体中删除非标准x-provider字段</strong> #9274 - 感谢@Sam280903</li>
+<li><strong>修复（路由）：裸模型 ID 首先路由到 Codex；验证同步候选者</strong> #9275</li>
+<li><strong>修复（mcp）：阻止数据库初始化日志记录损坏 stdio JSON-RPC 流</strong> #9281 — 感谢@Sam280903</li>
+<li><strong>修复（推理）：转发 Ollama Cloud 思维</strong> #9290 — 感谢 @xz-dev</li>
+<li><strong>修复（模型）：协调活动的实时模型目录</strong> #9294 — 感谢@Zartharas</li>
+<li><strong>修复：将百川网站 URL 更新为 baichuan-ai.com</strong> #9312 — 感谢 @zabrodschiipavel-sketch</li>
+<li><strong>修复（agentrouter）：重试 400 内容阻止 + 突发防护</strong> #9323</li>
+<li><strong>修复：nanogpt模型发现</strong> #9326 — 感谢@TheFrenchGhosty</li>
+<li><strong>修复（速率限制）：修补瓶颈 doExpire 容量泄漏</strong> #9328 — 感谢 @HouMinXi</li>
+<li><strong>修复（auth）：让 agy 请求找到它授权的连接</strong> #9340 — 感谢@HouMinXi</li>
+<li><strong>修复（组合）：网络错误不得触发提供商断路器</strong> #9342 — 感谢@HouMinXi</li>
+<li><strong>修复（反重力）：将 switchAuth 信号从 429 引擎传播到重试防护</strong> #9351 — 感谢 @HouMinXi</li>
+<li><strong>修复（路由）：正确的重置窗口策略优先级（#9330）</strong> #9353 — 感谢@Iammilansoni</li>
+<li><strong>修复（sse）：从聊天和身份验证中删除 localDb 桶导入</strong> #9380 — 感谢@HouMinXi</li>
+<li><strong>修复（提供者）：强制执行 Gemini-Web 推理和工具约束（#9356）</strong> #9397 — 感谢 @Iammilansoni</li>
+<li><strong>修复（组合）：完成#8400 - 保留完整的后备顺序+每个模型帐户对确定性组合的亲和力</strong> #9420 - 感谢@Chewji9875</li>
+<li><strong>修复（翻译）：标准化流式可选工具参数</strong> #9423 — 感谢@KittisakT</li>
+<li><strong>修复（提供者）：正确的 Codex GPT-5.6 上下文限制</strong> #9432 — 感谢 @PixmaNts</li>
+<li><strong>修复（用法）：停止在命令代码执行器中重复计算缓存读取令牌</strong> #9438 — 感谢@Stazyu</li>
+<li><strong>修复（deps）：碰撞由 vuln-ratchet 提出的 8 个 CVE 的传递 deps</strong> #9441 — 感谢 @wgordon17</li>
+<li><strong>修复（ui）：保留请求日志位置</strong> #9452 — 感谢@xiaoyaner0201</li>
+<li><strong>修复（sse）：提升系统角色时保留 client 缓存边界</strong> #9457 — 感谢@LeonG606</li>
+<li><strong>修复（提供商）：将 minimax 从 claude 切换为 openai 格式，以便图像工作</strong> #9463</li>
+<li><strong>修复（sse）：从模型中获取反重力输出上限，而不是常数</strong> #9482 - 感谢@HouMinXi</li>
+<li><strong>修复（文档）：将所需的 MDX frontmatter 添加到 AGENTROUTER_WAF.md</strong> #9503</li>
+<li><strong>修复（质量）：从 ESLint 抑制基线中删除陈旧的条目</strong> #9509 — 感谢 @HouMinXi</li>
+<li><strong>修复（分类）：在 Gemini 免费层 429s 上尊重上游重试窗口</strong> #9513 — 感谢 @shixi-li</li>
+<li><strong>修复（质量）：2个生产错误+ 24个单位基础红色+测量的门天花板</strong> #9529</li>
+<li><strong>修复（提供商）：支持数据 URL 图标</strong> #9555 — 感谢 @xz-dev</li>
+<li><strong>修复（sse）：将 chat.ts 缩小到冻结的文件大小上限（基红色排水管）</strong> #9598</li>
+<li><strong>修复（ci）：在发布/v3.8.50时清除基础红色（迁移碰撞+ 4个屏蔽门）</strong> #9600</li>
+<li><strong>修复（弹性）：通过滚动租赁强制 RPM</strong> #9604</li>
+<li><strong>修复（后端）：停止推理重播占位符自中毒</strong> #9610 — 感谢@stanleytejakusuma</li>
+<li><strong>修复（提供商）：为 zed 托管模型发现创建 Zed LLM 令牌</strong> #9628 — 感谢 @ARC345</li>
+<li><strong>修复（测试）：协调发布/v3.8.50</strong> #9634 上的基础漂移测试期望 - 感谢@HouMinXi</li>
+<li><strong>修复（openrouter）：每个模型的范围模型失败而不是毒害整个连接</strong> #9635 - 感谢@hartmark</li>
+<li><strong>修复（雷达）：缩小审计差距 - 身份验证、合并提要字段、选择加入状态、侧边栏门、大小上限 + 每日调度程序</strong> #9686</li>
+<li><strong>修复（ci）：从 08-06 合并批次中清除新的基础红色（迁移冲突 #2 + 损坏的导入）</strong> #9688</li>
+<li><strong>修复（codebuddy-cn）：替换代理系统提示以绕过腾讯内容过滤</strong> #9723 — 感谢@zuckdorsey</li>
+<li><strong>修复（db）：解决迁移版本 135 编号冲突</strong> #9745 — 感谢 @hartmark</li>
+<li><strong>修复（ci）：清除 08-08 基红色层 — 死代码、chat.ts 中的 prod 崩溃、响应负载回归、天生红色 stdio 测试、栅极漂移</strong> #9757</li>
+<li><strong>修复（bun）：使服务器子级和出站获取 Bun 安全</strong> #9761 — 感谢@Arul-</li>
+<li><strong>修复（sse）：保留语义缓存签名的原始主体 - 修复 0% 命中率</strong> #9775</li>
+<li><strong>修复（api）：在 4 个路由中使用 Zod 验证请求主体 — 恢复 t06 门（#9737）</strong> #9779</li>
+<li><strong>修复（ci）：恢复当前版本测试完整性</strong> #9819</li>
+<li><strong>修复（ci）：弥补剩余的发布绿色差距</strong> #9835</li>
+<li><strong>修复（代理）：通过帐户隔离 wreq TLS 会话</strong> #9837 — 感谢 @agisota</li>
+<li><strong>修复（光标）：SelectedImage blobIdWithData + JPEG 软帽准备</strong> #9840 #9834 — 感谢@yansigit</li>
+<li><strong>修复（执行器）：删除冗余的 oneOf 匹配同级枚举</strong> #9841 #9828 — 感谢@larin-vas</li>
+<li><strong>修复（执行程序）：保留响应流中命令代码的使用</strong> #9842 #9826 — 感谢@MrShitFox</li>
+<li><strong>修复（响应-api）：文本消息在同一output_index上发生冲突后调用工具</strong> #9843 #9822 — 感谢@hartmark</li>
+<li><strong>修复（准入）：在 503 busy 之前排队重量级聊天请求</strong> #9845 #9816 — 感谢 @herjarsa</li>
+<li><strong>[TS7] 修复（类型）：接受同步目录模型行</strong> #9846 #9798 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：标准化 DuckDuckGo 请求消息</strong> #9847 #9797 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：公开 SQLite 事务状态</strong> #9848 #9796 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：验证默认执行器池配置</strong> #9849 #9795 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：规范 Gemini 商业凭证</strong> #9851 #9792 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：保留克劳德思考身体契约</strong> #9852 #9791 — 感谢@backryun</li>
+<li><strong>修复（响应）：从所有推理字段中删除内部推理占位符</strong> #9853 #9790 — 感谢@adevwith Purpose</li>
+<li><strong>修复（api）：在网关镜像上强制执行模型权限</strong> #9854 #9788 — 感谢@xz-dev</li>
+<li><strong>修复（sse）：在 azure-ai 上应用 Azure 参数规则并限制 gpt-4o-mini 输出令牌</strong> #9855 #9787 — 感谢 @Michael-Rocco-Goldmann</li>
+<li><strong>修复（sse）：仅目录提供者的路由克劳德发现别名</strong>＃9856＃9777 - 感谢@Michael-Rocco-Goldmann</li>
+<li><strong>修复（i18n）：在 34 个语言环境中翻译验证模型密钥</strong> #9857 #9773 — 感谢 @Michael-Rocco-Goldmann</li>
+<li><strong>[TS7] 修复（技能）：标准化 Web 获取凭据</strong> #9859 #9755 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：缩小 DeepSeek 工具调用</strong> #9860 #9751 — 感谢 @backryun</li>
+<li><strong>修复（定价）：跨目录缓存版本记住 getSyncedPricing()</strong> #9861 #9746 — 感谢 @chloeassistant</li>
+<li><strong>修复（日志记录）：在限制记录的 tool_calls 时使用可配置的最大深度</strong> #9865 #9734 — 感谢 @hartmark</li>
+<li><strong>修复（执行者）：修复 DuckDuckGo AI 聊天挑战解决器（418 ERR_CHALLENGE）</strong> #9866 #9733 — 感谢@Mynacol</li>
+<li><strong>修复（压缩）：保留 RTK 渲染器配置</strong> #9867 #9730 — 感谢 @isaaclb98</li>
+<li><strong>修复（仪表板）：在开发模式下取消注册剩余的服务人员</strong> #9868 #9727 — 感谢@hartmark</li>
+<li><strong>修复（docker）：使 webpack build-arg escape hat 真正工作</strong> #9872 #9695 — 感谢@HouMinXi</li>
+<li><strong>修复（提供商）：每个提供商选择退出匿名无身份验证回退（opencode-go/zen 401s）</strong> #9873 #9675 — 感谢@chloeassistant</li>
+<li><strong>修复（提供商）：拒绝仪表板密码作为连接 API 密钥</strong> #9877 #9572 — 感谢@HouMinXi</li>
+<li><strong>修复（设置）：在模型覆盖中使用提供程序前缀</strong> #9878 #9569 — 感谢@xz-dev</li>
+<li><strong>修复（译者）：保留 Kimi K3 响应推理</strong> #9879 #9556 — 感谢@jackjinke</li>
+<li><strong>修复（adobe-firefly）：强化 CDP 温暖、风险会话和浏览器登录</strong> #9881 #9549 — 感谢 @artickc</li>
+<li><strong>修复：默认情况下通过最大推理工作，添加全局模型注册表后备</strong> #9883 #9612 — 感谢@Momen4444</li>
+<li><strong>修复（db）：解决 CCR 迁移版本冲突</strong> #9884 #9618 — 感谢@fenix007</li>
+<li><strong>修复（压缩）：添加 Lite 工具截断切换</strong> #9885 #9629 — 感谢 @xz-dev</li>
+<li><strong>修复（web-tools）：在提示尾部锚定工具合约+大提示的用户转向提醒</strong> #9887 #9693 — 感谢@ryan-brosas</li>
+<li><strong>修复（sse）：跨 SSE 增量块保持每个工具调用 JSON 转义状态</strong> #9889 #9704 — 感谢 @hartmark</li>
+<li><strong>修复（db，combo）：重新编号 ccr_blocks 134→139 + 恢复反重力池过滤器</strong> #9890 #9707 — 感谢@matiasbaglieri</li>
+<li><strong>修复（sse）：最终确定 client 断开连接之前的宽限期为 499</strong> #9891 #9711 — 感谢 @hartmark</li>
+<li><strong>修复（构建）：独立包缺少 LLMLingua dist + onnxruntime 本机二进制文件</strong> #9892 #9712 — 感谢 @hartmark</li>
+<li><strong>修复（响应-api）：将推理缓存写入索引与固定读取端同步</strong> #9895 #9741 — 感谢@hartmark</li>
+<li><strong>修复（ci）：修复版本 lint 测试回归</strong> #9896 #9813 — 感谢 @alex-jordan547</li>
+<li><strong>修复（命令代码）：包括工具调用参数</strong> #9897 #9821 — 感谢@Chewji9875</li>
+<li><strong>修复（提供商）：删除已停用的 NVIDIA NIM 目录条目</strong> #9898 #9825 — 感谢 @Zartharas</li>
+<li><strong>修复（nvidia）：保留 410 个故障模型范围</strong> #9899 #9833 — 感谢@Zartharas</li>
+<li><strong>修复：以紧凑形式重试 CodeBuddy 大型工具请求</strong> #9900 #9542 — 感谢 @mvanhorn</li>
+<li><strong>修复（质量）：清除两个版本/v3.8.50 基础红色大门</strong> #9901 #9619 — 感谢@wgordon17</li>
+<li><strong>修复：解决空心外部包目录崩溃并实施…</strong> #9913 — 感谢@SupremeNexas</li>
+<li><strong>修复（i18n）：恢复越南语言环境奇偶校验</strong> #9925</li>
+<li><strong>修复（组合）：将 Cloudflare 1010 指纹拒绝分类为非身份验证</strong> #9929 — 感谢 @HouMinXi</li>
+<li><strong>修复（图像）：默认情况下将 Fal 图像返回为 base64</strong> #9932 — 感谢 @rinseaid</li>
+<li><strong>修复（图像）：支持 Fal 参考图像编辑</strong> #9933 — 感谢 @rinseaid</li>
+<li><strong>修复（db）：使提供商连接删除时的 LKGP 引脚无效</strong> #9936 — 感谢 @Zartharas</li>
+<li><strong>修复（服务）：当二进制文件无法生成时停止嵌入式服务主管重试循环</strong> #9937 — 感谢@herjarsa</li>
+<li><strong>修复（后端）：保留提供者的流媒体使用选择：[{delta:{}}]最终块</strong> #9938 - 感谢@sadSanta-07</li>
+<li><strong>修复（反重力）：禁令安全强化 - 有界入职重试，门思想签名绕过哨兵</strong> #9939 - 感谢@benzntech</li>
+<li><strong>修复（护栏）：视觉桥重新路由/池/自循环修复（自动/最佳视觉，claude-wire base64）</strong> #9946 — 感谢@herjarsa</li>
+<li><strong>修复（mcp）：停止omniroute_get_health默默地丢弃真实数据</strong> #9959 - 感谢@tald26</li>
+<li><strong>修复（构建）：将@huggingface/transformers撞到4.2.0 + onnxruntime-node 1.24.3</strong> #9962 — 感谢@witt3rd</li>
+<li><strong>修复（清理）：通过created_at列修剪mcp_tool_audit/a2a_task_events</strong> #9963 — 感谢@witt3rd</li>
+<li><strong>修复（db）：避免跳过挂起的作业注册表迁移 146</strong> #9965 — 感谢@Zartharas</li>
+<li><strong>修复（视频）：支持 Fal 托管的 Grok Imagine Video</strong> #9969 — 感谢 @rinseaid</li>
+<li><strong>修复（i18n）：在所有 43 个语言环境中的 denoRelayOrgDomainHint 中转义尖括号</strong> #9976 — 感谢 @AgnesRiber</li>
+<li><strong>修复（媒体）：支持 Gemini Omni Flash 视频</strong> #9982 — 感谢@rinseaid</li>
+<li><strong>修复（copilot-web）：恢复浏览器身份验证</strong> #9984 — 感谢@backryun</li>
+<li><strong>修复（opencode）：回退不受支持的 DeepSeek json 模式输出</strong> #9992 — 感谢 @Zartharas</li>
+<li><strong>修复（译者）：恢复 Claude 到 Gemini 路径上的 TitleCase 工具名称</strong> #9993 — 感谢 @engmarcosjr</li>
+<li><strong>修复（提供者）：范围模型级 targetFormat 到声明提供者目录</strong> #9994 — 感谢 @Chewji9875</li>
+<li><strong>修复（kimi）：将 K3 工作策略应用于别名</strong> #10005 — 感谢 @jackjinke</li>
+<li><strong>修复（adobe-firefly） - 直接推送：</strong> 强化凭证解析和…</li>
+<li>**修复（combo/sse） - 直接推送：**忽略良性空错误字段…</li>
+<li>**修复（日志记录）-直接推送：**进行流块捕获并…</li>
+<li><strong>修复(i18n) — 直接推送：</strong> 在 UI 中恢复/取消转义 HTML 实体…</li>
+<li>**修复（提供商）-直接推送：**修复 DeepAI 注册表导入…</li>
+<li><strong>修复（deps） - 直接推动：</strong> CVE驱动的碰撞（nanoid，dompurify，…</li>
+<li>**修复（ci）：**将构建（咨询）固定到具有内存的托管运行器…#10408</li>
+<li>**修复（提供者）：**刷新翻译路径黄金… #10410</li>
+<li><strong>修复（sse）：</strong> Qwen/阿里巴巴个人代币计划配额… #10290</li>
+<li>**修复（deps）：**固定在确切版本旁边，因此是一个新鲜的上游…#10340</li>
+<li>**修复（类型）：**恢复自定义模型输出…#10339 — 感谢@backryun</li>
+<li>**修复（sse）：**停止执行者合约守卫热循环…#10373</li>
+<li><strong>修复（类型）：</strong> 验证非流式 JSON…#10258 — 感谢 @backryun</li>
+<li>**修复（类型）：**缩小刷新令牌轮换…#10257 — 感谢@backryun</li>
+<li>**修复（类型）：**标准化执行器结果…#10256 — 感谢@backryun</li>
+<li>**修复（类型）：**对齐响应流选项#10255 - 感谢@backryun</li>
+<li>**修复（类型）：**窄组合凭证…#10254 — 感谢@backryun</li>
+<li>**修复（压缩）：**上限…#10118 — 感谢@adevwith Purpose</li>
+<li>**修复（ci）：**在发布/v3.8.50上清除基础红色（第4轮＃10260</li>
+<li>**修复（sse）：**提取困惑网络…#10259 — 感谢@jeyhunfaslanov</li>
+<li>**修复（mcp）：**坚持并重新连接双子座…＃9448 - 感谢@Sam280903</li>
+<li>**修复（opencode-plugin）：**尊重… #8982 #9316 — 感谢@xiaoyaner0201</li>
+<li>**修复（提供者）：**提高默认提供者… #9283 - 感谢@Sam280903</li>
+<li>**修复（opencode-plugin）：**停止… #8983 #9042 — 感谢@xiaoyaner0201</li>
+<li>**修复（opencode）：**强制CLI…#10222 — 感谢@adevwith Purpose</li>
+<li>**修复（deepseek-web）：**对业务进行分类…#10218 — 感谢@Zartharas</li>
+<li>**修复（组合）：**在重试之前进行故障转移…#10217 — 感谢@hartmark</li>
+<li><strong>修复（响应）：</strong> 保留大小写不敏感… #10177 — 感谢@ddarkr</li>
+<li>**修复（发现）：**解析推理…#10138 — 感谢@excessivechaos</li>
+<li><strong>修复（组合）：</strong> 隔离会话粘性… #10137 — 感谢@Hydraxman</li>
+<li>**修复（组合）：**默认混乱SSE到…#10128 - 感谢@herjarsa</li>
+<li>**修复（kimi）：**标准化 MFJS 工具模式#10079 — 感谢@xz-dev</li>
+<li>**修复（mcp）：**将包验证移出…#10065 — 感谢@yansigit</li>
+<li><strong>修复（zed-hosted）：</strong> 发送提供商电汇…#10051 — 感谢@ARC345</li>
+<li>**修复（ci）：**修复并连接两个…#10050 - 感谢@ARC345</li>
+<li><strong>修复（推理）：</strong> 保留并重播…#10045 — 感谢@jackjinke</li>
+<li>**修复（类型）：**收紧chatCore助手…#10175 — 感谢@backryun</li>
+<li>**修复（cli）：**阅读完整的提供程序… #10097 — 感谢@amartinawi</li>
+<li>**修复（cli）：**停止吞咽非2xx…#10092 — 感谢@amartinawi</li>
+<li><strong>修复（cli）：</strong> openapi…#10091 — 感谢@amartinawi</li>
+<li>**修复（cli）：**医生检测到预建…#10090 - 感谢@amartinawi</li>
+<li><strong>修复（提供商）：</strong> kilo-gateway authType…#10086 — 感谢@TengSivtean</li>
+<li>**修复（cli）：**在…时删除内联注释#10101 - 感谢@amartinawi</li>
+<li>**修复（日志记录）：**文档…#10038 — 感谢@hartmark</li>
+<li>**修复（仪表板）：**公开 OpenAI 响应…#10121 — 感谢 @hartmark</li>
+<li><strong>修复（组合）：</strong> 当 LKGP 引脚… #10034 — 感谢 @hartmark</li>
+<li>**修复（sse）：**提供者响应摘要…#10037 - 感谢@hartmark</li>
+<li>**修复（响应-api）：**工具调用后… #10025 — 感谢@hartmark</li>
+<li>**修复（响应-api）：**明确…#10041 - 感谢@hartmark</li>
+<li><strong>修复（kimi）：</strong> 临时恢复限制…#10058 — 感谢@bortolidiego</li>
+<li><strong>修复（译者）：</strong> 保留响应…#10114 — 感谢@mtb-ninja</li>
+<li><strong>修复（提供商）：</strong> xai-oauth…#10165 #10170 — 感谢@nordz0r</li>
+<li>**修复（ollama-cloud）：**地图xhigh推理…#10160 — 感谢@Chewji9875</li>
+<li><strong>修复（译者）：</strong> 剥离 Codex 加密…#10053 — 感谢 @XDayonline</li>
+<li><strong>修复（组合）：</strong> 保留 OpenCode Free oc/… #10180 — 感谢 @AStupidBear</li>
+<li><strong>修复（sse）：</strong> 将免费层过滤器应用到… #10199 — 感谢@ggdayup</li>
+<li>**修复（提供商）：**默认缺失… #10221 — 感谢@jeff-alves</li>
+<li>**修复（ci）：**在发布/v3.8.50上清除基础红色（第3轮＃10213</li>
+<li>**修复（安全）：**正确的 XML 双转义和非 CSPRNG…#10154</li>
+<li>**修复（docker）：**从已发布的版本中消除 npm 捆绑的 CVE…#10182</li>
+<li>**修复（安全）：**解决打开的 CodeQL 警报#10188</li>
+<li>**修复（仪表板）：**将 Kimi 促销 CTA 重新定位到 API 平台…#10200</li>
+<li><strong>修复（构建）：</strong> 修复损坏的生产构建、红色棉绒门和…#10198</li>
+<li>修复（cli）：修复嵌套中的空心外部化包目录…#7346</li>
+<li>**电子封装烟雾测试：**添加冷重启模式…#7592</li>
+<li><strong>修复（用法）：</strong> 将会话/每周/每月配额窗口保留在…#7764</li>
+<li><strong>修复（图像）：</strong> 在同级 ChatGPT 上重试 Codex 图像生成…#8307</li>
+<li>修复（仪表板）：将 UncloseAI 视为无身份验证提供商，因此…#8864</li>
+<li>**修复（仪表板）：**模型级允许/阻止参数编辑现在…#9013</li>
+<li>修复（ssrf）：制作 <code>getProviderOutboundGuard</code> （用于…＃9123</li>
+<li>修复（压缩）：保留不受保护的原始代码（例如 Copilot #file…#9144</li>
+<li>修复（api）：在目录构建和批量加载期间产生事件循环…＃9147</li>
+<li>修复（组合）：all_targets_skipped 的恢复提示现在指向…#9303</li>
+<li>修复（提供者）：从 Gemini 工具模式中剥离 uniqueItems（Gemini…#9617</li>
+<li><strong>修复（翻译）：</strong> 转换嵌套在…中的 OpenAI <code>image_url</code> 块 #9692</li>
+<li>**修复（弹性）：**重试可重试的 Codex 预输出…#9708</li>
+<li>**修复（速率限制）：**尊重运营商<code>minTimeBetweenRequestsMs</code>…#9763</li>
+<li>**修复（测试）：**从MCP文件单元中删除实时<code>npm pack</code>…#3578#3821</li>
+<li>修复（仪表板）：媒体迷你游乐场通过会话进行身份验证…#9935</li>
+<li>修复（sse）：从凭证健康中排除搜索提供商…#9970</li>
+<li>**直通流：**停止泄漏上游 SSE 控制线…#10017</li>
+<li>修复（cli）：停止诊断每个 Next.js 仪器挂钩…#10028</li>
+<li>**修复（构建）：**停止本机… #10060 — 感谢@latest</li>
+<li><strong>修复（提供商）：</strong> 五个 g4f.space…#10071 — 感谢 @chirag127</li>
+<li><strong>修复（chatgpt-web）：</strong> 保留原生 <code>max</code>…#10077 — 感谢 @zannen7</li>
+<li>修复：将 AgentRouter 现有的控制台余额获取器连接到…#10078</li>
+<li>修复：AgentRouter 的美元余额现在呈现为…#10078</li>
+<li>修复（sse）：桥接通用 openai 兼容/anthropic 兼容…#10085</li>
+<li>修复（域）：停止处理未报告的反重力配额……#10095</li>
+<li>修复（仪表板）：重新映射统一 Kimi 代码卡 API-key 保存到…#10096</li>
+<li>修复（反重力）：为原生双子座剥离拖尾模型转向…#10104</li>
+<li>**修复（准入）：**停止自适应延迟梯度崩溃…#10111</li>
+<li>修复（sse）：降级 client 提供的 <code>thinking:{type:"adaptive"}</code>…#10119</li>
+<li>**修复（日志记录）：**移动调用日志工件序列化和…#10123</li>
+<li><strong>perf(logging):</strong> 将每个计划的呼叫日志轮换传递到… #10125</li>
+<li>**修复（流）：**当响应或…时启动早期 SSE 心跳 #10127</li>
+<li>**修复（组合）：**范围会话粘性绑定到他们拥有的…#10136</li>
+<li>**修复（译者）：**解决克劳德思维输出上限……#10139</li>
+<li>修复（提供者）：更正 conol-web 注册表后备模型导入…
+不存在的 <code>open-sse/config/services/</code> 并使加载提供程序注册表的任何套件都无法
+解决（#10140）</li>
+<li><strong>修复（oauth）：</strong> 通过创建克劳德连接… #10144 #10143</li>
+<li>**修复（sse）：**响应传递 <code>response.completed</code> 快照…#10156</li>
+<li>修复（代理订阅）：允许本地/环回代理订阅…#10158</li>
+<li>**修复（路由）：**保持近似组合…#10162 — 感谢@xz-dev</li>
+<li>**文档（设置）：**记录思维预算模式（直通与…＃10169</li>
+<li>修复（cli）：保证非空 <code>[STARTUP] Fatal:</code> 日志行…#10171</li>
+<li>修复（sse）：真实的门结构聊天入场脱落… #10183 #10268</li>
+<li><strong>修复（护栏）：</strong> Vision Bridge 手柄…#10202 — 感谢@Zartharas</li>
+<li><strong>修复（光标）：</strong> 停止截断待处理的工具调用… #10215</li>
+<li>**修复（响应）：**修复非 ASCII 损坏的 SSE 增量…#10223</li>
+<li>**修复（组合）：**推迟已知上下文溢出硬拒绝…#10225</li>
+<li>**修复（api）：**删除… #3199 #3782 #10228 — 感谢@Neuron-Mr-White</li>
+<li>**音频桥：**修复生产转录自循环上传…#10229</li>
+<li><strong>修复（api）：</strong> DeepSeek V4 的本机…#10230 — 感谢@Neuron-Mr-White</li>
+<li><strong>修复（提供商）：</strong> FreeAIAPIKey 现在的目标… #10233</li>
+<li><strong>修复（提供商）：</strong> MonsterAPI 的弃用现在实际上适用… #10234</li>
+<li>**修复（cliproxy）：**通过…在运行时读取平台/架构… #10244</li>
+<li>**修复（提供程序）：**兼容/自定义提供程序… #10247 — 感谢@xz-dev</li>
+<li>**修复（模型）：**自定义模型元数据和…#10248 - 感谢@jackjinke</li>
+<li>修复（open-sse）：停止并发请求在同一个…上发生冲突#10249</li>
+<li><strong>修复（翻译）：</strong> 文本格式工具调用由某些人内联发出…#10251</li>
+<li>修复（仪表板）：使提供商卡警告指示器暴露…#10261</li>
+<li>修复（命令代码）：将聊天路由到记录的…#10265</li>
+<li><strong>修复（提供者）：</strong> 保留验证器 HTTP…#10272 — 感谢 @Zartharas</li>
+<li><strong>修复（sse）：</strong> 小预算推理… #10281 — 感谢@harkaranbrar7</li>
+<li>修复（视频）：停止为 googleflow (Veo) 视频提供商做广告…#10285</li>
+<li>**修复（构建）：**阻止 Turbopack 消除死代码……#10293</li>
+<li><strong>修复（操作）：</strong> Docker HEALTHCHECK 默认为轻量级…#10311</li>
+<li>修复（api）：在将 API 密钥用作模型目录之前对其进行哈希处理…#10313</li>
+<li>修复（弹性）：保持组合质量和身份验证失败原因…＃10314</li>
+<li>修复（仪表板）：发送定期 WS 心跳 ping，如此实时……#10319</li>
+<li>**修复（chat-body-admission）：**恢复单个进程范围…#10110</li>
+<li><strong>修复（提供商）：</strong> 验证 Z.ai 网络本地…#10329 — 感谢@Zartharas</li>
+<li>**修复（opencode-plugin）：**发布裸组合模型 ID，无需…#10345</li>
+<li>**修复（后端）：**记录<code>auto/&#x3C;family> matched no connected models</code>…#10346</li>
+<li>修复（后端）：从默认值中删除 client IP 和帐户前缀…#10348</li>
+<li>**修复（github）：**主动凭证…＃10352 - 感谢@RaviTharuma</li>
+<li>**修复（docker）：**当 <code>OMNIROUTE_MEMORY_MB</code> 不同意时在启动时发出警告…#10353</li>
+<li>修复（提供商）：GitLab Duo 回退到公共代码…#10365</li>
+<li><strong>修复（db）：</strong> <code>getSettings</code> 默认值…#10372 — 感谢@lamchun1110</li>
+<li>**修复（译者）：**合并工具名称大小写… #7926 #8979 #10374</li>
+<li>**修复（响应）：**保留自定义的本机工具定义…#10374</li>
+<li>修复（仪表板）：“本月使用”的免费套餐现在包括实时…#10381</li>
+<li><strong>修复（执行器）：</strong> OpencodeExecutor 和 MimocodeExecutor 现在…#10393</li>
+<li>**修复（sse）：**标题预算下降…#10397 - 感谢@lamchun1110</li>
+<li>修复（sse）：故障转移达到…的组合流响应#10404</li>
+<li><strong>修复（护栏）：</strong> Vision Bridge 现在重新规划路线…#10415 — 感谢@rqzbeh</li>
+<li><strong>修复（反重力）：</strong> 地理封锁的出口…#10420 — 感谢@rqzbeh</li>
+<li><strong>修复（反重力）：</strong> 剥离竞争代理…#10420 — 感谢@rqzbeh</li>
+<li><strong>修复（反重力）：</strong> 帐户为空… #10424 — 感谢@rqzbeh</li>
+<li><strong>修复（反重力）：</strong> Google 已弃用…#10424 — 感谢@rqzbeh</li>
+<li>**修复（用法）：**阅读 Gemini <code>usageMetadata</code>…#59 #10430 — 感谢 @rqzbeh</li>
+<li>**修复（用法）：**表面双子座…#10430 #10465 — 感谢@rqzbeh</li>
+<li>**修复（反重力）：**自动… #10424 #10470 — 感谢@rqzbeh</li>
+<li>修复（mitm）：将直通流量转发到实际请求的…#10479</li>
+<li>**修复（docker）：**将bifrost边车指向真实的…＃10482</li>
+<li>修复（sse）：停止 ZWJ 混淆用户中的子字符串“hermes”…#10484</li>
+<li><strong>修复（内存）：</strong> 在安装时自动检查 Qdrant 运行状况并停止… #10489</li>
+<li><strong>测试（压缩）：</strong> 将源合同测试与合并的…#10489</li>
+<li>修复（cli）：使用 127.0.0.1 进行准备情况健康检查民意调查…＃10508</li>
+<li><strong>修复（提供商）：</strong> zed 托管的 OAuth 现在…#10517 — 感谢 @phatchau036</li>
+<li>**修复（提供商）：**允许令牌支持的网络…#10518 — 感谢@Zartharas</li>
+<li>**修复（提供商）：**测试令牌支持的网络…#10519 - 感谢@Zartharas</li>
+<li><strong>修复（合规性）：</strong> 编辑额外的…#10521 — 感谢@Zartharas</li>
+<li>修复（提供者）：在两个下注册一个真正的 Firefly 身份验证探针…#10522</li>
+<li>修复（服务）：隔离probeBeforeSpawn采用测试…#10523</li>
+<li>修复（sse）：自动重播有界的多转弯轨迹…＃10527</li>
+<li>**修复（网络）：**直接（无代理）出口现在限制每个…#10214</li>
+<li><strong>修复（模型）：</strong> 将 Codex GPT-5.6 上下文限制与 Codex…#10530 对齐</li>
+<li>**修复（deps）：**升级…#10536 — 感谢@atjsh @tensorflow @huggingface</li>
+<li><strong>修复（deepseek）：</strong> 做广告 <code>none</code>，<code>low</code>，… #10540 — 感谢@jackjinke</li>
+<li><strong>修复（a2a）：</strong> 在…中使用恒定时间承载比较#10544</li>
+<li>默认情况下保留可移植的明文推理… #10550 #10959</li>
+<li>修复（仪表板）：在“列表模型”上显示真实模型数量…#10553</li>
+<li>**修复（cli）：**忽略操作… #10557 #10492 — 感谢@redzrush101</li>
+<li><strong>修复（提供商）：</strong> OpenCode <code>x-opencode-session</code> 现在派生… #10571</li>
+<li>**修复（mcp）：**使GitHub技能工具可通过…发现</li>
+<li>修复（提供商）：从 crof 种子中删除 10 个退役模型 ID…#10577</li>
+<li><strong>修复（音频）：</strong> 当前缀匹配的 STT 提供商没有… #10583</li>
+<li>修复（sse）：解析短提供商别名前缀（例如 <code>el/</code>）…#10586</li>
+<li>修复（sse）：将 OpenAI 兼容的语音名称映射到真实的 ElevenLabs…#10589</li>
+<li>修复（仪表板）：通过…路由 Playground 的 ChatTab“发送”…#10592</li>
+<li><strong>修复（提供商）：</strong> Magnific Mystic 现在是规范的提供商… #10594</li>
+<li><strong>修复（sse）：</strong> 将编辑后的上游错误正文包含在… #10597</li>
+<li>**修复（xai）：**修剪聊天完成<code>messages</code>和响应…#10601</li>
+<li>**修复（cli）：**在普通情况下正确导出机器ID令牌…#10612</li>
+<li><strong>修复（cli）：</strong> <code>omniroute setup --add-provider --api-key &#x3C;key></code> 没有…#10613</li>
+<li>修复（仪表板）：使 /api/models 与 /v1/models 一致…#10615</li>
+<li>**组合路由：**在…之前等待每个连接的令牌限制#10686</li>
+<li>修复（guardrails）：在…之前解析公共提供者别名#10702</li>
+<li>修复（仪表板）：将 Modality Bridge Vision 模型选择器过滤为…#10703</li>
+<li>修复（使用）：修复提供商报告的 input_tokens：0…#10705</li>
+<li>修复（cli）：区分 CLI 探针超时与真正的…＃10710＃10711</li>
+<li>修复（cli）：为运行时自己传递 —allow-scripts … #10713</li>
+<li>修复（db）：过滤 <code>getProviderMetrics</code> 到具有现场直播的提供商…#10714</li>
+<li>修复（代理）：保留仅密码代理凭据而不是…#10720</li>
+<li><strong>修复（执行器）：</strong> Meta AI (muse-spark-web) WebSocket…#10727</li>
+<li><strong>修复（提供商）：</strong> copilot-m365-网络聊天…#10732 — 感谢@acc0mplish</li>
+<li>**修复（目录）：**停止计算 <code>getTokenLimit</code> 的通用 128k…#10734</li>
+<li><strong>修复（搜索）：</strong> 使用提供商 ID 命名 <code>/v1/search</code> 502 和…#10735</li>
+<li>**修复（db）：**暂停调用日志轮换并记录 SQLITE_CORRUPT…#10736</li>
+<li>修复（压缩）：跳过昂贵的 <code>createCompressionStats</code>…#10765</li>
+<li><strong>修复（api）：</strong> <code>/api/cache/stats</code> 报告了…#9446 — 感谢@Poid-ZA</li>
+<li>**修复（日志记录）：**应用程序日志可再次过滤和读取。参赛作品…</li>
+<li><strong>修复（分析）：</strong> 克劳德代码…#10774 — 感谢@electrumguy</li>
+<li>修复（db）：定期运行 <code>wal_checkpoint(TRUNCATE)</code> 所以…#10781</li>
+<li>修复（sse）：将 LiveWS 的仅应用程序活跃度检查替换为…#10782</li>
+<li>**修复（open-sse）：**声明 <code>supportedThinkingEfforts</code>…#10788</li>
+<li>**修复（弹性）：**范围相同帐户传输重试…#9708</li>
+<li>**修复（opencode-plugin）：**尊重日志级别…#10798 — 感谢@tientien17</li>
+<li><strong>修复（提供商）：</strong> 保持 NVIDIA 超时…#10799 — 感谢@Zartharas</li>
+<li>修复（db）：消除 <code>createProviderConnection</code> 的 OAuth 电子邮件的歧义…#10815</li>
+<li>修复（oauth）：停止将 Kiro 配置文件 ARN 视为帐户…#10815</li>
+<li><strong>修复（图像）：</strong> 在图像注册表中注册 OpenAI <code>dall-e-3</code>…#10832</li>
+<li><strong>修复（安全）：</strong> 现在出站 URL 防护…#10843 — 感谢 @ntdat812</li>
+<li>修复（配置）：排除 cookie-auth 图像桥（chatgpt-web，…＃10848</li>
+<li>修复（api）：POST /v1/search 现在回复名为“未知…”#10849</li>
+<li>**修复（api）：**别名 <code>GET</code>/<code>HEAD</code> <code>/readyz</code> 为 <code>/healthz</code> 所以…#10850</li>
+<li>记录有条件管理认证和 401/403…</li>
+<li><strong>修复（i18n）：</strong>“禁用”状态… #10812 #10853 — 感谢@ntdat812</li>
+<li><strong>修复（技能）：</strong> 市场安装… #10854 — 感谢@kriptoburak</li>
+<li><strong>修复（目录）：</strong> <code>/v1/models</code> 没有…#10831 #10857 — 感谢@ntdat812</li>
+<li><strong>修复（上下文）：</strong> Base64 文件有效负载…#10840 #10858 — 感谢@ntdat812</li>
+<li><strong>修复（mcp）：</strong> MCP 工具调用不再等待模型提供者…</li>
+<li><strong>修复（提供商）：</strong> 使用过期的 API 密钥导入模型… #5460 #5465</li>
+<li>修复（api）：拒绝删除每个模型的组合更新，并且…＃10866</li>
+<li>**修复（代理）：**代理“测试连接”不再报告… #1255</li>
+<li>修复（cli）：当 .env 行永远不会生效时发出警告，并停止…#10870</li>
+<li>**修复（db）：**删除陈旧的 MiMoCode 提供程序…#10873 — 感谢@Zartharas</li>
+<li><strong>修复（sse）：</strong> <code>getResetAwareProvider</code> 和自动组合配额… #10877</li>
+<li><strong>修复（提供商健康）：</strong> 保持不受支持… #10878 — 感谢@Zartharas</li>
+<li><strong>修复（反重力）：</strong> 地图双子座 3.7…#10882 — 感谢 @adevwith Purpose</li>
+<li>**修复（内存）：**启用代理内存… #10887 — 感谢@Egorich-print</li>
+<li>**修复（perplexity-web）：**使… #10902 #8634 — 感谢@danscMax</li>
+<li>**修复（提供商）：**环回准备门不再… #10903</li>
+<li><strong>修复（中继）：</strong> Cloudflare…#4643 #1360 #6149 — 感谢@evil</li>
+<li><strong>修复（构建）：</strong> <code>next</code> Docker…#10936 #10933 — 感谢@arminanton</li>
+<li>修复（cli）：始终在生成的 OpenCode 配置中发出 limit.output…#10940</li>
+<li>**修复（中继）：**私有/环回保护三个代理中继…#6149</li>
+<li>**账户轮换：**制作<code>fallbackStrategy: "least-used"</code>…#10945</li>
+<li><strong>桌面自动更新 (Windows)：</strong> 停止应用内更新程序 404ing…#10947</li>
+<li>当响应时保留明确的明文推理… #10949 #10959</li>
+<li><strong>修复（目录）：</strong> 保留提供者声明的…#10953 — 感谢@xz-dev</li>
+<li>修复（cli）：组合创建接受—models并且不再创建…＃10954</li>
+<li>修复（cli）：解析 $ref 路径参数并添加 PATCH 组合…#10955</li>
+<li>修复（sse）：默认单目标不兼容推理被删除…#10959</li>
+<li>修复（sse）：组合诊断不再截断…#10967</li>
+<li>修复（sse）：组合终端故障完全由…引起#10966</li>
+<li>**修复（搜索）：**跳过目录默认 SearXNG…#10976</li>
+<li>修复（命令代码）：当…时仅表面推理输出为内容#10986</li>
+<li>**修复（ci）：**清除继承的<code>release/v3.8.50</code>质量门红…#10988</li>
+<li>**修复（ci）：**清除剩余的<code>release/v3.8.50</code>…#9147#10501#10988</li>
+<li><strong>v0-vercel-web 的静态模型目录：</strong> 播种静态目录…#10990</li>
+<li>修复（提供程序）：将黑盒提供程序标记为已弃用 —… #10997</li>
+<li>修复（提供商）：根据其本机验证 Dify 密钥…#11002</li>
+<li><strong>修复（帐户）：</strong> <code>markCooldown</code> 现在…#11008 — 感谢@maxmad64bis</li>
+<li>**修复（提供商）：**路线终端…#11009 — 感谢@maxmad64bis</li>
+<li>**修复（codex）：**删除非标准…#11014 — 感谢@RaviTharuma</li>
+<li>**修复（弹性）：**算重量级…#11015 — 感谢@RaviTharuma</li>
+<li><strong>修复（启动）：</strong> 记录`凭证健康状况… #11016 — 感谢@RaviTharuma</li>
+<li>**文档（api-keys）：**记录…#2289 #11017 - 感谢@RaviTharuma</li>
+<li>**修复（webhooks）：**删除 3 个已声明但从未发出的事件…</li>
+<li>修复（提供者）：过滤 Perplexity 模型导入到声纳…#11060</li>
+<li>**修复（claude）：**恢复规范的工具名称… #11085 — 感谢@linhdmn</li>
+<li>**修复（弹性）：**按每个过滤聊天连接选择… #11089</li>
+<li>修复（安装）：使 ONNX 依赖链可选，所以…#11095</li>
+<li>**修复（提供商）：**拒绝静默验证降级… #11101</li>
+<li><strong>自动驾驶仪建议计数器：</strong> 组合健康自动驾驶仪… #11102</li>
+<li>**配置审核持久化：**持久化配置审核…#11103</li>
+<li>修复（sse）：在_完成_工具后恢复中流恢复…#11109</li>
+<li><strong>修复（提供商）：</strong> <code>reasoning_effort</code> 现在…#11116 — 感谢@maxmad64bis</li>
+<li>**修复（sse）：**响应 API 中的并行 <code>function_call</code> 项目…#11144</li>
+<li><strong>修复（分析）：</strong> <code>opencode-go</code> 现在…#11149 — 感谢@electrumguy</li>
+<li>修复（仪表板）：保留 <code>open-sse/config/providerRegistry.ts</code>…#11122#11154</li>
+<li>**组合创建：**现在创建没有任何模型的路由组合…</li>
+<li>**修复（弹性）：**丢失的模型…#11165 - 感谢@yourspraveen</li>
+<li>**修复（路由）：**自定义…#11180 — 感谢@marcs7</li>
+<li><strong>修复（路由）：</strong>“路由”选项卡的“最后一个已知的良好提供商”…#11181</li>
+<li><strong>修复（ollama）：</strong> Ollama 本地模型是… #11271 — 感谢@yourspraveen</li>
+<li><strong>修复（提供商）：</strong> 反重力 OAuth 标记与无云连接…#11284</li>
+<li><strong>修复（译者）：</strong> 保留省略… #11297 — 感谢@ofonseca-pyming</li>
+<li>**修复（db）：**组模型模式转义正则表达式元字符，所以…＃11311</li>
+<li>**修复（db）：**上游代理 URL 检查通过…判断主机…#11319</li>
+<li><strong>修复（i18n）：</strong> 三个 <code>pt</code> 字符串已删除其占位符… #11325</li>
+<li>**修复（kie）：**映射剩余的 <code>google-imagen/*</code> KIE…#11225 #11326</li>
+<li><strong>修复（安全）：</strong> <code>proxy-authorization</code> 和 <code>proxy-authenticate</code>…#11328</li>
+<li>**修复（视频桥）：**回到确定性… #11344</li>
+<li><strong>修复（翻译）：</strong> Codex Responses 工具调用翻译为…#11347</li>
+<li>**修复（视频桥）：**将高对比度时间戳刻录到每个…#11350</li>
+<li>**修复（视频）：**指纹保护视频桥字节，合并…#11362</li>
+<li>**修复（目录）：**保持大型 <code>/v1/models</code> 构建响应… #11367</li>
+<li><strong>修复（视频）：</strong> 在有界视觉后应用标题帧上限…#11382</li>
+<li><strong>实时仪表板：</strong> 遵循…#11331 报告的 WebSocket 端口</li>
+<li>**修复（仪表板）：**模型数据库同步…#11394 — 感谢@An0nym0us92</li>
+<li>**修复（api-manager）：**允许的组合现在可以限制为零…</li>
+<li>修复（构建）：容忍相同的真实路径符号链接或陈旧类型的目标…</li>
+<li>**修复（自动）：**速率限制 <code>auto/&#x3C;family> matched no connected models</code>…</li>
+<li>修复（cli）：删除孤儿<code>resolveOpencodeConfigDir</code>…＃10246＃9985</li>
+<li>修复（ci）：使 <code>Build (advisory)</code> 再次产生信号 - 固定到…</li>
+<li><strong>修复（api）：</strong> <code>/v1/models</code>目录缓存映射键中的散列API键所以…</li>
+<li><strong>修复（提供商）：</strong> 注册实时 OpenRouter… — 感谢 @RaviTharuma</li>
+<li>**修复（翻译）：**直接合并连续的相同角色内容…</li>
+<li><strong>修复（cli）：</strong> <code>omniroute update</code> 现在找到 npm…#52554 #5379 #5542 #11335</li>
+<li><strong>修复（cline）：</strong> 保留 client 提供的 Cline 任务 ID 并省略…</li>
+<li>合并后强化了 Codex 应用程序服务器传输…#11205</li>
+<li>修复（codex）：更喜欢 <code>max_context_window</code> 而不是 <code>context_window</code>…</li>
+<li>**修复（目录）：**从确切的…导出组合推理努力层</li>
+<li>修复（组合）：当组合时，清除内存中的会话粘性绑定…</li>
+<li>修复（组合）：解决以努力为后缀的命令代码变体（例如…</li>
+<li><strong>修复（db）：</strong> <code>compression_run_telemetry</code> 保留扫描… #6848 #9625</li>
+<li><strong>修复（压缩）：</strong> 在 <code>compressionWorkerPool</code> 中使用 <code>pathToFileURL</code> 所以…</li>
+<li>**修复（db）：**数据库设置 API 不再在 SQLite 上返回 HTTP 500…</li>
+<li>修复（发现）：解析嵌套在…下的上游推理层</li>
+<li><strong>修复（操作）：</strong> Docker HEALTHCHECK 探头改为轻量级 <code>/healthz</code>…</li>
+<li><strong>修复（api）：</strong> <code>/v1/embeddings</code> 400 为原生… - 感谢@RaviTharuma</li>
+<li>**修复（sse）：**将 Codex/Anthropic 配额标头保留在上游…</li>
+<li><strong>修复（用法）：</strong> z.ai/GLM 编码计划订阅密钥现在呈现它们的…</li>
+<li>**修复（auth）：**连接的 <code>lastError</code> 现在命名真正的上游…</li>
+<li><strong>修复（live-ws）：</strong> Live仪表板套接字现在可以指向… #11331</li>
+<li><strong>修复（sse）：</strong> MiniMax 音乐模型现在生成音频而不是失败…</li>
+<li><strong>修复（型号）：</strong> 尊重 <code>MODELS_DEV_SYNC_ENABLED=0</code> 作为硬杀开关…</li>
+<li><strong>修复（提供商）：</strong> 当 <code>OPENCODE_SYNTHESIZE_CLI_HEADERS=true</code> 时，… #5997</li>
+<li><strong>OpenCode 配置合并：</strong> 停止 <code>mergeOpenCodeConfig</code> 播放…</li>
+<li>**修复（模型）：**从提供商自己的 <code>/models</code> 同步的模型…</li>
+<li>**修复（提供者）：**克劳德代码/… - 感谢@jeff-alves</li>
+<li>**修复（电子）：**桌面窗口在 Windows 上保持隐藏状态，因为…</li>
+<li><strong>修复（执行器）：</strong> OpencodeExecutor 轮换（或在…上重试一次）</li>
+<li>**修复（cli）：**识别本机…#10227 - 感谢@tito13kfm</li>
+<li>修复（i18n）：最近添加的 UI 的完整越南语翻译…#9985</li>
+<li>修复（api）：修复损坏的 <code>@/lib/db/connections</code> 导入… #10939</li>
+<li>杂务（文档）：重新生成 PROVIDER_REFERENCE 并刷新 README 图…</li>
+<li>Chore(lint)：修剪发布分支上孤立的 ESLint 抑制</li>
+<li><strong>修复（构建）：</strong> #9011 #9982 #9969 #9199 #8728 #8736 #10087 #8974 #7682 #9173</li>
+<li><strong>修复（安全）：</strong> 强化审计中发现的三个秘密泄漏路径…</li>
+<li><strong>修复（db）：</strong> sql.js 后备现在以原子方式发布数据库…</li>
+</ul>
+<!-- 协调传递 2（阶段 0a.1）：在没有项目符号的情况下进入周期的提交 -->
+<ul>
+<li><strong>修复（sse）：</strong>＃10441＃11152＃11151＃10475＃10980＃10805 - 谢谢@geek007git @maxmad64bis @HouMinXi @linhdmn @minhlongs</li>
+<li><strong>修复（sse）：</strong>＃11043＃11110＃11129＃10330＃10806 - 谢谢@maxmad64bis @hartmark @xz-dev</li>
+<li><strong>修复（sse）：</strong>＃11209＃11214＃10803＃10457＃11113 - 谢谢@linhdmn @Kizuno18 @HouMinXi @ggdayup</li>
+<li><strong>修复（sse）：</strong>＃11194＃10445＃11047＃10435＃10632＃10650＃10450＃10434＃10691＃10674 - 谢谢@jonlwheat2-gif @killmonger2317-coder @maxmad64bis @octo-patch</li>
+<li><strong>修复（sse）：</strong>＃11177＃10545＃10684＃10978＃10306＃10488 - 谢谢@rqzbeh @NahuSauf @cryptiklemur @maxmad64bis @RaviTharuma</li>
+<li><strong>修复（sse）：</strong> Adobe Firefly…#11387 #11386 — 感谢@HouMinXi</li>
+<li><strong>修复（提供商）：</strong> #11375 #11123 #11262 #11117 #11055 #10356 #10566 #10634 — 感谢@ggdayup @rqzbeh @rizxfrog @backryun @RaviTharuma</li>
+<li>**修复（提供者）：**推理工作… #11274 #11305 — 感谢@linhdmn</li>
+<li><strong>修复（提供商）：</strong> #11309 #11302 #10862 #10971 #10072 #10471 #11049 #10973 #10974 - 感谢@ntdat812 @RaviTharuma @xz-dev @sha367 @maxmad64bis</li>
+<li><strong>修复（弹性）：</strong> #11355 #11310 #10534 #11078 #11267 #11075 #10506 #11020 — 感谢@sprintberlin @SnCr90 @rqzbeh @yourspraveen @hartmark @RaviTharuma</li>
+<li><strong>修复（配额）：</strong> #11353 #11378 — 感谢@sprintberlin @Neuron-Mr-White</li>
+<li><strong>修复（组合）：</strong> #11360 #10463 #10456 #11036 #10907 #10846 #10016 — 感谢@sprintberlin @herjarsa @asorourx @excessivechaos @HouMinXi @fenix007</li>
+<li><strong>修复（自动）：</strong> #10820 #10344 #11400 #11399 — 感谢@RaviTharuma @jacobsparts</li>
+<li><strong>修复（路由）：</strong> #11107 #11198 #11193 #10124 — 感谢 @SCys @pacocartones @benzntech</li>
+<li><strong>修复（模型）：</strong> #10957 #10898 #11397 #11307 #10533 #10299 #10055 — 感谢@Neuron-Mr-White @rqzbeh @marcelokarval @ekinnee @jackjinke @RaviTharuma</li>
+<li><strong>修复（目录）：</strong> #10963 #10723 #11337 — 感谢 @xz-dev @stanleytejakusuma</li>
+<li><strong>修复（定价）：</strong> #10635 #10636 #11210 — 感谢@stanleytejakusuma @xyzs996</li>
+<li><strong>修复（api）：</strong> #10657 #10654 #10769 #10663 #10253 #10772 #10607 #10565 #11162 #11081 — 谢谢@maxmad64bis @HouMinXi @dpozimski @sadSanta-07 @pucedoteth @RaviTharuma @AndrianBalanescu</li>
+<li><strong>修复（安全）：</strong> #11429 #11418 #11261 #10888 #11293 #11040 #11028 #10738 #10739 #10380 #11189 — 谢谢@HouMinXi @rqzbeh</li>
+<li>**修复（authz）：**确切的公共路线完全匹配，而不是…＃11417</li>
+<li><strong>修复（auth）：</strong> #11376 #11175 #10899 #10614 — 感谢@ntdat812 @rqzbeh @MeRezaRezaei</li>
+<li><strong>修复（oauth）：</strong> #11141 #10725 #10620 — 感谢@HouMinXi @MichaelYcJo @krishna3554</li>
+<li><strong>修复（cli）：</strong> #11374 #11332 #11238 #10835 #11263 — 感谢@ntdat812 @pacocartones @adevwith Purpose</li>
+<li><strong>修复（cli）：</strong>＃11173＃11079＃11054＃10572＃10468＃10447＃11264 - 谢谢@rqzbeh @Hydraxman @xiaoyaner0201</li>
+<li><strong>修复（仪表板）：</strong> #11407 #11402 #11067 #11056 #10872 #10452 #10448 #10449 — 谢谢@jacobsparts @rqzbeh @Rahulsharma0810</li>
+<li><strong>修复（live-ws）：</strong>… #11377 #11269 — 感谢@ntdat812 @Minamaging18</li>
+<li><strong>修复（db）：</strong>＃10979＃10709＃10552＃10278＃10423＃10432 - 感谢@RaviTharuma @jonlwheat2-gif @excessivechaos @maxmad64bis</li>
+<li><strong>修复（构建）：</strong> #11159 #10836 #10776 #11266 #10695 — 感谢@aliyosufi @adevwith Purpose</li>
+<li><strong>修复（docker）：</strong> #11419 #10818 #10288 — 感谢@RaviTharuma @anudeepadi</li>
+<li>**修复（电子）：**嵌入式服务器是…＃10717 - 感谢@echoriver89</li>
+<li><strong>修复（压缩）：</strong> #11364 #11084 #10807 #10660 #10834 #10498 #10655 — 感谢@TheDemonTuan @HouMinXi @blackwell-systems @stanleytejakusuma @adevwith Purpose @abhijeetnardele24-hash</li>
+<li><strong>修复（译者）：</strong> #11365 #10658 #10392 — 感谢@Siva010 @giauphan</li>
+<li>**修复（双子座）：**缺失的 <code>items</code> 模式…#10605 — 感谢@sadSanta-07</li>
+<li><strong>修复（codex）：</strong> #11179 #11041 #10608 #10573 #10838 #10946 — 感谢@excessivechaos @jackjinke @JxnLexn @HouMinXi @YunyunZhai</li>
+<li><strong>修复（开放代码）：</strong> #10874 #11004 #11385 #11133 #10821 #11199 — 感谢@zoser69 @ntdat812 @AStupidBear @maxmad64bis @RaviTharuma @pacocartones</li>
+<li><strong>修复（执行者）：</strong> #11158 #10402 #10694 — 感谢@maxmad64bis @excessivechaos</li>
+<li><strong>修复（搜索）：</strong> #10901 #11125 #10756 #10981 #11097 — 谢谢@rqzbeh @RaviTharuma @Egorich-print</li>
+<li><strong>修复（mcp）：</strong>＃11139＃10860＃10575＃10209 - 感谢@HouMinXi @ntdat812 @branben @sadSanta-07</li>
+<li><strong>修复（内存）：</strong> 中间对话… #11303 #11114 — 感谢@ggdayup</li>
+<li><strong>修复（嵌入）：</strong> 帐户是… #10529 #11260 — 感谢@HouMinXi</li>
+<li>**修复（视频桥）：**结构片段采样已验证，联系…</li>
+<li><strong>修复（图像）：</strong> #10847 #10363 #10554 — 感谢@RaviTharuma @tiangao88 @rinseaid</li>
+<li><strong>修复（融合）：</strong> 视觉兼容性过滤器应用于… #10737</li>
+<li><strong>修复（代理）：</strong> #11182 #10868 #10664 #10416 — 感谢 @rqzbeh @ntdat812 @maxmad64bis</li>
+<li>**修复（中继）：**一个… #10941 #10935 #10797 — 谢谢@ntdat812</li>
+<li><strong>修复（日志记录）：</strong> #10770 #10331 — 感谢@maxmad64bis @hartmark @benzntech</li>
+<li><strong>修复（日志）：</strong> #11082 #10685 — 感谢@AndrianBalanescu @cryptiklemur</li>
+<li>**修复（webhooks）：**三个… #11050 #11130 — 感谢@maxmad64bis</li>
+<li><strong>修复（反重力）：</strong> #10422 #10376 #10436 — 感谢@JxnLexn @Chewji9875</li>
+<li>**修复（adobe-firefly）：**会话通过…＃9255更新 - 感谢@artickc</li>
+<li><strong>修复（cline）：</strong> #10279 #10706 #11132 — 感谢@arafatkatze @rqzbeh</li>
+<li>**修复（agentrouter）：**协议是从 client 端点推断出来的，…</li>
+<li><strong>修复（服务）：</strong>… #10371 #10459 — 感谢@tkgo11 @aron-intframe</li>
+<li><strong>修复（监控）：</strong> #10370 #10307 #10827 #10699 — 感谢@tkgo11 @RaviTharuma</li>
+<li><strong>修复（github）：</strong> GitHub 访问令牌是… #11320 — 感谢@RaviTharuma</li>
+<li><strong>修复（i18n）：</strong> #11339 #11322 #10546 #9721 #11208 — 感谢 @pacocartones @rizxfrog @dionjoshualobo</li>
+<li><strong>修复（聊天）：</strong>… #11304 #10394 #10438 — 感谢@azzaouiomar19-sketch</li>
+<li><strong>修复（提供商）：</strong> #11026 #10733 #10810 #10458 #11045 #10116 #10637 #11088 #10904 #10584 #10186 #11207 #10894 — 感谢@sanforex24h @InkshadeWoods @Hsia97 @benzntech @MeRezaRezaei @Chewji9875 @backryun @yourspraveen @RaviTharuma @Tushar49 @rafacpti23 @rqzbeh</li>
+<li>**修复（雷达）：**功能可用性… #10487 #10464 — 感谢@backryun</li>
+<li><strong>修复（用法）：</strong> 配额窗口已订购… #11241 — 感谢@pacocartones</li>
+<li><strong>修复（文件）：</strong> 列表 <code>limit</code>…#10673 #11059 — 感谢 @pacocartones</li>
+<li><strong>修复（入门）：</strong> 设置向导… #10855 — 感谢@krishna3554</li>
+<li><strong>修复（设置）：</strong> #10890 #10525 — 感谢@rqzbeh @HouMinXi</li>
+<li>**修复（对话）：**重新连接… #10800 — 感谢@adevwith Purpose</li>
+<li>**修复（推理）：**兼容响应…#10574 — 感谢@jackjinke</li>
+<li>**修复（代理桥）：**重新生成证书…#10715 — 感谢@ntdatt812</li>
+<li>**修复（api-manager）：**空组合限制…#10066 — 感谢@xz-dev</li>
+<li>**修复（db）：**数据库设置页面编号…#10558 — 感谢@TechNickAI</li>
+<li>**修复（模型）：**健康检查排除…#10026 — 感谢@ritheshcn25</li>
+<li><strong>修复（技能）：</strong> CLI 技能因配额而过时… #10698</li>
+<li><strong>修复（mcp）：</strong> CLI MCP 调用协议问题…#10960 — 感谢@YunyunZhai</li>
+<li><strong>修复（仪表板）：</strong> Combo Builder 中的专家模式可以键入… #8875 #8285</li>
+<li>**修复（sse）：**固定到显式连接的组合步骤（或…＃8875</li>
+<li>**修复（cli）：**本地CLI看到完整的<code>/api/monitoring/health</code>…#11040</li>
+<li>**修复（搜索）：**配置的搜索连接（Serper，Brave，…＃11524</li>
+<li><strong>修复（api）：</strong> <code>/v1/models</code>不再阻止陈旧的…＃11551＃10198＃8728</li>
+<li><strong>修复（sse）：</strong> 通用切换，其摘要返回… #11552</li>
+</ul>
+<h3 id="-维护">📝 维护</h3>
+<ul>
+<li>**重构（提供者）：**删除了Puter提供者（id <code>puter</code>，别名…</li>
+<li><strong>修复（类型）：</strong> 保留 client 响应格式合同，同时… #8484</li>
+<li>在 TypeScript 下保留响应 API 转换期权合约…</li>
+<li>**修复（类型）：**保留已知的首次失败记录，同时… #8484</li>
+<li>**修复（类型）：**在…时重用验证失败谓词#8484</li>
+<li>**修复（类型）：**保留字面量`capability.vision：… #9121 #8484</li>
+<li>杂务（质量）：添加 RTL 布局棘轮…#3541 #8828 — 感谢@lukiod</li>
+<li>**杂务（sse）：**从…#8966中删除了剩余的<code>iflow</code>条目</li>
+<li>**杂务（ci）：**删除了两个fork拥有的图像发布工作流程…#8967</li>
+<li>**测试（ci）：**修复了间歇性的 <code>spawnSync bash EPIPE</code> 故障…#8977</li>
+<li>**重构（提供程序）：**删除了已退役的 GitHub 模型提供程序…#9023</li>
+<li>**测试（sse）：**添加了第一个测试套件…
+模块是 11.28% 线路覆盖计划中的热点#7，没有专门的测试； 14 纯
+检测器现在边对边固定（令牌梯、每个域最大非总和评分以及
+最小/最大钳位），使文件达到约 100% 的行覆盖率。该套件还记录了两个怪癖
+保持不变：<code>detectReasoningDepth</code> 通过其无标记输入得分高于 0
+始终应用的消息深度奖励，并且 <code>detectErrorContext</code> 返回非整数分数，因为
+它永远不会循环 (#9063)</li>
+<li><strong>修复（类型）：</strong> 将 Veo 轮询延迟承诺结果保留为…#9104</li>
+<li>**修复（类型）：**从…导入压缩分析统计数据#9105</li>
+<li><strong>杂务（类型）：</strong> 将语义缓存签名输入与…对齐#9117</li>
+<li>**修复（类型）：**缩小非流式聊天响应元数据…#9118</li>
+<li><strong>文档（自述文件）：</strong> 将 Roo Code 品牌替换为…#9229 — 感谢@taltas</li>
+<li>**杂务（ci）：**阻止dependabot对<code>ioredis</code>专业进行分组……#9425</li>
+<li>**杂务（测试）：**清除了两个… #9064 #9488 — 感谢@typescript-eslint</li>
+<li><strong>测试（cli）：</strong> OpenCode 插件套件重新调整为… #9178 #9175 #9614</li>
+<li>删除了… #9697 #9738 留下的未使用的 <code>RadarReferrals</code> 类型导出</li>
+<li>协调最终的 v3.8.50 捆绑包大小和文件大小棘轮…#9839</li>
+<li><strong>琐事（质量）：</strong> 将所有文件大小基线扩展 +30% 提前…#9950</li>
+<li>修复（质量）：收紧 eslintWarnings 基线 5000->0 以匹配…</li>
+<li><strong>[v3.8.50] 壮举：添加 RTL 布局兼容性 CSS（修复 #7680）</strong> #7987 — 感谢 @Dingding-leo</li>
+<li><strong>[v3.8.50] 壮举（devin-desktop）：替换公共 Windsurf 提供商</strong> #8228 — 感谢 @backryun</li>
+<li><strong>[v3.8.50] feat(ci)：将 i18n 术语表一致性门扩展到 ko</strong> #8244 — 感谢 @MichaelYcJo</li>
+<li><strong>[v3.8.50] 测试（尾部）：重新对齐 3 个过时的基色红色卫兵 + 注意 2 个仅环境误报（切片 6）</strong> #8263</li>
+<li><strong>[v3.8.50] feat(ui)：将全局模型搜索添加到组合构建器</strong> #8285 — 感谢@corefusiion</li>
+<li><strong>[v3.8.50] 壮举：将 CloakBrowser/browser-pool 提取到可选插件包</strong> #8299 — 感谢 @oyi77</li>
+<li><strong>[v3.8.50] 修复（i18n）：清理并自然化西班牙语翻译</strong> #8339 — 感谢@Dragost</li>
+<li><strong>[v3.8.50] 修复（压缩）：绑定会话去重后缀块扫描以防止 OOM</strong> #8438 — 感谢 @adrianojiu</li>
+<li><strong>[v3.8.50] 修复 Z.ai Web 浏览器传输和模型功能</strong> #8451 — 感谢 @backryun</li>
+<li><strong>[v3.8.50] 壮举（服务）：将 Dario 添加为第五个嵌入式服务（克劳德代码切换/故障转移）</strong> #8523 — 感谢 @seanford</li>
+<li><strong>[v3.8.50] 修复（adobe-firefly）：实时 x-arp-session-id / Arkose 线（停止 HTTP 408）</strong> #8571 — 感谢 @artickc</li>
+<li><strong>[v3.8.50] 修复（adobe-firefly）：持久会话、Chrome 恢复、浏览器登录</strong> #8578 — 感谢 @artickc</li>
+<li><strong>[v3.8.50] 修复：跨流、非流和仪表板路径传递 DeepSeek / MiniMax / Bedrock 的非标准缓存令牌字段</strong> #8591 — 感谢 @ikelvingo</li>
+<li><strong>[v3.8.50] 修复：将零重置反重力 429 视为瞬态</strong> #8626 — 感谢 @costaeder</li>
+<li><strong>[v3.8.50] 修复：强制执行 OpenAI 模型生命周期，无需静默重新路由</strong> #8627 — 感谢 @backryun</li>
+<li><strong>[v3.8.50] 修复（克劳德）：在混淆过程中保留签名思维转变</strong> #8629 — 感谢@costaeder</li>
+<li><strong>[v3.8.50] 修复（反重力）：锁定每个精确模型的完整配额</strong> #8630 — 感谢 @costaeder</li>
+<li><strong>[v3.8.50] 修复（errorConfig）：添加状态 499 元数据映射（修复 #8535）</strong> #8640 — 感谢 @Dingding-leo</li>
+<li><strong>[v3.8.50] 修复（auth）：接受 x-api-key，无需人类版本的克劳德代码用户代理（修复 #8655）</strong> #8678 — 感谢 @Dingding-leo</li>
+<li><strong>[v3.8.50] 修复（open-sse）：将“已耗尽”添加到 CREDITS_EXHAUSTED_SIGNALS（修复 #8631）</strong> #8704 — 感谢 @Dingding-leo</li>
+<li><strong>[v3.8.50] 修复（github）：尊重 Copilot 自定义模型的每个模型 targetFormat 覆盖</strong> #8713 — 感谢 @Witroch4</li>
+<li><strong>[v3.8.50] 修复（测试）：恢复孤立的 vitest 测试并修复 CI 路由</strong> #8718 — 感谢 @MohitRawat017</li>
+<li><strong>[v3.8.50] 壮举（提供商）：添加对 TinyCMS Web 的支持</strong> #8736 — 感谢 @jhordanjw123</li>
+<li><strong>[v3.8.50] 壮举（内存）：具有通用 HTTP 连接器的 MemoryBackend 提供程序模式</strong> #8752 — 感谢 @oyi77</li>
+<li><strong>[v3.8.50] 重构（db）：添加组合存储库边界</strong> #8757 — 感谢 @xiaoyaner0201</li>
+<li><strong>[v3.8.50] 修复（测试）：恢复孤立的 open-sse vitest 测试</strong> #8772 — 感谢 @MohitRawat017</li>
+<li><strong>[v3.8.50]修复（open-sse）：在最小计算之前过滤comboTargetLimits中的非数字值</strong> #8774 — 感谢@Dingding-leo</li>
+<li><strong>[v3.8.50] 壮举（压缩）：添加意大利语（it）穴居人规则包</strong> #8776 — 感谢@Anjielon</li>
+<li><strong>[v3.8.50] 壮举（组合）：将 maxContextWindow 添加到 contextRequirements （修复 #8777）</strong> #8790 — 感谢 @Dingding-leo</li>
+<li><strong>[v3.8.50] 壮举（图像）：添加 POST /v1/images/upscale（Adobe Firefly Topaz + Stability + Topaz Labs）</strong> #8791 — 感谢 @artickc</li>
+<li><strong>[v3.8.50] 修复（提供商）：删除 Cloudflare Workers AI 免费目录 ID (#8717)</strong> #8804 — 感谢 @DinonowDev</li>
+<li><strong>[v3.8.50] 修复（sse）：停止制作加密的 Codex 推理摘要文本</strong> #8807 — 感谢 @Prudhvivuda</li>
+<li><strong>[v3.8.50] 修复（后端）：更新 Cloudflare Workers AI 模型目录并删除死模型 ID (#8717)</strong> #8808 — 感谢 @Dingding-leo</li>
+<li><strong>[TS7] [v3.8.50] 重构（db）：保留标准化组合模型类型</strong> #8809 — 感谢 @backryun</li>
+<li><strong>[v3.8.50] 修复（db/apiKeys）：尊重组模型权限检查中的提供者参数（修复#8803）</strong> #8817 — 感谢@Dingding-leo</li>
+<li><strong>[TS7] [v3.8.50] 修复（类型）：保留浏览器中止处理</strong> #8818 — 感谢 @backryun</li>
+<li><strong>[v3.8.50] 壮举(cli)：将反重力凭证直接传送到远程安装</strong> #8834</li>
+<li><strong>[v3.8.50] 文档：slim AGENTS.md</strong> #8839 — 感谢@MumuTW</li>
+<li><strong>文档（指南）：添加反重力（Google One AI）入门指南</strong> #8904 — 感谢@HouMinXi</li>
+<li><strong>[v3.8.50] 修复（用法）：拒绝不可能的提供者令牌计数</strong> #8927 — 感谢 @artickc</li>
+<li><strong>将上下文元数据视为路由提示</strong> #8944 — 感谢@JxnLexn</li>
+<li><strong>docs(db)：指定 MySQL 一致性语义</strong> #8947 — 感谢 @rushsinging</li>
+<li><strong>为 Codex clients</strong> 添加本机 ChatGPT Web 提供程序** #8949 — 感谢 @JxnLexn</li>
+<li><strong>i18n(ru)：完整的俄语语言环境 — 100% 覆盖率</strong> #9001 — 感谢 @Egorich-print</li>
+<li><strong>文档（故障排除）：记录 chat_admission_busy 503 以及如何调整重量级聊天并发</strong> #9021 — 感谢 @xiaoyaner0201</li>
+<li><strong>安全：更新 Redis 以修复关键漏洞</strong> #9065 — 感谢 @tuxmonteiro</li>
+<li><strong>[TS7] 修复（类型）：验证聊天上下文估计输入</strong> #9084 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：窄流响应输出</strong> #9086 — 感谢 @backryun</li>
+<li><strong>文档：澄清免费提供商模型刷新结果</strong> #9087 — 感谢@AbdullahFageeh</li>
+<li><strong>[TS7] [v3.8.50] 修复（类型）：保留 SSE 工具调用函数形状</strong> #9090 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：缩小 CCR 存储拒绝</strong> #9091 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：保留数组缓冲区响应主体</strong> #9092 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：窄媒体生成失败</strong> #9093 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：保留思考签名恢复失败</strong> #9114 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：保留响应转换选项</strong> #9119 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：保留验证失败缩小</strong> #9120 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：保留 client 使用格式合同</strong> #9122 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：保留请求规则输入合约</strong> #9135 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：简化 Codex 服务层级缩小</strong> #9136 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：收紧提取的 chatCore 合约</strong> #9137 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：对齐 Web 执行器事件和模型合约</strong> #9138 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：调整网络提供商支持合同</strong> #9139 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：类型媒体提供商请求有效负载</strong> #9141 — 感谢 @backryun</li>
+<li><strong>测试（仪表板）：删除陈旧的 next-intl 模拟破坏 ProviderDetailPageClient 烟雾</strong> #9150 — 感谢 @maxmad64bis</li>
+<li><strong>测试（mcp）：保护 Node 24 捆绑 MCP 启动</strong> #9162 — 感谢 @Gioxaa</li>
+<li><strong>测试（压缩）：锁定冗余 tool_result 内容上堆叠的 RTK+Caveman 节省</strong> #9278 — 感谢 @Sam280903</li>
+<li><strong>琐事：提升 better-sqlite3 并添加提供商数据库查询脚本</strong> #9325 — 感谢 @jowimila</li>
+<li><strong>测试（配额）：等待热路径消耗而不是休眠</strong> #9365 — 感谢@HouMinXi</li>
+<li><strong>refactor(sse)：将思维预算助手移出 base.ts</strong> #9381 — 感谢 @HouMinXi</li>
+<li><strong>测试（sse）：期望无凭据消息中的尾随句点</strong> #9392 — 感谢@HouMinXi</li>
+<li><strong>杂务（db）：提高 sqlite cache_size/mmap_size 默认值</strong> #9467 — 感谢@Poid-ZA</li>
+<li><strong>[TS7] 修复（类型）：对齐流失败回调合约</strong> #9561 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：缩小 chatCore 本地合约</strong> #9562 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：验证 Azure OpenAI 基本 URL</strong> #9563 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：保留清理后的工具数组合约</strong> #9564 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：验证 Vision Bridge 组合名称</strong> #9565 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：保留流式 PII 选择键</strong> #9566 — 感谢 @backryun</li>
+<li><strong>[TS7] 测试（类型）：在层解析器中使用 Vitest 期望</strong> #9742 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（译者）：保留视频 URL 覆盖合约</strong> #9747 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（codex）：保留缩小的输入数组</strong> #9748 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（kiro）：完整的仅缓存使用总计</strong> #9753 — 感谢 @backryun</li>
+<li><strong>chore(repo)：忽略解压到 repo root 中的 Electron 构建输出</strong> #9858 #9770 — 感谢 @Michael-Rocco-Goldmann</li>
+<li><strong>测试（集成）：为真正的“默认”组合+无根线捕获添加通用实时测试工具</strong> #9862 #9744 — 感谢@hartmark</li>
+<li><strong>ci(test)：通过阻止 CI</strong> 路由孤立的 Vitest 测试 #9875 #9605 — 感谢 @MohitRawat017</li>
+<li><strong>文档（提案）：Telegram Mini App 集成可行性分析</strong> #9906 #9810 — 感谢 @benzntech</li>
+<li><strong>杂务：忽略 docker-compose.override.yml</strong> #9919 — 感谢 @lucasalx</li>
+<li><strong>[TS7] 修复（类型）：稳定技能令牌提取</strong> #9920 — 感谢 @backryun</li>
+<li><strong>文档：添加 Python、Node.js、PHP 和 cURL</strong> 的快速入门代码示例 #9922 — 感谢 @Hariprajwal</li>
+<li><strong>[TS7] 修复（类型）：窄组合模型集合</strong> #9972 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：对齐 Claude 消息合约</strong> #9973 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：类型 Copilot WebSocket 构造</strong> #9974 — 感谢 @backryun</li>
+<li><strong>[TS7] 杂务（类型）：删除孤立组合清单指标</strong> #9975 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：在成本计算之前标准化流使用</strong> #9977 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（流）：收集合成响应工具事件</strong> #9978 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：完整的响应流失败合约</strong> #9979 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：窄聊天调度合同</strong> #9986 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：缩小 chatCore 本地合约</strong> #9987 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：保留 GHE Copilot 执行器配置</strong> #9988 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：验证 Fal 视频结果 URL</strong> #9989 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：狭窄的克劳德流三角洲</strong> #9990 — 感谢 @backryun</li>
+<li><strong>提供者（agnes）：刷新模型目录</strong> #9998 — 感谢@backryun</li>
+<li><strong>文档：修复 MCP 服务器审核日志记录部分中的重复单词</strong> #10000 — 感谢 @TengSivtean</li>
+<li><strong>文档：修复 MCP 服务器文档中过时的工具计数（105 -> 104）</strong> #10002 — 感谢 @TengSivtean</li>
+<li><strong>记录带有 ToS 标记的免费套餐提供商的默认行为</strong> #10013 — 感谢 @yulinlina</li>
+<li><strong>[TS7] 修复（tinycms）：对齐执行者和签名者合约</strong> #10087 — 感谢 @backryun</li>
+<li><strong>[TS7] 修复（类型）：恢复提供者断路器谓词导入</strong> #10088 — 感谢 @backryun</li>
+<li><strong>[TS7] ci：阻止新的 TypeScript 7 诊断</strong> #10134 — 感谢 @backryun</li>
+<li><strong>杂务（repo）：删除跟踪的本地工件</strong> #10178 — 感谢@backryun</li>
+<li><strong>维护 - 直接推送（汇总）：</strong> 释放门和基础红色…</li>
+<li><strong>部门（汇总）：</strong> #9081 #9082 #9427 #9458 #9459 #9461 #9462 #9472</li>
+<li><strong>文档/杂务（汇总）：</strong> #8954 #8991 #9059 #9194 #9258 #9508</li>
+<li><strong>主分支管道（汇总）：</strong> #7168 #7179 #7216 #7220 #7225 #8941 #7559 #6634 #7341 #7347 #8067 #8070 #8317 #7076</li>
+<li><strong>deps:</strong> 将开发团队推向 1…#10043 — 感谢 @app</li>
+<li><strong>deps:</strong> 将电子从 43.2.0 碰撞到 43.3.0…#10042 — 感谢 @app</li>
+<li><strong>maint(release):</strong> 45 次直接推送到发布分支，没有 PR…</li>
+<li><strong>维护（回购）：</strong> #10187 #10189 #10190 #10193 #10196 #10203 #10204 #10205 #10207 #10210 #10236 #10318</li>
+<li>**文档（auth）：**区分仪表板会话，<code>oma_live_…</code>…#7786</li>
+<li>**文档（操作）：**文档 Kubernetes 探针…#10297 — 感谢@RaviTharuma</li>
+<li><strong>docs(docker):</strong> 说明 <code>:latest</code> 跟踪最高… #10317</li>
+<li><strong>文档（后端）：</strong> 记录内存提取、技能…#10349</li>
+<li><strong>docs(docker):</strong> 将默认 SQLite 文档记录为单副本 /… #10350</li>
+<li><strong>文档（后端）：</strong> 预先编写 SQLite 备份的文档…#10351</li>
+<li><strong>修复（测试）：</strong> 在发布分支上耗尽三个基础红色… #10539 #10704</li>
+<li>杂务（安全）：删除未使用的 <code>enforceSecrets</code> 重复项…#10775</li>
+<li>修复（质量）：注册 GrokBuildToolCard.tsx…#10778</li>
+<li><strong>文档：</strong> 自定义组合仅被调用… #10779 — 感谢@maxmad64bis</li>
+<li>杂务（启动）：删除 <code>src/server-init.ts</code> （183 行，从不… #10780</li>
+<li>修复（质量）：为自己的文件大小重新设定基准…#10859</li>
+<li><strong>docs(openapi):</strong> 记录 <code>GET</code> 和 <code>PUT</code> 操作… #10875</li>
+<li>修复（质量）：将自己的 EXPECTED_FEATURE_FLAG_COUNT 提高到 52…#10889</li>
+<li>**测试（db）：**替换…中的三个空<code>test.skip</code>占位符#10906</li>
+<li>**文档（docker）：**编码代理的文档运行时RAM…#10982</li>
+<li><strong>文档（数据库）：</strong> 将 SQLite 缓存指南与 65,536…#11018 对齐</li>
+<li>**文档（docker）：**文档N独立…#11024 - 感谢@RaviTharuma</li>
+<li>修复（质量）：重新设置 modelCapability.ts 文件大小的基准…#11034</li>
+<li>修复（质量）：注册…#11053</li>
+<li>杂务（质量）：排干两个 <code>release/v3.8.50</code> 基础红色 — 刷新…#11160</li>
+<li>**杂务（lint）：**棘轮…#7879 #11247 — 感谢@typescript-eslint</li>
+<li><strong>修复（deps）：</strong> 防止 pnpm 自动安装… — 感谢@lobehub
+<code>@lobehub/icons</code>，保留六个不需要的软件包，其许可证不兼容或无法验证
+生产安装之外的元数据 (#11342)。</li>
+<li><strong>ci(changelog):</strong> 用精确的替换广泛的移除旁路，…#11345</li>
+<li><strong>文档（自述文件）：</strong> 协调实时 v3.8.50 提供商、免费套餐、CLI，…
+社区、赞助商、致谢和 SVG 指标及其经过审计的来源
+分母，包括去重复的 OmniRoute-in-Action 快照和不同的
+合并拉取请求、GitHub 属性提交和 Git 历史记录的贡献者排名
+（＃11356）。</li>
+<li><strong>docs(openapi):</strong> 有条件地记录… #11363</li>
+<li>**修复（视频桥）：**使选择加入分段感知采样使用一个…#11381</li>
+<li><strong>文档：</strong> 添加嵌入 client 操作手册… — 感谢 @RaviTharuma</li>
+<li>**杂务（ci）：**忽略 env-doc-sync 中的临时 <code>BOT_TOKEN</code>/<code>BOT_URL</code>…</li>
+<li><strong>测试（kimi）：</strong> Kimi背景健康扫描不再绘制…＃11361</li>
+<li>杂务（测试）：重新生成提供商/翻译路径黄金…#10531</li>
+<li>**琐事（发布）：**重新同步 v3.8.50 提供程序和 CLI 目录，…</li>
+<li>**修复（ci）：**路线…
+通过 <code>sanitizeErrorMessage()</code> 下载失败消息而不是嵌入原始消息
+<code>err.message</code>，清除 <code>release/v3.8.50</code> 上的 <code>check:error-helper</code> 基色红色 (#9985)。</li>
+<li>**修复（ci）：**在<code>release/v3.8.50</code>上再排掉三个基础红色…#9985
+本地有 219 个错误（上次 CI 运行中有 25 个错误）——全部来自 <code>react-hooks/set-state-in-effect</code>，
+<code>react-hooks/preserve-manual-memoization</code>、<code>react-hooks/immutability</code>、
+<code>react-hooks/static-components</code>、<code>react-hooks/refs</code> 和 <code>react-hooks/purity</code>，六个 React
+编译器 lint 规则默认打开 <code>eslint-plugin-react-hooks</code> v7，并且是
+依赖性碰撞后从未冻结在 <code>config/quality/eslint-suppressions.json</code> 中。冻结
+通过 ESLint 原生对这六项规则预先存在的违规
+<code>--suppress-rule</code>/<code>--suppressions-location</code> 机构（与已用于
+<code>@next/next/no-location-assign-relative-destination</code>) — 没有更改应用程序代码，没有规则
+禁用，只有真正新的违规行为才会被阻止。 <code>check:dead-code</code> 的得分为 418
+415基线：删除了未使用的<code>src/lib/quota/providerCapabilities.ts</code>文件和未使用的
+<code>providerQuotaTelemetry.ts</code> 中的 <code>ProviderQuotaMonitor</code> 接口（自 PR #10148 起均已失效，
+2026-08-18，通过<code>grep</code>/knip交叉引用确认），登陆416；剩余+1可以
+在检查每个触及的死列表条目后，不归因于最近的一次提交
+自2026年8月14日基线测量以来，因此随着调查重新调整基线
+记录在<code>quality-baseline.json</code>中。 <code>tests/unit/autoCombo/tieredRotation.test.ts</code>的
+“在所有 43 个 Cerebras 连接 ID 之间轮换”案例达到了 vitest 的 5000 毫秒默认值
+Shared-devbox 下 200 次迭代同步 <code>selectProvider()</code> 循环超时
+争用（观察到平均负载为 40-60+）——将其显式超时扩大到 20000 毫秒；的
+断言本身没有改变。</li>
+<li><strong>修复（测试）：</strong> 在发布分支上耗尽两个基础红色 —… #10491</li>
+<li>**修复（测试）：**重新对齐两个 <code>stream-utils</code> 直通… #10017 #10473</li>
+<li><strong>修复（测试）：</strong> 在 <code>release/v3.8.50</code> 上耗尽几个基础红色……#9985
+具有相同的模式——合法的产品变更没有更新测试
+断言旧行为：<code>tests/unit/glm-provider-model-import-route.test.ts</code>（12 次测试）
+和 <code>tests/unit/model-sync-route.test.ts</code>（2 次测试）早于 #10603 的“上游模型同步是
+保留选择加入和手动覆盖”更改； <code>tests/unit/antigravity-model-aliases.test.ts</code>
+早于 #10537 淘汰折叠的 <code>gemini-3.7-flash</code> 别名，转而采用三层
+id。还修复了 <code>open-sse/config/freeModelCatalog.data.ts</code> 中的实际数据漂移（<code>qwen-web</code>
+免费目录条目仍然指向已退役的 <code>qwen3.8-max-preview</code> id，而不是
+当前 <code>qwen3.8-max</code>)，将 zh-TW <code>providers.autoFetchModelsTooltip</code> 字符串更正为
+词汇规范快取而不是服务器，并从中删除未使用的默认导出
+<code>src/lib/oauth/providers/zed-hosted.ts</code>（指定的出口已经涵盖了每个消费者）
+从 <code>check:dead-code</code> 棘轮回归中删除一个符号。</li>
+<li><strong>琐事（发布）：</strong> 同步迁移计数文档和…</li>
+<li>修复（i18n）：将 14 个 <code>providers.harImport*</code> 键翻译成…#11069</li>
+</ul>
+<!-- 协调传递 2（阶段 0a.1）：在没有项目符号的情况下进入周期的提交 -->
+<ul>
+<li><strong>修复（发布）：</strong> #11038 #10534 #10964 #11259 #11338 — 感谢@backryun @adevwith Purpose @hartmark @pacocartones</li>
+<li><strong>修复（质量）：</strong> #11438 #11321 — 感谢@pacocartones @hartmark @adevwith Purpose @wgordon17 @backryun</li>
+<li><strong>修复（测试）：</strong> #11306 #10726 #11161 #11341 #11327 #11240 #11380 #10683 #10682 #10689 #11135 #10700 #10451 #11040 #11147 - 谢谢@MichaelYcJo @rqzbeh @hartmark @wgordon17</li>
+<li><strong>修复（ci）：</strong> Windows…#10453 #11301 #10828 #10325 — 感谢@backryun</li>
+<li><strong>性能（电子）：</strong> #10390 #10367 #10382 #10359 #10327 #10328 #10324 — 感谢@backryun</li>
+<li><strong>perf(providers):</strong> 提供者模式验证是懒惰的并且… #11334 #11220</li>
+<li><strong>重构（sse）：</strong> #10633 #10910 #8367 #10201 #11051 — 感谢@oyi77 @xz-dev</li>
+<li>**重构（仪表板）：**自定义提供程序配额键是… #11188 #11156</li>
+<li><strong>杂务（安全）：</strong>…#10952 #10411 — 感谢@arminanton @blarovse</li>
+<li><strong>杂务（部门）：</strong> #10931 #10932 #10625 #10626 #10403 #10622 #10405 #10406 #10407 #10928 #10929 #10930</li>
+<li><strong>修复（deps）：</strong>＃10610＃10543 - 感谢@atjsh @tensorflow @jonlwheat2-gif @huggingface @dcox79</li>
+<li><strong>文档：</strong> #10648 #10512 #10569 #10112 #10649 #10816 #10817 #10823 #10824 #10825 #10983 #11031 #11299 #11204 #11157 #10433</li>
+<li><strong>文档（i18n）：</strong>＃11254＃11237＃11246＃10777＃10490＃10731 - 感谢@farshidrezaei @realize000 @pandaaaa1990</li>
+<li><strong>杂务（repo）：</strong> 存储库卫生 - 自引用 <code>_tasks</code>…</li>
+<li>**琐事（发布）：**本地化的 <code>llm.txt</code> 镜子和 v3.8.50 底座…</li>
+<li><strong>修复（ci）：</strong> 包工件出处门现在检查… #8875 #10427</li>
+<li>**测试（仪表板）：**代理注册表 e2e 烟雾流打开… #8875 #9870</li>
+<li><strong>测试（api）：</strong> <code>/v1/models</code> e2e检查接受授权… #9320 #8875</li>
+<li>**杂务（质量）：**刷新了组合页面 ESLint…#8875 #8285</li>
+</ul>
+<h3 id="-贡献者">🙌 贡献者</h3>
+<p>感谢所有在 v3.8.50 上发布作品的人：</p>
+<table>
+<thead>
+<tr>
+<th>贡献者</th>
+<th>PR / 问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/AbdullahFageeh">@AbdullahFageeh</a></td>
+<td>#9087</td>
+</tr>
+<tr>
+<td><a href="https://github.com/abhijeetnardele24-hash">@abhijeetnardele24-hash</a></td>
+<td>#10498</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Abhishek4512009">@Abhishek4512009</a></td>
+<td>#10494</td>
+</tr>
+<tr>
+<td><a href="https://github.com/acc0mplish">@acc0mplish</a></td>
+<td>＃10732，＃10948</td>
+</tr>
+<tr>
+<td><a href="https://github.com/adevwithpurpose">@adevwith目的</a></td>
+<td>＃9790，＃10118，＃10222，＃10800，＃10834，＃10835，＃10836，＃10882</td>
+</tr>
+<tr>
+<td><a href="https://github.com/adrianojiu">@adrianojiu</a></td>
+<td>#8438</td>
+</tr>
+<tr>
+<td><a href="https://github.com/agisota">@agisota</a></td>
+<td>#9837</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AgnesRiber">@AgnesRiber</a></td>
+<td>＃9718，＃9976</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ahmet-cetinkaya">@ahmet-cetinkaya</a></td>
+<td>#8878</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AIB1TAL0S">@AIB1TAL0S</a></td>
+<td>#9284</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AlanSyue">@AlanSyue</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/alex-jordan547">@alex-jordan547</a></td>
+<td>＃9235，＃9245，＃9813</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aliyosufi">@aliyosufi</a></td>
+<td>#11159</td>
+</tr>
+<tr>
+<td><a href="https://github.com/amartinawi">@amartinawi</a></td>
+<td>＃10090，＃10091，＃10092，＃10097，＃10101</td>
+</tr>
+<tr>
+<td><a href="https://github.com/An0nym0us92">@An0nym0us92</a></td>
+<td>#11394</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AndrianBalanescu">@AndrianBalanescu</a></td>
+<td>＃8888，＃8889，＃8890，＃8891，＃8892，＃8893，＃8894，＃8895，＃11081，＃11082</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AnhLead">@AnhLead</a></td>
+<td>#9722</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aniketshukla1">@aniketshukla1</a></td>
+<td>#9148</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Anjielon">@安杰隆</a></td>
+<td>#8776</td>
+</tr>
+<tr>
+<td><a href="https://github.com/anudeepadi">@anudeepadi</a></td>
+<td>#10288</td>
+</tr>
+<tr>
+<td><a href="https://github.com/apoapostolov">@apoapostolov</a></td>
+<td>#8916</td>
+</tr>
+<tr>
+<td><a href="https://github.com/app">@app</a></td>
+<td>#10042, #10043</td>
+</tr>
+<tr>
+<td><a href="https://github.com/arafatkatze">@arafatkatze</a></td>
+<td>#10706</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ARC345">@ARC345</a></td>
+<td>＃9628，＃10050，＃10051</td>
+</tr>
+<tr>
+<td><a href="https://github.com/arminanton">@arminanton</a></td>
+<td>＃10933，＃10952，＃11166</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aron-intframe">@aron-intframe</a></td>
+<td>#10459</td>
+</tr>
+<tr>
+<td><a href="https://github.com/artickc">@artickc</a></td>
+<td>＃8571，＃8578，＃8791，＃8843，＃8870，＃8927，＃8974，＃9097，＃9255，＃9549</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Arul-">@Arul-</a></td>
+<td>#9761</td>
+</tr>
+<tr>
+<td><a href="https://github.com/asorourx">@asorourx</a></td>
+<td>#11036</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AStupidBear">@AStupidBear</a></td>
+<td>＃10180，＃11385</td>
+</tr>
+<tr>
+<td><a href="https://github.com/azzaouiomar19-sketch">@azzaouiomar19-草图</a></td>
+<td>#10394</td>
+</tr>
+<tr>
+<td><a href="https://github.com/b1nhm1nh">@b1nhm1nh</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/backryun">@backryun</a></td>
+<td>#8228、#8451、#8627、#8809、#8818、#9084、#9086、#9090、#9091、#9092、#9093、#9114、#9119、#9120、#9122、#9135、#9136、#9137、#9138、 #9139、#9141、#9561、#9562、#9563、#9564、#9565、#9566、#9742、#9747、#9748、#9751、#9753、#9755、#9791、#9792、#9793、#9795、#9796、 #9797, #9798, #9920, #9972, #9973, #9974, #9975, #9977, #9978, #9979, #9984, #9986, #9987, #9988, #9989, #9990, #9998, #10087, #10088, ＃10134，＃10175，＃10178，＃10195，＃10254，＃10255，＃10256，＃10257，＃10258，＃10324，＃10339，＃10453，＃10464，＃10483，＃10637，＃10964</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Benson-mk">@Benson-mk</a></td>
+<td>#8369</td>
+</tr>
+<tr>
+<td><a href="https://github.com/benzntech">@benzntech</a></td>
+<td>＃9810，＃9812，＃9939，＃10124，＃10126，＃10458</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Bl0ck154">@Bl0ck154</a></td>
+<td>#9231</td>
+</tr>
+<tr>
+<td><a href="https://github.com/blackwell-systems">@blackwell-systems</a></td>
+<td>#10807</td>
+</tr>
+<tr>
+<td><a href="https://github.com/blarovse">@blarovse</a></td>
+<td>#10411</td>
+</tr>
+<tr>
+<td><a href="https://github.com/bortolidiego">@bortolidiego</a></td>
+<td>#10058</td>
+</tr>
+<tr>
+<td><a href="https://github.com/branben">@branben</a></td>
+<td>＃9940，＃10575</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Chewji9875">@Chewji9875</a></td>
+<td>＃9257，＃9420，＃9821，＃9994，＃10116，＃10160，＃10305，＃10376</td>
+</tr>
+<tr>
+<td><a href="https://github.com/chirag127">@chirag127</a></td>
+<td>#6674, #10071</td>
+</tr>
+<tr>
+<td><a href="https://github.com/chloeassistant">@chloeassistant</a></td>
+<td>＃9675，＃9746</td>
+</tr>
+<tr>
+<td><a href="https://github.com/configurowebmax">@configurowebmax</a></td>
+<td>#8877</td>
+</tr>
+<tr>
+<td><a href="https://github.com/corefusiion">@corefusiion</a></td>
+<td>#8285</td>
+</tr>
+<tr>
+<td><a href="https://github.com/costaeder">@costaeder</a></td>
+<td>＃8626，＃8629，＃8630</td>
+</tr>
+<tr>
+<td><a href="https://github.com/cryptiklemur">@cryptiklemur</a></td>
+<td>#10684, #10685</td>
+</tr>
+<tr>
+<td><a href="https://github.com/csoftware-arigpt">@csoftware-arigpt</a></td>
+<td>第3440章</td>
+</tr>
+<tr>
+<td><a href="https://github.com/DaDecky">@DaDecky</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/danscMax">@danscMax</a></td>
+<td>#8634</td>
+</tr>
+<tr>
+<td><a href="https://github.com/DarkEsteves">@DarkEsteves</a></td>
+<td>#10250</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dcox79">@dcox79</a></td>
+<td>#10543</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ddarkr">@ddarkr</a></td>
+<td>＃9035，＃9036，＃10177</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Dingding-leo">@丁丁-leo</a></td>
+<td>＃7987，＃8640，＃8678，＃8704，＃8774，＃8790，＃8808，＃8817</td>
+</tr>
+<tr>
+<td><a href="https://github.com/DinonowDev">@DinonowDev</a></td>
+<td>#8804</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dionjoshualobo">@dionjoshualobo</a></td>
+<td>#9721</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dpozimski">@dpozimski</a></td>
+<td>#10253</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Dragost">@Dragost</a></td>
+<td>#8339</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dsitmilis">@dsitmilis</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/echoriver89">@echoriver89</a></td>
+<td>#10717</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Egorich-print">@Egorich-print</a></td>
+<td>＃9001，＃9020，＃9058，＃10881，＃10887，＃11097</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ekinnee">@ekinnee</a></td>
+<td>#11307</td>
+</tr>
+<tr>
+<td><a href="https://github.com/electrumguy">@electrumguy</a></td>
+<td>＃10774，＃11149</td>
+</tr>
+<tr>
+<td><a href="https://github.com/engmarcosjr">@engmarcosjr</a></td>
+<td>#9993</td>
+</tr>
+<tr>
+<td><a href="https://github.com/epsilonode">@epsilonode</a></td>
+<td>#8871</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ervareza">@ervareza</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/excessivechaos">@excessivechaos</a></td>
+<td>＃10062，＃10138，＃10552，＃10883，＃10884，＃10907，＃11179</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fajarhide">@fajarhide</a></td>
+<td>＃9191，＃9198</td>
+</tr>
+<tr>
+<td><a href="https://github.com/farshidrezaei">@farshidrezaei</a></td>
+<td>#10777</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fenix007">@fenix007</a></td>
+<td>＃9618，＃10016</td>
+</tr>
+<tr>
+<td><a href="https://github.com/freudantunes">@freudantunes</a></td>
+<td>#10623</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Gecky2102">@Gecky2102</a></td>
+<td>#9280</td>
+</tr>
+<tr>
+<td><a href="https://github.com/geek007git">@geek007git</a></td>
+<td>#10441</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ggdayup">@ggdayup</a></td>
+<td>＃10199，＃11113，＃11114，＃11375</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Gi99lin">@Gi99lin</a></td>
+<td>#10342</td>
+</tr>
+<tr>
+<td><a href="https://github.com/giauphan">@giauphan</a></td>
+<td>#10392</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Gioxaa">@Gioxaa</a></td>
+<td>＃9162，＃9171</td>
+</tr>
+<tr>
+<td><a href="https://github.com/HaoNgo232">@HaoNgo232</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Hariprajwal">@Hariprajwal</a></td>
+<td>#9922</td>
+</tr>
+<tr>
+<td><a href="https://github.com/harkaranbrar7">@harkaranbrar7</a></td>
+<td>#10281</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hartmark">@hartmark</a></td>
+<td>#9635、#9704、#9711、#9712、#9727、#9734、#9735、#9738、#9741、#9744、#9745、#9822、#10025、#10034、#10037、#10038、#10041、#10121、 ＃10217，＃10262，＃10263，＃10330，＃10331，＃11259</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Hdiaktoros">@Hdiaktoros</a></td>
+<td>#8930</td>
+</tr>
+<tr>
+<td><a href="https://github.com/HectorBernstorff">@HectorBernstorff</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/HellFiveOsborn">@HellFiveOsborn</a></td>
+<td>#9248</td>
+</tr>
+<tr>
+<td><a href="https://github.com/herjarsa">@herjarsa</a></td>
+<td>＃9714，＃9816，＃9937，＃9946，＃10128，＃10456</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hgaib">@hgaib</a></td>
+<td>#10722</td>
+</tr>
+<tr>
+<td><a href="https://github.com/horacecar">@horacecar</a></td>
+<td>#7679</td>
+</tr>
+<tr>
+<td><a href="https://github.com/HouMinXi">@HouMinXi</a></td>
+<td>#8886、#8904、#8905、#8976、#8984、#9079、#9106、#9207、#9242、#9328、#9340、#9342、#9351、#9365、#9380、#9381、#9392、#9449、#9482、 #9483、#9509、#9510、#9572、#9631、#9634、#9695、#9929、#10457、#10475、#10525、#10529、#10573、#10663、#10846、#11084、#11139、#11140、 ＃11141，＃11386，＃11418</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hppsc1215">@hppsc1215</a></td>
+<td>#8970</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Hsia97">@Hsia97</a></td>
+<td>#10810</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hydraxman">@Hydraxman</a></td>
+<td>＃10137，＃10572</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Iammilansoni">@Iammilansoni</a></td>
+<td>＃9353，＃9397</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ignamiranda">@ignamiranda</a></td>
+<td>#11206</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ikelvingo">@ikelvingo</a></td>
+<td>＃8591，＃8872，＃9053</td>
+</tr>
+<tr>
+<td><a href="https://github.com/infinit-X">@infinit-X</a></td>
+<td>#9095</td>
+</tr>
+<tr>
+<td><a href="https://github.com/InkshadeWoods">@InkshadeWoods</a></td>
+<td>#10733</td>
+</tr>
+<tr>
+<td><a href="https://github.com/isaaclb98">@isaaclb98</a></td>
+<td>#9730</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jackjinke">@jackjinke</a></td>
+<td>＃9556，＃9601，＃10005，＃10045，＃10248，＃10533，＃10540，＃10574，＃11041</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jacobsparts">@jacobsparts</a></td>
+<td>＃11399，＃11400，＃11402</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jax-novita">@jax-novita</a></td>
+<td>#8913</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jeff-alves">@jeff-alves</a></td>
+<td>#10221</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jeyhunfaslanov">@jeyhunfaslanov</a></td>
+<td>#10259</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jhordanjw123">@jhordanjw123</a></td>
+<td>#8736</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jktan0504">@jktan0504</a></td>
+<td>#9025</td>
+</tr>
+<tr>
+<td><a href="https://github.com/joachimBrindeau">@joachimBrindeau</a></td>
+<td>第9200章</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jonlwheat2-gif">@jonlwheat2-gif</a></td>
+<td>＃10610，＃10709，＃11194</td>
+</tr>
+<tr>
+<td><a href="https://github.com/JoshimOfficial">@JoshimOfficial</a></td>
+<td>#9011</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jowimila">@jowimila</a></td>
+<td>#9325</td>
+</tr>
+<tr>
+<td><a href="https://github.com/JxnLexn">@JxnLexn</a></td>
+<td>＃8933，＃8940，＃8944，＃8949，＃10422，＃10608</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Kaedo17">@Kaedo17</a></td>
+<td>#8922</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KaspaPulse">@KaspaPulse</a></td>
+<td>#10362</td>
+</tr>
+<tr>
+<td><a href="https://github.com/khoazero123">@khoazero123</a></td>
+<td>#9272</td>
+</tr>
+<tr>
+<td><a href="https://github.com/killmonger2317-coder">@killmonger2317-编码器</a></td>
+<td>#10445</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KittisakT">@KittisakT</a></td>
+<td>#9423</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Kizuno18">@Kizuno18</a></td>
+<td>#10803</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KooshaPari">@KooshaPari</a></td>
+<td>#7329</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kriptoburak">@kriptoburak</a></td>
+<td>#10854</td>
+</tr>
+<tr>
+<td><a href="https://github.com/krishna3554">@krishna3554</a></td>
+<td>＃10620，＃10855</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lamchun1110">@lamchun1110</a></td>
+<td>＃10372，＃10397</td>
+</tr>
+<tr>
+<td><a href="https://github.com/larin-vas">@larin-vas</a></td>
+<td>#9828</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lazysaltyfish">@lazysaltyfish</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/LeonG606">@LeonG606</a></td>
+<td>#9457</td>
+</tr>
+<tr>
+<td><a href="https://github.com/linhdmn">@linhdmn</a></td>
+<td>＃10980，＃11085，＃11214，＃11274</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Llliao1113">@Llliao1113</a></td>
+<td>#8921</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lucasalx">@lucasalx</a></td>
+<td>#9919</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lucasmellos">@lucasmellos</a></td>
+<td>#8925</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lukiod">@lukiod</a></td>
+<td>#8828</td>
+</tr>
+<tr>
+<td><a href="https://github.com/luoyide">@luoyide</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/maci0">@maci0</a></td>
+<td>#11279</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mad-gooze">@mad-gooze</a></td>
+<td>#9052</td>
+</tr>
+<tr>
+<td><a href="https://github.com/maisdesign">@maisdesign</a></td>
+<td>#8858</td>
+</tr>
+<tr>
+<td><a href="https://github.com/marcelokarval">@marcelokarval</a></td>
+<td>#11397</td>
+</tr>
+<tr>
+<td><a href="https://github.com/marchlhw">@marchlhw</a></td>
+<td>#9050</td>
+</tr>
+<tr>
+<td><a href="https://github.com/marcs7">@marcs7</a></td>
+<td>#11180</td>
+</tr>
+<tr>
+<td><a href="https://github.com/matiasbaglieri">@matiasbaglieri</a></td>
+<td>#9707</td>
+</tr>
+<tr>
+<td><a href="https://github.com/maxmad64bis">@maxmad64bis</a></td>
+<td>#9150、#9246、#9291、#9414、#10278、#10402、#10652、#10662、#10664、#10694、#10769、#10770、#10779、#10876、#10885、#10974、#10978、 ＃11008，＃11009，＃11047，＃11116，＃11129，＃11130，＃11133，＃11151，＃11162，＃11252</td>
+</tr>
+<tr>
+<td><a href="https://github.com/McLuck">@McLuck</a></td>
+<td>#8914</td>
+</tr>
+<tr>
+<td><a href="https://github.com/megamen32">@megamen32</a></td>
+<td>#10184</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MeRezaRezaei">@MeRezaRezaei</a></td>
+<td>＃10174，＃10614，＃10944，＃11042，＃11045</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Michael-Rocco-Goldmann">@迈克尔-罗科-戈德曼</a></td>
+<td>＃9770，＃9773，＃9777，＃9787</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MichaelYcJo">@MichaelYcJo</a></td>
+<td>＃8244，＃10725，＃10726</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Minamaged18">@Minimaged18</a></td>
+<td>#11269</td>
+</tr>
+<tr>
+<td><a href="https://github.com/minhlongs">@minhlongs</a></td>
+<td>#10805</td>
+</tr>
+<tr>
+<td><a href="https://github.com/minhnhat166">@minhnhat166</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MohitRawat017">@MohitRawat017</a></td>
+<td>＃8718，＃8772，＃9605</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Momen4444">@Momen4444</a></td>
+<td>#9612</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MrShitFox">@MrShitFox</a></td>
+<td>#9826</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mtb-ninja">@mtb-ninja</a></td>
+<td>#10114</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MumuTW">@MumuTW</a></td>
+<td>#8839</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mvanhorn">@mvanhorn</a></td>
+<td>#9542</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mymusicmyspace">@mymusicmyspace</a></td>
+<td>#10965</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Mynacol">@Mynacol</a></td>
+<td>#9733</td>
+</tr>
+<tr>
+<td><a href="https://github.com/NahuSaruf">@NahuSauf</a></td>
+<td>#10545</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Neuron-Mr-White">@Neuron-Mr-White</a></td>
+<td>＃10228，＃10230，＃10957，＃11378</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nguyenha935">@nguyenha935</a></td>
+<td>＃9044，＃9215</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nordz0r">@nordz0r</a></td>
+<td>#10170</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nosolosoft">@nosolosoft</a></td>
+<td>#8900</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ntdat812">@ntdat812</a></td>
+<td>＃10843，＃10853，＃10857，＃10858，＃10860，＃10862，＃10868，＃10935，＃11004，＃11374，＃11376，＃11377</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ntdatt812">@ntdatt812</a></td>
+<td>＃10715，＃11076</td>
+</tr>
+<tr>
+<td><a href="https://github.com/octo-patch">@octo-patch</a></td>
+<td>#10650</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ofonseca-pyming">@ofonseca-pyming</a></td>
+<td>#11297</td>
+</tr>
+<tr>
+<td><a href="https://github.com/oyi77">@oyi77</a></td>
+<td>＃8299，＃8752，＃9158，＃9818，＃10910，＃10942</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pacocartones">@pacocartones</a></td>
+<td>＃10216，＃10673，＃11059，＃11193，＃11199，＃11238，＃11241，＃11321，＃11322，＃11332，＃11338</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pandaaaa1990">@pandaaaa1990</a></td>
+<td>#10731</td>
+</tr>
+<tr>
+<td><a href="https://github.com/phatchau036">@phatchau036</a></td>
+<td>#10517</td>
+</tr>
+<tr>
+<td><a href="https://github.com/phuongddx">@phuongddx</a></td>
+<td>#11415</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PixmaNts">@PixmaNts</a></td>
+<td>#9432</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pizzav-xyz">@pizzav-xyz</a></td>
+<td>#9077</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Poid-ZA">@Poid-ZA</a></td>
+<td>#9467</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Prudhvivuda">@Prudhvivuda</a></td>
+<td>＃8807，＃9014，＃9015，＃9016</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pucedoteth">@pucedoteth</a></td>
+<td>#10607</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qianze0628">@qianze0628</a></td>
+<td>#9038</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rafacpti23">@rafapti23</a></td>
+<td>＃11207，＃11213</td>
+</tr>
+<tr>
+<td><a href="https://github.com/raflyazf">@raflyazf</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Rahulsharma0810">@Rahulsharma0810</a></td>
+<td>＃8961，＃10872</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RaviTharuma">@RaviTharuma</a></td>
+<td>＃10055，＃10297，＃10307，＃10344，＃10352，＃10488，＃10565，＃10566，＃10568，＃10584，＃10771，＃10814，＃10818，＃10820，＃10821，＃10822， ＃10827，＃10847，＃10971，＃10979，＃10981，＃11014，＃11015，＃11016，＃11017，＃11020，＃11024，＃11314，＃11318，＃11320</td>
+</tr>
+<tr>
+<td><a href="https://github.com/realize000">@realize000</a></td>
+<td>#10490</td>
+</tr>
+<tr>
+<td><a href="https://github.com/redzrush101">@redzrush101</a></td>
+<td>#10492</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rengaryang">@rengaryang</a></td>
+<td>#11333</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rinseaid">@rinseaid</a></td>
+<td>＃8945，＃9037，＃9932，＃9933，＃9969，＃9982，＃10554</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ritheshcn25">@ritheshcn25</a></td>
+<td>#10026</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rixzkiye">@rixzkiye</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rizxfrog">@rizxfrog</a></td>
+<td>＃10356，＃10546</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RobertsXML">@RobertsXML</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/royanrosyad85">@royanrosyad85</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rqzbeh">@rqzbeh</a></td>
+<td>＃10415，＃10420，＃10424，＃10430，＃10465，＃10470，＃10890，＃10894，＃10898，＃10899，＃10901，＃11039，＃11054，＃11055，＃11056，＃11078， ＃11117，＃11123，＃11125，＃11132，＃11155，＃11161，＃11177，＃11182，＃11189，＃11262</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rushsinging">@rushsinging</a></td>
+<td>#8947</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ryan-brosas">@ryan-brosas</a></td>
+<td>#9693</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ryanngit">@ryanngit</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sadSanta-07">@sadSanta-07</a></td>
+<td>＃9938，＃10209，＃10605，＃10772</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SalyyS1">@SalyyS1</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Sam280903">@Sam280903</a></td>
+<td>＃9274，＃9278，＃9281，＃9283，＃9448</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sanforex24h">@sanforex24h</a></td>
+<td>#11026</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SCys">@SCys</a></td>
+<td>#11107</td>
+</tr>
+<tr>
+<td><a href="https://github.com/seakleangnhak">@seakleangnhak</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/seanford">@seanford</a></td>
+<td>#8523</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SemonCat">@SemonCat</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sha367">@sha367</a></td>
+<td>#10471</td>
+</tr>
+<tr>
+<td><a href="https://github.com/shixi-li">@shixi-li</a></td>
+<td>＃9022，＃9513，＃10001</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Siva010">@Siva010</a></td>
+<td>#10658</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SnCr90">@SnCr90</a></td>
+<td>#10534</td>
+</tr>
+<tr>
+<td><a href="https://github.com/soulhakr">@soulhakr</a></td>
+<td>#8799</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sprintberlin">@sprintberlin</a></td>
+<td>＃11353，＃11355，＃11360</td>
+</tr>
+<tr>
+<td><a href="https://github.com/stanleytejakusuma">@stanleytejakusuma</a></td>
+<td>＃9610，＃10636，＃10660，＃10730，＃11337</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Stazyu">@Stazyu</a></td>
+<td>＃9007，＃9226，＃9438</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SupremeNexas">@SupremeNexas</a></td>
+<td>#9913</td>
+</tr>
+<tr>
+<td><a href="https://github.com/swingtempo">@swingtempo</a></td>
+<td>＃9307，＃10354</td>
+</tr>
+<tr>
+<td><a href="https://github.com/szzhoujiarui">@szzhoujiarui</a></td>
+<td>#9218</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tald26">@tald26</a></td>
+<td>#9959</td>
+</tr>
+<tr>
+<td><a href="https://github.com/taltas">@taltas</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/TechNickAI">@TechNickAI</a></td>
+<td>＃9251，＃10558</td>
+</tr>
+<tr>
+<td><a href="https://github.com/TengSivtean">@TengSivtean</a></td>
+<td>＃10000，＃10002，＃10086</td>
+</tr>
+<tr>
+<td><a href="https://github.com/TheDemonTuan">@TheDemonTuan</a></td>
+<td>#11364</td>
+</tr>
+<tr>
+<td><a href="https://github.com/TheFrenchGhosty">@TheFrenchGhosty</a></td>
+<td>#9326</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tiangao88">@tiangao88</a></td>
+<td>＃10046，＃10363</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tientien17">@tientien17</a></td>
+<td>#10798</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tito13kfm">@tito13kfm</a></td>
+<td>#10227</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tkgo11">@tkgo11</a></td>
+<td>#10370, #10371</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tuandinh0801">@tuandinh0801</a></td>
+<td>＃10804，＃10830，＃11230</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Tushar49">@Tushar49</a></td>
+<td>#10186</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tuxmonteiro">@tuxmonteiro</a></td>
+<td>#9065</td>
+</tr>
+<tr>
+<td><a href="https://github.com/vinogradovnet">@vinogradovnet</a></td>
+<td>#9581</td>
+</tr>
+<tr>
+<td><a href="https://github.com/VXNCXNX">@VXNCXNX</a></td>
+<td>＃9111，＃9783</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wgordon17">@wgordon17</a></td>
+<td>＃8909，＃9233，＃9441，＃9619</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Witroch4">@Witroch4</a></td>
+<td>#8713</td>
+</tr>
+<tr>
+<td><a href="https://github.com/witt3rd">@witt3rd</a></td>
+<td>＃9962，＃9963</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wpec">@wpec</a></td>
+<td>#10839</td>
+</tr>
+<tr>
+<td><a href="https://github.com/XDayonline">@XDayonline</a></td>
+<td>#10053</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xiaoyaner0201">@xiaoyaner0201</a></td>
+<td>＃8757，＃8869，＃8876，＃8883，＃8906，＃8931，＃9021，＃9027，＃9042，＃9316，＃9452，＃10468</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xyzs996">@xyzs996</a></td>
+<td>#11210</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xz-dev">@xz-dev</a></td>
+<td>#8367、#8908、#9199、#9205、#9262、#9290、#9313、#9555、#9569、#9629、#9788、#9983、#10066、#10072、#10079、#10162、#10243、#10247、 ＃10437，＃10712，＃10716，＃10723，＃10806，＃10953</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yansigit">@yansigit</a></td>
+<td>＃9834，＃9909，＃9911，＃9917，＃9921，＃10065</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yidecode">@yidecode</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yourspraveen">@yourspra​​veen</a></td>
+<td>＃11075，＃11088，＃11165，＃11271</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yulinlina">@yulinlina</a></td>
+<td>#10013</td>
+</tr>
+<tr>
+<td><a href="https://github.com/YunyunZhai">@云云斋</a></td>
+<td>＃10946，＃10960</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yutuknown">@yutuknown</a></td>
+<td>#8999</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zabrodschiipavel-sketch">@zabrodschiipavel-草图</a></td>
+<td>#9312</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zannen7">@zannen7</a></td>
+<td>#10077</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Zartharas">@Zartharas</a></td>
+<td>#9161、#9164、#9181、#9182、#9184、#9185、#9186、#9189、#9294、#9825、#9833、#9936、#9965、#9992、#10202、#10218、#10272、#10329、 ＃10518，＃10519，＃10521，＃10799，＃10873，＃10878</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Zenlyte">@Zenlyte</a></td>
+<td>#9005</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zhiru">@zhiru</a></td>
+<td>＃9099，＃9101</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ziuus">@ziuus</a></td>
+<td>＃8912，＃11372</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zmf963">@zmf963</a></td>
+<td>直接提交/报告</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zoser69">@zoser69</a></td>
+<td>#10874</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zuckdorsey">@zuckdorsey</a></td>
+<td>#9723</td>
+</tr>
+<tr>
+<td><a href="https://github.com/diegosouzapw">@diegosouzapw</a></td>
+<td>维护者</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>📖 完整的 changelog 及其完整说明：<a href="https://github.com/diegosouzapw/OmniRoute/blob/main/CHANGELOG.md">CHANGELOG.md</a></p>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/cheaper-inference/OmniRoute">cheaper-inference/OmniRoute</a> · 🏷️ 版本：<code>v3.8.50</code> · 📅 发布：2026-08-26 · <a href="https://github.com/cheaper-inference/OmniRoute/releases/tag/v3.8.50">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.51"> <span class="k">← 下一个</span> <span class="t">v3.8.51</span> </a> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.49"> <span class="k">上一个 →</span> <span class="t">v3.8.49</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/cheaper-inference/OmniRoute/releases/tag/v3.8.50" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/cheaper-inference/OmniRoute" target="_blank" rel="noopener"> <span>cheaper-inference/OmniRoute</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#-按数字发布" class="lv3">📊 按数字发布</a><a href="#-本周期前-25-位贡献者" class="lv3">🏆 本周期前 25 位贡献者</a><a href="#-新功能" class="lv3">✨ 新功能</a><a href="#-错误修复" class="lv3">🐛 错误修复</a><a href="#-维护" class="lv3">📝 维护</a><a href="#-贡献者" class="lv3">🙌 贡献者</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.54"> <span class="v">v3.8.54</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.53"> <span class="v">v3.8.53</span> <span class="d">26-11-06</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.52"> <span class="v">v3.8.52</span> <span class="d">26-10-19</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.51"> <span class="v">v3.8.51</span> <span class="d">26-09-30</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.50" aria-current="true"> <span class="v">v3.8.50</span> <span class="d">26-08-26</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.49"> <span class="v">v3.8.49</span> <span class="d">26-07-30</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.48"> <span class="v">v3.8.48</span> <span class="d">26-07-13</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.47"> <span class="v">v3.8.47</span> <span class="d">26-07-13</span> </a> </li> </ul> <a href="/zh/releases/omniroute" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 39 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

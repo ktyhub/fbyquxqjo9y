@@ -1,0 +1,553 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>airflow 3.2.0 — STAGS NextStack</title><meta name="description" content="🐳 Docker Image: &#34;docker pull apache/airflow:3.2.0&#34;"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/airflow/airflow_3.2.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/airflow/3.2.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/airflow/airflow_3.2.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/airflow/3.2.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="airflow 3.2.0 — STAGS NextStack"><meta property="og:description" content="🐳 Docker Image: &#34;docker pull apache/airflow:3.2.0&#34;"><meta property="og:url" content="https://www.stags.cn/zh/release_note/airflow/airflow_3.2.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/airflow/airflow_3.2.0/#article","headline":"airflow 3.2.0 release notes","datePublished":"2026-04-07","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/apache/airflow"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/airflow/3.2.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/airflow/airflow_3.2.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/airflow/3.2.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/airflow/3.2.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/airflow/3.2.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/airflow/3.2.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/airflow/3.2.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/airflow">airflow</a> </nav> <h1 class="detail-title"> <span class="p">airflow</span> 3.2.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年4月7日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/apache/airflow" target="_blank" rel="noopener"> <span class="k">来源</span>apache/airflow </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/airflow/3.2.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/airflow/airflow_3.2.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="airflow-320">airflow 3.2.0</h1>
+<p>📦PyPI：<a href="https://pypi.org/project/apache-airflow/3.2.0/">https://pypi.org/project/apache-airflow/3.2.0/</a>
+📚 文档：<a href="https://airflow.apache.org/docs/apache-airflow/3.2.0/">https://airflow.apache.org/docs/apache-airflow/3.2.0/</a>
+🛠 Release Note：<a href="https://airflow.apache.org/docs/apache-airflow/3.2.0/release_notes.html">https://airflow.apache.org/docs/apache-airflow/3.2.0/release_notes.html</a>
+🐳 Docker 图片：“docker 拉 apache/airflow:3.2.0”
+🚏 约束：<a href="https://github.com/apache/airflow/tree/constraints-3.2.0">https://github.com/apache/airflow/tree/constraints-3.2.0</a></p>
+<h2 id="重大变化">重大变化</h2>
+<h3 id="资产分割">资产分割</h3>
+<p>Airflow 3.2.0 的主要功能是资产分区——数据感知的重大演变
+调度。您现在可以安排下游，而不是根据整个资产触发 Dags
+基于特定数据分区的处理。仅相关数据切片触发下游
+工作，使管道编排更加高效和精确。
+这在使用分区数据湖时很重要 - 日期分区的 S3 路径、Hive 表
+分区、BigQuery 表分区或任何其他分区数据存储。以前，任何更新
+无论哪个分区发生变化，资产都会触发所有下游 Dags。现在只剩下权利了
+工作会在正确的时间触发。
+详细使用说明请参见:doc:<code>/authoring-and-scheduling/assets</code>。</p>
+<h3 id="多团队部署">多团队部署</h3>
+<p>Airflow 3.2 引入了多团队支持，允许组织在单个 Airflow 部署中运行多个独立的团队。
+每个团队都可以拥有自己的 Dags、连接、变量、池和执行器，从而实现真正的资源和权限隔离，而无需每个团队使用单独的 Airflow 实例。
+这对于通过共享基础设施为多个数据工程或数据科学团队提供服务，同时在团队的资源和访问之间保持严格界限的平台团队来说尤其有价值。
+详细使用说明请参见:doc:<code>/core-concepts/multi-team</code>。
+..警告::
+多团队部署在 3.2.0 中处于实验阶段，并且可能会在未来版本中发生变化
+用户反馈。</p>
+<h3 id="对截止日期警报的同步回调支持">对截止日期警报的同步回调支持</h3>
+<p>除了现有的之外，截止日期警报现在还支持通过“<code>SyncCallback</code>”进行同步回调
+异步“<code>AsyncCallback</code>”。同步回调由执行器执行（而不是
+触发器），并且可以选择通过“<code>executor</code>”参数定位特定的执行器。
+Dag 还可以通过将列表传递给“<code>deadline</code>”参数来定义多个截止日期警报，
+每个警报都可以使用任一回调类型。
+..警告::
+截止日期警报在 3.2.0 中处于实验阶段，并且可能在未来版本中发生变化
+用户反馈。同步截止日期回调（<code>SyncCallback</code>）目前不支持
+支持存储在 Airflow 元数据数据库中的连接。
+详细使用说明请参见：doc:<code>/howto/deadline-alerts</code>。</p>
+<h3 id="ui-增强和性能">UI 增强和性能</h3>
+<ul>
+<li><strong>网格视图虚拟化</strong>：
+网格视图现在使用虚拟化——仅将可见行渲染到 DOM。这极大地提高了查看具有大量任务运行的 Dags 时的性能，减少了复杂 Dags 的渲染时间和内存使用量。 (#60241)</li>
+<li><strong>用户界面中的 XCom 管理</strong>：
+您现在可以直接从 Airflow UI 添加、编辑和删除 XCom 值。这使得在开发和日常操作过程中调试和管理 XCom 状态变得更加容易，而无需 CLI 命令。 (#58921)</li>
+<li><strong>HITL 详细历史记录</strong>：
+人在环审批界面现在包括完整的历史记录视图，让操作员和审阅者可以查看任何任务的批准和拒绝的完整审计跟踪。 （＃56760，＃55952）</li>
+<li><strong>甘特图改进</strong>：
+<ul>
+<li>显示所有任务尝试：甘特图现在显示每次尝试，而不仅仅是最新的尝试</li>
+</ul>
+</li>
+<li>甘特图中的任务显示名称：显示 task_display_name 以提高可读性 (#61438)
+<ul>
+<li>甘特图中的 ISO 日期：跨浏览器一致的日期格式 (#61250)</li>
+<li>修复了空日期时间崩溃：甘特图不再在具有空日期时间字段的任务上崩溃</li>
+</ul>
+</li>
+</ul>
+<h3 id="调度程序-cli-的新--only-idle标志">调度程序 CLI 的新“<code>--only-idle</code>”标志</h3>
+<p>“<code>airflow scheduler`` command has a new ``--only-idle</code>”标志仅在
+调度程序空闲。这有助于用户运行调度程序一次并处理所有触发的 Dags 和
+排队的任务。它需要并补充“<code>--num-runs</code>”标志，以便可以设置一个小值
+而不是猜测调度程序需要多少次迭代。</p>
+<h3 id="将每次运行的-ti-摘要请求替换为单个-ndjson-流">将每次运行的 TI 摘要请求替换为单个 NDJSON 流</h3>
+<p>网格、图表、甘特图和任务详细信息视图现在获取任务实例
+通过单个流式 HTTP 请求进行摘要
+(<code>GET /ui/grid/ti_summaries/{dag_id}?run_ids=...</code>) 而不是一个请求
+每次运行。  每次运行任务完成后，服务器会发出一条 JSON 行
+实例已准备就绪，因此列会逐渐出现，而不是一次性全部出现。
+<strong>改变了什么：</strong></p>
+<ul>
+<li><code>GET /ui/grid/ti_summaries/{dag_id}?run_ids=...</code> 现在是唯一的端点
+对于 TI 摘要，返回一个“<code>application/x-ndjson</code>”流，其中每个
+line 是一次运行的序列化“<code>GridTISummaries</code>”对象。</li>
+<li>旧的单次运行端点“<code>GET /ui/grid/ti_summaries/{dag_id}/{run_id}</code>”
+已被删除。</li>
+<li>序列化的 Dag 结构加载一次并在所有运行中共享
+共享相同的“<code>dag_version_id</code>”，避免多余的反序列化。</li>
+<li>所有 UI 视图（网格、图表、甘特图、任务实例、映射任务实例、组
+任务实例）使用流端点，传递一个或多个“<code>run_ids</code>”。</li>
+</ul>
+<h3 id="所有-api-服务器输出的结构化-json-日志记录">所有 API 服务器输出的结构化 JSON 日志记录</h3>
+<p>新的“<code>json_logs`` option under the ``[logging]</code>”部分使Airflow
+将其所有输出生成为换行符分隔的 JSON （结构化日志）而不是
+人类可读的格式化日志。这涵盖了 API 服务器（gunicorn/uvicorn），
+包括访问日志、警告和未处理的异常。
+并非所有组件都支持这一点 - 特别是“<code>airflow celery worker</code>”，但是
+启用“<code>json_logs</code>”时任何非 JSON 输出都将被视为错误。 (#63365)</p>
+<h3 id="删除旧版-otel-trace-元类和共享跟踪器包装器">删除旧版 OTel Trace 元类和共享跟踪器包装器</h3>
+<p>位于<code>airflow.traces</code>中的接口和函数是
+内部代码提供了管理跨度的标准方法
+内部气流代码。它们并不是面向用户的代码
+并且从未被记录下来。不再需要它们，所以我们
+在 3.2 中删除它们。 (#63452)</p>
+<h3 id="将任务级异常导入移动到任务-sdk-中">将任务级异常导入移动到任务 SDK 中</h3>
+<p>Airflow 现在从以下来源获取面向任务的异常（“<code>AirflowSkipException``, ``TaskDeferred</code>”等）
+<code>airflow.sdk.exceptions</code>. <code>airflow.exceptions</code> 仍然暴露相同的异常，但它们是
+发出“<code>DeprecatedImportWarning</code>”的代理，以便 Dag 作者可以在删除垫片之前进行迁移。
+<strong>改变了什么：</strong></p>
+<ul>
+<li>运行时代码现在一致引发任务级异常的 SDK 版本。</li>
+<li>任务 SDK 重新定义了这些类，因此工作人员在运行时不再依赖“<code>airflow-core</code>”。</li>
+<li><code>airflow.providers.common.compat.sdk</code> 集中提供程序的兼容性导入。
+<strong>行为改变：</strong></li>
+<li>验证用户输入的传感器和其他助手现在会引发“<code>ValueError</code>”（而不是
+<code>AirflowException</code>) when <code>poke_interval</code>/ <code>timeout</code> 参数无效。</li>
+<li>从“<code>airflow.exceptions</code>”导入已弃用的异常名称会记录一条警告，引导用户
+SDK 导入路径。
+<strong>“<code>airflow.sdk.exceptions</code>”现在提供的例外：</strong></li>
+<li><code>AirflowException</code> and <code>AirflowNotFoundException</code></li>
+<li><code>AirflowRescheduleException</code> and <code>AirflowSensorTimeout</code></li>
+<li><code>AirflowSkipException</code>, <code>AirflowFailException</code>, <code>AirflowTaskTimeout</code>, <code>AirflowTaskTerminated</code></li>
+<li><code>TaskDeferred</code>, <code>TaskDeferralTimeout</code>, <code>TaskDeferralError</code></li>
+<li><code>DagRunTriggerException</code> and <code>DownstreamTasksSkipped</code></li>
+<li><code>AirflowDagCycleException</code> and <code>AirflowInactiveAssetInInletOrOutletException</code></li>
+<li><code>ParamValidationError</code>, <code>DuplicateTaskIdFound</code>, <code>TaskAlreadyInTaskGroup</code>, <code>TaskNotFound</code>, <code>XComNotFound</code></li>
+<li><code>AirflowOptionalProviderFeatureException</code>
+<strong>向后兼容性：</strong></li>
+<li>不过，仍然从“<code>airflow.exceptions</code>”导入的现有 Dags/操作符继续工作
+他们记录警告。</li>
+<li>提供商可以依靠“<code>airflow.providers.common.compat.sdk</code>”来保持一个有效的导入路径
+跨受支持的 Airflow 版本。
+<strong>迁移：</strong></li>
+<li>更新自定义运算符、传感器和扩展以从中导入异常类
+<code>airflow.sdk.exceptions</code>（或来自提供商兼容垫片）。</li>
+<li>调整自定义验证代码以期望“<code>ValueError</code>”对于无效的传感器参数（如果它）
+之前捕获过“<code>AirflowException</code>”。</li>
+</ul>
+<h3 id="支持-retry_exponential_backoff-参数的数字乘数值">支持 retry_exponential_backoff 参数的数字乘数值</h3>
+<p><code>retry_exponential_backoff</code> parameter now accepts numeric values to specify custom exponential backoff multipliers for task retries. Previously, this parameter only accepted boolean values (<code>True</code> or <code>False</code>), with <code>True</code> using a hardcoded multiplier of <code>2.0</code>。
+<strong>新行为：</strong></p>
+<ul>
+<li>数值（例如“<code>2.0``, ``3.5</code>”）直接指定指数退避乘数</li>
+<li><code>retry_exponential_backoff=2.0</code> 将每次重试尝试之间的延迟加倍</li>
+<li><code>retry_exponential_backoff=0</code> or <code>False</code> disables exponential backoff (uses fixed <code>retry_delay</code>)
+<strong>向后兼容性：</strong>
+使用布尔值的现有 Dags 继续工作：</li>
+<li><code>retry_exponential_backoff=True</code> → converted to <code>2.0</code>（保持原始行为）</li>
+<li><code>retry_exponential_backoff=False</code> → converted to <code>0.0</code>（无指数退避）
+<strong>API 变化：</strong>
+“<code>retry_exponential_backoff`` has changed from ``type: boolean`` to ``type: number</code>”的 REST API 架构。 API clients 必须使用数值（布尔值将被拒绝）。
+<strong>迁移：</strong>
+虽然 Python Dags 中的布尔值会自动转换以实现向后兼容性，但为了清晰起见，我们建议更新为显式数值：</li>
+<li>更改“<code>retry_exponential_backoff=True`` → ``retry_exponential_backoff=2.0</code>”</li>
+<li>更改“<code>retry_exponential_backoff=False`` → ``retry_exponential_backoff=0</code>”</li>
+</ul>
+<h3 id="将序列化反序列化-serde-逻辑移至任务-sdk-中">将序列化/反序列化 (serde) 逻辑移至任务 SDK 中</h3>
+<p>Airflow 现在从“<code>airflow.sdk.serde</code>”获取 serde 逻辑，而不是
+<code>airflow.serialization.serde</code>. Serializer modules have moved from <code>airflow.serialization.serializers.*</code>
+至“<code>airflow.sdk.serde.serializers.*``. The old import paths still work but emit ``DeprecatedImportWarning</code>”
+来引导迁移。 Airflow 4 中将删除向后兼容层。
+<strong>改变了什么：</strong></p>
+<ul>
+<li>序列化/反序列化代码从“<code>airflow-core`` to ``task-sdk</code>”包中移出</li>
+<li>串行器模块从“<code>airflow.serialization.serializers.*`` to ``airflow.sdk.serde.serializers.*</code>”移出</li>
+<li>新的序列化器应添加到“<code>airflow.sdk.serde.serializers.*</code>”命名空间
+<strong>代码接口变化：</strong></li>
+<li>从“<code>airflow.sdk.serde.serializers.*`` instead of ``airflow.serialization.serializers.*</code>”导入序列化器</li>
+<li>从“<code>airflow.sdk.serde`` instead of ``airflow.serialization.serde</code>”导入序列化函数
+<strong>向后兼容性：</strong></li>
+<li>从“<code>airflow.serialization.serializers.*</code>”导入的现有序列化程序继续使用弃用警告</li>
+<li>所有现有序列化器（内置、日期时间、pandas、numpy 等）均可在新位置使用
+<strong>迁移：</strong></li>
+<li><strong>对于现有的自定义序列化程序</strong>：更新导入以使用“<code>airflow.sdk.serde.serializers.*</code>”</li>
+<li><strong>对于新的序列化器</strong>：将它们添加到<code>airflow.sdk.serde.serializers.*</code> namespace (e.g., create <code>task-sdk/src/airflow/sdk/serde/serializers/your_serializer.py</code>）</li>
+</ul>
+<h3 id="从-priorityweightstrategy-中删除的方法">从 PriorityWeightStrategy 中删除的方法</h3>
+<p>在（实验）类“<code>PriorityWeightStrategy``, functions ``serialize()</code>”上
+和“<code>deserialize()</code>”从未在任何地方使用过，并且已被删除。他们
+不应在用户代码中依赖。 (#59780)</p>
+<h3 id="从-taskinstance-中删除的方法">从 TaskInstance 中删除的方法</h3>
+<p>在类“<code>TaskInstance``, functions ``run()``, ``render_templates()</code>”上，
+<code>get_template_context()</code>，以及与其相关的私人成员已被
+已删除。自 3.0 起，该类已被视为内部类，并且不应被视为内部类
+在用户代码中依赖。 （＃59780，＃59835）</p>
+<h3 id="修改dagbag返回的信息">修改<code>DagBag</code>返回的信息</h3>
+<p><strong>新行为：</strong></p>
+<ul>
+<li><code>DagBag</code> now uses <code>Path.relative_to</code> 实现一致的跨平台行为。</li>
+<li><code>FileLoadStat</code> now has two additional nullable fields: <code>bundle_path</code> and <code>bundle_name</code>。
+<strong>向后兼容性：</strong>
+<code>FileLoadStat</code> will no longer produce paths beginning with <code>/</code> 的意思是“相对于 dags 文件夹”。
+对于依赖此行为执行基于字符串的路径操作的任何自定义代码来说，这是一个重大更改。
+建议用户更新此类代码以使用“<code>pathlib.Path</code>”。 (#59785)</li>
+</ul>
+<h3 id="删除--conn-id-option-from-airflow-connections-list">删除<code>--conn-id</code> option from <code>airflow connections list</code></h3>
+<p>多余的“<code>--conn-id`` option has been removed from the ``airflow connections list</code>”CLI 命令。
+请改用“<code>airflow connections get</code>”。 (#59855)</p>
+<h3 id="添加操作员级别-render_template_as_native_obj-覆盖">添加操作员级别 <code>render_template_as_native_obj</code> 覆盖</h3>
+<p>操作员现在可以覆盖 Dag 级别“<code>render_template_as_native_obj</code>”设置，
+启用对模板是否呈现为本机 Python 的细粒度控制
+基于每个任务的类型或字符串。设置“<code>render_template_as_native_obj=True</code>”或
+<code>False</code> on any operator to override the Dag setting, or leave as <code>None</code>（默认）
+从达格继承。</p>
+<h3 id="添加对-api-服务器的-gunicorn-支持具有零停机工作线程-recycling">添加对 API 服务器的 Gunicorn 支持，具有零停机工作线程 recycling</h3>
+<p>API 服务器现在支持 Gunicorn 作为滚动工作重新启动的替代服务器
+以防止长时间运行的进程中的内存积累。
+<strong>主要优点：</strong></p>
+<ul>
+<li><strong>滚动工作人员重新启动</strong>：新工作人员在老工作人员之前产生并通过健康检查
+被杀死，确保工人 recycling 期间零停机。</li>
+<li><strong>内存共享</strong>：Gunicorn 使用预加载 + fork，因此工作人员通过以下方式共享内存
+写时复制。与 uvicorn 相比，这显着减少了总内存使用量
+多进程模式，每个工作人员独立加载所有内容。</li>
+<li><strong>正确的 FIFO 信号处理</strong>：Gunicorn 的 SIGTTOU 杀死最旧的工作进程 (FIFO)，
+不是最新的 (LIFO)，这对于滚动重新启动是正确的。
+<strong>配置：</strong>
+.. 代码块:: ini
+[api]
+<h1 id="使用gunicorn代替uvicorn">使用gunicorn代替uvicorn</h1>
+服务器类型=gunicorn
+<h1 id="启用滚动工作线程每-12-小时重新启动一次">启用滚动工作线程每 12 小时重新启动一次</h1>
+工人刷新间隔= 43200
+<h1 id="一次重启一个worker">一次重启一个worker</h1>
+工人刷新批量大小 = 1
+或者通过环境变量：
+.. 代码块:: bash
+导出 AIRFLOW__API__SERVER_TYPE=gunicorn
+导出 AIRFLOW__API__WORKER_REFRESH_INTERVAL=43200
+<strong>要求：</strong>
+安装gunicorn额外：<code>pip install 'apache-airflow-core[gunicorn]'</code>
+<strong>关于 uvicorn 的注意事项（默认）：</strong>
+默认的 uvicorn 模式不支持滚动工作重启，因为：
+1.当workers=1时，没有master进程可以发送信号</li>
+</ul>
+<ol start="2">
+<li>uvicorn 的 SIGTTOU 杀死了最新的工作进程（LIFO），破坏了滚动重启的目的</li>
+<li>每个uvicorn工人独立加载所有内容，不共享内存
+如果您需要worker recycling 或内存高效的多worker 部署，请使用gunicorn。 (#60921)</li>
+</ol>
+<h3 id="改进了具有许多映射任务的-dags-的渲染任务实例字段清理性能大约快-42-倍">改进了具有许多映射任务的 Dags 的渲染任务实例字段清理性能（大约快 42 倍）</h3>
+<p>配置“<code>max_num_rendered_ti_fields_per_task`` is renamed to ``num_dag_runs_to_retain_rendered_fields</code>”
+（旧名称仍然适用于弃用警告）。
+保留现在基于 N 个最近的 dag 运行，而不是 N 个最近的任务执行，
+这可能会导致为条件/稀疏任务保留的记录较少。 (#60951)</p>
+<h3 id="authmanager-回填权限现在由requires_access_dag-on-the-dagaccessentityrun处理">AuthManager 回填权限现在由“<code>requires_access_dag`` on the ``DagAccessEntity.Run</code>”处理</h3>
+<p><code>is_authorized_backfill</code> of the <code>BaseAuthManager</code> 接口已被删除。 Core 将不再调用此方法及其
+提供者对应的实现将被标记为已弃用。
+现在使用现有的“<code>DagAccessEntity.Run</code>”权限检查回填操作的权限
+<code>requires_access_dag</code> 装饰器。换句话说，如果用户有运行 Dag 的权限，他们就可以对其执行回填操作。
+请更新您的安全策略，以确保需要执行回填操作的用户拥有适当的“<code>DagAccessEntity.Run</code>”权限。 （用户
+拥有 Backfill 权限但没有 DagRun 权限的用户将无法在没有任何更新的情况下执行回填操作）</p>
+<h3 id="添加了-python-314-支持">添加了 Python 3.14 支持</h3>
+<p>Airflow 3.2.0 增加了对 Python 3.14 的支持。 (#63787)</p>
+<h3 id="通过消除任务启动时的serializeddag负载来减少-api-服务器内存">通过消除任务启动时的“<code>SerializedDAG</code>”负载来减少 API 服务器内存</h3>
+<p>API 服务器在启动任务时不再加载完整的“<code>SerializedDAG</code>”，
+显着减少内存使用。 (#60803)</p>
+<h3 id="从容器镜像中删除-mysql-client">从容器镜像中删除 MySQL client</h3>
+<p>MySQL client 支持已从官方 Airflow 容器映像中删除。 MySQL用户
+基于官方映像构建必须自行安装 client。 (#57146)</p>
+<h3 id="在-pythonoperator-中添加对异步可调用对象的支持">在 PythonOperator 中添加对异步可调用对象的支持</h3>
+<p><code>PythonOperator</code> parameter <code>python_callable</code> 现在也支持 Airflow 3.2 中的异步可调用，
+允许用户运行 async def 函数，而无需手动管理事件循环。 (#60268)</p>
+<h3 id="使-continuous-时间表的-start_date-为可选">使 <code>@continuous</code> 时间表的 start_date 为可选</h3>
+<p>“<code>schedule="@continuous"`` parameter now works without requiring a ``start_date</code>”以及具有此计划的任何 Dags 将在未暂停时立即开始运行。 (#61405)</p>
+<h2 id="新功能">新功能</h2>
+<ul>
+<li>通过“<code>PYTHON_LTO</code>”构建参数使 Python LTO 可配置来添加 FIPS 支持 (#58337)</li>
+<li>通过新的“<code>--queues`` CLI option for the ``trigger</code>”命令添加对基于任务队列的触发器分配到特定触发器主机的支持 (#59239)</li>
+<li>添加 <code>--show-values</code> and <code>--hide-sensitive</code> flags to CLI <code>connections list</code> and <code>variables list</code> 以默认隐藏敏感值 (#62344)</li>
+<li>添加对通过“<code>AIRFLOW__SECRETS__BACKEND_KWARG__&#x3C;KEY></code>”环境变量设置个人秘密后端 kwargs 的支持 (#63312)</li>
+<li>将 <code>only_new</code> 参数添加到 Dag clear 以仅清除新添加的任务实例 (#59764)</li>
+<li>添加 <code>log_timestamp_format</code> 配置选项用于自定义组件日志时间戳 (#63321)</li>
+<li>添加 <code>--action-on-existing-key</code> option to <code>pools import</code> and <code>connections import</code> CLI 命令 (#62702)</li>
+<li>添加回 <code>--use-migration-files</code> flag for <code>airflow db init</code> (#62234)</li>
+<li>添加 <code>AllowedKeyMapper</code> 用于资产分区中的分区键验证 (#61931)</li>
+<li>添加 <code>ChainMapper</code> 用于链接多个分区映射器 (#64094)</li>
+<li>在 Docker 构建中添加 Python 源包的加密签名验证 (#63345)</li>
+<li>添加“<code>AgenticOperator</code>”的人机交互 (HITL) 审核系统 (#63081)</li>
+<li>添加 <code>@task.stub</code> 装饰器以允许在 Dags 中定义其他语言的任务 (#56055)</li>
+<li>添加对在 SDK 中使用 URI 创建连接的支持 (#62211)</li>
+<li>添加对“<code>TriggerDagRunOperator</code>”的注释支持（#60810）</li>
+<li>将“<code>allowed_run_types</code>”添加到白名单特定 Dag 运行类型 (#61833)</li>
+<li>在 API 搜索参数中添加 OR 运算符支持 (#60008)</li>
+<li>按时间表类型添加 API 对 Dags 的过滤 (#58852)</li>
+<li>在批量任务实例端点中添加对“<code>dag_id`` and ``dag_run_id</code>”的通配符支持 (#57441)</li>
+<li>添加 <code>operator_name_pattern</code>, <code>pool_pattern</code>, <code>queue_pattern</code> 作为任务实例搜索过滤器 (#57571)</li>
+<li>添加对批量补丁 API 的“<code>update_mask</code>”支持（#54597）</li>
+<li>添加资产事件发射侦听器事件 (#61718)</li>
+<li>添加 <code>source</code> parameter to <code>Param</code> (#58615)</li>
+<li>按时间范围、顺序和限制添加入口事件的延迟过滤 (#54891)</li>
+<li>添加获取之前的 <code>TaskInstance</code> on <code>RuntimeTaskInstance</code> 的功能 (#59712)</li>
+<li>将所需的上下文消息添加到所有 DagRun 状态更改通知 (#56272)</li>
+<li>为触发器 HA 设置添加 <code>max_trigger_to_select_per_loop</code> 配置 (#58803)</li>
+<li>添加 <code>uvicorn_logging_level</code> 配置选项来控制 API 服务器访问日志 (#56062)</li>
+<li>向执行 API 添加关联 ID 支持以进行请求跟踪 (#57458)</li>
+<li>添加 <code>executor.running_dags</code> 仪表指标以公开运行 Dags 的计数 (#52815)</li>
+<li>添加子模块支持 <code>GitDagBundle</code> (#59911)</li>
+<li>为 Dag 捆绑包的“<code>GitHook</code>”添加 HTTP URL 身份验证支持 (#58194)</li>
+<li>将流方法添加到 <code>RemoteIO</code> for <code>ObjectStorage</code> (#54813)</li>
+<li>通过 <code>--dev</code> 标志添加 CLI 热重载支持 (#57741)</li>
+<li>添加 <code>auth list-envs</code> 命令来列出 CLI 环境和身份验证状态 (#61426)</li>
+<li>将 Dag 包添加到 <code>airflow info</code> 命令输出中 (#59124)</li>
+<li>向 <code>db_clean</code> 添加新参数以显式包含或排除 Dags (#56663)</li>
+<li>UI：将作业页面添加到 Airflow UI (#61512)</li>
+<li>UI：在网格视图中添加 Dag 和捆绑包版本的版本更改指示器 (#53216)</li>
+<li>UI：为折叠任务组和映射任务添加分段状态栏（#61854）</li>
+<li>UI：为 Dag 执行添加日期范围过滤器 (#60772)</li>
+<li>UI：添加“选择最近的配置”以触发表单，恢复 Airflow 2 功能 (#56406)</li>
+<li>UI：向日志添加复制按钮（#61185）</li>
+<li>UI：将文件名显示添加到 Dag Code 选项卡，以便于识别文件 (#60759)</li>
+<li>UI：将 Dag 运行状态过滤器添加到网格视图选项 (#55898)</li>
+<li>UI：将任务上游/下游过滤器添加到图形和网格视图（#57237）</li>
+<li>UI：将过滤器添加到“任务实例”选项卡 (#56920)</li>
+<li>UI：在标题中添加活动 Dag 运行计数的显示并自动刷新 (#58332)</li>
+<li>UI：将 Dag ID 模式搜索添加到 Dag 运行和任务实例页面 (#55691)</li>
+<li>UI：在更多选项菜单中为 Dag 运行添加删除按钮 (#55696)</li>
+<li>用户界面：为“<code>TaskStreamFilter</code>”添加深度过滤器（#60549）</li>
+<li>UI：添加主题配置支持（#58411）</li>
+<li>UI：在自定义主题中添加对“<code>globalCss</code>”的支持（#61161）</li>
+<li>UI：在设置按钮中添加登录用户的显示（#58981）</li>
+<li>UI：添加工具提示来解释任务过滤器遍历（#61401）</li>
+<li>UI：为 API 和 CLI 访问添加自助 JWT 令牌生成 (#63195)</li>
+<li>UI：为边缘工作人员页面添加批量操作（#64033）</li>
+<li>UI：为边缘工作人员添加实时并发控制（#63142）</li>
+<li>UI：在 Dag 运行页面上添加 <code>run_after</code> 日期过滤器 (#62797)</li>
+<li>UI：在 Dag 运行页面上添加捆绑版本过滤器 (#62810)</li>
+<li>UI：添加对主题定制的图标支持（#62172）</li>
+<li>UI：为所有 JSON 编辑字段添加 Monaco 编辑器 (#62708)</li>
+<li>UI：将运行类型图例工具提示添加到网格视图（#62946）</li>
+<li>UI：除了品牌之外，还允许在“<code>AIRFLOW__API__THEME</code>”中自定义灰色、黑色和白色标记（#64232）</li>
+</ul>
+<h2 id="错误修复">错误修复</h2>
+<ul>
+<li>修复公共配置 APIs 中未屏蔽的敏感配置值；处理已弃用的 <code>non-sensitive-only</code> value as <code>True</code> (#59880)</li>
+<li>通过在发出指标时自动规范化它们来修复包含无效字符的池名称的“<code>InvalidStatsNameException</code>”(#59938)</li>
+<li>通过从工作负载对象表示中排除令牌字段，修复任务日志中出现的 JWT 令牌 (#62964)</li>
+<li>修复配置 <code>AIRFLOW__API__BASE_URL</code> 基本名称时的安全 iframe 导航 (#63141)</li>
+<li>修复动态任务组的网格视图 URL，通过不将 <code>/mapped</code> 附加到组 URL 来生成 404 (#63205)</li>
+<li>修复“<code>ti_skip_downstream</code>”在 HA 部署中将 RUNNING 任务覆盖为 SKIPPED (#63266)</li>
+<li>修复运行多个调度程序时重复任务执行的问题 (#60330)</li>
+<li>修复 Dag 包中的回调饥饿问题 (#63795)</li>
+<li>修复 <code>@task</code> decorator failing for tasks that return falsy values like <code>0</code> 或空字符串 (#63788)</li>
+<li>修复“<code>LatestOnlyOperator</code>”在动态映射任务的直接上游时不工作的问题 (#62287)</li>
+<li>使用动态映射修复映射任务组中不一致的“<code>XCom</code>”返回类型 (#59104)</li>
+<li>修复任务组查找使用错误的 Dag 版本进行历史运行，导致网格视图中出现 404 错误 (#63360)</li>
+<li>修复更新其他包中的 Dags 时的导入错误 (#63615)</li>
+<li>修复 <code>DagRun</code> span emission crash when <code>context_carrier</code> is <code>None</code> (#64087)</li>
+<li>修复“<code>next_dagrun`` fields are ``None</code>”时分区时间表的错误日志 (#63962)</li>
+<li>修复解码 <code>relativedelta</code> 时的时间表序列化错误 (#61671)</li>
+<li>修复 <code>task_instance_mutation_hook</code> receiving <code>run_id=None</code> during <code>TaskInstance</code> 创建 (#63049)</li>
+<li>修复“<code>None`` ``dag_version</code>”访问上的调度程序崩溃 (#62225)</li>
+<li>修复“<code>MetastoreBackend.expunge_all()</code>”损坏共享会话状态的问题 (#63080)</li>
+<li>修复触发器记录器文件描述符在触发器被删除时过早关闭的问题 (#62103)</li>
+<li>修复仅目录模式的“<code>airflowignore</code>”否定模式处理 (#62860)</li>
+<li>修复 TaskFlow 装饰器中“<code>TYPE_CHECKING</code>”仅前向引用的错误警告 (#63053)</li>
+<li>修复不可序列化对象上的“<code>structlog</code>”JSON 序列化崩溃 (#62656)</li>
+<li>修复截止日期警报序列化的向后兼容性 (#63701)</li>
+<li>修复 <code>queued_tasks</code> type mismatch in hybrid executors (<code>CeleryKubernetesExecutor</code>, <code>LocalKubernetesExecutor</code>) (#63744)</li>
+<li>修复 Celery 任务在工作进程启动时未注册的问题 (#63110)</li>
+<li>修复资产分区检测错误地将 Dags 识别为已分区的问题 (#62864)</li>
+<li>修复任务 SDK 中 Jinja 模板程序错误解析的 <code>pathlib.Path</code> 对象 (#63306)</li>
+<li>修复 Pod 完成后 Kubernetes 执行器中的状态不匹配问题 (#63061)</li>
+<li>修复 API Pydantic 模型的“<code>make_partial_model</code>”（#63716）</li>
+<li>修复连接表单中的 WTForms 验证器兼容性 (#63823)</li>
+<li>修复 <code>_execution_api_server_url()</code> 忽略配置值并回退到边缘配置 (#63192)</li>
+<li>修复 <code>DetachedInstanceError</code> for <code>airflow tasks render</code> 命令 (#63916)</li>
+<li>修复调度程序隔离每个 dag 运行的故障，以防止单个 DagRun 导致所有调度崩溃 (#62893)</li>
+<li>修复 <code>@task</code> 定义中导致 Dag 解析错误的任务参数顺序 (#62174)</li>
+<li>修复 <code>limit</code> parameter not sent in <code>execute_list</code> 服务器请求 (#63048)</li>
+<li>修复 Python 3.14 上“<code>airflow.configuration`` causing ``ImportError</code>”的循环导入 (#63787)</li>
+<li>修复 CLI 命令中的“<code>map_index</code>”范围验证 (#62626)</li>
+<li>通过恢复正确的默认值并删除未发布的纠正迁移来修复可为空的 ORM 字段 (#63899)</li>
+<li>修复并发请求的身份验证管理器初始化中的竞争条件 (#62431)</li>
+<li>修复多个工作线程启动时的“<code>FabAuthManager</code>”竞争条件 (#62737)</li>
+<li>修复工作人员同时创建权限、角色和资源时的“<code>FabAuthManager</code>”竞争条件 (#63842)</li>
+<li>修复 <code>JWTValidator</code> 不使用 JWKS 处理 GUESS 算法 (#63115)</li>
+<li>修复令牌身份验证中“<code>FabAuthManager</code>”第一个空闲 MySQL 断开连接的问题 (#62919)</li>
+<li>修复 Human-In-The-Loop 路由中的“<code>JWTBearerTIPathDep</code>”导入错误 (#63277)</li>
+<li>修复来自角色端点的 403，尽管 FAB 提供程序具有管理员权限 (#64097)</li>
+<li>修复任务日志过滤器在全屏模式下不起作用的问题 (#62747)</li>
+<li>修复从“<code>log_pos</code>”恢复时重复的日志读取（#63531）</li>
+<li>修复来自工作日志服务器的历史重试尝试的 404 错误，现在可以妥善处理 (#62475)</li>
+<li>修复任务日志选项卡中缺少 Elasticsearch/OpenSearch 日志记录异常详细信息 (#63739)</li>
+<li>修复任务级审核日志丢失成功/运行事件的问题 (#61932)</li>
+<li>修复 <code>null</code> <code>dag_run_conf</code> causing serialization error in <code>BackfillResponse</code> (#63259)</li>
+<li>使用错误的 Dag 运行类型修复 CLI 资产实现 (#63815)</li>
+<li>修复迁移 0094 性能：使用 SQL 而不是 Python 反序列化 (#63628)</li>
+<li>修复迁移可靠性：用 per-Dag 事务替换 <code>savepoints</code> (#63591)</li>
+<li>通过向 <code>deadline.callback_id</code> 添加索引来修复降级性能缓慢的问题 (#63612)</li>
+<li>修复 MySQL 保留关键字 <code>interval</code> causing query failures in <code>deadline_alert</code> (#63494)</li>
+<li>修复截止日期迁移期间 MySQL <code>serialize_dag</code> 查询失败的问题 (#63804)</li>
+<li>修复批处理表重建过程中 FK 约束导致的 SQLite 降级失败 (#63437)</li>
+<li>修复团队表存在现有行时迁移 0096 降级失败的问题 (#63449)</li>
+<li>修复有关硬编码 24h <code>visibility_timeout</code> 的缺失警告，该警告会终止长时间运行的 Celery 任务 (#62869)</li>
+<li>通过删除所有任务实例的预加载来修复调度程序内存问题 (#60956)</li>
+<li>修复截止日期警报迁移中的 MySQL 排序缓冲区溢出 (#61806)</li>
+<li>修复了无法使用“<code>CronPartitionedTimetable</code>”手动触发 Dag 的问题 (#62441)</li>
+<li>更新资产分区 DagRun 时修复“<code>AssetModel</code>”中的竞争条件 — 添加互斥锁 (#59183)</li>
+<li>修复 FAB <code>auth_manager</code> <code>load_user</code> causing <code>PendingRollbackError</code> (#61943)</li>
+<li>修复 N+1 查询：添加 <code>joinedload</code> for asset in <code>dags_needing_dagruns()</code> (#60957)</li>
+<li>修复 Dag 处理器运行状况检查阈值匹配 SchedulerJob/TriggererJob 模式 (#58704)</li>
+<li>修复了清除下游/上游任务实例时的“<code>NotMapped</code>”异常 (#58922)</li>
+<li>修复分区 DagRun 丢失的资产事件 (#61433)</li>
+<li>修复创建 DagRun 时丢失的 <code>partition_key</code> filter in <code>PALK</code> (#61831)</li>
+<li>修复因早期更改而损坏的 Dag 参数 API 合约 (#56831)</li>
+<li>修复 OAuth 会话竞争条件，导致登录期间出现错误 401 错误 (#61287)</li>
+<li>修复传递给 fsspec 的存储选项中的“<code>ObjectStoragePath`` to exclude ``conn_id</code>” (#62701)</li>
+<li>修复无法导入变量列表值的问题 (#61508)</li>
+<li>修复插件注册因重复名称而提前返回的问题 (#60498)</li>
+<li>修复使用 <code>XComObjectStorageBackend</code> 时的循环导入 (#55805)</li>
+<li>修复截止日期警报哈希错误 (#61702)</li>
+<li>修复任务 SDK 以从配置中读取 <code>default_email_on_failure</code>/<code>default_email_on_retry</code> (#59912)</li>
+<li>修复 macOS 上因不可序列化的本地函数而导致的 Celery Worker 崩溃问题 (#62655)</li>
+<li>修复 Celery 执行器中的 Redis 导入竞争条件 (#61362)</li>
+<li>修复 Dashboard 中任务实例的错误状态查询参数 (#59086)</li>
+<li>修复 <code>TaskInstance.get_dagrun</code> returning None in <code>task_instance_mutation_hook</code> (#60726)</li>
+<li>修复简单身份验证管理器登录在身份验证失败时显示神秘错误的问题 (#64303)</li>
+<li>修复 <code>dag_display_name</code> property bypass for <code>DagStats</code> 查询 (#64256)</li>
+<li>修复启动已运行的任务实例时未引发“<code>TaskAlreadyRunningError</code>”的问题 (#60855)</li>
+<li>修复拆卸任务不等待所有范围内任务完成的问题 (#64181)</li>
+<li>修复 API 服务器中不尊重的 <code>enable_swagger_ui</code> 配置 (#64376)</li>
+<li>修复：在为 DagRun 等待端点指定结果时添加对 xcom 权限的检查 (#64415)</li>
+<li>修复 <code>conf.has_option</code> 不尊重默认提供者元数据 (#64209)</li>
+<li>修复拆卸范围导致任务调度期间不必要的数据库写入 (#64558)</li>
+<li>修复使用 Elasticsearch 日志转发时实时任务日志输出在标准输出中不可见的问题 (#64067)</li>
+<li>修复非序列化运算符刷新任务权重时“<code>TaskInstance</code>”崩溃的问题 (#64557)</li>
+<li>修复配置多个后端时变量秘密后端冲突检查提前退出的问题 (#64062)</li>
+<li>UI：修复清除任务实例页面上的 Dag run 访问器键 (#64072)</li>
+<li>UI：修复可搜索下拉列表不适用于 Dag params 枚举字段 (#63895)</li>
+<li>UI：修复 Dag 警告警报中的换行符渲染 (#63588)</li>
+<li>UI：修复“<code>XCom</code>”编辑模态值在重新打开时不会重新填充（#62798）</li>
+<li>UI：修复任务持续时间工具提示未正确显示的问题 (#63639)</li>
+<li>UI：修复运行任务未显示的已用时间 (#63619)</li>
+<li>UI：修复 <code>RenderedJsonField</code> 折叠行为 (#63831)</li>
+<li>UI：修复“<code>RenderedJsonField</code>”不在表格单元格中显示的问题 (#63245)</li>
+<li>UI：修复 Chakra 升级后的全屏日志下拉 z-index (#63816)</li>
+<li>UI：修复资产物化运行类型显示（#63819）</li>
+<li>UI：修复具有无限（<code>-1</code>）插槽的池无法正确渲染的问题（#62831）</li>
+<li>UI：修复“<code>DurationChart</code>”标签并在自动刷新期间禁用动画闪烁（#62835）</li>
+<li>UI：修复未经授权的用户重新解析 Dag 时未显示的 403 错误 (#61560)</li>
+<li>UI：修复“<code>/dagruns</code>”页面上的逻辑日期过滤器不起作用（#62848）</li>
+<li>UI：修复分区 Dag 运行视图中夸大的“<code>total_received</code>”计数 (#62786)</li>
+<li>UI：修复带有子路径的反向代理后面的边缘执行器导航 (#63777)</li>
+<li>UI：修复在 Dag 运行添加/删除时未失效的查询 (#64269)</li>
+<li>UI：修复“<code>RenderedJsonField</code>”折叠时闪烁的问题（#64261）</li>
+<li>UI：修复禁用 API 文档时文档菜单 REST API 链接可见性 (#64359)</li>
+<li>UI：修复 <code>TISummaries</code> not refreshing when <code>gridRuns</code> 无效的问题 (#64113)</li>
+<li>UI：修复甘特图中空/未定义日期的保护，以防止 RangeError (#64031)</li>
+<li>UI：阻止对返回 403 Forbidden 的端点的轮询请求 (#64333)</li>
+<li>UI：修复甘特图视图在时间范围位于“<code>DagRun</code>”窗口之外时仍然可见的问题 (#64179)</li>
+<li>UI：修复人机交互 (HITL) 操作员选项在配置了 4 个选项时不显示的问题 (#64453)</li>
+</ul>
+<h2 id="杂项">杂项</h2>
+<ul>
+<li>弃用 <code>api.page_size</code> config in favor of <code>api.fallback_page_limit</code> (#61067)</li>
+<li>通过传递基于 Dag 最终状态的上下文相关任务实例而不是任意字典选择来提高 Dag 回调相关性 (#61274)</li>
+<li>优化 <code>get_dag_runs</code> API 端点性能 (#63940)</li>
+<li>提高历史指标端点性能 (#63526)</li>
+<li>将具有单次重复数据删除功能的 TTL 缓存添加到 Keycloak <code>filter_authorized_dag_ids</code> (#63184)</li>
+<li>使用“<code>gc.freeze</code>”减少 Celery 工作线程的内存使用量 (#62212)</li>
+<li>消除 <code>get_task_instances</code> 端点中的重复 JOIN (#62910)</li>
+<li>使用 CTE 和 JOIN 替换资产查询中的大型“<code>IN</code>”子句，以获得更好的 SQL 性能 (#62114)</li>
+<li>添加行锁以防止资产触发的 DagRun 创建期间的竞争条件 (#60773)</li>
+<li>添加“<code>ConnectionResponse</code>”序列化器保护措施，以防止敏感字段意外暴露（#63883）</li>
+<li>在 DagRun 任务实例 API 查询上添加缺少的“<code>dag_id</code>”过滤器 (#62750)</li>
+<li>在 FAB JWKS 获取中添加缺少的 HTTP 超时 (#63058)</li>
+<li>在资产实现端点中添加额外的权限检查（#63338）</li>
+<li>通过可读的 Dags 过滤回填列表（授权执行）（#63003）</li>
+<li>当禁用 <code>expose_stacktrace</code> 时隐藏异常详细信息中的 SQL 语句 (#63028)</li>
+<li>使用默认最大深度来编辑 API 响应中的变量值 (#63480)</li>
+<li>根据 Pydantic 模型验证 PATCH API 端点中的“<code>update_mask</code>”字段 (#62657)</li>
+<li>在执行 API 中对齐变量和连接的键/id 路径验证 (#63897)</li>
+<li>将 <code>order_by</code> 参数添加到 GET /permissions 端点以实现分页一致性 (#63418)</li>
+<li>为呈现的模板值实现截断逻辑 (#61878)</li>
+<li>添加 <code>BaseXcom</code> to <code>airflow.sdk</code> 公共导出 (#63116)</li>
+<li>使“<code>TaskSDK</code>”conf 尊重提供者元数据中的默认配置 (#62696)</li>
+<li>通过 <code>airflow.sdk.observability.trace</code> 添加 OTel 跟踪导入垫片 (#63554)</li>
+<li>改进 3.2.0 截止日期迁移性能 (#63920)</li>
+<li>改进 PostgreSQL 上“<code>external_executor_id</code>”的 3.2.0 降级迁移 (#63625)</li>
+<li>在迁移过程中跳过回填旧的“<code>DagRun.created_at</code>”以实现更快的升级（#63825）</li>
+<li>将 INFO 级日志记录添加到资产调度路径 (#63958)</li>
+<li>改进“<code>ExecuteCallback`` by including ``dag_id`` and ``run_id</code>”的日志文件模板 (#62616)</li>
+<li>提高 Dag 处理器超时日志记录的清晰度 (#62328)</li>
+<li>弃用 <code>get_connection_form_widgets</code> and <code>get_ui_field_behaviour</code> 挂钩方法 (#63711)</li>
+<li>为“<code>[workers]</code>”配置部分添加缺失的弃用警告 (#63659)</li>
+<li>公开 <code>TaskInstance</code> API 用于外部任务管理 (#61568)</li>
+<li>删除已弃用的 <code>airflow.datasets</code>, <code>airflow.timetables.datasets</code>, and <code>airflow.utils.dag_parsing_context</code> 模块 (#62927)</li>
+<li>从核心依赖项中删除 <code>PyOpenSSL</code> (#63869)</li>
+<li>优化快速失败检查以避免加载 <code>SerializedDAG</code> (#56694)</li>
+<li>通过从 <code>pop(0)</code> to <code>popleft()</code> 切换来提高任务队列处理的性能 (#61376)</li>
+<li>优化 K8s API 用于观看 Pod 事件的使用，修复挂起的通信 (#59080)</li>
+<li>删除团队名称的 N+1 数据库查询 (#61471)</li>
+<li>改进额外链接 API 中的 XCom 值处理 (#61641)</li>
+<li>删除 <code>.git</code> folder from versions in <code>GitDagBundle</code> 以减少存储大小 (#57069)</li>
+<li>弃用“<code>airflow.utils.process_utils</code>”中的子进程执行实用程序 (#57193)</li>
+<li>改进边缘工作人员对 405 响应的错误处理 (#60425)</li>
+<li>改进轮询之间删除的 pod 的可延迟“<code>KubernetesPodOperator</code>”处理 (#56976)</li>
+<li>改进 K8s 执行器的 pod 失败时的事件日志条目 (#60800)</li>
+<li>重构 XCom API 以使用共享序列化常量 (#64148)</li>
+<li>改进时间映射器以了解资产分区的时区 (#62709)</li>
+<li>改进 dag 版本通胀检查器逻辑并修复误报检测 (#61345)</li>
+<li>为了清楚起见，在分区映射器中重命名 <code>ToXXXMapper</code> to <code>StartOfXXXMapper</code> (#64160)</li>
+<li>仅对产品入口点中的核心组件运行数据库检查 (#63413)</li>
+<li>修复分区资产事件错误地触发非分区感知 Dags (#63848)</li>
+<li>通过 <code>partition_date</code> 改进分区 DagRun 排序 (#62866)</li>
+<li>在 <code>AIRFLOW__API__THEME</code> 配置中允许灰色、黑色和白色标记 (#64232)</li>
+<li>添加父任务跨度和嵌套工作器/触发器跨度以提高可观察性 (#63839)</li>
+<li>UI：增强代码视图以支持搜索和比较（#55467）</li>
+<li>UI：改进用户体验以添加自定义 <code>DeadlineReferences</code> (#57222)</li>
+<li>UI：增强“<code>FilterBar`` with ``DateRangeFilter</code>”以实现紧凑的 UI (#56173)</li>
+<li>UI：将截止日期警报移动到自己的表中以进行 UI 集成 (#58248)</li>
+<li>UI：在 Dag 网格视图中保留标签过滤器选择 (#63273)</li>
+<li>UI：仅针对启用审核的任务实例显示 HITL 审核选项卡 (#63477)</li>
+<li>UI：更新了用于添加连接、变量和池的按钮样式 (#62607)</li>
+<li>UI：为用户操作的 403 错误添加明确的权限 toast (#61588)</li>
+</ul>
+<h2 id="仅文档更改">仅文档更改</h2>
+<ul>
+<li>添加将执行前/执行后任务挂钩标记为 GA 的文档（不再是实验性的）(#59656)</li>
+<li>添加 <code>RedisTaskHandler</code> 配置示例 (#63898)</li>
+<li>添加解释延迟运算符与异步运算符之间差异的文档 (#63500)</li>
+<li>在多团队文档中添加身份验证管理器部分 (#63208)</li>
+<li>在 <code>_shared</code> 文件夹中添加有关共享库的文档 (#63468)</li>
+<li>澄清 <code>modules_management</code> 文档中的插件文件夹模块注册 (#63634)</li>
+<li>澄清 <code>max_active_tasks</code> Dag 参数文档 (#63217)</li>
+<li>澄清提取优先级文档中的 HLL (#63723)</li>
+<li>澄清快速入门指南中的 Ubuntu/Debian venv 要求 (#63244)</li>
+<li>修复 Git 连接文档以匹配实际的 <code>GitHook</code> 参数 (#63265)</li>
+<li>在文档中提及 Python 3.14 支持 (#63950)</li>
+<li>添加 <code>example_bash_decorator</code> 的 Dag 文档 (#62948)</li>
+<li>为 UI 添加俄语翻译 (#63450)</li>
+<li>添加匈牙利语翻译 (#62925)</li>
+<li>完整的繁体中文翻译 (#62652)</li>
+<li>添加资产分区文档 (#63262)</li>
+<li>添加 dag 版本通胀及其检查器指南 (#64100)</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/apache/airflow">apache/airflow</a> · 🏷️ 版本：<code>3.2.0</code> · 📅 发布：2026-04-07 · <a href="https://github.com/apache/airflow/releases/tag/3.2.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/airflow/airflow_3.2.1"> <span class="k">← 下一个</span> <span class="t">3.2.1</span> </a> <a href="/zh/release_note/airflow/airflow_helm-chart_1.20.0"> <span class="k">上一个 →</span> <span class="t">1.20.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/apache/airflow/releases/tag/3.2.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/apache/airflow" target="_blank" rel="noopener"> <span>apache/airflow</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#重大变化" class>重大变化</a><a href="#资产分割" class="lv3">资产分割</a><a href="#多团队部署" class="lv3">多团队部署</a><a href="#对截止日期警报的同步回调支持" class="lv3">对截止日期警报的同步回调支持</a><a href="#ui-增强和性能" class="lv3">UI 增强和性能</a><a href="#调度程序-cli-的新--only-idle标志" class="lv3">调度程序 CLI 的新“--only-idle”标志</a><a href="#将每次运行的-ti-摘要请求替换为单个-ndjson-流" class="lv3">将每次运行的 TI 摘要请求替换为单个 NDJSON 流</a><a href="#所有-api-服务器输出的结构化-json-日志记录" class="lv3">所有 API 服务器输出的结构化 JSON 日志记录</a><a href="#删除旧版-otel-trace-元类和共享跟踪器包装器" class="lv3">删除旧版 OTel Trace 元类和共享跟踪器包装器</a><a href="#将任务级异常导入移动到任务-sdk-中" class="lv3">将任务级异常导入移动到任务 SDK 中</a><a href="#支持-retry_exponential_backoff-参数的数字乘数值" class="lv3">支持 retry_exponential_backoff 参数的数字乘数值</a><a href="#将序列化反序列化-serde-逻辑移至任务-sdk-中" class="lv3">将序列化/反序列化 (serde) 逻辑移至任务 SDK 中</a><a href="#从-priorityweightstrategy-中删除的方法" class="lv3">从 PriorityWeightStrategy 中删除的方法</a><a href="#从-taskinstance-中删除的方法" class="lv3">从 TaskInstance 中删除的方法</a><a href="#修改dagbag返回的信息" class="lv3">修改DagBag返回的信息</a><a href="#删除--conn-id-option-from-airflow-connections-list" class="lv3">删除--conn-id option from airflow connections list</a><a href="#添加操作员级别-render_template_as_native_obj-覆盖" class="lv3">添加操作员级别 render_template_as_native_obj 覆盖</a><a href="#添加对-api-服务器的-gunicorn-支持具有零停机工作线程-recycling" class="lv3">添加对 API 服务器的 Gunicorn 支持，具有零停机工作线程 recycling</a><a href="#改进了具有许多映射任务的-dags-的渲染任务实例字段清理性能大约快-42-倍" class="lv3">改进了具有许多映射任务的 Dags 的渲染任务实例字段清理性能（大约快 42 倍）</a><a href="#authmanager-回填权限现在由requires_access_dag-on-the-dagaccessentityrun处理" class="lv3">AuthManager 回填权限现在由“requires_access_dag`` on the ``DagAccessEntity.Run”处理</a><a href="#添加了-python-314-支持" class="lv3">添加了 Python 3.14 支持</a><a href="#通过消除任务启动时的serializeddag负载来减少-api-服务器内存" class="lv3">通过消除任务启动时的“SerializedDAG”负载来减少 API 服务器内存</a><a href="#从容器镜像中删除-mysql-client" class="lv3">从容器镜像中删除 MySQL client</a><a href="#在-pythonoperator-中添加对异步可调用对象的支持" class="lv3">在 PythonOperator 中添加对异步可调用对象的支持</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/airflow/airflow_go-sdk_v1.0.0"> <span class="v">v1.0.0</span> <span class="d">26-11-13</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_3.4.0"> <span class="v">3.4.0</span> <span class="d">26-11-06</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_3.3.2"> <span class="v">3.3.2</span> <span class="d">26-09-17</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_3.3.1"> <span class="v">3.3.1</span> <span class="d">26-08-12</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_3.3.0"> <span class="v">3.3.0</span> <span class="d">26-07-06</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_1.22.0"> <span class="v">1.22.0</span> <span class="d">26-06-13</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_0.1.5"> <span class="v">0.1.5</span> <span class="d">26-06-03</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_3.2.2"> <span class="v">3.2.2</span> <span class="d">26-05-29</span> </a> </li> </ul> <a href="/zh/releases/airflow" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 79 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>deno v2.8.0 — STAGS NextStack</title><meta name="description" content="feat: accept deno audit fix as alias for deno audit --fix (#34273) · feat: add --watch flag to deno check (#34224) · feat: add deno bump-version subcommand (#30562) · feat: add deno why subcommand (#32908)"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/deno/deno_v2.8.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/deno/2.8.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/deno/deno_v2.8.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/deno/2.8.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="deno v2.8.0 — STAGS NextStack"><meta property="og:description" content="feat: accept deno audit fix as alias for deno audit --fix (#34273) · feat: add --watch flag to deno check (#34224) · feat: add deno bump-version subcommand (#30562) · feat: add deno why subcommand (#32908)"><meta property="og:url" content="https://www.stags.cn/zh/release_note/deno/deno_v2.8.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/deno/deno_v2.8.0/#article","headline":"deno v2.8.0 release notes","datePublished":"2026-05-22","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/denoland/deno"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/deno/2.8.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/deno/deno_v2.8.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/deno/2.8.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/deno/2.8.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/deno/2.8.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/deno/2.8.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/deno/2.8.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/deno">deno</a> </nav> <h1 class="detail-title"> <span class="p">deno</span> v2.8.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年5月22日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/denoland/deno" target="_blank" rel="noopener"> <span class="k">来源</span>denoland/deno </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/deno/2.8.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/deno/deno_v2.8.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="deno-v280">deno v2.8.0</h1>
+<h3 id="280--20260522">2.8.0 / 2026.05.22</h3>
+<p>了解更多：<a href="http://deno.com/blog/v2.8">http://deno.com/blog/v2.8</a></p>
+<ul>
+<li>壮举：接受 <code>deno audit fix</code> 作为 <code>deno audit --fix</code> 的别名 (#34273)</li>
+<li>壮举：添加 —watch 标志以进行 deno 检查 (#34224)</li>
+<li>壮举：添加 <code>deno bump-version</code> 子命令 (#30562)</li>
+<li>壮举：添加 <code>deno why</code> 子命令 (#32908)</li>
+<li>壮举：支持 <code>deno bump-version</code> 中的工作区 (#33689)</li>
+<li>feat(add/install)：默认为 npm 注册表，用于无前缀的软件包 (#33246)</li>
+<li>feat(compile)：为 deno 编译添加进度条 (#33874)</li>
+<li>feat(compile)：在编译的二进制文件中支持 module.registerHooks() (#33853)</li>
+<li>feat(core)：为延迟加载脚本添加 <code>Deno.core.loadExtScript()</code> (#33739)</li>
+<li>feat(core)：通过 ModuleResolveResponse 添加异步模块解析支持
+(#32432)</li>
+<li>feat(core)：通过导入语句支持lazy_loaded_esm模块(#33873)</li>
+<li>壮举（核心）：synthetic_esm 扩展 DSL + 节点：worker_threads 金丝雀（#34038）</li>
+<li>feat(ext/fetch)：为 fetch() 发出 Network.* 检查器事件 (#34220)</li>
+<li>feat(ext/node)：ESM import() 支持 module.registerHooks() (#33763)</li>
+<li>feat(ext/node)：将 createHistogram 添加到节点：perf_hooks (#34003)</li>
+<li>feat(ext/node)：缓冲 Network.* 检查器主体获取命令的主体
+(#34201)</li>
+<li>feat(ext/node)：将node:url/util/zlib 转换为synthetic_esm (#34041)</li>
+<li>feat(ext/node)：为节点发出 Network.* 检查器事件：http (#34231)</li>
+<li>feat(ext/node)：通过 process.binding(‘inspector’) 公开spector.isEnabled()
+(#34203)</li>
+<li>feat(ext/node)：为检查员实现网络 CDP 域 (#32707)</li>
+<li>feat(ext/node)：实现 NodeRuntime.notifyWhenWaitingForDisconnect (#34204)</li>
+<li>feat(ext/node)：为 CommonJS 实现 module.registerHooks() API (#33733)</li>
+<li>feat(ext/node)：实现节点：模块 SourceMap API (#32890)</li>
+<li>feat(ext/node)：实现节点：wasi (#34089)</li>
+<li>feat(ext/node)：实现 postMessageToThread 跨线程消息传递 (#34015)</li>
+<li>feat(ext/node)：使用 microtaskMode afterEvaluate 实现 vm.SourceTextModule
+支持（#33603）</li>
+<li>feat(ext/node)：使 Network.* CDP 事件在普通 —inspect 下触发 (#34270)</li>
+<li>feat(ext/node): 恢复 module.registerHooks (#34081)</li>
+<li>feat(ext/node)：支持通过 MessagePort 进行 KeyObject 结构化克隆 (#34229)</li>
+<li>feat(ext/node)：支持 NODE_EXTRA_CA_CERTS (#33148)</li>
+<li>feat(ext/node)：支持通过 IPC 发送 dgram.Socket 句柄 (#33863)</li>
+<li>feat(ext/telemetry)：为 OTLP 导出器添加 gRPC 协议支持 (#30365)</li>
+<li>feat(ext/web)：支持 Blob 和文件的结构化克隆 (#33827)</li>
+<li>feat(ext/websocket)：为 WebSocket 发出 Network.* 检查器事件 (#34222)</li>
+<li>feat(install)：为跨平台 npm 安装添加 —os 和 —arch 标志
+(#32785)</li>
+<li>feat(install)：添加了 —prod 以跳过开发 deps 和 @types (#33248)</li>
+<li>feat(install)：对于 <code>deno install -g</code> 无前缀软件包，默认使用 npm
+(#34290)</li>
+<li>feat(npm)：为集中依赖版本添加 <code>catalog:</code> 协议
+工作区 (#32947)</li>
+<li>feat(npm)：添加提升的 node_modules 链接器模式 (#32788)</li>
+<li>feat(npmrc)：支持 min-release-age (#33983)</li>
+<li>feat(task)：并行运行时在输出行前添加任务名称前缀
+(#33805)</li>
+<li>feat(test)：向 Deno.test() 添加超时选项 (#33815)</li>
+<li>壮举（类型）：添加 Math.sumPrecise 和 Intl.Locale.prototype.variants (#34287)</li>
+<li>壮举（不稳定）：几何接口模块级别 1 (#27527)
+-壮举（不稳定）：支持 TC39 导入延迟提案（#32360）</li>
+<li>feat(x)：添加 —package/-p 标志，用于与二进制文件分开指定包
+(#32855)</li>
+<li>壮举：OffscreenCanvas (#29357)</li>
+<li>壮举：添加 —package-json 标志来表示添加/安装/删除/卸载 (#33199)</li>
+<li>壮举：添加 <code>deno ci</code> 子命令 (#34235)</li>
+<li>壮举：添加 <code>deno pack</code> 命令来创建 npm tarball (#32139)</li>
+<li>壮举：添加 <code>deno transpile</code> 子命令 (#32691)</li>
+<li>壮举：默认禁用“no-process-global”、“no-node-globals”lint 规则
+(#33247)</li>
+<li>壮举：在 deno 测试中默认禁用操作和资源清理程序 (#33250)</li>
+<li>壮举： deno 编译的框架检测 (#33164)</li>
+<li>壮举：实施 <code>deno audit --fix</code> (#32909)</li>
+<li>壮举：默认包含节点库并使用 NodeJS.Timeout 作为计时器 (#33823)</li>
+<li>壮举：稳定文本导入（#34238）</li>
+<li>壮举：支持 Deno.upgradeWebSocket 和 node:http 升级事件 (#33342)</li>
+<li>壮举：将 TypeScript 更新为 6.0.3 (#32944)</li>
+<li>壮举：默认使用 Node.js 计时器并删除全局代理 (#33249)</li>
+<li>壮举：v8 14.9 (#34226)</li>
+<li>修复（ci）：在 Windows 上禁用 test-child-process-send-returns-boolean.js
+(#33883)</li>
+<li>修复（cli）：使 deno 为什么与 jsr deps 一起使用（#34227）</li>
+<li>修复（控制台）：不触发nodejs.util.inspect.custom的代理获取陷阱
+(#33730)</li>
+<li>修复（核心）：禁用 include_icu_data 功能 (#34279)</li>
+<li>修复（核心）：评估lazy_load_esm_module中的预实例化模块（#33973）</li>
+<li>修复（核心）：在异步模块期间设置 has_tick_scheduled 时防止 TLA 挂起
+评估（#33278）</li>
+<li>修复（核心）：当返回已注册的时，短路异步解析
+模块（#34058）</li>
+<li>修复（doc）：解析没有类型的 npm 入口点（#34147）</li>
+<li>修复（ext/crypto）：向 crypto.subtle.digest 添加 SHA3 支持（#32342）</li>
+<li>修复（ext/crypto）：标准化 P-521 SPKI 导出（#34087）</li>
+<li>修复（ext/crypto）：验证 X25519/X448/Ed25519 importKey 上的原始密钥长度
+(#33944)</li>
+<li>修复（ext/fetch）：当中止竞赛 op_fetch_send 完成时关闭response_rid
+(#33928)</li>
+<li>修复（ext/fs）：在阻塞池上运行 open_async，这样 FIFO 打开就不会停止
+运行时 (#33667)</li>
+<li>修复（ext/image）：正确处理 <code>createImageBitmap</code> 中的位图（#34285）</li>
+<li>修复（ext/napi）：在第二遍中同步运行弱回调终结器
+(#34023)</li>
+<li>修复（ext/node）：具有任意 modulusLength 的 DSA keygen (#34206)</li>
+<li>修复（ext/node）：MessagePort.on（‘message’）应该删除重复的侦听器（＃33991）</li>
+<li>修复（ext/node）：节点兼容的 TAP 报告器：测试（#34255）</li>
+<li>修复（ext/node）：TLSSocket.setServername 抛出键入错误（#33744）</li>
+<li>修复（ext/node）：工作线程拒绝 —heap-prof 和 —cpu-prof execArgv 标志
+错误错误 (#34011)</li>
+<li>修复（ext/node）：在 tls.setDefaultCACertificates 中接受 ArrayBufferView (#33700)</li>
+<li>修复（ext/node）：在createPublicKey/createPrivat中接受CryptoKey输入…
+(#33750)</li>
+<li>修复（ext/node）：添加 ERR_REQUIRE_ASYNC_MODULE 和 ERR_REQUIRE_CYCLE_MODULE 错误
+代码（#33921）</li>
+<li>修复（ext/node）：在 <code>node:sqlite</code> DatabaseSync 上添加 <code>limits</code> 属性 (#33106)</li>
+<li>修复（ext/node）：添加活动进程资源 APIs (#34101)</li>
+<li>修复（ext/node）：将emitExperimentalWarning/pendingDeprecate添加到internal/util，
+支持util.deprecate 中的modifyPrototype 选项 (#33660)</li>
+<li>修复（ext/node）：将 http2.performServerHandshake 添加到 polyfill (#33668)</li>
+<li>修复（ext/node）：添加 linkRequests/moduleRequests/instantiate 到 node:vm (#34131)</li>
+<li>修复（ext/node）：在 TCPWrap 连接中添加解析后拒绝检查（#33880）</li>
+<li>修复（ext/node）：添加 process._debugEnd() / process._debugProcess() (#34194)</li>
+<li>修复（ext/node）：将 test.expectFailure 添加到 node:test (#34130)</li>
+<li>修复（ext/node）：添加 tls.getCaCertificates() (#32032)</li>
+<li>修复（ext/node）：添加 util.setTraceSigInt 存根（#34013）</li>
+<li>修复（ext/node）：添加 v8.GCProfiler (#34158)</li>
+<li>修复（ext/node）：添加 v8.queryObjects() 和 util.queryObjects() (#34159)</li>
+<li>修复（ext/node）：添加 v8.startupSnapshot API 填充 (#34189)</li>
+<li>修复（ext/node）：对齐加密 KeyObject PKCS#8 加密、JWK 输入和 PSS
+与节点加盐 (#33757)</li>
+<li>修复（ext/node）：将检查器 WebSocket URL 与 Node.js 格式对齐
+(ws://主机:端口/UUID) (#33592)</li>
+<li>修复（ext/node）：在 ESM 中对齐 nextTick 顺序（#34085）</li>
+<li>修复（ext/node）：对齐名为导出的节点流 <code>destroy</code> (#33573)</li>
+<li>修复（ext/node）：将 scrypt 行为和性能与 Node 保持一致（#33773）</li>
+<li>修复（ext/node）：允许显式 paramEncoding 进行 EC 密钥生成（#33807）</li>
+<li>修复（ext/node）：允许 tls.Server SecureContext 没有 SNICallback 的证书/密钥
+(#33715)</li>
+<li>修复（ext/node）：在 loader-hook defaultResolve 中应用 Deno 的解析器
+(#33964)</li>
+<li>修复（ext/node）：将编码应用于 fs.readdir 中的 Dirent 名称/parentPath (#33972)</li>
+<li>修复（ext/node）：将 http1Options 应用到 HTTP/2 安全服务器回退（#33678）</li>
+<li>修复（ext/node）：将 addAbortListener 附加到 EventEmitter，修复 errorMonitor
+(#34262)</li>
+<li>修复（ext/node）：避免在隔离拆卸时 vm.createContext 循环中发生恐慌
+(#34195)</li>
+<li>修复（ext/node）：将 setImmediate 回调 this 绑定到 Immediate 实例
+(#33716)</li>
+<li>修复（ext/node）：绑定到 IPv6 通配符以启用默认 Server.listen()
+双堆栈 (#33617)</li>
+<li>修复（ext/node）：当套接字关闭时取消挂起的 TLS 写入（#33690）</li>
+<li>修复（ext/node）：在 Windows 上的 child_process.spawn 之后关闭命名管道句柄
+(#33941)</li>
+<li>修复（ext/node）：完整的 TLS 对等证书链（#34098）</li>
+<li>修复（ext/node）：解密publicEncrypt/privateDecrypt中的加密私钥
+并忽略密码 (#33770)</li>
+<li>修复（ext/node）：解密旧的 Proc-Type/DEK-Info 加密的 PEM 私钥
+(#33769)</li>
+<li>修复（ext/node）：暂停时推迟 http2 流窗口补充（#33640）</li>
+<li>修复（ext/node）：检测 StatWatcher 中的非实时统计变化（#33950）</li>
+<li>修复（ext/node）：具有真正 ANY 查询的 dnssolveAny，重试/maxTimeout 支持
+(#33577)</li>
+<li>修复（ext/node）：在 client 中止后不发出 ServerResponse“完成”（#34026）</li>
+<li>修复（ext/node）：在 JSStream 写入上驱动 TLSWrap 循环以修复死锁（#33914）</li>
+<li>修复（ext/node）：从 process.binding 下发出 DEP0111/DEP0119
+—待弃用 (#33594)</li>
+<li>修复（ext/node）：当需要 _tls_common 时发出 DEP0192 弃用警告
+(#33819)</li>
+<li>修复（ext/node）：通过会话错误发出 ERR_HTTP2_MAX_PENDING_SETTINGS_ACK
+而不是投掷 (#33679)</li>
+<li>修复（ext/node）：针对空数据帧发出 ERR_HTTP2_TOO_MANY_INVALID_FRAMES
+没有 END_STREAM (#33644)</li>
+<li>修复（ext/node）：当 http2 client 连接到非 h2 服务器时发出协议错误
+(#33740)</li>
+<li>修复（ext/node）：针对遗留流/_tls_wrap 要求发出弃用警告
+和 module.parent (#34086)</li>
+<li>修复（ext/node）：为清除的立即数发出销毁（#34084）</li>
+<li>修复（ext/node）：为 HTTP 服务器发出diagnostics_channel 事件（#33908）</li>
+<li>修复（ext/node）：在节点奇偶校验的下一个tick时发出耗尽的服务器关闭（＃33672）</li>
+<li>修复（ext/node）：发出 HttpClient 的 http PerformanceObserver 条目和
+HttpRequest (#33826)</li>
+<li>修复（ext/node）：为 http2 会话和流发出 perf_hooks PerformanceEntry
+(#33618)</li>
+<li>修复（ext/node）：通过更正 .mjs 文件启用快速节点兼容性测试
+配置中的扩展 (#33824)</li>
+<li>修复（ext/node）：启用 test-crypto-keygen-async-explicit-elliptic-curve
+(#33812)</li>
+<li>修复（ext/node）：启用带有 DSA 加密的 test-crypto-rsa-dsa 节点兼容性测试
+键（#33811）</li>
+<li>修复（ext/node）：启用 test-crypto-sign-verify 节点兼容性测试（#33810）</li>
+<li>修复（ext/node）：启用 test-crypto.js 节点兼容性测试（#33822）</li>
+<li>修复（ext/node）：启用 test-http2-server-shutdown-redundant (#33793)</li>
+<li>修复（ext/node）：强制 OpenSSL SECLEVEL 密钥强度检查
+创建安全上下文（#33686）</li>
+<li>修复（ext/node）：扩大diagnostics_channel覆盖范围（#34243）</li>
+<li>修复（ext/node）：导出 UV_EOF 并修复 Socket._final 没有连接（#34211）</li>
+<li>修复（ext/node）：在 http2 上公开 Http2Session 和 nghttp2ErrorString
+内部绑定（#33732）</li>
+<li>修复（ext/node）：在 http2 上公开 Http2Session 和 nghttp2ErrorString
+内部绑定（#33742）</li>
+<li>修复（ext/node）：在 http2 上公开 Http2Stream 和 nghttp2ErrorString
+内部绑定（#33729）</li>
+<li>修复（ext/node）：通过在服务器端 TLSSocket 上公开 TLS 服务器名称（SNI）
+getServername 操作 (#33725)</li>
+<li>修复（ext/node）：从 <code>internal/errors</code> 暴露 <code>E</code> 和 <code>SystemError</code> (#34080)</li>
+<li>修复（ext/node）：公开http2内部绑定并添加缺少的HTTP2_HEADER_*
+常量 (#33726)</li>
+<li>修复（ext/node）：使用 capital-ID 方法公开 http2 会话 setNextStreamID
+名称 (#33666)</li>
+<li>修复（ext/node）：暴露http2测试绑定并通过路由pushStream
+PushPromise (#33741)</li>
+<li>修复（ext/node）：暴露内部网络流模块（#34107）</li>
+<li>修复（ext/node）：将内部/async_hooks 公开为必需模块（#34116）</li>
+<li>修复（ext/node）：使用 FileHandle 公开内部/fs/promises（#34118）</li>
+<li>修复（ext/node）：暴露internal/js_stream_socket并添加默认读取路径
+(#34088)</li>
+<li>修复（ext/node）：将内部/网络公开为所需模块（#34152）</li>
+<li>修复（ext/node）：将内部/选项公开为必需模块（#34117）</li>
+<li>修复（ext/node）：将内部/tty暴露为必需模块（#34105）</li>
+<li>修复（ext/node）：暴露内部/url，以便 require(‘internal/url’) 工作（#34012）</li>
+<li>修复（ext/node）：公开内部/util/debuglog 并添加 formatTime 帮助程序
+(#33665)</li>
+<li>修复（ext/node）：使用正确的同步源触发 uncaughtExceptionMonitor
+顶级抛出 (#34048)</li>
+<li>修复（ext/node）：使用 Happy Eyeballs 地址回退修复 TLS 崩溃（#33641）</li>
+<li>修复（ext/node）：修复 TLS 对等证书多值字段、颁发者链和
+EC 曲线名称 (#33782)</li>
+<li>fix(ext/node): 修复 child_process.send() 反压返回值 (#33869)</li>
+<li>修复（ext/node）：修复嵌套 package.json 文件的模块解析（#33767）</li>
+<li>修复（ext/node）：充实节点：trace_events polyfill（#34216）</li>
+<li>修复（ext/node）：将http2协议错误从无效帧回调转发到
+会话错误事件 (#33630)</li>
+<li>修复（ext/node）：处理 HTTP/2 流量控制（#33795）</li>
+<li>修复（ext/node）：处理connectionsCheckingInterval选项并发送408
+请求超时 (#33836)</li>
+<li>修复（ext/node）：处理节点中未处理的拒绝：测试而不崩溃
+跑步者 (#33749)</li>
+<li>修复（ext/node）：实现 AES 密钥包装和带填充密码的密钥包装
+(#33813)</li>
+<li>修复（ext/node）：为 TLS 服务器实现 ALPNCallback 和 SNICallback (#33360)</li>
+<li>修复（ext/node）：实现 ECDH 验证和 DH verifyError (#33751)</li>
+<li>修复（ext/node）：实现 Module._stat (#34157)</li>
+<li>修复（ext/node）：实现 SocketAddress 类 (#34020)</li>
+<li>修复（ext/node）：实现 TCP/TLS 套接字 useUserBuffer (#34164)</li>
+<li>修复（ext/node）：为虚拟机脚本实现显示错误（#33942）</li>
+<li>修复（ext/node）：实现 h2 END_STREAM 打包和 Http2Session
+PerformanceObserver 条目 (#33796)</li>
+<li>修复（ext/node）：实现缺失节点：测试 APIs (#33764)</li>
+<li>修复（ext/node）：实现mock.getter，mock.setter，mockImplementation
+节点：测试 (#33755)</li>
+<li>修复（ext/node）：在 net.Server 上实现 noDelay 属性并应用 TCP_NODELAY
+接受（#33828）</li>
+<li>修复（ext/node）：在 unix 上实现节点：集群（#33752）</li>
+<li>修复（ext/node）：实现节点：wasi Preview1 兼容（#34245）</li>
+<li>修复（ext/node）：实现 vm.SyntheticModule 构造函数（#34014）</li>
+<li>修复（ext/node）：导入/导出 PKCS#8 和旧加密 PEM 私钥
+(#33762)</li>
+<li>修复（ext/node）：改进http服务器解析器兼容性（#34094）</li>
+<li>修复（ext/node）：改进 https 代理兼容性（#34091）</li>
+<li>修复（ext/node）：改进模块钩子支持（#33877）</li>
+<li>修复（ext/node）：提高node:tls测试兼容性（#34067）</li>
+<li>修复（ext/node）：提高worker_threads MessagePort 兼容性（#34250）</li>
+<li>修复（ext/node）：隔离 TLS client 拒绝会话恢复 (#34097)</li>
+<li>修复（ext/node）：使 hideStackFrames 实际上隐藏帧，暴露
+内部/验证器 (#33673)</li>
+<li>修复（ext/node）：将 rustls 记录解码错误映射到 OpenSSL 样式的“错误版本”
+号”（#33711）</li>
+<li>修复（ext/node）：ESM nextLoad、createRequire URL 的模块挂钩修复
+内置重定向 (#34219)</li>
+<li>修复（ext/node）：节点：repl 改进（#33930）</li>
+<li>修复（ext/node）：节点：测试改进（#33929）</li>
+<li>修复（ext/node）：节点：使用监视模式事件进行测试（#34254）</li>
+<li>修复（ext/node）：标准化带下划线的 V8 标志（#34129）</li>
+<li>修复（ext/node）：忽略 musl/非 Linux 上的 glibc 版本字段（#33987）</li>
+<li>修复（ext/node）：填充 DH 共享秘密并修复无状态的素数符号字节
+迪菲赫尔曼 (#33761)</li>
+<li>修复（ext/node）：当请求没有标头时，将 URL 传递给 kOnHeadersComplete
+(#33831)</li>
+<li>修复（ext/node）：async_hooks 的每个请求执行AsyncResource() (#34188)</li>
+<li>修复（ext/node）：polyfill module.enableCompileCache 和同伴（#34190）</li>
+<li>修复（ext/node）：端口内部/priority_queue并通过require公开它（#33696）</li>
+<li>修复（ext/node）：跨 HTTP/2 client 流保留 AsyncLocalStorage 上下文
+(#33677)</li>
+<li>修复（ext/node）：在包装 TLS 时保留原始套接字连接（#34093）</li>
+<li>修复（ext/node）：在之后导入节点内置程序时防止恐慌
+module.register() (#33920)</li>
+<li>修复（ext/node）：防止节点中的顶级 <code>await test(...)</code> 死锁：测试
+(#33947)</li>
+<li>修复（ext/node）：将 highWaterMark 选项从 http.createServer 传播到 req
+和资源（#33825）</li>
+<li>修复（ext/node）：通过 fd 读取大文件返回乱码内容
+(#34258)</li>
+<li>修复（ext/node）：刷新重用代理套接字的异步 ID（#34138）</li>
+<li>修复（ext/node）：为 stdout/stderr 注册 sigwinch 监听器（#33890）</li>
+<li>修复（ext/node）：拒绝文件支持的 Blob 的结构化克隆（#34075）</li>
+<li>修复（ext/node）：使用节点错误代码报告目录导入（#34076）</li>
+<li>修复（ext/node）：执行后恢复llhttp parser.data以处理可重入
+调用 (#33832)</li>
+<li>修复（ext/node）：在 ERROR_PIPE_BUSY 上重试命名管道连接 (Windows) (#33974)</li>
+<li>修复（ext/node）：通过绑定原型路由 ServerHttp2Stream.respond (#33736)</li>
+<li>修复（ext/node）：在内置函数的每个 require() 上运行加载钩子链（#34223）</li>
+<li>修复（ext/node）：在工作线程中运行 register() 挂钩，添加
+—实验加载器标志 (#33906)</li>
+<li>修复（ext/node）：满足代理基节点：https 堆栈跟踪检查（#34264）</li>
+<li>修复（ext/node）：在流 RST 之前发送 http2 GOAWAY，以便对等方看到会话
+销毁代码 (#33637)</li>
+<li>修复（ext/node）：在无状态下设置 OSSL 错误代码和密钥类型检查
+迪菲赫尔曼 (#33772)</li>
+<li>修复（ext/node）：共享 TLS 会话缓存和 tls.TLSSocket 会话的票证
+恢复（#33693）</li>
+<li>修复（ext/node）：跳过 CJS 模块的 ESM 负载钩桥（#33861）</li>
+<li>修复(ext/node)：支持CA证书自省和线程外加载
+测试 (#33708)</li>
+<li>修复（ext/node）：支持通过 PBES2 导出 PKCS#8 加密私钥 PEM
+(#33758)</li>
+<li>修复（ext/node）：支持 TLS client 恢复兼容性测试 (#34095)</li>
+<li>修复（ext/node）：支持 <code>fs.watch</code> 中的 <code>encoding</code> 选项（#33634）</li>
+<li>修复（ext/node）：支持<code>fs.watch</code>/<code>fs.promises.watch</code>中的<code>signal</code>选项
+(#33650)</li>
+<li>修复（ext/node）：支持节点中的抽象 Unix 套接字：net 管道绑定（#33872）</li>
+<li>修复(ext/node): 支持加密的 PKCS#8 DER 私钥导出和导入
+(#33756)</li>
+<li>修复（ext/node）：在 deno 编译中支持 VFS 文件上的 node:fs APIs (#33803)</li>
+<li>修复（ext/node）：支持向子进程发送 net.Socket 和 net.Server 句柄
+UNIX 上的进程 (#33605)</li>
+<li>修复（ext/node）：在http服务器中支持shouldUpgradeCallback（#34092）</li>
+<li>修复（ext/node）：支持undici调度程序以进行allowHTTP1 websocket升级
+(#33731)</li>
+<li>修复（ext/node）：表面 ERR_REQUIRE_ASYNC_MODULE/CYCLE_MODULE 代码并修复 TLA
+重试（#34060）</li>
+<li>修复（ext/node）：对 SQL 的标记模板文字支持（#34018）</li>
+<li>修复（ext/node）：在后续的 Hash.digest() 上抛出 ERR_CRYPTO_HASH_FINALIZED
+调用 (#33774)</li>
+<li>修复（ext/node）：对于虚假的 dns.lookup 主机名抛出 ERR_INVALID_ARG_VALUE
+(#34234)</li>
+<li>修复（ext/node）：对于奇数长度标头数组抛出 ERR_INVALID_ARG_VALUE
+http.ServerResp (#33820)</li>
+<li>修复（ext/node）：当 tls.createSecureContext 抛出 OpenSSL 形状的错误时
+clientCertEngine 已设置 (#33691)</li>
+<li>修复（ext/node）：在 privateDecrypt 中抛出加密 PEM 密钥的正确错误
+(#33808)</li>
+<li>修复（ext/node）：tls 服务器错误消息、拒绝捕获、两个兼容性测试
+(#34183)</li>
+<li>修复（ext/node）：在 FIFO 上解锁 fs.open 并在 http2 中正确读取管道
+响应文件 (#33792)</li>
+<li>修复（ext/node）：在 http2 writeAsciiString polyfill 中使用 ASCII 字节截断
+(#33645)</li>
+<li>修复（ext/node）：将 core.loadExtScript 用于 eno_web/deno_io polyfill deps
+(#33798)</li>
+<li>修复（ext/node）：在internal_binding/symbols.ts中使用primordials（#33865）</li>
+<li>修复（ext/node）：为 tls.TLSSocket.setServername() 使用正确的错误代码
+(#33745)</li>
+<li>修复（ext/node）：在 fs.close 中使用queueMicrotask以避免清理
+误报 (#33714)</li>
+<li>修复（ext/node）：验证 Cipheriv/Decipheriv update() 中的数据类型（#33649）</li>
+<li>修复（ext/node）：验证 fs.watch options.ignore (#33574)</li>
+<li>修复（ext/node）：连接 HTTP/2 PING ack 回调并发出有效负载缓冲区（#33794）</li>
+<li>修复（ext/node）：将 http2 maxSettings 选项连接到
+nghttp2_option_set_max_settings (#33790)</li>
+<li>修复（ext/node）：连接 http2 每个会话 maxOutstandingPings 标志（#33791）</li>
+<li>修复（ext/node）：使用 path/dest/syscall 包装 process.chdir 错误 (#33584)</li>
+<li>修复（ext/process）：尊重 Deno.Command.output() 中的 AbortSignal (#34069)</li>
+<li>修复（ext/process）：容忍spawn中未链接的cwd（#33587）</li>
+<li>修复（ext/tls）：升级 rustls 以修复 SSL 证书验证回归（#33912）</li>
+<li>修复（ext/url）：无效的 URLSearchParams Node-compat 错误消息和
+缺少参数 (#34017)</li>
+<li>修复（ext/url）：将 URLSearchParams 与节点对齐以实现节点：url 兼容（#34119）</li>
+<li>修复（ext/web）：通过WebIDL序列迭代转换MessageEvent端口
+(#33652)</li>
+<li>修复（ext/web）：尊重 Event.returnValue setter 中的可取消和被动标志
+(#33651)</li>
+<li>修复（ext/websocket）：不要对 poll_write 中的 H2 流重置感到恐慌（#33982）</li>
+<li>修复（fmt）：带有多级缩进的标记 HTML 模板出现恐慌（#34263）</li>
+<li>修复（init）：用 Deno.serve HTTP 服务器替换 add(2,3) 模板 (#33042)</li>
+<li>修复（安装）：不要将带有非 Node shebang 的 JS 脚本视为本机二进制文件
+(#33971)</li>
+<li>修复（安装）：在全局安装时使用 —force 重新生成锁定文件 (#33970)</li>
+<li>修复（lsp）：不要对未解析的 dts 导入悬停感到恐慌（#34112）</li>
+<li>fix(node): 修复自定义文件类型加载器的 registerHooks (#33899)</li>
+<li>修复（节点）：弱跟踪 util.aborted 资源（#34142）</li>
+<li>修复（node/fs）：带有位置参数的 readSync 返回 EINVAL（#34021）</li>
+<li>修复（node/sqlite）：实现 DatabaseSync.serialize() 和 deserialize()
+(#34010)</li>
+<li>修复（node/tls）：在 TLSWrap 写入方法中处理分离的 ArrayBuffer (#33737)</li>
+<li>修复（节点：http2）：保留代理会话套接字上的超时检查链接
+(#33721)</li>
+<li>修复（npm）：解析目录：从工作区对象形式覆盖（#33816）</li>
+<li>修复（npm）：在覆盖中支持 <code>catalog:</code> 协议（#33799）</li>
+<li>修复（发布）：不要对非 GitHub CI 中的来源生成感到恐慌 (#33802)</li>
+<li>修复（repl）：在检查员轮询后排除微任务以避免“Promise was”
+收集”（#33735）</li>
+<li>修复（解析器）：在 byonm 解析器中处理标签版本请求（#33962）</li>
+<li>修复（任务）：转义转发参数中的反引号（#34151）</li>
+<li>修复（任务）：支持工作区中的递归任务完成（#32422）</li>
+<li>修复（测试）：在监视路径中包含 —watch=<paths> （修复 #21704） (#32621)</paths></li>
+<li>修复（更新）：<code>deno update --lockfile-only</code> 不应更新配置（#33746）</li>
+<li>修复（watch）：将 <code>--watch-exclude</code> 过滤器应用于文件更改事件（#33854）</li>
+<li>修复（工作空间）：夹住 CLI 包含成员文件夹的路径（#33949）</li>
+<li>修复：将 deno_graph 提升为 0.108.2，用于 wasm 多值返回类型 (#34070)</li>
+<li>修复：禁用 V8 外部内存检查以防止大型 TypedArray 出现恐慌
+(#33896)</li>
+<li>修复：修复 npm 包的 CJS 重新导出分析 (#33263)</li>
+<li>修复：处理全局 npm install 中的本机二进制 bin 条目 (#33935)</li>
+<li>修复：默认包含节点库并使用 NodeJS.Timeout 作为计时器 (#33823)</li>
+<li>修复：将 eval 脚本报告为检查器的 <code>[eval]</code> URL (#34192)</li>
+<li>perf(core)：op_decode 的 SIMD ASCII 快速路径 (#33720)</li>
+<li>perf(core)：将 V8 平台线程池限制为 4 个线程 (#33697)</li>
+<li>perf(ext)：将 ext/cache、ext/canvas、ext/crypto JS 源转换为延迟加载
+脚本（#33778）</li>
+<li>perf(ext)：将 ext/fetch JS 源转换为延迟加载脚本 (#33784)</li>
+<li>perf(ext)：将 ext/ffi JS 源转换为延迟加载脚本 (#33780)</li>
+<li>perf(ext)：将 ext/io、ext/os、ext/net JS 源转换为延迟加载脚本
+(#33779)</li>
+<li>perf(ext)：将 ext/kv 和 ext/webgpu JS 源转换为延迟加载脚本
+(#33818)</li>
+<li>perf(ext)：将 ext/process 和 ext/http JS 源转换为延迟加载脚本
+(#33817)</li>
+<li>perf(ext)：将 ext/telemetry 和 ext/cron JS 源转换为延迟加载
+脚本（#33801）</li>
+<li>perf(ext/fetch)：BodyInit_DOMString 转换器中的快速路径字符串 (#33676)</li>
+<li>perf(ext/fetch): 在默认 init 上跳过 dict-converter walk
+请求/获取/响应.json (#33999)</li>
+<li>perf(ext/fs)：将 ext/fs JS 源转换为延迟加载脚本 (#33800)</li>
+<li>perf(ext/geometry)：避免为需要的参数进行堆分配
+固定长度的序列 (#33688)</li>
+<li>perf(ext/net)：减少 Quinn TLS 提供程序的大小 (#34294)</li>
+<li>perf(ext/node)：将 62 个以上的 polyfill 文件转换为延迟加载脚本 (#33835)</li>
+<li>perf(ext/node)：将 <em>stream</em>* polyfill 转换为延迟加载的 JS (#33988)</li>
+<li>perf(ext/node)：将 child_process、cluster、console 转换为延迟加载的 JS
+(#33925)</li>
+<li>perf(ext/node)：将 child_process、fs、http、http2、https、inspector 转换为
+延迟加载的 JS (#33967)</li>
+<li>perf(ext/node)：将 cluster、console、constants、crypto、dgram、dns 转换为
+延迟加载的 JS (#33951)</li>
+<li>perf(ext/node)：将errors.ts、util.mjs和基础层转换为
+延迟加载脚本 (#33830)</li>
+<li>perf(ext/node)：将 fs helpers、streams、dgram、dns/utils 转换为延迟加载
+ESM (#33936)</li>
+<li>perf(ext/node)：将 fs 内部结构、计时器、tty、url、webstreams 转换为
+延迟加载 ESM (#33939)</li>
+<li>perf(ext/node)：将 http2、readline、stream_base_commons 转换为延迟加载的 JS
+(#33932)</li>
+<li>perf(ext/node)：将内部/加密转换为延迟加载的 JS (#33919)</li>
+<li>perf(ext/node)：将更多的 polyfill 转换为延迟加载的 JS (#33871)</li>
+<li>perf(ext/node)：将更多的 polyfill 转换为延迟加载的 JS (#33882)</li>
+<li>perf(ext/node)：将更多的 polyfill 转换为延迟加载的 JS (#33897)</li>
+<li>perf(ext/node)：将更多的 polyfill 转换为延迟加载的 JS (#33900)</li>
+<li>perf(ext/node)：将更多的 polyfill 转换为延迟加载的 JS (#33902)</li>
+<li>perf(ext/node)：将更多的 polyfill 转换为延迟加载的 JS (#33909)</li>
+<li>perf(ext/node)：将更多的 polyfill 转换为延迟加载的 JS (#33913)</li>
+<li>perf(ext/node)：将 net、_tls_common、_tls_wrap 转换为延迟加载的 JS (#33997)</li>
+<li>perf(ext/node)：将节点：事件和流内部转换为延迟加载的 JS
+(#33881)</li>
+<li>perf(ext/node)：将 node:path 转换为延迟加载的 JS (#33917)</li>
+<li>perf(ext/node)：将 node:util、node:assert 转换为延迟加载 (#33876)</li>
+<li>perf(ext/node)：将计时器、tls、tty、url、v8、worker_threads、zlib 转换为
+延迟加载的 JS (#33960)</li>
+<li>perf(ext/node)：将 validators.mjs 和依赖项转换为延迟加载脚本
+(#33821)</li>
+<li>perf(ext/node)：优化直接 ServerResponse 字符串结尾 (#34253)</li>
+<li>perf(ext/node)：替换节点：使用 core.loadExtScript 导入缓冲区和
+下一个刻度 (#33862)</li>
+<li>perf(ext/node)：在节点的 tcp 套接字上进行 true writev：http (#33659)</li>
+<li>perf(ext/web)：为 TextDecoder.decode 添加超快速路径 (#33674)</li>
+<li>perf(ext/web)：将所有 ext/web JS 源转换为延迟加载脚本 (#33760)</li>
+<li>perf(ext/web)：TextEncoder.encodeInto 的快速路径 (#33675)</li>
+<li>perf(ext/web)：lazy-init EventTarget 监听器表 (#33734)</li>
+<li>perf(ext/web)：FormData、URLSearchParams、标题的线性时间设置/删除
+(#33961)</li>
+<li>perf(ext/web)：优化 TextEncoder 编码结果 (#34055)</li>
+<li>perf(ext/web): StructuredClone 原始快速路径 (#33728)</li>
+<li>perf(ext/webidl)：createDictionaryConverter 未定义输入的快速路径
+(#33692)</li>
+<li>perf(ext/webidl): 为转换器选项默认提升 EMPTY_OPTS (#34007)</li>
+<li>perf(ext/websocket)：延迟加载 WebSocket 和 WebSocketStream JS (#33701)</li>
+<li>perf(http)：当完整内容已缓冲时避免 ReadableStream (#33844)</li>
+<li>perf(http)：直接分派到 js 请求处理程序 (#33845)</li>
+<li>perf(http)：如果响应未压缩，则不要添加 Vary 标头 (#33892)</li>
+<li>perf(http)：分割明文 HTTP 自动检测连接任务 (#33887)</li>
+<li>perf(libs/core)：删除 libuv 风格的部分读取中断以修复节点：http p99
+(#33860)</li>
+<li>perf(runtime)：将 8 个运行时 JS 文件转换为延迟加载脚本 (#33864)</li>
+<li>perf(snapshot)：在二进制和 v8 快照之间删除重复的 JS 源 (#33992)</li>
+<li>perf：整合 HTTP Brotli 压缩器设置 (#34282)</li>
+<li>perf：在快照中延迟加载更多模块 (#34061)</li>
+<li>性能：monch 0.6 (#33643)</li>
+<li>perf：在发布版本中使用panic=abort (#34280)</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/denoland/deno">denoland/deno</a> · 🏷️ 版本：<code>v2.8.0</code> · 📅 发布：2026-05-22 · <a href="https://github.com/denoland/deno/releases/tag/v2.8.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/deno/deno_v2.8.1"> <span class="k">← 下一个</span> <span class="t">v2.8.1</span> </a> <a href="/zh/release_note/deno/deno_v2.7.14"> <span class="k">上一个 →</span> <span class="t">v2.7.14</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/denoland/deno/releases/tag/v2.8.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/denoland/deno" target="_blank" rel="noopener"> <span>denoland/deno</span> <span class="d">↗</span> </a> </li> </ul> </div>  <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/deno/deno_v2.9.8"> <span class="v">v2.9.8</span> <span class="d">26-10-21</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.7"> <span class="v">v2.9.7</span> <span class="d">26-09-17</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.6"> <span class="v">v2.9.6</span> <span class="d">26-08-27</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.5"> <span class="v">v2.9.5</span> <span class="d">26-08-06</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.4"> <span class="v">v2.9.4</span> <span class="d">26-07-23</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.3"> <span class="v">v2.9.3</span> <span class="d">26-07-15</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.2"> <span class="v">v2.9.2</span> <span class="d">26-07-08</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.1"> <span class="v">v2.9.1</span> <span class="d">26-07-01</span> </a> </li> </ul> <a href="/zh/releases/deno" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

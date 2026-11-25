@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>oh-my-pi v19.1.1 — STAGS NextStack</title><meta name="description" content="Prevented oversized handoffs from reaching the provider by detecting when prepared context exceeds the target model’s context window."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/oh-my-pi/oh-my-pi_v19.1.1/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/oh-my-pi/19.1.1"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/oh-my-pi/oh-my-pi_v19.1.1/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/oh-my-pi/19.1.1"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="oh-my-pi v19.1.1 — STAGS NextStack"><meta property="og:description" content="Prevented oversized handoffs from reaching the provider by detecting when prepared context exceeds the target model’s context window."><meta property="og:url" content="https://www.stags.cn/zh/release_note/oh-my-pi/oh-my-pi_v19.1.1/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/oh-my-pi/oh-my-pi_v19.1.1/#article","headline":"oh-my-pi v19.1.1 release notes","datePublished":"2026-11-23","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/can1357/oh-my-pi"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/oh-my-pi/19.1.1/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/oh-my-pi/oh-my-pi_v19.1.1/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/oh-my-pi/19.1.1/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/oh-my-pi/19.1.1/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/oh-my-pi/19.1.1/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/oh-my-pi/19.1.1/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/oh-my-pi/19.1.1/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/oh-my-pi">oh-my-pi</a> </nav> <h1 class="detail-title"> <span class="p">oh-my-pi</span> v19.1.1 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年11月23日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/can1357/oh-my-pi" target="_blank" rel="noopener"> <span class="k">来源</span>can1357/oh-my-pi </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/oh-my-pi/19.1.1"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/oh-my-pi/oh-my-pi_v19.1.1/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="oh-my-pi-v1911">oh-my-pi v19.1.1</h1>
+<h2 id="oh-my-pipi-agent-core">@oh-my-pi/pi-agent-core</h2>
+<h3 id="已修复">已修复</h3>
+<ul>
+<li>通过检测准备好的上下文何时超出目标模型的上下文窗口，防止过大的切换到达提供者。</li>
+<li>保留提供者错误状态、错误标识符、重试分类以及失败或取消的辅助轮次的取消标记。</li>
+<li>修复了在执行完成之前丢弃或中止时推测工具调用挂起的问题。</li>
+</ul>
+<h2 id="oh-my-pipi-ai">@oh-my-pi/pi-ai</h2>
+<h3 id="添加">添加</h3>
+<ul>
+<li>添加了 <code>AssistantMessage.requestId</code>，由 Anthropic 的 <code>request-id</code> 响应标头填充，因此失败或拒绝的请求保留 Anthropic 支持所需的标识符。</li>
+<li>将 <code>GET /v1/pi/models</code> 添加到 <code>omp auth-gateway</code>，为 pi-native clients 提供网关的模型目录（限制、思维水平、定价）。</li>
+</ul>
+<h3 id="已更改">已更改</h3>
+<ul>
+<li>Devin 帐户选择现在优先考虑具有剩余每日或每周配额的登录，然后是由按需余额资助的帐户，同时跳过没有可用容量的帐户。 Devin 登录还跟踪电子邮件、用户 ID 和组织，以便在 <code>omp usage</code> 和 <code>auth.accountPolicies</code> 中区分不同的组织；必须重新验证现有登录名才能填充此信息。</li>
+<li>提供商的计费失败现在被视为使用限制，允许重试轮换帐户并继续通过模型后备链。</li>
+<li>由扩展注册的提供程序使用报告现在在 omp 进程中持续存在，从而避免了不必要的重复使用端点检查。</li>
+<li>在提供程序操作期间停滞的请求现在被归类为超时，允许自动回退到另一个模型。</li>
+<li>仅当为请求启用扰动时才加载提示扰动数据，从而减少空闲内存使用量。</li>
+</ul>
+<h3 id="已修复-1">已修复</h3>
+<ul>
+<li>修复了拆分工具调用处理，以便配置了 <code>splitToolCalls</code> 的型号以正确的消息顺序接收每个工具调用及其相应结果。</li>
+<li>修复了 <code>apple/on-device</code> 完成原因处理，以便请求不再发出虚假的 stderr 警告并正确报告已识别的停止或长度完成。</li>
+<li>通过报告模型、提供程序和收到的消息计数而不是不透明的提供程序错误，改进了对空 Anthropic 请求的本地验证。</li>
+<li>修复了 OpenAI 和 Codex 请求在包含不受支持的未转义字符模式的 MCP 工具架构上失败的问题。</li>
+<li>以未计费的加密推理项结束的 OpenRouter 响应请求现在会显示底层提供程序故障，而不是静默完成。</li>
+<li>修复了使用 Portkey 或身份验证网关时跨工具调用保留 Gemini 思想签名的问题。</li>
+<li>修复了思维循环防护错误地重试包含长 Markdown 表或类似形状的 JSON 记录的最终答案。</li>
+<li>修复了严格的工具模式转换，因此接受任意字段的对象属性不会错误地限制为空对象。</li>
+<li>修复了 <code>antigravity-cli</code> 型号无法接收 <code>read</code> 等工具返回的图像的问题。</li>
+<li>修复了因中断快照流和禁用进程剩余部分的使用情况报告而导致的暂时性代理错误。</li>
+<li>修复了同一帐户的并发反重力 CLI 会话在凭证暂存期间失败的问题。</li>
+<li>修复了 OpenAI Codex WebSocket 延续，以便为后续请求保留粘性转向路由信息。</li>
+<li>改进了从损坏的 <code>agent.db</code> 中的恢复，以便在可能的情况下恢复可读的提供程序凭据，并且禁用的凭据保持禁用状态。</li>
+</ul>
+<h2 id="oh-my-pi浏览器中继">@oh-my-pi/浏览器中继</h2>
+<h3 id="已修复-2">已修复</h3>
+<ul>
+<li>侧面板的连接设置现在显示浏览器拒绝本机主机时的具体原因（例如，因为本机消息传递被企业策略阻止），而不是错误地建议主机可能丢失。</li>
+</ul>
+<h2 id="oh-my-pipi-目录">@oh-my-pi/pi-目录</h2>
+<h3 id="添加-1">添加</h3>
+<ul>
+<li>Z.AI (<code>zai</code>) 现在会发现可用于您的 GLM 编码计划密钥的模型，因此新发布的 GLM 模型会出现，无需等待目录更新。</li>
+<li>在 <code>@oh-my-pi/pi-catalog/models</code> 中添加了 <code>getUpstreamPin()</code> 和 <code>routedModelsAreEqual()</code>，以区分路由到不同上游提供商的聚合器模型。</li>
+<li>添加了 <code>@oh-my-pi/pi-catalog/discovery/pi-native</code> 和 <code>piNativeModelManagerOptions()</code>，用于从身份验证网关的 <code>GET /v1/pi/models</code> 读取提供商的模型名册。</li>
+</ul>
+<h3 id="已修复-3">已修复</h3>
+<ul>
+<li>修复了 Llama 3.x 模型在通过基于 vLLM 的主机（包括通过 OpenRouter 的 CoreWeave）提供服务时调用多个工具后轮流失败的问题。</li>
+<li>对于共享同一电子邮件地址的组织，Devin 的使用现在是分开的。</li>
+<li>更新了 Devin 图像代币会计，以匹配 Devin 发布的跨受支持的 Gemini 图像模型的每张图像 1,089 个代币收费。</li>
+<li>更正了 GPT-5.6 Sol、Terra 和 Luna 快速通道的 Devin 定价和上下文限制，包括超过 272K 输入令牌的长上下文速率以及禁用扩展上下文时的标准 272K 限制。</li>
+<li>更正了 GPT-5.6 Sol、Terra 和 Luna 模型的游标定价，因此超过 272K 输入代币的输出使用记录的 1.5× 汇率。</li>
+<li>关闭 GPT-6.1 Terra 的思考现在使用受支持的 <code>none</code> 推理工作。</li>
+<li>修复了 GPT-6.2 和更高版本的 OpenAI Responses 模型在会话修剪和后续工具调用后丢失推理上下文的问题。</li>
+<li>修正了 Bedrock Kimi K3.1 Pro Highspeed 推理选项和工作量处理。</li>
+<li>GitHub Copilot 现在仅列出帐户可用的模型，包括重新启动后的模型。</li>
+<li>在捆绑之前发现的 Codex 模型现在使用其格式化的显示名称，例如 <code>GPT-6.2 Sol</code>。</li>
+</ul>
+<h2 id="oh-my-pipi-coding-agent">@oh-my-pi/pi-coding-agent</h2>
+<h3 id="重大变化">重大变化</h3>
+<ul>
+<li>本机 shell Rust API 现在将索引变量存储为 <code>IndexedArray</code> 而不是 <code>Vec</code>；使用 <code>items.into()</code> 构造 <code>VarValue::Indexed</code> 值。</li>
+</ul>
+<h3 id="添加-2">添加</h3>
+<ul>
+<li>添加了选择加入的 <code>tree</code> 状态段，它显示会话在倒带后或在分支上在会话树中的位置；在 Tern 中，当 clicked 时，该段打开 <code>/tree</code>。</li>
+<li>通过身份验证网关 (<code>transport: pi-native</code>) 路由的提供程序现在列出网关的模型，因此可以选择网关在运行时发现的模型（例如新的 Codex 模型），而无需在 <code>models.yml</code> 中声明它们，并且隐藏网关无法路由的模型。</li>
+<li>添加了 <code>computer.takeover</code> 作为 <code>computer.backgroundFallback</code> 的替代品，并具有 <code>fallback</code>、<code>foreground</code> 和 <code>always</code> 模式，用于控制计算机工具何时接管前台窗口。默认情况下会保留现有的后备行为。</li>
+<li>添加了内置的便携式 <code>column</code> shell，其中包含与 util-linux 兼容的选项，包括表格式、命名列、对齐、隐藏、排序、JSON 输出、树显示和宽度控件。</li>
+<li>通过 <code>pi.registerTodoBackend()</code> 和 <code>todo.backend</code> 设置添加了扩展待办事项后端。注册的后端可以将会话的完整待办事项列表镜像到外部存储，并且可以从 <code>/settings</code> → 工具 → 待办事项中进行选择和配置。</li>
+<li><code>/wt</code> 现在运行新工作树的 <code>post-checkout</code> 挂钩，在 TUI 中显示进度，并加载挂钩创建的技能和命令。失败的挂钩会使工作树保持完整并显示警告。</li>
+</ul>
+<h3 id="已更改-1">已更改</h3>
+<ul>
+<li>空停止恢复现在使用所选模型、提供程序和停止元数据记录每次重试，从而使重复的空模型响应在会话日志中可见。</li>
+<li>快速模型选择器在后台刷新过时的提供商目录，因此长时间运行的会话可以发现新的可用模型。</li>
+<li>在 Linux 上，语言服务器文件监视现在适应 inotify 监视限制，因此大型工作区不太可能干扰其他文件监视程序和系统服务。</li>
+<li><code>eval</code> 工具现在在其提示和超时参数中记录其默认的 30 秒单元截止时间。</li>
+</ul>
+<h3 id="已修复-4">已修复</h3>
+<ul>
+<li>改进了 Magic Edit，使其可以搜索和读取当前草稿，重试失败的替换而不丢失成功的编辑，在写入之前验证语法，并支持以文本形式发出工具调用的模型。</li>
+<li>修复了当 <code>bash</code> 被扩展替换时的 shell 工具命令处理，包括支持带有远程或沙盒 shell 的纯工具命令行。</li>
+<li>修复了浏览器滚动验证和文档，以便无效的对象形式解释正确的像素增量签名和等效调用。</li>
+<li>修复了 <code>ask</code> 对单选按钮使用不同名称的字段集的处理，防止预选选项与用户的选择一起提交。</li>
+<li>修复了标题生成，当模型明确使用 <code>&#x3C;title/></code> 或 <code>none</code> 来 decli 时停止，同时继续处理下一个错误或不可用回复的候选者。</li>
+<li>修复了自动和推测压缩，因此超大或不可重试的切换请求将转移到下一个可用的压缩方法，而不是重复发送到提供者。</li>
+<li>eval 单元中的 <code>wait()</code> 现在接受显示的子代理 ID，包括 <code>agent://id</code> 表单，同时仍然拒绝属于其他会话的句柄。</li>
+<li>修复了启动和会话模型配置，以便思维级别、模型提供者排序、启用模型白名单、路由选择和固定上游路由在模型交换机、cycling、恢复、计划模式和元数据刷新之间保持一致。</li>
+<li>修复了当中断的响应被丢弃时排队的后续消息丢失的问题，以及修复了可能导致会话无法继续的 TTSR 中断的问题。</li>
+<li>修复了 OpenAI Responses 会话重写之前发送的工具结果的问题，这可能会导致稍后的推理项目被拒绝。</li>
+<li>修复了写入格式和符号链接相关的文件编辑问题，包括不正确的写入失败、丢失快照、重复的 <code>local://</code> 路径以及预览和日志中不正确的符号链接文件名。</li>
+<li>修复了当下载的文件被短暂锁定时，Windows 浏览器下载有时会保留临时 GUID 文件名的问题。</li>
+<li>修复了 RPC 关闭导致 MCP 子进程在会话结束后继续运行的问题。</li>
+<li>修复了顾问和 Spotlight 输出，以便准确表示截断或重复的工具结果，而不会丢失原始内容。</li>
+<li>修复了选择默认模型后仍然存在的首次运行启动警告。</li>
+<li>修复了上下文翻转处理，以便并发簿记不再默默地删除显式翻转，并且跳过翻转会产生警告。</li>
+<li><code>/omfg</code> 现在在成功保存规则后关闭其面板并显示保存的路径；错误使面板保持打开状态。</li>
+<li>修复了使用 glob、大括号或命名用户主目录扩展的主要 <code>cd</code> 命令的 shell 处理。</li>
+<li>Claude 格式的插件代理现在可以正确地将 Claude 工具名称（例如 <code>WebFetch</code>、<code>WebSearch</code>、<code>TodoWrite</code>、<code>AskUserQuestion</code>、<code>MultiEdit</code> 和 <code>Agent</code>）映射到其 OMP 等效名称。</li>
+<li>启动扩展通知现在保持可见，而不是被以后的通知或 MCP 启动状态覆盖。</li>
+<li>修复了 CLI 解析，因此 <code>--plan</code> 在启动、重新启动、fork 或子命令路由期间不再消耗以下 CLI 标志作为其值。</li>
+<li>修复了<code>/usage</code>使用数据库临时锁定时的问题；存储的历史记录仍然可见，并且如果无法刷新，则标记为未同步。</li>
+<li>模型发现现在将纯语音和纯转录模型分类为 TTS 和 STT 模型，而不是聊天模型。</li>
+<li>被父代理阻止的子代理现在会记录它们被父代理阻止。</li>
+<li>修复了 RPC 和 ACP 会话的 SDK 和扩展导入、示例以及特定于会话的扩展发现。</li>
+<li>修复了 X 和 YouTube URL 读取，以尊重 SDK 会话设置，即使全局设置尚未初始化。</li>
+<li>恢复的会话现在可以正确报告结果未知的后台作业，并且 <code>omp --restore</code> 不再在空闲压缩或中断后重播已完成的回合。</li>
+<li>选择性提交现在保留草稿内容和二进制、非文本、超大和 Git LFS 文件的 Git 清理过滤结果，并避免覆盖自草稿创建以来更改的文件。</li>
+<li>修复了启用推测执行和 <code>beforeToolCall</code> 挂钩时 <code>read</code> 挂在图像和其他非文本文件上的问题。</li>
+<li>提供者错误日志现在包括排除人为拒绝故障所需的请求 ID。</li>
+<li>从协作提示开始的会话现在会收到自动标题。</li>
+<li>修复了 <code>/tan</code> 分叉在其分配保持阻塞时过早结束空闲等待的问题。</li>
+</ul>
+<h2 id="oh-my-pipi-natives">@oh-my-pi/pi-natives</h2>
+<h3 id="已修复-5">已修复</h3>
+<ul>
+<li>修复了 <code>grep()</code>、<code>glob()</code>、<code>fuzzyFind()</code>、<code>astGrep()</code>、<code>astEdit()</code> 和递归 shell 搜索命令偶尔挂在具有多个 CPU 的计算机上的问题。</li>
+<li>修复了本机搜索、文件匹配、模糊搜索、AST 和编辑操作中可能导致崩溃或释放后使用错误的取消和超时竞争。</li>
+<li>修复了 <code>grep()</code> 的匹配限制，报告不完整的结果，而不是在目录遍历失败时拒绝。</li>
+<li>修复了从 Bun 缓存安装或独立二进制文件从另一个版本提取本机插件时 <code>@oh-my-pi/pi-natives</code> 无法加载的问题。</li>
+<li>修复了 Linux Wayland 对 GTK 对话框、控制值以及选定行、列表项和选项卡的可访问性和自动化支持。</li>
+<li>修复了命令退出后 Linux PTY 输出偶尔会包含额外的空行的问题。</li>
+<li>修复了在 kitty 键盘协议下 NumLock 关闭时键盘导航键被丢弃的问题。</li>
+<li>修复了 Wayland 屏幕截图在等待屏幕共享选择器时错误超时的问题。</li>
+<li>通过准确报告不确定的调度并防止在回复等待到期后发送操作，提高了 Windows 辅助功能操作的可靠性。</li>
+<li>修复了经典 Win32 和 WinForms 按钮和复选框的 Windows 自动化在不执行 click 的情况下错误地激活应用程序或报告成功的问题。</li>
+<li>修复了 macOS 计算机控制接管恢复，以便在自动化结束后正确恢复之前的活动窗口，并在无法确认恢复时报告故障。</li>
+<li>修复了 macOS 背景键盘和滚动事件，包括通过 iPhone 镜像发送、丢失或意外激活另一个窗口的事件。</li>
+<li>修复了活动键盘布局之外的非拉丁字符和其他字符的 X11 键入问题。</li>
+<li>现在，当目标文件与创建补丁的版本不匹配时，二进制补丁将拒绝应用，从而防止意外替换已更改的文件。</li>
+<li>在 Windows 上，中止或超时阻塞在打开的空标准输入管道上的进程内实用程序现在会终止它，而无需等待管道编写器。</li>
+</ul>
+<h3 id="已删除">已删除</h3>
+<ul>
+<li>删除了当源签出从另一个版本加载本机插件时显示的启动警告；当所需的符号不可用时，不兼容的插件仍然会产生可操作的错误。</li>
+</ul>
+<h2 id="oh-my-pisnapcompact">@oh-my-pi/snapcompact</h2>
+<h3 id="已修复-6">已修复</h3>
+<ul>
+<li>修复了 snapcompact 存档摘要，以便它们准确报告密集中间框架的网格布局。</li>
+</ul>
+<h2 id="oh-my-piomp-stats">@oh-my-pi/omp-stats</h2>
+<h3 id="添加-3">添加</h3>
+<ul>
+<li>添加了 <code>readDailyActivity()</code>，用于读取存储的日常活动，而不会被写入统计数据库的另一个进程阻止；当不存在统计数据库时，它返回 <code>null</code>。</li>
+</ul>
+<h3 id="已修复-7">已修复</h3>
+<ul>
+<li>修复了 Spotlight 基线和调整后的净计算，以使用一致的结果集，提高标题和步骤行的准确性。</li>
+</ul>
+<h2 id="oh-my-pipi-tui">@oh-my-pi/pi-tui</h2>
+<h3 id="添加-4">添加</h3>
+<ul>
+<li>通过 <code>SettingsRuntimeContext.runtimeOptions</code> 添加了主机提供的设置菜单运行时选项，同时保留了思维水平、主题和作曲家形状的内置选项。</li>
+<li>添加了中断元数据，以便主机可以区分父代理终止和用户启动的中断。</li>
+</ul>
+<h3 id="已修复-8">已修复</h3>
+<ul>
+<li>修复了仅模型的上游引脚发生变化时跳过的切换。</li>
+<li>修复了 <code>/usage</code> 活动日历在刷新失败时保留其历史记录，同时指示数据未同步的问题。</li>
+<li>修复了当问题超出面板范围时 SVG 图像在询问表单中闪烁的问题。</li>
+<li>修复了主动转弯状态线，使经过的时间能够以十分之一秒的速度平滑更新。</li>
+<li>修复了在选定模型上再次按 Enter 时将模型分配给角色的问题，这可能会错误地删除角色。</li>
+<li>更新了快速模型选择器 (<code>Alt+P</code>)，以包括会话开始后添加到目录中的模型，即使会话受到 <code>--models</code> 或 <code>enabledModels</code> 限制也是如此。</li>
+<li>修复了当 TUI 和 Tern 在不同计算机上或在没有 Tern 共享文件目录的本地会话中运行时，图像和其他基于路径的文件在 Tern 中显示为不可用的问题。</li>
+</ul>
+<h3 id="已删除-1">已删除</h3>
+<ul>
+<li>删除了<code>OmfgPanelComponent.markSaved</code>和<code>saved</code>面板状态；现在，<code>/omfg</code> 面板会在保存规则后关闭。</li>
+</ul>
+<h2 id="发生了什么变化">发生了什么变化</h2>
+<ul>
+<li>feat(coding-agent): 运行 /wt 的结账后钩子，就像 @Dangerboi 在 <a href="https://github.com/can1357/oh-my-pi/pull/20045">https://github.com/can1357/oh-my-pi/pull/20045</a> 中添加 git worktree</li>
+<li>修复（压缩）：绑定跨提供商切换请求（#20099），作者：@harshaygadekar，<a href="https://github.com/can1357/oh-my-pi/pull/20126">https://github.com/can1357/oh-my-pi/pull/20126</a></li>
+<li>修复（编码代理）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20131">https://github.com/can1357/oh-my-pi/pull/20131</a> 中 @harshaygadekar 以 ttsr 丢弃模式保留尾随消息</li>
+<li>feat(coding-agent)：让扩展通过 <a href="https://github.com/can1357/oh-my-pi/pull/19890">https://github.com/can1357/oh-my-pi/pull/19890</a> 中的 @Dangerboi 的待办事项后端镜像待办事项列表</li>
+<li>修复（编码代理）：在 <a href="https://github.com/can1357/oh-my-pi/pull/19664">https://github.com/can1357/oh-my-pi/pull/19664</a> 中通过 @taibenvenuti 保留跨模型更改和预走的上游路由</li>
+<li>测试（编码代理）：等待<a href="https://github.com/can1357/oh-my-pi/pull/20155%E4%B8%AD@sjawhar%E5%9C%A8%E4%B8%AD%E7%BB%A7%E5%BC%95%E5%AF%BC%E6%8E%A2%E9%92%88%E4%B8%AD%E7%9A%84%E9%80%89%E9%A1%B9%E5%8D%A1%E7%AD%94%E6%A1%88">https://github.com/can1357/oh-my-pi/pull/20155中@sjawhar在中继引导探针中的选项卡答案</a></li>
+<li>修复（ai）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20159">https://github.com/can1357/oh-my-pi/pull/20159</a> 中运行 OpenRouter 本机故障探测器，以获取 @koeria 的未计费推理停止</li>
+<li>修复（代理）：当 captureEvidence declines 在 <a href="https://github.com/can1357/oh-my-pi/pull/19361">https://github.com/can1357/oh-my-pi/pull/19361</a> 中@gtoxlili 声明图像时，防止推测性读取死锁</li>
+<li>测试（编码代理）：在 <a href="https://github.com/can1357/oh-my-pi/pull/19390">https://github.com/can1357/oh-my-pi/pull/19390</a> 中通过 @Xytronix 隔离异步交付会话切换测试中的注册表设置</li>
+<li>修复（natives）：在接管后返回 macOS 键窗口，而另一个程序则由 @will-bogusz 在 <a href="https://github.com/can1357/oh-my-pi/pull/19504">https://github.com/can1357/oh-my-pi/pull/19504</a> 中输入</li>
+<li>修复（natives）：通过 @will-bogusz 在 <a href="https://github.com/can1357/oh-my-pi/pull/19519">https://github.com/can1357/oh-my-pi/pull/19519</a> 中的临时键码键入 X11 键盘映射之外的字符</li>
+<li>修复（本地人）：等待 Wayland 屏幕共享选择器，直到 @will-bogusz 在 <a href="https://github.com/can1357/oh-my-pi/pull/19616">https://github.com/can1357/oh-my-pi/pull/19616</a> 的通话截止日期</li>
+<li>修复（natives）：<a href="https://github.com/can1357/oh-my-pi/pull/19702">https://github.com/can1357/oh-my-pi/pull/19702</a> 中 @will-bogusz 无需按下即可将 macOS 背景键发送到按键窗口</li>
+<li>测试：使用运行测试的包运行子进程，而不是 @sjawhar 在 <a href="https://github.com/can1357/oh-my-pi/pull/19750">https://github.com/can1357/oh-my-pi/pull/19750</a> 中找到的 PATH</li>
+<li>修复（会话）：防止 omp —restore 在 <a href="https://github.com/can1357/oh-my-pi/pull/19867">https://github.com/can1357/oh-my-pi/pull/19867</a> 中重播 @enieuwy 完成的回合</li>
+<li>修复（natives）：在 <a href="https://github.com/can1357/oh-my-pi/pull/19871">https://github.com/can1357/oh-my-pi/pull/19871</a> 中 @will-bogusz 调度后回复超时时报告未确认的 Windows UIA 操作</li>
+<li>修复（coding-agent，tui）：一旦 <a href="https://github.com/can1357/oh-my-pi/pull/19878">https://github.com/can1357/oh-my-pi/pull/19878</a> 中的 @will-bogusz 的目录已存在两个小时，就刷新模型选择器的发现</li>
+<li>修复（natives）：click Windows 按钮，但没有通过 <a href="https://github.com/can1357/oh-my-pi/pull/19889">https://github.com/can1357/oh-my-pi/pull/19889</a> 中的 @will-bogusz 激活其窗口</li>
+<li>修复（统计）：通过 @Xytronix 在 <a href="https://github.com/can1357/oh-my-pi/pull/19897">https://github.com/can1357/oh-my-pi/pull/19897</a> 中测量每个尺寸箱的聚光灯保持基线
+*修复（统计）：仅对 <a href="https://github.com/can1357/oh-my-pi/pull/19899">https://github.com/can1357/oh-my-pi/pull/19899</a> 中 @Xytronix 的剪辑自己的回电收取 Spotlight 调整后的网络费用</li>
+<li>修复（ai）：对于 <a href="https://github.com/can1357/oh-my-pi/pull/19980">https://github.com/can1357/oh-my-pi/pull/19980</a> 中的@JamieJ5926 的裸对象模式，回退到非严格模式</li>
+<li>修复（会话）：<a href="https://github.com/can1357/oh-my-pi/pull/19982">https://github.com/can1357/oh-my-pi/pull/19982</a> 中的@JamieJ5926 将顾问缩短的工具结果标记为仅顾问
+*修复（natives）：当核心从<a href="https://github.com/can1357/oh-my-pi/pull/19983%E4%B8%AD%E7%9A%84@JamieJ5926%E7%9A%84bun%E7%BC%93%E5%AD%98%E8%BF%90%E8%A1%8C%E6%97%B6%E6%89%BE%E5%88%B0%E5%B9%B3%E5%8F%B0%E5%8F%B6%E5%AD%90">https://github.com/can1357/oh-my-pi/pull/19983中的@JamieJ5926的bun缓存运行时找到平台叶子</a>
+*修复（目录）：仅列出该帐户可以通过<a href="https://github.com/can1357/oh-my-pi/pull/19984%E4%B8%AD%E7%9A%84@JamieJ5926%E9%80%89%E6%8B%A9%E7%9A%84Copilot%E5%9E%8B%E5%8F%B7">https://github.com/can1357/oh-my-pi/pull/19984中的@JamieJ5926选择的Copilot型号</a></li>
+<li>修复（编码代理）：在 <a href="https://github.com/can1357/oh-my-pi/pull/19985">https://github.com/can1357/oh-my-pi/pull/19985</a> 中通过 @JamieJ5926 选择模型后，删除了启动无模型警告</li>
+<li>修复（tui）：在刚刚分配的模型行上重复 Enter 保持其在 <a href="https://github.com/can1357/oh-my-pi/pull/19986">https://github.com/can1357/oh-my-pi/pull/19986</a> 中 @JamieJ5926 的角色</li>
+<li>修复（目录）：通过<a href="https://github.com/can1357/oh-my-pi/pull/19988%E4%B8%AD%E7%9A%84@JamieJ5926%E5%B0%86GPT-6.2%E6%80%9D%E7%BB%B4%E7%BB%91%E5%AE%9A%E5%88%B0%E5%85%B6%E6%8F%90%E7%A4%BA%E7%AC%A6%E5%89%8D%E7%BC%80">https://github.com/can1357/oh-my-pi/pull/19988中的@JamieJ5926将GPT-6.2思维绑定到其提示符前缀</a>
+*修复（ai）：停止思考循环启发式判断@JamieJ5926在<a href="https://github.com/can1357/oh-my-pi/pull/19990%E4%B8%AD%E7%9A%84%E7%BB%93%E6%9E%84%E5%8C%96%E7%AD%94%E6%A1%88%E5%86%85%E5%AE%B9">https://github.com/can1357/oh-my-pi/pull/19990中的结构化答案内容</a>
+*修复（目录）：正确的Bedrock Kimi K3.1思考工作由@alblez在<a href="https://github.com/can1357/oh-my-pi/pull/19998">https://github.com/can1357/oh-my-pi/pull/19998</a>
+*修复（编码代理）：停止重新发送@nick-maderight在<a href="https://github.com/can1357/oh-my-pi/pull/20011%E4%B8%AD%E7%8C%9C%E6%B5%8B%E7%9A%84%E8%A2%AB%E6%8B%92%E7%BB%9D%E7%9A%84%E8%BF%9C%E7%A8%8B%E5%8E%8B%E7%BC%A9%E7%AB%AF%E7%82%B9">https://github.com/can1357/oh-my-pi/pull/20011中猜测的被拒绝的远程压缩端点</a></li>
+<li>修复（tui）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20017">https://github.com/can1357/oh-my-pi/pull/20017</a> 中 @jaredlyon 保留询问形式的 SVG 图片重新光栅化每一帧
+*修复（xfs）：通过<a href="https://github.com/can1357/oh-my-pi/pull/20022%E4%B8%AD%E7%9A%84@sjawhar%E5%85%B3%E9%97%AD%E5%85%B6%E4%BD%9C%E4%B8%9A%E9%98%9F%E5%88%97%E6%9D%A5%E5%81%9C%E6%AD%A2%E5%B9%B6%E8%A1%8C%E8%A1%8C%E8%B5%B0">https://github.com/can1357/oh-my-pi/pull/20022中的@sjawhar关闭其作业队列来停止并行行走</a>
+*修复（会话）：报告后台bash作业被<a href="https://github.com/can1357/oh-my-pi/pull/20026%E4%B8%AD%E7%9A%84@eggpeat%E8%BF%9B%E7%A8%8B%E9%80%80%E5%87%BA%E7%BB%88%E6%AD%A2">https://github.com/can1357/oh-my-pi/pull/20026中的@eggpeat进程退出终止</a>
+*修复（聚光灯）：在<a href="https://github.com/can1357/oh-my-pi/pull/20032%E4%B8%AD%E4%BF%9D%E7%95%99@eggpeat%E7%9A%84%E5%AE%8C%E6%95%B4%E7%BC%96%E8%BE%91%E7%BB%93%E6%9E%9C%E5%92%8C%E9%94%99%E8%AF%AF%E5%93%8D%E5%BA%94">https://github.com/can1357/oh-my-pi/pull/20032中保留@eggpeat的完整编辑结果和错误响应</a></li>
+<li>修复（目录）：将 Devin 的其他测量的 Gemini 模型预算为 @will-bogusz 在 <a href="https://github.com/can1357/oh-my-pi/pull/20038">https://github.com/can1357/oh-my-pi/pull/20038</a> 中每张图像计费的 1,089 个代币</li>
+<li>文档：将 zh-CN 自述文件提供者列表与 <a href="https://github.com/can1357/oh-my-pi/pull/20044">https://github.com/can1357/oh-my-pi/pull/20044</a> 中 @bigHippoZz 的英文自述文件同步</li>
+<li>修复（获取）：通过 <a href="https://github.com/can1357/oh-my-pi/pull/20057">https://github.com/can1357/oh-my-pi/pull/20057</a> 中的 @eggpeat 将会话设置传递到 URL 特殊处理程序中
+*修复（编辑）：在<a href="https://github.com/can1357/oh-my-pi/pull/20059%E4%B8%AD%E9%80%9A%E8%BF%87@eggpeat%E6%A3%80%E6%9F%A5%E5%86%99%E5%85%A5%E5%90%8E%E7%A3%81%E7%9B%98%E9%AA%8C%E8%AF%81%E4%B8%AD%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%86%85%E5%AE%B9">https://github.com/can1357/oh-my-pi/pull/20059中通过@eggpeat检查写入后磁盘验证中的格式化内容</a>
+*修复（编码代理）：更新损坏的SDK示例和<a href="https://github.com/can1357/oh-my-pi/pull/20060%E4%B8%AD@eggpeat%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E7%A4%BA%E4%BE%8B">https://github.com/can1357/oh-my-pi/pull/20060中@eggpeat的类型检查示例</a></li>
+<li>修复（代理）：当 <a href="https://github.com/can1357/oh-my-pi/pull/20061">https://github.com/can1357/oh-my-pi/pull/20061</a> 中的提供者流被 @eggpeat 拒绝时，保留 errorId 和 errorStatus
+*修复（编码代理）：重试原子文件中的瞬态Windows EBUSY，替换为<a href="https://github.com/can1357/oh-my-pi/pull/20062%E4%B8%AD%E7%9A%84@jchanghong023">https://github.com/can1357/oh-my-pi/pull/20062中的@jchanghong023</a></li>
+<li>修复（tui）：通过 @jchanghong023 在 <a href="https://github.com/can1357/oh-my-pi/pull/20064">https://github.com/can1357/oh-my-pi/pull/20064</a> 中保持 time_spent 读数在旋转速率帧中保持新鲜</li>
+<li>修复（rpc）：在<a href="https://github.com/can1357/oh-my-pi/pull/20067%E4%B8%AD%E7%94%B1@jchanghong023%E9%80%80%E5%87%BA%E4%B9%8B%E5%89%8D%E7%AD%89%E5%BE%85%E7%A7%81%E6%9C%89MCP%E4%B8%BB%E6%9C%BA%E6%8B%86%E5%8D%B8">https://github.com/can1357/oh-my-pi/pull/20067中由@jchanghong023退出之前等待私有MCP主机拆卸</a></li>
+<li>测试（tui）：通过 @jchanghong023 在 <a href="https://github.com/can1357/oh-my-pi/pull/20068">https://github.com/can1357/oh-my-pi/pull/20068</a> 中使嵌入装置主机路径和 Windows 安全</li>
+<li>测试（编码代理）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20071">https://github.com/can1357/oh-my-pi/pull/20071</a> 中的 @jchanghong023 进行夹具清理之前停止 dsm-prelude JS 工作程序</li>
+<li>测试（lsp）：期望诊断目标中的主机分隔符与<a href="https://github.com/can1357/oh-my-pi/pull/20072%E4%B8%AD%E7%9A%84@jchanghong023%E5%8C%B9%E9%85%8D">https://github.com/can1357/oh-my-pi/pull/20072中的@jchanghong023匹配</a>
+*修复（编码代理）：将本机主机合约保留在@roboomp在<a href="https://github.com/can1357/oh-my-pi/pull/20073%E4%B8%AD%E5%8F%91%E5%B8%83%E7%9A%84%E5%8C%85%E4%B8%AD">https://github.com/can1357/oh-my-pi/pull/20073中发布的包中</a></li>
+<li>测试（编码代理）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20074">https://github.com/can1357/oh-my-pi/pull/20074</a> 中 @jchanghong023 清理 gh 夹具之前释放 GitHub 缓存</li>
+<li>修复（ai）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20082">https://github.com/can1357/oh-my-pi/pull/20082</a> 中 @smartinio 的 openai-completions 上保留 Gemini function.thought_signature</li>
+<li>在 <a href="https://github.com/can1357/oh-my-pi/pull/20087">https://github.com/can1357/oh-my-pi/pull/20087</a> 中 @fsoikin 保证的情况下，将小键盘按键映射为插入符号控件</li>
+<li>perf(coding-agent)：将嵌入式中继扩展保留在堆之外，直到 @iliaal 将其安装在 <a href="https://github.com/can1357/oh-my-pi/pull/20089">https://github.com/can1357/oh-my-pi/pull/20089</a> 中</li>
+<li>perf(ai): 仅当 <a href="https://github.com/can1357/oh-my-pi/pull/20090">https://github.com/can1357/oh-my-pi/pull/20090</a> 中的 @iliaal 扰动请求时才读取提示扰动池</li>
+<li>修复（目录）：价格光标的 GPT-5.6 长上下文输出为 <a href="https://github.com/can1357/oh-my-pi/pull/20093">https://github.com/can1357/oh-my-pi/pull/20093</a> 中 @will-bogusz 的 1.5 倍
+*修复（目录）：Devin的GPT-5.6长上下文层的价格已发布，快速通道由@will-bogusz包含在<a href="https://github.com/can1357/oh-my-pi/pull/20094%E4%B8%AD">https://github.com/can1357/oh-my-pi/pull/20094中</a>
+*修复（读取）：匹配：原始帮助到<a href="https://github.com/can1357/oh-my-pi/pull/20101%E4%B8%AD@eggpeat%E7%9A%84%E6%B4%BB%E5%8A%A8%E8%A1%8C%E5%89%8D%E7%BC%80%E6%A8%A1%E5%BC%8F">https://github.com/can1357/oh-my-pi/pull/20101中@eggpeat的活动行前缀模式</a></li>
+<li>测试（编码代理）：预计在 <a href="https://github.com/can1357/oh-my-pi/pull/20105">https://github.com/can1357/oh-my-pi/pull/20105</a> 中 @sjawhar 的 auth-broker 重试预算测试中启动重试
+*修复（编码代理）：使模型范围遵循<a href="https://github.com/can1357/oh-my-pi/pull/20108%E4%B8%AD@taibenvenuti%E7%9A%84modelProviderOrder">https://github.com/can1357/oh-my-pi/pull/20108中@taibenvenuti的modelProviderOrder</a>
+*修复（编码代理）：从@taibenvenuti在<a href="https://github.com/can1357/oh-my-pi/pull/20109%E4%B8%AD%E9%80%89%E5%AE%9A%E7%9A%84%E8%8C%83%E5%9B%B4%E6%9D%A1%E7%9B%AE%E4%B8%AD%E7%A7%8D%E5%AD%90%E5%90%AF%E5%8A%A8%E6%80%9D%E8%80%83">https://github.com/can1357/oh-my-pi/pull/20109中选定的范围条目中种子启动思考</a></li>
+<li>修复（natives）：在<a href="https://github.com/can1357/oh-my-pi/pull/20110%E4%B8%AD%E8%AF%BB%E5%8F%96Linux%E6%BB%91%E5%9D%97%E5%92%8C%E6%BB%9A%E5%8A%A8%E6%9D%A1%E5%80%BC%E4%BB%A5%E5%8F%8A@will-bogusz%E9%80%89%E6%8B%A9%E7%9A%84%E7%8A%B6%E6%80%81">https://github.com/can1357/oh-my-pi/pull/20110中读取Linux滑块和滚动条值以及@will-bogusz选择的状态</a>
+*修复（mcp）：当服务器拒绝<a href="https://github.com/can1357/oh-my-pi/pull/20113%E4%B8%AD%E7%9A%84@DanielTatarkin">https://github.com/can1357/oh-my-pi/pull/20113中的@DanielTatarkin</a> 2026-07-28时，回退到握手时代</li>
+<li>修复（计划）：<a href="https://github.com/can1357/oh-my-pi/pull/20114%E4%B8%AD@SuperUserA%E6%81%A2%E5%A4%8D%E5%90%8E%E6%81%A2%E5%A4%8D%E9%A2%84%E8%AE%A1%E5%88%92%E6%A8%A1%E5%9E%8B">https://github.com/can1357/oh-my-pi/pull/20114中@SuperUserA恢复后恢复预计划模型</a></li>
+<li>test(ai): 在 <a href="https://github.com/can1357/oh-my-pi/pull/20118">https://github.com/can1357/oh-my-pi/pull/20118</a> 中 @sjawhar 的 exec-handlers 测试后恢复内置游标传输</li>
+<li>test(ai)：在<a href="https://github.com/can1357/oh-my-pi/pull/20119%E4%B8%AD%E7%94%B1@sjawhar%E5%B0%81%E5%A0%B5WebSocket%E9%98%9F%E5%88%97%E6%BA%A2%E5%87%BA%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%844097%E5%B8%A7%E7%AA%81%E5%8F%91">https://github.com/can1357/oh-my-pi/pull/20119中由@sjawhar封堵WebSocket队列溢出测试中的4097帧突发</a></li>
+<li>修复（编码代理）：@roboomp 在 <a href="https://github.com/can1357/oh-my-pi/pull/20120">https://github.com/can1357/oh-my-pi/pull/20120</a> 中由 lsp 监视树持有的有界 inotify 监视</li>
+<li>修复（编码代理）：<a href="https://github.com/can1357/oh-my-pi/pull/20122">https://github.com/can1357/oh-my-pi/pull/20122</a> 中 @FnSGit 记录的空站检测和计划重试</li>
+<li>测试（编码代理）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20138">https://github.com/can1357/oh-my-pi/pull/20138</a> 中 @sjawhar 的恢复重试横幅测试中保持时钟</li>
+<li>修复（ai）：<a href="https://github.com/can1357/oh-my-pi/pull/20139">https://github.com/can1357/oh-my-pi/pull/20139</a> 中 @roboomp 剥离 openai 拒绝的嵌套字符类模式</li>
+<li>修复（ai）：将 402 计费错误主体视为使用限制，因此由 @Komzpa 在 <a href="https://github.com/can1357/oh-my-pi/pull/20141">https://github.com/can1357/oh-my-pi/pull/20141</a> 中运行回退</li>
+<li>修复（ai）：从<a href="https://github.com/can1357/oh-my-pi/pull/20142%E4%B8%AD@Komzpa%E9%9A%94%E7%A6%BB%E7%9A%84%E6%8D%9F%E5%9D%8F%E7%9A%84agent.db%E4%B8%AD%E6%81%A2%E5%A4%8D%E5%AD%98%E5%82%A8%E7%9A%84%E5%87%AD%E6%8D%AE">https://github.com/can1357/oh-my-pi/pull/20142中@Komzpa隔离的损坏的agent.db中恢复存储的凭据</a></li>
+<li>修复（目录）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20144">https://github.com/can1357/oh-my-pi/pull/20144</a> 中禁用 @Komzpa 的 GPT-6.1 Terra 推理时不发送任何努力</li>
+<li>修复(eval): 让 wait() 获取 @Komzpa 在 <a href="https://github.com/can1357/oh-my-pi/pull/20148">https://github.com/can1357/oh-my-pi/pull/20148</a> 中显示的子代理 id</li>
+<li>修复（ai）：匹配<a href="https://github.com/can1357/oh-my-pi/pull/20154%E4%B8%AD@eggpeat%E8%B6%85%E6%97%B6%E9%94%99%E8%AF%AF%E6%A8%A1%E5%BC%8F%E4%B8%AD%E7%9A%84%E6%B5%81%E5%81%9C%E6%BB%9E%E6%8E%AA%E8%BE%9E">https://github.com/can1357/oh-my-pi/pull/20154中@eggpeat超时错误模式中的流停滞措辞</a></li>
+<li>修复（内置）：在 <a href="https://github.com/can1357/oh-my-pi/pull/19338">https://github.com/can1357/oh-my-pi/pull/19338</a> 中观察 @jchanghong023 在阻塞的 Windows 标准输入管道上的取消</li>
+<li>修复（natives）：从 <a href="https://github.com/can1357/oh-my-pi/pull/19346">https://github.com/can1357/oh-my-pi/pull/19346</a> 中 @HeyItsGilbert 的不同相同大小构建中重新提取嵌入式插件
+*修复（ai）：在<a href="https://github.com/can1357/oh-my-pi/pull/19347%E4%B8%AD%E5%BA%8F%E5%88%97%E5%8C%96@eggpeat%E7%9A%84%E5%8F%8D%E9%87%8D%E5%8A%9B%E5%87%AD%E8%AF%81%E5%88%86%E7%BA%A7">https://github.com/can1357/oh-my-pi/pull/19347中序列化@eggpeat的反重力凭证分级</a></li>
+<li>修复（auth-broker）：<a href="https://github.com/can1357/oh-my-pi/pull/19348">https://github.com/can1357/oh-my-pi/pull/19348</a> 中的 @Alex-Wengg 仅将代理自己的 404 视为缺失端点</li>
+<li>修复（评估）：通过 @Alex-Wengg 在 <a href="https://github.com/can1357/oh-my-pi/pull/19349">https://github.com/can1357/oh-my-pi/pull/19349</a> 中向模型公开默认单元格截止日期
+*修复（反重力-cli）：在<a href="https://github.com/can1357/oh-my-pi/pull/19358%E4%B8%AD@0xprincess%E5%B0%86%E5%B7%A5%E5%85%B7%E7%BB%93%E6%9E%9C%E5%9B%BE%E5%83%8F%E4%BD%9C%E4%B8%BAACP%E6%8F%90%E7%A4%BA%E5%9D%97%E4%BC%A0%E9%80%92">https://github.com/can1357/oh-my-pi/pull/19358中@0xprincess将工具结果图像作为ACP提示块传递</a></li>
+<li>修复（标题）：在 <a href="https://github.com/can1357/oh-my-pi/pull/19365">https://github.com/can1357/oh-my-pi/pull/19365</a> 中 @DaddyMonster 的会话命名中包含协作提示</li>
+<li>修复（编码代理）：<a href="https://github.com/can1357/oh-my-pi/pull/19383">https://github.com/can1357/oh-my-pi/pull/19383</a> 中 @nnnnoel 记录失败的提供者请求 ID
+*修复（提交）：在<a href="https://github.com/can1357/oh-my-pi/pull/19392%E4%B8%AD%E7%94%B1@eggpeat%E5%86%BB%E7%BB%93%E9%80%89%E6%8B%A9%E6%80%A7%E8%8D%89%E7%A8%BF%E4%B8%AD%E7%9A%84%E6%95%B4%E4%B8%AA%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9">https://github.com/can1357/oh-my-pi/pull/19392中由@eggpeat冻结选择性草稿中的整个文件内容</a></li>
+<li>Chore(ci)：将操作/签出固定到 <a href="https://github.com/can1357/oh-my-pi/pull/16547">https://github.com/can1357/oh-my-pi/pull/16547</a> 中 @DeryFerd 的提交 SHA</li>
+<li>修复(omfg): 一旦 @suiso11 在 <a href="https://github.com/can1357/oh-my-pi/pull/20069">https://github.com/can1357/oh-my-pi/pull/20069</a> 中保存规则，就关闭面板
+*修复（浏览器中继）：在<a href="https://github.com/can1357/oh-my-pi/pull/20086%E4%B8%AD@roboomp%E5%9C%A8%E9%9D%A2%E6%9D%BF%E4%B8%AD%E6%98%BE%E7%A4%BA%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E6%9C%AC%E6%9C%BA%E4%B8%BB%E6%9C%BA%E6%8B%92%E7%BB%9D">https://github.com/can1357/oh-my-pi/pull/20086中@roboomp在面板中显示浏览器的本机主机拒绝</a></li>
+<li>修复（ai）：@roboomp 在 <a href="https://github.com/can1357/oh-my-pi/pull/20092">https://github.com/can1357/oh-my-pi/pull/20092</a> 中从 codex.response.metadata 捕获 codex 回合状态
+*修复（ai）：报告苹果调频完成原因，而不是通过@roboomp在<a href="https://github.com/can1357/oh-my-pi/pull/20102%E4%B8%AD%E8%AE%B0%E5%BD%95%E5%AE%83">https://github.com/can1357/oh-my-pi/pull/20102中记录它</a>
+*修复（tui）：通过<a href="https://github.com/can1357/oh-my-pi/pull/20104%E4%B8%AD%E7%9A%84@roboomp%E4%BB%85%E9%80%9A%E8%BF%87%E8%B7%AF%E5%BE%84%E5%B0%86%E5%AA%92%E4%BD%93%E5%8F%91%E9%80%81%E5%88%B0%E6%9C%AC%E6%9C%BA%E4%B8%8A%E7%9A%84tern">https://github.com/can1357/oh-my-pi/pull/20104中的@roboomp仅通过路径将媒体发送到本机上的tern</a>
+*修复（编码代理）：让棕褐色叉子等待@Fun10165在<a href="https://github.com/can1357/oh-my-pi/pull/20151%E4%B8%AD%E7%9A%84%E5%88%86%E9%85%8D">https://github.com/can1357/oh-my-pi/pull/20151中的分配</a></li>
+<li>修复（snapcompact）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20163">https://github.com/can1357/oh-my-pi/pull/20163</a> 中的 @will-bogusz 中说明存档框架在其摘要中使用的每个网格</li>
+<li>修复（编码代理）：让日志附加 @holny 在 <a href="https://github.com/can1357/oh-my-pi/pull/20164">https://github.com/can1357/oh-my-pi/pull/20164</a> 中进行的实验性防滚架竞赛</li>
+<li>修复（目录）：从 @roboomp 在 <a href="https://github.com/can1357/oh-my-pi/pull/20169">https://github.com/can1357/oh-my-pi/pull/20169</a> 中的 openai 参考中命名未捆绑的 Codex 模型
+*修复（询问）：拒绝<a href="https://github.com/can1357/oh-my-pi/pull/20170%E4%B8%AD%E7%9A%84@kaluli123123%E6%AF%8F%E4%B8%AA%E6%97%A0%E7%BA%BF%E7%94%B5%E9%83%BD%E5%B8%A6%E6%9C%89%E8%87%AA%E5%B7%B1%E5%90%8D%E7%A7%B0%E7%9A%84%E5%AD%97%E6%AE%B5%E9%9B%86">https://github.com/can1357/oh-my-pi/pull/20170中的@kaluli123123每个无线电都带有自己名称的字段集</a></li>
+<li>修复（浏览器）：拒绝 <a href="https://github.com/can1357/oh-my-pi/pull/20171">https://github.com/can1357/oh-my-pi/pull/20171</a> 中 @kaluli123123 未指定像素增量的滚动对象</li>
+<li>修复（标题）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20173">https://github.com/can1357/oh-my-pi/pull/20173</a> 中 @roboomp 清理模型 declines 后停止回退</li>
+<li>修复（本地人）：在 <a href="https://github.com/can1357/oh-my-pi/pull/17756">https://github.com/can1357/oh-my-pi/pull/17756</a> 中 @will-bogusz 接管点击后，保持后台 iPhone 镜像点击到达手机</li>
+<li>feat(coding-agent,tui)：在 <a href="https://github.com/can1357/oh-my-pi/pull/19925">https://github.com/can1357/oh-my-pi/pull/19925</a> 中 @Dangerboi 在“设置”中选择待办事项后端</li>
+<li>修复（代理）：在 <a href="https://github.com/can1357/oh-my-pi/pull/20174">https://github.com/can1357/oh-my-pi/pull/20174</a> 中的 @kaluli123123 的 bash 覆盖后面的本机 bash 上运行工具命令行</li>
+<li>修复（shell）：<a href="https://github.com/can1357/oh-my-pi/pull/20236">https://github.com/can1357/oh-my-pi/pull/20236</a> 中 @roboomp 跨叉共享索引数组元素</li>
+</ul>
+<h2 id="新贡献者">新贡献者</h2>
+<ul>
+<li>@gtoxlili 在 <a href="https://github.com/can1357/oh-my-pi/pull/19361">https://github.com/can1357/oh-my-pi/pull/19361</a> 中做出了第一个贡献</li>
+<li>@smartinio 在 <a href="https://github.com/can1357/oh-my-pi/pull/20082">https://github.com/can1357/oh-my-pi/pull/20082</a> 中做出了第一个贡献</li>
+<li>@fsoikin 在 <a href="https://github.com/can1357/oh-my-pi/pull/20087">https://github.com/can1357/oh-my-pi/pull/20087</a> 中做出了第一个贡献</li>
+<li>@DanielTatarkin 在 <a href="https://github.com/can1357/oh-my-pi/pull/20113">https://github.com/can1357/oh-my-pi/pull/20113</a> 中做出了第一个贡献</li>
+<li>@DaddyMonster 在 <a href="https://github.com/can1357/oh-my-pi/pull/19365">https://github.com/can1357/oh-my-pi/pull/19365</a> 中做出了第一个贡献</li>
+<li>@DeryFerd 在 <a href="https://github.com/can1357/oh-my-pi/pull/16547">https://github.com/can1357/oh-my-pi/pull/16547</a> 中做出了第一个贡献</li>
+<li>@suiso11 在 <a href="https://github.com/can1357/oh-my-pi/pull/20069">https://github.com/can1357/oh-my-pi/pull/20069</a> 中做出了第一个贡献
+<strong>完整 Changelog</strong>：<a href="https://github.com/can1357/oh-my-pi/compare/v19.1.0...v19.1.1">https://github.com/can1357/oh-my-pi/compare/v19.1.0…v19.1.1</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/can1357/oh-my-pi">can1357/oh-my-pi</a> · 🏷️ 版本：<code>v19.1.1</code> · 📅 发布：2026-11-23 · <a href="https://github.com/can1357/oh-my-pi/releases/tag/v19.1.1">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <span></span> <a href="/zh/release_note/oh-my-pi/oh-my-pi_v19.1.0"> <span class="k">上一个 →</span> <span class="t">v19.1.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/can1357/oh-my-pi/releases/tag/v19.1.1" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/can1357/oh-my-pi" target="_blank" rel="noopener"> <span>can1357/oh-my-pi</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#oh-my-pipi-agent-core" class>@oh-my-pi/pi-agent-core</a><a href="#已修复" class="lv3">已修复</a><a href="#oh-my-pipi-ai" class>@oh-my-pi/pi-ai</a><a href="#添加" class="lv3">添加</a><a href="#已更改" class="lv3">已更改</a><a href="#已修复-1" class="lv3">已修复</a><a href="#oh-my-pi浏览器中继" class>@oh-my-pi/浏览器中继</a><a href="#已修复-2" class="lv3">已修复</a><a href="#oh-my-pipi-目录" class>@oh-my-pi/pi-目录</a><a href="#添加-1" class="lv3">添加</a><a href="#已修复-3" class="lv3">已修复</a><a href="#oh-my-pipi-coding-agent" class>@oh-my-pi/pi-coding-agent</a><a href="#重大变化" class="lv3">重大变化</a><a href="#添加-2" class="lv3">添加</a><a href="#已更改-1" class="lv3">已更改</a><a href="#已修复-4" class="lv3">已修复</a><a href="#oh-my-pipi-natives" class>@oh-my-pi/pi-natives</a><a href="#已修复-5" class="lv3">已修复</a><a href="#已删除" class="lv3">已删除</a><a href="#oh-my-pisnapcompact" class>@oh-my-pi/snapcompact</a><a href="#已修复-6" class="lv3">已修复</a><a href="#oh-my-piomp-stats" class>@oh-my-pi/omp-stats</a><a href="#添加-3" class="lv3">添加</a><a href="#已修复-7" class="lv3">已修复</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/oh-my-pi/oh-my-pi_v19.1.1" aria-current="true"> <span class="v">v19.1.1</span> <span class="d">26-11-23</span> </a> </li><li> <a href="/zh/release_note/oh-my-pi/oh-my-pi_v19.1.0"> <span class="v">v19.1.0</span> <span class="d">26-11-21</span> </a> </li><li> <a href="/zh/release_note/oh-my-pi/oh-my-pi_v19.0.1"> <span class="v">v19.0.1</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/oh-my-pi/oh-my-pi_v19.0.0"> <span class="v">v19.0.0</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/oh-my-pi/oh-my-pi_v18.22.2"> <span class="v">v18.22.2</span> <span class="d">26-11-18</span> </a> </li><li> <a href="/zh/release_note/oh-my-pi/oh-my-pi_v18.22.1"> <span class="v">v18.22.1</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/oh-my-pi/oh-my-pi_v18.22.0"> <span class="v">v18.22.0</span> <span class="d">26-11-16</span> </a> </li><li> <a href="/zh/release_note/oh-my-pi/oh-my-pi_v18.21.0"> <span class="v">v18.21.0</span> <span class="d">26-11-16</span> </a> </li> </ul> <a href="/zh/releases/oh-my-pi" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 40 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

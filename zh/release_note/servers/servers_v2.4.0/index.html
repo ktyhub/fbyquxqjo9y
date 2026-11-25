@@ -1,0 +1,257 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>servers v2.4.0 — STAGS NextStack</title><meta name="description" content="v2.4.0 fixes six vulnerabilities in three servers. Upgrade @modelcontextprotocol/server-filesystem to 2.3.0, and mcp-server-git and mcp-server-fetch to 2026.11.11."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/servers/servers_v2.4.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/servers/2.4.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/servers/servers_v2.4.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/servers/2.4.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="servers v2.4.0 — STAGS NextStack"><meta property="og:description" content="v2.4.0 fixes six vulnerabilities in three servers. Upgrade @modelcontextprotocol/server-filesystem to 2.3.0, and mcp-server-git and mcp-server-fetch to 2026.11.11."><meta property="og:url" content="https://www.stags.cn/zh/release_note/servers/servers_v2.4.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/servers/servers_v2.4.0/#article","headline":"servers v2.4.0 release notes","datePublished":"2026-11-11","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/modelcontextprotocol/servers"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/servers/2.4.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/servers/servers_v2.4.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/servers/2.4.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/servers/2.4.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/servers/2.4.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/servers/2.4.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/servers/2.4.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/servers">servers</a> </nav> <h1 class="detail-title"> <span class="p">servers</span> v2.4.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年11月11日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener"> <span class="k">来源</span>modelcontextprotocol/servers </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/servers/2.4.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/servers/servers_v2.4.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="servers-v240">servers v2.4.0</h1>
+<h2 id="安全修复">安全修复</h2>
+<p>v2.4.0修复了三台服务器中的六个漏洞。升级<code>@modelcontextprotocol/server-filesystem</code>至2.3.0，
+以及 <code>mcp-server-git</code> 和 <code>mcp-server-fetch</code> 至 2026.11.11。</p>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>受影响</th>
+<th>固定在</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@modelcontextprotocol/server-filesystem</code></td>
+<td>2.3.0 之前的所有版本以及 2025.1.14 到 2026.8.31 的最新版本</td>
+<td>2.3.0</td>
+</tr>
+<tr>
+<td><code>mcp-server-git</code></td>
+<td>通过2026.11.4</td>
+<td>2026.11.11</td>
+</tr>
+<tr>
+<td><code>mcp-server-fetch</code></td>
+<td>通过2026.11.4</td>
+<td>2026.11.11</td>
+</tr>
+</tbody>
+</table>
+<h3 id="modelcontextprotocolserver-filesystem-230"><code>@modelcontextprotocol/server-filesystem</code> 2.3.0</h3>
+<ul>
+<li><strong>读取保留在已检查的文件中</strong>（Linux 和 macOS）。读取工具和文件资源现在打开一个相对于所检查的目录的文件，就像写入已经做的那样，因此在访问检查和读取之间交换符号链接的目录不能再从允许的目录之外返回文件。 FIFO、套接字或设备被拒绝而不是读取。 <strong>在 Windows 上，这会缩小竞争范围但不会结束</strong>，至于写入 (#5260) (<a href="https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-p9cv-8g75-4xcg">GHSA-p9cv-8g75-4xcg</a>)</li>
+<li><strong><code>move_file</code> 仅移动它检查的源。</strong> 一个设备内的移动首先以新名称将源从其自己的检查目录中取出，因此交换为符号链接的源目录不能再将外部文件带入允许的目录中，在该目录中该文件将变得可读（<a href="https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-7m4x-rv66-mxhh">GHSA-7m4x-rv66-mxhh</a>）</li>
+</ul>
+<h3 id="mcp-server-git-20261111"><code>mcp-server-git</code> 2026.11.11</h3>
+<ul>
+<li><strong>存储库自己的 Git 配置不再能让服务器运行程序。</strong> untrusted 存储库上的只读调用（例如 <code>git_status</code>）用于使用服务器的权限运行其 <code>.git/config</code> 中命名的命令（<code>core.fsmonitor</code>、<code>diff.external</code>、挂钩、过滤和合并驱动程序、签名）。现在每个 Git 命令都会覆盖这些设置，并且早于 2.31 的 Git 将忽略覆盖，被拒绝 (<a href="https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-6hqx-gqrx-c5r2">GHSA-6hqx-gqrx-c5r2</a>)</li>
+<li><strong><code>--repository</code> 限制涵盖了替代对象存储、链接工作树和 Git 目录中的链接。</strong> 允许的存储库内的存储库可以通过 <code>objects/info/alternates</code> 读取另一个存储库的对象，或者将链接工作树的 Git 目录作为允许的存储库传递。两者都被拒绝，Git 目录中的符号链接通向允许的存储库之外也是如此。 <strong>在 Windows 上，尚未覆盖目录连接</strong> (#5520) (<a href="https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-q74p-4wrc-q7w6">GHSA-q74p-4wrc-q7w6</a>)</li>
+</ul>
+<h3 id="mcp-server-fetch-20261111"><code>mcp-server-fetch</code> 2026.11.11</h3>
+<ul>
+<li><strong>IPv6 站点本地地址是私有的。</strong> 私有地址防护将 <code>fec0::/10</code> 读取为公共地址。现在已被拒绝，全球单播 (<code>2000::/3</code>) 之外的任何不携带 IPv4 地址 (<a href="https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-3rxj-6jhw-qfv7">GHSA-3rxj-6jhw-qfv7</a>) 的 IPv6 地址也被拒绝</li>
+<li>**robots.txt 与站点将解析的路径以及写入的路径相匹配，因此 <code>//private</code> 或 <code>/x/../private</code> 无法再通过 <code>Disallow: /private</code> (<a href="https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-f9hh-cmx9-2f23">GHSA-f9hh-cmx9-2f23</a>)</li>
+</ul>
+<h3 id="从日期版本的-npm-版本升级">从日期版本的 npm 版本升级</h3>
+<p>TypeScript 服务器从日期版本（2025.x、2026.x）迁移到 1.0.0 中的语义版本。软件包管理器将 2.3.0 的排名低于每个 2025.x 和 2026.x 版本，因此他们不会将其作为升级提供。如果您使用的是 <code>@modelcontextprotocol/server-filesystem</code> 的日期版本，请显式安装 2.3.0：<code>npm install @modelcontextprotocol/server-filesystem@2.3.0</code>。</p>
+<h2 id="套餐">套餐</h2>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>版本</th>
+<th>登记处</th>
+<th>在此版本中</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@modelcontextprotocol/server-everything</code></td>
+<td><code>2.3.0</code></td>
+<td>npm</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>@modelcontextprotocol/server-filesystem</code></td>
+<td><code>2.3.0</code></td>
+<td>npm</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>@modelcontextprotocol/server-memory</code></td>
+<td><code>2.1.1</code></td>
+<td>npm</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>@modelcontextprotocol/server-sequential-thinking</code></td>
+<td><code>2.1.1</code></td>
+<td>npm</td>
+<td>不变</td>
+</tr>
+<tr>
+<td><code>mcp-server-fetch</code></td>
+<td><code>2026.11.11</code></td>
+<td>PyPI</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>mcp-server-git</code></td>
+<td><code>2026.11.11</code></td>
+<td>PyPI</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>mcp-server-time</code></td>
+<td><code>2026.11.11</code></td>
+<td>PyPI</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td>发布账本：<a href="https://claude.ai/artifact/Wdm6VAnQ7tXoNmVKZPQsDf">v2/chore/5509-release-v2.4.0</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="modelcontextprotocol服务器-一切-230">@modelcontextprotocol/服务器-一切 2.3.0</h2>
+<h3 id="发生了什么变化">发生了什么变化</h3>
+<ul>
+<li>修复（所有内容）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5449">https://github.com/modelcontextprotocol/servers/pull/5449</a> 中以 UTF-8 字节计数任务/更新答案</li>
+<li>everything：默认将HTTP传输绑定到环回，HOST通过<a href="https://github.com/modelcontextprotocol/servers/pull/5452%E4%B8%AD%E7%9A%84@cliffhall%E8%BF%9B%E8%A1%8C%E6%89%A9%E5%B1%95">https://github.com/modelcontextprotocol/servers/pull/5452中的@cliffhall进行扩展</a></li>
+<li>壮举：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5475">https://github.com/modelcontextprotocol/servers/pull/5475</a> 中描述每个工具输入属性 (#3669)</li>
+<li>杂务（deps）：每月依赖项刷新（2026 年 11 月）由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5476">https://github.com/modelcontextprotocol/servers/pull/5476</a></li>
+<li>修复（docker）：通过 <a href="https://github.com/modelcontextprotocol/servers/pull/5473">https://github.com/modelcontextprotocol/servers/pull/5473</a> 中的 @cliffhall 以非 root 用户身份运行每个服务器映像</li>
+<li>杂务（一切）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5478">https://github.com/modelcontextprotocol/servers/pull/5478</a> 中删除未使用的 jszip 依赖项</li>
+<li>杂务：<a href="https://github.com/modelcontextprotocol/servers/pull/5470">https://github.com/modelcontextprotocol/servers/pull/5470</a> 中 @github-actions[bot] 的版本包</li>
+<li>发布v2.4.0：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5518%E4%B8%AD%E7%9A%84@cliffhall%E5%B0%86v2/main%E5%90%88%E5%B9%B6%E5%88%B0main%E4%B8%AD">https://github.com/modelcontextprotocol/servers/pull/5518中的@cliffhall将v2/main合并到main中</a></li>
+</ul>
+<h2 id="modelcontextprotocol服务器文件系统-230">@modelcontextprotocol/服务器文件系统 2.3.0</h2>
+<h3 id="发生了什么变化-1">发生了什么变化</h3>
+<ul>
+<li>杂务（docker）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5469">https://github.com/modelcontextprotocol/servers/pull/5469</a> 中从工作区锁定文件构建文件系统、内存和顺序思考</li>
+<li>壮举：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5475">https://github.com/modelcontextprotocol/servers/pull/5475</a> 中描述每个工具输入属性 (#3669)</li>
+<li>feat(文件系统，内存)：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5460%E4%B8%AD%E7%9A%84@cliffhall%E8%AF%B4%E6%98%8E%E4%BD%95%E6%97%B6%E4%BD%BF%E7%94%A8%E6%AF%8F%E4%B8%AA%E5%88%97%E8%A1%A8%E5%92%8C%E5%88%A0%E9%99%A4%E5%B7%A5%E5%85%B7">https://github.com/modelcontextprotocol/servers/pull/5460中的@cliffhall说明何时使用每个列表和删除工具</a>
+*修复（docker）：通过@cliffhall在<a href="https://github.com/modelcontextprotocol/servers/pull/5473%E4%B8%AD%E4%BB%A5%E9%9D%9Eroot%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E8%BF%90%E8%A1%8C%E6%AF%8F%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%98%A0%E5%83%8F">https://github.com/modelcontextprotocol/servers/pull/5473中以非root用户身份运行每个服务器映像</a>
+*修复（文件系统）：在<a href="https://github.com/modelcontextprotocol/servers/pull/5446%E4%B8%AD%E8%AF%BB%E5%8F%96@cliffhall%E7%9A%84search_files">https://github.com/modelcontextprotocol/servers/pull/5446中读取@cliffhall的search_files</a> exceptPatterns，如directory_tree
+*修复（文件系统）：以“/ **”结尾的exportPatterns glob修剪<a href="https://github.com/modelcontextprotocol/servers/pull/5456%E4%B8%AD%E7%94%B1@cliffhall%E5%91%BD%E5%90%8D%E7%9A%84%E7%9B%AE%E5%BD%95">https://github.com/modelcontextprotocol/servers/pull/5456中由@cliffhall命名的目录</a>
+*修复（文件系统）：匹配<a href="https://github.com/modelcontextprotocol/servers/pull/5447%E4%B8%AD@cliffhall%E4%BB%A5%E6%8D%A2%E8%A1%8C%E7%AC%A6%E7%BB%93%E5%B0%BE%E7%9A%84edit_file">https://github.com/modelcontextprotocol/servers/pull/5447中@cliffhall以换行符结尾的edit_file</a> oldText</li>
+<li>修复（文件系统）：<a href="https://github.com/modelcontextprotocol/servers/pull/5448">https://github.com/modelcontextprotocol/servers/pull/5448</a> 中的 @cliffhall 报告丢失的父目录，而不是原始 chdir 错误
+*壮举（文件系统）：在<a href="https://github.com/modelcontextprotocol/servers/pull/5450%E4%B8%AD%E6%8B%92%E7%BB%9D@cliffhall%E5%9C%A8Windows%E4%B8%8A%E7%9A%84NTFS%E5%A4%87%E7%94%A8%E6%95%B0%E6%8D%AE%E6%B5%81%E8%B7%AF%E5%BE%84">https://github.com/modelcontextprotocol/servers/pull/5450中拒绝@cliffhall在Windows上的NTFS备用数据流路径</a></li>
+<li>feat(filesystem): 拒绝 Windows 设备名称和 <a href="https://github.com/modelcontextprotocol/servers/pull/5458">https://github.com/modelcontextprotocol/servers/pull/5458</a> 中 @cliffhall 路径中的尾随点/空格</li>
+<li>文件系统：<a href="https://github.com/modelcontextprotocol/servers/pull/5451">https://github.com/modelcontextprotocol/servers/pull/5451</a> 中的 @cliffhall 使用 —read-only-dir 进行每个目录的只读访问</li>
+<li>修复（文件系统）：GHSA-p9cv-8g75-4xcg 由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5516">https://github.com/modelcontextprotocol/servers/pull/5516</a></li>
+<li>杂务：<a href="https://github.com/modelcontextprotocol/servers/pull/5470">https://github.com/modelcontextprotocol/servers/pull/5470</a> 中 @github-actions[bot] 的版本包</li>
+<li>发布v2.4.0：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5518%E4%B8%AD%E7%9A%84@cliffhall%E5%B0%86v2/main%E5%90%88%E5%B9%B6%E5%88%B0main%E4%B8%AD">https://github.com/modelcontextprotocol/servers/pull/5518中的@cliffhall将v2/main合并到main中</a></li>
+</ul>
+<h2 id="modelcontextprotocol服务器内存-211">@modelcontextprotocol/服务器内存 2.1.1</h2>
+<h3 id="发生了什么变化-2">发生了什么变化</h3>
+<ul>
+<li>杂务（docker）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5469">https://github.com/modelcontextprotocol/servers/pull/5469</a> 中从工作区锁定文件构建文件系统、内存和顺序思考</li>
+<li>壮举：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5475">https://github.com/modelcontextprotocol/servers/pull/5475</a> 中描述每个工具输入属性 (#3669)</li>
+<li>feat(文件系统，内存)：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5460%E4%B8%AD%E7%9A%84@cliffhall%E8%AF%B4%E6%98%8E%E4%BD%95%E6%97%B6%E4%BD%BF%E7%94%A8%E6%AF%8F%E4%B8%AA%E5%88%97%E8%A1%A8%E5%92%8C%E5%88%A0%E9%99%A4%E5%B7%A5%E5%85%B7">https://github.com/modelcontextprotocol/servers/pull/5460中的@cliffhall说明何时使用每个列表和删除工具</a>
+*修复（内存）：停止锁心跳刷新<a href="https://github.com/modelcontextprotocol/servers/pull/5462%E4%B8%AD@cliffhall%E4%B8%8D%E5%86%8D%E6%8B%A5%E6%9C%89%E7%9A%84%E9%94%81">https://github.com/modelcontextprotocol/servers/pull/5462中@cliffhall不再拥有的锁</a></li>
+<li>文档（内存）：通过 <a href="https://github.com/modelcontextprotocol/servers/pull/5474">https://github.com/modelcontextprotocol/servers/pull/5474</a> 中的 @cliffhall 提供 Docker 保持容器正常工作的升级步骤</li>
+<li>修复（docker）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5473">https://github.com/modelcontextprotocol/servers/pull/5473</a> 中以非 root 用户身份运行每个服务器映像</li>
+<li>杂务：<a href="https://github.com/modelcontextprotocol/servers/pull/5470">https://github.com/modelcontextprotocol/servers/pull/5470</a> 中 @github-actions[bot] 的版本包</li>
+<li>发布v2.4.0：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5518%E4%B8%AD%E7%9A%84@cliffhall%E5%B0%86v2/main%E5%90%88%E5%B9%B6%E5%88%B0main%E4%B8%AD">https://github.com/modelcontextprotocol/servers/pull/5518中的@cliffhall将v2/main合并到main中</a></li>
+</ul>
+<h2 id="mcp-服务器获取-20261111">mcp 服务器获取 2026.11.11</h2>
+<h3 id="发生了什么变化-3">发生了什么变化</h3>
+<ul>
+<li>杂务（deps）：每月依赖项刷新（2026 年 11 月）由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5476">https://github.com/modelcontextprotocol/servers/pull/5476</a></li>
+<li>修复（docker）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5473">https://github.com/modelcontextprotocol/servers/pull/5473</a> 中以非 root 用户身份运行每个服务器映像</li>
+<li>feat(fetch)：在 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5453">https://github.com/modelcontextprotocol/servers/pull/5453</a> 中读取响应主体大小时限制其大小
+*杂务（python）：采用ruff 0.17并清除<a href="https://github.com/modelcontextprotocol/servers/pull/5479%E4%B8%AD@cliffhall%E7%9A%84%E6%96%B0%E6%A3%89%E7%BB%92%E5%8F%91%E7%8E%B0">https://github.com/modelcontextprotocol/servers/pull/5479中@cliffhall的新棉绒发现</a></li>
+<li>修复（获取）：GHSA-3rxj-6jhw-qfv7 由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5515">https://github.com/modelcontextprotocol/servers/pull/5515</a></li>
+<li>杂务：<a href="https://github.com/modelcontextprotocol/servers/pull/5510">https://github.com/modelcontextprotocol/servers/pull/5510</a> 中 @github-actions[bot] 为 2026.11.11 标记 Python CalVer 版本</li>
+<li>发布v2.4.0：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5518%E4%B8%AD%E7%9A%84@cliffhall%E5%B0%86v2/main%E5%90%88%E5%B9%B6%E5%88%B0main%E4%B8%AD">https://github.com/modelcontextprotocol/servers/pull/5518中的@cliffhall将v2/main合并到main中</a></li>
+</ul>
+<h2 id="mcp-服务器-git-20261111">mcp-服务器-git 2026.11.11</h2>
+<h3 id="发生了什么变化-4">发生了什么变化</h3>
+<ul>
+<li>文档（git，时间）：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5464%E4%B8%AD%E7%9A%84@cliffhall%E4%BD%BFZed%E9%85%8D%E7%BD%AE%E7%89%87%E6%AE%B5%E6%9C%89%E6%95%88JSON">https://github.com/modelcontextprotocol/servers/pull/5464中的@cliffhall使Zed配置片段有效JSON</a></li>
+<li>文档（git）：<a href="https://github.com/modelcontextprotocol/servers/pull/5454%E4%B8%AD%E7%9A%84@cliffhall%E5%9C%A8--help%E5%92%8Cvalidate_repo_path%E4%B8%AD%E7%8A%B6%E6%80%81--repository%E9%99%90%E5%88%B6">https://github.com/modelcontextprotocol/servers/pull/5454中的@cliffhall在—help和validate_repo_path中状态—repository限制</a></li>
+<li>修复（git）：<a href="https://github.com/modelcontextprotocol/servers/pull/5455">https://github.com/modelcontextprotocol/servers/pull/5455</a> 中的 @cliffhall 要求 git_log max_count 至少为 1</li>
+<li>杂务（deps）：每月依赖项刷新（2026 年 11 月）由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5476">https://github.com/modelcontextprotocol/servers/pull/5476</a></li>
+<li>修复（docker）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5473">https://github.com/modelcontextprotocol/servers/pull/5473</a> 中以非 root 用户身份运行每个服务器映像
+*杂务（python）：采用ruff 0.17并清除<a href="https://github.com/modelcontextprotocol/servers/pull/5479%E4%B8%AD@cliffhall%E7%9A%84%E6%96%B0%E6%A3%89%E7%BB%92%E5%8F%91%E7%8E%B0">https://github.com/modelcontextprotocol/servers/pull/5479中@cliffhall的新棉绒发现</a></li>
+<li>修复(git): GHSA-6hqx-gqrx-c5r2 由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5514">https://github.com/modelcontextprotocol/servers/pull/5514</a></li>
+<li>杂务：<a href="https://github.com/modelcontextprotocol/servers/pull/5510">https://github.com/modelcontextprotocol/servers/pull/5510</a> 中 @github-actions[bot] 为 2026.11.11 标记 Python CalVer 版本</li>
+<li>发布v2.4.0：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5518%E4%B8%AD%E7%9A%84@cliffhall%E5%B0%86v2/main%E5%90%88%E5%B9%B6%E5%88%B0main%E4%B8%AD">https://github.com/modelcontextprotocol/servers/pull/5518中的@cliffhall将v2/main合并到main中</a></li>
+</ul>
+<h2 id="mcp-服务器时间-20261111">mcp-服务器时间 2026.11.11</h2>
+<h3 id="发生了什么变化-5">发生了什么变化</h3>
+<ul>
+<li>文档（git，时间）：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5464%E4%B8%AD%E7%9A%84@cliffhall%E4%BD%BFZed%E9%85%8D%E7%BD%AE%E7%89%87%E6%AE%B5%E6%9C%89%E6%95%88JSON">https://github.com/modelcontextprotocol/servers/pull/5464中的@cliffhall使Zed配置片段有效JSON</a></li>
+<li>杂务（deps）：每月依赖项刷新（2026 年 11 月）由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5476">https://github.com/modelcontextprotocol/servers/pull/5476</a></li>
+<li>修复（docker）：通过 <a href="https://github.com/modelcontextprotocol/servers/pull/5473">https://github.com/modelcontextprotocol/servers/pull/5473</a> 中的 @cliffhall 以非 root 用户身份运行每个服务器映像
+*杂务（python）：采用ruff 0.17并清除<a href="https://github.com/modelcontextprotocol/servers/pull/5479%E4%B8%AD@cliffhall%E7%9A%84%E6%96%B0%E6%A3%89%E7%BB%92%E5%8F%91%E7%8E%B0">https://github.com/modelcontextprotocol/servers/pull/5479中@cliffhall的新棉绒发现</a></li>
+<li>杂务：<a href="https://github.com/modelcontextprotocol/servers/pull/5510">https://github.com/modelcontextprotocol/servers/pull/5510</a> 中 @github-actions[bot] 为 2026.11.11 标记 Python CalVer 版本</li>
+<li>发布v2.4.0：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5518%E4%B8%AD%E7%9A%84@cliffhall%E5%B0%86v2/main%E5%90%88%E5%B9%B6%E5%88%B0main%E4%B8%AD">https://github.com/modelcontextprotocol/servers/pull/5518中的@cliffhall将v2/main合并到main中</a></li>
+</ul>
+<h2 id="存储库">存储库</h2>
+<h3 id="发生了什么变化-6">发生了什么变化</h3>
+<ul>
+<li>文档：修复 <a href="https://github.com/modelcontextprotocol/servers/pull/5467">https://github.com/modelcontextprotocol/servers/pull/5467</a> 中 @cliffhall 的 README 和 ADDITIONAL.md 中的替代文本和死链接</li>
+<li>Chore(ci)：通过@cliffhall在<a href="https://github.com/modelcontextprotocol/servers/pull/5459%E4%B8%AD%E5%8C%BA%E5%88%86%E6%AF%8F%E4%B8%AA%E6%9B%B4%E6%94%B9%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84MCP%E6%8E%A5%E5%8F%A3%EF%BC%8C%E5%AF%B9%E4%BA%8E%E6%AF%8F%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%99%A8">https://github.com/modelcontextprotocol/servers/pull/5459中区分每个更改的服务器的MCP接口，对于每个服务器</a></li>
+<li>杂务（deps）：将 @<a href="https://github.com/modelcontextprotocol/servers/pull/5507">https://github.com/modelcontextprotocol/servers/pull/5507</a> 中 @cliffhall 的 lint 工具的 minimatch 覆盖为 ^11.0.1
+<strong>完整 Changelog</strong>：<a href="https://github.com/modelcontextprotocol/servers/compare/v2.3.0...v2.4.0">https://github.com/modelcontextprotocol/servers/compare/v2.3.0…v2.4.0</a></li>
+</ul>
+<h2 id="感谢您帮助我们改进">感谢您帮助我们改进</h2>
+<p>此版本解决了这些社区成员报告的问题和漏洞。感谢您花时间举报这些问题：</p>
+<ul>
+<li>@soarkit (#5418, #5419)</li>
+<li>@Feldspar-AI-Agent (#4741)</li>
+<li>@jashory (GHSA-q74p-4wrc-q7w6)</li>
+<li>@KryptosAI (#3669)</li>
+<li>@nomunomu0504 (#5071)</li>
+<li>@Pranav-Nexus (#5216)</li>
+<li>@reservoir-cmyk (GHSA-7m4x-rv66-mxhh)</li>
+<li>@ShayanMuhammad-CS (#5230)</li>
+<li>@ShieldPi1 (GHSA-3rxj-6jhw-qfv7)</li>
+<li>@simpleqt (#5214)</li>
+<li>@superbot-helper (GHSA-6hqx-gqrx-c5r2)</li>
+<li>@ucsurf (GHSA-f9hh-cmx9-2f23)</li>
+<li>@ZackaryLoevseth (GHSA-p9cv-8g75-4xcg)
+对于这些贡献者，他们的拉取请求原型化了此版本中发布的更改。根据存储库的 <a href="https://github.com/modelcontextprotocol/servers/blob/v2/main/CONTRIBUTING.md">问题，而不是拉取请求</a> 政策，他们的 PR 被关闭，并且由维护者重建更改，并将问题归功于他们：</li>
+<li>@radeshgovind-2005 (#3732)，工具输入属性的描述，适用于#3669</li>
+<li>@Jim1874 (#4004)，工具输入属性的描述，适用于#3669</li>
+<li>@Lubrsy706 (#4165)，工具输入属性的描述，用于#3669</li>
+<li>@go165 (#4317)，工具输入属性的描述，用于#3669</li>
+<li>@m9ter1a (#4547)，工具输入属性的描述，适用于#3669</li>
+<li>@yash161004 (#4569)，工具输入属性的描述，适用于#3669</li>
+<li>@Pranav-Nexus (#4771)，工具输入属性的描述，适用于#3669</li>
+<li>@somuai (#4742)，服务器 Dockerfiles 中的非 root 用户，用于 #4741</li>
+<li>@teddiesloco (#4745)，服务器 Dockerfiles 中的非 root 用户，用于 #4741</li>
+<li>@Ashfaqbs (#4783)，服务器 Dockerfiles 中的非 root 用户，用于 #4741</li>
+<li>@killertcell428 (#4169)，README 和 ADDITIONAL.md 链接更正，针对 #5212</li>
+<li>@wisdom222 (#4675)，README 和 ADDITIONAL.md 链接更正，针对 #5212</li>
+<li>@pratikgx (#4884)，README 和 ADDITIONAL.md 链接更正，针对 #5212</li>
+<li>@abhicris (#3989)，Zed 配置片段中有效的 JSON，适用于 #5213</li>
+<li>@Cyberfilo (#4231)，Zed 配置片段中有效的 JSON，适用于 #5213</li>
+<li>@xubenqiang（在#5216 上发布的修复），search_files 排除与directory_tree 匹配的模式，针对#5216</li>
+<li>@neuralmanacle (#4185)，获取响应的流字节上限，用于#5370</li>
+<li>@TheodorNEngoy (#3303)，一个环回默认绑定，对所有 HTTP 传输进行 HOST 覆盖，#5371</li>
+<li>@andreiminca (#4523)，拒绝 Windows 上的 NTFS 备用数据流路径，#5375</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/modelcontextprotocol/servers">modelcontextprotocol/servers</a> · 🏷️ 版本：<code>v2.4.0</code> · 📅 发布：2026-11-11 · <a href="https://github.com/modelcontextprotocol/servers/releases/tag/v2.4.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/servers/servers_v2.5.0"> <span class="k">← 下一个</span> <span class="t">v2.5.0</span> </a> <a href="/zh/release_note/servers/servers_v2.3.0"> <span class="k">上一个 →</span> <span class="t">v2.3.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/modelcontextprotocol/servers/releases/tag/v2.4.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener"> <span>modelcontextprotocol/servers</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#安全修复" class>安全修复</a><a href="#modelcontextprotocolserver-filesystem-230" class="lv3">@modelcontextprotocol/server-filesystem 2.3.0</a><a href="#mcp-server-git-20261111" class="lv3">mcp-server-git 2026.11.11</a><a href="#mcp-server-fetch-20261111" class="lv3">mcp-server-fetch 2026.11.11</a><a href="#从日期版本的-npm-版本升级" class="lv3">从日期版本的 npm 版本升级</a><a href="#套餐" class>套餐</a><a href="#modelcontextprotocol服务器-一切-230" class>@modelcontextprotocol/服务器-一切 2.3.0</a><a href="#发生了什么变化" class="lv3">发生了什么变化</a><a href="#modelcontextprotocol服务器文件系统-230" class>@modelcontextprotocol/服务器文件系统 2.3.0</a><a href="#发生了什么变化-1" class="lv3">发生了什么变化</a><a href="#modelcontextprotocol服务器内存-211" class>@modelcontextprotocol/服务器内存 2.1.1</a><a href="#发生了什么变化-2" class="lv3">发生了什么变化</a><a href="#mcp-服务器获取-20261111" class>mcp 服务器获取 2026.11.11</a><a href="#发生了什么变化-3" class="lv3">发生了什么变化</a><a href="#mcp-服务器-git-20261111" class>mcp-服务器-git 2026.11.11</a><a href="#发生了什么变化-4" class="lv3">发生了什么变化</a><a href="#mcp-服务器时间-20261111" class>mcp-服务器时间 2026.11.11</a><a href="#发生了什么变化-5" class="lv3">发生了什么变化</a><a href="#存储库" class>存储库</a><a href="#发生了什么变化-6" class="lv3">发生了什么变化</a><a href="#感谢您帮助我们改进" class>感谢您帮助我们改进</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/servers/servers_v2.5.0"> <span class="v">v2.5.0</span> <span class="d">26-11-18</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v2.4.0" aria-current="true"> <span class="v">v2.4.0</span> <span class="d">26-11-11</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v2.3.0"> <span class="v">v2.3.0</span> <span class="d">26-11-04</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v2.2.0"> <span class="v">v2.2.0</span> <span class="d">26-10-28</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v2.1.0"> <span class="v">v2.1.0</span> <span class="d">26-10-25</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v2.0.0"> <span class="v">v2.0.0</span> <span class="d">26-10-19</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v1.0.0"> <span class="v">v1.0.0</span> <span class="d">26-10-11</span> </a> </li><li> <a href="/zh/release_note/servers/servers_2026.8.31"> <span class="v">2026.8.31</span> <span class="d">26-08-31</span> </a> </li> </ul> <a href="/zh/releases/servers" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

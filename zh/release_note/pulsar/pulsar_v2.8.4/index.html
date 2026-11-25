@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>pulsar v2.8.4 — STAGS NextStack</title><meta name="description" content="[improve][broker] Do not print the log that the topic does not exist #13535 · [fix][broker] Fix NPE when nextValidLedger is null #13975"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/pulsar/pulsar_v2.8.4/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/pulsar/2.8.4"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/pulsar/pulsar_v2.8.4/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/pulsar/2.8.4"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="pulsar v2.8.4 — STAGS NextStack"><meta property="og:description" content="[improve][broker] Do not print the log that the topic does not exist #13535 · [fix][broker] Fix NPE when nextValidLedger is null #13975"><meta property="og:url" content="https://www.stags.cn/zh/release_note/pulsar/pulsar_v2.8.4/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/pulsar/pulsar_v2.8.4/#article","headline":"pulsar v2.8.4 release notes","datePublished":"2022-10-04","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/apache/pulsar"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/pulsar/2.8.4/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/pulsar/pulsar_v2.8.4/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/pulsar/2.8.4/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/pulsar/2.8.4/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/pulsar/2.8.4/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/pulsar/2.8.4/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/pulsar/2.8.4/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/pulsar">pulsar</a> </nav> <h1 class="detail-title"> <span class="p">pulsar</span> v2.8.4 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2022年10月4日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/apache/pulsar" target="_blank" rel="noopener"> <span class="k">来源</span>apache/pulsar </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/pulsar/2.8.4"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/pulsar/pulsar_v2.8.4/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="pulsar-v284">pulsar v2.8.4</h1>
+<h4 id="经纪人">经纪人</h4>
+<ul>
+<li>[改进][broker]不打印主题不存在的日志<a href="https://github.com/apache/pulsar/pull/13535">#13535</a></li>
+<li>[修复][broker]修复 nextValidLedger 为空时的 NPE <a href="https://github.com/apache/pulsar/pull/13975">#13975</a></li>
+<li>[修复][broker]修复 <code>ReplicatedSubscriptionsController</code> 发送启用重复数据删除的标记消息时的 NPE <a href="https://github.com/apache/pulsar/pull/14017">#14017</a></li>
+<li>[修复][经纪人]修复消费者的 avg-messagePerEntry 指标 <a href="https://github.com/apache/pulsar/pull/14330">#14330</a></li>
+<li>[改进][broker]设置 bookie 机架信息时验证机架名称 <a href="https://github.com/apache/pulsar/pull/14336">#14336</a></li>
+<li>[改进][broker]优化查找网卡流程。 <a href="https://github.com/apache/pulsar/pull/14340">#14340</a></li>
+<li>[修复][broker]修复订阅已删除时的 NPE <a href="https://github.com/apache/pulsar/pull/14363">#14363</a></li>
+<li>[修复][broker] 修复 Broker HealthCheck 端点暴露竞争条件 <a href="https://github.com/apache/pulsar/pull/14367">#14367</a></li>
+<li>[改进][经纪人]使用Compactor时优化RawReader#create <a href="https://github.com/apache/pulsar/pull/14447">#14447</a></li>
+<li>[fix][broker] 修复压缩后的 topic 最新消息无法读取的问题 <a href="https://github.com/apache/pulsar/pull/14449">#14449</a></li>
+<li>[修复][broker]修复 ServerCnx#handleProducer 中 ProducerFuture 未完成的问题 <a href="https://github.com/apache/pulsar/pull/14467">#14467</a></li>
+<li>[修复][经纪人]修复 ManagedLedgerImpl 中的 NPW <a href="https://github.com/apache/pulsar/pull/14481">#14481</a></li>
+<li>[改进][broker] ConcurrentLongHashMap 支持收缩 <a href="https://github.com/apache/pulsar/pull/14497">#14497</a></li>
+<li>[修复][broker]修复了由于未清理主题策略服务状态而导致的错误行为。 <a href="https://github.com/apache/pulsar/pull/14503">#14503</a></li>
+<li>[改进][broker]优化内存使用：支持收缩pendingAcks映射<a href="https://github.com/apache/pulsar/pull/14515">#14515</a></li>
+<li>[修复][broker]托管账本关闭时取消卸载任务<a href="https://github.com/apache/pulsar/pull/14744">#14744</a></li>
+<li>[改进][经纪人]减少ConcurrentLong地图不必要的扩展并设置<a href="https://github.com/apache/pulsar/pull/14562">#14562</a></li>
+<li>[修复][broker]修复检查 BacklogQuota 时元数据存储死锁 <a href="https://github.com/apache/pulsar/pull/14634">#14634</a></li>
+<li>[改进][经纪人]支持地图或集合缩小<a href="https://github.com/apache/pulsar/pull/14663">#14663</a></li>
+<li>[修复][经纪人]修复由于账本翻转导致消息丢失的问题<a href="https://github.com/apache/pulsar/pull/14664">#14664</a></li>
+<li>[修复][broker]将 splitNamespaceBundle 设置为 <code>readonly=false</code> <a href="https://github.com/apache/pulsar/pull/14680">#14680</a></li>
+<li>[修复][broker]修复了所有消费者断开连接时重复的延迟消息<a href="https://github.com/apache/pulsar/pull/14740">#14740</a></li>
+<li>[fix][broker] 修复非持久游标的错误状态 <a href="https://github.com/apache/pulsar/pull/14869">#14869</a></li>
+<li>[修复][broker]改进未找到主题的错误日志记录<a href="https://github.com/apache/pulsar/pull/14892">#14892</a></li>
+<li>[修复][broker]修复主题策略阅读器关闭错误 <a href="https://github.com/apache/pulsar/pull/14897">#14897</a></li>
+<li>[修复][经纪人]如果重置正在进行则返回<a href="https://github.com/apache/pulsar/pull/14978">#14978</a></li>
+<li>[修复][经纪人]修复Replicator中潜在的NPE <a href="https://github.com/apache/pulsar/pull/15003">#15003</a></li>
+<li>[修复][经纪人]修复更新lastMarkDeleteEntry字段中的竞争条件<a href="https://github.com/apache/pulsar/pull/15031">#15031</a></li>
+<li>[修复][经纪人]修复添加重复消费者的可能性<a href="https://github.com/apache/pulsar/pull/16826">#16826</a></li>
+<li>[修复][经纪人] 跟进 ManagedCursorImpl #15031 <a href="https://github.com/apache/pulsar/pull/15067">#15067</a> 中的竞争条件修复</li>
+<li>[清理] [经纪人] 删除无用的代码以避免 OpReadEntry#checkReadCompletion 中的混乱 <a href="https://github.com/apache/pulsar/pull/15104">#15104</a></li>
+<li>[修复][broker]主题正常关闭时取消<code>fencedTopicMonitoringTask</code>。 <a href="https://github.com/apache/pulsar/pull/15202">#15202</a></li>
+<li>[fix][broker] 修复 MessageDeduplication#inactiveProducers 可能无法正确持久化的问题 <a href="https://github.com/apache/pulsar/pull/15206">#15206</a></li>
+<li>[修复][经纪人]修复<code>OpAddEntry</code>中超时和完成之间的竞争条件<a href="https://github.com/apache/pulsar/pull/15233">#15233</a></li>
+<li>[修复][经纪人]修复了 RateLimiter#tryAcquire 的问题 <a href="https://github.com/apache/pulsar/pull/15306">#15306</a></li>
+<li>[改进][代理]使用收缩映射进行消息重新传递。 <a href="https://github.com/apache/pulsar/pull/15342">#15342</a></li>
+<li>[改进][broker]支持ConcurrentSortedLongPairSet收缩<a href="https://github.com/apache/pulsar/pull/15354">#15354</a></li>
+<li>[改进][broker]如果无法发送 ping 或 pong 消息，则关闭连接 <a href="https://github.com/apache/pulsar/pull/15382">#15382</a></li>
+<li>[cleanup][broker] 修复枚举名称中的拼写错误并正确处理通道关闭，因为 writeAndFlush 是异步的 <a href="https://github.com/apache/pulsar/pull/15384">#15384</a></li>
+<li>[修复][经纪人]避免心跳主题卸载。 <a href="https://github.com/apache/pulsar/pull/15393">#15393</a></li>
+<li>[修复][broker] 修复主题创建失败的竞争条件后代理中的死锁 <a href="https://github.com/apache/pulsar/pull/15570">#15570</a></li>
+<li>[修复][经纪人]修复 getNumberOfEntriesInStorage 中的计算 <a href="https://github.com/apache/pulsar/pull/15627">#15627</a></li>
+<li>[修复][broker]修复设置 <code>AutoTopicCreationOverride</code> 时的 NPE <a href="https://github.com/apache/pulsar/pull/15653">#15653</a></li>
+<li>[修复][broker]修复设置积压配额时创建生产者失败的问题 <a href="https://github.com/apache/pulsar/pull/15663">#15663</a></li>
+<li>[修复][经纪商]修复将值设置为 <code>RangeCache</code> 时的 NPE <a href="https://github.com/apache/pulsar/pull/15707">#15707</a></li>
+<li>[fix][broker] 修复 <code>AutoUpdateSchemaEnabled=false</code> 时无法启用系统主题的问题 <a href="https://github.com/apache/pulsar/pull/15759">#15759</a></li>
+<li>[fix][broker] 修复 Linux 上网卡速度的错误单位 <a href="https://github.com/apache/pulsar/pull/15770">#15770</a></li>
+<li>[修复][broker]修复 MessageDeduplication 中的 NPE <a href="https://github.com/apache/pulsar/pull/15820">#15820</a></li>
+<li>[修复][经纪人]修复在 <code>OpReadEntry</code> 中找不到账本 ID 时的 NPE <a href="https://github.com/apache/pulsar/pull/15837">#15837</a></li>
+<li>[修复][broker]跳过更新标记删除位置时，使用执行器执行回调以防止死锁 <a href="https://github.com/apache/pulsar/pull/15971">#15971</a></li>
+<li>[修复][经纪人]修复了因时间限制而减少积压时的NPE。 <a href="https://github.com/apache/pulsar/pull/16235">#16235</a></li>
+<li>[fix][broker]修复 getInternalStats 偶尔再次缺少 LeaderInfo <a href="https://github.com/apache/pulsar/pull/16238">#16238</a></li>
+<li>[修复][经纪人]修复 RawReader 故障 <a href="https://github.com/apache/pulsar/pull/16390">#16390</a></li>
+<li>[修复][broker] 跳过读取更多条目以进行等待读取，没有更多条目 <a href="https://github.com/apache/pulsar/pull/16400">#16400</a></li>
+<li>[修复][经纪人]修复没有这样的账本异常<a href="https://github.com/apache/pulsar/pull/16420">#16420</a></li>
+<li>[fix][broker] 修复 RawReader hasMessageAvailable 在没有消息时返回 true <a href="https://github.com/apache/pulsar/pull/16443">#16443</a></li>
+<li>[修复][经纪人]使用选项 -m 修复内部统计数据导致活动账本恢复然后关闭 <a href="https://github.com/apache/pulsar/pull/16662">#16662</a></li>
+<li>[修复][经纪人]修复传递错误的身份验证数据<a href="https://github.com/apache/pulsar/pull/16840">#16840</a></li>
+<li>[修复][broker] ManagedCursor：创建元账本失败时标记删除无回调 <a href="https://github.com/apache/pulsar/pull/16841">#16841</a></li>
+<li>[改进][broker]避免在并发创建分区主题时重新连接<a href="https://github.com/apache/pulsar/pull/16867">#16867</a></li>
+<li>[改进][broker]在某些极端情况下回收 OpReadEntry <a href="https://github.com/apache/pulsar/pull/16869">#16869</a></li>
+<li>[修复][经纪人]修复压缩订阅确认标记消息问题。 <a href="https://github.com/apache/pulsar/pull/16918">#16918</a></li>
+</ul>
+<h4 id="安全">安全</h4>
+<ul>
+<li>[修复][秒] 对 AuthorizationService 使用提供商的 canLookupAsync 方法 <a href="https://github.com/apache/pulsar/pull/11777">#11777</a></li>
+<li>[改进][秒]优化允许命名空间操作的逻辑<a href="https://github.com/apache/pulsar/pull/13090">#13090</a></li>
+<li>[改进][秒]完全支持设置 SSL 提供程序、密码和协议 <a href="https://github.com/apache/pulsar/pull/13740">#13740</a></li>
+<li>[fix][sec] 具有命名空间的角色 Produce authz 也可以获得主题 <a href="https://github.com/apache/pulsar/pull/13773">#13773</a></li>
+<li>[改进][秒]完全支持代理服务和代理服务的 SSL 提供程序、密码和协议 <a href="https://github.com/apache/pulsar/pull/15034">#15034</a></li>
+<li>[改进][秒]添加加载多个证书支持<a href="https://github.com/apache/pulsar/pull/14798">#14798</a></li>
+<li>[修复][秒]修复在 MultiRolesTokenAuthorizationProvider 中处理单一角色和非 jwt 令牌的问题 <a href="https://github.com/apache/pulsar/pull/14857">#14857</a></li>
+<li>[修复][秒] 使用 tlsCertRefreshCheckDurationSec 而不是 0 作为刷新值 <a href="https://github.com/apache/pulsar/pull/15075">#15075</a></li>
+<li>[改进][秒]创建 AuthenticationDataHttp 实例时跳过不必要的 DNS 解析 <a href="https://github.com/apache/pulsar/pull/15221">#15221</a></li>
+<li>[改进][秒]改进创建 AuthenticationDataHttp 实例时跳过 DNS 解析 <a href="https://github.com/apache/pulsar/pull/15228">#15228</a></li>
+<li>[修复][秒]修复 MultiRolesTokenAuthorizationProvider <code>authorize</code> 问题 <a href="https://github.com/apache/pulsar/pull/15454">#15454</a></li>
+<li>[fix][sec] 修复授予所有权限但无法列出主题 <a href="https://github.com/apache/pulsar/pull/15501">#15501</a></li>
+<li>[改进][秒]切换为依赖 Netty 进行主机名验证 <a href="https://github.com/apache/pulsar/pull/15824">#15824</a></li>
+<li>[修复][秒]修复使用 TLS 配置创建 client <a href="https://github.com/apache/pulsar/pull/16014">#16014</a></li>
+<li>[修复][秒]避免订阅名称的 AuthenticationDataSource 突变 <a href="https://github.com/apache/pulsar/pull/16065">#16065</a></li>
+<li>[改进][秒]改进获取基本身份验证配置<a href="https://github.com/apache/pulsar/pull/16526">#16526</a></li>
+<li>[fix][sec] 修复多角色授权 <a href="https://github.com/apache/pulsar/pull/16645">#16645</a></li>
+<li>[修复][秒] 添加同步方法超时并避免调用 AuthoriationService 的同步方法 (#15694) <a href="https://github.com/apache/pulsar/pull/16831">#16831</a></li>
+<li>[改进][秒] 支持从 HTTP 参数获取令牌 <a href="https://github.com/apache/pulsar/pull/16871">#16871</a></li>
+<li>[改进][秒] 调整带有前缀的基本身份验证配置 <a href="https://github.com/apache/pulsar/pull/16935">#16935</a></li>
+</ul>
+<h4 id="管理员">管理员</h4>
+<ul>
+<li>[改进][admin]为命名空间添加相应的get命令<a href="https://github.com/apache/pulsar/pull/12322">#12322</a></li>
+<li>[fix][admin] 修复系统主题存在时删除命名空间会失败的问题 <a href="https://github.com/apache/pulsar/pull/15040">#15040</a></li>
+<li>[修复][管理员]修复 validateGlobalNamespaceOwnership 包装异常问题 <a href="https://github.com/apache/pulsar/pull/14612">#14612</a></li>
+<li>[fix][admin] 修复在没有 GET_BUDNLE 权限的情况下获取非持久主题列表时的错误提示异常 <a href="https://github.com/apache/pulsar/pull/14638">#14638</a></li>
+<li>[修复][管理员]修复了使用http查找未正确返回404错误消息的问题<a href="https://github.com/apache/pulsar/pull/14677">#14677</a></li>
+<li>[改进][admin]设置 <code>autoTopicCreation</code> 时提供准确的错误消息 <a href="https://github.com/apache/pulsar/pull/14684">#14684</a></li>
+<li>[fix][admin] 修复无法删除带有系统主题的命名空间 <a href="https://github.com/apache/pulsar/pull/14730">#14730</a></li>
+<li>[fix][admin] 修复未设置服务时 PulsarAdminBuilder 中的 NPE <a href="https://github.com/apache/pulsar/pull/14769">#14769</a></li>
+<li>[修复][管理员]修复 swagger 定义中缺少的响应类型 <a href="https://github.com/apache/pulsar/pull/16022">#16022</a></li>
+</ul>
+<h4 id="功能">功能</h4>
+<ul>
+<li>[fix][fn] 修复输出主题和 serde 类名的 get 函数 <a href="https://github.com/apache/pulsar/pull/14103">#14103</a></li>
+<li>[改进][fn]将配置的metricsPort传递到k8s运行时<a href="https://github.com/apache/pulsar/pull/14502">#14502</a></li>
+<li>[fix][fn] 修复从包 URL 创建函数时的一些 IOExceptions <a href="https://github.com/apache/pulsar/pull/14553">#14553</a></li>
+<li>[修复][fn]当 <code>getLeader</code> 返回 null 时处理 NPE <a href="https://github.com/apache/pulsar/pull/15058">#15058</a></li>
+<li>[改进][fn] 在 WebSocket、Function Worker HTTPS 服务器中添加 KeyStore 支持 <a href="https://github.com/apache/pulsar/pull/15084">#15084</a></li>
+<li>[修复][功能]关闭 FileSource 时检查执行器为空 <a href="https://github.com/apache/pulsar/pull/15247">#15247</a></li>
+<li>[改进][fn]为函数日志附加程序提供默认错误处理程序<a href="https://github.com/apache/pulsar/pull/15728">#15728</a></li>
+<li>[修复][功能]修复用户使用 pulsar 函数本地运行器启动时的错误 <a href="https://github.com/apache/pulsar/pull/16565">#16565</a></li>
+<li>[修复][功能]修复 python 实例无法正确处理 zip 文件的问题 <a href="https://github.com/apache/pulsar/pull/16697">#16697</a></li>
+</ul>
+<h4 id="io">IO</h4>
+<ul>
+<li>[修复][io]当Kafka偏移支持存储启动失败时抛出异常<a href="https://github.com/apache/pulsar/pull/14491">#14491</a></li>
+<li>[修复][io] 处理返回不可变映射作为配置的 Kafka 接收器 <a href="https://github.com/apache/pulsar/pull/14780">#14780</a></li>
+</ul>
+<h4 id="sql">SQL</h4>
+<ul>
+<li>[fix][sql] 修复 PulsarRecordCursor 反序列化问题。 <a href="https://github.com/apache/pulsar/pull/14615">#14615</a></li>
+<li>[修复][sql]修复<code>messageQueue</code>发布消息问题。 <a href="https://github.com/apache/pulsar/pull/16155">#16155</a></li>
+</ul>
+<h4 id="卸载程序">卸载程序</h4>
+<ul>
+<li>[fix][offloader] 修复从分层存储读取条目时警告日志中不正确的entryId <a href="https://github.com/apache/pulsar/pull/14685">#14685</a></li>
+<li>[改进] TieredStorage：添加调试信息 <a href="https://github.com/apache/pulsar/pull/14907">#14907</a></li>
+<li>[feat][offloader] 为卸载程序添加纯 S3 提供程序 <a href="https://github.com/apache/pulsar/pull/15710">#15710</a></li>
+<li>[fix][offloader] 修复 setManagedLedgerOffloadedReadPriority 不起作用。 <a href="https://github.com/apache/pulsar/pull/16436">#16436</a></li>
+</ul>
+<h4 id="代理">代理</h4>
+<ul>
+<li>[改进][代理]打开与代理的连接失败时记录警告<a href="https://github.com/apache/pulsar/pull/14710">#14710</a></li>
+<li>[重构][代理]重构代理代码并通过切换到自动读取模式修复连接停顿<a href="https://github.com/apache/pulsar/pull/14713">#14713</a></li>
+<li>[改进][代理]配置 Netty DNS 解析器以匹配 JDK DNS 缓存设置，在代理中共享 DNS 解析器实例 <a href="https://github.com/apache/pulsar/pull/15219">#15219</a></li>
+<li>[修复][代理]修复连接正在进行时入站连接关闭时代理连接泄漏<a href="https://github.com/apache/pulsar/pull/15366">#15366</a></li>
+<li>[修复][代理]修复 DNS 条目过期时 DNS 服务器拒绝服务问题 <a href="https://github.com/apache/pulsar/pull/15403">#15403</a></li>
+<li>[改进][代理]删除 LookupProxyHandler 中不必要的阻塞 DNS 查找 <a href="https://github.com/apache/pulsar/pull/15415">#15415</a></li>
+<li>[修复][代理]转发管理请求时不保留主机。 <a href="https://github.com/apache/pulsar/pull/16342">#16342</a></li>
+<li>[修复][代理]修复 client 服务 URL <a href="https://github.com/apache/pulsar/pull/16834">#16834</a></li>
+</ul>
+<h4 id="监控">监控</h4>
+<ul>
+<li>[改进][监视器]：为 pulsar Web 服务线程池添加指标 <a href="https://github.com/apache/pulsar/pull/14742">#14742</a></li>
+<li>[改进][监控]为消费者添加消息确认率指标<a href="https://github.com/apache/pulsar/pull/15674">#15674</a></li>
+<li>[修复][监视器]修复错误：如果 bookkeeperClientExposeStatsToPrometheus 为 true，则无法将托管账本 client 统计数据公开给 prometheus <a href="https://github.com/apache/pulsar/pull/16343">#16343</a></li>
+<li>[改进][监控]公开主题级别存储写入和读取速率指标<a href="https://github.com/apache/pulsar/pull/16855">#16855</a></li>
+</ul>
+<h4 id="cli">CLI</h4>
+<ul>
+<li>[修复][cli] 删除 trust 证书检查 <a href="https://github.com/apache/pulsar/pull/14764">#14764</a></li>
+</ul>
+<h4 id="测试及其他">测试及其他</h4>
+<ul>
+<li>[改进][测试]使用 Awaitility 替换 pulsar-zookeeper-utils 模块的 Thread.sleep。 <a href="https://github.com/apache/pulsar/pull/11017">#11017</a></li>
+<li>[修复][测试]修复 PersistentStreamingDispatcherBlockConsumerTest 中的不稳定测试 <a href="https://github.com/apache/pulsar/pull/12943">#12943</a></li>
+<li>[fix][build] 修复 pulsar-io/batch-data-generator 和 Jcloud offloader 中的 NoClassDefFoundError: com/google/inject/AbstractModule <a href="https://github.com/apache/pulsar/pull/14150">#14150</a></li>
+<li>[修复][测试]修复不稳定的 AdminApiSchemaTest#testSchemaInfoApi <a href="https://github.com/apache/pulsar/pull/14508">#14508</a></li>
+<li>[修复][测试]修复NamespacesTest执行顺序<a href="https://github.com/apache/pulsar/pull/14552">#14552</a></li>
+<li>[修复][测试]修复 AdminApiTest.testNamespaceSplitBundleConcurrent <a href="https://github.com/apache/pulsar/pull/14565">#14565</a></li>
+<li>[修复][测试]修复片状测试 MemoryLimitTest#testRejectMessages (#14220) <a href="https://github.com/apache/pulsar/pull/14628">#14628</a></li>
+<li>[修复][ci]将zlib版本升级到1.2.12 <a href="https://github.com/apache/pulsar/pull/14964">#14964</a></li>
+<li>[改进][构建]在配置脚本中混淆密码时忽略大小写<a href="https://github.com/apache/pulsar/pull/15077">#15077</a></li>
+<li>[修复][构建]修复分支 2.8 的许可证文件 <a href="https://github.com/apache/pulsar/pull/15261">#15261</a></li>
+<li>[改进][doc] 在代理中添加 IO 和接受器线程的配置 <a href="https://github.com/apache/pulsar/pull/15340">#15340</a></li>
+<li>[改进][构建]通过直通配置配置 DLog Bookie、Pulsar 和 Admin clients <a href="https://github.com/apache/pulsar/pull/15818">#15818</a></li>
+<li>[改进][build]允许覆盖 pulsar_tool_env.sh PULSAR_MEM <a href="https://github.com/apache/pulsar/pull/15868">#15868</a></li>
+<li>[修复][测试] TieredStorageConfigurationTests - 清除系统属性 <a href="https://github.com/apache/pulsar/pull/15957">#15957</a></li>
+<li>[修复][doc] 更新/修复参数的 Swagger 注释：权威 <a href="https://github.com/apache/pulsar/pull/16222">#16222</a></li>
+<li>[改进][测试]验证授权提供者中的身份验证数据<a href="https://github.com/apache/pulsar/pull/16900">#16900</a></li>
+</ul>
+<h4 id="依赖项更新">依赖项更新</h4>
+<ul>
+<li>[改进][构建]将snakeyaml版本升级到1.30 <a href="https://github.com/apache/pulsar/pull/13722">#13722</a></li>
+<li>[修复][build]删除由 Google Guice 导致的非法访问错误（升级到 5.0.1，JClouds 升级到 2.4.0）<a href="https://github.com/apache/pulsar/pull/13810">#13810</a></li>
+<li>[修复][build] 删除由 Google Guice - Pulsar IO、Offloaders 和 Pulsar SQL 导致的非法访问错误 - 将 Guice 改为 5.1.0 <a href="https://github.com/apache/pulsar/pull/14300">#14300</a></li>
+<li>[修复][构建]升级 jackson 和 jackson-databind (2.13.2.1) 以摆脱 CVE-2020-36518 <a href="https://github.com/apache/pulsar/pull/14871">#14871</a></li>
+<li>[改进][构建]删除 CVE-2022-23307 的 log4j <a href="https://github.com/apache/pulsar/pull/15109">#15109</a></li>
+<li>[改进][构建]将 Netty 升级到 4.1.76.Final、Netty Tcnative、grpc 和 protobuf <a href="https://github.com/apache/pulsar/pull/15212">#15212</a></li>
+<li>[改进][构建]使用 grpc-bom 来对齐 grpc 库版本 <a href="https://github.com/apache/pulsar/pull/15234">#15234</a></li>
+<li>[改进][构建]将 BookKeeper 升级到 4.14.5 <a href="https://github.com/apache/pulsar/pull/15581">#15581</a></li>
+<li>[改进][构建]将 Netty 升级到 4.1.77.Final，将 netty-tcnative 升级到 2.0.52.Final <a href="https://github.com/apache/pulsar/pull/15646">#15646</a></li>
+<li>[改进][构建]将 JClouds 升级到 2.5.0 [#15649](<a href="https://github.com/apache/pulsar/pull/15649">https://github.com/apache/pulsar/pull/15649</a></li>
+<li>[修复][构建]分层存储：将 Hadoop 升级到 3.3.3 以摆脱 CVE-2022-26612 <a href="https://github.com/apache/pulsar/pull/15660">#15660</a></li>
+<li>[修复][build]升级到 Jetty 到 9.4.48.v20220622 以摆脱 CVE-2022-2047 <a href="https://github.com/apache/pulsar/pull/16520">#16520</a></li>
+<li>[改进][broker]将log4j2版本升级到2.18.0 (#16884) <a href="https://github.com/apache/pulsar/pull/16914">#16914</a></li>
+</ul>
+<h4 id="java-client">Java Client</h4>
+<ul>
+<li>[改进][java] 改进消费者侦听器逻辑 <a href="https://github.com/apache/pulsar/pull/13273">#13273</a></li>
+<li>[修复][java] 修复 ConsumerBuilderImpl#subscribeAsync 阻塞调用线程 <a href="https://github.com/apache/pulsar/pull/14614">#14614</a></li>
+<li>[修复][java]修复partitionsAutoUpdateFuture永远不会完成<a href="https://github.com/apache/pulsar/pull/14625">#14625</a></li>
+<li>[修复][java] 修复消费者重新交付中的竞争条件 <a href="https://github.com/apache/pulsar/pull/14687">#14687</a></li>
+<li>[改进][java] DeadLetterPolicy 的进程 maxRedeliverCount 为 0 <a href="https://github.com/apache/pulsar/pull/14706">#14706</a></li>
+<li>[改进][java] 避免在上一个订阅完成之前运行计时器任务 <a href="https://github.com/apache/pulsar/pull/14818">#14818</a></li>
+<li>[修复][java] 修复 doReconsumeLater 中可能未完成的 CompletableFuture <a href="https://github.com/apache/pulsar/pull/14947">#14947</a></li>
+<li>[修复][java] ConsumerBuilderImpl 无法将 deadLetterPolicy 设置为 null。 <a href="https://github.com/apache/pulsar/pull/14980">#14980</a></li>
+<li>[改进][java] 添加测试以确保侦听器回调中的消息顺序 <a href="https://github.com/apache/pulsar/pull/15049">#15049</a></li>
+<li>[修复][java]修复消息监听器的性能回归<a href="https://github.com/apache/pulsar/pull/15162">#15162</a></li>
+<li>[fix][java] 修复基于键的批处理的重复数据删除错误行为 <a href="https://github.com/apache/pulsar/pull/15413">#15413</a></li>
+<li>[改进][java] 改进 ACK 分组跟踪器检查重复消息 ID 时的逻辑 <a href="https://github.com/apache/pulsar/pull/15465">#15465</a></li>
+<li>[修复][java]收到关闭消费者命令时删除消费者<a href="https://github.com/apache/pulsar/pull/15761">#15761</a></li>
+<li>[fix][java] 修复启用 Jsr310Conversion 时 <code>TimestampMillisConversion</code> 的转换无效 <a href="https://github.com/apache/pulsar/pull/15863">#15863</a></li>
+<li>[修复][java]收到关闭生产者命令时删除生产者<a href="https://github.com/apache/pulsar/pull/16028">#16028</a></li>
+<li>[fix][java] 修复 <code>LastCumulativeAck</code> 的线程安全问题 <a href="https://github.com/apache/pulsar/pull/16072">#16072</a></li>
+<li>[改进][java] 在 client 超时时发送 CloseConsumer <a href="https://github.com/apache/pulsar/pull/16616">#16616</a></li>
+<li>[fix][java] 修复 ReconsumeLater 如果 retryLetterProducer 异常会挂起 <a href="https://github.com/apache/pulsar/pull/16655">#16655</a></li>
+<li>[修复][java] 修复加载 trust 证书 <a href="https://github.com/apache/pulsar/pull/16789">#16789</a></li>
+<li>[修复][java]删除ConsumerImpl中分块消息TotalChunkMsgSize的冗余检查<a href="https://github.com/apache/pulsar/pull/16797">#16797</a></li>
+<li>[修复][java] 当消息无效时忘记更新内存使用情况 <a href="https://github.com/apache/pulsar/pull/16835">#16835</a></li>
+<li>[fix][java] 修复主题删除时 PatternTopicsChangedListener 被阻止的问题 <a href="https://github.com/apache/pulsar/pull/16842">#16842</a></li>
+<li>[修复][java] 修复 createOpSendMsg 中的 MaxQueueSize 信号量释放泄漏问题 <a href="https://github.com/apache/pulsar/pull/16915">#16915</a></li>
+</ul>
+<h4 id="c-client">C++ Client</h4>
+<ul>
+<li>[改进][cpp] 在 Reader API 中公开 getLastMessageId <a href="https://github.com/apache/pulsar/pull/11723">#11723</a></li>
+<li>[fix][cpp] 修复 hasMessageAvailable 返回最后一条消息的错误值 <a href="https://github.com/apache/pulsar/pull/13883">#13883</a></li>
+<li>[fix][cpp] 修复多主题消费者的线程安全问题 <a href="https://github.com/apache/pulsar/pull/14380">#14380</a></li>
+<li>[fix][cpp] 修复 Access Token Response 的 <code>expires_in</code> 字段单位错误 <a href="https://github.com/apache/pulsar/pull/14554">#14554</a></li>
+<li>[修复][cpp] 处理达到 fd 限制时创建套接字时的异常 <a href="https://github.com/apache/pulsar/pull/14587">#14587</a></li>
+<li>[cleanup][cpp] 在子对象的初始化周围添加大括号 <a href="https://github.com/apache/pulsar/pull/14735">#14735</a></li>
+<li>[修复][cpp] 修复生产者在 client 关闭之前永远不会被破坏 <a href="https://github.com/apache/pulsar/pull/14797">#14797</a></li>
+<li>[fix][cpp] 修复有关引用计数的不稳定测试 <a href="https://github.com/apache/pulsar/pull/14854">#14854</a></li>
+<li>[fix][cpp] 修复创建套接字失败时的分段错误 <a href="https://github.com/apache/pulsar/pull/14834">#14834</a></li>
+<li>[fix][cpp] 修复连接超时任务的竞争条件 <a href="https://github.com/apache/pulsar/pull/14823">#14823</a></li>
+<li>[fix][cpp] 修复基于键的批处理中可能无法调用发送回调的问题 <a href="https://github.com/apache/pulsar/pull/14898">#14898</a></li>
+<li>[fix][cpp] 修复代理关闭与代理的连接时连接未关闭的问题 <a href="https://github.com/apache/pulsar/pull/15009">#15009</a></li>
+<li>[fix][cpp] 修复单个消息元数据设置不正确的问题 <a href="https://github.com/apache/pulsar/pull/15072">#15072</a></li>
+<li>[fix][cpp] 修复分区生产者可能会返回 UnknownError <a href="https://github.com/apache/pulsar/pull/15161">#15161</a></li>
+<li>[改进][cpp] 删除片状且无意义的测试 <a href="https://github.com/apache/pulsar/pull/15271">#15271</a></li>
+<li>[改进][cpp] 关闭 Client 时等待事件循环终止 <a href="https://github.com/apache/pulsar/pull/15316">#15316</a></li>
+<li>[修复][cpp] 避免竞争条件导致关闭时双重回调 <a href="https://github.com/apache/pulsar/pull/15508">#15508</a></li>
+<li>[修复][cpp] 生成正确的众所周知的 OpenID 配置 URL <a href="https://github.com/apache/pulsar/pull/15928">#15928</a></li>
+<li>[修复][cpp] 重命名函数名称：pulsar_ Producer_configuration_set_crypto_failure_action <a href="https://github.com/apache/pulsar/pull/16031">#16031</a></li>
+<li>[cleanup][cpp] 清理 C++ client 卷曲配置 <a href="https://github.com/apache/pulsar/pull/16064">#16064</a></li>
+<li>[fix][cpp] 修复 Client 关闭可能卡住或返回错误结果的问题 <a href="https://github.com/apache/pulsar/pull/16285">#16285</a></li>
+<li>[改进][cpp] 修复不稳定的 C++ ClientTest.testWrongListener <a href="https://github.com/apache/pulsar/pull/16510">#16510</a></li>
+</ul>
+<h4 id="python-client">Python Client</h4>
+<ul>
+<li>[fix][python] 修复生成的 Python protobuf 代码与最新 protobuf 包不兼容的问题 <a href="https://github.com/apache/pulsar/pull/15846">#15846</a></li>
+</ul>
+<h4 id="websocket-client">WebSocket Client</h4>
+<ul>
+<li>[修复][ws] 修复 MultiTopicReader#getConsumer ClassCastException <a href="https://github.com/apache/pulsar/pull/15534">15534</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/apache/pulsar">apache/pulsar</a> · 🏷️ 版本：<code>v2.8.4</code> · 📅 发布：2022-10-04 · <a href="https://github.com/apache/pulsar/releases/tag/v2.8.4">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/pulsar/pulsar_v2.10.2"> <span class="k">← 下一个</span> <span class="t">v2.10.2</span> </a> <a href="/zh/release_note/pulsar/pulsar_v2.7.5"> <span class="k">上一个 →</span> <span class="t">v2.7.5</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/apache/pulsar/releases/tag/v2.8.4" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/apache/pulsar" target="_blank" rel="noopener"> <span>apache/pulsar</span> <span class="d">↗</span> </a> </li> </ul> </div>  <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/pulsar/pulsar_v5.0.1"> <span class="v">v5.0.1</span> <span class="d">26-10-26</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_v5.0.0"> <span class="v">v5.0.0</span> <span class="d">26-10-05</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_v4.2.5"> <span class="v">v4.2.5</span> <span class="d">26-10-05</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_4.0.14"> <span class="v">v4.0.14</span> <span class="d">26-10-05</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_5.0.0-m2"> <span class="v">v5.0.0-M2</span> <span class="d">26-09-16</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_4.2.4"> <span class="v">v4.2.4</span> <span class="d">26-08-03</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_4.0.13"> <span class="v">v4.0.13</span> <span class="d">26-08-03</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_v4.2.3"> <span class="v">v4.2.3</span> <span class="d">26-07-06</span> </a> </li> </ul> <a href="/zh/releases/pulsar" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 100 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

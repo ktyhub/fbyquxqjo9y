@@ -1,0 +1,293 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>orca v1.4.242 — STAGS NextStack</title><meta name="description" content="This release is lighter on memory, with lower memory use in the terminal host and WSL connections, plus less idle CPU use in terminals."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/orca/orca_v1.4.242/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/orca/1.4.242"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/orca/orca_v1.4.242/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/orca/1.4.242"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="orca v1.4.242 — STAGS NextStack"><meta property="og:description" content="This release is lighter on memory, with lower memory use in the terminal host and WSL connections, plus less idle CPU use in terminals."><meta property="og:url" content="https://www.stags.cn/zh/release_note/orca/orca_v1.4.242/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/orca/orca_v1.4.242/#article","headline":"orca v1.4.242 release notes","datePublished":"2026-10-27","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/stablyai/orca"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/orca/1.4.242/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/orca/orca_v1.4.242/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/orca/1.4.242/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/orca/1.4.242/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/orca/1.4.242/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/orca/1.4.242/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/orca/1.4.242/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/orca">orca</a> </nav> <h1 class="detail-title"> <span class="p">orca</span> v1.4.242 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年10月27日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/stablyai/orca" target="_blank" rel="noopener"> <span class="k">来源</span>stablyai/orca </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/orca/1.4.242"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/orca/orca_v1.4.242/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="orca-v14242">orca v1.4.242</h1>
+<h2 id="内存更轻claude-代理-click远程服务器记得">内存更轻，Claude 代理 click，远程服务器记得 🪄</h2>
+<p>此版本对内存的占用较小，终端主机和 WSL 连接中的内存使用量较低，终端中的空闲 CPU 使用量也较少。它还可以让您直接从侧边栏打开 Claude 子代理，使 Codex 聊天在询问模式下在编辑前进行询问，并帮助配对服务器、SSH 和 WSL 主机保留您的选项卡并解释故障。此版本还修复了 Windows、Linux 和 macOS 上的问题。</p>
+<h2 id="简短版本">简短版本</h2>
+<ul>
+<li><strong>从侧边栏打开 Claude 子代理：</strong> Click 侧边栏或仪表板中的 Claude 子代理行，以在同一终端中打开其记录，然后 click 父代理返回。一只眼睛会标记您正在观看的人。</li>
+<li><strong>首先询问的聊天：</strong> 询问模式下的 Codex 聊天现在会在编辑工作区之前询问，配对服务器上的远程 Claude 终端可以继续聊天，而无法开始的聊天会告诉您原因。</li>
+<li><strong>代理在您离开时恢复：</strong> 恢复的 Claude 会话保留其工作级别和启动标志，Codex 保留您上次授予的权限，会话历史记录可在更多文件夹和服务器上查找聊天。</li>
+<li><strong>远程服务器会记住：</strong> 配对服务器在重新启动时保持选项卡状态，关闭的选项卡保持关闭状态，WSL 主机在每次重新启动后停止重新配对，并且 SSH 失败会说明实际出了什么问题。</li>
+<li><strong>内存更轻：</strong> 终端使用的空闲 CPU 少得多，终端主机下次重新启动时使用的内存更少，WSL 连接需要的内存少得多，资源面板现在与 macOS 上的活动监视器相匹配。</li>
+<li><strong>来自社区的修复：</strong> 间隔 Windows 启动器路径、韩语输入、自动化中的 DST、焦点跟随鼠标、选项卡拖动和 Linux 软件包都工作得更好。
+<strong>电话和网络更新：</strong> 电话现在可以解释无法访问的计算机，而不是永远旋转，并且流式回复和长时间的网络聊天重绘更少。当手机以桌面尺寸观看时，向终端询问问题的终端程序也可以继续运行。</li>
+</ul>
+<h2 id="兼容性和升级说明">兼容性和升级说明</h2>
+<ul>
+<li><strong>在“询问”模式下进行 Codex 聊天：</strong> “询问”现在以只读方式运行，并在工作区编辑之前询问；批准我和完全访问权限保持不变，已经运行的工作仍保留其授权。配对服务器上的聊天将保留旧行为，直到该服务器更新为止。</li>
+<li><strong>Claude 子代理导航：</strong> 默认情况下，带有 Claude 状态挂钩。 Orca 仅将其插件加载到 Orca 窗格中，并在其使用的每个 Claude 文件夹中的 <code>keybindings.json</code> 中添加一个快捷方式（第一个不使用 Ctrl+Alt+G、H 或 V 的快捷方式）。在设置 → 代理 → Claude 子代理导航中将其关闭以删除该快捷方式。已经运行的克劳德会议需要重新启动。</li>
+<li><strong>配对服务器：</strong> 将窗格移动到新选项卡并继续聊天中的远程 Claude 终端需要服务器运行此版本。在较旧的服务器上，移动仅保留在此窗口中，与以前一样，并且“聊天 UI 中的继续”显示为禁用并带有更新提示。</li>
+<li><strong>Claude 帐户切换：</strong> 当系统默认 Claude 文件夹登录到旧帐户时，切换帐户现在还可以重新启动在该文件夹中运行的会话。该对话框将会话分为旧帐户上的会话、其他会话和无法移动的会话。</li>
+<li><strong>WSL 主机：</strong> 与 WSL 主机服务器的连接现在通过 bash，并在 bash 丢失或太旧时回退到 Node。这不需要服务器更新并且适用于任何服务器版本。</li>
+</ul>
+<hr>
+<h2 id="产品体验">产品体验</h2>
+<h3 id="本机聊天实验性">本机聊天（实验性）</h3>
+<p><em>Codex 在编辑前询问，远程终端继续聊天，无法开始的聊天说出原因。</em></p>
+<ul>
+<li>在“询问”模式下进行 Codex 工作区编辑之前询问，并通过 @brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/31299">https://github.com/stablyai/orca/pull/31299</a> 中将权限更改应用于每个新回合</li>
+<li>通过 <a href="https://github.com/stablyai/orca/pull/33954">https://github.com/stablyai/orca/pull/33954</a> 中的@nwparker 窗格或会话历史记录，在配对服务器上的聊天中继续远程 Claude 终端对话</li>
+<li>通过重试启动发送启动提示和工作任务，这样第一次失败的启动就不会丢失它们 @brennanb2025 in <a href="https://github.com/stablyai/orca/pull/33832">https://github.com/stablyai/orca/pull/33832</a></li>
+<li>当代理的答案在 <a href="https://github.com/stablyai/orca/pull/33685">https://github.com/stablyai/orca/pull/33685</a> 中的 @brennanb2025 重试时永远无法成功时，在一次尝试后显示启动失败</li>
+<li>说明为什么 Claude 拒绝开始聊天，包括 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33812">https://github.com/stablyai/orca/pull/33812</a> 中以 root 身份运行时的完全访问权限</li>
+<li>使 Stop 暂停 Codex 目标起作用，并使用作曲家在 <a href="https://github.com/stablyai/orca/pull/33631">https://github.com/stablyai/orca/pull/33631</a> 中保存的模型和工作启动 Set 和 Resume @brennanb2025</li>
+<li>在 /clear 之后为聊天指定一个新的自动名称，同时保留您在 <a href="https://github.com/stablyai/orca/pull/32287">https://github.com/stablyai/orca/pull/32287</a> 中由 @brennanb2025 设置的名称</li>
+<li>在 @brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/33815">https://github.com/stablyai/orca/pull/33815</a> 中发送第一条消息之前，将仅限聊天的工作区显示为活动状态</li>
+<li>当 Pi 发送超过 8 MiB 的事件时，保持 Pi 聊天处于打开状态，例如 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/33651">https://github.com/stablyai/orca/pull/33651</a> 中的大型内联图像</li>
+<li>删除 <a href="https://github.com/stablyai/orca/pull/33392">https://github.com/stablyai/orca/pull/33392</a> 中 @AmethystLiang 可能再次达到相同限制的使用限制继续按钮</li>
+<li>将链接和文件操作保留在 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33725">https://github.com/stablyai/orca/pull/33725</a> 中重新打开的聊天上下文菜单中</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33788">https://github.com/stablyai/orca/pull/33788</a> 中的 @AmethystLiang 准备好布局之前，防止保留的聊天窗格跳转</li>
+<li>当 <a href="https://github.com/stablyai/orca/pull/33791">https://github.com/stablyai/orca/pull/33791</a> 中的 @AmethystLiang 更改主题时，保持聊天按钮悬停颜色可读</li>
+<li>停止重试对仅由 <a href="https://github.com/stablyai/orca/pull/33678">https://github.com/stablyai/orca/pull/33678</a> 中的 @brennanb2025 中的不可见字符组成的旧聊天名称进行失败的重命名</li>
+</ul>
+<h3 id="代理启动状态和帐户">代理启动、状态和帐户</h3>
+<p><em>导航 Claude 子代理，使用他们拥有的设置恢复代理，并查看正确的状态和历史记录。</em></p>
+<ul>
+<li>从侧边栏或仪表板打开 Claude 子代理的视图，并通过 @OrcaWin 在 <a href="https://github.com/stablyai/orca/pull/33322">https://github.com/stablyai/orca/pull/33322</a> 中跟踪 Claude 正在显示哪一个</li>
+<li>当您在<a href="https://github.com/stablyai/orca/pull/33018%E4%B8%AD%E9%80%9A%E8%BF%87@brennanb2025%E4%B8%BA%E6%89%80%E6%9C%89%E4%BB%A3%E7%90%86%E9%80%89%E6%8B%A9%E6%9D%83%E9%99%90%E6%97%B6%EF%BC%8C%E8%AF%B7%E5%8D%95%E7%8B%AC%E4%BF%9D%E7%95%99%E6%82%A8%E8%AE%BE%E7%BD%AE%E7%9A%84%E4%BB%A3%E7%90%86">https://github.com/stablyai/orca/pull/33018中通过@brennanb2025为所有代理选择权限时，请单独保留您设置的代理</a></li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33765">https://github.com/stablyai/orca/pull/33765</a> 中@Jinwoo-H 以自己的努力水平恢复克劳德课程</li>
+<li>当 @Jinwoo-H 在 <a href="https://github.com/stablyai/orca/pull/33776">https://github.com/stablyai/orca/pull/33776</a> 中恢复后台代理启动时，保留后台代理启动的标志</li>
+<li>使用上次授予的权限恢复 Codex 线程，而不是 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33460">https://github.com/stablyai/orca/pull/33460</a> 中的 Orca 启动标志</li>
+<li>当 @Jinwoo-H 在 <a href="https://github.com/stablyai/orca/pull/33793">https://github.com/stablyai/orca/pull/33793</a> 中切换帐户时，提供重新启动登录到旧帐户的系统默认 Claude 会话的功能</li>
+<li>保留 MiMo 的登录名和会话，同时 Orca 在 <a href="https://github.com/stablyai/orca/pull/33668">https://github.com/stablyai/orca/pull/33668</a> 中添加 @nwparker 的状态插件</li>
+<li>在 Windows 上以及 Kimi 准备好后通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33581">https://github.com/stablyai/orca/pull/33581</a> 中传递 Kimi 的第一个提示</li>
+<li>让 Codex 更严格的 Windows 沙箱通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33748">https://github.com/stablyai/orca/pull/33748</a> 中读取 Orca 的托管 Codex 文件夹</li>
+<li>当 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33804">https://github.com/stablyai/orca/pull/33804</a> 中打开文件夹-trust 对话框时，将 Claude 和 Codex 窗格显示为等待</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33826">https://github.com/stablyai/orca/pull/33826</a> 中的 @nwparker 的启动对话框中识别手写的 Claude</li>
+<li>停止错误的反重力需求 - 来自 <a href="https://github.com/stablyai/orca/pull/33671">https://github.com/stablyai/orca/pull/33671</a> 中 @nwparker 的选项卡标题和自动批准提示的注意</li>
+<li>将 Codex 的隐藏标题书写提示保留在 <a href="https://github.com/stablyai/orca/pull/33746">https://github.com/stablyai/orca/pull/33746</a> 中 @nwparker 的侧边栏标题中</li>
+<li>当 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33738">https://github.com/stablyai/orca/pull/33738</a> 中 pi-subagents 子进程仍在运行时，保持 Pi 行工作</li>
+<li>让 Hermes 指定配置文件通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33742">https://github.com/stablyai/orca/pull/33742</a> 的窗格中报告状态</li>
+<li>停止在 Claude 后台作业中运行 Codex，将 Claude 窗格标记为 <a href="https://github.com/stablyai/orca/pull/24641">https://github.com/stablyai/orca/pull/24641</a> 中 @stakost 的 Codex</li>
+<li>检测 <a href="https://github.com/stablyai/orca/pull/25324">https://github.com/stablyai/orca/pull/25324</a> 中 @brynnclaw 仅安装在 ~/.grok/bin 中的 Grok CLI</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33751">https://github.com/stablyai/orca/pull/33751</a> 中的@nwparker 的代理会话历史记录中列出来自包装器脚本或启动设置的 CLAUDE_CONFIG_DIR 的 Claude 会话</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33658">https://github.com/stablyai/orca/pull/33658</a> 中 @nwparker 的代理会话历史记录中列出来自 Orca 管理的数据帐户的 OpenCode 会话</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33753">https://github.com/stablyai/orca/pull/33753</a> 中 @nwparker 拥有 OpenCode 会话的帐户下恢复 OpenCode 会话</li>
+<li>当 Pi 和 OMP 在 <a href="https://github.com/stablyai/orca/pull/33647">https://github.com/stablyai/orca/pull/33647</a> 中通过 @AmoabaKelvin 共享会话文件夹时，在编写该聊天的应用程序下列出一次聊天</li>
+<li>删除 <a href="https://github.com/stablyai/orca/pull/33906">https://github.com/stablyai/orca/pull/33906</a> 中 @nwparker 拥有的服务器上的服务器托管会话</li>
+<li>恢复工作区已删除的服务器会话，并显示 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33965">https://github.com/stablyai/orca/pull/33965</a> 中的远程搜索命中的预览</li>
+<li>当 @brynnclaw 在 <a href="https://github.com/stablyai/orca/pull/25287">https://github.com/stablyai/orca/pull/25287</a> 中报告代理挂钩安装失败时，仅发送错误代码，而不发送原始消息</li>
+</ul>
+<h3 id="编排和-cli">编排和 CLI</h3>
+<p><em>工作人员向正确的协调员报告并阅读他们的所有邮件，CLI 命令明显失败。</em></p>
+<ul>
+<li>从调用者那里找到一个worker的协调器，因此在<a href="https://github.com/stablyai/orca/pull/33744%E4%B8%AD@nwparker%E5%8F%AF%E4%BB%A5%E5%9C%A8%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%90%AF%E5%8A%A8%E4%B8%80%E4%B8%AAworker">https://github.com/stablyai/orca/pull/33744中@nwparker可以在另一台服务器上启动一个worker</a></li>
+<li>阻止工人接管他们工作的 Run 由 @brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/29008">https://github.com/stablyai/orca/pull/29008</a></li>
+<li>教工作人员确认和清空邮件批次，以便 <a href="https://github.com/stablyai/orca/pull/26768">https://github.com/stablyai/orca/pull/26768</a> 中的 @1aifanatic 不会隐藏新邮件</li>
+<li>当 <a href="https://github.com/stablyai/orca/pull/26762">https://github.com/stablyai/orca/pull/26762</a> 中的 @1aifanatic 后期启动步骤失败时，保留工作人员完成的报告</li>
+<li>在 @kaznowski 在 <a href="https://github.com/stablyai/orca/pull/32894">https://github.com/stablyai/orca/pull/32894</a> 中填满页面后，继续向前翻阅工作人员记录</li>
+<li>以普通 <code>orca terminal list</code> 和 <code>show</code> 格式显示终端的孤立状态，由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33910">https://github.com/stablyai/orca/pull/33910</a> 中输出</li>
+<li>拒绝空的 —terminal 和 —from 句柄，而不是回退到 <a href="https://github.com/stablyai/orca/pull/16745">https://github.com/stablyai/orca/pull/16745</a> 中 @Cunninger 的默认值</li>
+<li>在<a href="https://github.com/stablyai/orca/pull/16030%E4%B8%AD%E6%8E%A5%E5%8F%97@2sumtech%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E5%A1%AB%E5%85%85%E5%92%8C%E9%80%89%E6%8B%A9%E5%91%BD%E4%BB%A4%E4%B8%AD%E6%8E%A5%E5%8F%97%E7%A9%BA%E5%80%BC">https://github.com/stablyai/orca/pull/16030中接受@2sumtech在浏览器填充和选择命令中接受空值</a></li>
+<li>向代理教授有关 <code>orca terminal read --screen</code> 的知识，并通过 @webdevtodayjason 在 <a href="https://github.com/stablyai/orca/pull/15893">https://github.com/stablyai/orca/pull/15893</a> 中修复两条 <code>orca --help</code> 行</li>
+<li>更正 @kaynansc 在 <a href="https://github.com/stablyai/orca/pull/9038">https://github.com/stablyai/orca/pull/9038</a> 中阅读的 CLI 指南代理中的 split —direction 措辞</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/22494">https://github.com/stablyai/orca/pull/22494</a> 中的 @AlgoraAndrew 在 Linux 上的计算机使用中按请求的命名键和热键字母</li>
+<li>让计算机在 Linux 系统上使用设置的文本字段，例如 Ubuntu 24.04 by @innocarpe in <a href="https://github.com/stablyai/orca/pull/10586">https://github.com/stablyai/orca/pull/10586</a></li>
+<li>按 <a href="https://github.com/stablyai/orca/pull/27642">https://github.com/stablyai/orca/pull/27642</a> 中的 @jespo2021 在 Windows 计算机上使用的大写热键字母的简单快捷方式</li>
+</ul>
+<h3 id="终端">终端</h3>
+<p><em>更轻的终端主机、更干净的重画以及针对 Windows、Linux、macOS 和韩语输入的修复。</em></p>
+<ul>
+<li>通过一条路径启动每个终端，因此同时从窗口启动，CLI 或手机通过 @brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/32076">https://github.com/stablyai/orca/pull/32076</a> 中共享一个结果</li>
+<li>减少检查空闲本地 shell 窗格的频率，通过 <a href="https://github.com/stablyai/orca/pull/33829">https://github.com/stablyai/orca/pull/33829</a> 中的 @OrcaWin 削减终端主机内存和空闲 CPU</li>
+<li>限制终端主机的短期内存，使其在空闲时和突发后保持较小的状态（<a href="https://github.com/stablyai/orca/pull/33837">https://github.com/stablyai/orca/pull/33837</a> 中的 @OrcaWin）</li>
+<li>通过 <a href="https://github.com/stablyai/orca/pull/33027">https://github.com/stablyai/orca/pull/33027</a> 中的 @nwparker 将窗格移至配对服务器上新选项卡中的新选项卡中</li>
+<li>在配对终端暂停时回答发送的输出中的终端查询，因此 <a href="https://github.com/stablyai/orca/pull/33749">https://github.com/stablyai/orca/pull/33749</a> 中的 @nwparker 不会冻结鱼</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33783">https://github.com/stablyai/orca/pull/33783</a> 中由 @nwparker 回答停放输出中暂停的配对终端丢弃的终端查询</li>
+<li>在其自己的选项卡下打开另一个 client 的终端，而不是 <a href="https://github.com/stablyai/orca/pull/33978">https://github.com/stablyai/orca/pull/33978</a> 中 @nwparker 的第二个副本</li>
+<li>当您返回 <a href="https://github.com/stablyai/orca/pull/33880">https://github.com/stablyai/orca/pull/33880</a> 中的 @nwparker 的隐藏窗格时，停止绘制两次线条并显示为文本的颜色代码</li>
+<li>当 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33905">https://github.com/stablyai/orca/pull/33905</a> 中放弃隐藏窗格的恢复时，跳过半发送的颜色或标题代码</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33835">https://github.com/stablyai/orca/pull/33835</a> 中@nwparker 的跳过隐藏输出通知上重新绘制 Codex 和 Claude 代码</li>
+<li>为 <a href="https://github.com/stablyai/orca/pull/33119">https://github.com/stablyai/orca/pull/33119</a> 中 @Muriano 在降级终端主机后面运行的应用内终端保存一次输出</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/30614">https://github.com/stablyai/orca/pull/30614</a> 中@zhangxaochen 退出代理后返回 shell 后，将选项卡从聊天视图返回到终端</li>
+<li>当 <a href="https://github.com/stablyai/orca/pull/31095">https://github.com/stablyai/orca/pull/31095</a> 中的@dansolombrino 仍在加载历史记录时，阻止关闭的终端被报告为卡住</li>
+<li>保持向上滚动的阅读位置不变，因为 <a href="https://github.com/stablyai/orca/pull/23334">https://github.com/stablyai/orca/pull/23334</a> 中的 @Meapri 会修剪旧的回滚</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33865">https://github.com/stablyai/orca/pull/33865</a> 中保留键入的键，以防止启动代理阻止 @nwparker 的卡住窗格恢复</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/18844">https://github.com/stablyai/orca/pull/18844</a> 中通过 @AntonioKL 使用 Cmd+G 和 Cmd+Shift+G 在比赛之间移动时保持查找栏突出显示</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/17624">https://github.com/stablyai/orca/pull/17624</a> 中 @ethznn 编写韩语输入时，发送单词跳转一次，而不是两次</li>
+<li>让焦点跟随鼠标在 <a href="https://github.com/stablyai/orca/pull/29914">https://github.com/stablyai/orca/pull/29914</a> 中的@oha-4 浮动终端和主工作区终端之间移动</li>
+<li>当 @Baek-Seunghyun 在 <a href="https://github.com/stablyai/orca/pull/10188">https://github.com/stablyai/orca/pull/10188</a> 中从 Claude Code 启动 Orca 时，停止新终端继承 Claude Code 的嵌套会话变量</li>
+<li>在本地 Windows 终端中发送真实的 Alt+Left/Right，以便 Codex 可以在 <a href="https://github.com/stablyai/orca/pull/33463">https://github.com/stablyai/orca/pull/33463</a> 中通过 @nwparker 切换代理</li>
+<li>注意当 Windows PowerShell 中启动的代理由 <a href="https://github.com/stablyai/orca/pull/18182">https://github.com/stablyai/orca/pull/18182</a> 中的 @hwantage 退出时</li>
+<li>从 <a href="https://github.com/stablyai/orca/pull/13501">https://github.com/stablyai/orca/pull/13501</a> 中 @thsvkd 的带有空格或括号的文件夹运行 Windows 启动器</li>
+<li>使用 glibc 2.42 和 @OrcaWin 的 <a href="https://github.com/stablyai/orca/pull/33803">https://github.com/stablyai/orca/pull/33803</a> 更新版本保持终端在 Linux 上运行</li>
+<li>当 Linux 终端继承 <a href="https://github.com/stablyai/orca/pull/29762">https://github.com/stablyai/orca/pull/29762</a> 中 @JacobHonore 终止长时间运行作业的限制时，在日志中发出警告</li>
+<li>阻止同时打开的多个 macOS 终端等待 3 秒的 shell 由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33833">https://github.com/stablyai/orca/pull/33833</a> 中</li>
+<li>跟踪由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33898">https://github.com/stablyai/orca/pull/33898</a> 中设置为其他语言和区域的 Mac 上的终端和代理会话</li>
+<li>@aashish254 在 <a href="https://github.com/stablyai/orca/pull/23251">https://github.com/stablyai/orca/pull/23251</a> 中正确读取无终端的 macOS 进程</li>
+</ul>
+<h3 id="sshwsl-和远程服务器">SSH、WSL 和远程服务器</h3>
+<p><em>配对的服务器让您保持警惕，WSL 主机保持配对且更轻，SSH 错误表明出了什么问题。</em></p>
+<ul>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33926">https://github.com/stablyai/orca/pull/33926</a> 中@nwparker 在桌面重新启动时保留配对服务器的工作区选项卡</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33702">https://github.com/stablyai/orca/pull/33702</a> 中 @nwparker 移动到其托管服务器的主机上重新启动后，停止关闭的选项卡返回</li>
+<li>Orca 退出后，在 <a href="https://github.com/stablyai/orca/pull/33972">https://github.com/stablyai/orca/pull/33972</a> 中@nwparker 没有完全关闭后，保持配对服务器上关闭的浏览器选项卡关闭</li>
+<li>删除配对服务器关闭时的终端选项卡，并在 <a href="https://github.com/stablyai/orca/pull/33949">https://github.com/stablyai/orca/pull/33949</a> 中的@nwparker 在关闭的远程终端上提供关闭窗格</li>
+<li>记住您在 <a href="https://github.com/stablyai/orca/pull/33761">https://github.com/stablyai/orca/pull/33761</a> 中 @nwparker 在配对服务器上使用键盘切换到哪个选项卡</li>
+<li>阻止相互服务的桌面传回彼此的编辑器选项卡，作者：<a href="https://github.com/stablyai/orca/pull/33752">https://github.com/stablyai/orca/pull/33752</a> 中的 @nwparker</li>
+<li>一旦机器应答，就忘记每个恢复的工作区的最后一台机器，即使<a href="https://github.com/stablyai/orca/pull/33863%E4%B8%AD%E7%9A%84@nwparker%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8">https://github.com/stablyai/orca/pull/33863中的@nwparker无法访问另一台机器</a></li>
+<li>当<a href="https://github.com/stablyai/orca/pull/33816%E4%B8%AD%E7%9A%84@nwparker%E8%BF%94%E5%9B%9E%E6%97%B6%E5%86%8D%E6%AC%A1%E5%88%97%E5%87%BA%E4%B8%BB%E6%9C%BA%E7%9A%84%E7%BB%88%E7%AB%AF%E4%BB%A3%E7%90%86">https://github.com/stablyai/orca/pull/33816中的@nwparker返回时再次列出主机的终端代理</a></li>
+<li>立即在每个窗口中显示由 <a href="https://github.com/stablyai/orca/pull/33930">https://github.com/stablyai/orca/pull/33930</a> 中的 @nwparker 添加了 <code>orca environment add</code> 的服务器</li>
+<li>当 <a href="https://github.com/stablyai/orca/pull/33864">https://github.com/stablyai/orca/pull/33864</a> 中的@nwparker 崩溃使保存的服务器文件为空时恢复保存的服务器</li>
+<li>通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33935">https://github.com/stablyai/orca/pull/33935</a> 中为 SSH 主机添加启动时按主机重新连接切换</li>
+<li>在更多编辑器中打开 SSH 工作区，直接在 <a href="https://github.com/stablyai/orca/pull/33877">https://github.com/stablyai/orca/pull/33877</a> 中的 @nwparker 在远程主机上</li>
+<li>显示当 Connect 从未到达主机时 SSH 所说的内容 by @nwparker in <a href="https://github.com/stablyai/orca/pull/33928">https://github.com/stablyai/orca/pull/33928</a></li>
+<li>说明 <a href="https://github.com/stablyai/orca/pull/33992">https://github.com/stablyai/orca/pull/33992</a> 中的 @nwparker 在“添加项目主机选择器”中 SSH 主机失败的原因</li>
+<li>通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33682">https://github.com/stablyai/orca/pull/33682</a> 中命名太旧或无法解压 Orca 运行时的 Windows SSH 主机</li>
+<li>使用 SSH 密钥，其 IdentityFile 路径具有 <a href="https://github.com/stablyai/orca/pull/33981">https://github.com/stablyai/orca/pull/33981</a> 中 @nwparker 的 %d 或 ${NAME} 等令牌</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/33914">https://github.com/stablyai/orca/pull/33914</a> 中使用 @nwparker 的箭头键在远程文件夹浏览器中移动</li>
+<li>拒绝使用相同机器 ID 克隆的主机上的第二个 Orca 服务器，并通过 <a href="https://github.com/stablyai/orca/pull/33775">https://github.com/stablyai/orca/pull/33775</a> 中的 @nwparker 说明如何修复它</li>
+<li>将远程文件删除保留在 git 之外，并说明为什么 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33831">https://github.com/stablyai/orca/pull/33831</a> 中删除或打开文件失败</li>
+<li>通过 <a href="https://github.com/stablyai/orca/pull/33754">https://github.com/stablyai/orca/pull/33754</a> 中的 @nwparker 解释无头主机还无法共享工件或技能</li>
+<li>将 macOS <code>orca serve</code> 排除在 Dock 之外，并让 Linux 服务器通过 <a href="https://github.com/stablyai/orca/pull/33878">https://github.com/stablyai/orca/pull/33878</a> 中的 @nwparker 选择加入 GPU</li>
+<li>一分钟后停止服务器的空闲会话历史记录帮助程序以节省内存 by @nwparker in <a href="https://github.com/stablyai/orca/pull/33845">https://github.com/stablyai/orca/pull/33845</a></li>
+<li>@nwparker 在 <a href="https://github.com/stablyai/orca/pull/33897">https://github.com/stablyai/orca/pull/33897</a> 中为会话历史记录帮助程序在 WSL 主机上提供 3 分钟空闲时间，在 SSH 主机上提供 10 分钟空闲时间</li>
+<li>通过 bash 而不是 Node 连接到 WSL 主机服务器，@nwparker 在 <a href="https://github.com/stablyai/orca/pull/33820">https://github.com/stablyai/orca/pull/33820</a> 中使用更少的内存</li>
+<li>在应用程序重新启动时保留 WSL 主机的桥接端口，这样 <a href="https://github.com/stablyai/orca/pull/33109">https://github.com/stablyai/orca/pull/33109</a> 中的 @nwparker 就不会重新配对它</li>
+<li>将每个 WSL 主机记录与其配对联系起来，以便过时记录无法通过 <a href="https://github.com/stablyai/orca/pull/29832">https://github.com/stablyai/orca/pull/29832</a> 中的 @nwparker 声明另一台服务器</li>
+<li>将 WSL 驱动器文件夹项目的工作树、选项卡和历史记录保存在 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33706">https://github.com/stablyai/orca/pull/33706</a> 中保存的名称下</li>
+<li>读取 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33735">https://github.com/stablyai/orca/pull/33735</a> 中通过 WSL 网络路径打开的项目文件到 Windows 驱动器</li>
+<li>@nwparker 在 <a href="https://github.com/stablyai/orca/pull/33756">https://github.com/stablyai/orca/pull/33756</a> 中也通过驱动器路径打开、保存和重命名这些文件</li>
+</ul>
+<h3 id="工作区侧边栏和日常润色">工作区、侧边栏和日常润色</h3>
+<p><em>正确的工作区保持选中状态，退出和重新加载行为，并且 Orca 使用更少的内存。</em></p>
+<ul>
+<li>拒绝删除或编辑其 id 存在于两台计算机上的工作区或设置，除非该计算机由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33818">https://github.com/stablyai/orca/pull/33818</a> 中命名</li>
+<li>保持侧边栏突出显示您实际参与的项目，作者：<a href="https://github.com/stablyai/orca/pull/14475">https://github.com/stablyai/orca/pull/14475</a> 中的 @PannenetsF</li>
+<li>忘记删除的工作树作为<a href="https://github.com/stablyai/orca/pull/6255%E4%B8%AD@audichuang%E6%9C%80%E5%90%8E%E6%89%93%E5%BC%80%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8C%BA">https://github.com/stablyai/orca/pull/6255中@audichuang最后打开的工作区</a></li>
+<li>当一台机器拥有 @AnddyAgudelo 在 <a href="https://github.com/stablyai/orca/pull/12176">https://github.com/stablyai/orca/pull/12176</a> 中的项目的两个副本时，从项目设置中打开正确的设置</li>
+<li>在<a href="https://github.com/stablyai/orca/pull/23551%E4%B8%AD%E9%80%9A%E8%BF%87@shahidbeig-a11y%E5%B0%86%E7%8E%B0%E6%9C%89%E6%96%87%E4%BB%B6%E5%A4%B9%E8%AE%BE%E7%BD%AE%E4%B8%BA%E4%B8%8D%E5%90%8C%E9%A1%B9%E7%9B%AE%E6%97%B6%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%A1%B9%E7%9B%AE">https://github.com/stablyai/orca/pull/23551中通过@shahidbeig-a11y将现有文件夹设置为不同项目时命名文件夹的真实项目</a></li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/26765">https://github.com/stablyai/orca/pull/26765</a> 中@1aifanatic 删除存储在 Orca 常用文件夹之外的 Windows 工作树，而不会出现观察者权限错误</li>
+<li>在系统要求 <a href="https://github.com/stablyai/orca/pull/31439">https://github.com/stablyai/orca/pull/31439</a> 中的@jun-planfit 进行全面重新扫描后，继续观察 macOS 文件夹</li>
+<li>首先在 <a href="https://github.com/stablyai/orca/pull/33699">https://github.com/stablyai/orca/pull/33699</a> 中 @nwparker 的悬停卡中列出工作区的最新链接评论</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/34035">https://github.com/stablyai/orca/pull/34035</a> 中@nwparker 剪切长工作区状态标签而不拆分表情符号</li>
+<li>通过 @OriginalByteMe 在 <a href="https://github.com/stablyai/orca/pull/31816">https://github.com/stablyai/orca/pull/31816</a> 中保持聚焦环在工作区详细信息面板中的字段上可见</li>
+<li>使用 <a href="https://github.com/stablyai/orca/pull/29157">https://github.com/stablyai/orca/pull/29157</a> 中 @SavenkoSy 的 Match Terminal 使每个侧边栏标签都遵循终端颜色</li>
+<li><a href="https://github.com/stablyai/orca/pull/27930%E4%B8%AD@grboy6770%E5%B0%86%E6%A0%87%E7%AD%BE%E6%A0%8F%E6%BB%9A%E5%8A%A8%E6%97%B6%E6%8B%96%E5%8A%A8%E7%9A%84%E6%A0%87%E7%AD%BE%E6%8B%96%E6%94%BE%E5%88%B0%E5%85%89%E6%A0%87%E6%89%80%E5%9C%A8%E7%9A%84%E4%BD%8D%E7%BD%AE">https://github.com/stablyai/orca/pull/27930中@grboy6770将标签栏滚动时拖动的标签拖放到光标所在的位置</a></li>
+<li>当 @nikolas-sapa 在 <a href="https://github.com/stablyai/orca/pull/33223">https://github.com/stablyai/orca/pull/33223</a> 中聚焦浮动面板时，使用 Ctrl+Tab 循环浮动工作区选项卡</li>
+<li>使用 Cmd/Ctrl+W 关闭代理仪表板的终端对话框，而不关闭其后面的选项卡 by @tvrmsmith in <a href="https://github.com/stablyai/orca/pull/19758">https://github.com/stablyai/orca/pull/19758</a></li>
+<li>将关闭代理仪表板抽屉的 Escape 保留在 <a href="https://github.com/stablyai/orca/pull/34037">https://github.com/stablyai/orca/pull/34037</a> 中 @nwparker 的聚焦终端之外</li>
+<li>显示 Markdown 编辑器无法安全地重写为 <a href="https://github.com/stablyai/orca/pull/33733">https://github.com/stablyai/orca/pull/33733</a> 中@AmethystLiang 的格式化预览</li>
+<li>当 <a href="https://github.com/stablyai/orca/pull/14812">https://github.com/stablyai/orca/pull/14812</a> 中的 @VXNCXNX 拼写不同的 Windows 路径时，重新加载外部更改时打开的编辑器选项卡</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/24466">https://github.com/stablyai/orca/pull/24466</a> 中@innocarpe 的查看所有差异中保留折叠文件的标题</li>
+<li>按值订购 GitHub 项目编号字段组，而不是 <a href="https://github.com/stablyai/orca/pull/19397">https://github.com/stablyai/orca/pull/19397</a> 中 @pucedoteth 的标签</li>
+<li>通过 @innocarpe 在 <a href="https://github.com/stablyai/orca/pull/25215">https://github.com/stablyai/orca/pull/25215</a> 中通过标准输入将问题正文发送到 gh</li>
+<li>当 <code>code</code> 不在 <a href="https://github.com/stablyai/orca/pull/14010">https://github.com/stablyai/orca/pull/14010</a> 中的 @bbingz 的 PATH 上时，在标准安装中查找 VS Code 命令行</li>
+<li>从 <a href="https://github.com/stablyai/orca/pull/31675">https://github.com/stablyai/orca/pull/31675</a> 中的 @SamuelAdigos 在没有运行时环境的 Linux AppImage 中打开编辑器</li>
+<li>防止自动化计划在夏令时更改期间跳过日期，作者：<a href="https://github.com/stablyai/orca/pull/19086">https://github.com/stablyai/orca/pull/19086</a> 中的@ImcLiuQian</li>
+<li>当时钟回落时，将 cron 和每小时自动化移至重复的小时，作者：<a href="https://github.com/stablyai/orca/pull/20179">https://github.com/stablyai/orca/pull/20179</a> 中的 @eatmoreduck</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/26321">https://github.com/stablyai/orca/pull/26321</a> 中使用 @Ethereal49 的真实 macOS 默认声音作为系统通知选项</li>
+<li>在资源面板中显示Activity Monitor在macOS上的内存占用，并在<a href="https://github.com/stablyai/orca/pull/33901%E4%B8%AD%E9%80%9A%E8%BF%87@OrcaWin%E7%BB%9F%E8%AE%A1%E7%BB%88%E7%AB%AF%E4%B8%BB%E6%9C%BA">https://github.com/stablyai/orca/pull/33901中通过@OrcaWin统计终端主机</a></li>
+<li>当没有打开此类文件时停止 TypeScript 和 JavaScript 编辑器助手，通过 @OrcaWin 在 <a href="https://github.com/stablyai/orca/pull/33810">https://github.com/stablyai/orca/pull/33810</a> 中节省内存</li>
+<li>通过 @OrcaWin 在 <a href="https://github.com/stablyai/orca/pull/33786">https://github.com/stablyai/orca/pull/33786</a> 中将 Orca 的捆绑脚本更紧凑地存储在内存中</li>
+<li>修复了双重电话撤销、错过的检查面板自动打开以及 <a href="https://github.com/stablyai/orca/pull/33989">https://github.com/stablyai/orca/pull/33989</a> 中 @nwparker 的存储库设置中丢失 IME 字母的问题</li>
+<li>当因 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/33941">https://github.com/stablyai/orca/pull/33941</a> 中无法保存会话而取消强制重新加载时显示祝酒词</li>
+<li>当关闭窗口无法接收最终 UI 状态时让 Orca 退出 @denis-sj in <a href="https://github.com/stablyai/orca/pull/21029">https://github.com/stablyai/orca/pull/21029</a></li>
+<li><a href="https://github.com/stablyai/orca/pull/21581">https://github.com/stablyai/orca/pull/21581</a> 中 @cis2042 关闭窗口后停止“对象已被破坏”崩溃</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/14127">https://github.com/stablyai/orca/pull/14127</a> 中 @smwbev 在源代码管理菜单中本地化提交和同步、变基和创建 PR 提示</li>
+<li>通过<a href="https://github.com/stablyai/orca/pull/28568%E4%B8%AD%E7%9A%84@abruption%E6%9C%AC%E5%9C%B0%E5%8C%96%E6%8B%89%E5%8F%96%E8%AF%B7%E6%B1%82%E5%90%88%E5%B9%B6%E5%92%8C%E5%85%B3%E9%97%AD%E7%A1%AE%E8%AE%A4%E4%BB%A5%E5%8F%8A%E5%90%88%E5%B9%B6%E6%96%B9%E6%B3%95%E6%A0%87%E7%AD%BE">https://github.com/stablyai/orca/pull/28568中的@abruption本地化拉取请求合并和关闭确认以及合并方法标签</a></li>
+<li>通过 @ka2umaz 在 <a href="https://github.com/stablyai/orca/pull/31027">https://github.com/stablyai/orca/pull/31027</a> 中写入只有您可读的使用缓存文件</li>
+<li>当 Linux 无法让笔记本电脑为代理保持唤醒状态时，警告一次（不是每 30 秒一次）@brynnclaw 在 <a href="https://github.com/stablyai/orca/pull/24839">https://github.com/stablyai/orca/pull/24839</a> 中</li>
+<li>当保持唤醒锁不断失败时，警告一次并在重试之间等待更长的时间（@nwparker in <a href="https://github.com/stablyai/orca/pull/33841%EF%BC%89">https://github.com/stablyai/orca/pull/33841）</a></li>
+<li>使用 @fettpl 在 <a href="https://github.com/stablyai/orca/pull/18339">https://github.com/stablyai/orca/pull/18339</a> 中的 arm64 更新源检查 Linux arm64 上的更新</li>
+<li>列出 Orca 在 Linux .deb 和 .rpm 包中所需的声音和图形库，作者为 @nwparker，位于 <a href="https://github.com/stablyai/orca/pull/34036">https://github.com/stablyai/orca/pull/34036</a></li>
+</ul>
+<h3 id="电话和网络">电话和网络</h3>
+<p><em>电话解释了无法访问的计算机，聊天重画次数减少，终端在您观看时不断应答。</em></p>
+<ul>
+<li>展示为什么手机无法连接到您的计算机，而不是由 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/33689">https://github.com/stablyai/orca/pull/33689</a> 中的无尽旋转器</li>
+<li>当 @brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/23840">https://github.com/stablyai/orca/pull/23840</a> 中的手机上回复流时，仅重绘已更改的行</li>
+<li>一旦网络聊天返回 <a href="https://github.com/stablyai/orca/pull/33664">https://github.com/stablyai/orca/pull/33664</a> 中 @AmoabaKelvin 的最新消息，就删除后面的行</li>
+<li>在手机观看桌面尺寸的终端时回答终端查询，作者：@AmoabaKelvin，<a href="https://github.com/stablyai/orca/pull/33674">https://github.com/stablyai/orca/pull/33674</a></li>
+</ul>
+<h3 id="测试构建和维护">测试、构建和维护</h3>
+<p><em>更快的本地 lint、构建和开发设置，更多的行为覆盖范围和更少的低价值测试，持续的模块组织和中继服务改进。</em>
+&#x3C;详情></p>
+<summary>所有测试、构建和维护更改</summary>
+* 取消 https://github.com/stablyai/orca/pull/33900 中 @Jinwoo-H 变慢或丢失的池化中继数据库连接
+* 通过 https://github.com/stablyai/orca/pull/34027 中的 @Jinwoo-H 记录中继控制器每个运行时窗口的 TCP 重传
+* https://github.com/stablyai/orca/pull/33670 中@Jinwoo-H 的内部清理
+* https://github.com/stablyai/orca/pull/33723 中@Jinwoo-H 的内部清理
+* https://github.com/stablyai/orca/pull/33734 中@Jinwoo-H 的内部清理
+* https://github.com/stablyai/orca/pull/33779 中@Jinwoo-H 的内部清理
+* https://github.com/stablyai/orca/pull/33821 中@Jinwoo-H 的内部清理
+* https://github.com/stablyai/orca/pull/33856 中@Jinwoo-H 的内部清理
+* https://github.com/stablyai/orca/pull/33862 中@Jinwoo-H 的内部清理
+* https://github.com/stablyai/orca/pull/33714 中@Jinwoo-H 的内部清理
+* 杂务（移动）：在 https://github.com/stablyai/orca/pull/33764 中撞到 0.0.59 和 Android 版本Code 23 by @Jinwoo-H
+* perf(daemon): 当 @ctolkien 在 https://github.com/stablyai/orca/pull/30996 中没有待处理的情况时，跳过排水等待过滤器
+*修复（ci）：本地化https://github.com/stablyai/orca/pull/33715中@nwparker的聊天字体系列搜索关键字
+* 修复（i18n）：在 https://github.com/stablyai/orca/pull/33950 中拒绝 @nwparker 本地化目录中的重复键
+* 修复（构建）：保持index.js源映射与https://github.com/stablyai/orca/pull/33899中@nwparker的引导横幅对齐
+* 修复（构建）：将本机 SwiftPM 构建系统固定为 https://github.com/stablyai/orca/pull/21146 中 @eatmoreduck 的计算机使用通用二进制文件
+* 修复（终端）：将链接路由对话框上下文从组件模块中分离出来，以便快速刷新不会通过 https://github.com/stablyai/orca/pull/29740 中的@a-rookie-of-C-语言使终端崩溃
+* feat(tools)：在 https://github.com/stablyai/orca/pull/33781 中使用 @nwparker 的 --resize-at 调整 PTY 中捕获的大小
+* 构建（deps）：bump vite 8.3.5、oxlint 1.89.0、oxlint-tsgolint 7.0.2005 by @OrcaWin in https://github.com/stablyai/orca/pull/33794
+* perf(lint): 在 https://github.com/stablyai/orca/pull/33813 中 @OrcaWin 无法匹配的文件上跳过 JS 插件规则 (lint:js-plugins 17s → 4s)
+* perf(devex)：并行 pnpm lint (169s → 50s)，上限类型检查线程，@OrcaWin 在 https://github.com/stablyai/orca/pull/33817 中的新鲜分片计时
+* perf(build)：限制 Rolldown 线程（−24% 构建 CPU）；不要在 https://github.com/stablyai/orca/pull/33828 中 @OrcaWin 构建的配对 Web 上阻止 pnpm dev
+* perf(dev): −1.2 每个 pnpm dev 实例 GB 空闲 RSS（Rolldown 线程 + mimalloc 清除），作者：https://github.com/stablyai/orca/pull/33836 中的 @OrcaWin
+* perf(ci)：缩短预检的串行尾部（中值约 24 秒），并行棘轮，允许 @OrcaWin 在 https://github.com/stablyai/orca/pull/33887 中使用 2-10 个单位分片
+* perf(lint)：@OrcaWin 在 https://github.com/stablyai/orca/pull/33903 中对 lint 门和片状测试棘轮进行一次 ast-grep 扫描（11s → 6s）
+* 文档：停止承诺跨工作树拆分窗格和跳转调色板中的 Shift-Enter 拆分，@nwparker 在 https://github.com/stablyai/orca/pull/33902 中
+* 文档（设置）：将 GitHub 集成描述为本地 gh CLI 登录，而不是 https://github.com/stablyai/orca/pull/26609 中 @eatmoreduck 的 OAuth
+* 文档：在 https://github.com/stablyai/orca/pull/14777 中 @innocarpe 的安装说明中使用完整的 `stablyai/orca/orca` 木桶名称
+* 删除 https://github.com/stablyai/orca/pull/34008 中@AmethystLiang 过时的参考文档
+* 重构（渲染器）：https://github.com/stablyai/orca/pull/33665 中@nwparker 分组代理状态记录和减速器
+* 重构：在 https://github.com/stablyai/orca/pull/33808 中由 @nwparker 并置任务页面组合挂钩
+* 重构：在https://github.com/stablyai/orca/pull/33830中并置@nwparker的任务页面列表呈现规则
+* 重构：在https://github.com/stablyai/orca/pull/33890中并置@nwparker的任务页面PR呈现规则
+* 重构（任务页面）：通过 @nwparker 在 https://github.com/stablyai/orca/pull/33913 中并置跨提供商组合所有者
+* 重构（移动）：在 https://github.com/stablyai/orca/pull/33922 中并置 @nwparker 的本地聊天编辑器和草稿
+* test(vitest): 运行范围的临时目录，在退出时删除，因此测试装置停止通过https://github.com/stablyai/orca/pull/33834中的@OrcaWin泄漏到/tmp中
+* test(vitest): 当 Vitest 在 https://github.com/stablyai/orca/pull/33848 中被 @OrcaWin 杀死（150s+ → 53ms）时，停止孤立的节点运行时工作进程
+* 测试（wsl）：由 @nwparker 在 https://github.com/stablyai/orca/pull/33907 中覆盖 bash 桥的 argv、背压、回退和清理
+* 测试（布局）：在 https://github.com/stablyai/orca/pull/33919 中 @nwparker 停止重建运行时和 RPC 注册表
+* test(layout): 在https://github.com/stablyai/orca/pull/33923中@nwparker进行布局能力测试之前加载一次运行时图
+* 测试（布局）：删除调用助手的热身 #33919 被 @nwparker 在 https://github.com/stablyai/orca/pull/33934 中删除
+* 测试（启动）：在 https://github.com/stablyai/orca/pull/33925 中@nwparker 的第一个测试中停止支付就绪图的冷转换费用
+* 测试（e2e）：等待 https://github.com/stablyai/orca/pull/33960 中 @nwparker 缓慢转换后的目录失败
+* 测试（守护进程）：在 https://github.com/stablyai/orca/pull/18289 中 @innocarpe 的 Windows 敏感测试中使用平台本机守护进程端点和 cwd
+* 测试：加强Git和会话断言；删除 @OrcaWin 在 https://github.com/stablyai/orca/pull/33669 中复制的路径规范重放
+*测试：删除冗余案例并加强@OrcaWin在https://github.com/stablyai/orca/pull/33686中的审计断言
+* 测试：删除https://github.com/stablyai/orca/pull/33708中@OrcaWin的低价值套件并复制测试预言机
+* 测试：通过 @OrcaWin 在 https://github.com/stablyai/orca/pull/33736 中删除低价值包装器和库存套件
+* 测试：删除 @OrcaWin 在 https://github.com/stablyai/orca/pull/33745 中的包装器重播和测试夹具清单
+*测试：通过@OrcaWin在https://github.com/stablyai/orca/pull/33757中删除多余的浏览器和传输覆盖
+* 测试：通过 @OrcaWin 在 https://github.com/stablyai/orca/pull/33767 中删除多余的浏览器、运行时和秘密注册表覆盖
+* 测试：通过@OrcaWin在https://github.com/stablyai/orca/pull/33770中删除冗余配置、快捷方式和恢复覆盖
+*测试：通过@OrcaWin在https://github.com/stablyai/orca/pull/33772中删除29个低值渲染器套件
+* 测试：通过 @OrcaWin 在 https://github.com/stablyai/orca/pull/33778 中删除低值谓词、清单和辅助回显
+* 测试：通过 @OrcaWin 在 https://github.com/stablyai/orca/pull/33796 中删除低价值库存、直通和冗余案例
+* 测试：通过 @OrcaWin 在 https://github.com/stablyai/orca/pull/33811 中删除低值渲染器谓词和包装器套件
+* 测试：通过 @OrcaWin 在 https://github.com/stablyai/orca/pull/33819 中删除低值渲染器套件和冗余共享案例
+* 测试：删除 https://github.com/stablyai/orca/pull/33876 中@OrcaWin 的低值渲染器助手和演示测试
+<!--详情-->
+**完整 Changelog**：https://github.com/stablyai/orca/compare/v1.4.241...v1.4.242
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/stablyai/orca">stablyai/orca</a> · 🏷️ 版本：<code>v1.4.242</code> · 📅 发布：2026-10-27 · <a href="https://github.com/stablyai/orca/releases/tag/v1.4.242">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/orca/orca_v1.4.243"> <span class="k">← 下一个</span> <span class="t">v1.4.243</span> </a> <a href="/zh/release_note/orca/orca_v1.4.241"> <span class="k">上一个 →</span> <span class="t">v1.4.241</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/stablyai/orca/releases/tag/v1.4.242" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/stablyai/orca" target="_blank" rel="noopener"> <span>stablyai/orca</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#内存更轻claude-代理-click远程服务器记得" class>内存更轻，Claude 代理 click，远程服务器记得 🪄</a><a href="#简短版本" class>简短版本</a><a href="#兼容性和升级说明" class>兼容性和升级说明</a><a href="#产品体验" class>产品体验</a><a href="#本机聊天实验性" class="lv3">本机聊天（实验性）</a><a href="#代理启动状态和帐户" class="lv3">代理启动、状态和帐户</a><a href="#编排和-cli" class="lv3">编排和 CLI</a><a href="#终端" class="lv3">终端</a><a href="#sshwsl-和远程服务器" class="lv3">SSH、WSL 和远程服务器</a><a href="#工作区侧边栏和日常润色" class="lv3">工作区、侧边栏和日常润色</a><a href="#电话和网络" class="lv3">电话和网络</a><a href="#测试构建和维护" class="lv3">测试、构建和维护</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/orca/orca_v1.4.271"> <span class="v">v1.4.271</span> <span class="d">26-11-22</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.269"> <span class="v">v1.4.269</span> <span class="d">26-11-21</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.268"> <span class="v">v1.4.268</span> <span class="d">26-11-21</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.267"> <span class="v">v1.4.267</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.266"> <span class="v">v1.4.266</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.265"> <span class="v">v1.4.265</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.264"> <span class="v">v1.4.264</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.263"> <span class="v">v1.4.263</span> <span class="d">26-11-18</span> </a> </li> </ul> <a href="/zh/releases/orca" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 39 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

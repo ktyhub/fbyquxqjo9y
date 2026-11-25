@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>airflow 2.7.2 — STAGS NextStack</title><meta name="description" content="Check if the lower of provided values are sensitives in config endpoint (#34712) · Add support for ZoneInfo and generic UTC to fix datetime serialization (#34683, #34804)"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/airflow/airflow_2.7.2/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/airflow/2.7.2"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/airflow/airflow_2.7.2/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/airflow/2.7.2"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="airflow 2.7.2 — STAGS NextStack"><meta property="og:description" content="Check if the lower of provided values are sensitives in config endpoint (#34712) · Add support for ZoneInfo and generic UTC to fix datetime serialization (#34683, #34804)"><meta property="og:url" content="https://www.stags.cn/zh/release_note/airflow/airflow_2.7.2/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/airflow/airflow_2.7.2/#article","headline":"airflow 2.7.2 release notes","datePublished":"2023-10-12","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/apache/airflow"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/airflow/2.7.2/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/airflow/airflow_2.7.2/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/airflow/2.7.2/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/airflow/2.7.2/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/airflow/2.7.2/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/airflow/2.7.2/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/airflow/2.7.2/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/airflow">airflow</a> </nav> <h1 class="detail-title"> <span class="p">airflow</span> 2.7.2 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2023年10月12日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/apache/airflow" target="_blank" rel="noopener"> <span class="k">来源</span>apache/airflow </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/airflow/2.7.2"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/airflow/airflow_2.7.2/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="airflow-272">airflow 2.7.2</h1>
+<h2 id="重大变化">重大变化</h2>
+<p>无重大变化</p>
+<h2 id="错误修复">错误修复</h2>
+<ul>
+<li>检查配置端点中提供的较低值是否敏感 (#34712)</li>
+<li>添加对 ZoneInfo 和通用 UTC 的支持以修复日期时间序列化（#34683、#34804）</li>
+<li>修复 AttributeError：在airflow db migrate 命令期间“Select”对象没有属性“count” (#34348)</li>
+<li>使修补任务实例可以选择试运行 (#34568)</li>
+<li>修复非确定性日期时间反序列化 (#34492)</li>
+<li>使用迭代循环查找映射的父级 (#34622)</li>
+<li>通过检查是否映射任何父“<code>taskgroup</code>”来修复 is_parent_mapped 值 (#34587)</li>
+<li>避免顶级气流导入以避免循环依赖 (#34586)</li>
+<li>在冗长的指标列表中添加更多豁免（#34531）</li>
+<li>修复 dag 警告端点权限 (#34355)</li>
+<li>修复批处理端点中的任务实例访问问题 (#34315)</li>
+<li>纠正网格视图中显示的错误时间（#34179）</li>
+<li>修复 www <code>cluster_activity</code> view not loading due to <code>standaloneDagProcessor</code> 模板 (#34274)</li>
+<li>设置 <code>loglevel=DEBUG</code> in ‘Not syncing <code>DAG-level</code> 权限’ (#34268)</li>
+<li>使参数验证与 DAG 验证和触发保持一致 (#34248)</li>
+<li>确保选择任何选项卡时显示详细信息面板 (#34136)</li>
+<li>修复与 <code>access_control={}</code> 相关的问题 (#34114)</li>
+<li>修复在 CLI 会话中找不到 <code>ab_user</code> 表 (#34120)</li>
+<li>修复 FAB 相关的日志格式插值 (#34139)</li>
+<li>修复 <code>next_run_datasets_summary</code> 端点中的查询错误 (#34143)</li>
+<li>修复任务组切换重复标签的问题 (#34072)</li>
+<li>修复从 UI 清除 TI 所需的权限 (#34123)</li>
+<li>重复使用 <code>_run_task_session</code> in mapped <code>render_template_fields</code> (#33309)</li>
+<li>修复调度程序逻辑，通过忽略手动运行来计划新的 dag 运行 (#34027)</li>
+<li>为 Flask 操作添加、编辑和删除添加缺失的审核日志 (#34090)</li>
+<li>从集群活动页面隐藏不相关的 Dag 处理器 (#33611)</li>
+<li>删除风车的无限动画，旋转 1.5 秒 (#34020)</li>
+<li>使用“<code>version_added</code>”恢复提供者配置的渲染（#34011）</li>
+</ul>
+<h2 id="仅文档更改">仅文档更改</h2>
+<ul>
+<li>澄清审核日志权限（#34815）</li>
+<li>添加审核日志用户的说明 (#34814)</li>
+<li>从 WSGI 中间件示例中的 FAB 导入 <code>AUTH_REMOTE_USER</code> (#34721)</li>
+<li>添加有关将来删除支持 MsSQL 作为数据库后端的信息 (#34375)</li>
+<li>记录如何使用系统的时区数据库 (#34667)</li>
+<li>澄清文档中着陆时间的含义 (#34608)</li>
+<li>修复动态任务映射文档中的屏幕截图 (#34566)</li>
+<li>修复公共接口文档中的类引用 (#34454)</li>
+<li>澄清 var.value.get 和 var.json.get 的用法 (#34411)</li>
+<li>计划默认值描述 (#34291)
+-triggered_dataset_event 的文档 (#34410)</li>
+<li>添加 DagRun 事件 (#34328)</li>
+<li>提供有关触发器表单参数类型的表格概述 (#34285)</li>
+<li>在核心文档中添加指向 Amazon 提供商配置的链接 (#34305)</li>
+<li>在安全模型中添加“安全基础设施”段落（#34301）</li>
+<li>更改 SQLAlchemy 1.4 的链接 (#34288)</li>
+<li>在安全文档中添加 SBOM 条目 (#34261)</li>
+<li>添加了更多 XCom 推拉示例代码 (#34016)</li>
+<li>将状态实用程序添加到公共气流接口 (#34059)</li>
+<li>用第一个样式链接替换 markdown 样式链接 (#33990)</li>
+<li>修复“UPDATING.md”文件的损坏链接 (#33583)</li>
+</ul>
+<h2 id="杂项内部">杂项/内部</h2>
+<ul>
+<li>更新 min-sqlalchemy 版本以考虑使用的最新功能 (#34293)</li>
+<li>修复 SessionExemptMixin 拼写 (#34696)</li>
+<li>限制 <code>astroid</code> 版本 &#x3C; 3 (#34658)</li>
+<li>如果在没有触发器的情况下延迟，则 dag 测试失败 (#34619)</li>
+<li>修复连接导出的输出 (#34640)</li>
+<li>创建新的 alembic 迁移时不要运行 isort (#34636)</li>
+<li>弃用 PythonVirtualEnvOperator 中的数字类型 python 版本 (#34359)</li>
+<li>重构 <code>os.path.splitext</code> to <code>Path.*</code> (#34352、#33669)</li>
+<li>替换 = by 用于类型比较 (#33983)</li>
+<li>重构整数除法 (#34180)</li>
+<li>重构：简化比较（#34181）</li>
+<li>重构：简化字符串生成（#34118）</li>
+<li>用核心中的 dict() 替换不必要的 dict 理解 (#33858)</li>
+<li>将“并非全部”更改为“任何”以方便阅读 (#34259)</li>
+<li>在代码中将断言替换为 if…raise (#34250、#34249)</li>
+<li>将默认时区移至 except 块 (#34245)</li>
+<li>在核心中组合相似的 if 逻辑 (#33988)</li>
+<li>重构：整合随机的导入和使用（#34108）</li>
+<li>合并 os.path.* 的导入 (#34060)</li>
+<li>通过在 Airflow 核心中解包来替换序列串联 (#33934)</li>
+<li>重构存储库中不需要的“继续”跳转（#33849、#33845、#33846、#33848、#33839、#33844、#33836、#33842）</li>
+<li>从 <code>pyproject.toml</code> 中删除 [project] 部分 (#34014)</li>
+<li>当 Airflow 核心中可能时，将 try 移到循环之外 (#33975)</li>
+<li>在核心中查找正值时将循环替换为 any (#33985)</li>
+<li>不要创建我们不需要的列表 (#33519)</li>
+<li>从核心中删除无用的字符串连接 (#33969)</li>
+<li>添加 TCH001 和 TCH002 规则以预先提交以检测和移动类型检查模块 (#33865)</li>
+<li>批量添加cancel_trigger_ids到to_cancel出队（#33944）</li>
+<li>解析统计 datadog 标签时避免创建不必要的列表 (#33943)</li>
+<li>当核心中未使用 key 时，将 dict.items 替换为 dict.values (#33940)</li>
+<li>将 lambda 替换为推导式 (#33745)</li>
+<li>改进 Airflow 核心中的模块导入，将其中一些模块导入到类型检查块中 (#33755)</li>
+<li>重构：删除未使用的状态 - SHUTDOWN（#33746、#34063、#33893）</li>
+<li>重构：使用就地 .sort() (#33743)</li>
+<li>在 Airflow 核心中使用文字 dict 而不是调用 dict() (#33762)</li>
+<li>删除不必要的地图并使用 Airflow 核心中的列表重写它 (#33764)</li>
+<li>用 Airflow 核心中的 def 方法替换 lambda (#33758)</li>
+<li>在 fab_security 管理器中将 type func 替换为 <code>isinstance</code> (#33760)</li>
+<li>在所有 Airflow 模块中用双引号替换单引号 (#33766)</li>
+<li>在一次调用中合并对同一对象的多个“<code>isinstance</code>”调用 (#33767)</li>
+<li>使用具有多个上下文的单个语句，而不是核心中的嵌套语句 (#33769)</li>
+<li>重构：使用 f 字符串（#33734，#33455）</li>
+<li>重构：使用 random.choices (#33631)</li>
+<li>使用 <code>str.splitlines()</code> 分割线 (#33592)</li>
+<li>重构：删除无用的 str() 调用 (#33629)</li>
+<li>重构：改进重复项检测和列表排序 (#33675)</li>
+<li>简化 <code>len()</code> 的条件 (#33454)</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/apache/airflow">apache/airflow</a> · 🏷️ 版本：<code>2.7.2</code> · 📅 发布：2023-10-12 · <a href="https://github.com/apache/airflow/releases/tag/2.7.2">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/airflow/airflow_2.7.3"> <span class="k">← 下一个</span> <span class="t">2.7.3</span> </a> <a href="/zh/release_note/airflow/airflow_1.11.0"> <span class="k">上一个 →</span> <span class="t">1.11.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/apache/airflow/releases/tag/2.7.2" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/apache/airflow" target="_blank" rel="noopener"> <span>apache/airflow</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#重大变化" class>重大变化</a><a href="#错误修复" class>错误修复</a><a href="#仅文档更改" class>仅文档更改</a><a href="#杂项内部" class>杂项/内部</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/airflow/airflow_go-sdk_v1.0.0"> <span class="v">v1.0.0</span> <span class="d">26-11-13</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_3.4.0"> <span class="v">3.4.0</span> <span class="d">26-11-06</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_3.3.2"> <span class="v">3.3.2</span> <span class="d">26-09-17</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_3.3.1"> <span class="v">3.3.1</span> <span class="d">26-08-12</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_3.3.0"> <span class="v">3.3.0</span> <span class="d">26-07-06</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_1.22.0"> <span class="v">1.22.0</span> <span class="d">26-06-13</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_0.1.5"> <span class="v">0.1.5</span> <span class="d">26-06-03</span> </a> </li><li> <a href="/zh/release_note/airflow/airflow_3.2.2"> <span class="v">3.2.2</span> <span class="d">26-05-29</span> </a> </li> </ul> <a href="/zh/releases/airflow" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 79 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

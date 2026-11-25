@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>orca v1.4.238 — STAGS NextStack</title><meta name="description" content="This release makes it easier to move between agents, files, browsers and remote machines. Tabs of the same file now share unsaved edits, native chats pick up turns made elsewhere, and the phone gets more dependable…"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/orca/orca_v1.4.238/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/orca/1.4.238"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/orca/orca_v1.4.238/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/orca/1.4.238"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="orca v1.4.238 — STAGS NextStack"><meta property="og:description" content="This release makes it easier to move between agents, files, browsers and remote machines. Tabs of the same file now share unsaved edits, native chats pick up turns made elsewhere, and the phone gets more dependable…"><meta property="og:url" content="https://www.stags.cn/zh/release_note/orca/orca_v1.4.238/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/orca/orca_v1.4.238/#article","headline":"orca v1.4.238 release notes","datePublished":"2026-10-23","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/stablyai/orca"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/orca/1.4.238/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/orca/orca_v1.4.238/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/orca/1.4.238/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/orca/1.4.238/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/orca/1.4.238/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/orca/1.4.238/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/orca/1.4.238/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/orca">orca</a> </nav> <h1 class="detail-title"> <span class="p">orca</span> v1.4.238 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年10月23日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/stablyai/orca" target="_blank" rel="noopener"> <span class="k">来源</span>stablyai/orca </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/orca/1.4.238"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/orca/orca_v1.4.238/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="orca-v14238">orca v1.4.238</h1>
+<h2 id="更多互联工作更安全的编辑">更多互联工作，更安全的编辑 🐳</h2>
+<p>此版本使代理、文件、浏览器和远程计算机之间的移动变得更加容易。同一文件的选项卡现在共享未保存的编辑，本机聊天可拾取其他地方的轮流，并且手机获得更可靠的终端手势和更丰富的选项卡控件。</p>
+<h2 id="简短版本">简短版本</h2>
+<ul>
+<li>**您的编辑保持在一起：**同一文件的选项卡在工作区之间共享未保存的文本。冲突审查可以看到实时文本、工作区删除列出未保存的文件以及过时的 Markdown 或笔记本编辑不再覆盖较新的工作。</li>
+<li><strong>持续的聊天：</strong> Codex 和 Pi 显示聊天之外的轮流。长粘贴可以成为文本附件，Codex 问题可以获得答案卡，OMP 可以获得图像发送和可操作的计划审查卡。</li>
+<li><strong>对代理进行更多控制：</strong> 创建工作区时选择聊天或终端，为默认代理设置该选择，在支持的远程服务器上添加 Claude 和 Codex 帐户，并为另外 11 个代理安装共享技能。</li>
+<li><strong>功能更强大的浏览器：</strong> 工作区感知的新选项卡、地址栏建议、记住的站点权限、每个站点的外观和缩放以及桌面和手机上的页面加载进度。</li>
+<li><strong>更流畅的电话体验：</strong> 在选项卡中查看座席活动，双击重命名，向后滚动之前的聊天消息，更自然地选择终端文本，并在恢复后返回到终端阅读位置。</li>
+<li><strong>更好的可见性和恢复：</strong> 检查资源管理器中的本地终端，当主机移动到 Orca 服务器被阻止时使用普通 SSH，并通过托管服务器更新和恢复保持配对。</li>
+<li><strong>日常润色：</strong> 巴西葡萄牙语、入职期间的语言选择、​​可搜索的发布版本、更清晰的历史扫描进度，以及 <strong>使用 AI 解决</strong> 暂停的合并、变基和挑选 — 即使在文件冲突得到修复之后也是如此。
+<strong>手机更新：</strong> 在为您的手机提供服务的计算机上更新 Orca 会更新所提供的界面。新的 <strong>Home → New Workspace</strong> 条目和本机 iOS 听写修复需要更新的本机手机应用程序；主屏幕条目随下一个应用程序版本一起提供。</li>
+</ul>
+<h2 id="兼容性和升级说明">兼容性和升级说明</h2>
+<ul>
+<li><strong>远程帐户：</strong> 更新新的 Claude 和 Codex 添加帐户流程的配对服务器。 Windows 服务器和较旧的主机保留 <code>orca account add</code> 指南。凭证保留在服务器上；现有帐户的远程重新身份验证不属于此更改范围。</li>
+<li><strong>本机聊天（实验性）：</strong> 与 Orca 一起更新配对主机和 SSH 主机以获得最新的聊天修复。代理版本检查现在接受满足最低要求的较新版本和预发行版；已知的旧版本显示更新指南。</li>
+<li><strong>资源管理器：</strong> 新的 PTY 视图涵盖本地终端。结束终端需要主机支持验证所选会话；老主机拒绝未经检查的终止。</li>
+<li><strong>HTML 文件：</strong> 此版本恢复了默认在预览中打开 HTML 的功能。</li>
+<li><strong>实验基础工作：</strong> 下面列出的布局所有者和侧边栏更改仍然处于禁用状态。新的可选代理写入控件没有启用现有的呼叫者。</li>
+</ul>
+<hr>
+<h2 id="产品体验">产品体验</h2>
+<h3 id="本机聊天实验性">本机聊天（实验性）</h3>
+<p><em>通过聊天和终端继续对话，回答代理问题，并更轻松地共享图像和长提示。</em></p>
+<ul>
+<li>在 <a href="https://github.com/stablyai/orca/pull/30883">https://github.com/stablyai/orca/pull/30883</a> 中 @brennanb2025 的现有 Codex 聊天中显示在 Orca 之外进行的回合</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31618">https://github.com/stablyai/orca/pull/31618</a> 中 @brennanb2025 的现有 Pi 聊天中显示在 Orca 之外进行的回合</li>
+<li>在 @brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/30398">https://github.com/stablyai/orca/pull/30398</a> 中发送之前，将长粘贴附加为文本文件并标记超大消息</li>
+<li>Codex 异步问题在桌面和手机上显示由 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31652">https://github.com/stablyai/orca/pull/31652</a> 中提供的答题卡</li>
+<li>OMP 的计划审查显示为计划卡，您可以通过 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31635">https://github.com/stablyai/orca/pull/31635</a> 中通过桌面和移动聊天进行回答</li>
+<li>超过 16 KB 的问题会在 <a href="https://github.com/stablyai/orca/pull/31632">https://github.com/stablyai/orca/pull/31632</a> 中@AmoabaKelvin 的每个选项中显示其卡片</li>
+<li>OMP聊天发送图像； ACP 代理自己的启动答案由 <a href="https://github.com/stablyai/orca/pull/30910">https://github.com/stablyai/orca/pull/30910</a> 中的 @brennanb2025 决定</li>
+<li>保持较新的代理版本和符合条件的预发布版本可用于聊天，当安装的版本太旧时，@brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/30393">https://github.com/stablyai/orca/pull/30393</a> 中提供明确的指导</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/30107">https://github.com/stablyai/orca/pull/30107</a> 中 @brennanb2025 的 Claude 更新中保持模型选择一致</li>
+<li>@brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/31203">https://github.com/stablyai/orca/pull/31203</a> 中，焦点移动后快速打字可保持按键顺序</li>
+<li>消除 <a href="https://github.com/stablyai/orca/pull/31479">https://github.com/stablyai/orca/pull/31479</a> 中 @nwparker 的幽灵队列连续气泡</li>
+<li>将提示钩子块显示为每个代理的单独行，作者：<a href="https://github.com/stablyai/orca/pull/30898">https://github.com/stablyai/orca/pull/30898</a> 中的 @brennanb2025</li>
+<li>即使期刊被 @brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/31735">https://github.com/stablyai/orca/pull/31735</a> 中短暂填满，取消的批准卡也会关闭</li>
+<li>在<a href="https://github.com/stablyai/orca/pull/31620%E4%B8%AD@AmethystLiang%E7%9B%B4%E6%8E%A5%E5%9C%A8%E9%A2%84%E8%A7%88%E5%AF%B9%E8%AF%9D%E6%A1%86%E4%B8%AD%E6%89%93%E5%BC%80%E5%86%85%E8%81%94%E5%9B%BE%E5%83%8F">https://github.com/stablyai/orca/pull/31620中@AmethystLiang直接在预览对话框中打开内联图像</a></li>
+<li>通过 @AmethystLiang 在 <a href="https://github.com/stablyai/orca/pull/31742">https://github.com/stablyai/orca/pull/31742</a> 中处理内联图像预览边缘情况</li>
+<li>通过 @AmethystLiang 在 <a href="https://github.com/stablyai/orca/pull/31848">https://github.com/stablyai/orca/pull/31848</a> 中设置本机聊天表单元格的最小宽度</li>
+<li>通过 @AmethystLiang 在 <a href="https://github.com/stablyai/orca/pull/32098">https://github.com/stablyai/orca/pull/32098</a> 中的本地附件对草稿图像所有权进行检查</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31936">https://github.com/stablyai/orca/pull/31936</a> 中通过 @OrcaWin 构建选取器时避免重复的技能目录扫描</li>
+</ul>
+<h3 id="代理账户和技能">代理、账户和技能</h3>
+<p><em>开始工作时选择聊天或终端，在远程服务器上添加帐户，并为更多座席安装共享技能。</em></p>
+<ul>
+<li>在创建工作树中选择聊天或终端 CLI，在 <a href="https://github.com/stablyai/orca/pull/31189">https://github.com/stablyai/orca/pull/31189</a> 中由 @brennanb2025 创建文件夹和继续选择器</li>
+<li>设置默认代理打开为聊天或终端 CLI by @brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/31590">https://github.com/stablyai/orca/pull/31590</a></li>
+<li>通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31461">https://github.com/stablyai/orca/pull/31461</a> 中从配对桌面在受支持的远程服务器上添加 Claude 和 Codex 帐户</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31945">https://github.com/stablyai/orca/pull/31945</a> 中 @nwparker 切换帐户后重新启动 WSL Claude 窗格</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31657">https://github.com/stablyai/orca/pull/31657</a> 中@Jinwoo-H 为另外 11 个代理安装共享技能并停止 Qoder 列出技能两次</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31469">https://github.com/stablyai/orca/pull/31469</a> 中 @nwparker 导入的 Claude hooks 中保留光标身份</li>
+<li>重命名终端不再隐藏其正在运行的代理（@AmoabaKelvin in <a href="https://github.com/stablyai/orca/pull/31428%EF%BC%89">https://github.com/stablyai/orca/pull/31428）</a></li>
+<li>通过 <a href="https://github.com/stablyai/orca/pull/31440">https://github.com/stablyai/orca/pull/31440</a> 中的 @nwparker 将 OMP 问题卡路由到终端</li>
+</ul>
+<h3 id="电话选项卡聊天和工作区">电话：选项卡、聊天和工作区</h3>
+<p><em>阅读较早的消息而不会丢失您的位置，在选项卡栏中查看代理活动，并将工作区操作保留在正确的计算机上。</em></p>
+<ul>
+<li>选项卡条显示终端和聊天代理状态，显示下一个选项卡，由 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31372">https://github.com/stablyai/orca/pull/31372</a> 中双击重命名</li>
+<li>在向上滚动时加载较早的聊天消息，保留 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31339">https://github.com/stablyai/orca/pull/31339</a> 中的读者位置</li>
+<li>电话终端和聊天选项卡名称与 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31384">https://github.com/stablyai/orca/pull/31384</a> 中的桌面相匹配</li>
+<li>关闭手机显示的选项卡会将其返回到 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31365">https://github.com/stablyai/orca/pull/31365</a> 中之前查看过的选项卡</li>
+<li>通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31711">https://github.com/stablyai/orca/pull/31711</a> 中快速关闭后，防止关闭的终端选项卡重新出现</li>
+<li>新选项卡抽屉与其代理一起重新打开，并在桌面刷新时刷新它们（<a href="https://github.com/stablyai/orca/pull/31367">https://github.com/stablyai/orca/pull/31367</a> 中的 @AmoabaKelvin）</li>
+<li>当 Codex 在 <a href="https://github.com/stablyai/orca/pull/31460">https://github.com/stablyai/orca/pull/31460</a> 中的 @nwparker 在无头主机上显示其空闲标题时，在屏幕上保持 Codex 聊天</li>
+<li>浮动面板聊天由 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31364">https://github.com/stablyai/orca/pull/31364</a> 中从桌面上的电话显示开始</li>
+<li>移动聊天编辑器在 <a href="https://github.com/stablyai/orca/pull/31425">https://github.com/stablyai/orca/pull/31425</a> 中使用@brennanb2025 的桌面占位符</li>
+<li>当 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31370">https://github.com/stablyai/orca/pull/31370</a> 中缺少特工身份时，请附上 Codex 图像</li>
+<li>当桌面连接发生变化时刷新聊天文件建议 by @nwparker in <a href="https://github.com/stablyai/orca/pull/31702">https://github.com/stablyai/orca/pull/31702</a></li>
+<li>当您在<a href="https://github.com/stablyai/orca/pull/31695%E4%B8%AD%E9%80%9A%E8%BF%87@nwparker%E5%88%87%E6%8D%A2%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%97%B6%E5%8A%A0%E8%BD%BD%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BB%A3%E7%90%86%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95">https://github.com/stablyai/orca/pull/31695中通过@nwparker切换计算机时加载正确的代理历史记录</a></li>
+<li>准备家里的新工作区抽屉；主屏幕条目需要 @Jinwoo-H 在 <a href="https://github.com/stablyai/orca/pull/31305">https://github.com/stablyai/orca/pull/31305</a> 中构建的下一个本机手机应用程序</li>
+<li>在<a href="https://github.com/stablyai/orca/pull/31488%E4%B8%AD@nwparker%E5%9C%A8%E6%BA%90%E6%8A%BD%E5%B1%89%E5%85%B3%E9%97%AD%E5%90%8E%E6%89%93%E5%BC%80%E5%88%9B%E5%BB%BA%E5%B7%A5%E4%BD%9C%E5%8C%BA">https://github.com/stablyai/orca/pull/31488中@nwparker在源抽屉关闭后打开创建工作区</a></li>
+<li>通过 <a href="https://github.com/stablyai/orca/pull/31351">https://github.com/stablyai/orca/pull/31351</a> 中的 @nwparker 在选定的存储库运行时中检测新的工作区代理</li>
+<li>通过 <a href="https://github.com/stablyai/orca/pull/31442">https://github.com/stablyai/orca/pull/31442</a> 中的 @nwparker 在正确的主机上加载文件夹工作区代理预设</li>
+<li>当 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31694">https://github.com/stablyai/orca/pull/31694</a> 中刷新存储库列表时，保留您的设置脚本选择</li>
+<li>仅当工作区有休眠代理时，才警告代理无法在无窗口服务器上唤醒（@Jinwoo-H in <a href="https://github.com/stablyai/orca/pull/31607%EF%BC%89">https://github.com/stablyai/orca/pull/31607）</a></li>
+<li><a href="https://github.com/stablyai/orca/pull/31480">https://github.com/stablyai/orca/pull/31480</a> 中的 @nwparker 在临时连接检查失败后恢复工作区功能</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31628">https://github.com/stablyai/orca/pull/31628</a> 中被 @AmethystLiang 锁定时，保持选定的移动选项可见</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31674">https://github.com/stablyai/orca/pull/31674</a> 中 @AmethystLiang 在 iOS 上宣布锁定选择器通知</li>
+</ul>
+<h3 id="电话终端语音和触摸">电话：终端、语音和触摸</h3>
+<p><em>更自然地选择文本，返回相同的阅读位置，并保持滚动、听写和键盘输入可靠。</em></p>
+<ul>
+<li><a href="https://github.com/stablyai/orca/pull/31433">https://github.com/stablyai/orca/pull/31433</a> 中 @nwparker 长按手指拖动终端选择</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31434">https://github.com/stablyai/orca/pull/31434</a> 中@nwparker 在渲染的单元格边界处选择 Unicode 单词</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31445">https://github.com/stablyai/orca/pull/31445</a> 中防止终端滚动手势变成点击 @nwparker</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31471">https://github.com/stablyai/orca/pull/31471</a> 中通过 @nwparker 保留终端滚动后的提示点击</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31472">https://github.com/stablyai/orca/pull/31472</a> 中通过 @nwparker 启动电话终端滚动，没有计时器延迟</li>
+<li><a href="https://github.com/stablyai/orca/pull/31661%E4%B8%AD@nwparker%E6%81%A2%E5%A4%8D%E5%90%8E%E4%BF%9D%E7%95%99%E7%BB%88%E7%AB%AF%E8%AF%BB%E5%8F%96%E4%BD%8D%E7%BD%AE">https://github.com/stablyai/orca/pull/31661中@nwparker恢复后保留终端读取位置</a></li>
+<li>防止陈旧的终端大小调整和流回调影响较新的电话会话，作者：<a href="https://github.com/stablyai/orca/pull/31432">https://github.com/stablyai/orca/pull/31432</a> 中的 @nwparker</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31437">https://github.com/stablyai/orca/pull/31437</a> 中重播 @nwparker 的终端快照之前清除旧的触摸手势</li>
+<li>取消 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31436">https://github.com/stablyai/orca/pull/31436</a> 中拖动过时的快捷方式列表</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31356">https://github.com/stablyai/orca/pull/31356</a> 中保留 @nwparker 的原生 iOS 听写占位符</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31435">https://github.com/stablyai/orca/pull/31435</a> 中 @nwparker 在 iOS 音频中断后恢复听写</li>
+<li>通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31443">https://github.com/stablyai/orca/pull/31443</a> 中挂载已保存首选项的会话</li>
+<li>终端设置显示 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31361">https://github.com/stablyai/orca/pull/31361</a> 中保存的“当您离开移动应用程序时”选择</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31446">https://github.com/stablyai/orca/pull/31446</a> 中的 @nwparker 在第一个终端显示器上渲染离线 Nerd 字体符号</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31441">https://github.com/stablyai/orca/pull/31441</a> 中通过 @nwparker 在手机上应用桌面终端 WebGL 渲染修复</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31474">https://github.com/stablyai/orca/pull/31474</a> 中由 @nwparker 填充最终终端行下方的背景</li>
+<li>通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31658">https://github.com/stablyai/orca/pull/31658</a> 中的草稿保持终端等待反馈可见</li>
+<li>Terminal Paste 说明了 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31640">https://github.com/stablyai/orca/pull/31640</a> 中没有粘贴任何内容的原因</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31666">https://github.com/stablyai/orca/pull/31666</a> 中 @nwparker 处理 OTA 会话中的 Android 终端键盘和弦</li>
+<li>记住您在 <a href="https://github.com/stablyai/orca/pull/31689">https://github.com/stablyai/orca/pull/31689</a> 中 @nwparker 打开终端链接的最新选择</li>
+<li>当 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31704">https://github.com/stablyai/orca/pull/31704</a> 中完成较早的保存时，保留更新的快速命令编辑</li>
+</ul>
+<h3 id="电话文件评论和联系">电话：文件、评论和联系</h3>
+<p><em>将草稿与其文件一起保存，保留最近的编辑，并从连接和加载失败中更清晰地恢复。</em></p>
+<ul>
+<li>将审阅笔记草稿与 @nwparker 所属的文件一起保留在 <a href="https://github.com/stablyai/orca/pull/31698">https://github.com/stablyai/orca/pull/31698</a> 中</li>
+<li>将生成的提交消息保留在 <a href="https://github.com/stablyai/orca/pull/31709">https://github.com/stablyai/orca/pull/31709</a> 中 @nwparker 请求的工作区中</li>
+<li>当 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31706">https://github.com/stablyai/orca/pull/31706</a> 中加载提交的更改文件失败时显示重试</li>
+<li>刷新打开的子文件夹并保持 <a href="https://github.com/stablyai/orca/pull/31697">https://github.com/stablyai/orca/pull/31697</a> 中 @nwparker 可见的深层嵌套文件名</li>
+<li>@nwparker 在 <a href="https://github.com/stablyai/orca/pull/31707">https://github.com/stablyai/orca/pull/31707</a> 中加载完成后，保持关闭的分支预览不重新打开</li>
+<li>在<a href="https://github.com/stablyai/orca/pull/31690%E4%B8%AD%E9%80%9A%E8%BF%87@nwparker%E5%90%AF%E7%94%A8%E9%80%9A%E7%9F%A5%E5%BC%80%E5%85%B3%E5%90%8E%EF%BC%8C%E9%98%B2%E6%AD%A2%E9%80%9A%E7%9F%A5%E5%BC%80%E5%85%B3%E7%BF%BB%E8%BD%AC%E5%9B%9E%E6%9D%A5">https://github.com/stablyai/orca/pull/31690中通过@nwparker启用通知开关后，防止通知开关翻转回来</a></li>
+<li>阻止慢速连接，避免 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31692">https://github.com/stablyai/orca/pull/31692</a> 中将您送回两次</li>
+<li>使用端口 443 通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31659">https://github.com/stablyai/orca/pull/31659</a> 中进行显式 WSS 主机编辑</li>
+<li>区分延迟的连接截止时间和无法访问的主机 by @nwparker in <a href="https://github.com/stablyai/orca/pull/31478">https://github.com/stablyai/orca/pull/31478</a></li>
+<li>通过 @OrcaWin 在 <a href="https://github.com/stablyai/orca/pull/31943">https://github.com/stablyai/orca/pull/31943</a> 中通过文件路径加速手机差异审查笔记查找</li>
+</ul>
+<h3 id="浏览器">浏览器</h3>
+<p><em>打开工作区感知的新选项卡，从地址栏查找站点，并控制每个站点的权限、外观和缩放。</em></p>
+<ul>
+<li>新标签页，带有工作区卡和 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31656">https://github.com/stablyai/orca/pull/31656</a> 中推荐的站点</li>
+<li>@AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31604">https://github.com/stablyai/orca/pull/31604</a> 中提供 Chrome 风格的新标签和地址栏建议</li>
+<li>允许/阻止站点权限提示，由 @AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31158">https://github.com/stablyai/orca/pull/31158</a> 中记住每个站点</li>
+<li>每个站点的外观和缩放，从页面菜单和 Cmd/Ctrl +/-/0 by @AmoabaKelvin in <a href="https://github.com/stablyai/orca/pull/31621">https://github.com/stablyai/orca/pull/31621</a></li>
+<li>显示每个页面加载，包括链接 clicks，作为 <a href="https://github.com/stablyai/orca/pull/31597">https://github.com/stablyai/orca/pull/31597</a> 中的@AmoabaKelvin 在桌面和移动设备上沿地址栏的一行</li>
+</ul>
+<h3 id="编辑器文件和源代码控制">编辑器、文件和源代码控制</h3>
+<p><em>跨同一文件的选项卡共享未保存的文本，在保存和删除工作区期间保护编辑，并获得有关暂停的 Git 操作的帮助。</em></p>
+<ul>
+<li>使同一文件的选项卡与 <a href="https://github.com/stablyai/orca/pull/31974">https://github.com/stablyai/orca/pull/31974</a> 中 @nwparker 未保存编辑的一条共享记录保持同步</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31990">https://github.com/stablyai/orca/pull/31990</a> 中 @nwparker 的只读冲突审查中显示任何工作区中文件的实时未保存文本</li>
+<li>在删除工作区之前列出未保存的文件，并拒绝 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31641">https://github.com/stablyai/orca/pull/31641</a> 中默默丢失的删除操作</li>
+<li>当<a href="https://github.com/stablyai/orca/pull/31738%E4%B8%AD%E7%9A%84@nwparker%E5%9C%A8%E6%B2%A1%E6%9C%89%E6%8F%90%E7%A4%BA%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E5%88%A0%E9%99%A4%E5%B7%A5%E4%BD%9C%E5%8C%BA%E6%97%B6%EF%BC%8C%E6%8F%90%E4%BE%9B%E6%9C%AA%E4%BF%9D%E5%AD%98%E7%9A%84%E7%BC%96%E8%BE%91">https://github.com/stablyai/orca/pull/31738中的@nwparker在没有提示的情况下删除工作区时，提供未保存的编辑</a></li>
+<li>让保存安全完成，并在 <a href="https://github.com/stablyai/orca/pull/31655">https://github.com/stablyai/orca/pull/31655</a> 中 @nwparker 的“不保存”之后将丢弃的文本保留在磁盘上</li>
+<li>笔记本中陈旧的延迟编辑和丰富的 Markdown 视图不再覆盖 <a href="https://github.com/stablyai/orca/pull/31760">https://github.com/stablyai/orca/pull/31760</a> 中 @nwparker 的新文本</li>
+<li>通过 <a href="https://github.com/stablyai/orca/pull/31768">https://github.com/stablyai/orca/pull/31768</a> 中的 @nwparker 保护自动保存、跳过相同的写入并避免自动保存非 UTF-8 文件</li>
+<li>正确解析远程 <code>.tsx</code> 文件，并通过 <a href="https://github.com/stablyai/orca/pull/31624">https://github.com/stablyai/orca/pull/31624</a> 中的 @nwparker 将其导入保留在远程主机上</li>
+<li>将未跟踪的文件合并到<a href="https://github.com/stablyai/orca/pull/31831%E4%B8%AD@AmethystLiang%E7%9A%84%E6%9B%B4%E6%94%B9%E4%B8%AD">https://github.com/stablyai/orca/pull/31831中@AmethystLiang的更改中</a></li>
+<li>通过 <a href="https://github.com/stablyai/orca/pull/28569">https://github.com/stablyai/orca/pull/28569</a> 中的@AmethystLiang 提供带有 AI 的 Resolve，用于暂停合并、变基和樱桃选择</li>
+<li>波兰浏览器搜索布局和可折叠过滤器，由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31825">https://github.com/stablyai/orca/pull/31825</a> 中提供</li>
+<li>避免在 <a href="https://github.com/stablyai/orca/pull/31934">https://github.com/stablyai/orca/pull/31934</a> 中重复扫描 @OrcaWin 未完成的 wiki 链接的后缀</li>
+</ul>
+<h3 id="终端ssh-和远程服务器">终端、SSH 和远程服务器</h3>
+<p><em>在资源管理器中检查本地终端，更可靠地重新连接，并保持远程配对和帐户更改完好无损。</em></p>
+<ul>
+<li>在资源管理器的 PTY 视图中检查本地终端，并在 <a href="https://github.com/stablyai/orca/pull/31593">https://github.com/stablyai/orca/pull/31593</a> 中通过@AmethystLiang 进行主机验证后结束选定的终端</li>
+<li>已删除文件夹中的每个开头都会在工作区根目录中打开，并由 <a href="https://github.com/stablyai/orca/pull/30747">https://github.com/stablyai/orca/pull/30747</a> 中的 @brennanb2025 这么说</li>
+<li><a href="https://github.com/stablyai/orca/pull/31451">https://github.com/stablyai/orca/pull/31451</a> 中的 @nwparker 在手机适配结束后重新绘制桌面</li>
+<li>当重新连接无法在 <a href="https://github.com/stablyai/orca/pull/31482">https://github.com/stablyai/orca/pull/31482</a> 中通过 @nwparker 对其窗格进行成像时，重新绘制空闲的全屏程序</li>
+<li>由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31453">https://github.com/stablyai/orca/pull/31453</a> 中从远程 Codex 窗格复制到查看设备的 clipboard</li>
+<li>修复 <a href="https://github.com/stablyai/orca/pull/31713">https://github.com/stablyai/orca/pull/31713</a> 中 @nwparker 跨填充输出行分割的终端 URL</li>
+<li>当 <a href="https://github.com/stablyai/orca/pull/21816">https://github.com/stablyai/orca/pull/21816</a> 中的 @mmarabel 显示叠加层时，链接带框架的多行 URL</li>
+<li>解决一个已恢复的远程窗格，其主机会话已被 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31968">https://github.com/stablyai/orca/pull/31968</a> 中退出</li>
+<li>在每个终端中设置 <code>ORCA_WORKSPACE_ID</code> Orca 以 <a href="https://github.com/stablyai/orca/pull/31608">https://github.com/stablyai/orca/pull/31608</a> 中的 @Jinwoo-H 开头</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31668">https://github.com/stablyai/orca/pull/31668</a> 中@Jinwoo-H 也在 WSL 终端中设置 <code>ORCA_WORKSPACE_ID</code></li>
+<li>保留@nwparker 在 <a href="https://github.com/stablyai/orca/pull/31481">https://github.com/stablyai/orca/pull/31481</a> 中从陈旧电话输入中收回桌面的功能</li>
+<li>当<a href="https://github.com/stablyai/orca/pull/29104%E4%B8%AD%E7%9A%84@brennanb2025%E9%87%8D%E6%96%B0%E5%8A%A0%E8%BD%BD%E6%B8%B2%E6%9F%93%E5%99%A8%E6%97%B6%E9%87%8A%E6%94%BE%E8%BF%9C%E7%A8%8B%E6%B5%81">https://github.com/stablyai/orca/pull/29104中的@brennanb2025重新加载渲染器时释放远程流</a></li>
+<li>共享此主机：仅提供 <a href="https://github.com/stablyai/orca/pull/31447">https://github.com/stablyai/orca/pull/31447</a> 中 @nwparker 实际应答的地址（无无效 IPv6 链接）</li>
+<li>托管主机的“没有桌面共享其浏览器”错误也由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31444">https://github.com/stablyai/orca/pull/31444</a> 中命名浏览器路由设置</li>
+<li>列出阻止 SSH 主机移动的内容，并通过 <a href="https://github.com/stablyai/orca/pull/31638">https://github.com/stablyai/orca/pull/31638</a> 中的 @nwparker 在终端窗格中提供“无论如何移动”</li>
+<li>打开一个普通的 SSH 终端到一个主机，该主机到 Orca 服务器的移动被 <a href="https://github.com/stablyai/orca/pull/31716">https://github.com/stablyai/orca/pull/31716</a> 中的 @nwparker 阻止</li>
+<li>在按钮旁边说出普通 SSH 的用途，并通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31732">https://github.com/stablyai/orca/pull/31732</a> 中完善普通 SSH 窗口</li>
+<li>当 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31630">https://github.com/stablyai/orca/pull/31630</a> 中路由运行时操作时，一致地解析存储库 SSH 主机</li>
+<li>对 SSH 和 WSL 服务器使用一致的连接、更新和强制决策，作者为 <a href="https://github.com/stablyai/orca/pull/31682">https://github.com/stablyai/orca/pull/31682</a> 中的 @nwparker</li>
+<li>通过 <a href="https://github.com/stablyai/orca/pull/31684">https://github.com/stablyai/orca/pull/31684</a> 中的 @nwparker 在托管服务器的更新、回滚和恢复中保留注册配对</li>
+<li>在<a href="https://github.com/stablyai/orca/pull/31685%E4%B8%AD@nwparker%E9%87%87%E7%94%A8%E4%B9%8B%E5%89%8D%E9%80%9A%E8%BF%87%E5%86%85%E6%A0%B8%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%98%8E%E6%9C%AA%E8%AE%B0%E5%BD%95%E7%9A%84orcad">https://github.com/stablyai/orca/pull/31685中@nwparker采用之前通过内核身份证明未记录的orcad</a></li>
+<li>当 WSL 主机拒绝 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31745">https://github.com/stablyai/orca/pull/31745</a> 中注册的令牌时，从发行版再次配对</li>
+<li>编辑项目组不再将移动的主机标记为 <a href="https://github.com/stablyai/orca/pull/31954">https://github.com/stablyai/orca/pull/31954</a> 中 @nwparker 更改的主机</li>
+<li>阻止浮动终端元数据阻止 <a href="https://github.com/stablyai/orca/pull/31963">https://github.com/stablyai/orca/pull/31963</a> 中 @nwparker 的 SSH 访问链接</li>
+<li>在服务器停止期间防止新终端并保护回滚和重新启动转换（<a href="https://github.com/stablyai/orca/pull/31418">https://github.com/stablyai/orca/pull/31418</a> 中的 @nwparker）</li>
+<li>当固定的 Node 运行时无法通过 <a href="https://github.com/stablyai/orca/pull/29829">https://github.com/stablyai/orca/pull/29829</a> 中的 @nwparker 启动时，命名缺失的共享库</li>
+<li>将计算机与服务器一起使用，并在 <a href="https://github.com/stablyai/orca/pull/31958">https://github.com/stablyai/orca/pull/31958</a> 中的 @nwparker 不可用时进行说明</li>
+<li><a href="https://github.com/stablyai/orca/pull/32083">https://github.com/stablyai/orca/pull/32083</a> 中的 @AmethystLiang 在重试期间稳定远程主机状态栏</li>
+<li>当<a href="https://github.com/stablyai/orca/pull/32080%E4%B8%AD%E7%9A%84@Jinwoo-H%E5%9C%A8%E5%8F%A6%E4%B8%80%E5%8F%B0%E4%B8%BB%E6%9C%BA%E4%B8%8A%E5%AD%98%E5%9C%A8%E7%9B%B8%E5%90%8C%E8%B7%AF%E5%BE%84%E6%97%B6%EF%BC%8C%E5%9C%A8%E9%85%8D%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E5%88%9B%E5%BB%BA%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8C%BA%E6%98%BE%E7%A4%BA%E4%B8%80%E7%BB%84%E9%BB%98%E8%AE%A4%E9%80%89%E9%A1%B9%E5%8D%A1">https://github.com/stablyai/orca/pull/32080中的@Jinwoo-H在另一台主机上存在相同路径时，在配对服务器上创建的工作区显示一组默认选项卡</a></li>
+<li>通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31508">https://github.com/stablyai/orca/pull/31508</a> 中打开 stdio 桥，无需重新探测发行版平台</li>
+<li>保留服务器包 ASCII，以便 V8 将其大小存储为 <a href="https://github.com/stablyai/orca/pull/31495">https://github.com/stablyai/orca/pull/31495</a> 中 @nwparker 的一半</li>
+<li>@OrcaWin 在 <a href="https://github.com/stablyai/orca/pull/31949">https://github.com/stablyai/orca/pull/31949</a> 中在终端中查找 PR URL 方案时避免重复扫描</li>
+</ul>
+<h3 id="历史设置和日常使用">历史、设置和日常使用</h3>
+<p><em>搜索更大的项目，跟踪历史记录，在安装过程中选择您的语言，并更轻松地查找发布版本。</em></p>
+<ul>
+<li>项目搜索适用于 <a href="https://github.com/stablyai/orca/pull/31603">https://github.com/stablyai/orca/pull/31603</a> 中 @Jinwoo-H 的具有数百个工作树的项目</li>
+<li>Pi 和 OMP 将他们自己的代理人保留在@AmoabaKelvin 在 <a href="https://github.com/stablyai/orca/pull/31377">https://github.com/stablyai/orca/pull/31377</a> 中列出的成绩单上</li>
+<li>在 @brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/30949">https://github.com/stablyai/orca/pull/30949</a> 的扫描过程中保持会话历史记录检查总数固定</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/30954">https://github.com/stablyai/orca/pull/30954</a> 中显示 @brennanb2025 的每个代理会话历史记录阅读进度</li>
+<li>仅修复配置文件的损坏部分，而不是回滚整个配置文件（<a href="https://github.com/stablyai/orca/pull/30931">https://github.com/stablyai/orca/pull/30931</a> 中的 @brennanb2025）</li>
+<li>添加搜索到<a href="https://github.com/stablyai/orca/pull/31678%E4%B8%AD@AmethystLiang%E7%9A%84%E5%8F%91%E5%B8%83%E6%9E%84%E5%BB%BA%E5%88%97%E8%A1%A8">https://github.com/stablyai/orca/pull/31678中@AmethystLiang的发布构建列表</a></li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31627">https://github.com/stablyai/orca/pull/31627</a> 中添加 @AmethystLiang 的巴西葡萄牙语 UI 本地化</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31784">https://github.com/stablyai/orca/pull/31784</a> 中添加 @AmethystLiang 的入门语言选择</li>
+<li>在<a href="https://github.com/stablyai/orca/pull/31810%E4%B8%AD@AmethystLiang%E5%9C%A8%E4%B8%A4%E4%B8%AA%E5%AE%9E%E9%AA%8C%E9%98%9F%E5%88%97%E4%B8%AD%E4%BF%9D%E7%95%99%E7%B3%BB%E7%BB%9F%E8%AF%AD%E8%A8%80">https://github.com/stablyai/orca/pull/31810中@AmethystLiang在两个实验队列中保留系统语言</a></li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31822">https://github.com/stablyai/orca/pull/31822</a> 中 @AmethystLiang 拒绝加载目录后恢复语言选择</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31259">https://github.com/stablyai/orca/pull/31259</a> 中恢复 @AmethystLiang 的本地化编辑器安全副本</li>
+<li>使用<a href="https://github.com/stablyai/orca/pull/31456%E4%B8%AD@leo-yt-upstage%E7%9A%84%E5%90%8E%E8%A3%94%E6%8E%AA%E8%BE%9E%E7%BA%A0%E6%AD%A3%E9%9F%A9%E8%AF%AD%E7%9D%A1%E7%9C%A0">https://github.com/stablyai/orca/pull/31456中@leo-yt-upstage的后裔措辞纠正韩语睡眠</a></li>
+<li>通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31467">https://github.com/stablyai/orca/pull/31467</a> 中澄清日语电话控制和连接措辞</li>
+<li>在<a href="https://github.com/stablyai/orca/pull/31852%E4%B8%AD@nwparker%E5%88%A0%E9%99%A4%E6%9C%AA%E8%B7%9F%E8%B8%AA%E7%9A%84%E8%AE%BE%E7%BD%AE%E5%90%8E%E4%BF%9D%E7%95%99%E8%BF%90%E8%A1%8C%E6%97%B6%E6%9D%A1%E7%9B%AE">https://github.com/stablyai/orca/pull/31852中@nwparker删除未跟踪的设置后保留运行时条目</a></li>
+<li>调暗终端并在不专心的一侧进行聊天，就像 <a href="https://github.com/stablyai/orca/pull/28952">https://github.com/stablyai/orca/pull/28952</a> 中 @brennanb2025 的编辑一样</li>
+<li>删除 <a href="https://github.com/stablyai/orca/pull/31599">https://github.com/stablyai/orca/pull/31599</a> 中 @AmethystLiang 的定向选项卡关闭操作和跟踪</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31791">https://github.com/stablyai/orca/pull/31791</a> 中确认关闭服务器工作区中的固定选项卡会关闭它，而不是由 @Jinwoo-H 快速恢复</li>
+<li>标签重新发送的保留选项卡在 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31951">https://github.com/stablyai/orca/pull/31951</a> 中重播时关闭</li>
+<li>仅当 <a href="https://github.com/stablyai/orca/pull/30904">https://github.com/stablyai/orca/pull/30904</a> 中的 @brennanb2025 更改问题或其来源时，工作树卡才会再次获取其线性问题</li>
+<li>通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31744">https://github.com/stablyai/orca/pull/31744</a> 中删除每个分组中多余的主机徽章</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31956">https://github.com/stablyai/orca/pull/31956</a> 中 @nwparker 的无头 Orca 服务上尊重“仅当桌面不在时”</li>
+<li>保留推送数据库容量，以便通知传递可以由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31955">https://github.com/stablyai/orca/pull/31955</a> 中完成</li>
+<li>通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31899">https://github.com/stablyai/orca/pull/31899</a> 中对数据库索引进行繁忙设备通知检查</li>
+<li>使用数据库范围索引来绑定 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31921">https://github.com/stablyai/orca/pull/31921</a> 中的推送通知保留工作</li>
+<li>避免@OrcaWin在<a href="https://github.com/stablyai/orca/pull/31938%E4%B8%AD%E4%B8%A4%E6%AC%A1%E8%A7%A3%E7%A0%81Qoder%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95">https://github.com/stablyai/orca/pull/31938中两次解码Qoder历史记录</a></li>
+<li>@OrcaWin 在 <a href="https://github.com/stablyai/orca/pull/31950">https://github.com/stablyai/orca/pull/31950</a> 中绑定历史范围缓存批量枚举</li>
+<li>通过@OrcaWin在<a href="https://github.com/stablyai/orca/pull/31935%E4%B8%AD%E7%B4%A2%E5%BC%95%E7%A8%B3%E5%AE%9A%E7%9A%84%E5%B8%83%E5%B1%80%E8%AE%B0%E5%BD%95%E6%9D%A5%E5%8A%A0%E9%80%9F%E4%BC%9A%E8%AF%9D%E6%9B%B4%E6%96%B0">https://github.com/stablyai/orca/pull/31935中索引稳定的布局记录来加速会话更新</a></li>
+<li>在<a href="https://github.com/stablyai/orca/pull/30698%E4%B8%AD%E9%80%9A%E8%BF%87@OrcaWin%E9%99%90%E5%88%B6%E7%BC%93%E5%86%B2%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%AD%90%E8%BF%9B%E7%A8%8B%E8%BE%93%E5%87%BA%E8%80%8C%E4%B8%8D%E4%B8%A2%E5%A4%B1%E5%AD%97%E8%8A%82">https://github.com/stablyai/orca/pull/30698中通过@OrcaWin限制缓冲的工作子进程输出而不丢失字节</a></li>
+<li>由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31406">https://github.com/stablyai/orca/pull/31406</a> 中记录 Windows 上的每日聚合 WSL 使用情况快照</li>
+</ul>
+<h3 id="测试构建和维护">测试、构建和维护</h3>
+<p><em>发布和安全更新、插件修复、性能工作、更广泛的检查和持续的模块清理。下面禁用的基础工作不会启用新的布局或侧边栏行为。</em></p>
+<ul>
+<li>默认情况下添加了 HTML 预览，然后由 @AmethystLiang 在 <a href="https://github.com/stablyai/orca/pull/31575">https://github.com/stablyai/orca/pull/31575</a> 和 <a href="https://github.com/stablyai/orca/pull/31893">https://github.com/stablyai/orca/pull/31893</a> 中恢复此版本
+*修复（插件）：开发插件重新加载<a href="https://github.com/stablyai/orca/pull/31394%E4%B8%AD@nwparker%E5%90%AF%E5%8A%A8%E5%85%B6%E8%A7%82%E5%AF%9F%E8%80%85%E6%97%B6%E4%BF%9D%E5%AD%98%E7%9A%84%E7%BC%96%E8%BE%91">https://github.com/stablyai/orca/pull/31394中@nwparker启动其观察者时保存的编辑</a></li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31422">https://github.com/stablyai/orca/pull/31422</a> 中通过 @nwparker 进行资格认证，准备服务器模板组件</li>
+<li>在 <a href="https://github.com/stablyai/orca/pull/31450">https://github.com/stablyai/orca/pull/31450</a> 中@nwparker 跨应用程序版本提升重用 Windows 服务器本机预构建</li>
+<li>重构（渲染器）：通过<a href="https://github.com/stablyai/orca/pull/31462%E4%B8%AD%E7%9A%84@Jinwoo-H%E9%80%9A%E8%BF%87%E7%B1%BB%E5%9E%8B%E5%8C%96%E9%80%89%E6%8B%A9%E5%99%A8%E8%AF%BB%E5%8F%96%E5%B7%A5%E4%BD%9C%E5%8C%BA%E8%AE%B0%E5%BD%95">https://github.com/stablyai/orca/pull/31462中的@Jinwoo-H通过类型化选择器读取工作区记录</a>
+*修复(relay-ops)：防止一个停滞的导演实例触发@Jinwoo-H在<a href="https://github.com/stablyai/orca/pull/31484%E4%B8%AD%E7%9A%84%E5%82%A8%E5%A4%87%E6%89%8B%E8%A1%A8%E7%9A%84503%E8%A7%84%E5%88%99">https://github.com/stablyai/orca/pull/31484中的储备手表的503规则</a></li>
+<li>测试（守护进程）：通过 @brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/31520">https://github.com/stablyai/orca/pull/31520</a> 中使真实套接字背压断言具有确定性</li>
+<li>文档（移动版）：通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31347">https://github.com/stablyai/orca/pull/31347</a> 中澄清缓冲终端自动完成范围</li>
+<li>杂务（棘轮）：删除陈旧的所有者适配器焦点种子并修剪<a href="https://github.com/stablyai/orca/pull/31625%E4%B8%AD%E7%9A%84@nwparker%E7%9A%84%E5%9F%BA%E7%BA%BF">https://github.com/stablyai/orca/pull/31625中的@nwparker的基线</a></li>
+<li>重构（ssh）：删除 SSH 和 orcad 助手，@nwparker 在 <a href="https://github.com/stablyai/orca/pull/31629">https://github.com/stablyai/orca/pull/31629</a> 中没有调用任何内容</li>
+<li>重构（orcad）：在 <a href="https://github.com/stablyai/orca/pull/31633">https://github.com/stablyai/orca/pull/31633</a> 中分享 @nwparker 的一项无法验证的终端普查</li>
+<li>杂务（运行时）：删除导出 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31639">https://github.com/stablyai/orca/pull/31639</a> 中读取的任何内容</li>
+<li>重构（ssh）：从<a href="https://github.com/stablyai/orca/pull/31642%E4%B8%AD@nwparker%E5%AE%9A%E4%B9%89%E7%9A%84%E6%A8%A1%E5%9D%97%E4%B8%AD%E5%AF%BC%E5%85%A5SSH%E5%92%8Corcad%E5%90%8D%E7%A7%B0">https://github.com/stablyai/orca/pull/31642中@nwparker定义的模块中导入SSH和orcad名称</a></li>
+<li>重构（执行主机）：存储库行可以通过 <a href="https://github.com/stablyai/orca/pull/31623">https://github.com/stablyai/orca/pull/31623</a> 中的 @nwparker 拨打的 SSH 目标的一个解析器</li>
+<li>refactor(repo-host)：主机的一个帮助程序，由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31634">https://github.com/stablyai/orca/pull/31634</a> 中注册 repo id</li>
+<li>重构（orcad）：根据 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31647">https://github.com/stablyai/orca/pull/31647</a> 中安装的内容来命名远程安装助手</li>
+<li>文档(ssh)：描述 <a href="https://github.com/stablyai/orca/pull/31651">https://github.com/stablyai/orca/pull/31651</a> 中 @nwparker 没有删除中继的 orcad 连接路径</li>
+<li>重构（orcad）：使用共享错误和活跃度助手，而不是<a href="https://github.com/stablyai/orca/pull/31654%E4%B8%AD@nwparker%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%89%AF%E6%9C%AC">https://github.com/stablyai/orca/pull/31654中@nwparker的本地副本</a></li>
+<li>重构（渲染器）：通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31626">https://github.com/stablyai/orca/pull/31626</a> 中为所有者适配器的功能命名（resolveOwnerOrLocal）</li>
+<li>ci：在 <a href="https://github.com/stablyai/orca/pull/31581">https://github.com/stablyai/orca/pull/31581</a> 中直接为 @brennanb2025 的 shell 合约安装经过验证的 Fish 4</li>
+<li>重构（终端）：<a href="https://github.com/stablyai/orca/pull/31644">https://github.com/stablyai/orca/pull/31644</a> 中的@nwparker 在终端生成路由中没有无目录失败打开到集中运行时</li>
+<li>从 <a href="https://github.com/stablyai/orca/pull/31669">https://github.com/stablyai/orca/pull/31669</a> 中的 @nwparker 中删除编辑器的同文件检查中未使用的规则（保留 WSL 折叠以丢弃保留）</li>
+<li>文档：<a href="https://github.com/stablyai/orca/pull/31670">https://github.com/stablyai/orca/pull/31670</a> 中 @nwparker 计划安静优先的模块组织清理</li>
+<li>修复（relay-ops）：使每个保留观察样本都由 @Jinwoo-H 在 <a href="https://github.com/stablyai/orca/pull/31619">https://github.com/stablyai/orca/pull/31619</a> 中读取一个云日志
+*修复（中继）：在<a href="https://github.com/stablyai/orca/pull/31572%E4%B8%AD@Jinwoo-H%E5%91%8A%E8%AF%89%E5%AE%83%E7%A6%BB%E5%BC%80%E4%B9%8B%E5%89%8D%E9%87%8A%E6%94%BE%E4%B8%80%E4%B8%AA%E8%80%97%E5%B0%BD%E7%9A%84%E4%B8%BB%E6%9C%BA">https://github.com/stablyai/orca/pull/31572中@Jinwoo-H告诉它离开之前释放一个耗尽的主机</a></li>
+<li>重构（ssh）：SSH 主机查找器使用 <a href="https://github.com/stablyai/orca/pull/31631">https://github.com/stablyai/orca/pull/31631</a> 中 @nwparker 的主机选择器溢出注释和有界列表形状</li>
+<li>重构（ipc）：将线性处理程序与 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31673">https://github.com/stablyai/orca/pull/31673</a> 中的直接所有者导入进行分组</li>
+<li>重构（ipc）：通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31680">https://github.com/stablyai/orca/pull/31680</a> 中将 Jira 处理程序与具体所有者导入进行分组</li>
+<li>重构（native-chat）：<a href="https://github.com/stablyai/orca/pull/30848">https://github.com/stablyai/orca/pull/30848</a> 中 @Jinwoo-H 批准信封的一个共享解析器</li>
+<li>重构（jira）：通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31683">https://github.com/stablyai/orca/pull/31683</a> 中导入具体所有者的组附件模块</li>
+<li>文档（自述文件）：通过 @Jinwoo-H 在 <a href="https://github.com/stablyai/orca/pull/31701">https://github.com/stablyai/orca/pull/31701</a> 中更新明星历史图表</li>
+<li>修复：修复 <a href="https://github.com/stablyai/orca/pull/31681">https://github.com/stablyai/orca/pull/31681</a> 中 @nwparker 跨工作区的依赖安全建议</li>
+<li>重构（侧边栏）：<a href="https://github.com/stablyai/orca/pull/31524">https://github.com/stablyai/orca/pull/31524</a> 中 @Jinwoo-H 为桌面窗口和手机提供的一个共享源 client</li>
+<li>修复（配对）：<a href="https://github.com/stablyai/orca/pull/31465">https://github.com/stablyai/orca/pull/31465</a> 中的 @nwparker 在 clients 上一致地标准化 Base64</li>
+<li>重构（线性）：<a href="https://github.com/stablyai/orca/pull/31686">https://github.com/stablyai/orca/pull/31686</a> 中 @nwparker 在具体所有者下读取组问题上下文</li>
+<li>修复（浏览器）：通过 <a href="https://github.com/stablyai/orca/pull/31727">https://github.com/stablyai/orca/pull/31727</a> 中的 @Jinwoo-H 将地址栏恢复到 400 行限制以下</li>
+<li>修复（安全）：更新 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31687">https://github.com/stablyai/orca/pull/31687</a> 中 10 月安全版本的节点运行时</li>
+<li>通过 @AmethystLiang 在 <a href="https://github.com/stablyai/orca/pull/31600">https://github.com/stablyai/orca/pull/31600</a> 中提取共享映像 clipboard 复制实用程序</li>
+<li>通过 <a href="https://github.com/stablyai/orca/pull/31729">https://github.com/stablyai/orca/pull/31729</a> 中的 @brennanb2025 将主线带回线限制以下（主线棉绒为红色）</li>
+<li>ci：修复 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31747">https://github.com/stablyai/orca/pull/31747</a> 中受保护的主下载徽章更新</li>
+<li>重构（浏览器）：<a href="https://github.com/stablyai/orca/pull/31730">https://github.com/stablyai/orca/pull/31730</a> 中 @nwparker 分组 Chromium cookie 导入阶段</li>
+<li>杂务：删除 <a href="https://github.com/stablyai/orca/pull/31737">https://github.com/stablyai/orca/pull/31737</a> 中 @nwparker 未使用的 shadcn 生成器依赖项</li>
+<li><a href="https://github.com/stablyai/orca/pull/31757">https://github.com/stablyai/orca/pull/31757</a> 中@Jinwoo-H 的内部清理</li>
+<li>修复（ci）：由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31775">https://github.com/stablyai/orca/pull/31775</a> 中准备历史 VM 回滚快照</li>
+<li>由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31753">https://github.com/stablyai/orca/pull/31753</a> 中更新云中继运行时、提供程序和安全检查</li>
+<li>修复（ci）：在 <a href="https://github.com/stablyai/orca/pull/31793">https://github.com/stablyai/orca/pull/31793</a> 中@nwparker 在 pnpm 注册表中断期间恢复云和主要检查</li>
+<li>由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31792">https://github.com/stablyai/orca/pull/31792</a> 中将中继部署配置移至私有云操作中</li>
+<li>杂务：删除 <a href="https://github.com/stablyai/orca/pull/31748">https://github.com/stablyai/orca/pull/31748</a> 中 @nwparker 的五个冗余 Tiptap 包装器依赖项</li>
+<li>重构（主要）：由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31771">https://github.com/stablyai/orca/pull/31771</a> 中对临时 VM 生命周期模块进行分组</li>
+<li>杂务：用 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31824">https://github.com/stablyai/orca/pull/31824</a> 中的 Electron API 替换电子工具包实用程序</li>
+<li>重构（设置）：<a href="https://github.com/stablyai/orca/pull/31830">https://github.com/stablyai/orca/pull/31830</a> 中 @nwparker 分组存储库身份模块</li>
+<li>ci：<a href="https://github.com/stablyai/orca/pull/31836">https://github.com/stablyai/orca/pull/31836</a> 中的 @nwparker 显式设置工作流令牌权限为只读</li>
+<li>测试：通过 <a href="https://github.com/stablyai/orca/pull/31835">https://github.com/stablyai/orca/pull/31835</a> 中的 @nwparker 删除过时的 @streamparser/json 依赖项</li>
+<li>ci：防止基准候选代码在<a href="https://github.com/stablyai/orca/pull/31838%E4%B8%AD%E7%94%B1@nwparker%E5%8F%91%E5%B8%83%E7%BC%93%E5%AD%98">https://github.com/stablyai/orca/pull/31838中由@nwparker发布缓存</a></li>
+<li>ci：在 <a href="https://github.com/stablyai/orca/pull/31839">https://github.com/stablyai/orca/pull/31839</a> 中由 @nwparker 执行源之前验证临时构建来源</li>
+<li>稳定 <a href="https://github.com/stablyai/orca/pull/31840">https://github.com/stablyai/orca/pull/31840</a> 中 @AmethystLiang 的待处理拒绝选项重试测试</li>
+<li>ci：在 <a href="https://github.com/stablyai/orca/pull/31842">https://github.com/stablyai/orca/pull/31842</a> 中跳过 @nwparker 在仅渲染器 PR 上的不相关中继集成</li>
+<li>ci：删除@nwparker在<a href="https://github.com/stablyai/orca/pull/31843%E4%B8%AD%E5%AE%8C%E6%88%90%E7%9A%84%E9%87%8D%E5%AE%9A%E4%BD%8D%E5%92%8Cpnpm%E7%BC%93%E5%AD%98%E5%AE%9E%E9%AA%8C">https://github.com/stablyai/orca/pull/31843中完成的重定位和pnpm缓存实验</a></li>
+<li>重构（移动）：<a href="https://github.com/stablyai/orca/pull/31845">https://github.com/stablyai/orca/pull/31845</a> 中 @nwparker 的分组平台接缝分析工具</li>
+<li>ci：避免路由测试更改的全局扇出，@nwparker 在 <a href="https://github.com/stablyai/orca/pull/31856">https://github.com/stablyai/orca/pull/31856</a> 中</li>
+<li>重构（运行时）：通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31866">https://github.com/stablyai/orca/pull/31866</a> 中的规范路由 API 解析监视的存储库的主机</li>
+<li>重构（运行时）：用 <a href="https://github.com/stablyai/orca/pull/31864">https://github.com/stablyai/orca/pull/31864</a> 中的 @nwparker 的类型保护替换工作树查询中未经检查的存储转换</li>
+<li>重构（worktrees）：通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31872">https://github.com/stablyai/orca/pull/31872</a> 中从规范的 SSH 目标中选择存储库的目录观察程序传输</li>
+<li>ci：在 <a href="https://github.com/stablyai/orca/pull/31865">https://github.com/stablyai/orca/pull/31865</a> 中 @nwparker 统计跑步者需求报告中的每次重试尝试</li>
+<li>修复（插件）：验证 <a href="https://github.com/stablyai/orca/pull/31877">https://github.com/stablyai/orca/pull/31877</a> 中@nwparker 发送的示例面板回复</li>
+<li>修复（文档）：避免在 <a href="https://github.com/stablyai/orca/pull/31884">https://github.com/stablyai/orca/pull/31884</a> 中 @nwparker 的摘录链接目的地中回溯
+*修复（ci）：将候选测试工作流程限制为<a href="https://github.com/stablyai/orca/pull/31887%E4%B8%AD@nwparker%E7%9A%84%E5%8F%AA%E8%AF%BB%E7%BC%93%E5%AD%98">https://github.com/stablyai/orca/pull/31887中@nwparker的只读缓存</a></li>
+<li>重构（中继）：<a href="https://github.com/stablyai/orca/pull/31871">https://github.com/stablyai/orca/pull/31871</a> 中 @nwparker 的组分配清理和诊断</li>
+<li>重构（ssh）：将 ssh2 握手、主机密钥验证、系统 ssh 探测和凭证回退从 <a href="https://github.com/stablyai/orca/pull/31878">https://github.com/stablyai/orca/pull/31878</a> 中的 @nwparker 中的 SshConnection 中分离出来</li>
+<li>重构（orcad）：删除<a href="https://github.com/stablyai/orca/pull/31875%E4%B8%AD@nwparker%E7%9A%84%E5%B7%A5%E5%85%B7%E9%93%BE%E6%8E%A2%E9%92%88%E7%9A%84%E6%9C%AA%E8%AF%BBtoolchainMissing%E5%88%A4%E5%86%B3">https://github.com/stablyai/orca/pull/31875中@nwparker的工具链探针的未读toolchainMissing判决</a></li>
+<li>修复（图像）：避免<a href="https://github.com/stablyai/orca/pull/31882%E4%B8%AD@nwparker%E5%9C%A8%E6%95%B0%E6%8D%AEURI%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%E4%B8%AD%E5%9B%9E%E6%BA%AF">https://github.com/stablyai/orca/pull/31882中@nwparker在数据URI参数解析中回溯</a></li>
+<li>ci：通过@nwparker在<a href="https://github.com/stablyai/orca/pull/31876%E4%B8%AD%E6%8F%90%E9%AB%98%E5%BD%B1%E5%AD%90%E5%8D%95%E5%85%83%E4%BE%9D%E8%B5%96%E7%B2%BE%E5%BA%A6">https://github.com/stablyai/orca/pull/31876中提高影子单元依赖精度</a></li>
+<li>ci：检查<a href="https://github.com/stablyai/orca/pull/31858%E4%B8%AD@nwparker%E5%AF%B9PR%E5%92%8C%E7%A8%B3%E5%AE%9A%E7%89%88%E6%9C%AC%E7%9A%84%E4%BE%9D%E8%B5%96%E6%BC%8F%E6%B4%9E">https://github.com/stablyai/orca/pull/31858中@nwparker对PR和稳定版本的依赖漏洞</a></li>
+<li>重构（orcad）：停止导出<a href="https://github.com/stablyai/orca/pull/31894%E4%B8%AD@nwparker%E4%BB%85%E5%9C%A8%E5%85%B6%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A8%A1%E5%9D%97%E5%86%85%E4%BD%BF%E7%94%A8%E7%9A%84%E5%A3%B0%E6%98%8E">https://github.com/stablyai/orca/pull/31894中@nwparker仅在其自己的模块内使用的声明</a></li>
+<li>测试：通过 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31891">https://github.com/stablyai/orca/pull/31891</a> 中隔离 Windows 树终止加载装置的启动和清理</li>
+<li>ci：@nwparker 在 <a href="https://github.com/stablyai/orca/pull/31873">https://github.com/stablyai/orca/pull/31873</a> 中的金丝雀分层 WSL 分发资格</li>
+<li>重构（托管服务器）：停止导出<a href="https://github.com/stablyai/orca/pull/31888%E4%B8%AD@nwparker%E4%BB%85%E5%9C%A8%E5%85%B6%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A8%A1%E5%9D%97%E5%86%85%E4%BD%BF%E7%94%A8%E7%9A%84%E5%A3%B0%E6%98%8E">https://github.com/stablyai/orca/pull/31888中@nwparker仅在其自己的模块内使用的声明</a></li>
+<li>ci：由 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31883">https://github.com/stablyai/orca/pull/31883</a> 中构建一次 SSH Windows 移动页面</li>
+<li>重构（native-chat）：在<a href="https://github.com/stablyai/orca/pull/31622%E4%B8%AD%E9%80%9A%E8%BF%87@brennanb2025%E5%9C%A8%E4%BB%A3%E7%90%86%E4%B9%8B%E9%97%B4%E5%85%B1%E4%BA%AB%E8%BF%BD%E8%B5%B6%E5%BC%80%E6%94%BE%E8%B7%91%E6%AD%A5%E8%80%85">https://github.com/stablyai/orca/pull/31622中通过@brennanb2025在代理之间共享追赶开放跑步者</a></li>
+<li>重构（ssh）：停止导出<a href="https://github.com/stablyai/orca/pull/31897%E4%B8%AD@nwparker%E4%BB%85%E5%9C%A8%E5%85%B6%E8%87%AA%E5%B7%B1%E7%9A%84%E6%A8%A1%E5%9D%97%E5%86%85%E4%BD%BF%E7%94%A8%E7%9A%84%E5%A3%B0%E6%98%8E">https://github.com/stablyai/orca/pull/31897中@nwparker仅在其自己的模块内使用的声明</a></li>
+<li>重构(ssh)：删除<a href="https://github.com/stablyai/orca/pull/31909%E4%B8%AD@nwparker%E6%9C%AA%E4%BD%BF%E7%94%A8%E7%9A%84SFTP%E4%BC%9A%E8%AF%9D%E5%90%8E%E6%9C%9F%E9%94%99%E8%AF%AF%E9%94%81%E5%AD%98%E5%99%A8">https://github.com/stablyai/orca/pull/31909中@nwparker未使用的SFTP会话后期错误锁存器</a></li>
+<li>修复（ci）：从<a href="https://github.com/stablyai/orca/pull/31919%E4%B8%AD@nwparker%E7%9A%84%E8%BF%90%E8%A1%8C%E8%80%85%E9%9C%80%E6%B1%82%E4%B8%AD%E6%8E%92%E9%99%A4%E7%BB%A7%E6%89%BF%E7%9A%84%E4%BD%9C%E4%B8%9A%E7%BB%93%E6%9E%9C">https://github.com/stablyai/orca/pull/31919中@nwparker的运行者需求中排除继承的作业结果</a></li>
+<li>重构（共享）：删除导出 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31917">https://github.com/stablyai/orca/pull/31917</a> 中读取的任何内容</li>
+<li>重构（ssh）：保持连接步骤主机类型私有，并证明 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31900">https://github.com/stablyai/orca/pull/31900</a> 中投射的主机密钥顺序合理</li>
+<li>重构（ssh）：通过 <a href="https://github.com/stablyai/orca/pull/31922">https://github.com/stablyai/orca/pull/31922</a> 中的 @nwparker 删除失效的 SSH 文件系统提供程序和桌面 SSH 文件监视程序</li>
+<li>重构（任务）：在 <a href="https://github.com/stablyai/orca/pull/31907">https://github.com/stablyai/orca/pull/31907</a> 中并置 @nwparker 加载的 GitLab 任务页面</li>
+<li>杂务：删除经过验证的死代码并校准 @nwparker 在 <a href="https://github.com/stablyai/orca/pull/31903">https://github.com/stablyai/orca/pull/31903</a> 中的 Knip 条目</li>
+<li>重构（ssh）：将重新连接梯子和会话通道从<a href="https://github.com/stablyai/orca/pull/31923%E4%B8%AD%E7%9A%84@nwparker%E7%A7%BB%E5%87%BASshConnection">https://github.com/stablyai/orca/pull/31923中的@nwparker移出SshConnection</a></li>
+<li>重构（jira）：在 <a href="https://github.com/stablyai/orca/pull/31933">https://github.com/stablyai/orca/pull/31933</a> 中并置 @nwparker 的 JQL 谓词组合</li>
+<li>重构（渲染器）：在 <a href="https://github.com/stablyai/orca/pull/31960">https://github.com/stablyai/orca/pull/31960</a> 中并置 @nwparker 的线性问题空状态策略</li>
+<li>编辑器缓冲区准备好共享：每条记录自动保存，分离选项卡的单独模型（无行为改变），作者：<a href="https://github.com/stablyai/orca/pull/31970">https://github.com/stablyai/orca/pull/31970</a> 中的 @nwparker</li>
+<li>修复（打包）：将 ssh2 的仅限 Windows 的 Pageant 文件保留在 <a href="https://github.com/stablyai/orca/pull/31946">https://github.com/stablyai/orca/pull/31946</a> 中 @nwparker 的 macOS 和 Linux 包之外</li>
+<li>测试运行程序使用存储库的固定 Bun，并拒绝旧的 Bun，而不是默默地跳过 @Jinwoo-H 在 <a href="https://github.com/stablyai/orca/pull/31981">https://github.com/stablyai/orca/pull/31981</a> 中的测试</li>
+<li>重构（工具）：@nwparker 在 <a href="https://github.com/stablyai/orca/pull/31976">https://github.com/stablyai/orca/pull/31976</a> 中对移动网络预览和证据工具进行分组</li>
+<li>重构：@nwparker 在 <a href="https://github.com/stablyai/orca/pull/32008">https://github.com/stablyai/orca/pull/32008</a> 中并置移动 Web 路由和捆绑工具</li>
+<li>重构：@nwparker 在 <a href="https://github.com/stablyai/orca/pull/32024">https://github.com/stablyai/orca/pull/32024</a> 中并置提供程序重试记录规则</li>
+<li>重构：在 <a href="https://github.com/stablyai/orca/pull/32041">https://github.com/stablyai/orca/pull/32041</a> 中并置 @nwparker 的本机聊天命令语言规则</li>
+<li>重构：@nwparker 在 <a href="https://github.com/stablyai/orca/pull/32055">https://github.com/stablyai/orca/pull/32055</a> 中并置本机聊天命令信封</li>
+<li>重构：@nwparker 在 <a href="https://github.com/stablyai/orca/pull/32062">https://github.com/stablyai/orca/pull/32062</a> 中并置浏览器 cookie 验证</li>
+<li>重构（pty）：@brennanb2025 在 <a href="https://github.com/stablyai/orca/pull/31596">https://github.com/stablyai/orca/pull/31596</a> 中为两个终端启动通道执行一个提交步骤</li>
+<li>重构：将 @nwparker 的存储代理合约并置在 <a href="https://github.com/stablyai/orca/pull/32067">https://github.com/stablyai/orca/pull/32067</a> 中</li>
+<li>重构：在 <a href="https://github.com/stablyai/orca/pull/32079">https://github.com/stablyai/orca/pull/32079</a> 中并置 Jira 图像和 @nwparker 的流合约</li>
+<li>重构：在 <a href="https://github.com/stablyai/orca/pull/32089">https://github.com/stablyai/orca/pull/32089</a> 中并置 @nwparker 的 Jira 查询构造</li>
+<li>feat(agent-write)：在 <a href="https://github.com/stablyai/orca/pull/32092">https://github.com/stablyai/orca/pull/32092</a> 中 @Jinwoo-H 在共享代理编写器上选择启动取消、批准等待和处理围栏</li>
+<li>重构：在 <a href="https://github.com/stablyai/orca/pull/32099">https://github.com/stablyai/orca/pull/32099</a> 中并置 @nwparker 生成的 Jira 问题摘要
+&#x3C;详情></li>
+</ul>
+<summary>布局和侧边栏基础（已禁用）</summary>
+* 正在运行的代理的简历注释不是睡眠，因此打开构建报告它已连接（仅深色，布局所有者构建）由 https://github.com/stablyai/orca/pull/31485 中的 @Jinwoo-H
+* 配对桌面显示服务器的浏览器选项卡，无需打开第二个页面（仅深色，布局所有者构建），作者：@Jinwoo-H，https://github.com/stablyai/orca/pull/31509
+* 在 https://github.com/stablyai/orca/pull/31529 中@Jinwoo-H 每次布局更改（仅深色，布局所有者构建）后，手机都会获取主选项卡顺序、组和名称
+* 侧边栏：从主翻转分支上启动修复，在 https://github.com/stablyai/orca/pull/31466 中 @Jinwoo-H 仍然关闭开关
+* 编辑器选项卡主要优先：窗口询问每次编辑器选项卡更改的主要内容，并仅绘制 https://github.com/stablyai/orca/pull/31438 中 @Jinwoo-H 的主要更新（仅深色，布局所有者构建）
+* 侧边栏 P2：主要发布无需等待 git，每个源都通过 @Jinwoo-H 在 https://github.com/stablyai/orca/pull/31513 中宣布其更改（惰性）
+* 主要关闭、重命名、睡眠和启动新选项卡的终端本身，有或没有窗口（仅深色，布局所有者构建），作者：https://github.com/stablyai/orca/pull/31571 中的 @Jinwoo-H
+* 修复（侧边栏）：在 https://github.com/stablyai/orca/pull/31517 中@Jinwoo-H 将每个主机的活动、PR 通道和保留分开，以实现相同 ID 的工作区（深色）
+*壮举（侧边栏）：主中每个工作区有一条生命周期线，带有https://github.com/stablyai/orca/pull/31553中@Jinwoo-H的正在进行的提示（开关门控）
+*布局基础（关闭）：主启动并恢复每个窗格，窗口仅附加和绘制https://github.com/stablyai/orca/pull/31567中@Jinwoo-H的主机历史记录
+* 浏览器、聊天和模拟器选项卡 main-first：窗口询问 main 的每个更改，并仅绘制 https://github.com/stablyai/orca/pull/31516 中 @Jinwoo-H 的 main 更新（仅深色、布局所有者构建）
+* 手机将桌面的无标题 Markdown 选项卡保持为只读（仅深色，布局所有者构建），作者：@Jinwoo-H，https://github.com/stablyai/orca/pull/31667
+* 主要标题代理选项卡并应用手机选项卡移动本身，选项卡移动命名它们遵循的选项卡（仅深色，布局所有者构建），作者：https://github.com/stablyai/orca/pull/31812 中的 @Jinwoo-H
+*布局基础（关闭）：主要告诉窗口它的启动是否恢复了窗格的代理，因此恢复的横幅和重新打开计数由https://github.com/stablyai/orca/pull/31908中的@Jinwoo-H返回
+* 布局所有者构建：手机的选项卡移动始终是服务器自己的； @Jinwoo-H 在 https://github.com/stablyai/orca/pull/31925 中重新启动后没有幽灵编辑器选项卡
+* 配对桌面保留其在 https://github.com/stablyai/orca/pull/31853 中的 @Jinwoo-H 从服务器布局（仅限打开版本）中创建的服务器工作区中创建的选项卡
+* 在 https://github.com/stablyai/orca/pull/31898 中 @Jinwoo-H 从服务器布局绘制的服务器工作区中打开的浏览器选项卡保持打开状态（仅限打开版本）
+* 配对桌面的选项卡在服务器工作区中移动、分割、调整大小、道具和重命名，转到服务器的布局（仅限打开版本），作者：https://github.com/stablyai/orca/pull/31714 中的 @Jinwoo-H
+* 配对桌面的窗格拖出、无句柄分割和默认选项卡标记到达服务器自己的布局（仅深色、布局所有者构建；堆叠在 #31714 上），由 @Jinwoo-H 在 https://github.com/stablyai/orca/pull/31869 中实现
+* 手机的新终端位于其命名的选项卡之后，并且其拆分会像窗口一样选择移动的选项卡（仅限深色，仅布局所有者构建），作者：https://github.com/stablyai/orca/pull/31924 中的 @Jinwoo-H
+* 在从框架绘制的服务器工作区中打开的服务器托管浏览器选项卡在 https://github.com/stablyai/orca/pull/31920 中 @Jinwoo-H 对该工作区的其他更改（仅限打开版本）中保留下来
+* 配对桌面将其编辑器选项卡交给服务器，然后从服务器的布局中绘制服务器工作区（仅限打开版本），由 @Jinwoo-H 在 https://github.com/stablyai/orca/pull/32088 中绘制
+* 在 https://github.com/stablyai/orca/pull/32003 中 @Jinwoo-H 从服务器布局绘制的服务器工作区中启动的聊天保留在您打开它的位置（仅限打开版本）
+<!--详情-->
+**完整 Changelog**：https://github.com/stablyai/orca/compare/v1.4.237...v1.4.238
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/stablyai/orca">stablyai/orca</a> · 🏷️ 版本：<code>v1.4.238</code> · 📅 发布：2026-10-23 · <a href="https://github.com/stablyai/orca/releases/tag/v1.4.238">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/orca/orca_v1.4.239"> <span class="k">← 下一个</span> <span class="t">v1.4.239</span> </a> <a href="/zh/release_note/orca/orca_v1.4.237"> <span class="k">上一个 →</span> <span class="t">v1.4.237</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/stablyai/orca/releases/tag/v1.4.238" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/stablyai/orca" target="_blank" rel="noopener"> <span>stablyai/orca</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#更多互联工作更安全的编辑" class>更多互联工作，更安全的编辑 🐳</a><a href="#简短版本" class>简短版本</a><a href="#兼容性和升级说明" class>兼容性和升级说明</a><a href="#产品体验" class>产品体验</a><a href="#本机聊天实验性" class="lv3">本机聊天（实验性）</a><a href="#代理账户和技能" class="lv3">代理、账户和技能</a><a href="#电话选项卡聊天和工作区" class="lv3">电话：选项卡、聊天和工作区</a><a href="#电话终端语音和触摸" class="lv3">电话：终端、语音和触摸</a><a href="#电话文件评论和联系" class="lv3">电话：文件、评论和联系</a><a href="#浏览器" class="lv3">浏览器</a><a href="#编辑器文件和源代码控制" class="lv3">编辑器、文件和源代码控制</a><a href="#终端ssh-和远程服务器" class="lv3">终端、SSH 和远程服务器</a><a href="#历史设置和日常使用" class="lv3">历史、设置和日常使用</a><a href="#测试构建和维护" class="lv3">测试、构建和维护</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/orca/orca_v1.4.271"> <span class="v">v1.4.271</span> <span class="d">26-11-22</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.269"> <span class="v">v1.4.269</span> <span class="d">26-11-21</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.268"> <span class="v">v1.4.268</span> <span class="d">26-11-21</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.267"> <span class="v">v1.4.267</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.266"> <span class="v">v1.4.266</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.265"> <span class="v">v1.4.265</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.264"> <span class="v">v1.4.264</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/orca/orca_v1.4.263"> <span class="v">v1.4.263</span> <span class="d">26-11-18</span> </a> </li> </ul> <a href="/zh/releases/orca" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 39 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>diffusers v0.37.0 — STAGS NextStack</title><meta name="description" content="Modular Diffusers introduces a new way to build diffusion pipelines by composing reusable blocks. Instead of writing entire pipelines from scratch, you can now mix and match building blocks to create custom workflows…"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/diffusers/diffusers_v0.37.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/diffusers/0.37.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/diffusers/diffusers_v0.37.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/diffusers/0.37.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="diffusers v0.37.0 — STAGS NextStack"><meta property="og:description" content="Modular Diffusers introduces a new way to build diffusion pipelines by composing reusable blocks. Instead of writing entire pipelines from scratch, you can now mix and match building blocks to create custom workflows…"><meta property="og:url" content="https://www.stags.cn/zh/release_note/diffusers/diffusers_v0.37.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/diffusers/diffusers_v0.37.0/#article","headline":"diffusers v0.37.0 release notes","datePublished":"2026-03-05","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/huggingface/diffusers"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/diffusers/0.37.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/diffusers/diffusers_v0.37.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/diffusers/0.37.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/diffusers/0.37.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/diffusers/0.37.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/diffusers/0.37.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/diffusers/0.37.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/diffusers">diffusers</a> </nav> <h1 class="detail-title"> <span class="p">diffusers</span> v0.37.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年3月5日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/huggingface/diffusers" target="_blank" rel="noopener"> <span class="k">来源</span>huggingface/diffusers </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/diffusers/0.37.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/diffusers/diffusers_v0.37.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h2 id="模块化扩散器">模块化扩散器</h2>
+<p>模块化扩散器引入了一种通过组合可重复使用的块来构建扩散管道的新方法。您现在可以混合和匹配构建块来创建适合您的特定需求的自定义工作流程，而不是从头开始编写整个管道！这补充了现有的 <code>DiffusionPipeline</code> 类，提供了更灵活的方式来创建自定义扩散管道。
+<a href="https://huggingface.co/docs/diffusers/en/modular_diffusers/quickstart">此处</a> 了解有关如何开始使用模块化扩散器的更多详细信息，并查看<a href="https://huggingface.co/blog/modular-diffusers">公告帖子</a>。</p>
+<h2 id="新管道和模型">新管道和模型</h2>
+<h3 id="图片">图片🌆</h3>
+<ul>
+<li><a href="https://huggingface.co/docs/diffusers/en/api/pipelines/z_image">Z Image Omni Base</a>：Z-Image 是 Z-Image 系列的基础模型，专为高质量、强大的生成多样性、广泛的风格覆盖和精确的及时遵守而设计。虽然 Z-Image-Turbo 是为了速度而构建的，但 Z-Image 是一款全功能、未经蒸馏的转换器，旨在成为需要最高水平创作自由度的创作者、研究人员和开发人员的支柱。感谢@RuoyiDufor 在#12857 中做出的贡献。</li>
+<li><a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/flux2#diffusers.Flux2KleinPipeline">Flux2 Klein</a>：FLUX.2 [Klein] 将生成和编辑统一在一个紧凑的架构中，以低至一秒的速度提供最先进的质量和端到端推理。专为需要实时图像生成而不牺牲质量的应用程序而构建，并在消费类硬件上运行，VRAM 低至 13GB。</li>
+<li><a href="https://huggingface.co/Qwen/Qwen-Image-Layered">Qwen Image Layered</a>：Qwen-Image-Layered 是一个能够将图像分解为多个 RGBA 层的模型。这种分层表示解锁了固有的可编辑性：每个层都可以独立操作，而不影响其他内容。感谢 @naykun 在 #12853 中做出的贡献。</li>
+<li><a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/bria_fibo_edit">FIBO Edit</a>：Fibo Edit 是一种 8B 参数图像到图像模型，引入了结构化控制的新范例，在与源图像配对的 JSON 输入上进行操作，以实现确定性和可重复的编辑工作流程。它具有可实现精细精度的原生掩码，超越了简单的基于提示的扩散，提供针对生产环境优化的明确、可解释的控制。其轻量级架构专为深度定制而设计，使研究人员能够为特定领域的任务构建专门的“编辑”模型，同时提供顶级的美学质量。感谢 galbria 在 <a href="https://github.com/huggingface/diffusers/pull/12930">https://github.com/huggingface/diffusers/pull/12930</a> 中做出的贡献。</li>
+<li><a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/cosmos">Cosmos Predict2.5</a>：Cosmos-Predict2.5，Cosmos World Foundation Models (WFM) 系列的最新版本，专门用于模拟和预测世界的未来状态。感谢@miguelmartin75 在#12852 中做出的贡献。</li>
+<li><a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/cosmos">Cosmos Transfer2.5</a>：Cosmos-Transfer2.5 是一种具有自适应多模态控制的条件世界生成模型，可根据多个控制输入生成高质量的世界模拟。这些输入可以采用不同的模式，包括边缘、模糊视频、分割图和深度图。感谢@miguelmartin75 在#13066 中做出的贡献。</li>
+<li><a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/glm_image">GLM-Image</a>：GLM-Image是一种图像生成模型，采用混合自回归+扩散解码器架构，有效推动视觉保真度和细粒度细节的上限。在一般图像生成质量方面，它与基于 LDM 的行业标准方法保持一致，同时在知识密集型图像生成场景中展现出显着优势。感谢 @zRzRzRzRzRzRzRzR 在 <a href="https://github.com/huggingface/diffusers/pull/12973">https://github.com/huggingface/diffusers/pull/12973</a> 中的贡献。</li>
+<li><a href="https://huggingface.co/docs/diffusers/main/api/models/autoencoder_rae">RAE</a>：表示自动编码器（又名 RAE）是传统 VAE 的令人兴奋的替代品，通常用于图像生成的潜在空间扩散模型领域。 RAE 利用预先训练的视觉编码器并训练轻量级解码器来完成重建任务。</li>
+</ul>
+<h3 id="视频--音频">视频 + 音频 🎥 🎼</h3>
+<ul>
+<li><a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/ltx2">LTX-2</a>：LTX-2 是一种音频调节的文本到视频生成模型，可以生成带有同步音频的视频。支持完整模型推理和蒸馏模型推理，以及空间采样的两阶段推理。我们还支持条件管道，允许传递不同的条件（例如图像、图像系列等）。查看文档以了解更多信息！</li>
+<li><a href="https://huggingface.co/docs/diffusers/main/api/pipelines/helios">Helios</a>：Helios 是一种 14B 视频生成模型，在单个 NVIDIA H100 GPU 上以 17 FPS 运行，支持分钟级生成，同时满足强大的质量基准。感谢@SHYuanBest 在 <a href="https://github.com/huggingface/diffusers/pull/13208">https://github.com/huggingface/diffusers/pull/13208</a> 中贡献此内容。</li>
+</ul>
+<h2 id="核心库的改进">核心库的改进</h2>
+<h3 id="新的缓存方法">新的缓存方法</h3>
+<ul>
+<li><a href="https://github.com/huggingface/diffusers/pull/12744">MagCache</a> — 感谢@AlanPonnachan！</li>
+<li><a href="https://github.com/huggingface/diffusers/pull/12648/">TaylorSeer</a> — 感谢@toilaluan！</li>
+</ul>
+<h3 id="新的上下文并行cp后端">新的上下文并行（CP）后端</h3>
+<ul>
+<li><a href="https://github.com/huggingface/diffusers/pull/12693">统一序列并行注意力</a> — 感谢@Bissmella！</li>
+<li><a href="https://github.com/huggingface/diffusers/pull/12996">尤利西斯任何注意</a> — 感谢@DefTruth！</li>
+</ul>
+<h3 id="其他">其他</h3>
+<ul>
+<li>Mambo-G 指南：新指南实施 (#12862)</li>
+<li>DDPM 的拉普拉斯调度程序 (#11320)</li>
+<li>UniPCMultistepScheduler 中的自定义西格玛 (#12109)</li>
+<li>MultiControlNet 支持 SD3 修复 (#11251)</li>
+<li>原生 Flash Attention 中的上下文并行 (#12829)</li>
+<li>NPU Ulysses Attention 支持 (#12919)</li>
+<li>修复 Wan 2.1 I2V 上下文并行推理 (#12909)</li>
+<li>修复 Qwen-图像上下文并行推理 (#12970)</li>
+<li>介绍用于简化模型定义的 <code>@apply_lora_scale</code> 装饰器 (#12994)</li>
+<li>引入管道级“cpu”<code>device_map</code> (#12811)</li>
+<li>为基于内核的注意力后端启用 CP (#12812)</li>
+<li>扩散器与变形金刚 V5 (<a href="https://github.com/huggingface/diffusers/pull/12976">https://github.com/huggingface/diffusers/pull/12976</a>) 兼容
+上述许多功能/改进都是我们一直在运行的 <a href="https://github.com/huggingface/diffusers/issues/12635">MVP 计划</a> 的一部分。非常感谢贡献者！</li>
+</ul>
+<h2 id="错误修复">错误修复</h2>
+<ul>
+<li>修复 NPU 上的 QwenImageEditPlus (#13017)</li>
+<li>修复 MT5Tokenizer → 使用 <code>T5Tokenizer</code> 实现 Transformers v5.0+ 兼容性 (#12877)</li>
+<li>修复 Wan/WanI2V 补丁 (#13038)</li>
+<li>使用 <code>num_videos_per_prompt > 1</code> 和 CFG 修复 LTX-2 推理 (#13121)</li>
+<li>修复 Flux2 img2img 预测 (#12855)</li>
+<li>修复 QwenImage <code>txt_seq_lens</code> 处理 (#12702)</li>
+<li>修复 <code>prefix_token_len</code> 错误 (#12845)</li>
+<li>修复 Wan 和 SkyReels-V2 中的 ftfy 导入（#12314、#13113）</li>
+<li>修复 <code>is_fsdp</code> 确定 (#12960)</li>
+<li>修复 GLM 图像 <code>get_image_features</code> API (#13052)</li>
+<li>当变压器不存在时修复 Wan 2.2 (#13055)</li>
+<li>修复引导问题 (#13147)</li>
+<li>修复新版本的 torchao 量化器 (#12901)</li>
+<li>使用非量化内核修复 GGUF 的非量化类型 (#12498)</li>
+<li>使 Qwen 隐藏状态与 torchao 连续 (#13081)</li>
+<li>使 Flux 隐藏状态连续 (#13068)</li>
+<li>修复 Kandinsky 5 硬编码 CUDA 自动转换 (#12814)</li>
+<li>修复 <code>aiter</code> 可用性检查 (#13059)</li>
+<li>修复不支持后端的注意掩码检查（#12892）</li>
+<li>在 <code>GlmImagePipeline</code> 中同时允许 <code>prompt</code> 和 <code>prior_token_ids</code> (#13092)</li>
+<li>GLM-图像批量支持（#13007）</li>
+<li>Cosmos 2.5 Video2World 帧提取修复（#13018）</li>
+<li>ResNet：仅在训练模式中使用连续（#12977）</li>
+</ul>
+<h2 id="所有提交">所有提交</h2>
+<ul>
+<li>[PRX] 改进@WaterKnight1998 在 #12787 中的模型编译</li>
+<li>通过 @delmalih 在 #12798 中改进了 Scheduling_dpmsolver_singlestep.py 中的文档字符串和类型提示</li>
+<li>[模块化]z-image 由 @yiyixuxu 在 #12808 中</li>
+<li>修复 Qwen Edit Plus 模块，用于 @sayakpaul 在 #12601 中的多图像输入</li>
+<li>[WIP] 在 #12763 中通过 @DN6 添加 Flux2 模块</li>
+<li>[文档] 改进分布式推理 cp 文档。  由 @sayakpaul 在 #12810</li>
+<li>@sayakpaul 在 #12804 中发布 0.36.0 后
+*更新distributed_inference.md以纠正@sayakpaul在#12827中的语法</li>
+<li>[lora] 删除不需要的 lora 文档并添加“# Copied from …” by @sayakpaul in #12824</li>
+<li>在 #12829 中支持 @sywangyi 原生 Flash 关注中的 CP</li>
+<li>[qwen-image] 编辑@naykun 在#12839 中的2511 支持</li>
+<li>修复 pytest 测试/管道/pixart_sigma/test_pixart.py::PixArtSigmaPi… by @sywangyi in #12842</li>
+<li>支持 control-lora by @lavinal712 in #10686</li>
+<li>在 #12828 中添加@junqiangwu 对 LongCat-Image 的支持</li>
+<li>修复 @junqiangwu 在 #12845 中的 prefix_token_len 错误</li>
+<li>通过 @sywangyi 在 #12768 中将 TorchAoTest::test_model_memory_usage 扩展到其他平台</li>
+<li>Qwen 图像分层支持由 @naykun 在 #12853 中提供</li>
+<li>Z-Image-Turbo ControlNet，作者：@hlky，#12792</li>
+<li>Cosmos Predict2.5 Base：推理管道、调度程序和 chkpt 转换，由 @miguelmartin75 在 #12852 中提供</li>
+<li>@yiyixuxu 在 #12560 中的更多模块化更新</li>
+<li>功能：在 #12862 中添加 Mambo-G Guidance 作为@MatrixTeam-AI 的引导器</li>
+<li>在 <code>AUTO_TEXT2IMAGE_PIPELINES_MAPPING</code> 中添加 <code>OvisImagePipeline</code> 由 @alvarobartt 在 #12876 中</li>
+<li>Cosmos Predict2.5 14b 转换由 @miguelmartin75 在 #12863 中完成</li>
+<li>使用 <code>T5Tokenizer</code> 代替 <code>MT5Tokenizer</code> （在变形金刚 v5.0+ 中被删除）由 @alvarobartt 在 #12877 中</li>
+<li>在 #12857 中添加 @RuoyiDu 的 z-image-omni-base 实现</li>
+<li>修复了 @vkuzo 在 #12901 中的新 torchao 版本的 torchao 量化器</li>
+<li>修复 Qwen Image Transformer 单文件加载映射功能，使其与 @mbalabanski 在 #12894 中的其他加载器 API 保持一致</li>
+<li>Z-Image-Turbo from_single_file 由 @hlky 在 #12888 中修复</li>
+<li>杂务：通过@DefTruth 在 #12904 中修复 setup.py 中的开发版本</li>
+<li>社区管道：在 #12882 中添加 @r4inm4ker 的 z 图像差分 img2img</li>
+<li>修复 #12914 中 @miguelmartin75 的 src/diffusers/pipelines/cosmos/pipeline_cosmos2_5_predict.py 中的拼写错误</li>
+<li>修复 #12909 中@DefTruth 的 wan 2.1 i2v 上下文并行问题</li>
+<li>修复 @sayakpaul 在 #12902 中 CP 文档中 device_map 的使用</li>
+<li>[核心] 在 #12873 中 @sayakpaul 从 <code>AutoencoderMixin</code> 子类化时删除不需要的自动编码器方法</li>
+<li>通过 @hlky 在 #12861 中检测 2.0 与 2.1 ZImageControlNetModel</li>
+<li>@palinebm 在 #12916 中重构工作流程中的环境变量分配</li>
+<li>在 #12917 中添加 @paulinebm 的 codeQL 工作流程</li>
+<li>通过 @paulinebm 删除 .github/workflows/codeql.yml （在 v0.37.0-release 上直接提交）</li>
+<li>@paulinebm 用于安全分析的 CodeQL 工作流程（在 v0.37.0-release 上直接提交）</li>
+<li>通过 @dxqb 在 #12892 中检查不支持它的后端中的注意力掩码</li>
+<li>[Flux.1] #12897中@zhangtao0408通过在npu上计算来改进ascend npu的pos嵌入</li>
+<li>LTX 视频 0.9.8 长多重提示，由 @yaoqih 在 #12614 中提供</li>
+<li>由 @leisuzz 在 #12860 中为 Flux2 添加 FSDP 选项</li>
+<li>为 SkyReels-V2 管道添加变压器缓存上下文并更新 @tolgacangoz 的文档 #12837</li>
+<li>[文档] 修复 torchao 拼写错误。  由 @sayakpaul 在 #12883</li>
+<li>由 @sayakpaul 在 #12890 中更新 wan.md 以删除不需要的 hfoptions</li>
+<li>通过 @delmalih 在 #12871 中改进 Scheduling_edm_euler.py 中的文档字符串和类型提示</li>
+<li>[模块化]梅隆视频，作者：@asomoza，#12924</li>
+<li>在 #12915 中添加 @dg845 的 LTX 2.0 视频管道</li>
+<li>在 #12927 中通过 @palinebm 添加环境变量到结帐步骤</li>
+<li>通过 @delmalih 在 #12928 中改进了 Scheduling_consistency_decoder.py 中的文档字符串和类型提示</li>
+<li>修复：删除 Kandinsky 5 中的硬编码 CUDA 自动转换，以修复 #12814 中@adi776borate 的导入警告</li>
+<li>@salmanmkc 在 #12865 中升级 GitHub 操作以实现 Node 24 兼容性
+*修复@msdsm在#12841中不推荐使用torch_dtype的警告</li>
+<li>[NPU] npu 注意力启用尤利西斯 by @TmacAaron in #12919</li>
+<li>Torchao floatx 版本防护，作者：@howardzhang-cv，#12923</li>
+<li>由 @leisuzz 在 #12825 中修复 dreambooth Flux2 img2img2 的错误</li>
+<li>[模块化] qwen 由 @yiyixuxu 在 #12872 中重构</li>
+<li>[模块化] @sayakpaul 在 #12557 中测试模块化扩散器中的自定义块</li>
+<li>[杂务] 删除 controlnet 模块之外的 controlnet 实现。  由 @sayakpaul 在 #12152</li>
+<li>[核心] 在分布式环境中处理进度条和日志记录，作者：@sayakpaul，#12806</li>
+<li>通过 @delmalih 在 #12931 中改进了 Scheduling_consistency_models.py 中的文档字符串和类型提示</li>
+<li>[功能] MultiControlNet 支持 SD3Impainting by @ishan-modi #11251</li>
+<li>DDPM 的拉普拉斯调度程序，作者：@gapatron，#11320</li>
+<li>存储 vae.config.scaling_factor 以防止丢失 attr 参考（sdxl 高级 dreambooth 训练脚本），由 @Teriks 在 #12346 中编写</li>
+<li>为管道中的组件添加线程安全包装器 (examples/server-async/utils/requestscopedpipeline.py) by @FredyRivera-dev in #12515</li>
+<li>[研究]稳定扩散 XL 的潜在感知损失 (LPL) by @kashif in #11573</li>
+<li>将 #11501 中的 @bhavya01 的时间步长设备更改为 xla 的 cpu</li>
+<li>[LoRA] 将 lora_alpha 添加到 @linoytsaban 的 sana README #11780</li>
+<li>修复了 #11669 中@Promisery 的 FlowMatching 调度程序的scale_noise 中错误的参数类型、文档和处理噪声=None</li>
+<li>[文档] @stevhliu 在 #12372 中的远程推理</li>
+<li>将 HunyuanVideoConditionEmbedding 与 @samutamm 在 #12316 中的 CombinedTimestepGuidanceTextProjEmbeddings 对齐</li>
+<li>[修复] QwenImageEditPlusPipeline 中的语法，作者：@SahilCarterr，#12371</li>
+<li>通过 @dsocek 在 #12314 中修复 Wan 管道中的 ftfy 名称错误</li>
+<li>[模块化] @sayakpaul 在 #12578 中的 <code>enable_auto_cpu_offload</code> 早期错误</li>
+<li>[ChronoEdit] 支持多个 loras by @zhangjiewu in #12679</li>
+<li>修复@sayakpaul 在 #12960 中确定 <code>is_fsdp</code> 的方式</li>
+<li>[LoRA] 在 #12933 中@sayakpaul 添加对 LTX-2 的 LoRA 支持</li>
+<li>修复：#12687 中 @tvelovraf 的 autoencoder_dc.py 中的拼写错误</li>
+<li>[模块化] @yiyixuxu 在 #12932 中提供更好的文档字符串</li>
+<li>[文档] 完善缓存文档。  由 @sayakpaul 在 #12684</li>
+<li>修复 #12705 中@omahs 的拼写错误</li>
+<li>修复 #12708 中 @JuanFKurucz 提供的 diffedit 实现参考的链接</li>
+<li>修复 #12702 中 @kashif 处理的 QwenImage txt_seq_lens</li>
+<li>修复了 @leisuzz 在 #12855 中对 Flux2 img2img2 预测的错误</li>
+<li>添加标志到 <code>PeftLoraLoaderMixinTests</code> 以启用/禁用文本编码器 LoRA 测试 by @dg845 in #12962</li>
+<li>在 #12693 中添加 @Bissmella 的统一序列并行注意力</li>
+<li>[模块化] @asomoza 在 #12959 中使用 WAN I2V 的更改</li>
+<li>Z rz rz rz rz rz rz r cogview 由 @sayakpaul 在 #12973
+*更新distributed_inference.md以重新定位@sayakpaul在#12971中的部分</li>
+<li>[杂务] 使glm 图像的变形金刚版本检查更加严格。  由 @sayakpaul 在 #12974</li>
+<li>删除@SunMarc 在 #12972 中的 8 位设备限制</li>
+<li><code>from_pretrained</code> 管道中的 <code>disable_mmap</code> 由 @hlky 在 #12854 中</li>
+<li>[模块化] Mellon utils by @yiyixuxu in #12978</li>
+<li>LongCat 图像管道：允许 @Yahweasel 在 #12963 中卸载/量化 text_encoder 组件</li>
+<li>在 #12848 中添加 @hameerabbasi 的 <code>ChromaInpaintPipeline</code></li>
+<li>修复 Qwen-Image 系列上下文并行由 @DefTruth 在 #12970</li>
+<li>Flux2 klein 作者：@yiyixuxu #12982</li>
+<li>[模块化] 修复 Mellon 参数中的错误并通过 @yiyixuxu 在 #12980 中改进文档字符串</li>
+<li>添加克莱因文档。  由 @sayakpaul 在 #12984</li>
+<li>LTX 2 单文件支持由 @dg845 在 #12983 中提供</li>
+<li>[核心] 当不支持 attn-backend x cp 组合时优雅地出错。  由 @sayakpaul 在 #12832</li>
+<li>通过 @delmalih 在 #12936 中改进了 Scheduling_cosine_dpmsolver_multistep.py 中的文档字符串和类型提示</li>
+<li>[文档] 将根 CONTRIBUTING.md 替换为 @delmalih 在 #12986 中指向源文档的符号链接</li>
+<li>由 @sayakpaul 制作风格 &#x26;&#x26; 制作质量（直接提交于 v0.37.0-release）</li>
+<li>恢复 @sayakpaul 的“制作风格 &#x26;&#x26; 制作质量”（在 v0.37.0-release 上直接提交）</li>
+<li>【杂务】打造风格推动新变化。  由 @sayakpaul 在 #12998</li>
+<li>Fibo 编辑管道，作者：@galbria，#12930</li>
+<li>修复了 PeftAdapterMixin.set_adapters 文档字符串中的变量名称，作者为 #13003 中的@geekuillaume</li>
+<li>通过 @delmalih 在#12992 中改进了 Scheduling_ddim_cogvideox.py 中的文档字符串和类型提示</li>
+<li>[调度程序] 在 UniPCMultistepScheduler 中支持自定义 sigmas by @a-r-r-o-w #12109</li>
+<li>壮举：通过 @lgyStoic 在 #13019 中的区域编译加速 longcat-image</li>
+<li>通过 @delmalih 在 #13010 中改进 Scheduling_ddim_flax.py 中的文档字符串和类型提示</li>
+<li>通过 @delmalih 在 #13020 中改进 Scheduling_ddim_inverse.py 中的文档字符串和类型提示</li>
+<li>修复 cuda 和 xformers 的 Docker 文件。  由 @sayakpaul 在 #13022</li>
+<li>Resnet 仅在训练模式下使用连续。  作者：@jiqing-feng in #12977</li>
+<li>壮举：为 longcat 变压器添加 qkv 投影保险丝，由 @lgyStoic 在 #13021 中添加</li>
+<li>通过 @delmalih 在 #13023 中改进了 Scheduling_ddim_parallel.py 中的文档字符串和类型提示</li>
+<li>通过 @delmalih 在 #13024 中改进 Scheduling_ddpm_flax.py 中的文档字符串和类型提示</li>
+<li>通过 @delmalih 在 #13027 中改进了 Scheduling_ddpm_parallel.py 中的文档字符串和类型提示</li>
+<li>在 #13026 中删除 @hameerabbasi 从 Chroma inpaint 中提到的 <code>*pooled_*</code></li>
+<li>将 Flax 调度程序标记为 @delmalih 在 #13031 中已弃用</li>
+<li>[模块化] 在 #12958 中添加 @yiyixuxu 的 auto_docstring 和更多与文档相关的重构</li>
+<li>由 @salmanmkc 在 #12866 中将 GitHub Actions 升级到最新版本</li>
+<li>[来自单个文件] 支持 @samadwar 在 #12691 中对 <code>WanAnimateTransformer3DModel</code> 的 <code>from_single_file</code> 方法</li>
+<li>修复：Cosmos2.5 Video2World 帧提取并在 #13018 中添加 @adi776borate 的默认否定提示</li>
+<li>[GLM-Image] 在 #13007 中添加 @JaredforReal 对 GlmImagePipeline 的批量支持</li>
+<li>[Qwen] 在 #12987 中@kashif 没有填充时避免创建注意力蒙版</li>
+<li>[模块化]支持 klein by @yiyixuxu #13002</li>
+<li>[QwenImage] 修复@sayakpaul 在 #13042 中的提示隔离测试</li>
+<li>@itazap 在 #13036 中快速更新 tok</li>
+<li>更改为 CUDA 12.9。  由 @sayakpaul 在 #13045</li>
+<li>从 @vkuzo 在 #13048 中的扩散器文档中删除 torchao autoquant</li>
+<li>文档：通过@delmalih 在#13044 中改进文档字符串scheduling_dpm_cogvideox.py</li>
+<li>修复 @Jayce-Ping 在 #13038 中的 Wan/WanI2V 补丁</li>
+<li>@rootonchair 在 #12934 中提供的 LTX2 蒸馏检查点支持</li>
+<li>[wan] 修复 @sayakpaul 在 #13039 中对 CPU 的分层向上转换测试</li>
+<li>[ci] pytorch cuda 的统一运行时间和轮子。  由 @sayakpaul 在 #13047</li>
+<li>文档：修复 @Olexandr88 在 #13040 中的 fp16_safetensors CLI 警告中的语法</li>
+<li>[wan] 修复当任一变压器不存在时的 wan 2.2。  由 @sayakpaul 在 #13055</li>
+<li>[错误修复] GLM-Image 适合新的 <code>get_image_features</code> API by @JaredforReal in #13052</li>
+<li>在 #13059 中修复 @lauri9 的 aiter 可用性检查</li>
+<li>[模块化]在#13029中添加@yiyixuxu的真正快速入门指南</li>
+<li>壮举：支持 @DefTruth 的 Ulysses Anything Attention #12996</li>
+<li>@DN6 在 #12822 中重构模型测试</li>
+<li>[Flux2] 通过 @songkey 在 #13030 中自适应枚举变压器块来修复 Flux2 Klein 的 LoRA 加载</li>
+<li>[模块化] 加载器由 @yiyixuxu 在 #13025 中相关</li>
+<li>[模块化] Mellon 文档等，作者：@yiyixuxu，#13051</li>
+<li>[模块化]通过@sayakpaul在#13072中更改模板模块化管道卡</li>
+<li>在 #12744 中添加 @AlanPonnachan 对 Magcache 的支持</li>
+<li>[文档] 修复 @sayakpaul 在 #13076 中量化配置中的语法错误</li>
+<li>文档：通过@delmalih 在#13083 中改进文档字符串scheduling_dpmsolver_multistep_inverse.py</li>
+<li>[核心] 通过 @sayakpaul 在 #13068 中使通量隐藏状态连续</li>
+<li>[核心] 使 qwen 隐藏状态连续以使 torchao 快乐。  由 @sayakpaul 在 #13081</li>
+<li>由 @CalamitousFelicitousness 在 #13006 中提供的功能/zimage 修复管道</li>
+<li>GGUF 在 #12498 中修复了 @dxqb 使用非量化内核时未量化类型的问题</li>
+<li>文档：通过@delmalih 在#13085 中改进文档字符串scheduling_dpmsolver_multistep_inverse.py</li>
+<li>[模块化]简化组件管理器文档，由 @yiyixuxu 在 #13088 中编写</li>
+<li>@hlky 在 #13080 中的 ZImageControlNet cfg</li>
+<li>[模块化] 重构 Wan：按任务等模块化管道，由 @yiyixuxu 在 #13063 中编写</li>
+<li>[模块化]守卫<code>ModularPipeline.blocks</code>属性由@yiyixuxu在#13014</li>
+<li>LTX 2 通过接受更多输入类型来改进 <code>encode_video</code> by @dg845 in #13057</li>
+<li>@linoytsaban 在 #13056 中进行 Z 图像 lora 训练</li>
+<li>[模块化] 在 #13078 中添加 @sayakpaul 的 Z-Image 和 Wan 模块化测试</li>
+<li>[文档] 在 #13099 中通过 @DN6 添加带有自定义代码的 AutoModel 指南</li>
+<li>[SkyReelsV2] 修复@asomoza 在 #13113 中的 ftfy 导入</li>
+<li>[lora] 修复@sayakpaul 在 #13119 中对 Flux2 的非扩散器 Lora 键处理</li>
+<li>[CI] @DN6 在 #13082 中重构 Wan 模型测试</li>
+<li>文档：通过@delmalih 在#13122 中改进文档字符串scheduling_edm_dpmsolver_multistep.py</li>
+<li>[修复]允许<code>prompt</code>和<code>prior_token_ids</code>在#13092中@JaredforReal在<code>GlmImagePipeline</code>中同时提供</li>
+<li>文档：通过@delmalih 在#13127 中改进文档字符串scheduling_flow_match_euler_discrete.py</li>
+<li>Cosmos Transfer2.5 推理管道：一般/{seg、深度、模糊、边缘}，作者：@miguelmartin75，#13066</li>
+<li>[模块化] 添加稳健模型加载的测试。  由 @sayakpaul 在 #13120</li>
+<li>修复 #13121 中 @dg845 启用 <code>num_videos_per_prompt > 1</code> 和 CFG 时的 LTX-2 推理</li>
+<li>[CI] 在 #13129 中修复 @dg845 的 <code>setuptools</code> <code>pkg_resources</code> 错误</li>
+<li>文档：通过@delmalih 在#13130 中改进文档字符串scheduling_flow_match_heun_discrete.py</li>
+<li>[CI] 修复 @dg845 在 #13132 中 PR GPU 测试的 <code>setuptools</code> <code>pkg_resources</code> 错误</li>
+<li>修复 Cosmos 变压器打字问题。  由 @sayakpaul 在 #13134</li>
+<li>Sunset Python 3.8 并尽可能摆脱 @sayakpaul 在 #12524 中明确的 <code>typing</code> 导出</li>
+<li>壮举：实施 apply_lora_scale 来删除样板文件。  由 @sayakpaul 在 #12994</li>
+<li>[文档] 修复 ltx2 i2v 文档字符串。  由 @sayakpaul 在 #13135</li>
+<li>[模块化] 通过 @yiyixuxu 在 #13145 中添加不同的管道块到 init 中</li>
+<li>在#13146 中修复@yiyixuxu 的 MT5Tokenizer</li>
+<li>在 #13147 中修复@yiyixuxu 的引导器</li>
+<li>[模块化] 由 @yiyixuxu 在 #13100 中更新 <code>ModularPipeline</code> 的文档</li>
+<li>[模块化] 在 #13028 中添加 @yiyixuxu 的显式工作流程支持</li>
+<li>[LTX2] 修复@asomoza 在 #13144 中错误的 lora mixin</li>
+<li>[Pipelines] 在 #13152 中通过 @DN6 移除 k-diffusion</li>
+<li>[测试] 在 #13150 中 @sayakpaul 的测试中接受用户的 recompile_limit</li>
+<li>[核心] 支持设备类型 device_maps 与卸载一起使用。  由 @sayakpaul 在 #12811</li>
+<li>[Bug] #13017 中 @zhangtao0408 修复 NPU 上的 QwenImageEditPlus 系列</li>
+<li>[CI] 在 #13155 中通过 @DN6 添加 ftfy 作为测试依赖项</li>
+<li>文档：通过@delmalih 在#13160 中改进文档字符串scheduling_flow_match_lcm.py</li>
+<li>[文档] 在 #13158 中添加 @stevhliu 的 qwenimagelayered 文档</li>
+<li>Flux2：张量元组可能会导致 @dxqb 在 #12777 中的检查点问题</li>
+<li>[CI] 恢复 <code>setuptools</code> CI 修复，因为失败的管道已被 #13149 中的 @dg845 弃用</li>
+<li>在 #13154 中通过 @dg845 修复 PRX Pipeline 的 <code>ftfy</code> 导入</li>
+<li>[核心] 为基于内核的注意力后端启用 CP，由 @sayakpaul 在 #12812 中实现</li>
+<li>在 #13164 中删除 @sayakpaul 与 ci 中的测试相关的 deps</li>
+<li>[CI] 在 #13163 中修复 @DN6 的新 LoRAHotswap 测试</li>
+<li>[gguf][torch.compile time] 在 #13166 中的 @anijain2305 之前在 dequantize_gguf_tensor 中转换为普通张量</li>
+<li>支持@asomoza 在 #13169 中的 Flux Klein peft (fal) lora 格式</li>
+<li>修复 @DavidBert 在 #13143 中为 Transformer 5.x 复合 T5GemmaConfig 加载 T5GemmaEncoder</li>
+<li>允许 Automodel 使用带有自定义代码的 <code>from_config</code>。  由 @DN6 在 #13123 中提供</li>
+<li>修复 AutoModel <code>typing</code> 导入错误（@dg845 在 #13178 中）</li>
+<li>由 @sayakpaul 在 #12976 迁移到 <code>transformers</code> v5</li>
+<li>修复：#13060 中 @sym-bot 无法导入注意力后端时的优雅回退</li>
+<li>[文档] 修复 @sayakpaul 在 #13181 文档中的 torchrun 命令参数顺序</li>
+<li>[注意后端] 使用 fa3 的专用包装器进行 cp。  由 @sayakpaul 在 #13165</li>
+<li>Cosmos Transfer2.5 自回归推理管道，作者：@miguelmartin75，#13114</li>
+<li>修复 ZImagePipeline 中错误的 <code>do_classifier_free_guidance</code> 阈值，由 @kirillsst 在 #13183 中修复</li>
+<li>修复 Flash Attention 3 接口，以实现新的 FA3 返回格式（由 @veeceey 在 #13173 中提供）</li>
+<li>修复了@Songrui625 在 #13187 中两阶段生成中 LTX-2 图像到视频生成失败的问题</li>
+<li>修复 Kohya loras 加载：Flux.1-dev loras 带有 TE（“lora_te1_”前缀），作者：@christopher5106，#13188</li>
+<li>[模块化] 通过@yiyixuxu 在 #13148 中更新自动管道块文档</li>
+<li>[测试] @sayakpaul 在 #13192 中对模块化索引进行一致性测试</li>
+<li>[modular] 在 #13193 中 @yiyixuxu 在 ModularPipeline 中加载基本块类时回退到 default_blocks_name</li>
+<li>[杂务] pypi 发布工作流程中的更新。  由 @sayakpaul 在 #12805</li>
+<li>[测试] 在torchao中启用CPU卸载测试，无需编译。  由 @sayakpaul 在 #12704</li>
+<li>从 @sayakpaul 在 #13199 的基准测试中删除 db utils</li>
+<li>[AutoModel] 修复#13197中通过@DN6加载自定义代码时子文件夹和本地模型路径的错误</li>
+<li>[AutoModel] 允许在 #13186 中通过 @DN6 注册 <code>auto_map</code> 到模型配置</li>
+<li>[模块化] 在 #13168 中通过 @DN6 将模块化管道权重保存到 Hub</li>
+<li>文档：通过@delmalih 在#13198 中改进文档字符串scheduling_ipndm.py</li>
+<li>清理#13202中@DN6的意外文件</li>
+<li>[模块化]更新模型卡以包含@yiyixuxu 在 #13195 中的工作流程</li>
+<li>[模块化] 不将 trust_remote_code 通过 @yiyixuxu 在 #13204 中传递到外部存储库</li>
+<li>[模块化] 通过 @sayakpaul 在 #12196 中实现自定义块的需求验证</li>
+<li>cogvideo 示例：在 CogVideoX LoRA 训练中跨进程分发 VAE 视频编码，作者：@jiqing-feng #13207</li>
+<li>修复@SHYuanBest 在 #13211 中的组卸载错误</li>
+<li>在 #13208 中添加 @dg845 的 Helios-14B 视频生成管道</li>
+<li>[Z-Image] 在 #13212 中修复了 @asomoza 的更多 <code>do_classifier_free_guidance</code> 阈值</li>
+<li>[lora] 修复 zimage lora 转换以支持更多 lora。  由 @sayakpaul 在 #13209</li>
+<li>添加 lora 支持到 z-image controlnet 管道，由 @christopher5106 在 #13200 中添加</li>
+<li>在 #13058 中添加 @dg845 的 LTX2 条件管道</li>
+<li>修复@SHYuanBest 在 #13213 文档中的 Helios 论文链接</li>
+<li>[注意后端]更改为更新的存储库和版本。  由 @sayakpaul 在 #13161</li>
+<li>壮举：实现 rae 自动编码器。  通过 @Ando233 在 #13046</li>
+<li>发布：@sayakpaul 的 v0.37.0-release（直接提交到 v0.37.0-release）</li>
+</ul>
+<h2 id="重大社区贡献">重大社区贡献</h2>
+<p>以下贡献者对上一个版本的库进行了重大更改：</p>
+<ul>
+<li>@delmalih
+<ul>
+<li>改进 Scheduling_dpmsolver_singlestep.py 中的文档字符串和类型提示 (#12798)
+*改进scheduling_edm_euler.py中的文档字符串和类型提示（#12871）
+*改进scheduling_consistency_decoder.py中的文档字符串和类型提示（#12928）
+*改进scheduling_consistency_models.py中的文档字符串和类型提示（#12931）</li>
+<li>改进 Scheduling_cosine_dpmsolver_multistep.py 中的文档字符串和类型提示 (#12936)</li>
+<li>[文档] 将根 CONTRIBUTING.md 替换为源文档的符号链接 (#12986)
+*改进scheduling_ddim_cogvideox.py中的文档字符串和类型提示（#12992）</li>
+<li>改进 Scheduling_ddim_flax.py 中的文档字符串和类型提示 (#13010)
+*改进scheduling_ddim_inverse.py中的文档字符串和类型提示（#13020）</li>
+<li>改进 Scheduling_ddim_parallel.py 中的文档字符串和类型提示 (#13023)</li>
+<li>改进 Scheduling_ddpm_flax.py 中的文档字符串和类型提示 (#13024)</li>
+<li>改进 Scheduling_ddpm_parallel.py 中的文档字符串和类型提示 (#13027)</li>
+<li>将 Flax 调度程序标记为已弃用 (#13031)</li>
+<li>文档：改进文档字符串调度_dpm_cogvideox.py (#13044)</li>
+<li>文档：改进文档字符串scheduling_dpmsolver_multistep_inverse.py (#13083)</li>
+<li>文档：改进文档字符串scheduling_dpmsolver_multistep_inverse.py (#13085)</li>
+<li>文档：改进文档字符串scheduling_edm_dpmsolver_multistep.py (#13122)</li>
+<li>文档：改进文档字符串scheduling_flow_match_euler_discrete.py (#13127)</li>
+<li>文档：改进文档字符串scheduling_flow_match_heun_discrete.py (#13130)</li>
+<li>文档：改进文档字符串scheduling_flow_match_lcm.py (#13160)</li>
+<li>文档：改进文档字符串scheduling_ipndm.py (#13198)</li>
+</ul>
+</li>
+<li>@yiyixuxu
+<ul>
+<li>[模块化]z-image (#12808)</li>
+<li>模块化的更多更新 (#12560)</li>
+<li>[模块化] qwen 重构 (#12872)</li>
+<li>[模块化] 更好的文档字符串 (#12932)</li>
+<li>[模块化] Mellon utils (#12978)</li>
+<li>Flux2 克莱因 (#12982)</li>
+<li>[模块化] 修复 Mellon 参数中的错误并改进文档字符串 (#12980)</li>
+<li>[模块化] 添加 auto_docstring 和更多与文档相关的重构 (#12958)</li>
+<li>[模块化]支持克莱因 (#13002)</li>
+<li>[模块化]添加真正的快速入门指南(#13029)</li>
+<li>[模块化]加载器相关(#13025)</li>
+</ul>
+</li>
+<li>[模块化] 梅隆文档等 (#13051)
+<ul>
+<li>[模块化]简化组件管理器文档 (#13088)</li>
+<li>[模块化] 重构 Wan：按任务等模块化管道 (#13063)</li>
+<li>[模块化]守卫<code>ModularPipeline.blocks</code>属性(#13014)</li>
+<li>[模块化] 添加不同的管道块到 init (#13145)</li>
+<li>修复 MT5Tokenizer (#13146)</li>
+<li>修复引导器 (#13147)</li>
+<li>[模块化] <code>ModularPipeline</code> 的更新文档 (#13100)</li>
+<li>[模块化] 添加显式工作流程支持 (#13028)</li>
+<li>[模块化] 更新自动管道块文档 (#13148)</li>
+<li>[modular] 在 ModularPipeline 中加载基本块类时回退到 default_blocks_name (#13193)</li>
+<li>[模块化]更新模型卡以包含工作流程 (#13195)</li>
+<li>[模块化] 不将 trust_remote_code 传递到外部存储库 (#13204)</li>
+</ul>
+</li>
+<li>@sayakpaul
+<ul>
+<li>修复 Qwen Edit Plus 多图像输入模块 (#12601)</li>
+<li>[文档] 改进分布式推理 cp 文档。 (#12810)</li>
+<li>发布后 0.36.0 (#12804)
+*更新distributed_inference.md以正确的语法(#12827)</li>
+<li>[lora] 删除不需要的 lora 文档并添加“# Copied from …”(#12824)</li>
+<li>修复 CP 文档中 device_map 的使用 (#12902)</li>
+<li>[核心] 从 <code>AutoencoderMixin</code> 子类化时删除不需要的自动编码器方法 (#12873)</li>
+<li>[文档] 修复 torchao 拼写错误。 (#12883)</li>
+<li>更新 wan.md 以删除不需要的 hfoptions (#12890)</li>
+<li>[模块化] 模块化扩散器中自定义块的测试 (#12557)</li>
+<li>[杂务] 删除 controlnet 模块之外的 controlnet 实现。 (#12152)</li>
+<li>[核心] 处理分布式环境中的进度条和日志记录 (#12806)</li>
+<li>[模块化] <code>enable_auto_cpu_offload</code> 早期错误 (#12578)</li>
+<li>修复 <code>is_fsdp</code> 的确定方式 (#12960)</li>
+<li>[LoRA] 为 LTX-2 添加 LoRA 支持 (#12933)</li>
+<li>[文档] 完善缓存文档。 (#12684)</li>
+<li>Z rz rz rz rz rz rz r cogview (#12973)
+*更新distributed_inference.md以重新定位部分（#12971）</li>
+<li>[杂务] 使glm 图像的变形金刚版本检查更加严格。 (#12974)</li>
+<li>添加克莱因文档。 (#12984)</li>
+<li>[核心] 当不支持 attn-backend x cp 组合时优雅地出错。 (#12832)</li>
+<li>打造风格 &#x26;&#x26; 打造品质</li>
+<li>恢复“打造风格&#x26;&#x26;打造品质”</li>
+<li>【杂务】打造风格推动新变化。 (#12998)</li>
+<li>修复 cuda 和 xformers 的 Docker 文件。 (#13022)</li>
+<li>[QwenImage] 修复提示隔离测试 (#13042)</li>
+<li>更改为 CUDA 12.9。 (#13045)</li>
+<li>[wan] 修复 CPU 上的分层向上转换测试 (#13039)</li>
+<li>[ci] pytorch cuda 的统一运行时间和轮子。 (#13047)</li>
+<li>[wan] 修复 wan 2.2 当任一变压器不存在时的问题。 (#13055)</li>
+<li>[模块化]更改模板模块化管道卡(#13072)</li>
+<li>[文档] 修复量化配置中的语法错误 (#13076)</li>
+<li>[核心] 使通量隐藏状态连续 (#13068)</li>
+<li>[核心] 使 qwen 隐藏状态连续以使 torchao 快乐。 (#13081)</li>
+<li>[模块化] 添加 Z-Image 和 Wan 的模块化测试 (#13078)</li>
+<li>[lora] 修复 Flux2 的非扩散器 lora 键处理 (#13119)</li>
+<li>[模块化] 添加稳健模型加载的测试。 (#13120)</li>
+<li>修复 Cosmos 变压器打字问题。 (#13134)</li>
+<li>Sunset Python 3.8 并尽可能摆脱显式的 <code>typing</code> 导出 (#12524)</li>
+<li>壮举：实施 apply_lora_scale 来删除样板文件。 (#12994)</li>
+<li>[文档] 修复 ltx2 i2v 文档字符串。 (#13135)</li>
+<li>[测试] 在测试中接受用户的 recompile_limit (#13150)</li>
+</ul>
+</li>
+<li>[核心] 支持设备类型 device_maps 与卸载一起使用。 (#12811)
+<ul>
+<li>[核心] 为基于内核的注意力后端启用 CP (#12812)</li>
+<li>从 ci 中删除与测试相关的 deps (#13164)</li>
+<li>迁移到 <code>transformers</code> v5 (#12976)</li>
+<li>[文档] 修复文档中的 torchrun 命令参数顺序 (#13181)</li>
+<li>[注意后端] 使用 fa3 的专用包装器进行 cp。 (#13165)</li>
+<li>[测试] 模块化索引的一致性测试 (#13192)</li>
+<li>[杂务] pypi 发布工作流程中的更新。 (#12805)</li>
+<li>[测试] 在torchao中启用CPU卸载测试，无需编译。 (#12704)</li>
+<li>从基准测试中删除 db utils (#13199)</li>
+<li>[模块化] 实现自定义块的需求验证 (#12196)</li>
+<li>[lora] 修复 zimage lora 转换以支持更多 lora。 (#13209)</li>
+<li>[注意后端]更改为更新的存储库和版本。 (#13161)</li>
+<li>发布：v0.37.0-release</li>
+</ul>
+</li>
+<li>@DN6
+<ul>
+<li>[WIP] 添加 Flux2 模块 (#12763)</li>
+<li>重构模型测试 (#12822)</li>
+<li>[文档] 使用自定义代码添加 AutoModel 指南 (#13099)</li>
+<li>[CI] 重构 Wan 模型测试 (#13082)</li>
+<li>[管道] 删除 k-扩散 (#13152)</li>
+<li>[CI] 添加 ftfy 作为测试依赖项 (#13155)</li>
+<li>[CI] 修复新的 LoRAHotswap 测试 (#13163)</li>
+<li>允许 Automodel 使用带有自定义代码的 <code>from_config</code>。 (#13123)</li>
+<li>[AutoModel] 修复加载自定义代码时子文件夹和本地模型路径的错误 (#13197)</li>
+<li>[AutoModel] 允许将 <code>auto_map</code> 注册到模型配置 (#13186)</li>
+<li>[模块化] 将模块化管道权重保存到 Hub (#13168)</li>
+<li>清理意外文件 (#13202)</li>
+</ul>
+</li>
+<li>@naykun
+<ul>
+<li>[qwen-image] 编辑 2511 支持 (#12839)</li>
+<li>Qwen 图像分层支持 (#12853)</li>
+</ul>
+</li>
+<li>@junqiangwu
+<ul>
+<li>添加对 LongCat-Image 的支持 (#12828)</li>
+<li>修复 prefix_token_len 错误 (#12845)</li>
+</ul>
+</li>
+<li>@hlky
+<ul>
+<li>Z-Image-Turbo ControlNet (#12792)</li>
+<li>Z-Image-Turbo from_single_file 修复 (#12888)</li>
+<li>检测 2.0 与 2.1 ZImageControlNetModel (#12861)</li>
+<li>管道 <code>from_pretrained</code> 中的 <code>disable_mmap</code> (#12854)</li>
+<li>ZImageControlNet cfg (#13080)</li>
+</ul>
+</li>
+<li>@米格尔马丁75
+<ul>
+<li>Cosmos Predict2.5 Base：推理管道、调度程序和 chkpt 转换 (#12852)</li>
+<li>Cosmos Predict2.5 14b 转换 (#12863)</li>
+<li>修复 src/diffusers/pipelines/cosmos/pipeline_cosmos2_5_predict.py 中的拼写错误 (#12914)</li>
+<li>Cosmos Transfer2.5 推理管道：一般/{seg、深度、模糊、边缘} (#13066)</li>
+<li>Cosmos Transfer2.5 自回归推理管道 (#13114)</li>
+</ul>
+</li>
+<li>@若一杜
+<ul>
+<li>添加 z-image-omni-base 实现 (#12857)</li>
+</ul>
+</li>
+<li>@r4inm4ker
+<ul>
+<li>社区管道：添加 z 图像差分 img2img (#12882)</li>
+</ul>
+</li>
+<li>@yaoqih
+<ul>
+<li>LTX Video 0.9.8 长多重提示 (#12614)</li>
+</ul>
+</li>
+<li>@dg845
+<ul>
+<li>添加 LTX 2.0 视频管道 (#12915)</li>
+<li>向 <code>PeftLoraLoaderMixinTests</code> 添加标志以启用/禁用文本编码器 LoRA 测试 (#12962)</li>
+<li>LTX 2 单文件支持 (#12983)</li>
+<li>LTX 2 通过接受更多输入类型改进 <code>encode_video</code> (#13057)</li>
+<li>修复 <code>num_videos_per_prompt > 1</code> 和 CFG 启用时的 LTX-2 推理 (#13121)</li>
+<li>[CI] 修复 <code>setuptools</code> <code>pkg_resources</code> 错误 (#13129)</li>
+<li>[CI] 修复 PR GPU 测试的 <code>setuptools</code> <code>pkg_resources</code> 错误 (#13132)</li>
+<li>[CI] 恢复 <code>setuptools</code> CI 修复，因为失败的管道已被弃用 (#13149)</li>
+<li>修复 PRX Pipeline 的 <code>ftfy</code> 导入 (#13154)</li>
+<li>修复 AutoModel <code>typing</code> 导入错误 (#13178)</li>
+<li>添加 Helios-14B 视频生成管道 (#13208)</li>
+<li>添加 LTX2 条件管道 (#13058)</li>
+</ul>
+</li>
+<li>@卡西夫</li>
+<li>[研究]稳定扩散 XL 的潜在感知损失 (LPL) (#11573)
+<ul>
+<li>修复 QwenImage txt_seq_lens 处理 (#12702)</li>
+<li>[Qwen] 避免在没有填充时创建注意力蒙版 (#12987)</li>
+</ul>
+</li>
+<li>@bhavya01
+<ul>
+<li>将 xla 的时间步长设备更改为 cpu (#11501)</li>
+</ul>
+</li>
+<li>@linoytsaban
+<ul>
+<li>[LoRA] 将 lora_alpha 添加到 sana README (#11780)</li>
+<li>Z 图像 lora 训练 (#13056)</li>
+</ul>
+</li>
+<li>@stevhliu
+<ul>
+<li>[文档] 远程推理 (#12372)</li>
+<li>[文档] 添加 qwenimagelayered 文档 (#13158)</li>
+</ul>
+</li>
+<li>@hameerabbasi
+<ul>
+<li>添加 <code>ChromaInpaintPipeline</code> (#12848)</li>
+<li>从 Chroma 修复中删除 <code>*pooled_*</code> 提及 (#13026)</li>
+</ul>
+</li>
+<li>@加尔布里亚
+<ul>
+<li>斐波那契编辑管道 (#12930)</li>
+</ul>
+</li>
+<li>@JaredforReal
+<ul>
+<li>[GLM-Image] 添加对 GlmImagePipeline 的批量支持 (#13007)</li>
+<li>[错误修复] GLM-Image 适合新的 <code>get_image_features</code> API (#13052)</li>
+<li>[修复]允许在 <code>GlmImagePipeline</code> 中同时提供 <code>prompt</code> 和 <code>prior_token_ids</code> (#13092)</li>
+</ul>
+</li>
+<li>@rootonchair
+<ul>
+<li>LTX2 蒸馏检查点支持 (#12934)</li>
+</ul>
+</li>
+<li>@AlanPonnachan
+<ul>
+<li>添加对 Magcache 的支持 (#12744)</li>
+</ul>
+</li>
+<li>@CalamitousFelicitousness
+<ul>
+<li>功能/zimage 修复管道 (#13006)</li>
+</ul>
+</li>
+<li>@Ando233
+<ul>
+<li>壮举：实现 rae 自动编码器。 (#13046)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>来源</strong> <a href="https://github.com/huggingface/diffusers">huggingface/diffusers</a> · <code>v0.37.0</code> · 2026-03-05 · <a href="https://github.com/huggingface/diffusers/releases/tag/v0.37.0">上游版本</a>
+<em>逐字镜像以进行索引。所有权利属于上游项目。</em></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/huggingface/diffusers">huggingface/diffusers</a> · 🏷️ 版本：<code>v0.37.0</code> · 📅 发布：2026-03-05 · <a href="https://github.com/huggingface/diffusers/releases/tag/v0.37.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/diffusers/diffusers_v0.37.1"> <span class="k">← 下一个</span> <span class="t">v0.37.1</span> </a> <a href="/zh/release_note/diffusers/diffusers_v0.36.0"> <span class="k">上一个 →</span> <span class="t">v0.36.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/huggingface/diffusers/releases/tag/v0.37.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/huggingface/diffusers" target="_blank" rel="noopener"> <span>huggingface/diffusers</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#模块化扩散器" class>模块化扩散器</a><a href="#新管道和模型" class>新管道和模型</a><a href="#图片" class="lv3">图片🌆</a><a href="#视频--音频" class="lv3">视频 + 音频 🎥 🎼</a><a href="#核心库的改进" class>核心库的改进</a><a href="#新的缓存方法" class="lv3">新的缓存方法</a><a href="#新的上下文并行cp后端" class="lv3">新的上下文并行（CP）后端</a><a href="#其他" class="lv3">其他</a><a href="#错误修复" class>错误修复</a><a href="#所有提交" class>所有提交</a><a href="#重大社区贡献" class>重大社区贡献</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/diffusers/diffusers_v0.43.0"> <span class="v">v0.43.0</span> <span class="d">26-11-12</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.42.1"> <span class="v">v0.42.1</span> <span class="d">26-10-27</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.42.0"> <span class="v">v0.42.0</span> <span class="d">26-10-23</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.41.0"> <span class="v">v0.41.0</span> <span class="d">26-10-06</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.40.0"> <span class="v">v0.40.0</span> <span class="d">26-08-20</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.39.0"> <span class="v">v0.39.0</span> <span class="d">26-07-03</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.38.0"> <span class="v">v0.38.0</span> <span class="d">26-05-01</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.37.1"> <span class="v">v0.37.1</span> <span class="d">26-03-25</span> </a> </li> </ul> <a href="/zh/releases/diffusers" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 16 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

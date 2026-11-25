@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>lighthouse v6.0.0 — STAGS NextStack</title><meta name="description" content="We expect this release to ship in the DevTools of Chrome 84."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/lighthouse/lighthouse_v6.0.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/lighthouse/6.0.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/lighthouse/lighthouse_v6.0.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/lighthouse/6.0.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="lighthouse v6.0.0 — STAGS NextStack"><meta property="og:description" content="We expect this release to ship in the DevTools of Chrome 84."><meta property="og:url" content="https://www.stags.cn/zh/release_note/lighthouse/lighthouse_v6.0.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/lighthouse/lighthouse_v6.0.0/#article","headline":"lighthouse v6.0.0 release notes","datePublished":"2020-05-19","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/GoogleChrome/lighthouse"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/lighthouse/6.0.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/lighthouse/lighthouse_v6.0.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/lighthouse/6.0.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/lighthouse/6.0.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/lighthouse/6.0.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/lighthouse/6.0.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/lighthouse/6.0.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/lighthouse">lighthouse</a> </nav> <h1 class="detail-title"> <span class="p">lighthouse</span> v6.0.0 </h1> <div class="detail-meta"> <span class="chip chip--major">大版本</span> <span><span class="k">发布时间</span>2020年5月19日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/GoogleChrome/lighthouse" target="_blank" rel="noopener"> <span class="k">来源</span>GoogleChrome/lighthouse </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/lighthouse/6.0.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/lighthouse/lighthouse_v6.0.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <p><a href="https://github.com/GoogleChrome/lighthouse/compare/v5.6.0...v6.0.0">原始提交 changelog</a>
+我们预计此版本将在 Chrome 84 的 DevTools 中发布。</p>
+<h2 id="显着变化">显着变化</h2>
+<p>这么多！请参阅<a href="https://web.dev/lighthouse-whats-new-6.0/"><strong>Lighthouse 6.0：新增功能</strong>博客文章</a> 进行深入了解。</p>
+<h2 id="-新审核">🆕 新审核</h2>
+<ul>
+<li><a href="https://web.dev/lighthouse-largest-contentful-paint/">最大内容绘制</a> (LCP) 是一个新指标，用于测量从导航到渲染视口中最大内容元素的时间（<a href="https://github.com/GoogleChrome/lighthouse/pull/9905">#9905</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10213">#10213</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10452">#10452</a>、 [#10529]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10529%EF%BC%89%EF%BC%89%E3%80%82">https://github.com/GoogleChrome/lighthouse/pull/10529））。</a>
+<ul>
+<li><code>largest-contentful-paint-element</code> 是一项配套审核，提供有关哪个元素触发了 LCP 的信息（<a href="https://github.com/GoogleChrome/lighthouse/pull/10517">#10517</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10713">#10713</a>）。</li>
+</ul>
+</li>
+<li><a href="https://web.dev/cls/">累积布局偏移</a> (CLS) 是一个新指标，用于测量页面加载时内容意外移动的量（<a href="https://github.com/GoogleChrome/lighthouse/pull/9037">#9037</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10427">#10427</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10495">#10495</a>、 <a href="https://github.com/GoogleChrome/lighthouse/pull/10570">#10570</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10728">#10728</a>)。
+<ul>
+<li><code>layout-shift-elements</code> 是另一个伴随诊断，它提供有关页面加载时移动的元素的信息 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10702">#10702</a>)。</li>
+</ul>
+</li>
+<li><code>unused-javascript</code> 是一项审核，已经存在了一段时间，但现在才默认启用。它解释了 JavaScript 已加载但在页面加载期间从未执行的内容，并估计可以通过代码分割、死代码消除或明智地使用删除键来节省的加载时间（<a href="https://github.com/GoogleChrome/lighthouse/pull/9854">#9854</a>）。</li>
+<li>PWA <a href="https://web.dev/maskable-icon-audit/"><code>maskable-icon</code></a> 在主屏幕上看起来更好，因此这项新审核鼓励您在清单中至少有一个可用 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10370">#10370</a>)。</li>
+<li><code>timing-budget</code> 扩展了<a href="https://github.com/GoogleChrome/lighthouse/blob/7e4fa55/docs/performance-budgets.md">预算断言</a>，现在可以在所有性能指标上进行设置（<a href="https://github.com/GoogleChrome/lighthouse/pull/9901">#9901</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/9925">#9925</a>）。</li>
+<li>新的 <a href="https://web.dev/charset"><code>charset</code></a> 审核可确保页面内容的字符编码正确（<a href="https://github.com/GoogleChrome/lighthouse/pull/10284">#10284</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10389">#10389</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10689">#10689</a>）。</li>
+<li><code>image-size-responsive</code> 检查图像的长宽比和分辨率是否与其在页面上的显示方式相匹配 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10460">#10460</a>)。</li>
+<li>更新到最新版本的<code>axe-core</code>已解锁许多新的可访问性审核：<a href="https://web.dev/aria-hidden-body/"><code>aria-hidden-body</code></a>、<a href="https://web.dev/aria-hidden-focus/"><code>aria-hidden-focus</code></a>、<a href="https://web.dev/aria-input-field-name/"><code>aria-input-field-name</code></a>、<a href="https://web.dev/aria-toggle-field-name/"><code>aria-toggle-field-name</code></a>、 <a href="https://web.dev/duplicate-id-active/"><code>duplicate-id-active</code></a>、<a href="https://web.dev/duplicate-id-aria/"><code>duplicate-id-aria</code></a>、<a href="https://web.dev/form-field-multiple-labels/"><code>form-field-multiple-labels</code></a>、<a href="https://web.dev/heading-order/"><code>heading-order</code></a> (<a href="https://github.com/GoogleChrome/lighthouse/pull/9798">#9798</a>)。</li>
+</ul>
+<h2 id="️-实验审核">⚗️ 实验审核</h2>
+<p>这些审核尚未成为默认 Lighthouse 体验的一部分，但它们将根据页面 JavaScript 捆绑包的分析提供性能建议。今天可以使用 <code>--preset=experimental</code> 标志在命令行上测试它们。</p>
+<ul>
+<li><code>legacy-javascript</code> 翻遍你的包，寻找不必要或过时的 polyfill 和打包器转换（<a href="https://github.com/GoogleChrome/lighthouse/pull/10303">#10303</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10568">#10568</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10564">#10564</a>）。</li>
+<li><code>duplicated-javascript</code> 还会深入浏览页面的 JavaScript，查找最终在捆绑包内或跨多个捆绑包重复的代码 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10314">#10314</a>)。</li>
+<li><code>unused-javascript</code> 现在默认运行（如上所述），但是当在 <code>experimental</code> 下运行时，审核可以使用源映射来显示哪些_原始_源代码从未运行并且可以推迟或消除（[#10090]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10090%EF%BC%89%EF%BC%89%E3%80%82">https://github.com/GoogleChrome/lighthouse/pull/10090））。</a></li>
+</ul>
+<h2 id="新贡献者">新贡献者！</h2>
+<p>感谢@TGiles、@roelfjan、@chruxin、@warrengm、@alexgreencode、@mikedijkstra、@egsweeny、@johnsampson、@jazyan、@b3none、@mattjared、@Malvoz、@Beytoven、@Munter、@jayaddison、@msomji、@piotrzarycki、@awdltd、@mathiasbynens、 @Carr1005、@staabm、@SphinxKnight、@sk-、@AndreasKubasa、@jantimon、@kmanuel、@Kikobeats、@RolandBurrows、@nxqamar、@catalinred 和 @baseeee，感谢他们的首次贡献！这么多！</p>
+<h2 id="-重大变更">💥 重大变更</h2>
+<ul>
+<li>性能指标分数<a href="https://web.dev/performance-scoring/">已重新加权</a>，以更好地反映用户的加载体验(<a href="https://github.com/GoogleChrome/lighthouse/pull/9949">#9949</a>)。</li>
+<li>运行桌面 Lighthouse 测试时，指标分数曲线已更新，以考虑更快的连接和 CPU（<a href="https://github.com/GoogleChrome/lighthouse/pull/9911">#9911</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10756">#10756</a>）。</li>
+<li><code>frameNavigated</code> 事件现在用于跟踪重定向，这意味着现在在确定运行的 <code>finalUrl</code> 时会考虑 JS 重定向（<a href="https://github.com/GoogleChrome/lighthouse/pull/10339">#10339</a>）。</li>
+<li>模拟移动设备已从 Nexus 5x 移至 Moto G4（但现有 DPR 保持不变）（<a href="https://github.com/GoogleChrome/lighthouse/pull/10191">#10191</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10749">#10749</a>）。</li>
+<li><code>mixed-content</code> 预设已被删除，因为它没有被广泛使用，并且需要很长时间才能添加到默认的 Lighthouse 体验中（<a href="https://github.com/GoogleChrome/lighthouse/pull/10159">#10159</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10750">#10750</a>）。</li>
+<li><code>full</code> 预设已重命名为 <code>experimental</code>，表示默认情况下该代码可能尚未准备好运行（<a href="https://github.com/GoogleChrome/lighthouse/pull/9930">#9930</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10311">#10311</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10333">#10333</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10585">#10585</a>）。</li>
+<li>模拟的 Chrome UA 字符串已更新为 Chrome 80 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9967">#9967</a>)。</li>
+<li><code>installable-manifest</code>：Web 应用清单中的图标必须可获取才能被视为可安装（<a href="https://github.com/GoogleChrome/lighthouse/pull/10168">#10168</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10320">#10320</a>）</li>
+</ul>
+<h2 id="-针对程序化用户的重大变化">🤖💥 针对程序化用户的重大变化</h2>
+<p>这些更改不太可能影响最终用户，但如果您正在编写自定义配置、插件或处理 Lighthouse JSON 输出，这些更改可能很重要。</p>
+<ul>
+<li>通过审核的 <code>LH.Audit.Context</code> 现在被视为不可变。如果代码之前推送到 <code>context.LighthouseRunWarnings</code> 以获得顶级警告，那么它现在应该将其传递回审计产品的 <code>runWarnings</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10555">#10555</a>)。</li>
+<li><code>Audit.computeLogNormalScore</code> 已被重新定义，以指定具有中位数和 p10 点的对数正态曲线（删除“收益递减点”）。现有审核已移至此新定义，因此不应发生分数更改 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10715">#10715</a>)。</li>
+<li><code>loadFailureMode</code> 设置已添加到 <code>Config</code> 传递中，以控制页面加载失败时的行为。以前这是隐式控制的（例如，没有可用的脱机页面不会导致错误）（<a href="https://github.com/GoogleChrome/lighthouse/pull/9987">#9987</a>）</li>
+<li><code>time-to-first-byte</code> 已更名为 <code>server-response-time</code>，以更好地反映审核所测量的内容 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10735">#10735</a>)。</li>
+<li><code>resource-summary</code>：为了清晰起见，<code>details.items.size</code> 已重命名为 <code>transferSize</code>（<a href="https://github.com/GoogleChrome/lighthouse/pull/10700">#10700</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10743">#10743</a>）。</li>
+</ul>
+<h2 id="-核心">🧱 核心</h2>
+<h3 id="改进错误修复澄清">改进、错误修复、澄清</h3>
+<p>以下更改被视为错误修复或更新，以更好地匹配要审核的内容，但这些更改可能会导致审核分数或行为的调整。</p>
+<ul>
+<li>如果 Lighthouse 在加载完成之前超时，则添加顶级警告 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10538">#10538</a>)</li>
+<li>如果测试的 URL 被重定向，则添加顶级警告 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10157">#10157</a>)</li>
+<li>现在包含 FCP + 5 秒作为测试页被视为已加载之前必须达到的最短时间（<a href="https://github.com/GoogleChrome/lighthouse/pull/10505">#10505</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10516">#10516</a>）</li>
+<li>加载模拟：当存在重复记录时，从 <code>initiatorRequest</code> 添加边缘 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10097">#10097</a>)
+*加载模拟：保留第一个布局/绘制/解析事件，无论持续时间如何（<a href="https://github.com/GoogleChrome/lighthouse/pull/9922">#9922</a>）</li>
+<li>负载模拟：不要通过计时器创建自依赖性（<a href="https://github.com/GoogleChrome/lighthouse/pull/10280">#10280</a>）
+*负载模拟：删除CPU节点上的最短任务持续时间（[#9910]（<a href="https://github.com/GoogleChrome/lighthouse/pull/9910%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/9910））</a></li>
+<li>加载模拟：对数据 URL 使用固定时间，因为它们已经被加载 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9932">#9932</a>)</li>
+<li>加载模拟：将布局节点链接到根框架请求（<a href="https://github.com/GoogleChrome/lighthouse/pull/9727">#9727</a>）</li>
+<li>Tracehouse：改进了 XHR + 绘制/布局/HTML 的归因（<a href="https://github.com/GoogleChrome/lighthouse/pull/10001">#10001</a>）</li>
+<li><code>offscreen-images</code>：在三个视口之外寻找可能延迟的图像（[#10643]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10643%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10643））</a></li>
+<li><code>uses-responsive-images</code>：包括大于视口的屏幕外图像（<a href="https://github.com/GoogleChrome/lighthouse/pull/10506">#10506</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10561">#10561</a>）</li>
+<li><code>accessibility</code>：在工件中包含 <code>axe-core</code> <a href="https://github.com/dequelabs/axe-core/blob/ffa666972d2c82fe198c76a3491988def64769ee/doc/rule-development.md#check-properties">‘不完整’</a> 结果，甚至包括部分 a11y 结果（<a href="https://github.com/GoogleChrome/lighthouse/pull/10072">#10072</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10270">#10270</a>）</li>
+<li><code>audio-caption</code>：删除已被 <code>axe-core</code> 禁用的检查（<a href="https://github.com/GoogleChrome/lighthouse/pull/10453">#10453</a>）</li>
+<li><code>link-text</code>：添加更多关键字到阻止列表 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9986">#9986</a>)</li>
+<li><code>font-size</code>：不允许删除的节点使收集器失败（[#9928]（<a href="https://github.com/GoogleChrome/lighthouse/pull/9928%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/9928））</a></li>
+<li><code>installable-manifest</code>：将所需的图标大小从 192px 降低到 144px (<a href="https://github.com/GoogleChrome/lighthouse/pull/10175">#10175</a>)</li>
+<li><code>is-on-https</code>：将 <code>filesystem</code> 添加到安全方案（[#10073]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10073%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10073））</a></li>
+<li><code>offscreen-images</code>：排除 <code>lazy</code> 或 <code>eager</code> <code>loading</code> 图像 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10117">#10117</a>)</li>
+<li><code>resource-summary</code>：摘要中不包含 favicon.ico (<a href="https://github.com/GoogleChrome/lighthouse/pull/10190">#10190</a>)</li>
+<li><code>uses-rel-preconnect</code>：如果发现超过三个预连接，则会发出警告（[#9903]（<a href="https://github.com/GoogleChrome/lighthouse/pull/9903%EF%BC%89%EF%BC%8C%5B#10293%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10293%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/9903），[#10293]（https://github.com/GoogleChrome/lighthouse/pull/10293））</a></li>
+<li><code>third-party-summary</code>：如果来源在第三方列表中，则不包括主要资源（[#10006]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10006%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10006））</a></li>
+<li><code>js-lib-detector</code>：处理新的快速库检测条目、版本异构性（[#9888]（<a href="https://github.com/GoogleChrome/lighthouse/pull/9888%EF%BC%89%E3%80%81%5B#10295%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10295%EF%BC%89%E3%80%81%5B#10176%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10176%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/9888）、[#10295]（https://github.com/GoogleChrome/lighthouse/pull/10295）、[#10176]（https://github.com/GoogleChrome/lighthouse/pull/10176））</a></li>
+<li><code>is-on-https</code>：更新描述以引用混合内容（[#10712]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10712%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10712））</a></li>
+<li><code>definition-list</code>：允许提及 <code>&#x3C;div></code> 对 <code>&#x3C;dl></code> 中的内容进行分组 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10479">#10479</a>)</li>
+<li><code>offline-start-url</code>：改进失败消息（[#9982]（<a href="https://github.com/GoogleChrome/lighthouse/pull/9982%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/9982））</a></li>
+<li>更新并修复审核和堆栈包描述中的文档链接（<a href="https://github.com/GoogleChrome/lighthouse/pull/9850">#9850</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/9863">#9863</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10019">#10019</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10069">#10069</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10246">#10246</a>、 <a href="https://github.com/GoogleChrome/lighthouse/pull/10496">#10496</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10714">#10714</a>)</li>
+</ul>
+<h3 id="程序化用户的新事物">程序化用户的新事物</h3>
+<ul>
+<li>审计结果现在有一个 <code>numericUnit</code> 属性来指定其 <code>numericResult</code> 的单位 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9979">#9979</a>)</li>
+<li><code>ImageElements</code>：添加 <code>usesPixelArtScaling</code> 和 <code>usesSrcSetDensityDescriptor</code> 属性 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10481">#10481</a>)</li>
+<li><code>MetaElements</code>: 包含 <code>property</code> 属性 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9978">#9978</a>)</li>
+<li>添加新的基础神器 <code>HostFormFactor</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/9923">#9923</a>)</li>
+<li>重构以将 <code>unused-javascript-summary</code> 共享为计算工件（<a href="https://github.com/GoogleChrome/lighthouse/pull/10387">#10387</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10634">#10634</a>）</li>
+<li>添加新的源映射计算工件，<code>js-bundles</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10078">#10078</a>)</li>
+<li>重构以将 <code>unused-css</code> 共享为计算工件（<a href="https://github.com/GoogleChrome/lighthouse/pull/10160">#10160</a>）</li>
+<li>重构以将度量计时共享为计算工件（<a href="https://github.com/GoogleChrome/lighthouse/pull/9814">#9814</a>）</li>
+<li>预算：添加对 CLS 和 LCP 预算的支持（<a href="https://github.com/GoogleChrome/lighthouse/pull/10579">#10579</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10625">#10625</a>）</li>
+<li>预算：将 <code>firstPartyHostnames</code> 添加到 API (<a href="https://github.com/GoogleChrome/lighthouse/pull/10105">#10105</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10324">#10324</a>)
+*预算：从API中删除未使用的<code>tolerance</code>属性（[#9770]（<a href="https://github.com/GoogleChrome/lighthouse/pull/9770%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/9770））</a></li>
+</ul>
+<h3 id="内部重构和改进">内部重构和改进</h3>
+<ul>
+<li>确保 <code>axe-core</code> 错误正确序列化 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10646">#10646</a>)</li>
+<li><code>audit-details</code> 类型名称的清理 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10603">#10603</a>)</li>
+<li>包括隐藏 <code>network-requests</code> 审核中的 <code>finished</code> 状态 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10530">#10530</a>)</li>
+<li>获取测试页面之外的源映射，这样就不会被 CORS 阻止（<a href="https://github.com/GoogleChrome/lighthouse/pull/9459">#9459</a>）</li>
+<li><code>driver</code>：死代码清理（[#10491]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10491%EF%BC%89%EF%BC%8C%5B#10571%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10571%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10491），[#10571]（https://github.com/GoogleChrome/lighthouse/pull/10571））</a></li>
+<li>添加仅供内部使用的 <code>__internalOptionalArtifacts</code> 用于实验工件 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10355">#10355</a>)</li>
+<li><code>font-size</code>：使用 <code>DOMSnapshot.captureSnapshot</code> 以获得更好的性能 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10200">#10200</a>)</li>
+<li>从测试页面获取内容时使用隔离的 <code>evaluateAsync</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10130">#10130</a>)
+*预算：集中路径匹配逻辑（<a href="https://github.com/GoogleChrome/lighthouse/pull/9895">#9895</a>）</li>
+<li><code>script-elements</code>：并行获取脚本内容（[#9713]（<a href="https://github.com/GoogleChrome/lighthouse/pull/9713%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/9713））</a></li>
+<li>在内部性能计时编号中包含 <code>GatherRunner.runPass</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10205">#10205</a>)</li>
+<li>为了清晰起见，重命名为 <code>GatherRunner.isPerfPass</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/9896">#9896</a>)</li>
+<li>迁移到扁平化 Chrome DevTools 协议 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9783">#9783</a>)</li>
+</ul>
+<h2 id="-cli">💻 CLI</h2>
+<ul>
+<li>添加对多个 <code>--chrome-flags</code> 的支持 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10607">#10607</a>)</li>
+<li><code>--output</code> 允许使用逗号分隔值 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10188">#10188</a>)</li>
+<li>添加 <code>--chrome-ignore-default-flags</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10184">#10184</a>)</li>
+<li>允许 <code>--extra-headers</code> 作为对象 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9962">#9962</a>)</li>
+</ul>
+<h2 id="-报告">📔 报告</h2>
+<ul>
+<li>在最佳实践类别中添加“Trust 和安全”组 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10623">#10623</a>)</li>
+<li>添加指向分数计算器的链接，其中填充了当前指标分数（<a href="https://github.com/GoogleChrome/lighthouse/pull/10754">#10754</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10763">#10763</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10773">#10773</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10767">#10767</a>）</li>
+<li>改进顶级警告的显示（<a href="https://github.com/GoogleChrome/lighthouse/pull/10636">#10636</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10765">#10765</a>）</li>
+<li><code>external-anchors-use-rel-noopener</code>：使用 <code>node</code> 审核详细信息类型 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10242">#10242</a>)</li>
+<li><code>is-crawlable</code>: 包含阻止爬行的 <code>robots.txt</code> 行号 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10154">#10154</a>)</li>
+<li>临时测试 CSS 网格的指标（<a href="https://github.com/GoogleChrome/lighthouse/pull/10695">#10695</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10778">#10778</a>）</li>
+<li>相对于 <code>report-font-size</code> 定义等宽字体 <code>font-size</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10761">#10761</a>)</li>
+<li>更新评分文档的链接 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10725">#10725</a>)</li>
+<li>为内部 linter 添加非 <code>null</code> jsdoc 类型注释 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10454">#10454</a>)</li>
+<li>将“大小”澄清为传输大小或资源大小（<a href="https://github.com/GoogleChrome/lighthouse/pull/10420">#10420</a>）</li>
+<li>更新表格和内联代码格式（<a href="https://github.com/GoogleChrome/lighthouse/pull/10437">#10437</a>）</li>
+<li>修复深色模式下的链接对比度 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10364">#10364</a>)</li>
+<li>将 <code>channel</code> 添加到运行时设置 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10099">#10099</a>)</li>
+<li>对齐审核警告（<a href="https://github.com/GoogleChrome/lighthouse/pull/10232">#10232</a>）</li>
+<li>失去焦点时关闭下拉菜单 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10208">#10208</a>)</li>
+<li>打印时隐藏下拉菜单 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10216">#10216</a>)</li>
+<li>将 <code>Util.UIStrings</code> 移动到 <code>Util.i18n</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10153">#10153</a>)</li>
+<li>添加对表中子行的初始支持 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10084">#10084</a>)</li>
+<li>调整划线规的弧长以考虑圆线帽 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9913">#9913</a>)</li>
+<li>修复滚动期间标题移动闪烁的问题 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9955">#9955</a>)</li>
+<li>添加 <code>source-location</code> 详细信息以链接到源代码 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9354">#9354</a>)</li>
+<li>CSV 报告：将测试的 URL 添加到条目中（<a href="https://github.com/GoogleChrome/lighthouse/pull/10656">#10656</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10675">#10675</a>）</li>
+<li>查看器：添加从任何 URL 加载 JSON 的选项 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10608">#10608</a>)</li>
+<li>观众：提及其他灯塔频道 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10384">#10384</a>)</li>
+<li>查看器：为信号加载添加页面和光标样式（<a href="https://github.com/GoogleChrome/lighthouse/pull/10305">#10305</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10348">#10348</a>）</li>
+<li>查看器：使用新徽标（<a href="https://github.com/GoogleChrome/lighthouse/pull/9991">#9991</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/9999">#9999</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10002">#10002</a>）</li>
+</ul>
+<h2 id="-clients">👥 Clients</h2>
+<ul>
+<li>退休延期；替换为 PSI 启动器（<a href="https://github.com/GoogleChrome/lighthouse/pull/9193">#9193</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/9988">#9988</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/9989">#9989</a>）</li>
+<li>扩展: 添加 Firefox 支持 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10332">#10332</a>)</li>
+<li>扩展：删除内容安全策略 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10380">#10380</a>)</li>
+<li>devtools：与 lightrider 共享桌面节流设置（<a href="https://github.com/GoogleChrome/lighthouse/pull/10322">#10322</a>）</li>
+<li>devtools：拆分 <code>runLighthouseInWorker</code> 并暴露给工作人员 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10005">#10005</a>)</li>
+<li>开发工具：添加 <code>settings.internalDisableDeviceScreenEmulation</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/9377">#9377</a>)</li>
+<li>开发工具：在捆绑包中包含 <code>lighthouse-plugin-publisher-ads</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/9924">#9924</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10583">#10583</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10682">#10682</a>)</li>
+<li>devtools：更新 <code>roll-to-devtools</code> 并跟踪上游更改（<a href="https://github.com/GoogleChrome/lighthouse/pull/9942">#9942</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10310">#10310</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10036">#10036</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10758">#10758</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10762">#10762</a>)</li>
+</ul>
+<h2 id="-国际化">🌍 国际化</h2>
+<ul>
+<li>新字符串：审核、堆栈包、标题和更正（<a href="https://github.com/GoogleChrome/lighthouse/pull/9940">#9940</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10244">#10244</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10245">#10245</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10645">#10645</a>）</li>
+<li>本地化报告中的运行时设置和工具 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9166">#9166</a>)</li>
+<li>不要为本地化协议错误提供未使用的参数 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9935">#9935</a>)</li>
+<li>使用 <code>log.verbose()</code> 来发出过时字符串警告 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9931">#9931</a>)</li>
+<li>集中指标名称的字符串 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9871">#9871</a>)</li>
+</ul>
+<h2 id="文档">文档</h2>
+<p>*插件：更新配方和文档以使用<code>NODE_PATH</code>（[#9997]（<a href="https://github.com/GoogleChrome/lighthouse/pull/9997%EF%BC%89%EF%BC%8C%5B#10028%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10028%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/9997），[#10028]（https://github.com/GoogleChrome/lighthouse/pull/10028））</a></p>
+<ul>
+<li>插件：更新示例列表 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9917">#9917</a>)</li>
+<li>评分：v6 更新，性能请参考 web.dev（<a href="https://github.com/GoogleChrome/lighthouse/pull/10223">#10223</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10633">#10633</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10676">#10676</a>）</li>
+<li>灯笼：添加深度视频 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10546">#10546</a>)</li>
+<li>新审计：强调什么是好的审计（<a href="https://github.com/GoogleChrome/lighthouse/pull/10376">#10376</a>）</li>
+<li>黑客提示：链接到直接使用审核结果的要点 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10480">#10480</a>)</li>
+<li>可变性：扩展硬件建议 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10483">#10483</a>)</li>
+<li>节流：添加 devtools-节流弃用通知 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9933">#9933</a>)</li>
+<li>授权：在配方中使用 <code>--disable-storage-reset</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10189">#10189</a>)</li>
+<li>调整经过身份验证的页面和 puppeteer 文档 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10277">#10277</a>)</li>
+<li>添加使用 Lighthouse 和 Jest 的集成测试配方 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9722">#9722</a>)</li>
+<li>添加绩效预算文档 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10542">#10542</a>)</li>
+<li>添加在自定义收集器中使用 puppeteer 的配方（<a href="https://github.com/GoogleChrome/lighthouse/pull/10253">#10253</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10447">#10447</a>）</li>
+<li>添加 <code>build/</code> 目录的自述文件 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10004">#10004</a>)</li>
+<li>自述文件：向常见问题解答添加可变性和限制 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10631">#10631</a>)</li>
+<li>自述文件：添加目录 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10283">#10283</a>)</li>
+<li>自述文件：添加有关 <code>yarn test-docs</code> 的注释（<a href="https://github.com/GoogleChrome/lighthouse/pull/10263">#10263</a>）</li>
+<li>自述文件：修复拼写错误（<a href="https://github.com/GoogleChrome/lighthouse/pull/10179">#10179</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10694">#10694</a>）</li>
+<li>自述文件：添加 protobuf 安装说明 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10250">#10250</a>)</li>
+<li>自述文件：单独的免费和付费集成（<a href="https://github.com/GoogleChrome/lighthouse/pull/10027">#10027</a>）</li>
+<li>自述文件：添加新的和更新的集成（<a href="https://github.com/GoogleChrome/lighthouse/pull/9954">#9954</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/9984">#9984</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10018">#10018</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/9985">#9985</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10156">#10156</a>、 <a href="https://github.com/GoogleChrome/lighthouse/pull/9836">#9836</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10385">#10385</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10466">#10466</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10475">#10475</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10609">#10609</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10745">#10745</a>)</li>
+</ul>
+<h2 id="测试">测试</h2>
+<ul>
+<li>从 <code>yarn update:sample-json</code> 中删除 protobuf 往返检查（以及本地 protobuf 开发要求）（<a href="https://github.com/GoogleChrome/lighthouse/pull/10557">#10557</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10661">#10661</a>）</li>
+<li>对新的 github 操作运行 CI 测试（<a href="https://github.com/GoogleChrome/lighthouse/pull/10418">#10418</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10551">#10551</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10620">#10620</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10622">#10622</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10627">#10627</a>）</li>
+<li>通过 CI github 操作向 buildtracker 报告提交（<a href="https://github.com/GoogleChrome/lighthouse/pull/10550">#10550</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10718">#10718</a>）</li>
+<li>灯笼：更新黄金痕迹收集脚本并重新收集它们（<a href="https://github.com/GoogleChrome/lighthouse/pull/9662">#9662</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10129">#10129</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10209">#10209</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10279">#10279</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10663">#10663</a>)</li>
+<li>Smokehouse：重构以能够集成测试所有 Lighthouse clients（[#9843]（<a href="https://github.com/GoogleChrome/lighthouse/pull/9843%EF%BC%89%EF%BC%8C%5B#10158%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10158%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/9843），[#10158]（https://github.com/GoogleChrome/lighthouse/pull/10158））</a></li>
+<li>Smokehouse：添加 <code>bundle.js</code> 运行程序以驱动捆绑的灯塔测试（<a href="https://github.com/GoogleChrome/lighthouse/pull/9943">#9943</a>）</li>
+<li>捆绑 Smokehouse + <code>bundle.js</code> 运行器 + 捆绑 Lighthouse，用于在浏览器中进行集成测试（<a href="https://github.com/GoogleChrome/lighthouse/pull/9873">#9873</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10727">#10727</a>）</li>
+<li>熏制室：在不同环境中工作的一些期望的使用范围（<a href="https://github.com/GoogleChrome/lighthouse/pull/10227">#10227</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10473">#10473</a>）</li>
+<li>Smokehouse：添加 <code>static-server</code> 钩子来修改响应主体（<a href="https://github.com/GoogleChrome/lighthouse/pull/9872">#9872</a>）</li>
+<li>Smokehouse：调整期望处理和日志记录以实现兼容性（[#10361]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10361%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10361））</a></li>
+<li>Smokehouse：提交 <code>pwa.rocks</code> 的副本进行测试（<a href="https://github.com/GoogleChrome/lighthouse/pull/10648">#10648</a>）</li>
+<li>添加类型检查到<code>driver-test</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10135">#10135</a>, <a href="https://github.com/GoogleChrome/lighthouse/pull/10123">#10123</a>)</li>
+<li>添加类型检查到<code>gather-runner-test</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10136">#10136</a>, <a href="https://github.com/GoogleChrome/lighthouse/pull/10215">#10215</a>, <a href="https://github.com/GoogleChrome/lighthouse/pull/10230">#10230</a>)</li>
+<li>修复 Node 13 中的 <code>i18n-test.js</code> 错误 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10595">#10595</a>)</li>
+<li>i18n：添加对语言环境文件的检查以查找可能错误的字符串（<a href="https://github.com/GoogleChrome/lighthouse/pull/9847">#9847</a>）</li>
+<li>在严格断言模式下使用 <code>assert</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10606">#10606</a>, <a href="https://github.com/GoogleChrome/lighthouse/pull/10733">#10733</a>)</li>
+<li><code>report-ui-features</code>：添加测试并删除相互依赖关系（[#10199]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10199%EF%BC%89%EF%BC%8C%5B#10201%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10201%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10199），[#10201]（https://github.com/GoogleChrome/lighthouse/pull/10201））</a>
+*更新<code>coveragePathIgnore</code>笑话配置（[#10448]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10448%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10448））</a></li>
+<li><code>speedline</code>：删除片状测试（[#10181]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10181%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10181））</a></li>
+<li>删除 jsdom 测试的 <code>global.URL</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10186">#10186</a>)</li>
+<li>查看器测试：不要覆盖 <code>puppeteer</code> 的 chromium (<a href="https://github.com/GoogleChrome/lighthouse/pull/9877">#9877</a>)</li>
+<li>修复 appveyor 缓存故障 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10281">#10281</a>)</li>
+<li>使用 Lighthouse tarball 进行配方测试 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10254">#10254</a>)</li>
+<li>每个 PR 的舞台观众与 <code>yarn now-build</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10151">#10151</a>)</li>
+</ul>
+<h2 id="其他">其他</h2>
+<ul>
+<li>更新许可证标头以记入 <code>Lighthouse Authors</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10469">#10469</a>)</li>
+<li>将 <code>timings-data/</code> 添加到 <code>.npmignore</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/10584">#10584</a>)</li>
+<li>将 commitlint 配置更新为最新，放宽主题案例 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10371">#10371</a>)</li>
+<li>调整 <code>CODEOWNERS</code> 进行代码审查分配（<a href="https://github.com/GoogleChrome/lighthouse/pull/10265">#10265</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10274">#10274</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10282">#10282</a>）</li>
+<li>发布脚本推送标签 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10193">#10193</a>)</li>
+<li>添加 <code>bump-versions.js</code> 发布脚本 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9998">#9998</a>)</li>
+<li>添加有关 LCP 最低 chrome 版本的评论 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9889">#9889</a>)</li>
+<li>更新 changelog 订单并添加 chrome note 占位符 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9859">#9859</a>)</li>
+<li>添加 <code>.mailmap</code> 文件 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10766">#10766</a>)</li>
+<li>将 chrome 版本字段添加到错误报告模板 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9866">#9866</a>)</li>
+<li>升级 Lighthouse CI 狗粮脚本 (<a href="https://github.com/GoogleChrome/lighthouse/pull/9879">#9879</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/9951">#9951</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/9972">#9972</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10482">#10482</a>)</li>
+<li>内部 <code>compare-runs</code> 脚本的更新和新功能（<a href="https://github.com/GoogleChrome/lighthouse/pull/10296">#10296</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10519">#10519</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10526">#10526</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10652">#10652</a>）</li>
+<li>添加用于管理 Github 问题和 PR 的 <code>git3po</code> 脚本（<a href="https://github.com/GoogleChrome/lighthouse/pull/10231">#10231</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10266">#10266</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10255">#10255</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10271">#10271</a>、 <a href="https://github.com/GoogleChrome/lighthouse/pull/10338">#10338</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10256">#10256</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10304">#10304</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10658">#10658</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10257">#10257</a>)</li>
+</ul>
+<h2 id="部门">部门</h2>
+<ul>
+<li><code>lighthouse-plugin-publisher-ads</code>：升级到1.1.0-beta.0（[#10544]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10544%EF%BC%89%EF%BC%8C%5B#10776%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10776%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10544），[#10776]（https://github.com/GoogleChrome/lighthouse/pull/10776））</a></li>
+<li><code>chrome-launcher</code>：升级到0.13.2（[#9904]（<a href="https://github.com/GoogleChrome/lighthouse/pull/9904%EF%BC%89%EF%BC%8C%5B#10535%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10535%EF%BC%89%EF%BC%8C%5B#10724%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10724%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/9904），[#10535]（https://github.com/GoogleChrome/lighthouse/pull/10535），[#10724]（https://github.com/GoogleChrome/lighthouse/pull/10724））</a></li>
+<li><code>yargs-parser</code>：升级到18.1.3（[#10723]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10723%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10723））</a></li>
+<li><code>third-party-web</code>：升级到0.11.1（[#10711]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10711%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10711））</a></li>
+<li><code>axe-core</code>：升级到3.5.3（[#10056]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10056%EF%BC%89%EF%BC%8C%5B#10344%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10344%EF%BC%89%EF%BC%8C%5B#10637%5D%EF%BC%88https://github.com/GoogleChrome/lighthouse/pull/10637%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10056），[#10344]（https://github.com/GoogleChrome/lighthouse/pull/10344），[#10637]（https://github.com/GoogleChrome/lighthouse/pull/10637））</a></li>
+<li><code>typescript</code>：升级到3.8.3（[#10461]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10461%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10461））</a></li>
+<li><code>puppeteer</code>：升级到1.20.0（[#10275]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10275%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10275））</a></li>
+<li><code>bundlesize</code>：升级到0.18.0（[#10272]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10272%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10272））</a></li>
+<li><code>devtools-protocol</code>：升级到0.0.729809（[#10207]（<a href="https://github.com/GoogleChrome/lighthouse/pull/10207%EF%BC%89%EF%BC%89">https://github.com/GoogleChrome/lighthouse/pull/10207））</a></li>
+<li>将 <code>angular</code> 测试夹具检查到仓库中（<a href="https://github.com/GoogleChrome/lighthouse/pull/10086">#10086</a>）</li>
+<li>删除 <code>fs.mkdir</code> 的 <code>mkdirp</code> 和 <code>make-dir</code> (<a href="https://github.com/GoogleChrome/lighthouse/pull/9858">#9858</a>)</li>
+<li>更新 snyk 快照 (<a href="https://github.com/GoogleChrome/lighthouse/pull/10771">#10771</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10670">#10670</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10621">#10621</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10559">#10559</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10066">#10066</a>、 <a href="https://github.com/GoogleChrome/lighthouse/pull/9929">#9929</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10531">#10531</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10478">#10478</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10423">#10423</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/10163">#10163</a>、<a href="https://github.com/GoogleChrome/lighthouse/pull/9965">#9965</a>)</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>来源</strong> <a href="https://github.com/GoogleChrome/lighthouse">GoogleChrome/灯塔</a> · <code>v6.0.0</code> · 2020-05-19 · <a href="https://github.com/GoogleChrome/lighthouse/releases/tag/v6.0.0">上游版本</a>
+<em>逐字镜像以进行索引。所有权利属于上游项目。</em></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/GoogleChrome/lighthouse">GoogleChrome/lighthouse</a> · 🏷️ 版本：<code>v6.0.0</code> · 📅 发布：2020-05-19 · <a href="https://github.com/GoogleChrome/lighthouse/releases/tag/v6.0.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/lighthouse/lighthouse_v6.1.0"> <span class="k">← 下一个</span> <span class="t">v6.1.0</span> </a> <a href="/zh/release_note/lighthouse/lighthouse_v5.6.0"> <span class="k">上一个 →</span> <span class="t">v5.6.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/GoogleChrome/lighthouse/releases/tag/v6.0.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/GoogleChrome/lighthouse" target="_blank" rel="noopener"> <span>GoogleChrome/lighthouse</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#显着变化" class>显着变化</a><a href="#-新审核" class>🆕 新审核</a><a href="#️-实验审核" class>⚗️ 实验审核</a><a href="#新贡献者" class>新贡献者！</a><a href="#-重大变更" class>💥 重大变更</a><a href="#-针对程序化用户的重大变化" class>🤖💥 针对程序化用户的重大变化</a><a href="#-核心" class>🧱 核心</a><a href="#改进错误修复澄清" class="lv3">改进、错误修复、澄清</a><a href="#程序化用户的新事物" class="lv3">程序化用户的新事物</a><a href="#内部重构和改进" class="lv3">内部重构和改进</a><a href="#-cli" class>💻 CLI</a><a href="#-报告" class>📔 报告</a><a href="#-clients" class>👥 Clients</a><a href="#-国际化" class>🌍 国际化</a><a href="#文档" class>文档</a><a href="#测试" class>测试</a><a href="#其他" class>其他</a><a href="#部门" class>部门</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/lighthouse/lighthouse_v13.6.0"> <span class="v">v13.6.0</span> <span class="d">26-10-27</span> </a> </li><li> <a href="/zh/release_note/lighthouse/lighthouse_v13.5.0"> <span class="v">v13.5.0</span> <span class="d">26-09-18</span> </a> </li><li> <a href="/zh/release_note/lighthouse/lighthouse_v13.4.1"> <span class="v">v13.4.1</span> <span class="d">26-07-20</span> </a> </li><li> <a href="/zh/release_note/lighthouse/lighthouse_v13.4.0"> <span class="v">v13.4.0</span> <span class="d">26-06-09</span> </a> </li><li> <a href="/zh/release_note/lighthouse/lighthouse_v13.3.0"> <span class="v">v13.3.0</span> <span class="d">26-05-07</span> </a> </li><li> <a href="/zh/release_note/lighthouse/lighthouse_v13.2.0"> <span class="v">v13.2.0</span> <span class="d">26-05-01</span> </a> </li><li> <a href="/zh/release_note/lighthouse/lighthouse_v13.1.0"> <span class="v">v13.1.0</span> <span class="d">26-04-07</span> </a> </li><li> <a href="/zh/release_note/lighthouse/lighthouse_v13.0.3"> <span class="v">v13.0.3</span> <span class="d">26-02-11</span> </a> </li> </ul> <a href="/zh/releases/lighthouse" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 95 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

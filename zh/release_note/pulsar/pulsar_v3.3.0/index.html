@@ -1,0 +1,463 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>pulsar v3.3.0 — STAGS NextStack</title><meta name="description" content="PIP-315: Configurable max delay limit for delayed delivery (#21798) · PIP-321 Introduce allowed-cluster at the namespace level (#21648) · PIP-324: Alpine Docker images (#21716)"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/pulsar/pulsar_v3.3.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/pulsar/3.3.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/pulsar/pulsar_v3.3.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/pulsar/3.3.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="pulsar v3.3.0 — STAGS NextStack"><meta property="og:description" content="PIP-315: Configurable max delay limit for delayed delivery (#21798) · PIP-321 Introduce allowed-cluster at the namespace level (#21648) · PIP-324: Alpine Docker images (#21716)"><meta property="og:url" content="https://www.stags.cn/zh/release_note/pulsar/pulsar_v3.3.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/pulsar/pulsar_v3.3.0/#article","headline":"pulsar v3.3.0 release notes","datePublished":"2024-06-05","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/apache/pulsar"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/pulsar/3.3.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/pulsar/pulsar_v3.3.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/pulsar/3.3.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/pulsar/3.3.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/pulsar/3.3.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/pulsar/3.3.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/pulsar/3.3.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/pulsar">pulsar</a> </nav> <h1 class="detail-title"> <span class="p">pulsar</span> v3.3.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2024年6月5日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/apache/pulsar" target="_blank" rel="noopener"> <span class="k">来源</span>apache/pulsar </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/pulsar/3.3.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/pulsar/pulsar_v3.3.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="pulsar-v330">pulsar v3.3.0</h1>
+<h3 id="画中画">画中画</h3>
+<ul>
+<li>PIP-315：可配置延迟交付的最大延迟限制（#21798）</li>
+<li>PIP-321 在命名空间级别引入 <code>allowed-cluster</code> (#21648)</li>
+<li>PIP-324：Alpine Docker 图像 (#21716)</li>
+<li>PIP-325：添加命令来中止事务（#21731）</li>
+<li>PIP-326：创建 BOM 以简化依赖关系管理 (#21747)</li>
+<li>PIP-329：维护 Pulsar docker 图像最新标签的策略 (#21872)</li>
+<li>PIP-330：getMessagesById 获取所有消息 (#21873)</li>
+<li>PIP 342：支持 Pulsar client 中的 OpenTelemetry 指标 (#22178)</li>
+<li>PIP-343：使用 picocli 代替 jcommander (#22181)</li>
+<li>PIP-344 更正公共 API pulsarClient.getPartitionsForTopic(topicName) 的行为 (#22182)</li>
+<li>PIP-335：Oxia 元数据插件 (#22009)</li>
+<li>PIP-339：引入 Pulsar 接收器和源的 —log-topic 选项 (#22071)</li>
+</ul>
+<h3 id="经纪人">经纪人</h3>
+<ul>
+<li>[admin][broker] 修复强制删除订阅不起作用的问题 (#22423)</li>
+<li>[cleanup][admin] 删除 PersistentTopicsBase 中未使用的方法 (#22424)</li>
+<li>[cleanup][broker] 创建 OwnershipCache 时删除未使用的 NamespaceBundleFactory 参数 (#22482)</li>
+<li>[清理][经纪人]∂ 修复 TransactionBuffer#isTxnAborted 的文档 (#21956)</li>
+<li>[cleanup][broker] 修复 TransactionTimeoutTrackerImpl#addTransaction 的返回值 (#22020)</li>
+<li>[cleanup][broker] 删除无用的代码注释 (#22459)</li>
+<li>[清理][元] 删除 com.beust.jcommander.internal 导入 (#22294)</li>
+<li>[cleanup][ml] ManagedCursor 清理。 (#22246)</li>
+<li>[清理][测试]删除无用的 TestAuthorizationProvider2 (#22595)</li>
+<li>[feat][admin] 在管理 Client 中默认启用 Gzip 压缩 (#22464)</li>
+<li>[feat][admin] PIP-330：getMessagesById 获取所有消息 (#21918)</li>
+<li>[壮举][经纪人] PIP-323 的实施：完整的待办事项配额遥测 (#21816)</li>
+<li>[feat][broker] PIP-264：添加 Java 运行时指标 (#22616)</li>
+<li>[feat][broker] PIP-264：添加主题消息传递指标 (#22467)</li>
+<li>[feat][misc] 添加 Pulsar BOM（物料清单）(#21871)</li>
+<li>[feat][misc] PIP-264：使用 OpenTelemetry 实现主题查找指标 (#22058)</li>
+<li>[feat][misc] PIP-320：添加 OpenTelemetry 脚手架 (#22010)</li>
+<li>[修复] 修复阅读器可能因事务中止消息而卡住的问题。 (#22610)</li>
+<li>[修复] 修复了从 long -> int 的隐式转换 (#22055)</li>
+<li>[修复] 在阴影 client 库中包含 swagger 注释 (#22570)</li>
+<li>[修复] 恢复 AbstractMetadataStore 中已弃用的方法 (#21950)</li>
+<li>[修复] 测试将 client 实例保留为 null (#22631)</li>
+<li>[修复][管理员]在 Open API 上明确定义 REST API (#22783)</li>
+<li>[修复][管理员]在 Open API 上为 Namesaces@v2 明确定义 REST API (#22775)</li>
+<li>[修复][管理]在 Open API 上明确定义 REST API 主题 (#22782)</li>
+<li>[fix][admin] 修复无法删除 v1 租户的问题 (#22550)</li>
+<li>[修复][管理员] 修复已弃用的检查 (#22653)</li>
+<li>[fix][admin] 修复命名空间管理 api 异常响应 (#22587)</li>
+<li>[修复][admin][part-1]在 Open API 上明确定义 REST API (#22774)</li>
+<li>[修复][broker] 将缺失的 opentelemetry-sdk-testing 依赖项添加到 pulsar-broker-auth-sasl 的测试中 (#22665)</li>
+<li>[修复][broker] 使用可扩展负载管理器关闭代理时避免卡住 (#22573)</li>
+<li>[修复][broker]避免消费者在重新连接后收到来自压缩主题的已确认消息 (#21187)</li>
+<li>[修复][broker] 如果命名空间被删除，避免执行prepareInitPoliciesCacheAsync (#22268)</li>
+<li>[修复][broker]通过账本关闭时间检查过期消息时避免过期未关闭的账本 (#22335)</li>
+<li>[修复][broker] 在将游标添加到 <code>waitingCursors</code> 之前检查游标状态 (#22191)</li>
+<li>[修复][broker] 在启用 ExtensibleLoadManager 时检查代理是否可用于 SLA 监视器捆绑包 (#22485)</li>
+<li>[修复][broker]关闭调度程序由于dispatcher.consumerList和dispatcher.consumerSet之间不匹配而卡住（#22270）</li>
+<li>[修复][broker]即使执行器关闭也继续关闭（#22599）</li>
+<li>[修复][broker]当前账本关闭后创建新账本（#22034）</li>
+<li>[修复][broker]删除主题时删除压缩账本 (#21745)</li>
+<li>[修复][broker] 禁用系统主题消息重复数据删除 (#22582)</li>
+<li>[修复][broker] 使用 ExtensibleLoadBalancer 时，不要在蓝绿迁移期间迁移内部主题 (#22478)</li>
+<li>[修复][broker] 由于 ack 和交付并发性，启用批处理会导致负的 unackedMessages (#22090)</li>
+<li>[修复][broker] 根据账本关闭时间使消息过期，以避免 client 时钟偏差 (#21940)</li>
+<li>[fix][broker] 修复 /metrics gzip 压缩中的 BufferOverflowException 和 EOFException 错误 (#22576)</li>
+<li>[fix][broker] 修复 NPE 在使用 Key_Shared 模式和allowOutOfOrderDelivery=true 时导致调度停止的问题 (#22533)</li>
+<li>[修复][代理]修复 OpReadEntry.skipCondition NPE 问题 (#22367)</li>
+<li>[fix][broker] 修复 PersistentSubscription 重复实现接口 Subscription (#22359)</li>
+<li>[修复][broker]修复启用 ExtensibleLoadManager 时复制主题卸载错误 (#22496)</li>
+<li>[fix][broker] 修复 ResourceGroup 报告本地使用情况 (#22340)</li>
+<li>[修复][代理]修复资源组加载 (#21781)</li>
+<li>[fix][broker] 修复字符串格式错误 (#21829)</li>
+<li>[修复][broker] 修复 NamespaceEventsSystemTopicFactory init 期间 SystemTopicBasedTopicPoliciesService 中的死锁 (#22528)</li>
+<li>[fix][broker] 修复中断更改：由于 PIP-145 错误，无法使用后缀匹配的正则表达式订阅分区主题 (#21885)</li>
+<li>[fix][broker] 修复损坏的主题策略实现与旧 pulsar 版本的兼容性 (#22535)</li>
+<li>[fix][broker] 修复在启用事务和可扩展负载管理器时代理无法启动的问题 (#22139)</li>
+<li>[fix][broker] 修复无法使用后缀匹配的正则表达式订阅分区主题的问题 (#22025)</li>
+<li>[修复][broker]修复消息过期时压缩/复制数据丢失的问题 (#21865)</li>
+<li>[fix][broker] 修复配置MetadataSyncEventTopic 被标记为支持动态设置，但未实现 (#22684)</li>
+<li>[修复][经纪人]修复消费者在处理大量积压订单时停止接收消息的问题 (#22454)</li>
+<li>[修复][经纪人]修复死锁，同时跳过不可恢复的账本。 (#21915)</li>
+<li>[修复][经纪人]修复 getMessageById 抛出 500 (#21919)</li>
+<li>[fix][broker] 修复使用以数字结尾的消费者名称时的哈希冲突 (#22053)</li>
+<li>[fix][broker] 修复日志异常中的无效条件 (#22412)</li>
+<li>[fix][broker] 修复处理 GetSchema 请求时未设置字段“topic”的问题 (#22377)</li>
+<li>[fix][broker] 修复 GetMessageIdByTimestamp 无法从压缩账本中找到匹配 messageId 的问题 (#21600)</li>
+<li>[fix][broker] 修复配置广告地址和广告监听器时无法确定领导者代理的问题 (#21894)</li>
+<li>[fix][broker] 修复生产者统计中的消息丢失记录 (#22458)</li>
+<li>[fix][broker] 修复加载非持久主题失败时指标 pulsar_topic_load_failed_count 为 0 并修复片状测试 testBrokerStatsTopicLoadFailed (#22580)</li>
+<li>[修复][经纪人] 修复删除动态配置后没有任何变化 (#22673)</li>
+<li>[修复][经纪人]修复禁用活性检查时潜在的 NPE (#21840)</li>
+<li>[fix][broker] 修复阅读器在禁用读取压缩模式的情况下从压缩主题读取时卡住的问题 (#21969)</li>
+<li>[修复][broker] 修复当同时设置 webServicePort 和 webServicePortTls 时返回错误的 webServiceUrl (#21842)</li>
+<li>[修复][broker] 修复删除具有多个分区和架构的分区主题时架构删除错误 (#21977)</li>
+<li>[fix][broker] 修复 loadSheddingTask 和 loadResourceQuotaTask 字段的线程安全性 (#22660)</li>
+<li>[修复][经纪人]修复拼写错误 (#21843)</li>
+<li>[修复][经纪人]修复CompactedTopicImpl中的拼写错误。 (#22235)</li>
+<li>[fix][broker] 修复 Consumer 类中的拼写错误 (#22532)</li>
+<li>[fix][broker] 修复 PersistentTopic 类中的拼写错误 (#22364)</li>
+<li>[fix][broker] 修复 UniformLoadShedder 类中的拼写错误 (#21907)</li>
+<li>[修复][经纪人] 修复将所有压缩条目写入压缩主题 (#21917)</li>
+<li>[fix][broker] 修复调度程序中 readOnActiveConsumerTask 错误的双重检查锁定 (#22279)</li>
+<li>[修复][代理]使 ExtensibleLoadManagerImpl.getOwnedServiceUnits 异步 (#22727)</li>
+<li>[修复][broker] 一个主题可以同时关闭多次 (#17524)</li>
+<li>[修复][broker] 优化/metrics，修复无界请求队列问题并修复metricsBufferResponse模式下的竞争条件 (#22494)</li>
+<li>[修复][broker] 第 1 部分：由于前一个主题所有者中存在孤立复制器，因此无法成功创建复制器 (#21946)</li>
+<li>[修复][broker]第 2 部分：由于前一个主题所有者中存在孤立复制器，因此无法成功创建复制器 (#21948)</li>
+<li>[修复][broker] 防止重复数据删除游标长时间积压，以便主题加载不会超时 (#22479)</li>
+<li>[修复][broker]启用replicateSubscriptionState时调用hasMessageAvailable后Reader卡住（#22572）</li>
+<li>[修复][broker] 由于卸载主题失败而导致复制停止 (#21947)</li>
+<li>[修复][broker] 恢复代理 ID 以匹配现有 Pulsar 版本中使用的格式 (#21937)</li>
+<li>[修复][broker] 在分配和释放时返回 getOwnerAsync，无需等待源代理，并在角色初始化期间处理角色更改 (#22112)</li>
+<li>[修复][broker] 在登录 apply-config-from-env.py 脚本之前清理值 (#22044)</li>
+<li>[修复][broker] 显式设置 ServiceUnitStateChannel 主题压缩阈值，改进 getOwnerAsync，并修复其他错误 (#22064)</li>
+<li>[修复][broker] 如果主题 future 因所有权检查失败，则在卸载期间跳过 topic.close，并修复 isBundleOwnedByAnyBroker 以将 ns.checkOwnershipPresentAsync 用于 ExtensibleLoadBalancer (#22379)</li>
+<li>[修复][经纪人] 由于调用管理员 API 分析订阅备份而导致订阅卡住 (#22019)</li>
+<li>[修复][broker] 支持使用 JWK 的 OIDC 提供商，但在密钥中不设置 alg 字段 (#22421)</li>
+<li>[修复][代理]支持可扩展负载管理器的查找选项（#22487）</li>
+<li>[修复][broker] 支持运行 gid != 0 的 docker 容器 (#22081)</li>
+<li>[fix][broker]统一主题级策略启用判断条件(#19501)</li>
+<li>[修复][broker] 更新 TransferShedder 欠载代理检查以考虑最大加载代理的 msgThroughputEMA 并更新 IsExtensibleLoadBalancerImpl 检查 (#22321)</li>
+<li>[修复][broker] 当配置 maxNumPartitionsPerPartitionedTopic&#x3C;0 时更新主题分区失败 (#22397)</li>
+<li>[修复][经纪人]当抛出某些ex时尽可能更新主题策略（#21810）</li>
+<li>[修复][经纪人]添加健康检查读取超时。 (#21990)</li>
+<li>[修复][经纪人]避免卸载系统主题 (#22497)</li>
+<li>[修复][经纪人]正确的压缩第一阶段超时含义（#21908）</li>
+<li>[修复][broker]修复dispatcher.consumerList和dispatcher.consumerSet之间的不匹配（#22283）</li>
+<li>[fix][broker] 修复 BrokerSrevice.maxUnackedMsgsPerDispatcher 的错误值 (#21765)</li>
+<li>[修复][broker]删除分区主题失败时打印非日志 (#22153)</li>
+<li>[修复][经纪人]修复 NonPersistentDispatcherMultipleConsumers ArrayIndexOutOfBoundsException (#21856)</li>
+<li>[修复][broker]支持在expiryMon中动态设置<code>autoSkipNonRecoverableData</code>… (#21991)</li>
+<li>[fix][broker][admin] 修复无法更新 NonDurable 订阅的属性。 (#22411)</li>
+<li>[修复][杂项]使 ConcurrentBitSet 线程安全 (#22361)</li>
+<li>[修复][杂项] 独立关闭期间的 NPE (#22636)</li>
+<li>[修复][杂项]重命名所有着色的 Netty 本机库 (#22415)</li>
+<li>[fix][ml] 修复恢复终止的托管分类帐时 getValidPositionAfterSkippedEntries 的 NPE (#22552)</li>
+<li>[fix][ml] 修复删除账本失效的重试机制 (#21869)</li>
+<li>[修复][ml] 由于切换游标账本失败而导致标记删除卡住 (#22662)</li>
+<li>[修复][ml] 当元数据服务无效时，不会滚动非活动账本 (#22284)</li>
+<li>[修复][ml]公开账本时间戳 (#22338)</li>
+<li>[修复][卸载]遇到 EOF 时中断填充缓冲区循环 (#22722)</li>
+<li>[修复][卸载]修复分层存储中由无界偏移缓存引起的 OOM (#22679)</li>
+<li>[fix][offload] 修复 Offload readHandle 无法多次关闭的问题。 (#22162)</li>
+<li>[修复][卸载] 将 GCP/GCS 卸载的文件上传限制从 2048MiB 增加到 4096MiB (#22554)</li>
+<li>[fix][sec] 恢复“[fix][sec] 添加对输入时间值的检查 (apache#22023)” (#22243)</li>
+<li>[fix][sec] 添加对输入时间值的检查 (#22023)</li>
+<li>[修复][秒] 忽略有关 MD5 的警告，因为它足以满足这些用例 (#22282)</li>
+<li>[修复][秒] Go Functions 安全更新 (#21844)</li>
+<li>[修复][秒] 复合赋值中的隐式缩小转换 (#22074)</li>
+<li>[修复][存储] ReadonlyManagedLedger 初始化不填写属性 (#22630)</li>
+<li>[fix][txn] 通过托管账本获取先前的位置。 (#22024)</li>
+<li>[fix][txn]修复 TopicTransactionBuffer 潜在的线程安全问题 (#22149)</li>
+<li>[修复][txn]处理事务挂起的 ack init 中的异常 (#21274)</li>
+<li>[fix][ws] 在启动 websocket 服务之前检查配置的有效性 (#22231)</li>
+<li>[改进] 添加了 CodeQL 静态扫描器 (#22037)</li>
+<li>[改进] 使配置 <code>metricsBufferResponse</code> 描述更有效 (#22490)</li>
+<li>[改进] PIP-335：Pulsar 与 Oxia 集成测试 (#22045)</li>
+<li>[改进] PIP-342：OTel client 指标支持 (#22179)</li>
+<li>[改进] 从 Docker 图像中删除了不必要的本机库 (#22230)</li>
+<li>[改进] 错误后通过退避重试重新验证 ResourceLock (#22617)</li>
+<li>[改进] 使用当前图像运行 Trivy 图像扫描仪 (#22386)</li>
+<li>[改进] 将 Oxia client 更新为 0.1.6 (#22525)</li>
+<li>[改进][admin] 对齐身份验证并在第一个位置检查与主题相关的 API (#22507)</li>
+<li>[改进][管理]添加架构授权测试并调整事务授权 (#22399)</li>
+<li>[改进][admin] 对齐身份验证并在第一个位置检查与主题相关的 API (#22342)</li>
+<li>[改进][admin]检查主题在权限操作之前是否存在(#22547)</li>
+<li>[改进][admin] 向 amdin 公开卸载阈值（以秒为单位） (#22101)</li>
+<li>[改进][admin] 修复 <code>createMissingPartitions</code> 无法正确响应的问题 (#22311)</li>
+<li>[改进][broker]添加错误日志，解决启动broker注册失败的问题。 (#22065)</li>
+<li>[改进][broker] 将 createTopicIfDoesNotExist 选项添加到 RawReader 构造函数 (#22264)</li>
+<li>[改进][broker] 向 ns/topic 管理端点添加细粒度授权 (#22305)</li>
+<li>[改进][经纪人]向保留管理员 API 添加细粒度授权 (#22163)</li>
+<li>[改进][经纪人]添加日志记录到领导者选举（#22645）</li>
+<li>[改进][broker]添加日志到<code>getInternalStats</code>，以便在模式账本丢失时快速定位问题(#22233)</li>
+<li>[改进][broker] 添加缺少的配置键以缓存追赶读取 (#22295)</li>
+<li>[改进][经纪人] 将主题名称添加到发出的错误消息中。 (#22506)</li>
+<li>[改进][代理]在 LeastResourceUsageWithWeight 中应用 loadBalancerDebugModeEnabled (#22549)</li>
+<li>[改进][broker] 使用 Key_Shared 模式时避免重复读取和丢弃 (#22245)</li>
+<li>[改进][broker]发送到系统主题时缓存内部编写器。 (#22099)</li>
+<li>[改进][代理]更改日志级别以减少重复日志 (#22147)</li>
+<li>[改进][broker] 关闭 TopicPoliciesService 以允许 Pulsar 代理正常关闭 (#22589)</li>
+<li>[改进][broker] 持续向 REST API 添加细粒度授权 (#22202)</li>
+<li>[改进][broker]启用主题级别复制时自动创建分区主题 (#22537)</li>
+<li>[改进][broker] 弃用未使用的enableNamespaceIsolationUpdateOnTime 配置 (#22449)</li>
+<li>[改进][代理]在 OpenTelemetry 中禁用 JFR 指标报告 (#22669)</li>
+<li>[改进][broker] 如果由于 LockBusyException 导致查找失败，请勿关闭套接字 (#21993)</li>
+<li>[改进][broker]调用<code>Admin API</code>且主题不存在时响应<code>HTTP-404</code>时不打印错误日志。 (#21995)</li>
+<li>[改进][broker]不要保留系统主题中的数据(#22022)</li>
+<li>[改进][broker] 当主题元不存在并且不期望创建新主题元时，不要尝试打开 ML。 #21995 (#22004)</li>
+<li>[改进][broker] 默认情况下不记录brokerClientAuthenticationParameters 和 bookkeeperClientAuthenticationParameters (#22395)</li>
+<li>[改进][经纪人]不要根据不活动滚动空账本 (#21893)</li>
+<li>[改进][broker] 默认情况下不要使用 forkjoin 池来删除分区主题 (#22598)</li>
+<li>[改进][经纪人]从主题统计的发布者字段中排除地理复制的生产者（#22556）</li>
+<li>[改进][broker] 改进 Gzip 压缩，允许排除特定路径或禁用它 (#22370)</li>
+<li>[改进][broker] 改进 NamespaceUnloadStrategy 错误消息 (#21880)</li>
+<li>[改进][代理] 在服务器分发中包含运行时依赖项 (#22001)</li>
+<li>[改进][broker] 使 BrokerSelectionStrategy 可插拔 (#22553)</li>
+<li>[改进][broker] 通过共享/缓存压缩结果来优化 /metrics 端点的 gzip 压缩 (#22521)</li>
+<li>[改进][broker]优化Web界面deleteDynamicConfiguration返回错误消息(#22356)</li>
+<li>[改进][broker] PIP-299-part-1：如果单个确认将在持久存储中丢失，则停止调度消息 (#21423)</li>
+<li>[改进][经纪人] PIP-299-part-2：添加配置调度程序PauseOnAckStatePersistentEnabled (#21370)</li>
+<li>[改进][代理] PIP-299-part-3：添加动态配置支持：dispatcherPauseOnAckStatePersistentEnabled (#21837)</li>
+<li>[改进][代理] PIP-299-part-4：添加主题级策略：dispatcherPauseOnAckStatePersistent (#21874)</li>
+<li>[改进][代理] PIP-299-part-5：添加命名空间级别策略：dispatcherPauseOnAckStatePersistent (#21926)</li>
+<li>[改进][经纪人] PIP-307：添加功能标志配置选项 (#21866)</li>
+<li>[改进][经纪人] PIP-307：添加监控指标以优雅地关闭生产者/消费者 (#21854)</li>
+<li>[改进][经纪人]适用时在 TopicBusyException 中传播导致异常 (#22596)</li>
+<li>[改进][broker] 恢复损坏的模式账本主题上的订阅创建 (#22469)</li>
+<li>[改进][经纪人]减少ResourceGroup日志(#21957)</li>
+<li>[改进][broker] 减少 LeaderElectionService 的重复空检查 (#22465)</li>
+<li>[改进][broker] 删除调度程序的活动消费者的原子性 (#22285)</li>
+<li>[改进][broker] 当configurationMetadataStore等于localMetadataStore时重复handleMetadataChanges回调 (#22519)</li>
+<li>[改进][broker]Servlet 支持响应压缩 (#21667)</li>
+<li>[改进][broker] 如果未配置，则跳过加载 NAR 包 (#21867)</li>
+<li>[改进][broker] 支持 X-Forwarded-For 和 HA 代理协议来解析 http/https 请求的原始 client IP (#22524)</li>
+<li>[改进][broker] 支持根据配置创建 RawReader (#22280)</li>
+<li>[改进][经纪商]积压配额超出限制日志替换为 <code>debug</code> (#22488)</li>
+<li>[改进][broker] 如果所有者不活动则推迟所有权检查 (ExtensibleLoadManager) (#21811)</li>
+<li>[改进][broker] perf：减少共享订阅中非持久主题的 StickyHash 计算 (#22536)</li>
+<li>[改进][文档] 改进 ConsumerBuilder 的 <code>maxTotalReceiverQueueSizeAcrossPartitions</code> 和 <code>receiverQueueSize</code> 的文档 (#21841)</li>
+<li>[改进][日志]启用 haProxyProtocolEnabled 时打印源 client 地址 (#22686)</li>
+<li>[改进][元] 当 ZK 批处理因连接丢失而失败时记录警告 (#22566)</li>
+<li>[改进][杂项] 在问题模板中添加关于发布策略的强制复选框 (#22267)</li>
+<li>[改进][杂项]包括适用于arm64的Netty的本机epoll库(#22319)</li>
+<li>[改进][杂项] 删除对 sun InetAddressCachePolicy 的调用 (#22329)</li>
+<li>[改进][杂项] 在基于 Alpine 的镜像中指定 /pulsar/data 作为用户的主目录 (#22447)</li>
+<li>[改进][ml] 在从分类帐读取条目之前过滤掉已删除的条目。 (#21739)</li>
+<li>[改进][卸载]将 autoSkipNonRecoverableData 配置应用于分层存储 (#22531)</li>
+<li>[改进][卸载] 替换 OffsetsCache 中着色类的使用 (#22683)</li>
+<li>[改进][代理]添加对尚不支持多uri的brokerServiceURL的检查(#21972)</li>
+<li>[改进][存储]定期翻转游标分类帐 (#22622)</li>
+<li>[改进][pip] PIP-339：引入 Pulsar 接收器和源的 —log-topic 选项 (#22071)</li>
+<li>[改进][txn] 添加命令来中止事务 (#21630)</li>
+<li>[改进][ws] 添加 Websocket 代理中使用的 Pulsar client 的内存限制配置 (#22666)</li>
+<li>[改进][pip] PIP-324：高山图像 (#22054)</li>
+</ul>
+<h3 id="pulsar-io-和-pulsar-函数">Pulsar IO 和 Pulsar 函数</h3>
+<ul>
+<li>[bug][fn] 防止 <code>putstate</code> 使用空值 (#22127)</li>
+<li>[修复][fn] 将缺失的 <code>version</code> 字段添加回 <code>querystate</code> API (#21966)</li>
+<li>[fix][fn] 防止 API 调用不存在的实例创建状态表 (#22107)</li>
+<li>[修复][fn] 当未找到状态键时抛出 404 RestException (#21921)</li>
+<li>[fix][fn] 使用统一的 PackageManagement 服务下载包 (#21955)</li>
+<li>[fix][fn] 修复损坏的功能-go 测试 (#22260)</li>
+<li>[修复][fn]确保 ContextImpl 的类加载器在不同运行时是 <code>functionClassLoader</code> (#22501)</li>
+<li>[改进][fn] 添加连接器和功能包 url 源的配置 (#22184)</li>
+<li>[改进][fn] 为某些 <code>log.error</code> 添加缺失的“异常”参数 (#22140)</li>
+<li>[改进][fn] 将 <code>RuntimeFlags</code> 公开为 Pulsar 功能和连接器的 CLI 选项 (#22514)</li>
+<li>[改进][fn] 通过延迟加载和直接 zip/字节码访问优化 Function Worker 启动 (#22122)</li>
+<li>[改进][fn] 将 FunctionDetails 传递给 Go 实例 (#22350)</li>
+<li>[improve][fn] 显示 pulsar 函数异常的类名 (#21833)</li>
+<li>[feat][io] Pulsar 的 AzureDataExplorer/Kusto Sink (#22006)</li>
+<li>[修复][io] CompressionEnabled 在 elasticsearch 接收器上不起作用 (#22565)</li>
+<li>[fix][io] 修复 es 索引创建 (#22654)</li>
+<li>[修复][io] Kafka 源连接器可能卡住 (#22511)</li>
+<li>[改进][io]：添加对不支持原始模式的 JDBC 接收器的验证 (#22376)</li>
+</ul>
+<h3 id="cli">CLI</h3>
+<ul>
+<li>[清理][cli] 清理 jcommander (#22337)</li>
+<li>[改进][cli] CmdConsume 打印发布时间和事件时间信息。 (#22308)</li>
+<li>[改进][cli] PIP-343：将 pulsar-perf 重构为子命令 (#22388)</li>
+<li>[改进][cli] PIP-343：在 bin/pulsar 中使用 picocli 代替 jcommander (#22288)</li>
+<li>[改进][cli] PIP-343：在 pulsar-client-tools 中使用 picocli 代替 jcommander (#22209)</li>
+<li>[改进][cli] PIP-343：在 pulsar 函数中使用 picocli 代替 jcommander (#22331)</li>
+<li>[改进][cli] PIP-343：在 pulsar-perf 中使用 picocli 代替 jcommander (#22303)</li>
+<li>[改进][cli] 删除 cli 不必要的代码 (#22161)</li>
+<li>[改进][cli] 当 —bundle 为空时设置 —destinationBroker 时出错 (#21879)</li>
+<li>[修复][cli] 修复帮助选项 (#22408)</li>
+<li>[fix][cli] 修复 set-retention 使用 -T 指定大小时的 bug (#22150)</li>
+<li>[修复][cli] 修复 CmdSinks 类中的拼写错误 (#22358)</li>
+<li>[修复][cli] 删除 CmdFunctions 的租户/命名空间的默认值 (#22764)</li>
+</ul>
+<h3 id="client">Client</h3>
+<ul>
+<li>[feat][client] 在 TableView 中引入刷新 API (#21417)</li>
+<li>[修复][client] 由于批量消息确认中的竞争条件，消费者丢失了消息确认 (#22353)</li>
+<li>[修复][client] 禁用allowAutoSubscriptionCreation 时，不会重试未找到的错误订阅 (#22164)</li>
+<li>[修复][client]修复消费者应返回配置的批量接收最大消息（＃22619）</li>
+<li>[修复][client] 修复 ConsumerBuilderImpl#subscribe 在使用 pulsar-client:3.0.x 以及 2.12.0 之前的杰克逊注释时卡住的静默问题 (#21985)</li>
+<li>[修复][client] 修复多个消费者向 DLQ 发送消息时 DLQ 生产者名称冲突 (#21890)</li>
+<li>[修复][client] 修复调用 MessageImpl.create 时 client 端内存泄漏并修复不精确的 client 端指标：pendingMessagesUpDownCounter、pendingBytesUpDownCounter、latencyHistogram (#22393)</li>
+<li>[修复][client] 修复批处理容器中的消息意外超时 (#21889)</li>
+<li>[修复][client] 修复多主题消费者在查找后可能收到旧消息的问题 (#21945)</li>
+<li>[fix][client] 修复按时间戳查找后 hasMessageAvailable 和 readNext 结果错误的问题 (#22363)</li>
+<li>[修复][client] GenericProtobufNativeSchema 未实现 getNativeSchema 方法。 (#22204)</li>
+<li>[修复][client] 由于 TopicListWatcher 重新连接而丢失消息 (#21853)</li>
+<li>[修复][client] 创建具有两个相同主题的消费者时出现不清楚的错误消息 (#22255)</li>
+<li>[修复][client] 修复 Reader.hasMessageAvailable 在查找最新版本后可能返回 true (#22201)</li>
+<li>[修复][client] 如果确认半批消息则修复巨大的许可 (#22091)</li>
+<li>[修复][client]修复了在同一进程中访问多个集群时获取不正确的 <code>maxMessageSize</code> 值的问题 (#22306)</li>
+<li>[改进][client] 在故障转移优先级 javaDoc 中提及分区 (#21980)</li>
+<li>[改进][client] 添加物理地址作为连接池密钥的一部分 (#22196)
+库更新</li>
+<li>[修复] 在 /pulsar-function-go/examples 中将 google.golang.org/protobuf 从 1.32.0 切换到 1.33.0 (#22262)</li>
+<li>[修复] 将 golang.org/x/net 从 /pulsar-function-go 中的 0.17.0 更改为 0.23.0 (#22540)</li>
+<li>[修复] 将 /pulsar-io/solr 中的 org.apache.solr:solr-core 从 8.11.1 更改为 8.11.3 (#22047)</li>
+<li>[修复] 在构建时升级 Alpine 软件包以修复 CVE-2023-4236 (#22763)</li>
+<li>[修复] 将 jose4j 升级到 0.9.4 (#22273)</li>
+<li>[修复][经纪人]升级 jclouds 2.5.0 -> 2.6.0 (#22220)</li>
+<li>[修复][秒]将 Bouncycastle 升级到 1.78 (#22509)</li>
+<li>[修复][秒]升级 Debezium oracle 连接器版本以避免 CVE-2023-4586 (#22641)</li>
+<li>[修复][秒] 将 Jetty 升级到 9.4.54.v20240208 以解决 CVE-2024-22201 (#22144)</li>
+<li>[修复][秒] 将 Zookeeper 升级到 3.9.2 以解决 CVE-2024-23944 (#22275)</li>
+<li>[修复][秒]升级 aws-sdk.version 以避免 CVE-2024-21634 (#22633)</li>
+<li>[修复][秒] 将 commons-compress 升级到 1.26.0 (#22086)</li>
+<li>[修复][秒]升级 elasticsearch-java 版本以避免 CVE-2023-4043 (#22640)</li>
+<li>[改进]升级到Oxia client 0.2.0 (#22663)</li>
+<li>[改进][杂项]升级到Bookkeeper 4.17.0 (#22551)</li>
+<li>[改进][杂项]升级到Bookkeeper 4.16.5 (#22484)</li>
+<li>[改进][bk] 将 BookKeeper 依赖项升级到 4.16.4 (#21983)</li>
+<li>[改进][构建]将 Lombok 升级到 1.18.32 以支持 Java 22 (#22425)</li>
+<li>[改进][构建]升级 OTel 库版本 (#22649)</li>
+<li>[改进][构建]将 OWASP 依赖项检查版本升级到 9.1.0 (#22530)</li>
+<li>[改进][ci] 升级 GitHub Actions 版本以修复弃用警告 (#21978)</li>
+<li>[改进][ci] 升级 Gradle Enterprise maven 扩展版本 (#22096)</li>
+<li>[改进][ci] 升级 codecov-action 版本 (#22123)</li>
+<li>[改进][ci] 将已弃用的 GitHub 操作升级到支持的版本 (#22620)</li>
+<li>[改进][ci] 将 pulsar-client-python 升级到 3.4.0 以避免 CVE-2023-1428 (#21899)</li>
+<li>[改进][ci] 升级到 actions/upload-artifact@v4 (#21836)</li>
+<li>[改进][杂项] 将 Netty 版本升级到 4.1.105.Final (#21923)</li>
+<li>[改进][杂项] 将 checkstyle 升级到 10.14.2 (#22291)</li>
+<li>[改进][杂项]将球衣升级到2.41 (#22290)</li>
+<li>[改进][杂项] 将 log4j2 升级到 2.23.1 (#22327)</li>
+<li>[改进][杂项] 将 slf4j 升级到 2.0.13 (#22391)</li>
+<li>[改进][杂项]升级到 Netty 4.1.108 和 tcnative 2.0.65 (#22369)</li>
+<li>[改进][构建]使用 slf4j-bom 来对齐 slf4j 版本 (#22646)</li>
+</ul>
+<h3 id="测试和-ci">测试和 CI</h3>
+<ul>
+<li>[feat][ci] 添加 Trivy 容器扫描 Github 工作流程 (#22063)</li>
+<li>[修复][ci] 不允许在没有成功结果的情况下合并 PR (#22563)</li>
+<li>[修复][ci] 修复 OWASP 部门检查 GH 操作工作流程 (#21831)</li>
+<li>[fix][ci] 修复贴标机 GitHub Actions 工作流程，适应 v5 配置格式 (#22628)</li>
+<li>[fix][ci] 修复片状测试 GitHub 问题模板的标签 (#22434)</li>
+<li>[fix][ci] 修复 snappy-java 本机库在 x86 alpine 中加载失败的问题 (#22804)</li>
+<li>[修复][ci] 容忍 CI 中挂载选项更改失败 (#22241)</li>
+<li>[改进][ci] 禁用导致 OOME 的测试，直到问题得到解决 (#22586)</li>
+<li>[改进][ci] 改进 OWASP 依赖项检查 (#21817)</li>
+<li>[改进][ci] 仅当 PR 包含对非测试 java 代码的更改时才运行 CodeQL (#22146)</li>
+<li>[改进][ci] 要求在合并 PR 之前解决有关代码的所有对话 (#21832)</li>
+<li>[改进][ci] 在 Pulsar CI 工作流程中运行 CodeQL 作为强制检查 (#22132)</li>
+<li>[改进][ci] 即使主检查失败，也对卸载程序和 pulsar-io 运行 OWASP 依赖项检查 (#21826)</li>
+<li>[改进][ci] 将 JDK 发行版从 temurin 切换到 corretto (#22238)</li>
+<li>[改进][ci] 重新审视tune-runner-vm操作，放弃docker的调整（#22448）</li>
+<li>[修复][测试]清除 MockedPulsarServiceBaseTest 字段以防止测试运行时内存泄漏 (#22659)</li>
+<li>[修复][测试]清除测试清理中的字段以减少内存消耗(#22583)</li>
+<li>[修复][测试] 修复 BookKeeperClusterTestCase TeaDown 中的 NPE (#22493)</li>
+<li>[修复][测试]修复 Thread.getThreadGroup().getName() NPE (#22070)</li>
+<li>[修复][测试] 修复不稳定的 ManagedLedgerErrorsTest.recoverAfterZnodeVersionError (#22368)</li>
+<li>[修复][测试] 修复不稳定的 RGUsageMTAggrWaitForAllMsgsTest (#22252)</li>
+<li>[修复][测试] 修复不稳定的测试 BrokerServiceAutoSubscriptionCreationTest (#22190)</li>
+<li>[修复][测试] 修复片状测试 ManagedLedgerTest.testGetNumberOfEntriesInStorage (#22344)</li>
+<li>[修复][测试] 修复不稳定的测试 ReplicatorTest (#22594)</li>
+<li>[修复][测试] 修复片状测试 testPerTopicExpiredStat (#22018)</li>
+<li>[修复][测试]修复测试代码创建命名空间冲突 (#21941)</li>
+<li>[修复][测试]修复测试 testAsyncFunctionMaxPending (#22121)</li>
+<li>[修复][测试] 修复测试 testTransactionBufferMetrics (#22117)</li>
+<li>[修复][测试] 修复 ManagedLedgerImplUtilsTest 的不稳定测试 (#22611)</li>
+<li>[fix][test] 修复具有相同名称空间名称的测试 (#22240)</li>
+<li>[修复][测试]修复 InjectedClientCnxClientBuilder 和 EnableProxyProtocolTest 中的线程泄漏 (#21878)</li>
+<li>[修复][测试]修复 TopicPoliciesAuthZTest 中的线程泄漏 (#22257)</li>
+<li>[修复][测试] Flaky-test: ManagedLedgerTest.testTimestampOnWorkingLedger (#22600)</li>
+<li>[修复][测试] Flaky-test：testMessageExpiryWithTimestampNonRecoverableException 和 testIn CorrectClientClock (#22489)</li>
+<li>[修复][测试]使基测试类方法受保护，以便它通过 ReportUnannotatedMethods 验证 (#21976)</li>
+<li>[修复][测试] 将 ExtensibleLoadManagerImplTest 移至片状测试 (#22495)</li>
+<li>[修复][测试] AutoConsumeSchema 中的 SchemaMap 已被重用 (#22500)</li>
+<li>[修复][测试] 修复片状测试 shouldProvideConsistentAnswerToTopicLookupsUsingAdminApi (#22249)</li>
+<li>[修复][测试]修复测试 testSyncNormalPositionWhenTBRecover (#22120)</li>
+<li>[改进][测试] 添加命名空间 API 的操作认证测试 (#22398)</li>
+<li>[改进][测试] 添加命名空间 API 的策略身份验证测试 (#22593)</li>
+<li>[改进][测试]为主题 API 添加主题操作检查器 (#22468)</li>
+<li>[改进][测试]添加主题 API 的主题策略测试 (#22546)</li>
+<li>[改进][测试] 在清理时清除 AuthZTest 类中的字段 (#22661)</li>
+<li>[改进][测试] 不要为 MultiBrokerTestZKBaseTest 配置 Mockito 间谍活动 (#22250)</li>
+<li>[改进][测试] 将 ShadowManagedLedgerImplTest 移至片状测试 (#22526)</li>
+<li>[改进][测试] 将大多数片状测试移至片状组 (#22433)</li>
+<li>[改进][测试]减少 AdvertiedListenersMultiBrokerLeaderElectionTest 不稳定 (#22258)</li>
+<li>[改进][测试]减少测试中的日志记录开销 (#22251)</li>
+<li>[改进][测试]删除冗余测试代码(#21999)</li>
+<li>[改进][测试] 在Java测试中替换curl的使用并修复流泄漏(#22463)-[修复][测试]清除MockedPulsarServiceBaseTest字段以防止测试运行时内存泄漏(#22659)</li>
+<li>[修复][测试]清除测试清理中的字段以减少内存消耗(#22583)</li>
+<li>[修复][测试] 修复 BookKeeperClusterTestCase TeaDown 中的 NPE (#22493)</li>
+<li>[修复][测试]修复 Thread.getThreadGroup().getName() NPE (#22070)</li>
+<li>[修复][测试] 修复不稳定的 ManagedLedgerErrorsTest.recoverAfterZnodeVersionError (#22368)</li>
+<li>[修复][测试] 修复不稳定的 RGUsageMTAggrWaitForAllMsgsTest (#22252)</li>
+<li>[修复][测试] 修复不稳定的测试 BrokerServiceAutoSubscriptionCreationTest (#22190)</li>
+<li>[修复][测试] 修复片状测试 ManagedLedgerTest.testGetNumberOfEntriesInStorage (#22344)</li>
+<li>[修复][测试] 修复不稳定的测试 ReplicatorTest (#22594)</li>
+<li>[修复][测试] 修复片状测试 testPerTopicExpiredStat (#22018)</li>
+<li>[修复][测试]修复测试代码创建命名空间冲突 (#21941)</li>
+<li>[修复][测试]修复测试 testAsyncFunctionMaxPending (#22121)</li>
+<li>[修复][测试] 修复测试 testTransactionBufferMetrics (#22117)</li>
+<li>[修复][测试] 修复 ManagedLedgerImplUtilsTest 的不稳定测试 (#22611)</li>
+<li>[fix][test] 修复具有相同名称空间名称的测试 (#22240)</li>
+<li>[修复][测试]修复 InjectedClientCnxClientBuilder 和 EnableProxyProtocolTest 中的线程泄漏 (#21878)</li>
+<li>[修复][测试]修复 TopicPoliciesAuthZTest 中的线程泄漏 (#22257)</li>
+<li>[修复][测试] Flaky-test: ManagedLedgerTest.testTimestampOnWorkingLedger (#22600)</li>
+<li>[修复][测试] Flaky-test：testMessageExpiryWithTimestampNonRecoverableException 和 testIn CorrectClientClock (#22489)</li>
+<li>[修复][测试]使基测试类方法受保护，以便它通过 ReportUnannotatedMethods 验证 (#21976)</li>
+<li>[修复][测试] 将 ExtensibleLoadManagerImplTest 移至片状测试 (#22495)</li>
+<li>[修复][测试] AutoConsumeSchema 中的 SchemaMap 已被重用 (#22500)</li>
+<li>[修复][测试] 修复片状测试 shouldProvideConsistentAnswerToTopicLookupsUsingAdminApi (#22249)</li>
+<li>[修复][测试]修复测试 testSyncNormalPositionWhenTBRecover (#22120)</li>
+<li>[改进][测试] 添加命名空间 API 的操作认证测试 (#22398)</li>
+<li>[改进][测试] 添加命名空间 API 的策略身份验证测试 (#22593)</li>
+<li>[改进][测试]为主题 API 添加主题操作检查器 (#22468)</li>
+<li>[改进][测试]添加主题 API 的主题策略测试 (#22546)</li>
+<li>[改进][测试] 在清理时清除 AuthZTest 类中的字段 (#22661)</li>
+<li>[改进][测试] 不要为 MultiBrokerTestZKBaseTest 配置 Mockito 间谍活动 (#22250)</li>
+<li>[改进][测试] 将 ShadowManagedLedgerImplTest 移至片状测试 (#22526)</li>
+<li>[改进][测试] 将大多数片状测试移至片状组 (#22433)</li>
+<li>[改进][测试]减少 AdvertiedListenersMultiBrokerLeaderElectionTest 不稳定 (#22258)</li>
+<li>[改进][测试]减少测试中的日志记录开销 (#22251)</li>
+<li>[改进][测试]删除冗余测试代码(#21999)</li>
+<li>[改进][测试] 替换 Java 测试中的 curl 用法并修复流泄漏 (#22463)</li>
+</ul>
+<h3 id="其他">其他</h3>
+<ul>
+<li>[修复][构建]为脉冲星图像添加curl命令(#22732)</li>
+<li>[fix][build] 在 set-project-version.sh 中添加对 pulsar-bom 的特殊处理 (#22272)</li>
+<li>[修复][build] 通过在 docker 映像中升级到 OpenSSL 来修复 CVE-2024-2511 (#22731)</li>
+<li>[fix][build] 修复构建 java-test-image 而不设置 IMAGE_JDK_MAJOR_VERSION (#22095)</li>
+<li>[fix][build] 修复潜在的原型相关配置不足的问题 (#21629)</li>
+<li>[修复][构建]修复 ps 命令 (#22451)</li>
+<li>[修复][构建]修复 pulsar-client-python 在 ARM arch 上的安装 (#22733)</li>
+<li>[fix][build] 修复容易出错的 Maven 配置文件 (#21834)</li>
+<li>[修复][构建]修复 Windows cmd 重命名脚本中的拼写错误 (#22426)</li>
+<li>[修复][构建]修复了 docker 映像中 <code>packages-storage</code> 目录的创建 (#22730)</li>
+<li>[修复][构建]删除 docker-compose yaml 文件中重复的映射键 (#21979)</li>
+<li>[改进][构建]将版本提升至 3.3.0-SNAPSHOT (#21818)</li>
+<li>[改进][构建]更新版权日期(#21830)</li>
+</ul>
+<blockquote>
+<p>特别感谢以下为 Pulsar 3.3.0 做出贡献的贡献者：
+@freeznet、@dragosvictor、@poorbarcode、@merlimat、@jianpeng Cheng、@heesung-sn、@crossoverJie、@mattisonchao、@hanmz、@nikhilerigila09、@izumo27、@pgier、@sherlock-lin、@yaalsn、@thetumbled、@chenhongSZ、@mukesh154、@hangc0276、 @gvanyao、@nodece、@Denovo1998、@coderzc、@zhangqian321、@eolivelli、@rdhabalia、@lhotari、@Shawyeok、@BewareMyPower、@dao-jun、@massakam、@teet-vaher-sympower、@Demogorgon314、@Technoboy-、@AnonHxy、@codelipenghui、@liangyepianzhou、 @zymap、@jianyun8023、@shibd、@dlg99、@onobc、@nicoloboschi</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/apache/pulsar">apache/pulsar</a> · 🏷️ 版本：<code>v3.3.0</code> · 📅 发布：2024-06-05 · <a href="https://github.com/apache/pulsar/releases/tag/v3.3.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/pulsar/pulsar_v3.0.6"> <span class="k">← 下一个</span> <span class="t">v3.0.6</span> </a> <a href="/zh/release_note/pulsar/pulsar_v3.2.3"> <span class="k">上一个 →</span> <span class="t">v3.2.3</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/apache/pulsar/releases/tag/v3.3.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/apache/pulsar" target="_blank" rel="noopener"> <span>apache/pulsar</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#画中画" class="lv3">画中画</a><a href="#经纪人" class="lv3">经纪人</a><a href="#pulsar-io-和-pulsar-函数" class="lv3">Pulsar IO 和 Pulsar 函数</a><a href="#cli" class="lv3">CLI</a><a href="#client" class="lv3">Client</a><a href="#测试和-ci" class="lv3">测试和 CI</a><a href="#其他" class="lv3">其他</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/pulsar/pulsar_v5.0.1"> <span class="v">v5.0.1</span> <span class="d">26-10-26</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_v5.0.0"> <span class="v">v5.0.0</span> <span class="d">26-10-05</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_v4.2.5"> <span class="v">v4.2.5</span> <span class="d">26-10-05</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_4.0.14"> <span class="v">v4.0.14</span> <span class="d">26-10-05</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_5.0.0-m2"> <span class="v">v5.0.0-M2</span> <span class="d">26-09-16</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_4.2.4"> <span class="v">v4.2.4</span> <span class="d">26-08-03</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_4.0.13"> <span class="v">v4.0.13</span> <span class="d">26-08-03</span> </a> </li><li> <a href="/zh/release_note/pulsar/pulsar_v4.2.3"> <span class="v">v4.2.3</span> <span class="d">26-07-06</span> </a> </li> </ul> <a href="/zh/releases/pulsar" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 100 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

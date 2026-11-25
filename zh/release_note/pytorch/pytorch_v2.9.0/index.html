@@ -1,0 +1,1007 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>pytorch v2.9.0 — STAGS NextStack</title><meta name="description" content="Highlights · Backwards Incompatible Changes · Deprecations · New Features"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/pytorch/pytorch_v2.9.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/pytorch/2.9.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/pytorch/pytorch_v2.9.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/pytorch/2.9.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="pytorch v2.9.0 — STAGS NextStack"><meta property="og:description" content="Highlights · Backwards Incompatible Changes · Deprecations · New Features"><meta property="og:url" content="https://www.stags.cn/zh/release_note/pytorch/pytorch_v2.9.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/pytorch/pytorch_v2.9.0/#article","headline":"pytorch v2.9.0 release notes","datePublished":"2025-10-15","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/pytorch/pytorch"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/pytorch/2.9.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/pytorch/pytorch_v2.9.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/pytorch/2.9.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/pytorch/2.9.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/pytorch/2.9.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/pytorch/2.9.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/pytorch/2.9.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/pytorch">pytorch</a> </nav> <h1 class="detail-title"> <span class="p">pytorch</span> v2.9.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2025年10月15日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener"> <span class="k">来源</span>pytorch/pytorch </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/pytorch/2.9.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/pytorch/pytorch_v2.9.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="pytorch-v290">pytorch v2.9.0</h1>
+<h1 id="pytorch-290-release-notes">PyTorch 2.9.0 Release Notes</h1>
+<ul>
+<li><a href="#highlights">亮点</a></li>
+<li><a href="#backwards-incomplete-changes">向后不兼容的更改</a></li>
+<li><a href="#deprecations">弃用</a></li>
+<li><a href="#new-features">新功能</a></li>
+<li><a href="#improvements">改进</a></li>
+<li><a href="#bug-fixes">错误修复</a></li>
+<li><a href="#%E6%80%A7%E8%83%BD">性能</a></li>
+<li><a href="#%E6%96%87%E6%A1%A3">文档</a></li>
+<li><a href="#%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98">开发人员</a></li>
+<li><a href="#%E5%AE%89%E5%85%A8">安全</a></li>
+</ul>
+<h1 id="亮点">亮点</h1>
+<p>&#x3C;表></p>
+  
+   <strong>不稳定（API-不稳定）</strong>
+  
+  
+   更新了第三方 C++/CUDA 扩展的稳定 libtorch ABI
+  
+  
+   对称内存可轻松编程多 GPU 内核
+  
+  
+   能够在 torch.compile 中任意切换错误或在图形中断时恢复
+  
+  
+   扩展了轮子变体支持，包括 ROCm、XPU 和 CUDA 13
+  
+  
+   Intel GPU 上的 FlexAttention 支持
+  
+  
+   X86 CPU上基于FlexAttention的Flash解码优化
+  
+  
+   ARM 平台改进和优化
+  
+  
+   在所有支持的 CUDA 版本上启用 Linux aarch64 二进制轮构建
+  
+<!--表-->
+有关这些突出功能的更多详细信息，您可以查看[发布博文](https://pytorch.org/blog/pytorch-2-9/)。以下是此版本的完整 release note。
+# 向后不兼容的更改
+## 最低支持的 Python 版本现在是 3.10 (#162310)
+PyTorch 2.9.0 所需的 Python 最低版本是 3.10。我们还提供 3.14 和 3.14t 作为此版本的预览版。
+## 当自定义运算符的输出与输入共享存储时未定义的行为
+这是一个提醒，PyTorch 自定义运算符的输出（使用 `torch.library` 或 `TORCH_LIBRARY` API 注册）不允许返回与输入张量共享存储的张量。违反此条件会导致未定义的行为：有时结果是正确的，有时结果是垃圾。
+在 [#163227](https://github.com/pytorch/pytorch/pull/163227) 之后，违反此条件且之前在 `torch.compile` 下返回正确结果的自定义运算符现在可能会在 `torch.compile` 下默默返回错误结果。因为这正在改变未定义行为的行为，所以我们不认为这是一个错误，但我们仍然在本节中将其记录为“潜在的意外行为更改”。
+这是[`torch.library.opcheck`](https://docs.pytorch.org/docs/stable/library.html#testing-custom-ops)检查的条件之一，并在[自定义操作员手册](https://docs.google.com/document/d/1_W62p8WJOQQUzPsJYa7s701JXt0qf2OfLub2sbkHOaU/edit?tab=t.0#bookmark=id.4c0um7xkba6e)中提到
+### 更多细节
+PyTorch 自定义运算符的输出不允许返回与输入张量共享存储的张量
+例如，以下两个自定义运算符不是有效的自定义运算符：
+```py
+@torch.library.custom_op("mylib::foo", mutates_args=())
+def foo(x: torch.Tensor) -> torch.Tensor:
+    # the result of `foo` must not directly be an input to foo.
+    return x
+<p>@torch.library.custom_op(“mylib::bar”, mutates_args=())
+def bar(x: torch.Tensor) -> torch.Tensor:
+# the result of bar must not be a view of an input of bar
+return x.view(-1)</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>最简单的解决方法是在输出中添加一个额外的 `.clone()`：</span></span>
+<span class="line"><span>```py</span></span>
+<span class="line"><span>@torch.library.custom_op("mylib::foo", mutates_args=())</span></span>
+<span class="line"><span>def foo(x: torch.Tensor) -> torch.Tensor:</span></span>
+<span class="line"><span>    return x.clone()</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>@torch.library.custom_op("mylib::bar", mutates_args=())</span></span>
+<span class="line"><span>def bar(x: torch.Tensor) -> torch.Tensor:</span></span>
+<span class="line"><span>    return x.view(-1).clone()</span></span></code></pre>
+<p>遇到这种情况的常见方法是用户想要创建一个自定义运算符，该运算符有时会就地改变输入，有时会返回一个新的张量，如下例所示。</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#6F42C1">@torch.library.custom_op</span><span style="color:#24292E">(</span><span style="color:#032F62">"mylib::baz"</span><span style="color:#24292E">, </span><span style="color:#E36209">mutates_args</span><span style="color:#D73A49">=</span><span style="color:#24292E">[</span><span style="color:#032F62">"x"</span><span style="color:#24292E">])</span></span>
+<span class="line"><span style="color:#D73A49">def</span><span style="color:#6F42C1"> baz</span><span style="color:#24292E">(x: torch.Tensor) -> torch.Tensor:</span></span>
+<span class="line"><span style="color:#D73A49">    if</span><span style="color:#24292E"> inplace:</span></span>
+<span class="line"><span style="color:#24292E">        x.sin_()</span></span>
+<span class="line"><span style="color:#D73A49">        return</span><span style="color:#24292E"> x</span></span>
+<span class="line"><span style="color:#D73A49">    else</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#D73A49">        return</span><span style="color:#24292E"> x.sin()</span></span></code></pre>
+<p>这种动态不受支持并导致未定义的行为。解决方法是将自定义运算符拆分为两个自定义运算符，一个始终就地改变输入，另一个始终返回新的张量。</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#6F42C1">@torch.library.custom_op</span><span style="color:#24292E">(</span><span style="color:#032F62">"mylib::baz_outplace"</span><span style="color:#24292E">, </span><span style="color:#E36209">mutates_args</span><span style="color:#D73A49">=</span><span style="color:#24292E">())</span></span>
+<span class="line"><span style="color:#D73A49">def</span><span style="color:#6F42C1"> baz_outplace</span><span style="color:#24292E">(x: torch.Tensor) -> torch.Tensor:</span></span>
+<span class="line"><span style="color:#D73A49">    return</span><span style="color:#24292E"> x.sin()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1">@torch.library.custom_op</span><span style="color:#24292E">(</span><span style="color:#032F62">"mylib::baz_inplace"</span><span style="color:#24292E">, </span><span style="color:#E36209">mutates_args</span><span style="color:#D73A49">=</span><span style="color:#24292E">[</span><span style="color:#032F62">"x"</span><span style="color:#24292E">])</span></span>
+<span class="line"><span style="color:#D73A49">def</span><span style="color:#6F42C1"> baz_inplace</span><span style="color:#24292E">(x: torch.Tensor) -> torch.Tensor:</span></span>
+<span class="line"><span style="color:#24292E">    x.sin_()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">def</span><span style="color:#6F42C1"> baz</span><span style="color:#24292E">(x):</span></span>
+<span class="line"><span style="color:#D73A49">    if</span><span style="color:#24292E"> inplace:</span></span>
+<span class="line"><span style="color:#24292E">        baz_inplace(x)</span></span>
+<span class="line"><span style="color:#D73A49">        return</span><span style="color:#24292E"> x</span></span>
+<span class="line"><span style="color:#D73A49">    else</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#D73A49">        return</span><span style="color:#24292E"> baz_outplace(x)</span></span></code></pre>
+<h2 id="构建-macos-14-的金属内核并删除所有-macos-14-之前的特定逻辑需要-macos-14-继续前进159733159912">构建 MacOS-14+ 的金属内核并删除所有 MacOS-14 之前的特定逻辑，需要 MacOS-14+ 继续前进（#159733，#159912）</h2>
+<p>PyTorch MPS 仅在 MacOS-14 或更高版本上受支持。如果您需要在 MacOS Ventura 上使用 MPS，请避免更新到 Python-3.9 或更高版本</p>
+<h2 id="升级到-dlpack-10-145000">升级到 DLPack 1.0 (#145000)</h2>
+<p>此升级与 DLPack 版本进行了相同的 BC 破坏性更改。 <code>torch.utils.dlpack</code> 中的对象已更新以反映这些更改，例如 <code>DLDeviceType</code>。
+有关具体更改以及如何更新代码的详细信息，请参阅 PR。</p>
+<h2 id="在-torchcat-中引发适当的错误-158249">在 <code>torch.cat</code> 中引发适当的错误 (#158249)</h2>
+<p><code>torch.cat</code> 现在在适当的情况下提高 <code>ValueError</code>、<code>IndexError</code> 或 <code>TypeError</code>，而不是通用的 <code>RuntimeError</code>。如果您的代码捕获了这些错误，您可以进行更新以捕获新的错误类型。</p>
+<h2 id="onnx-导出器默认为-dynamotrue-159646162726">ONNX 导出器默认为 <code>dynamo=True</code> (#159646、#162726)</h2>
+<p>以前，如果未提供参数，<code>torch.onnx.export(...)</code> 使用旧版 TorchScript 导出器。 ONNX 导出器现在默认使用较新的 <code>torch.export.export</code> 管道 (<code>dynamo=True</code>)。此更改提高了图形保真度和面向未来的导出，但可能会暴露以前被掩盖或以不同方式处理的图形捕获错误。
+以前在火炬 2.8.0 中：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># API calls the legacy exporter with dynamo=False</span></span>
+<span class="line"><span style="color:#24292E">torch.onnx.export(</span><span style="color:#005CC5">...</span><span style="color:#24292E">)</span></span></code></pre>
+<p>现在在火炬 2.9.0 中：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># To preserve the original behavior</span></span>
+<span class="line"><span style="color:#24292E">torch.onnx.export(</span><span style="color:#005CC5">...</span><span style="color:#24292E">, </span><span style="color:#E36209">dynamo</span><span style="color:#D73A49">=</span><span style="color:#005CC5">False</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Export onnx model through torch.export.export</span></span>
+<span class="line"><span style="color:#24292E">torch.onnx.export(</span><span style="color:#005CC5">...</span><span style="color:#24292E">)</span></span></code></pre>
+<p>建议：首先尝试新的默认值；仅当遇到阻塞问题并向上游报告时才回退。
+长期解决方案：修复根本原因，而不是依赖后备或 TorchScript 导出器。</p>
+<h2 id="默认情况下在导出中关闭运行时断言以支持形状保护功能160111161178161794">默认情况下，在导出中关闭运行时断言，以支持形状保护功能（#160111、#161178、#161794）</h2>
+<p>要启用运行时断言，请使用 <code>export(..., prefer_deferred_runtime_asserts_over_guards=True)</code>。还杀死 <code>allow_complex_guards_as_runtime_asserts</code> 标志，将其合并到前一个选项中。
+此外，<code>exported_program.module()</code> 将生成对 <code>_guards_fn</code> 子模块的调用，该子模块将对输入运行额外的检查。不希望出现此行为的用户可以在图中删除此调用，或者执行 <code>exported_program.module(check_guards=False)</code> 以避免生成。</p>
+<h2 id="在-onnx-中将默认-opset-设置为-20-158802">在 ONNX 中将默认 opset 设置为 20 (#158802)</h2>
+<p>Opset 20 支持更新的运算符定义。如果您的工具或下游运行时仅支持 opset 18，请明确固定它。对于最新的 ONNX 运算符，您可以尝试使用 opset 23。
+以前在火炬 2.8.0 中：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># opset_version=18</span></span>
+<span class="line"><span style="color:#24292E">torch.onnx.export(</span><span style="color:#005CC5">...</span><span style="color:#24292E">)</span></span></code></pre>
+<p>现在在火炬 2.9.0 中：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># To preserve the original behavior</span></span>
+<span class="line"><span style="color:#24292E">torch.onnx.export(</span><span style="color:#005CC5">...</span><span style="color:#24292E">, </span><span style="color:#E36209">opset_version</span><span style="color:#D73A49">=</span><span style="color:#005CC5">18</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># New: opset_version=20</span></span>
+<span class="line"><span style="color:#24292E">torch.onnx.export(</span><span style="color:#005CC5">...</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Use the latest supported opset: opset_version=23</span></span>
+<span class="line"><span style="color:#24292E">torch.onnx.export(</span><span style="color:#005CC5">...</span><span style="color:#24292E">, </span><span style="color:#E36209">opset_version</span><span style="color:#D73A49">=</span><span style="color:#005CC5">23</span><span style="color:#24292E">)</span></span></code></pre>
+<h2 id="将-draft_export-放入导出器-api-161454-162225">将 <code>draft_export</code> 放入导出器 API (#161454, #162225)</h2>
+<p>从默认导出器路径中删除隐式草稿跟踪，实现更清晰的行为和更快的故障。
+昂贵的 <code>torch.export.draft_export</code> 诊断路径不再自动调用（在大型型号上可能需要几个小时）。您仍然可以选择进行深度诊断：
+以前在火炬 2.8.0 中：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># If both torch.export.export(..., strict=False) and</span></span>
+<span class="line"><span style="color:#6A737D"># torch.export.export(..., strict=True) fail to capture</span></span>
+<span class="line"><span style="color:#6A737D"># the model graph, torch.export.draft_export(...) will be triggered,</span></span>
+<span class="line"><span style="color:#6A737D"># and uses real tensor to trace/export the model.</span></span>
+<span class="line"><span style="color:#6A737D">#</span></span>
+<span class="line"><span style="color:#6A737D"># Inside export_to_onnx.py:</span></span>
+<span class="line"><span style="color:#6A737D">#  ... torch.onnx.export(..., dynamo=True)</span></span>
+<span class="line"><span style="color:#6F42C1">python</span><span style="color:#032F62"> export_to_onnx.py</span></span></code></pre>
+<p>现在在火炬 2.9.0 中：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># To trigger torch.export.draft_export once</span></span>
+<span class="line"><span style="color:#6A737D"># torch.export.export strict=False/True both</span></span>
+<span class="line"><span style="color:#6A737D"># fail:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">TORCH_ONNX_ENABLE_DRAFT_EXPORT</span><span style="color:#D73A49">=</span><span style="color:#032F62">True</span><span style="color:#6F42C1"> python</span><span style="color:#032F62"> export_to_onnx.py</span></span></code></pre>
+<h2 id="删除-torchonnxdynamo_export-和-onnxrt-torch-编译后端-158130-158258">删除 <code>torch.onnx.dynamo_export</code> 和 <code>onnxrt</code> torch 编译后端 (#158130, #158258)</h2>
+<p><code>torch.onnx.dynamo_export</code> 已删除。请改用<code>torch.onnx.export</code>。
+不再支持实验性 ONNX 运行时编译后端 (<code>torch.compile(backend="onnxrt")</code>)。</p>
+<h2 id="删除-torchonnxenable_fake_mode-161222">删除 <code>torch.onnx.enable_fake_mode</code> (#161222)</h2>
+<p><code>dynamo=True</code> 模式默认使用 <code>FakeTensor</code>，这样可以节省内存。</p>
+<h2 id="基于-torchscript-的导出器的一些面向公众的-onnx-实用程序-api-现在是私有的-161323">基于 TorchScript 的导出器的一些面向公众的 ONNX 实用程序 API 现在是私有的 (#161323)</h2>
+<p><code>torch.onnx.verification</code> 中已弃用的成员已被删除。以前的私有 <code>torch.onnx.symbolic_opsets*</code> 功能将不再可用。如果您需要访问任何私有函数以与基于 TorchScript 的导出器兼容，请考虑复制源代码。</p>
+<h2 id="删除-torchonnxsymbolic_caffe2-157102">删除 <code>torch.onnx.symbolic_caffe2</code> (#157102)</h2>
+<p>ONNX 导出器对 <code>caffe2</code> 的支持已结束并被删除。</p>
+<h2 id="删除会减慢构建速度的-d2implyavx512upperregs-标志-159431">删除会减慢构建速度的 <code>/d2implyavx512upperregs</code> 标志 (#159431)</h2>
+<p>针对 Windows VS2022 版本重新引入 AVX512 优化，可能会导致特定版本的 VS2022 出现问题，请参阅#145702</p>
+<h2 id="将-scalartype-添加到垫片转换和-stabletensorscalar_type-160557">将 <code>ScalarType</code> 添加到垫片转换和 <code>stable::Tensor.scalar_type</code> (#160557)</h2>
+<p>以前，用户扩展只能抽象地传递显示为 <code>int32_ts</code> 的混淆数据类型。现在，用户可以放心地在主要标量类型的扩展中使用 <code>torch::headeronly::ScalarType</code>。此 PR 通过 shim 添加翻译层来实现 ABI 稳定性，这样即使 <code>ScalarType</code> 枚举值将来发生变化，用户扩展也不必担心。
+此更改增加了对用户扩展的 ScalarType 支持，并且仅在扩展检索上述 Tensor dtype 并将其传递到的用例中对不受欢迎的 dtypes 进行了狭小的 BC 破坏：<code>quint*</code>s、<code>qint*</code>s、<code>Bits*</code>、<code>dummy_uint*</code>s、<code>dummy_int*</code>s、<code>Float8_e8m0fnu</code> 和 <code>Float4_e2m1fn_x2</code> <code>aoti_torch_call_dispatcher</code>。</p>
+<h1 id="弃用">弃用</h1>
+<h2 id="弃用-torchutilsdatadataloader-中的-pin_memory_device-参数-158323">弃用 <code>torch.utils.data.DataLoader</code> 中的 <code>pin_memory_device</code> 参数 (#158323)</h2>
+<p>我们将启用 <code>pin_memory</code> 的功能移回 <code>BaseDataLoaderIter</code> 内部。这是 <code>StatefulDataloader</code> 所必需的，它直接利用 <code>BaseDataLoaderIter</code> 而不是 <code>Dataloader</code> 类 init</p>
+<h2 id="弃用-torchexportexport_for_training-api转而使用等效的-torchexportexport-api-158203">弃用 <code>torch.export.export_for_training</code> API，转而使用等效的 <code>torch.export.export</code> API (#158203)</h2>
+<p><code>torch.export.export_for_training</code> 存在是因为我们无法将导出的内部用法迁移到最终的 IR。现在我们已经完成了迁移，我们弃用并删除了这个 API。</p>
+<h1 id="新功能">新功能</h1>
+<h2 id="python-前端">Python 前端</h2>
+<ul>
+<li>添加实用程序以获取当前在调度程序上注册的内核 (#158393)</li>
+<li>扩展 <code>__torch_function__</code> 处理程序以由列表中的元素触发 (#160256)</li>
+<li>添加 <code>torch.hash_tensor</code> 还原功能 (#154149)</li>
+</ul>
+<h2 id="外汇">外汇</h2>
+<ul>
+<li>将 torch 函数支持扩展到所有参数，而不仅仅是标量类型（但不在列表内部，#145089）</li>
+<li>添加 <code>is_fx_symbolic_tracing</code> 标志 (#161385)</li>
+</ul>
+<h2 id="发电机">发电机</h2>
+<ul>
+<li>用于在全图模式下提前编译模型的实验性 API (#161383)</li>
+<li>添加用于重新编译的钩子 (#157961)</li>
+<li>DynamicInts 原型 (#162194)
+引入 API，通过用 <code>DynamicInt()</code> 包装普通整数来注释 <code>torch.compile</code> 的动态整数输入和属性。
+DynamicInt 对象也可以在 eager 模式下工作，在作为标量输入传递时充当其基础值。</li>
+</ul>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#24292E">a </span><span style="color:#D73A49">=</span><span style="color:#24292E"> DynamicInt(</span><span style="color:#005CC5">4</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">y </span><span style="color:#D73A49">=</span><span style="color:#24292E"> a </span><span style="color:#D73A49">+</span><span style="color:#005CC5"> 2</span><span style="color:#6A737D">  # DynamicInt(6)</span></span>
+<span class="line"><span style="color:#24292E">z </span><span style="color:#D73A49">=</span><span style="color:#24292E"> torch.ones(a)  </span><span style="color:#6A737D"># torch.ones(4)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">fn </span><span style="color:#D73A49">=</span><span style="color:#24292E"> torch.compile(torch.ones)</span></span>
+<span class="line"><span style="color:#24292E">fn(a)  </span><span style="color:#6A737D"># compiled fn takes a dynamic integer input</span></span>
+<span class="line"><span style="color:#24292E">fn(</span><span style="color:#005CC5">2</span><span style="color:#24292E">)  </span><span style="color:#6A737D"># returns torch.ones(2) without recompiling</span></span></code></pre>
+<h2 id="优化器">优化器</h2>
+<ul>
+<li>将 Muon 优化器引入 PyTorch (#160213)</li>
+</ul>
+<h2 id="分析器">分析器</h2>
+<ul>
+<li>将 GC 事件添加到 Python 堆栈跟踪器 (#161209)</li>
+<li>添加自定义分析器配置选项 (#151656)</li>
+</ul>
+<h2 id="电感器">电感器</h2>
+<ul>
+<li>允许用户传入自定义分区器函数 (#157580)</li>
+</ul>
+<h2 id="导出">导出</h2>
+<ul>
+<li>添加对推理模式下参数突变的支持 (#159661)</li>
+</ul>
+<h2 id="aot-调度程序">AOT 调度程序</h2>
+<ul>
+<li>添加 AOTDispatcher 配置以设置向后自动投射行为 (#156356)</li>
+</ul>
+<h2 id="量化">量化</h2>
+<ul>
+<li>启用 cpu fp8 qlinear 和 cpu fp8 qconv (#155678, #157076)</li>
+</ul>
+<h2 id="onnx">ONNX</h2>
+<ul>
+<li>opset 23 中的 RMS Norm 支持 (#159377)</li>
+</ul>
+<h2 id="c-扩展">C++ 扩展</h2>
+<ul>
+<li>在 <code>torch/csrc/stable/ops.h</code> 中构建一组稳定的 ATen 操作：<code>amax</code>、<code>narrow</code>、<code>new_empty</code> + <code>new_zeros</code> dtype 变体、<code>pad</code>，（#159328、#158974、#159508、#161597、#160214）</li>
+<li>添加 <code>torch::stable::Tensor()</code> 默认构造函数、<code>is_cpu</code> 和 <code>get_device_index</code>(#159507、#160212、#160143)</li>
+<li>添加 <code>torch::stable::accelerator</code> 的开头，支持 DeviceGuard 和 Stream（#159679、#160453）</li>
+<li>开始构建 <code>torch/headeronly</code>：c10 宏、STD_TORCH_CHECK、ScalarTypes（如 BFloat16 和 Half、#158035、#158365、#157912、#158377、#159302、#159414、#159412、#159415、#159411、 #159911)</li>
+<li>删除 cmake 缓存，如果无效则重新配置 (#156958)</li>
+<li>从 AOTI 中剪切 <code>headeronly</code> 中的 <code>TORCH_ERROR_CODE_CHECK</code> 版本 (#159604)</li>
+<li>从构建要求中删除 <code>wheel</code> (#158027)</li>
+<li>在 <code>TensorBase.h</code> 中定义 <code>TORCH_STABLE_ONLY</code> 时出错 (#161658)</li>
+</ul>
+<h2 id="构建前端">构建前端</h2>
+<ul>
+<li>添加转置到 <code>torch/csrc/stable</code> (#158160)</li>
+<li>将 <code>zero_()</code> 和 <code>empty_like(t)</code> 添加到 <code>torch/csrc/stable/ops.h</code> (#158866)</li>
+</ul>
+<h2 id="发布工程">发布工程</h2>
+<ul>
+<li>在 CI/CD 构建中添加对 CUDA 13.0 的支持。启用 CUDA 压缩模式以减少 CUDA 13.0 版本的二进制大小（#160956、#161073、#161257、#161663、#161316、#160201、#160770、#161013、#161916、#162268、#162322、 ＃162383，＃161833）</li>
+<li>为 Linux ARM64 CD 版本启用 CUDA 12.6、12.8 和 13.0 支持（#162364、#160720、#159481）</li>
+<li>在 CI/CD 版本中添加对 Python 3.14 的支持（#156889、#157559、#159261、#159869、#160593、#160788、#161255、#159725）</li>
+<li>启用 NVSHMEM 集成（#151261、#153010、#154538、#155506、#156685、#158938、#161321、#160778、#159907、#160465）</li>
+</ul>
+<h2 id="cuda">CUDA</h2>
+<ul>
+<li>为 CUDA 图形执行添加 getter 以允许捕获的内核参数发生变化 (#161294)</li>
+<li>实现对 <code>cudnn_batch_norm_out</code> 内核的支持以替换 autogen 方法 (#123020)
+##CPU</li>
+<li>支持 GQA 进行闪光关注 (#157893)</li>
+</ul>
+<h2 id="mps">MPS</h2>
+<ul>
+<li>对 MPS 后端的部分稀疏支持（#159729、#160254、#160223、#161846、#162007、#157238）</li>
+<li>为 MPS 添加 <code>avg_pool3d</code>、<code>max_unpool1d/2d/3d</code>、<code>max_pool3d</code>、<code>max_pool3d</code> bwd pass 和 <code>avg_pool3d</code> bwd pass（#158877、#159789、#156467、#157498、#159089）</li>
+</ul>
+<h2 id="rocm">ROCm</h2>
+<ul>
+<li>OCP 微缩放格式 (mx-fp8/mx-fp4) 支持 (#151360)</li>
+</ul>
+<h2 id="xpu">XPU</h2>
+<ul>
+<li>在 Intel GPU 上启用 <code>FlexAttention</code> (#143553)</li>
+</ul>
+<h1 id="改进">改进</h1>
+<h2 id="python-前端-1">Python 前端</h2>
+<ul>
+<li>通过减少随机读取来加速 <code>FakeTensorMode</code> 下的 <code>torch.load</code> (#157931)</li>
+<li>使 <code>torch.utils.benchmark.utils.timer</code> 加速器不可知 (#157131)</li>
+<li>改进仅重量加载错误的错误消息 (#159935)</li>
+</ul>
+<h2 id="火炬nn">火炬.nn</h2>
+<ul>
+<li>允许 <code>register_buffer</code> 与类似 <code>Tensor</code> 的对象 (#159455)</li>
+<li>改进了不支持的填充配置的错误消息 (#160866)</li>
+<li>当 <code>NLLLoss</code> 中输入为 1D 时验证目标为 0D (#161412)</li>
+</ul>
+<h2 id="优化器-1">优化器</h2>
+<ul>
+<li>解决将 <code>requires_grad=True</code> 张量转换为标量时 LBFGS 中的警告 (#160389)</li>
+<li>解决有关调用 <code>step(epoch)</code> 的 <code>SequentialLR</code> 弃用警告 (#149392)</li>
+</ul>
+<h2 id="自动毕业">自动毕业</h2>
+<ul>
+<li>向后支持确定性 <code>torch.nn.Upsample</code> <code>mode="trilinear"</code> (#154239)</li>
+</ul>
+<h2 id="分布式">分布式</h2>
+<h3 id="c10d">c10d</h3>
+<ul>
+<li>添加对 <code>ProcessGroupNCCL</code> 的 eager init 的改进 (#156748)</li>
+<li>简化 <code>ProcessGroupNCCL</code> 的独特哈希管理 (#156790)</li>
+<li><code>ProcessGroupGloo</code> 中支持每个操作超时 (#158128)</li>
+<li>允许在 <code>TCPStore</code> 中重试 ping (#159165)</li>
+<li>支持功能 <code>all_gather</code> 的标量张量 (#149913)</li>
+<li>为 dist.ProcessGroupNCCL.NCCLConfig 展示 <code>unsafe_get_ptr</code> (#161136)</li>
+<li>添加 <code>send/recv_object_list</code> 的批量选项 (#160342)</li>
+<li>使 FakeStore 成为可选的传递到假后端的选项 (#162164)</li>
+<li>在 <code>ProcessGroupGloo</code> 中启用复杂数据类型支持 (#156633)</li>
+<li>移动线程本地捕获模式保护以包含 <code>work.isStarted</code> (#160398)</li>
+</ul>
+<h3 id="分布式数据并行-ddp">分布式数据并行 (DDP)</h3>
+<ul>
+<li>支持 ddp 零钩 XCCL 路径 (#159240)</li>
+</ul>
+<h3 id="dtensor">DTensor</h3>
+<ul>
+<li>放宽 <code>local_map</code> 中的 <code>device_mesh</code> 参数约束 (#157049)</li>
+<li>支持 DTensor redistribute 中的复数 (#157329)</li>
+<li>重新设计逐点运算中的部分传播并支持 mul (#157340)</li>
+<li>允许 <code>DTensor</code> 切片动态形状 (#157953)</li>
+<li>实施 <code>histc</code> 操作 (#158298)</li>
+<li>通过 decomps 调度分片道具 (#159324)</li>
+<li>支持用户提供的随机操作生成器 (#159933)</li>
+<li>添加 <code>propagate_tensor_meta</code> 功能，如果 <code>_are_we_tracing</code> 则跳过缓存 (#161334)
+<ul>
+<li>支持 <code>local_map</code> 作为装饰器 (#161353)</li>
+</ul>
+</li>
+</ul>
+<h3 id="设备网格">设备网格</h3>
+<ul>
+<li>即使对于全局网格也允许使用用户设置后端和 pg 选项 (#157501)</li>
+<li>启用子网格切片并带有警告 (#158899)</li>
+<li>允许通过 <code>init_device_mesh</code> 控制 PG 后端和选项 (#159371)</li>
+</ul>
+<h3 id="fullshardeddataparallel2-fsdp2">FullShardedDataParallel2 (FSDP2)</h3>
+<ul>
+<li>支持自定义 <code>all_gather</code> 和 <code>reduce_scatter</code> 通信 (#155189)</li>
+<li>如果与自定义通讯钩子一起使用，<code>set_allocate_memory_from_process_group</code> 会失败 (#157487)</li>
+<li>当世界大小为 1 时使用 <code>reduceOpSum</code> (#157529)</li>
+<li>当世界大小为 1 时跳过 <code>allgather</code> (#160135)</li>
+<li>在 hsdp+cpuoffload 上使用 <code>post_reduce_stream.record_event()</code> (#160481)</li>
+</ul>
+<h3 id="张量并行-tp">张量并行 (TP)</h3>
+<ul>
+<li>改进 <code>parallelize_module</code> API 以支持更多案例 (#157182)</li>
+</ul>
+<h3 id="张量管道">张量管道</h3>
+<ul>
+<li>更新 TensorPipe 固定依赖版本 (#159834)</li>
+</ul>
+<h3 id="火炬弹性">火炬弹性</h3>
+<ul>
+<li>启用 NUMA 与弹性代理和 <code>torchrun</code> 的绑定集成 (#149334)</li>
+<li>支持可调用入口点的 NUMA 绑定（#160163、#161183）</li>
+</ul>
+<h3 id="管道并行性-pp">管道并行性 (PP)</h3>
+<ul>
+<li>将 <code>eval()</code> API 添加到计划中 (#157795)</li>
+<li>允许零气泡中的中间节点具有多个梯度（#159084）</li>
+<li>支持 <code>OVERLAP_F_B</code> 计算类型 (#158978)</li>
+<li>第一步初始化 P2P 通信器 (#160210)</li>
+<li>添加 <code>DualPipeV</code> 时间表 (#159591)</li>
+</ul>
+<h2 id="线性代数前端">线性代数前端</h2>
+<ul>
+<li>在 AMD 上使用 rocSOLVER 进行 Cholesky 反演。 (#157154)</li>
+<li>添加使用 TF32 作为 MKLDNN 上 matmul/线性/Con 的 fp32 内部精度的选项 (#157520)</li>
+<li>使 einsum 在更多情况下产生连续的输出 (#161755)</li>
+</ul>
+<h2 id="分析器-1">分析器</h2>
+<ul>
+<li>为内核启动器添加更多 CUDA API (#156016)</li>
+<li>打印分析器表时允许自定义时间单位 (#157913)</li>
+<li>更新 CUDA 运行时内核识别逻辑 (#157890)</li>
+</ul>
+<h2 id="外汇-1">外汇</h2>
+<ul>
+<li>通过改进 <code>is_impure()</code> 修复 DCE 消除随机操作（#151524、#157981）</li>
+<li>支持在 FX 跟踪中将 float32 张量转换为标量。 (#158216)</li>
+<li>在 ModuleStackTracer 中正确复制 <code>self.module_stack</code> (#159956)</li>
+<li>添加工具来跟踪图表分割中的事件 (#159795)</li>
+<li>将 <code>node_name_match</code> 添加到子图重写器 (#157574)</li>
+</ul>
+<h2 id="发电机-1">发电机</h2>
+<ul>
+<li>改进对各种 Python 内置数据结构/模块的跟踪支持：
+<ul>
+<li><code>list</code>s（例如#153969）</li>
+<li><code>set</code>s（例如#153150）</li>
+<li><code>dict</code>s（例如#154794）</li>
+<li><code>iter</code>（例如#156371）</li>
+<li><code>itertools</code>（例如#159693）</li>
+<li><code>collections</code>（例如#159365）</li>
+<li><code>collections.NamedTuple</code> (#159367)</li>
+<li>冻结 <code>dataclasses.dataclass</code> (#159529)</li>
+</ul>
+</li>
+<li>图表中断错误消息链接到包含更多信息的网站 (#159011)</li>
+<li>添加 <code>TorchDispatchMode</code> 忽略 <code>torch.compile</code> 内部的选项 (#161648)</li>
+</ul>
+<h2 id="电感器-1">电感器</h2>
+<ul>
+<li>添加对 MTIA 后端的电感器支持 (#159211)</li>
+<li>当所有图形分区和 cudagraph 不安全操作位于同一设备上时共享默认设备上下文 (#162873)</li>
+</ul>
+<h2 id="提前电感-aoti">提前电感 (AOTI)</h2>
+<ul>
+<li>在 Windows 上为 CPU 启用 AOTI (#158915)</li>
+<li>使用 AOTI 重新启用 TMA 模板 (#157819)</li>
+<li>如果提供了 <code>{non-inf, > int32_max}</code> 上限，则不允许使用 int32 索引 (#159433)</li>
+<li>将 RecordFunction 添加到 C shim，以便分析可以与 AOTI 一起使用 (#159842)</li>
+<li>为集体操作添加 AOTI C shim 函数 (#154492)</li>
+<li>将缺失的操作添加到可以返回 nullptr 的 C-shim 操作集中 (#158073)</li>
+</ul>
+<h2 id="导出-1">导出</h2>
+<ul>
+<li>在非严格中处理 <code>None</code> 和省略号切片/选择 (#157821)</li>
+<li>扩展序列化中的 FP8 类型 (#158430)</li>
+<li>改进反序列化的错误消息 (#159881)</li>
+<li>支持 <code>triton_kernel_wrapper_functional</code> HOP 序列化 (#161314)</li>
+<li>支持复杂常量的序列化 (#161517)</li>
+<li>将运行时断言添加到 <code>while_loop</code> HOP 子图 (#158467)</li>
+<li>警告严格模式下的副作用代码 (#160060)</li>
+<li>在预调度导出中支持 vmap (#154650)</li>
+<li>支持 vmap 和自定义 autograd 函数/改善 DTensor 构造函数效率低下 (#162240)</li>
+</ul>
+<h2 id="aot-调度程序-1">AOT 调度程序</h2>
+<ul>
+<li>如果没有要量化的节点，则跳过 fp8 激活量化中的记录 (#158129)</li>
+<li>添加 <code>aot_export_joint_with_descriptors</code> 和 <code>aot_compile_joint_with_descriptors</code> (#158715)</li>
+<li>提取 <code>prepare_aot_module_simplified</code> 以在下一个 PR 中使用 (#158319)</li>
+<li>重命名 AOTAutograd 中的模块 (#158449)</li>
+<li>AOTAutograd 跟踪图所有输入/输出的跟踪描述符 (#158624)</li>
+<li>使用子类错误消息改进图形输出别名 (#159619)</li>
+<li>将固件/黑白编译器传递给 <code>aot_export_joint_with_descriptors</code> (#159814)</li>
+</ul>
+<h2 id="可组合性">可组合性</h2>
+<ul>
+<li><code>aten.add.Scalar</code> 的元实现 (#161332)</li>
+<li><code>aten.expand_copy</code> 分解 (#161688)</li>
+<li>修复 <code>aten.linalg_vector_norm</code> 的 decomp 中的结果数据类型转换 (#155111)</li>
+<li>在元实现中为多个排序操作添加数据类型检查 (#159556)</li>
+<li>修复 <code>aten.complex</code> 的元功能 (#160894)</li>
+<li>改进对多种分解的无支持 symint（动态形状）支持（#148815、#156902、#157008、#158894、#159184、#160683、#160253、#162084、#162099、#162109、#160462）</li>
+</ul>
+<h2 id="量化-1">量化</h2>
+<ul>
+<li>避免为 pt2e 量化流每个节点获取一次模型设备 (#159901)</li>
+<li>修复了 <code>HistogramObserver</code> 实现中的错误 (#156457)</li>
+<li>支持 <code>fbgemm_linear_fp16_weight</code> CPU 操作的 <code>bias=None</code> (#158535)</li>
+<li>为 Sigmoid 的 <code>wrapped_fbgemm_linear_fp16_weight</code> 添加静态调度内核 (#160451)</li>
+</ul>
+<h2 id="嵌套张量-njt">嵌套张量 (NJT)</h2>
+<ul>
+<li>添加了初始 <code>log_softmax()</code> 支持 (#159662)</li>
+</ul>
+<h2 id="foreach">foreach</h2>
+<ul>
+<li>对非就地 foreach 操作一致调用 <code>vector.reserve()</code> (#161128)</li>
+<li><code>has_integral_tensor()</code> 中更快、更安全的 lambda 表达式捕获 (#161042)</li>
+</ul>
+<h2 id="onnx-1">ONNX</h2>
+<ul>
+<li>支持 ONNX 导出器中的符号参数 (#157734)</li>
+<li>修复 ONNX <code>symbolic_opset10</code> 导出中的 <code>torch.tensor</code> 警告 (#158835)</li>
+</ul>
+<h2 id="c-前端">C++ 前端</h2>
+<ul>
+<li>通过新的 <code>AcceleratorAllocatorConfig</code> 使 <code>AllocatorConfig</code> 与设备无关（#149601、#150312）</li>
+<li>添加了 <code>Scalar::isUnsigned()</code> 方法 (#159877)</li>
+<li>从nativert 公开<code>ModelRunner</code> (#159989)</li>
+<li>改进 <code>torch.binomial</code> 强制浮动输入的错误消息 (#157658)</li>
+</ul>
+<h2 id="构建前端-1">构建前端</h2>
+<ul>
+<li>修复 <code>Dependencies.cmake</code> 中的开发警告 (#159702)</li>
+<li>使用 CUDA/HIP 修复建筑系统 gloo (#146637)</li>
+<li>在没有 NVSHMEM 的情况下构建 <code>libtorch</code> (#160910)</li>
+<li>改进 BLAS 特征检测 (#143846)</li>
+</ul>
+<h2 id="发布工程-1">发布工程</h2>
+<ul>
+<li>启用 vLLM 测试工作流程（#160583、#161565、#162292、#162000、#161797）</li>
+<li>启用 Windows ARM64 CI 测试（#148753、#161504）</li>
+<li>启用 PyTorch ROCm CI 进行 MI355X 测试。 (#158889)</li>
+</ul>
+<h2 id="cuda-1">CUDA</h2>
+<ul>
+<li>使 cublaslt/hipblaslt 工作空间持久化 (#156495)</li>
+<li>删除 ATen 编译过程中不必要的警告 (#157703)</li>
+<li>稍微改进 <code>repeat_interleave</code> 内核的错误消息 (#157996)</li>
+<li>添加常见 CUDA 错误解释的框架 (#158395)</li>
+<li>升级 KernelLauncher <code>kernelLaunchCheck</code> 以打印帮助字符串 (#158896)</li>
+<li>忽略 <code>Wunused-but-set-variable</code> 来准备弯刀升级 (#159276)</li>
+<li><code>libc++</code> 下 ATen SFINAE 的解决方法 (#161101)</li>
+<li>对 ATen 中的 CCCL (CUB/Thrust/LibCUDACXX) 使用进行更改 (#153373)</li>
+<li>添加可能未使用的标志以删除警告 (#157655)</li>
+<li>在 v2.8 中使用新的 CCCL API (#160554)</li>
+<li>当设备提供显式索引时，改进 cupy 设备放置 (#158529)</li>
+</ul>
+<h2 id="cpu-aarch64">CPU (AArch64)</h2>
+<ul>
+<li>使 PyTorch 可在 ARM 上使用 gcc-14 进行编译 (#157867)</li>
+</ul>
+<h2 id="mps-1">MPS</h2>
+<ul>
+<li>添加 <code>shifted_chebyshev_polynomial_[tuvw]</code>、<code>igamma/igammac,grid_sampler_3d, native_dropout</code>/<code>native_dropout_backward</code> (#157488、#161927、#160541、#162108)</li>
+<li>将原子操作扩展到所有 int 类型 (#158179)</li>
+<li>将 <code>index_put</code> 扩展到复杂类型 (#160159)</li>
+<li>将 <code>addmm</code> 扩展到整数类型 (#160270)</li>
+<li>添加对无符号类型的支持 (#159094)</li>
+<li>添加 API 来查询 GPU 核心数 (#160414)</li>
+<li>添加 <code>kthvalue</code> (#161817)</li>
+<li>类型提升张量迭代器通用 dtype (#160334)</li>
+<li>实现 <code>logcumsumexp</code> 金属内核 (#156858)</li>
+<li>启用 <code>dlpack</code> 集成 (#158888)</li>
+<li>动态减少（#159355）</li>
+<li>更新 <code>avg_pool2d</code> 以在 <code>ceil_mode=True</code> 时使用 Metal 内核 (#161011)</li>
+</ul>
+<h2 id="rocm-1">ROCm</h2>
+<ul>
+<li>额外的 hipify 映射（#158056、#158352、#161992）</li>
+<li>重构 <code>composable_kernel</code> (CK) 后端用户界面以改善用户体验 (#152951)</li>
+<li>允许使用 <code>rocSOLVER</code> 进行 Cholesky 反演。 (#157154)</li>
+<li>AOT 电感器启用 gfx950，以使用 CK 实现最大自动调谐 (#159195)</li>
+<li>添加标志 <code>torch.backends.miopen.immediate</code> 来切换 MIOpen 立即模式，而不是依赖 <code>deterministic=True</code> 和 <code>benchmark=False</code> (#158951)</li>
+<li>MIOpen 卷积不再调用 <code>reshape_</code> 或意外更改内存格式 (#161687)</li>
+</ul>
+<h2 id="xpu-1">XPU</h2>
+<ul>
+<li>支持 AOTInductor 中的 Intel GPU 量化操作 (#156572)</li>
+<li>将 <code>device_id</code> 添加到 Intel GPU 属性以区分具有相同名称的 iGPU (#156481)</li>
+</ul>
+<h1 id="错误修复">错误修复</h1>
+<h2 id="python-前端-2">Python 前端</h2>
+<ul>
+<li>在 <code>torch.utils.cpp_extension.load_inline</code> 中添加选项以覆盖 gencode (#156850)</li>
+<li>修复张量打印中的 <code>max_width</code> 计算 (#126859)</li>
+<li>改进仅 CPU 系统上的 <code>pin_memory</code> 错误消息 (#159994)</li>
+<li>为 <code>F.embedding</code> DTensor-aware 制定批处理规则 (#162117)</li>
+</ul>
+<h2 id="自动毕业-1">自动毕业</h2>
+<ul>
+<li>修复由于 <code>torch.utils.checkpiont</code> 提前停止而导致的 <code>torch.autograd.Function</code> 内存泄漏 (#161171)</li>
+<li>修复 <code>torch.autograd.graph.GradientEdge</code> 为 <code>torch.autograd.Function</code> (#160098)</li>
+<li>匹配 0-dim 渐变设备类型，无论子类如何 (#160165)</li>
+</ul>
+<h2 id="分布式-1">分布式</h2>
+<h3 id="c10d-1">c10d</h3>
+<ul>
+<li>修复由于套接字中重复的 dns 解析失败而导致初始化缓慢的问题 (#159596)</li>
+<li>修复 <code>group_split</code> 和 <code>merge_remote_group</code> 中的 <code>setGroupName</code> 和 <code>setGroupDesc</code> (#159429)</li>
+<li>修复了 Gloo 后端上具有不连续张量的分布式“聚集”的错误 (#158903)</li>
+<li>修复 NCCL 后端上具有非连续张量的分布式“聚集”错误 (#159549)</li>
+<li>通过使 P2P 张量密集，修复使用带有 2D 张量视图的 <code>batch_isend_irecv</code> 时的数据不一致问题 (#163719)</li>
+<li>处理不连续的 <code>allgather</code>/<code>reducescatter</code> 输入 (#163712)</li>
+</ul>
+<h3 id="设备网格-1">设备网格</h3>
+<ul>
+<li>修复未错误地将每个字符串链接为可迭代的问题 (#160709)</li>
+</ul>
+<h3 id="分布式数据并行-ddp-1">分布式数据并行 (DDP)</h3>
+<ul>
+<li>修复 <code>DDPOptimizer</code> 和捐赠缓冲区之间不正确的交互 (#160745)</li>
+</ul>
+<h3 id="dtensor-1">DTensor</h3>
+<ul>
+<li>修复 DTensor 对共轭位的处理 (#158030)</li>
+<li>修复 <code>OpSchema</code> 相等性检查 (#161231)</li>
+<li>修复无效步幅情况下的 <code>grouped_mm</code> 策略 (#158245)</li>
+<li>修复 DTensor 中的 <code>F.one_hot</code> (#162307)</li>
+<li>编译时始终禁用 <code>ShardingPropagation</code> 缓存 (#156868)</li>
+</ul>
+<h3 id="完全分片数据并行-fsdp">完全分片数据并行 (FSDP)</h3>
+<ul>
+<li>修复 FSDP 卸载 <code>pin_memory</code> 中的错误 (#157147)</li>
+<li>修复以确保通过在复制之前展平张量来正确写回处理 <code>NO_SHARD</code> (#154369)</li>
+</ul>
+<h3 id="fullshardeddataparallel2-fsdp2-1">FullShardedDataParallel2 (FSDP2)</h3>
+<ul>
+<li>修复 <code>fsdp_pre_all_gather</code> 的错误消息 (#160817)</li>
+<li>修复 <code>set_reduce_scatter_divide_factor</code> 错误和 <code>MixedPrecisionPolicy</code> 的问题 (#155964)</li>
+</ul>
+<h3 id="管道并行性-pp-1">管道并行性 (PP)</h3>
+<ul>
+<li>修复 <code>no_grad()</code> 下的评估步骤 (#159293)</li>
+<li>修复 <code>eval()</code> 的零气泡时间表 (#159475)</li>
+</ul>
+<h3 id="张量管道-1">张量管道</h3>
+<ul>
+<li>如果在没有 <code>TensorPipe</code> 的情况下编译，则修复 <code>import torch</code> (#159461)</li>
+</ul>
+<h3 id="火炬弹性-1">火炬弹性</h3>
+<ul>
+<li>修复 <code>torch.distributed.elastic.multiprocessing.start_processes()</code> 文档中错误的日志文件名 (#160396)</li>
+</ul>
+<h2 id="线性代数前端-1">线性代数前端</h2>
+<ul>
+<li>避免 BLAS 后端上的 fp16 matmul 下降 (#161999)</li>
+</ul>
+<h2 id="分析器-2">分析器</h2>
+<ul>
+<li>修复快照中全局注释标志的 Linter (#157858)</li>
+</ul>
+<h2 id="外汇-2">外汇</h2>
+<ul>
+<li>使用 symint 修复 <code>split_module</code> (#160093)</li>
+<li>使用 ModuleList 修复 <code>getattr_recursive</code> (#161204)</li>
+<li>使用符号表达式跳过 const 折叠 (#161437)</li>
+<li>修复 <code>torch.Tensor</code> 方法的限定名称 (#162224)</li>
+</ul>
+<h2 id="发电机-2">发电机</h2>
+<ul>
+<li>修复由于 Dynamo 后端和 <code>torch.compiler.reset()</code> 之间的交互而导致的段错误 (#156527)</li>
+<li>修复了由于与重新编译和 Python 3.11+ 中的块交互不良而导致的崩溃 (#162318)</li>
+</ul>
+<h2 id="火炬nn-1">火炬.nn</h2>
+<ul>
+<li>修复 <code>FlexAttention</code> 的无声正确性和反向支撑梯度 (#163677)</li>
+<li>修复 <code>FlexAttention</code> 中的 <code>return_lse</code> 警告消息 (#163578)</li>
+<li>修复 <code>FlexAttention</code> 头部广播 (#163426)</li>
+</ul>
+<h2 id="电感器-2">电感器</h2>
+<ul>
+<li>修复 <code>constant_pad_nd</code> 错误的元函数 (#159878)</li>
+<li>修复电感器中的可学习偏置断言错误 (#161170)</li>
+<li>修复 <code>MutationOutput</code> 缓冲区中的 int64 (#162020)</li>
+<li>修复电感器 CUDA 排序 <code>NaN</code> 行为 (#159308)</li>
+<li>修复外循环融合中本地 buf 的布局 (#160857)</li>
+<li>修复切片分散 <code>dtype</code> 一致性 (#160851)</li>
+<li>修复 3d 平铺在线 softmax (#162341)</li>
+<li>修复 Inductor 中等待后不安全的集体重新排序 (#157489)</li>
+<li>修复 <code>FallbackKernel</code> 别名函数以避免自定义操作的错误别名 (#163227)</li>
+</ul>
+<h2 id="提前电感-aoti-1">提前电感 (AOTI)</h2>
+<ul>
+<li>修复 <code>load_constants</code> 的错误 (#161887)</li>
+<li>修复 <code>gen_aoti_c_shim</code> 中 Fallback_ops_dict 的错误传播 (#159904)</li>
+<li>修复 Inductor 内存规划中无支持的 symint 和内存泄漏 (#159839)</li>
+<li>修复了调用 <code>aoti_torch_as_strided</code> 时 AOTI 中的内存泄漏 (#162118)</li>
+<li>显式删除 <code>wait_tensor</code> 返回的张量 (#159502)</li>
+<li>修复 <code>all_reduce</code> 的内存泄漏 (#159818)</li>
+</ul>
+<h2 id="可组合性-1">可组合性</h2>
+<ul>
+<li>使用 pickle 使功能化 ViewMeta 可序列化 (#163769)</li>
+</ul>
+<h2 id="导出-2">导出</h2>
+<ul>
+<li>修复常量提升过程中的错误 (#157719)</li>
+<li>修复了 unlift pass 中的 <code>from_node</code> 出处 (#157943)</li>
+<li>修复 <code>NaN</code> 序列化 (#155359)</li>
+<li>修复无支持符号范围的反序列化 (#158681)</li>
+<li>修复反序列化中的运行时断言处理 (#159060)</li>
+<li>修复了 unflattener 中的 FQN 处理 (#159418)</li>
+<li>修复 <code>assert_tensor_metadata</code> 节点的 <code>nn_module_stack</code> (#159625)</li>
+<li>修复 <code>move_to_device_pass</code> 的使用（#159992、#160528、#162301）</li>
+<li>避免别名导出模块参数的名称覆盖 (#160600)</li>
+<li>避免在展平中插入 <code>dynamo.disables</code> (#161306)</li>
+<li>修复存储偏移的反序列化问题 (#162172)</li>
+<li>将权重保存到原始字节时删除 <code>.contiguous()</code> 以保留张量的原始存储大小 (#163587)</li>
+</ul>
+<h2 id="量化-2">量化</h2>
+<ul>
+<li>在 CPU <code>qlinear</code> 和 <code>qconv</code> 操作的 fp8 输出中避免 <code>NaN</code> (#160957)</li>
+<li>修复 <code>choose_qparams_optimized</code> 时的分段错误 (#161966)</li>
+</ul>
+<h2 id="foreach-1">foreach</h2>
+<ul>
+<li>Foreach 函子的 <code>chunk_size</code> 应始终为 <code>int64_t</code> (#156872)</li>
+</ul>
+<h2 id="onnx-2">ONNX</h2>
+<ul>
+<li>使 onnx 导出 SDPA 匹配 ATen 行为 (#159973)</li>
+<li>修复 <code>rotary_embedding_23</code> 实现 (#162865)</li>
+<li>修复模型以 <code>None</code> 作为输出时的导出行为 (#160200)</li>
+<li>修复 <code>dynamo=True</code> 中较低的 opset 版本支持 (#161056)</li>
+<li>修复 <code>index_put_</code> 的使用 (#161263)</li>
+</ul>
+<h2 id="c-扩展-1">C++ 扩展</h2>
+<ul>
+<li>修复了 <code>TORCH_CUDA_ARCH_LIST</code> 的 CPP 扩展分布式警告，使其仅在非分布式或等级 0 上运行时记录 (#162764)</li>
+</ul>
+<h2 id="c-前端-1">C++ 前端</h2>
+<ul>
+<li>修复 clang 版本 20.1.7+libcxx 的 <code>torch.utils.cpp_extension</code> 解析器 (#157666)</li>
+<li>修复 <code>MakeTensor::computeStorageSize()</code> 计算 (#158690)</li>
+<li>修复 <code>AllocatorConfig</code> 的静态初始化顺序问题 (#159629)</li>
+</ul>
+<h2 id="构建前端-2">构建前端</h2>
+<ul>
+<li>打开 <code>BUILD_BUNDLEPTXAS=1</code> 以允许在较新的 GPU 上进行编译(#163988)</li>
+</ul>
+<h2 id="cuda-2">CUDA</h2>
+<ul>
+<li>处理未初始化的 <code>torch.backends.cuda.matmul.fp32_precision</code> (#161102)</li>
+<li>修复非 JIT 构建中的 nansum (#158633)</li>
+<li>减少 Blackwell 的 CTCLoss 向后发射范围以避免崩溃 (#159522)</li>
+<li>实施 <code>cudaErrorNotSupported</code> 的解决方法 (#162412)</li>
+<li>向后修正 MultiMarginLoss 中缺失的 <code>__syncthreads</code> (#158994)</li>
+<li>由于编译问题而回滚 cuDNN 前端升级和更新元注册 (#163104)</li>
+<li>禁用 cuDNN 进行 3D 卷积，并使用 <code>kernel size != 1</code> 进行 cuDNN 9.8+ (#163581)
+##CPU</li>
+<li>添加检查，以便非 aarch64 平台可以命中 <code>MKLDNN</code> 路径 (#162168)</li>
+</ul>
+<h2 id="mps-2">MPS</h2>
+<ul>
+<li>修复批次规范不正确的梯度 (#156867)</li>
+<li>如果是 <code>tensor dim > INT_MAX</code> 则不会崩溃 (#158824)</li>
+<li>避免为 MPS 从 <code>exponential_</code> 输出零 (#159386)</li>
+<li>修复 <code>ConvTranspose3d</code> 的 MPS 自动投射 (#160345)</li>
+<li>修复 MPS <code>conv3d</code> 自动施放偏差 dtype 不匹配 (#160423)</li>
+<li>修复标量上 <code>torch.var</code> 的错误检查 (#160889)</li>
+<li>修复 <code>index_add</code> 的复杂 + int64、int64 输入 + Zerodim 索引（#160926、#161511）</li>
+<li>修复了 pad 为空时的 <code>constant_pad_nd_mps</code> 错误 (#161149)</li>
+<li>修复 <code>index_select</code> 为 <code>scalar_types</code> (#161206)</li>
+<li>修复标量的 <code>index_copy</code> 和跨步索引的 <code>index_copy</code> (#161267、#161333)</li>
+<li>在使用 MPS 线性内核之前确保张量是连续的 (#161641)</li>
+<li>如果使用从查询中屏蔽的所有值调用 SDPA，则地址 <code>NaN</code>s (#157727)</li>
+<li>修复无效格式 (#158436)</li>
+<li>修复 posneg 函数中的空输入 (#161824)</li>
+<li>将圆形一元运算迁移到 Metal (#161712)</li>
+<li>类型提升张量迭代器通用 dtype (#160334)</li>
+<li>使用 MPS 修复 2.8.0 中 <code>scaled_dot_product_attention</code> 的回归 (#163598)</li>
+<li>将 <code>fillBuffer</code> 分成 4Gb 切片，以避免 MacOS 26 上的回归 (#164108)</li>
+<li>修复可能导致 CPP 扩展中出现段错误的潜在错误 (#164093)</li>
+</ul>
+<h2 id="rocm-2">ROCm</h2>
+<ul>
+<li>修复 Inductor with cudagraph trees <code>hip:0</code> 设备错误 (#161221)</li>
+<li>修复了一些构建失败并支持 Windows 上的一些 BLAS 调用 (#161981)</li>
+<li>修复在 Windows 上公开 MIOpen 符号后未定义的符号链接器错误 (#156479)</li>
+<li>修复在 Windows 上查找 ROCm/HIP 版本的问题 (#156486)</li>
+<li>修复 Windows 上环境变量路径的 LoadHIP 处理 (#159080)</li>
+<li>在 Windows 上向 <code>cpp_extension.py</code> 添加 hipcc 兼容性标志 (#159790)</li>
+<li>在通过 AOTriton 的 SDPA 中，<code>logsumexp</code> 需要缩放回自然基础 (#156903)</li>
+<li>检查 <code>memcpy_and_sync</code> 内联函数中的流图捕获状态 (#158165)</li>
+</ul>
+<h2 id="xpu-2">XPU</h2>
+<ul>
+<li>修复 <code>cpp_extension</code> 与 <code>intel-deep-learning-essentials-2025.2</code> 的兼容性 (#161012)</li>
+</ul>
+<h2 id="即时生产">即时生产</h2>
+<ul>
+<li>使 <code>ErrorReport::CallStack</code> 线程安全 (#160386)</li>
+<li>修复了解析为 <code>None</code> 的 <code>Tensor?</code> 的 <code>RemoveProfileNodesAndSpecializeTypes</code> 处理 (#161538)</li>
+</ul>
+<h1 id="性能">性能</h1>
+<h2 id="优化器-2">优化器</h2>
+<ul>
+<li>使用 <code>addmm</code> 改进 Muon 中的牛顿-舒尔茨正交化 (#161379)</li>
+<li>避免 SWA <code>AveragedModel.update_parameters()</code> 中的流同步 (#157705)</li>
+</ul>
+<h2 id="自动毕业-2">自动毕业</h2>
+<ul>
+<li>修复 SVD 前向模式 AD 乘法优先级 (#161027)</li>
+</ul>
+<h2 id="发电机-3">发电机</h2>
+<ul>
+<li>递归 <code>dict</code> 标签优化可实现更快的防护评估 (#159183)</li>
+</ul>
+<h2 id="电感器-3">电感器</h2>
+<ul>
+<li>改进 A16W4 和 A16W8 <code>GEMM</code> 模板的性能（#159127、#161148）</li>
+<li>更积极的持续减少（#161055）</li>
+<li>为 LOAF 添加一些外部尺寸缩减案例 (#162028)</li>
+<li>将两个 RoPE 内核融合为一个内核并提高运行时效率 (#161420)</li>
+</ul>
+<h2 id="导出-3">导出</h2>
+<ul>
+<li>占位符命名过程的缓存优化 (#158594)</li>
+<li>添加 <code>fmod.Scalar</code> 和 <code>scale_gradient</code> 的静态调度内核（#160654、#160454）</li>
+</ul>
+<h2 id="cuda-3">CUDA</h2>
+<ul>
+<li>使用非阻塞副本来避免使用 CPU 掩码进行 GPU 张量索引的流同步 (#156384)</li>
+<li>默认情况下禁用 cudagraph GC 以提高捕获性能 (#158649)</li>
+</ul>
+<h2 id="发布工程-2">发布工程</h2>
+<ul>
+<li>升级到 ROCm 6.4.1 和 6.4.2 补丁版本（#156636、#158887、#158886、#158651、#159001）</li>
+<li>将 RPyTorch ROCm CI 迁移到 MI325 容量（#159059、#159649、#161184）</li>
+<li>启用 B200 PyTorch 基准测试（#158011、#157341）</li>
+</ul>
+<h2 id="mps-3">MPS</h2>
+<ul>
+<li>优化 cummin/cummax 金属内核 (#156794)</li>
+<li>1 字节类型的加速 <code>torch.full</code> (#158874)</li>
+<li>加速 <code>argmax</code>/<code>argmin</code> (#159524)</li>
+<li>改进 <code>max_pool3d</code> 的性能 (#157875)</li>
+<li>避免在 <code>max_pool3d</code> impl 中调用张量操作 (#157874)</li>
+<li>将 <code>max_pool2d</code> 移至 <code>stride != 1</code> 的金属 (#157876)</li>
+</ul>
+<h2 id="rocm-3">ROCm</h2>
+<ul>
+<li>SDPA 现在使用 AOTriton 至 0.11b (#161754)</li>
+<li>对于 ROCm >= 6.3，gfx908 默认使用 <code>hipblaslt</code> (#159092)</li>
+<li>启用 miopen 通道的最后 3d 进行 conv 和 batchnorm (#160529)</li>
+<li>删除 MIOpen 上 NHWC 卷积中的额外转置 (#160435)</li>
+<li>删除 <code>tensor.item()</code> 中的额外同步 (#158486)</li>
+<li>逐元素和缩减内核性能改进（#159430、#159652、#160444、#160466、#161054、#161180、#161181）</li>
+<li>启用 <code>fbgemm_gpu genai</code> 源的构建以支持分组 GEMM (#160676)</li>
+</ul>
+<h2 id="xpu-3">XPU</h2>
+<ul>
+<li>为 Intel GPU 启用张量内存描述符 Triton 模板 (#161600)</li>
+</ul>
+<h1 id="文档">文档</h1>
+<h2 id="python-前端-3">Python 前端</h2>
+<ul>
+<li>改进了 <code>torch.lobpcg</code>、<code>torch.clone</code>、<code>torch.matmul</code>、<code>torch.max</code>、<code>torch.gather</code>、<code>torch.Tensor.scatter_</code>、<code>torch.empty_like</code>、<code>torch.randint</code>、<code>torch.mul</code>、<code>torch.min</code>、<code>torch.max</code> 的文档。 <code>torch.sort</code>、<code>torch.full_like</code>、<code>torch.histogramdd</code>、<code>torch.hamming_window</code>（#156139、#157007、#161424、#156153、#157929、#157920、#158050、#158731、#160312、#161539、 ＃162051，＃158275，＃152682）</li>
+<li>删除序列化文档中与 torchscript 相关的部分 (#156648)</li>
+<li>修复 <code>torch.set_float32_matmul_precision</code> 文档中的拼写错误 (#158191)</li>
+<li>修复 <code>torch.nn.utils.clip_grads_with_norm_</code> 的文档字符串以反映夹紧行为 (#158200)</li>
+<li>修复<code>torch.gradient</code>中edge_order描述的文档问题（#159130）</li>
+<li>添加 <code>torch.segment_reduce</code> 文档 (#154352)</li>
+<li>将示例添加到 <code>torch.is_floating_point</code> 和 <code>torch.is_complex</code> 文档 (#161951)</li>
+</ul>
+<h2 id="火炬nn-2">火炬.nn</h2>
+<ul>
+<li>改进了 <code>avg_poolnd</code> 的 <code>padding</code> 描述 (#159142)</li>
+<li>使用不正确的目标规范示例改进 <code>CrossEntropyLoss</code> 文档 (#155649)</li>
+<li>删除 <code>scaled_dot_product_attention</code> 示例中冗余的数据类型转换 (#161613)</li>
+</ul>
+<h2 id="优化器-3">优化器</h2>
+<ul>
+<li>正确记录特定优化器模块 API，例如 <code>torch.optim.adam.Adam</code>（#158483、#158669、#160194）</li>
+<li>在 Adafactor 文档 #154862 (#155248) 中添加注释以确保清晰</li>
+<li>轻微改进 <code>zero_grad</code> 描述 (#161239)</li>
+</ul>
+<h2 id="自动毕业-3">自动毕业</h2>
+<ul>
+<li>改进 <code>torch.inference_mode</code> 文档和错误消息 (#161164)</li>
+</ul>
+<h2 id="分布式-2">分布式</h2>
+<h3 id="c10d-2">c10d</h3>
+<ul>
+<li>记录障碍集体与 <code>device_id</code> 的互动 (#159389)</li>
+<li>修复注释以匹配 <code>distributed_c10d.py</code> 中的逻辑 (#162158)</li>
+</ul>
+<h3 id="dtensor-2">DTensor</h3>
+<ul>
+<li>重写了 <code>TupleStrategy</code> 的文档 (#158132)</li>
+<li>记录 <code>redistribute_costs</code> (#158495)</li>
+</ul>
+<h3 id="完全分片数据并行-fsdp-1">完全分片数据并行 (FSDP)</h3>
+<ul>
+<li>删除了 FSDP1 开发者说明 (#158991)</li>
+</ul>
+<h2 id="分析器-3">分析器</h2>
+<ul>
+<li>更新 PT2 Profiler Torch 编译的区域图像 (#158066)</li>
+<li>修复实验配置文档(#156586)</li>
+<li>更新自述文件 (#159816)</li>
+</ul>
+<h2 id="外汇-3">外汇</h2>
+<ul>
+<li>修复 <code>torch/</code> 中的拼写错误（<code>torch/fx/</code>，#156604）</li>
+<li>添加输入（#158450）</li>
+<li>修复 FX 解释器类文档中的拼写错误 (#162055)</li>
+<li>从 <code>torch/fx/experimental/migrate_gradual_types/util.py</code> 中删除允许无类型定义 (#157236)</li>
+</ul>
+<h2 id="电感器-4">电感器</h2>
+<ul>
+<li>添加 CUDAGraph 分区的文档 (#159450)</li>
+</ul>
+<h2 id="导出-4">导出</h2>
+<ul>
+<li>更新有关草稿导出、动态和 PT2 存档的文档 (#157750)</li>
+</ul>
+<h2 id="onnx-3">ONNX</h2>
+<ul>
+<li>更新导出文档字符串 (#162622)</li>
+<li>删除已弃用的教程页面链接 (#157310)</li>
+<li>过滤出 torchscript 句子 (#158850)</li>
+<li>修复 <code>symbolic_multi_out</code> 的文档拼写错误 (#160702)</li>
+<li><code>onnx.md</code> 简化已弃用的实体 (#159312)</li>
+<li>更新导出文档字符串并默认设置 <code>fallback=False</code> (#162622、#162726)</li>
+<li>修复错误消息中的拼写错误：峰会 -> 提交 (#162587)</li>
+</ul>
+<h2 id="发布工程-3">发布工程</h2>
+<ul>
+<li>添加装饰器以创建弃用警告 (#155127)</li>
+<li>将可运行的代码示例添加到导出文档 (#158506)</li>
+<li>添加将新后端集成到 PyTorch 的开发人员注释 (#158644)</li>
+</ul>
+<h2 id="xpu-4">XPU</h2>
+<ul>
+<li>将支持的操作系统更新为适用于 Intel client GPU 的 Windows 11 和 Ubuntu 24.04/25.04 (#161699)</li>
+</ul>
+<h1 id="安全">安全</h1>
+<h2 id="python-前端-4">Python 前端</h2>
+<ul>
+<li>不要将火焰图存储到 tmp 文件夹 (#157374)</li>
+</ul>
+<h1 id="开发者">开发者</h1>
+<h2 id="python-前端-5">Python 前端</h2>
+<ul>
+<li>更好的 addmm OpInfo 示例输入 (#160234)</li>
+</ul>
+<h2 id="分布式-3">分布式</h2>
+<h3 id="c10d-3">c10d</h3>
+<ul>
+<li>添加 <code>waitcounter</code> 用于看门狗和心跳监控线程 (#157480)</li>
+<li>让 <code>torch.distributed.breakpoint</code> 设置很长的超时（#158481）</li>
+<li>添加 <code>check_rng_sync</code> 实用程序 (#160283)</li>
+<li>添加对 <code>ProcessGroupXCCL</code> 的 <code>FlightRecorder</code> 支持 (#158568)</li>
+<li>将 <code>early_stop</code> kwarg 添加到 <code>torch.utils.checkpoint</code> (#160781)</li>
+</ul>
+<h3 id="dtensor-3">DTensor</h3>
+<ul>
+<li>包含上下文异常的分片道具错误 (#161574)</li>
+<li>添加检查是否跟踪分片传播以处理 DTensor 中不可散列的键 (#160798)</li>
+</ul>
+<h3 id="设备网格-2">设备网格</h3>
+<ul>
+<li>当用户尝试切片不连续的扁平暗子网格时添加错误 (#157523)</li>
+<li>当调试 ENV 未设置时，使 repr 更短 (#158822)</li>
+</ul>
+<h3 id="分片张量">分片张量</h3>
+<ul>
+<li>在 ShardedTensor 创建中使错误消息具有描述性（#150627、#159423）</li>
+</ul>
+<h3 id="管道并行性-pp-2">管道并行性 (PP)</h3>
+<ul>
+<li>添加分析以安排执行 (#160753)</li>
+</ul>
+<h2 id="外汇-4">外汇</h2>
+<ul>
+<li>在 Tracer 中合并堆栈跟踪（#156257、#157302、#158266）</li>
+<li>不同级别的单独来源跟踪（#160383、#158399、#158796、#159484）</li>
+<li>修复 <code>register_foward_pre_hook not supported on ScriptModule</code> 错误 (#156904)</li>
+<li>将 <code>__eq__</code> 功能添加到 NodeSource (#158170)</li>
+<li>将 <code>__hash__</code> 函数添加到 NodeSource (#158322)</li>
+<li>缓存字典和字符串代表以获得更好的 NodeSource 性能 (#158372)</li>
+<li>从 dict 恢复节点源（#158373，#158473）</li>
+<li>在 <code>tlparse</code> 错误中包含错误堆栈跟踪和图形模块 (#158469)</li>
+<li>为 FX 打印、渲染描述符、更新测试添加 <code>expanded_def</code> 选项 (#158708)</li>
+<li>删除 <code>co_lnotab</code> 以支持 <code>co_linetable</code> (#159227)</li>
+<li>删除重复导入 (#161685)</li>
+<li>包括 <code>CompiledFxGraph</code> 的输出张量元数据 (#159311)</li>
+</ul>
+<h2 id="电感器-5">电感器</h2>
+<ul>
+<li>在 <code>tl.dot(..., allow_tf32=...)</code> 中弃用 <code>allow_tf32</code>，使用 <code>tl.dot(..., input_precision=...)</code> (#160711)</li>
+<li>将自动调谐选择和基准测试结果记录到 scuba/chrome 跟踪 (#159496)</li>
+<li>添加 TLParse 工件来记录集合和计算操作的运行时间 (#159730)</li>
+<li>在 Inductor Triton 内核编译路径中调用 <code>jit_post_compile_hook</code> (#161443)</li>
+<li>修剪需要比硬件限制更多共享内存的配置 (#161996)</li>
+<li>在仅 mm 基准模式上使用 nccl 估计器进行运行时估计 (#161405)</li>
+<li>不要在电感器缓存密钥中使用 <code>torch.backends.cuda.matmul.allow_tf32</code> (#159480)</li>
+</ul>
+<h2 id="提前电感-aoti-2">提前电感 (AOTI)</h2>
+<ul>
+<li>未找到 .so/cpp 文件时出现更好的错误消息 (#156863)</li>
+<li>清理 AOTI c 垫片中的旧 API (#158400)</li>
+<li>为 cpp extern 内核添加电感器出处映射（#161656、#162069）</li>
+<li>当 nvcc 编译器失败时打印错误消息 (#157203)</li>
+<li>添加 AOTI 包的内核信息 JSON 生成 (#160540)</li>
+</ul>
+<h2 id="可组合性-2">可组合性</h2>
+<ul>
+<li>停止建议在数据相关错误上使用 <code>guard_size_oblivious</code> (#160510)</li>
+<li>避免不必要的切片导致数据相关错误 (#157528)</li>
+</ul>
+<h2 id="量化-3">量化</h2>
+<ul>
+<li>修改数据类型文档 (#156087)</li>
+<li>使用新的类型语句来修复类型的公共 API (#158487)</li>
+</ul>
+<h2 id="数据加载器前端">数据加载器前端</h2>
+<ul>
+<li>添加 <code>torch.utils.data</code> 采样器基准脚本 (#156974)</li>
+<li>添加 <code>torch.utils.data.Dataloader</code> 基准测试脚本 (#159432)</li>
+</ul>
+<h2 id="发布工程-4">发布工程</h2>
+<ul>
+<li>将 <code>setup.py develop</code> 替换为 <code>pip install -e</code> 以进行开发构建（#155998、#156027、#156710）（#156709）</li>
+</ul>
+<h2 id="xpu-5">XPU</h2>
+<ul>
+<li>将 Intel GPU 软件堆栈包升级为 intel-deep-learning-essentials-2025.2 (#158733)</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/pytorch/pytorch">pytorch/pytorch</a> · 🏷️ 版本：<code>v2.9.0</code> · 📅 发布：2025-10-15 · <a href="https://github.com/pytorch/pytorch/releases/tag/v2.9.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/pytorch/pytorch_v2.9.1"> <span class="k">← 下一个</span> <span class="t">v2.9.1</span> </a> <a href="/zh/release_note/pytorch/pytorch_v2.8.0"> <span class="k">上一个 →</span> <span class="t">v2.8.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/pytorch/pytorch/releases/tag/v2.9.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener"> <span>pytorch/pytorch</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#构建-macos-14-的金属内核并删除所有-macos-14-之前的特定逻辑需要-macos-14-继续前进159733159912" class>构建 MacOS-14+ 的金属内核并删除所有 MacOS-14 之前的特定逻辑，需要 MacOS-14+ 继续前进（#159733，#159912）</a><a href="#升级到-dlpack-10-145000" class>升级到 DLPack 1.0 (#145000)</a><a href="#在-torchcat-中引发适当的错误-158249" class>在 torch.cat 中引发适当的错误 (#158249)</a><a href="#onnx-导出器默认为-dynamotrue-159646162726" class>ONNX 导出器默认为 dynamo=True (#159646、#162726)</a><a href="#默认情况下在导出中关闭运行时断言以支持形状保护功能160111161178161794" class>默认情况下，在导出中关闭运行时断言，以支持形状保护功能（#160111、#161178、#161794）</a><a href="#在-onnx-中将默认-opset-设置为-20-158802" class>在 ONNX 中将默认 opset 设置为 20 (#158802)</a><a href="#将-draft_export-放入导出器-api-161454-162225" class>将 draft_export 放入导出器 API (#161454, #162225)</a><a href="#删除-torchonnxdynamo_export-和-onnxrt-torch-编译后端-158130-158258" class>删除 torch.onnx.dynamo_export 和 onnxrt torch 编译后端 (#158130, #158258)</a><a href="#删除-torchonnxenable_fake_mode-161222" class>删除 torch.onnx.enable_fake_mode (#161222)</a><a href="#基于-torchscript-的导出器的一些面向公众的-onnx-实用程序-api-现在是私有的-161323" class>基于 TorchScript 的导出器的一些面向公众的 ONNX 实用程序 API 现在是私有的 (#161323)</a><a href="#删除-torchonnxsymbolic_caffe2-157102" class>删除 torch.onnx.symbolic_caffe2 (#157102)</a><a href="#删除会减慢构建速度的-d2implyavx512upperregs-标志-159431" class>删除会减慢构建速度的 /d2implyavx512upperregs 标志 (#159431)</a><a href="#将-scalartype-添加到垫片转换和-stabletensorscalar_type-160557" class>将 ScalarType 添加到垫片转换和 stable::Tensor.scalar_type (#160557)</a><a href="#弃用-torchutilsdatadataloader-中的-pin_memory_device-参数-158323" class>弃用 torch.utils.data.DataLoader 中的 pin_memory_device 参数 (#158323)</a><a href="#弃用-torchexportexport_for_training-api转而使用等效的-torchexportexport-api-158203" class>弃用 torch.export.export_for_training API，转而使用等效的 torch.export.export API (#158203)</a><a href="#python-前端" class>Python 前端</a><a href="#外汇" class>外汇</a><a href="#发电机" class>发电机</a><a href="#优化器" class>优化器</a><a href="#分析器" class>分析器</a><a href="#电感器" class>电感器</a><a href="#导出" class>导出</a><a href="#aot-调度程序" class>AOT 调度程序</a><a href="#量化" class>量化</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/pytorch/pytorch_v2.15.0"> <span class="v">v2.15.0</span> <span class="d">26-10-28</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.14.1"> <span class="v">v2.14.1</span> <span class="d">26-09-30</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.14.0"> <span class="v">v2.14.0</span> <span class="d">26-09-02</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.13.0"> <span class="v">v2.13.0</span> <span class="d">26-07-08</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.12.1"> <span class="v">v2.12.1</span> <span class="d">26-06-18</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.12.0"> <span class="v">v2.12.0</span> <span class="d">26-05-13</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.11.0"> <span class="v">v2.11.0</span> <span class="d">26-03-23</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.10.0"> <span class="v">v2.10.0</span> <span class="d">26-01-21</span> </a> </li> </ul> <a href="/zh/releases/pytorch" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

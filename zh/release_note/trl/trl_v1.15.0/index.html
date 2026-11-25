@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>trl v1.15.0 — STAGS NextStack</title><meta name="description" content="SFT, DPO, KTO, GRPO, RLOO and Distillation now score tokens with a fused LM head: a Triton kernel projects the hidden states through the LM head in tiles and reduces to per-token log-probs and entropy directly, so the…"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/trl/trl_v1.15.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/trl/1.15.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/trl/trl_v1.15.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/trl/1.15.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="trl v1.15.0 — STAGS NextStack"><meta property="og:description" content="SFT, DPO, KTO, GRPO, RLOO and Distillation now score tokens with a fused LM head: a Triton kernel projects the hidden states through the LM head in tiles and reduces to per-token log-probs and entropy directly, so the…"><meta property="og:url" content="https://www.stags.cn/zh/release_note/trl/trl_v1.15.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/trl/trl_v1.15.0/#article","headline":"trl v1.15.0 release notes","datePublished":"2026-10-08","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/huggingface/trl"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/trl/1.15.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/trl/trl_v1.15.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/trl/1.15.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/trl/1.15.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/trl/1.15.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/trl/1.15.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/trl/1.15.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/trl">trl</a> </nav> <h1 class="detail-title"> <span class="p">trl</span> v1.15.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年10月8日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/huggingface/trl" target="_blank" rel="noopener"> <span class="k">来源</span>huggingface/trl </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/trl/1.15.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/trl/trl_v1.15.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="trl-v1150">trl v1.15.0</h1>
+<img width="1672" height="941" alt="霓虹灯握持工业阀门" src="https://github.com/user-attachments/assets/329793d4-cef1-49ae-9ab6-5b1387d13071">
+## 特点
+### ⚡ 融合 LM 头：同一 GPU 上长达 6.9× 更长的序列
+SFT、DPO、KTO、GRPO、RLOO 和 Distillation 现在使用**融合 LM 头**对标记进行评分：Triton 内核通过 LM 头以图块形式投影隐藏状态，并直接减少为每个标记的对数概率和熵，因此永远不会构建 `[batch, seq, vocab]` logits 张量。默认情况下它是打开的，无需打开任何东西。
+**最大可训练序列长度**（gemma-3-1b、262k 词汇量、79 GiB GPU 内存、bf16、批量大小 1、梯度检查点、sdpa）：
+|培训师| v1.14.2 | v1.15.0 | |
+| --- | --- | --- | --- |
+|数据保护官 | 10,240 | 10,240 **59,392** | **5.80×** |
+| KTO（批量大小 2）| 9,216 | 9,216 **63,488** | **6.89×** |
+| GRPO（仅评分）| 28,672 | 28,672 **114,688** | **4.00×** |
+| RLOO（仅计分）| 23,552 | 23,552 **100,352** | **4.26×** |
+| SFT (`loss_type="nll"`) | 20,480 | 20,480 **107,520** | **5.25×** |
+| SFT（默认`chunked_nll`）| 107,520 | 107,520 107,520 | 107,520 1.00× |
+**在 8,192 个令牌**时，峰值内存下降 52% 至 82%，并且步骤速度加快 2.3% 至 10.9%：
+|培训师|峰值 GiB v1.14.2 → v1.15.0 |代币 |
+| --- | --- | --- |
+|数据保护官 | 48.97 → **12.00** (-75.5%) | 1.035× |
+|韩国贸易组织 | 64.91 → **11.98** (-81.5%) | 1.045× |
+| GRPO | 24.15 → **10.30** (-57.4%) | 1.023× |
+|罗洛 | 29.28 → **14.02** (-52.1%) | 1.029× |
+| SFT (`nll`) | 30.33 → **8.87** (-70.7%) | 1.029× |
+对于具有大词汇量的小模型，增益最大。 SFT之前的默认值（`chunked_nll`）已经避免了完整的logits，因此它没有改变。评分需要 GPU（带有 CUDA、ROCm 或 XPU 的 Linux）上的 Triton。
+**💥 这会给您带来什么变化。** 全 logits 评分路径、`use_liger_kernel` 分块路径和 `_forward_redirection` 已从 GRPO、RLOO、DPO 和 KTO 中消失：
+* `lm_head`** 上的 PEFT 适配器现在升起。请改用 `modules_to_save=["lm_head"]`。
+* `use_liger_kernel=True` 在这四个训练器中已弃用，并将在 v2.0.0 中删除。 Liger 的层内核仍然适用，但 `fused_linear_cross_entropy` 被迫为 `False`（它将取代融合头）并明确设置它引发。使用`model_init_kwargs={"use_kernels": True}`。
+* 在 DPO 和 KTO 中，`compute_metrics` 和 `compute_loss(..., return_outputs=True)` 仍会从仅在使用时进行的额外前向传递中获得完整的 logits。两者都警告说这已被弃用并将在 v2.0.0 中删除。
+培训师记录的其他内容不会丢失：内核获得了 `log_sum_sq_probs`（WPO 权重）、`mean_logits`（`logits/chosen`、`logits/rejected`）和 `is_top1`（DPO 的 `mean_token_accuracy`）作为选择加入输出，每个输出都对照测试中的完整 logits 进行检查。
+&#x3C;详情>
+<summary>基准详细信息</summary>
+1× B300，PyTorch 分配器上限为 79 GiB（大约 H100 80GB 的可用内存），`google/gemma-3-1b-pt` 根据其配置构建，具有随机 bf16 权重、lr 1e-6、AdamW、精确长度的合成令牌 ID。最大长度：每次尝试一个新过程，2 个训练步骤，从 8k 倍增，然后二分到 1024 个令牌，在同一作业中手臂交错循环。吞吐量：12 个步骤，前 2 个被丢弃，同一作业中 3 个 A/B/A/B 重复的中值。本底噪声（A 与 A）为 0.1% 至 0.8%，低于报告的每个间隙。 GRPO/RLOO 用固定的随机完成替换生成，因此仅测量得分。
+未测量：H100 硬件本身、flash-attention（仅限 sdpa）、真实生成、多 GPU。
+<!--详情-->
+* 通过 @qgallouedec 在 https://github.com/huggingface/trl/pull/7386 中使用 Triton 内核计算分块对数概率
+* 在 https://github.com/huggingface/trl/pull/7387 中由 @qgallouedec 修补的转发中添加一个选择加入的融合 LM 头
+* 💥 使用 @qgallouedec 在 https://github.com/huggingface/trl/pull/7389 中的融合 LM 头对 GRPO 和 RLOO 代币进行评分
+* 💥 使用 @qgallouedec 在 https://github.com/huggingface/trl/pull/7390 中的融合 LM 头对 DPO 和 KTO 代币进行评分
+* 使用 @qgallouedec 在 https://github.com/huggingface/trl/pull/7466 中的融合 LM 头对 SFT 代币进行评分
+* 通过 @qgallouedec 在 https://github.com/huggingface/trl/pull/7465 中使用 Triton 内核计算蒸馏散度
+* 仅计算 https://github.com/huggingface/trl/pull/7406 中 @qgallouedec 请求的融合 LM 头输出
+* https://github.com/huggingface/trl/pull/7415 中的 @qgallouedec 将 `patch_fused_lm_head` 重命名为 `add_fused_lm_head`
+* https://github.com/huggingface/trl/pull/7439 中 @YaseenBashaT 的融合 LM 头中的 Honor `logits_scaling` 和 `lm_head_multiplier`
+* 修复 https://github.com/huggingface/trl/pull/7479 中@albertvillanova 跨设备模型的融合 LM 头
+### SFT 中的选择性激活检查点
+启用梯度检查点后，注意力输出现在会在前向过程中保存，而不是在后向中重新计算，从而在长上下文中恢复大部分检查点减速，每层有一个额外的隐藏状态大小的张量。 torchtitan 在 FSDP2 下使用相同的急切 SAC 方法，不需要 `torch.compile`。
+```python
+SFTConfig(
+    gradient_checkpointing=True,
+    gradient_checkpointing_kwargs={"selective": True},
+)
+```
+PEFT + DeepSpeed ZeRO-3 被拒绝：该组合需要可重入检查点，而 SAC 无法使用该组合。
+通过 @kashif 在 https://github.com/huggingface/trl/pull/7194
+### SFT 中视觉数据集的仅助手损失
+`assistant_only_loss=True` 现在适用于视觉数据集。 `SFTTrainer` 曾经拒绝它，因为一旦图像占位符扩展，处理器就不会返回可用的辅助蒙版； [transformers#48793](https://github.com/huggingface/transformers/pull/48793) 修复了该问题，并以 `transformers` 5.18 形式发货。
+```python
+SFTConfig(assistant_only_loss=True)  # now fine with an image dataset
+```
+视觉整理器通过处理器的 `apply_chat_template` 对会话示例进行标记，并请求辅助掩码掩盖标签中的非辅助标记。较旧的 `transformers` 仍然会引发，现在消息中包含所需的版本。
+作者：@albertvillanova，https://github.com/huggingface/trl/pull/7377
+### 完成表中的对话
+提示和完成内容被记录为原始对话列表，而不是 `batch_decode` 的平面字符串，因此表格会依次呈现。对于多转弯和工具调用设置以及 VLM 来说更具可读性。
+<img width="1627" alt="逐次渲染的完成表" src="https://github.com/user-attachments/assets/649cf786-d4e5-4955-b486-ff7cd8d7439b">
+呈现的系统提示（包括聊天模板注入的工具定义）不再可见，因为显示的是原始消息而不是完全模板化的字符串。
+作者：@qgallouedec，https://github.com/huggingface/trl/pull/5309
+### AsyncGRPO 和 AsyncDistillation
+* AsyncGRPO：通过 @adithya-s-k 在 https://github.com/huggingface/trl/pull/6947 中验证的令牌捕获来训练 OpenEnv 利用
+* 在https://github.com/huggingface/trl/pull/7476中添加@kashif对`AsyncDistillationTrainer`的PEFT支持
+* 通过 @lewtun 在 https://github.com/huggingface/trl/pull/7549 中使用数据并行 vLLM 修复 AsyncGRPO 组中的重复完成
+### 其他
+* 在 https://github.com/huggingface/trl/pull/5868 中添加 @aazizyan 的带有生成标记的 SmolVLM 原始和训练聊天模板
+* 在https://github.com/huggingface/trl/pull/7508中通过@qgallouedec声明`loss_is_scaled_for_ga`的梯度累积损失缩放
+* 保持 SFT 的 MoE aux 损失与 https://github.com/huggingface/trl/pull/7570 中的 @qgallouedec 的世界大小和梯度累积无关
+* 在https://github.com/huggingface/trl/pull/7360中发现类上的环境工具，而不是@Rome-1的实例
+* 在 `VLLMClient` 中接受 @qgallouedec 在 https://github.com/huggingface/trl/pull/7462 中的 IPv6 `base_url`
+* 通过 @qgallouedec 在 https://github.com/huggingface/trl/pull/7547 中的 VLM SFT 整理器中的 `processor_kwargs` 传递处理器 kwargs
+* 在 https://github.com/huggingface/trl/pull/7384 中@qgallouedec 的脚本和示例末尾调用 `trainer.end()`
+* 在 https://github.com/huggingface/trl/pull/7464 中的 @qgallouedec 的 TRL Docker 映像中安装 vLLM
+* 穿过港口的火车线束：将 @sergiopaniego 的独立开放代码示例放在 https://github.com/huggingface/trl/pull/7457 中
+* 在 https://github.com/huggingface/trl/pull/7567 中添加 @qgallouedec 对 vLLM 0.31.0 的支持
+## 重大更改和删除
+* **删除 Python 3.10 支持** 由 @qgallouedec 在 https://github.com/huggingface/trl/pull/7497 中
+* **拒绝`nn.DataParallel`**（并放弃多GPU慢速测试作业），作者：https://github.com/huggingface/trl/pull/7407中的@qgallouedec
+* **删除https://github.com/huggingface/trl/pull/7500中@qgallouedec的实验性MiniLLM训练器**
+* **`use_liger_kernel` 在 `DPOTrainer`、`KTOTrainer`、`GRPOTrainer` 和 `RLOOTrainer` 中已弃用**，并将在 v2.0.0 中删除。这些训练器现在使用融合的 LM 头，因此只有 Liger 的层内核适用；请改用 `model_init_kwargs={"use_kernels": True}`。文档由 @qgallouedec 在 https://github.com/huggingface/trl/pull/7535 中更新
+* 在 https://github.com/huggingface/trl/pull/7435,、https://github.com/huggingface/trl/pull/7499 和 https://github.com/huggingface/trl/pull/7568 中删除 @qgallouedec 的 vLLM 0.20.0 / 0.20.1 / 0.20.2 支持
+* 通过 @behroozazarkhalili 在 https://github.com/huggingface/trl/pull/6946 中删除无法访问的 `prepare_multimodal_messages_vllm`
+## 修复
+* **修复聊天模板漂移**：识别当前的 LFM2 (#7494) 和 LFM2.5 (#7493) 聊天模板、其他 Gemma 4 修订版 (#7495)、解析当前的 LFM2 工具调用 (#7522)，并读取按默认变体 (#7530) 作为命名变体提供的模板，全部由 @albertvillanova 完成
+* **修复 `dataset_text_field` 不是 `"text"` 时 `SFTTrainer` 不附加 EOS** 由 https://github.com/huggingface/trl/pull/7446 中的 @JoeyTan21
+* **结束模型声明的每个 eos id 的完成** 在 https://github.com/huggingface/trl/pull/7505, 中 @albertvillanova 的 GRPO、RLOO 和 Distillation 以及 https://github.com/huggingface/trl/pull/7506 中的实验训练器中
+* **在标记化提示和提示+完成分歧的地方开始完成** by @qgallouedec in https://github.com/huggingface/trl/pull/7463
+* **修复了 https://github.com/huggingface/trl/pull/7410 中的 @albertvillanova 在 vLLM 0.20 到 0.25 上第一次权重同步时的服务器模式崩溃问题**
+* **在 vLLM 服务器模式下工具调用后为每个样本生成一个补全** 由 https://github.com/huggingface/trl/pull/7418 中的 @qgallouedec
+* **在 FSDP 下修复 `precompute_ref_log_probs`，没有参考模型** 由 @qgallouedec 在 https://github.com/huggingface/trl/pull/7507 中
+* **在没有可训练标记的批次上保持 DFT 损失有限** 作者：https://github.com/huggingface/trl/pull/7471 中的 @albertvillanova
+* **在 https://github.com/huggingface/trl/pull/7545, 中由 @qgallouedec 保护 vLLM client** 中的 `requests` 和 `urllib3` 导入，以及在 https://github.com/huggingface/trl/pull/7561 中@albertvillanova 的实验性异步 vLLM clients 中保护 `requests` 和 `urllib3` 导入
+* `fix(cpo, orpo)`：独立截断响应以防止 https://github.com/huggingface/trl/pull/6588 中 @RohanMali2003 的空完成
+* 修复 https://github.com/huggingface/trl/pull/7450 中@jayzuccarelli 具有未绑定字嵌入的模型的 FLOP 计数过高问题
+* `[MFU]` 在 https://github.com/huggingface/trl/pull/7197 中使用设备峰值触发器，而不是 @dwarez 硬编码的 H100
+* 修复了从 @albertvillanova 在 https://github.com/huggingface/trl/pull/7455 中的模型 ID 加载 bf16 检查点时 Apple Silicon 上的段错误
+* 将 DoRA 幅度向量保留在 QLoRA 下的 float32 中，由 @qgallouedec 在 https://github.com/huggingface/trl/pull/7342 中
+* 修复 https://github.com/huggingface/trl/pull/7467 中@adithya-s-k 缺失的 OpenReward 结果奖励
+* 将下一回合的第一个令牌保留在 https://github.com/huggingface/trl/pull/7375 中 @albertvillanova 的 Llava-Next 助理面具之外
+* 在 https://github.com/huggingface/trl/pull/7559 中 @albertvillanova 加载带有变压器 5.3.0 的远程代码模型后绑定权重
+* 使 SDFT 无需 pef 即可导入，并通过 @albertvillanova 在 https://github.com/huggingface/trl/pull/7562 中对齐 SSD
+* 在 https://github.com/huggingface/trl/pull/7394 中的 @DaoyuanLi2816 中保留 CLI 脚本中的显式 `model_init_kwargs`
+* CLI 脚本中的 `resume_from_checkpoint` 由 @DaoyuanLi2816 在 https://github.com/huggingface/trl/pull/7391 中实现
+* 在创建模型之前进行种子处理，以便 @qgallouedec 在 https://github.com/huggingface/trl/pull/7385, 中重现 PEFT 适配器初始化，并在 @albertvillanova 在 https://github.com/huggingface/trl/pull/7401 中的实验训练器中重现
+* 通过 @albertvillanova 在 https://github.com/huggingface/trl/pull/7379 中删除 `trl vllm-serve` 中的冗余生成启动方法
+* `FIX`：L40 上的 `test_offloading_with_peft_models`，在 https://github.com/huggingface/trl/pull/7380 中 @AmineDiro 的激活卸载测试中注册模型参数
+* 从 @behroozazarkhalili 在 https://github.com/huggingface/trl/pull/6866 中的 Nemotron 3 SFT 示例中删除已失效的 `gate_proj` LoRA 目标
+* 以 @behroozazarkhalili 在 https://github.com/huggingface/trl/pull/6870 中的 Nemotron 3 LoRA 示例中的 Mamba `in_proj` 为目标
+* 将 `sft_qwen3_8b_1m_context.py` 中的内省防护替换为 https://github.com/huggingface/trl/pull/7537 中 @kumarrah2002 的版本检查
+## 文档
+* 通过 @davanstrien 在 https://github.com/huggingface/trl/pull/7441 中扩展工作培训指南
+* 由 @akshansh47 在 https://github.com/huggingface/trl/pull/5794 中记录 `expandable_segments` 分配器配置以进行内存调整
+* 由 @qgallouedec 在 https://github.com/huggingface/trl/pull/7593 中更新了熔融 LM 头的“新增功能”
+* 记录每个存储的聊天模板并通过 @albertvillanova 在 https://github.com/huggingface/trl/pull/7502 中的 CI 中进行检查
+* 记录 @albertvillanova 在 https://github.com/huggingface/trl/pull/7440 中发布的补丁内容
+* @albertvillanova 在 https://github.com/huggingface/trl/pull/7472 中记录输入验证指南
+* 在 https://github.com/huggingface/trl/pull/7405 中打开@qgallouedec 文档中的硬包装段落
+* 不鼓励 `SimpleNamespace`、`object.__new__` 和 https://github.com/huggingface/trl/pull/7459 中 @qgallouedec 的代理指令中的模拟测试
+* 要求首次贡献者链接 https://github.com/huggingface/trl/pull/7313 中 @qgallouedec 分配给他们的问题
+* 将 AI 使用政策扩展到 https://github.com/huggingface/trl/pull/7473 中 @albertvillanova 的问题
+* 需要错误报告来说明 @albertvillanova 在 https://github.com/huggingface/trl/pull/7474 中如何解决该问题
+* 标签 CONTRIBUTING.md 更改为 @albertvillanova 在 https://github.com/huggingface/trl/pull/7475 中的文档
+## CI
+**聊天模板覆盖**，因此漂移不再重复出现，这一切均由 @albertvillanova 完成：记录每个存储的聊天模板并在 CI 中检查它 (#7502)，添加一个脚本检查引用 Hub 存储库是否仍然提供存储的聊天模板 (#7523)，每周检查一次 (#7521)，并测试早期的 LFM2 版本 (#7527)
+**小模型配置对齐**，继续扫描，全部由 @albertvillanova 完成：DeepSeek-V3 (#7398) 和 V3-0528 (#7399)、GPT-OSS (#7424)、Qwen2-VL (#7425) 和 Qwen2.5-VL (#7426) mrope 部分、Nemotron-3-Nano (#7443)、 Nemotron-3.5-Lightning (#7444)、Nemotron-3-Super (#7447)、Nemotron-3-Ultra (#7448)、LFM2 (#7400)、LFM2.5 (#7532)
+**测试质量**，遵循“真实对象，而不是模拟”规则，全部由 @albertvillanova 完成：在 GRPO 和 SDFT 测试中构建真正的训练器而不是 `object.__new__` (#7531)，在 GOLD 和 GKD 测试中构建真实配置而不是 `SimpleNamespace` (#7564)，通过 `__init__` (#7555) 构建异步推出循环，运行异步对真实分词器和响应解析器进行 GRPO 推出循环测试 (#7556)，在真实模型输出上对齐 DFT 损失测试 (#7481)
+**套件卫生**，除非另有说明，均由 @albertvillanova 提供：将 vLLM 训练 (#7488)、连续批处理 (#7487) 和 SFT 激活卸载 (#7477) 测试移至常规套件，取消将 vLLM client/服务器测试标记为慢速 (#7490)，在单个 xdist 工作线程上运行它们 (#7489)，将 SFT 慢速测试替换为fp16 测试 (#7550)、删除始终跳过的 Gemma 3n 测试 (#7485)、删除 no-op Slow 和 low_priority 标记 (#7486)、停止管道 vLLM 测试服务器输出 (#7414)、在最后一个可见加速器上运行 VLM 测试服务器 (#7412)、根据记录的 `vllm serve` 命令测试 vLLM client (#7378)、将 `MODEL_REVISIONS` 注入自动加载程序 (#7528)、将 pad 令牌镜像到回调测试中的模型配置上 (#7383)、删除 DataParallel 收集警告过滤器 (#7554)、将 mamba-ssm 自动转换警告过滤器删除与变压器 5.6 绑定 (#7431)、删除夜间缓存清理工作流程 (#7395)、范围@hf-security-analysis (#7381) 为每个作业设置 `GITHUB_TOKEN` 权限，@paulinebm (#7542) 提升文档生成器工作流程 pin，Dependabot 组提升 (#7411)
+**修补程序**：x 使 DataParallel 下的 GRPO 连续批处理测试失败 (#7422)，x 使针对损坏的 Transformer 开发版本的 Qwen3.5-MoE VLM 测试失败 (#7437)，并在修复后恢复 (#7460)
+## 新贡献者
+* @dwarez 在 https://github.com/huggingface/trl/pull/7197 中做出了第一个贡献
+* @Rome-1 在 https://github.com/huggingface/trl/pull/7360 中做出了第一个贡献
+* @JoeyTan21 在 https://github.com/huggingface/trl/pull/7446 中做出了第一个贡献
+* @jayzuccarelli 在 https://github.com/huggingface/trl/pull/7450 中做出了第一个贡献
+* @RohanMali2003 在 https://github.com/huggingface/trl/pull/6588 中做出了第一个贡献
+* @kumarrah2002 在 https://github.com/huggingface/trl/pull/7537 中做出了第一个贡献
+## 发生了什么变化
+* ⬆️ @albertvillanova 在 https://github.com/huggingface/trl/pull/7393 中的凹凸开发版本
+* https://github.com/huggingface/trl/pull/7381 中 @hf-security-analysis[bot] 为每个作业分配 GITHUB_TOKEN 权限范围
+* 在 @albertvillanova 在 https://github.com/huggingface/trl/pull/7383 的回调测试中将 pad 令牌镜像到模型配置上
+* 通过 @albertvillanova 在 https://github.com/huggingface/trl/pull/7379 中删除 `trl vllm-serve` 中的冗余生成启动方法
+* 在创建模型之前进行种子处理，以便 @qgallouedec 在 https://github.com/huggingface/trl/pull/7385 中可以重现 PEFT 适配器初始化
+* 通过 @qgallouedec 在 https://github.com/huggingface/trl/pull/7386 中使用 Triton 内核计算分块对数概率
+* 在 https://github.com/huggingface/trl/pull/7387 中 @qgallouedec 修补的转发中添加一个选择加入的融合 LM 头
+* 在 https://github.com/huggingface/trl/pull/7405 中打开@qgallouedec 文档中的硬包装段落
+* 使用 @qgallouedec 在 https://github.com/huggingface/trl/pull/7389 中的融合 LM 头对 GRPO 和 RLOO 代币进行评分
+* 修复 https://github.com/huggingface/trl/pull/7410 中 @albertvillanova 在 vLLM 0.20 到 0.25 上第一次权重同步时服务器模式崩溃的问题
+* 通过 @dependabot[bot] 在 https://github.com/huggingface/trl/pull/7411 中跨多个生态系统进行 2 次更新，突破“github-actions-and-pre-commit”组
+* 在 @albertvillanova 在 https://github.com/huggingface/trl/pull/7401 的实验训练器中创建模型之前进行种子
+* 将小型 DeepSeek-V3-0528 配置与 @albertvillanova 在 https://github.com/huggingface/trl/pull/7399 中的 deepseek-ai/DeepSeek-R1-0528 对齐
+* 修补程序 CI：在 https://github.com/huggingface/trl/pull/7422 中 @albertvillanova 在 DataParallel 下进行 GRPO 连续批处理测试失败
+* 将小型 DeepSeek-V3 配置与 @albertvillanova 在 https://github.com/huggingface/trl/pull/7398 中的 deepseek-ai/DeepSeek-R1 对齐
+* 删除 https://github.com/huggingface/trl/pull/7395 中 @albertvillanova 的夜间缓存清理工作流程
+* [修复] https://github.com/huggingface/trl/pull/7418 中的 @qgallouedec 在 vLLM 服务器模式下进行工具调用后，为每个样本生成一个补全
+* 在https://github.com/huggingface/trl/pull/7394中通过@DaoyuanLi2816在CLI脚本中保留显式的model_init_kwargs
+* 在https://github.com/huggingface/trl/pull/7391中尊重@DaoyuanLi2816在CLI脚本中的resume_from_checkpoint
+* 在 https://github.com/huggingface/trl/pull/7384 中@qgallouedec 的脚本和示例末尾调用 trainer.end()
+* https://github.com/huggingface/trl/pull/7415 中的 @qgallouedec 将 `patch_fused_lm_head` 重命名为 `add_fused_lm_head`
+* 修补程序 CI：Xfail Qwen3.5-MoE VLM 针对 @albertvillanova 在 https://github.com/huggingface/trl/pull/7437 中损坏的变压器开发版本进行测试
+* 将微小的 GPT-OSS 配置与 @albertvillanova 在 https://github.com/huggingface/trl/pull/7424 中的 openai/gpt-oss-20b 对齐
+* 将微小的 Qwen2-VL mrope_section 与 @albertvillanova 在 https://github.com/huggingface/trl/pull/7425 中的 Qwen/Qwen2-VL-2B-Instruct 对齐
+* 将微小的 Qwen2.5-VL mrope_section 与 https://github.com/huggingface/trl/pull/7426 中 @albertvillanova 的 Qwen/Qwen2.5-VL-3B-Instruct 对齐
+* 通过 @davanstrien 在 https://github.com/huggingface/trl/pull/7441 中扩展工作培训指南
+* 将下一回合的第一个令牌保留在 https://github.com/huggingface/trl/pull/7375 中 @albertvillanova 的 Llava-Next 助理面具之外
+* 将 mamba-ssm 自动施放警告过滤器移除与 @albertvillanova 在 https://github.com/huggingface/trl/pull/7431 中的变压器 5.6 联系起来
+* 停止通过管道传输 vLLM 测试服务器输出，以便它不再隐藏错误或阻止服务器 @albertvillanova 在 https://github.com/huggingface/trl/pull/7414
+* 在最后一个可见的加速器上运行 VLM 测试服务器，以便它可以在 https://github.com/huggingface/trl/pull/7412 中的 @albertvillanova 的 24 GB GPU 上启动
+* 将微型 Nemotron-3-Nano 配置与 https://github.com/huggingface/trl/pull/7443 中的 @albertvillanova 的 nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16 对齐
+* 将微型 Nemotron-3.5-Lightning 配置与 https://github.com/huggingface/trl/pull/7444 中的 @albertvillanova 的 nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16 对齐
+* 将微型 Nemotron-3-Super 配置与 @albertvillanova 在 https://github.com/huggingface/trl/pull/7447 中的 nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16 对齐
+* 将微型 Nemotron-3-Ultra 配置与 @albertvillanova 在 https://github.com/huggingface/trl/pull/7448 中的 nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16 对齐
+* 修复 https://github.com/huggingface/trl/pull/7450 中 @jayzuccarelli 具有未绑定字嵌入的模型的 FLOP 计数过高问题
+* 在 https://github.com/huggingface/trl/pull/7194 中@kashif 将选择性激活检查点 (SAC) 添加到 SFT
+* 修复了 https://github.com/huggingface/trl/pull/7446 中 @JoeyTan21 当 `dataset_text_field` 不是 `"text"` 时 SFTTrainer 不附加 EOS 的问题
+* 要求首次贡献者链接 https://github.com/huggingface/trl/pull/7313 中 @qgallouedec 分配给他们的问题
+* 现在恢复 Qwen3.5-MoE VLM 测试的 xfail，变压器通过 @albertvillanova 在 https://github.com/huggingface/trl/pull/7460 中修复了 router_logits
+* 在 https://github.com/huggingface/trl/pull/7435 中删除 @qgallouedec 的 vLLM 0.20.0 支持
+* [MFU] 在 https://github.com/huggingface/trl/pull/7197 中使用 @dwarez 的设备峰值触发器而不是硬编码的 H100
+* 修复了 https://github.com/huggingface/trl/pull/7455 中 @albertvillanova 从模型 ID 加载 bf16 检查点时 Apple Silicon 上的段错误
+* 根据 @albertvillanova 在 https://github.com/huggingface/trl/pull/7378 中记录的 `vllm serve` 命令测试 vLLM client
+* 支持 @albertvillanova 在 https://github.com/huggingface/trl/pull/7377 中 SFT 中视觉数据集的仅助手损失
+* AsyncGRPO：通过 @adithya-s-k 在 https://github.com/huggingface/trl/pull/6947 中验证的令牌捕获来训练 OpenEnv 利用
+* 不鼓励在 https://github.com/huggingface/trl/pull/7459 中 @qgallouedec 的代理指令测试中使用 SimpleNamespace、object.__new__ 和模拟
+* 在 https://github.com/huggingface/trl/pull/7462 中接受 @qgallouedec 在 VLLMClient 中的 IPv6 base_url
+* 修复：L40 上的 test_offloading_with_peft_models。在https://github.com/huggingface/trl/pull/7380中@AmineDiro在激活卸载测试中注册模型参数
+* 删除https://github.com/huggingface/trl/pull/6946中@behroozazarkhalili无法访问的prepare_multimodal_messages_vllm
+* 文档：@akshansh47 在 https://github.com/huggingface/trl/pull/5794 中用于内存调整的文档可扩展_段分配器配置
+* @albertvillanova 在 https://github.com/huggingface/trl/pull/7472 中记录输入验证指南
+* 将 AI 使用政策扩展到 https://github.com/huggingface/trl/pull/7473 中@albertvillanova 的问题
+* 需要错误报告来说明 @albertvillanova 在 https://github.com/huggingface/trl/pull/7474 中如何解决该问题
+* 标签 CONTRIBUTING.md 更改为 @albertvillanova 在 https://github.com/huggingface/trl/pull/7475 中的文档
+* 在 https://github.com/huggingface/trl/pull/7471 中 @albertvillanova 在没有可训练标记的批次上保持 DFT 损失有限
+* 将 SFT 激活卸载测试移至 https://github.com/huggingface/trl/pull/7477 中 @albertvillanova 的常规套件
+* 将 DoRA 幅度向量保留在 QLoRA 下的 float32 中，由 @qgallouedec 在 https://github.com/huggingface/trl/pull/7342 中
+* 记录 @albertvillanova 在 https://github.com/huggingface/trl/pull/7440 中发布的补丁内容
+* 在 https://github.com/huggingface/trl/pull/7464 中的 @qgallouedec 的 TRL Docker 映像中安装 vLLM
+* 从 @behroozazarkhalili 在 https://github.com/huggingface/trl/pull/6866 中的 Nemotron 3 SFT 示例中删除失效的 gateway_proj LoRA 目标
+* 以 @behroozazarkhalili 在 https://github.com/huggingface/trl/pull/6870 中的 Nemotron 3 LoRA 示例中的 Mamba in_proj 为目标
+* 在 https://github.com/huggingface/trl/pull/5868 中添加 @aazizyan 的带有生成标记的 SmolVLM 原始和训练聊天模板
+* 在 https://github.com/huggingface/trl/pull/7439 中 @YaseenBashaT 尊重融合 LM 头中的 logits_scaling 和 lm_head_multiplier
+* 在https://github.com/huggingface/trl/pull/7360中发现类上的环境工具，而不是@Rome-1的实例
+*修复（cpo，orpo）：独立截断响应以防止https://github.com/huggingface/trl/pull/6588中@RohanMali2003的空完成
+* 识别https://github.com/huggingface/trl/pull/7493中@albertvillanova当前的LFM2.5聊天模板
+* 识别 https://github.com/huggingface/trl/pull/7495 中@albertvillanova 的其他 Gemma 4 聊天模板修订版
+* 由 @albertvillanova 在 https://github.com/huggingface/trl/pull/7489 中的单个 xdist 工作线程上运行 vLLM 服务器测试
+* 在 https://github.com/huggingface/trl/pull/7490 中取消将 vLLM client/服务器测试标记为慢的 @albertvillanova
+* 识别当前 LFM2 聊天模板，仅由 @albertvillanova 在 https://github.com/huggingface/trl/pull/7494 中进行助理丢失
+* 将小型 LFM2 配置与 @albertvillanova 在 https://github.com/huggingface/trl/pull/7400 中的 LiquidAI/LFM2-1.2B 对齐
+* 删除 https://github.com/huggingface/trl/pull/7485 中 @albertvillanova 始终跳过的 Gemma 3n 测试
+* 从 @albertvillanova 在 https://github.com/huggingface/trl/pull/7486 的实验测试中删除 no-op Slow 和 low_priority 标记
+* 将 vLLM 训练测试移至常规套件，并由 @albertvillanova 在 https://github.com/huggingface/trl/pull/7488 中将其添加到 RLOO
+* 在 https://github.com/huggingface/trl/pull/7497 中删除 @qgallouedec 的 Python 3.10 支持
+* 在 https://github.com/huggingface/trl/pull/7499 中删除 @qgallouedec 的 vLLM 0.20.1 支持
+* 通过港口的火车线束：将 @sergiopaniego 的独立开放代码示例放在 https://github.com/huggingface/trl/pull/7457 中
+* 修复 https://github.com/huggingface/trl/pull/7507 中 @qgallouedec 在 FSDP 下无参考模型的 `precompute_ref_log_probs`
+* 修复 https://github.com/huggingface/trl/pull/7467 中@adithya-s-k 缺失的 OpenReward 结果奖励
+* 修复@albertvillanova 在 https://github.com/huggingface/trl/pull/7479 中跨设备拆分模型的融合 LM 头
+* 在 @albertvillanova 在 https://github.com/huggingface/trl/pull/7528 中的测试中将 MODEL_REVISIONS 注入自动分词器和处理器加载器中
+* 将小型 LFM2.5 配置与 https://github.com/huggingface/trl/pull/7532 中的 @albertvillanova 的 LiquidAI/LFM2.5-230M 对齐
+* 添加一个脚本，检查参考 Hub 存储库是否仍通过 @albertvillanova 在 https://github.com/huggingface/trl/pull/7523 中提供存储的聊天模板
+* 每周检查参考 Hub 存储库是否仍然在 https://github.com/huggingface/trl/pull/7521 中发送@albertvillanova 存储的聊天模板
+* 将 DFT 损失测试与 @albertvillanova 在 https://github.com/huggingface/trl/pull/7481 中的真实模型输出对齐
+* 记录每个存储的聊天模板，并通过 @albertvillanova 在 https://github.com/huggingface/trl/pull/7502 中的 CI 中检查它
+* 由 @paulinebm 在 https://github.com/huggingface/trl/pull/7542 中凹凸文档生成器工作流程引脚
+* 删除 https://github.com/huggingface/trl/pull/7500 中 @qgallouedec 的实验性 MiniLLM 训练器
+* 拒绝 nn.DataParallel 并删除 @qgallouedec 在 https://github.com/huggingface/trl/pull/7407 中的多 GPU 慢速测试作业
+* 将 sft_qwen3_8b_1m_context.py 中的内省防护替换为 https://github.com/huggingface/trl/pull/7537 中 @kumarrah2002 的版本检查
+* 修复：在 https://github.com/huggingface/trl/pull/7463 中@qgallouedec 标记化提示和提示+完成出现分歧的情况下启动完成
+* 在 https://github.com/huggingface/trl/pull/5309 中 @qgallouedec 在完成表中显示对话而不是解码文本
+* 结束模型在 GRPO、RLOO 和 Distillation 中声明的每个 eos id 的完成，作者为 https://github.com/huggingface/trl/pull/7505 中的 @albertvillanova
+* 通过 https://github.com/huggingface/trl/pull/7545 中的 @qgallouedec 保护 vLLM client 中的请求和 urllib3 导入
+* 通过 @kashif 在 https://github.com/huggingface/trl/pull/7476 中为 AsyncDistillationTrainer 添加 PEFT 支持
+* 通过 @lewtun 在 https://github.com/huggingface/trl/pull/7549 中使用数据并行 vLLM 修复 AsyncGRPO 组中的重复完成
+* 结束模型在 @albertvillanova 在 https://github.com/huggingface/trl/pull/7506 的实验训练器中声明的每个 eos id 的完成
+* 在 @albertvillanova 在 https://github.com/huggingface/trl/pull/7531 的 GRPO 和 SDFT 测试中构建真正的训练器而不是 object.__new__
+* 将连续批处理测试移至常规套件，并将其添加至 https://github.com/huggingface/trl/pull/7487 中 @albertvillanova 的 RLOO
+* 通过https://github.com/huggingface/trl/pull/7547中@qgallouedec的VLM SFT整理器中的processor_kwargs传递处理器kwargs
+* 仅计算 https://github.com/huggingface/trl/pull/7406 中 @qgallouedec 请求的融合 LM 头输出
+* 使用 @qgallouedec 在 https://github.com/huggingface/trl/pull/7390 中的融合 LM 头对 DPO 和 KTO 代币进行评分
+* 在 https://github.com/huggingface/trl/pull/7567 中添加 @qgallouedec 对 vLLM 0.31.0 的支持
+* 在 https://github.com/huggingface/trl/pull/7568 中删除 @qgallouedec 的 vLLM 0.20.2 支持
+* 使用 @qgallouedec 在 https://github.com/huggingface/trl/pull/7466 中的融合 LM 头对 SFT 代币进行评分
+* 解析https://github.com/huggingface/trl/pull/7522中@albertvillanova当前LFM2聊天模板的工具调用
+* 保留@albertvillanova 在 https://github.com/huggingface/trl/pull/7527 中测试的早期 LFM2 聊天模板修订版
+* 阅读 @albertvillanova 在 https://github.com/huggingface/trl/pull/7530 中以默认变体命名的变体形式提供的聊天模板
+* 将 SFT 慢速测试替换为 @albertvillanova 在 https://github.com/huggingface/trl/pull/7550 中的 fp16 测试
+* 删除 https://github.com/huggingface/trl/pull/7554 中 @albertvillanova 的 DataParallel 收集警告过滤器
+* 在 https://github.com/huggingface/trl/pull/7559 中 @albertvillanova 加载带有变压器 5.3.0 的远程代码模型后绑定权重
+* 保护 @albertvillanova 在 https://github.com/huggingface/trl/pull/7561 实验性异步 vLLM clients 中导入的请求
+* 使 SDFT 无需 pef 即可导入，并由 @albertvillanova 在 https://github.com/huggingface/trl/pull/7562 中对齐 SSD
+* 在 @albertvillanova 在 https://github.com/huggingface/trl/pull/7564 的 GOLD 和 GKD 测试中构建真实的配置而不是 SimpleNamespace
+* 保持 SFT 的 MoE aux 损失与 https://github.com/huggingface/trl/pull/7570 中的 @qgallouedec 的世界大小和梯度累积无关
+* 通过 @albertvillanova 在 https://github.com/huggingface/trl/pull/7555 中的 __init__ 在测试中构建异步推出循环
+* 由 @albertvillanova 在 https://github.com/huggingface/trl/pull/7556 中的真实分词器和响应解析器上运行异步 GRPO 推出循环测试
+* 由 @qgallouedec 在 https://github.com/huggingface/trl/pull/7465 中使用 Triton 内核计算蒸馏散度
+* 从 @qgallouedec 的 https://github.com/huggingface/trl/pull/7535 文档中删除已弃用的 `use_liger_kernel`
+* 在https://github.com/huggingface/trl/pull/7508中通过@qgallouedec声明`loss_is_scaled_for_ga`的梯度累积损失缩放
+* 由 @qgallouedec 在 https://github.com/huggingface/trl/pull/7593 中更新了熔融 LM 头的“新增功能”
+* 发布：v1.15 由 @qgallouedec 在 https://github.com/huggingface/trl/pull/7594 中
+**完整 Changelog**：https://github.com/huggingface/trl/compare/v1.14.0...v1.15.0
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/huggingface/trl">huggingface/trl</a> · 🏷️ 版本：<code>v1.15.0</code> · 📅 发布：2026-10-08 · <a href="https://github.com/huggingface/trl/releases/tag/v1.15.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/trl/trl_v1.16.0"> <span class="k">← 下一个</span> <span class="t">v1.16.0</span> </a> <a href="/zh/release_note/trl/trl_v1.14.2"> <span class="k">上一个 →</span> <span class="t">v1.14.2</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/huggingface/trl/releases/tag/v1.15.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/huggingface/trl" target="_blank" rel="noopener"> <span>huggingface/trl</span> <span class="d">↗</span> </a> </li> </ul> </div>  <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/trl/trl_v1.18.2"> <span class="v">v1.18.2</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.18.1"> <span class="v">v1.18.1</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.18.0"> <span class="v">v1.18.0</span> <span class="d">26-11-13</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.17.1"> <span class="v">v1.17.1</span> <span class="d">26-10-30</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.17.0"> <span class="v">v1.17.0</span> <span class="d">26-10-29</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.16.0"> <span class="v">v1.16.0</span> <span class="d">26-10-15</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.15.0" aria-current="true"> <span class="v">v1.15.0</span> <span class="d">26-10-08</span> </a> </li><li> <a href="/zh/release_note/trl/trl_v1.14.2"> <span class="v">v1.14.2</span> <span class="d">26-10-06</span> </a> </li> </ul> <a href="/zh/releases/trl" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

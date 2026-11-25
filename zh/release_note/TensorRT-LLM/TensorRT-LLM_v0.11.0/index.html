@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TensorRT-LLM v0.11.0 — STAGS NextStack</title><meta name="description" content="We are very pleased to announce the 0.11.0 version of TensorRT-LLM. This update includes"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.11.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/tensorrt-llm/0.11.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.11.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/tensorrt-llm/0.11.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="TensorRT-LLM v0.11.0 — STAGS NextStack"><meta property="og:description" content="We are very pleased to announce the 0.11.0 version of TensorRT-LLM. This update includes"><meta property="og:url" content="https://www.stags.cn/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.11.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.11.0/#article","headline":"TensorRT-LLM v0.11.0 release notes","datePublished":"2024-07-17","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/NVIDIA/TensorRT-LLM"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/tensorrt-llm/0.11.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.11.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/tensorrt-llm/0.11.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/tensorrt-llm/0.11.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/tensorrt-llm/0.11.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/tensorrt-llm/0.11.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/tensorrt-llm/0.11.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/tensorrt-llm">TensorRT-LLM</a> </nav> <h1 class="detail-title"> <span class="p">TensorRT-LLM</span> v0.11.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2024年7月17日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noopener"> <span class="k">来源</span>NVIDIA/TensorRT-LLM </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/tensorrt-llm/0.11.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.11.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="tensorrt-llm-v0110">TensorRT-LLM v0.11.0</h1>
+<p>嗨，
+我们非常高兴地发布 TensorRT-LLM 的 <a href="https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v0.11.0">0.11.0</a> 版本。本次更新包括：</p>
+<h3 id="主要功能和增强功能">主要功能和增强功能</h3>
+<ul>
+<li>支持 LLaMA 的非常长的上下文（请参阅 <code>examples/llama/README.md</code> 中的“长上下文评估”部分）。</li>
+<li>低延迟优化
+<ul>
+<li>添加了reduce-norm功能，旨在将AllReduce之后的ResidualAdd和LayerNorm内核融合为单个内核，建议在批量大小较小且生成阶段时间占主导地位时启用该功能。</li>
+<li>为 GEMM 插件添加了 FP8 支持，这有利于批量大小小于 4 的情况。</li>
+<li>在 SM90 上为 FP8 添加了融合的 GEMM-SwiGLU 插件。</li>
+</ul>
+</li>
+<li>LoRA 增强
+<ul>
+<li>支持运行带有 FP16 LoRA 检查点的 FP8 LLaMA。</li>
+<li>添加了对量化基础模型和 FP16/BF16 LoRA 的支持。
+<ul>
+<li>SQ OOTB (- INT8 A/W) + FP16/BF16/FP32 LoRA​</li>
+<li>INT8/ INT4 仅重量 (INT8 /W) + FP16/BF16/FP32 LoRA​</li>
+<li>仅重量分组 + FP16/BF16/FP32 LoRA</li>
+</ul>
+</li>
+<li>在 Qwen2 中添加了 LoRA 支持，请参阅 <code>examples/qwen/README.md</code> 中的“使用 LoRA 运行模型”部分。</li>
+<li>添加了对 Phi-3-mini/small FP8 底座 + FP16/BF16 LoRA 的支持，请参阅 <code>examples/phi/README.md</code> 中的“使用 LoRA 运行 Phi-3”部分。</li>
+<li>添加了对 starcoder-v2 FP8 基础 + FP16/BF16 LoRA 的支持，请参阅 <code>examples/gpt/README.md</code> 中的“使用 LoRA 运行 StarCoder2”部分。</li>
+</ul>
+</li>
+<li>编码器-解码器模型 C++ 运行时增强
+<ul>
+<li>支持分页 KV 缓存和飞行批处理。 （#800）</li>
+<li>支持张量并行。</li>
+</ul>
+</li>
+<li>支持 INT8 量化，不包括嵌入层。</li>
+<li>将 Whisper 的默认模型更新为 <code>distil-whisper/distil-large-v3</code>，感谢 @IbrahimAmin1 在 #1337 中的贡献。</li>
+<li>支持Python高级API自动下载HuggingFace模型。</li>
+<li>支持用于动态批处理的显式草稿令牌。</li>
+<li>支持本地自定义校准数据集，感谢@DreamGenX 在#1762 中的贡献。</li>
+<li>添加了批量 logits 后处理器。</li>
+<li>将 Hopper qgmma 内核添加到 XQA JIT 代码路径。</li>
+<li>支持为 MoE 一起启用的张量并行性和专家并行性。</li>
+<li>支持层数不能除以 PP 大小时的管道并行情况。</li>
+<li>将 <code>numQueuedRequests</code> 添加到执行器 API 的迭代统计日志中。</li>
+<li>将 <code>iterLatencyMilliSec</code> 添加到执行器 API 的迭代统计日志中。</li>
+<li>添加来自社区的 HuggingFace 模型动物园，感谢 @matichon-vultureprime 在 #1674 中的贡献。</li>
+</ul>
+<h3 id="api-变化">API 变化</h3>
+<ul>
+<li>[重大变更] <code>trtllm-build</code> 命令
+<ul>
+<li>将 Whisper 迁移到统一工作流程（<code>trtllm-build</code> 命令），请参阅文档：examples/whisper/README.md。</li>
+<li><code>trtllm-build</code> 命令中的 <code>max_batch_size</code> 默认切换为 256。</li>
+<li><code>trtllm-build</code> 命令中的 <code>max_num_tokens</code> 默认切换为 8192。</li>
+<li>弃用了 <code>max_output_len</code> 并添加了 <code>max_seq_len</code>。</li>
+<li>从 <code>trtllm-build</code> 命令中删除了不必要的 <code>--weight_only_precision</code> 参数。</li>
+<li>从 <code>trtllm-build</code> 命令中删除了 <code>attention_qk_half_accumulation</code> 参数。</li>
+<li>从 <code>trtllm-build</code> 命令中删除了 <code>use_context_fmha_for_generation</code> 参数。</li>
+<li>从 <code>trtllm-build</code> 命令中删除了 <code>strongly_typed</code> 参数。</li>
+<li><code>max_seq_len</code> 的默认值现在从 HuggingFace 模式配置中读取。</li>
+</ul>
+</li>
+<li>C++运行时
+<ul>
+<li>[重大变更] 将 <code>ModelRunnerCpp</code> 中的 <code>free_gpu_memory_fraction</code> 重命名为 <code>kv_cache_free_gpu_memory_fraction</code>。</li>
+<li>[重大变更] 重构 <code>GptManager</code> API
+<ul>
+<li>将 <code>maxBeamWidth</code> 移至 <code>TrtGptModelOptionalParams</code>。</li>
+<li>将 <code>schedulerConfig</code> 移至 <code>TrtGptModelOptionalParams</code>。</li>
+</ul>
+</li>
+<li>为 <code>ModelRunnerCpp</code> 添加了更多选项，包括 <code>max_tokens_in_paged_kv_cache</code>、<code>kv_cache_enable_block_reuse</code> 和 <code>enable_chunked_context</code>。</li>
+</ul>
+</li>
+<li>[重大变更] Python 高级 API</li>
+<li>删除了 <code>ModelConfig</code> 类别，所有选项均移至 <code>LLM</code> 类别。
+<ul>
+<li>重构了<code>LLM</code>类，请参考<code>examples/high-level-api/README.md</code>
+<ul>
+<li>移动了显式参数列表中最常用的选项，并隐藏了 kwargs 中的专家选项。</li>
+<li>公开 <code>model</code> 以接受 HuggingFace 模型名称或本地 HuggingFace 模型/TensorRT-LLM 检查点/TensorRT-LLM 引擎。</li>
+<li>支持从 HuggingFace 模型中心下载模型，目前仅支持 Llama 变体。</li>
+<li>支持构建缓存，通过设置环境变量 <code>TLLM_HLAPI_BUILD_CACHE=1</code> 或将 <code>enable_build_cache=True</code> 传递给 <code>LLM</code> 类来重用构建的 TensorRT-LLM 引擎。</li>
+<li>kwargs 中公开的低级选项包括 <code>BuildConfig</code>、<code>SchedulerConfig</code> 等，理想情况下您应该能够配置有关构建和运行时阶段的详细信息。</li>
+</ul>
+</li>
+<li>重构了<code>LLM.generate()</code>和<code>LLM.generate_async()</code> API。
+<ul>
+<li>删除了 <code>SamplingConfig</code>。</li>
+<li>添加了具有更广泛参数的 <code>SamplingParams</code>，请参阅 <code>tensorrt_llm/hlapi/utils.py</code>。
+<ul>
+<li>新的 <code>SamplingParams</code> 包含并管理 <code>SamplingConfig</code>、<code>OutputConfig</code> 等的 Python 绑定中的字段。</li>
+</ul>
+</li>
+<li>将 <code>LLM.generate()</code> 输出重构为 <code>RequestOutput</code>，请参阅 <code>tensorrt_llm/hlapi/llm.py</code>。</li>
+</ul>
+</li>
+<li>更新了<code>apps</code>示例，特别是使用<code>LLM</code> API重写了<code>chat.py</code>和<code>fastapi_server.py</code>，详细信息请参阅<code>examples/apps/README.md</code>。
+<ul>
+<li>更新了<code>chat.py</code>，支持多轮对话，允许用户在终端中与模型聊天。</li>
+<li>修复了 <code>fastapi_server.py</code> 并消除了多 GPU 场景中对 <code>mpirun</code> 的需求。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>[重大变更] 推测解码配置统一
+<ul>
+<li>引入 <code>SpeculativeDecodingMode.h</code> 以在不同的推测解码技术之间进行选择。</li>
+<li>引入用于推测解码技术的 <code>SpeculativeDecodingModule.h</code> 基类。</li>
+<li>删除了 <code>decodingMode.h</code>。</li>
+</ul>
+</li>
+<li><code>gptManagerBenchmark</code>
+<ul>
+<li>[重大变更] <code>gptManagerBenchmark</code> 命令中的 <code>api</code> 现在默认为 <code>executor</code>。</li>
+<li>添加了运行时 <code>max_batch_size</code>。</li>
+<li>添加了运行时 <code>max_num_tokens</code>。</li>
+</ul>
+</li>
+<li>[重大变更] 向 <code>LayerNorm</code> 模块添加了 <code>bias</code> 参数，并支持非偏置层归一化。</li>
+<li>[重大变更] 删除了 <code>GptSession</code> Python 绑定。</li>
+</ul>
+<h3 id="模型更新">模型更新</h3>
+<ul>
+<li>支持 Jais，请参阅 <code>examples/jais/README.md</code>。</li>
+<li>支持 DiT，请参阅 <code>examples/dit/README.md</code>。</li>
+<li>支持VILA 1.5。</li>
+<li>支持视频 NeVA，请参阅 <code>examples/multimodal/README.md</code> 中的 <code>Video NeVA</code> 部分。</li>
+<li>支持 Grok-1，请参阅 <code>examples/grok/README.md</code>。</li>
+<li>支持带有 FP8 PTQ 的 Qwen1.5-110B。</li>
+<li>支持具有块稀疏注意力的 Phi-3 小模型。</li>
+<li>支持 InternLM2 7B/20B，感谢 @RunningLeon 在 #1392 中的贡献。</li>
+<li>支持的 Phi-3-medium 型号，请参阅 <code>examples/phi/README.md</code>。</li>
+<li>支持Qwen1.5 MoE A2.7B。</li>
+<li>支持 phi 3 视觉多模式。</li>
+</ul>
+<h3 id="已修复的问题">已修复的问题</h3>
+<ul>
+<li>修复了批量大小大于 1 时损坏的输出。(#1539)</li>
+<li>修复了 <code>executor.py</code> 中的 <code>top_k</code> 类型，感谢 @vonjackustc 在 #1329 中的贡献。</li>
+<li>修复了 Python 运行时中的停止和坏词列表指针偏移，感谢 @fjosw 在 #1486 中的贡献。</li>
+<li>修复了 Whisper 模型的一些拼写错误，感谢 #1328 中@Pzzzzz5142 的贡献。</li>
+<li>修复了 CUDA 驱动程序 &#x3C; 526 和 pynvml >= 11.5.0 的导出失败问题，感谢 @CoderHam 在 #1537 中的贡献。</li>
+<li>修复了 NMT 权重转换中的问题，感谢 #1660 中 @Pzzzzz5142 的贡献。</li>
+<li>修复了 LLaMA Smooth Quant 转换，感谢 @lopuhin 在 #1650 中的贡献。</li>
+<li>修复了 Qwen1.5-32B (#1589) 的 <code>qkv_bias</code> 形状问题，感谢 @Tlntin 在 #1637 中的贡献。</li>
+<li>修复了 <code>fpA_intB</code> 的 Ada 特征错误，感谢 @JamesTheZ 在 #1583 中的贡献。</li>
+<li>更新 <code>examples/qwenvl/requirements.txt</code>，感谢 @ngoanpv 在 #1248 中的贡献。</li>
+<li>修复了 <code>lora_manager</code> 中的 rsLoRA 缩放问题，感谢 @TheCodeWrangler 在 #1669 中的贡献。</li>
+<li>修复了 Qwen1.5 检查点转换失​​败#1675。</li>
+<li>修复了 Medusa safetensors 和 AWQ 转换，感谢 @Tushar-ml 在 #1535 中的贡献。</li>
+<li>修复了在全局范围之外调用该函数时 <code>convert_hf_mpt_legacy</code> 调用失败的问题，这要归功于 #1534 中 @bloodeagle40234 的贡献。</li>
+<li>修复了 <code>use_fp8_context_fmha</code> 损坏的输出 (#1539)。</li>
+<li>修复了 NMT 模型的预规范权重转换，感谢 @Pzzzzz5142 在 #1723 中的贡献。</li>
+<li>修复了随机种子初始化问题，感谢@pathorn 在 #1742 中的贡献。</li>
+<li>修复了 python 绑定中的停用词和坏词。 (#1642)</li>
+<li>修复了转换 Mistral 7B v0.3 检查点时的问题，感谢 @Ace-RR 的贡献：#1732。</li>
+<li>修复了 fp8 Llama 和 Mixtral 的飞行批处理损坏问题，感谢 @bprus 的贡献：#1738</li>
+<li>修复了 <code>quantize.py</code> 导出数据到 config.json 时失败的问题，感谢 @janpetrov 的贡献：#1676</li>
+<li>当 autopp 检测到不支持的 quant 插件时引发错误 #1626。</li>
+<li>修复了加载 Gemma #1799 时未设置 <code>shared_embedding_table</code> 的问题，感谢 @mfuntowicz 的贡献。</li>
+<li>修复了 <code>ModelRunner</code> #1815 连续的停止词和坏词列表，感谢 @Marks101 的贡献。</li>
+<li>修复了 <code>FAST_BUILD</code> 缺失的注释，感谢 #1851 中 @lkm2835 的支持。</li>
+<li>修复了Top-P采样偶尔产生无效token的问题。第1590章</li>
+<li>修正#1424。</li>
+<li>修正#1529。</li>
+<li>修复了 #1562 和 #1552 的 <code>benchmarks/cpp/README.md</code>。</li>
+<li>修复了死链接，感谢 @DefTruth、@buvnswrn 和 @sunjiabin17 的帮助：<a href="https://github.com/triton-inference-server/tensorrtllm_backend/pull/478">https://github.com/triton-inference-server/tensorrtllm_backend/pull/478</a>, <a href="https://github.com/triton-inference-server/tensorrtllm_backend/pull/482">https://github.com/triton-inference-server/tensorrtllm_backend/pull/482</a> 和 <a href="https://github.com/triton-inference-server/tensorrtllm_backend/pull/449">https://github.com/triton-inference-server/tensorrtllm_backend/pull/449</a>.</li>
+</ul>
+<h3 id="基础设施变化">基础设施变化</h3>
+<ul>
+<li>TensorRT-LLM 的基础 Docker 映像已更新为 <code>nvcr.io/nvidia/pytorch:24.05-py3</code>。</li>
+<li>TensorRT-LLM 后端的基础 Docker 映像已更新为 <code>nvcr.io/nvidia/tritonserver:24.05-py3</code>。</li>
+<li>依赖的 TensorRT 版本更新为 10.1.0。</li>
+<li>依赖的CUDA版本更新为12.4.1。</li>
+<li>依赖的 PyTorch 版本更新为 2.3.1。</li>
+<li>依赖的ModelOpt版本更新为v0.13.0。</li>
+</ul>
+<h3 id="已知问题">已知问题</h3>
+<ul>
+<li>在Windows上的conda环境中，TensorRT-LLM的安装可能会成功。但是，在 Python 中导入库时，您可能会收到 <code>OSError: exception: access violation reading 0x0000000000000000</code> 的错误消息。此问题正在调查中。
+目前，该项目有两个关键分支：</li>
+</ul>
+<ul>
+<li><a href="https://github.com/NVIDIA/TensorRT-LLM/tree/rel">rel</a> 分支是 TensorRT-LLM 发布的稳定分支。它已经过质量检查和仔细测试。</li>
+<li><a href="https://github.com/NVIDIA/TensorRT-LLM/tree/main">main</a> 分支是 dev 分支。它更具实验性。
+我们定期更新 <code>main</code> 分支，提供新功能、错误修复和性能优化。 ZZPH100​​ZZ 分支的更新频率将会降低，具体频率取决于您的反馈。
+谢谢，
+TensorRT-LLM 工程团队</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/NVIDIA/TensorRT-LLM">NVIDIA/TensorRT-LLM</a> · 🏷️ 版本：<code>v0.11.0</code> · 📅 发布：2024-07-17 · <a href="https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v0.11.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.12.0"> <span class="k">← 下一个</span> <span class="t">v0.12.0</span> </a> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.10.0"> <span class="k">上一个 →</span> <span class="t">v0.10.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/NVIDIA/TensorRT-LLM/releases/tag/v0.11.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noopener"> <span>NVIDIA/TensorRT-LLM</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#主要功能和增强功能" class="lv3">主要功能和增强功能</a><a href="#api-变化" class="lv3">API 变化</a><a href="#模型更新" class="lv3">模型更新</a><a href="#已修复的问题" class="lv3">已修复的问题</a><a href="#基础设施变化" class="lv3">基础设施变化</a><a href="#已知问题" class="lv3">已知问题</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v1.3.0"> <span class="v">v1.3.0</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v1.2.1"> <span class="v">v1.2.1</span> <span class="d">26-04-20</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v1.2.0"> <span class="v">v1.2.0</span> <span class="d">26-03-12</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v1.1.0"> <span class="v">v1.1.0</span> <span class="d">25-12-19</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v1.0.0"> <span class="v">v1.0.0</span> <span class="d">25-09-24</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.21.0"> <span class="v">v0.21.0</span> <span class="d">25-08-04</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.20.0"> <span class="v">v0.20.0</span> <span class="d">25-06-19</span> </a> </li><li> <a href="/zh/release_note/TensorRT-LLM/TensorRT-LLM_v0.19.0"> <span class="v">v0.19.0</span> <span class="d">25-05-09</span> </a> </li> </ul> <a href="/zh/releases/tensorrt-llm" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 23 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

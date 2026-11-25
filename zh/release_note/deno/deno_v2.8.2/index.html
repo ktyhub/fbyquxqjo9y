@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>deno v2.8.2 — STAGS NextStack</title><meta name="description" content="feat(compile): improve --bundle dependency resolution and add --minify"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/deno/deno_v2.8.2/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/deno/2.8.2"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/deno/deno_v2.8.2/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/deno/2.8.2"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="deno v2.8.2 — STAGS NextStack"><meta property="og:description" content="feat(compile): improve --bundle dependency resolution and add --minify"><meta property="og:url" content="https://www.stags.cn/zh/release_note/deno/deno_v2.8.2/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/deno/deno_v2.8.2/#article","headline":"deno v2.8.2 release notes","datePublished":"2026-06-03","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/denoland/deno"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/deno/2.8.2/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/deno/deno_v2.8.2/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/deno/2.8.2/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/deno/2.8.2/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/deno/2.8.2/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/deno/2.8.2/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/deno/2.8.2/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/deno">deno</a> </nav> <h1 class="detail-title"> <span class="p">deno</span> v2.8.2 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年6月3日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/denoland/deno" target="_blank" rel="noopener"> <span class="k">来源</span>denoland/deno </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/deno/2.8.2"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/deno/deno_v2.8.2/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="deno-v282">deno v2.8.2</h1>
+<h3 id="282--20260603">2.8.2 / 2026.06.03</h3>
+<ul>
+<li>feat(compile)：改进—bundle依赖解析并添加—minify
+(#34536)</li>
+<li>feat(compile):scope —bundle npm 嵌入到实际到达的包中 (#34532)</li>
+<li>壮举（ext/crypto）：添加 ChaCha20-Poly1305、SHAKE、cSHAKE、TurboSHAKE、SHA-3 HMAC
+(#34417)</li>
+<li>feat(ext/crypto)：添加 ML-DSA (FIPS 204) 后量子签名 (#34448)</li>
+<li>feat(ext/crypto)：实现 ML-KEM (FIPS 203) 后量子 KEM (#34447)</li>
+<li>feat(ext/node)：对 Node:http 和 Node:https 的 env/global 代理支持 (#34257)</li>
+<li>feat(ext/node)：支持节点中的 DENO_SERVE_ADDRESS 覆盖：http 服务器
+(#34662)</li>
+<li>feat(jupyter)：用 JS 重写内核，删除 Zeromq/runtimelib deps (#34083)</li>
+<li>feat(lsp): 自动完成 jsr:/npm:/node: 在 deno.json(c) 导入中 (#34724)</li>
+<li>feat(publish)：在 Wasm 模块中展开导入说明符 (#34549)</li>
+<li>壮举（任务）：支持 —env-file 标志（#34508）</li>
+<li>feat(task)：支持任务名称通配符中的排除组 (#34506)</li>
+<li>壮举（不稳定）：将 —bundle 标志添加到 <code>deno compile</code> (#34527)</li>
+<li>壮举：将 eno_task_shell 提升至 0.33.0 (#34642)</li>
+<li>修复（添加）：处理 JSR 包的 <code>deno add</code> 中的 <code>@latest</code> 等版本标签
+(#32859)</li>
+<li>修复（添加）：当 deno.json 发现失败时，将恐慌替换为错误 (#34517)</li>
+<li>修复（bundle）：当模块没有装饰器时跳过装饰器传递（#34489）</li>
+<li>修复（bundle）：在 Deno 平台上使用节点样式的 CJS 互操作（#34533）</li>
+<li>修复（缓存）：在 WSL-1 上跳过 WAL 日志模式 (#34499)</li>
+<li>修复（cache_dir）：EnsureCachedStrategy 必须显示缓存的重定向（#34563）</li>
+<li>修复（检查）：使 node:stream/web 类型为全局变量别名 (#34606)</li>
+<li>修复（检查）：在类型检查时解析没有类型的 npm 包（#34551）</li>
+<li>修复（cli）：抑制损坏管道打印恐慌上的错误报告横幅（＃34552）</li>
+<li>修复（cli/task）：并行运行递归工作区任务（#34512）</li>
+<li>修复（编译）：允许 process.chdir() 进入 VFS (#34610)</li>
+<li>修复（编译）：在 —bundle 下单独捆绑工作人员（#34531）</li>
+<li>修复（编译）：覆盖 —bundle 下的 CJS 深度导入（#34534）</li>
+<li>修复（编译）：导入 JSON 或 Wasm 模块时创建代码缓存 (#34614)</li>
+<li>修复（编译）：检测 svelte-adapter-deno 构建输出（#34535）</li>
+<li>修复（编译）：不显示 —include 文件的图形错误（#34568）</li>
+<li>修复（编译）：在 VFS 中嵌入工作区包.json 文件 (#34530)</li>
+<li>修复（编译）：在编译的二进制文件中在 Windows 上启用 ANSI 颜色 (#34701)</li>
+<li>修复（编译）：在 —bundle 中处理 CJS 和本机插件 (#34529)</li>
+<li>修复（编译）：扁平化 node_modules 时尊重 npm 注册表子路径
+(#34575)</li>
+<li>修复（编译）：支持从 blob URL 加载的工作程序 (#34574)</li>
+<li>修复（编译）：编译运行时导入的 TypeScript (#34616)</li>
+<li>修复（配置）：为发出管道连接 verbatimModuleSyntax (#34495)</li>
+<li>修复（配置）：使配置自动发现跳过每个平台上的相同错误
+(#34558)</li>
+<li>修复（配置）：在链接/工作空间包中显示无效的“导出”映射
+(#34473)</li>
+<li>修复（配置）：当启动目录不是工作空间成员时发出警告而不是错误
+(#34458)</li>
+<li>修复（配置）：当工作区成员目录丢失时发出警告而不是错误
+(#34511)</li>
+<li>修复（核心）：当异步 dep 触发延迟 ESM 加载时，TLA 挂在 dyn 导入上
+(#34469)</li>
+<li>修复（核心）：在新上下文中保留 WebAssembly 流式回调
+(#34679)</li>
+<li>修复（加密）：正确的 X448 PKCS#8 处理 (#34578)</li>
+<li>修复（doc）：不要对跨包类型的 private-type-ref 进行 lint 检查（#34339）</li>
+<li>修复（doc）：处理非 ASCII 文档 lint 诊断（#34626）</li>
+<li>修复（ext/console）：当 getKeys 抛出异常时优雅降级 (#24980) (#34464)</li>
+<li>修复（ext/fetch）：实现缺少的请求属性（#34607）</li>
+<li>修复（ext/fetch）：保留静态请求正文长度（#34546）</li>
+<li>修复（ext/ffi）：在 Apple 上的 Turbocall Trampoline 中匹配 V8 stack-arg 布局
+硅 (#34561)</li>
+<li>修复（ext/fs）：当copyFile源和目标是同一文件时出错
+(#34718)</li>
+<li>修复（ext/fs）：在 Windows 上驱动程序时重试而不使用 FILE_FLAG_BACKUP_SEMANTICS
+拒绝它 (#34686)</li>
+<li>修复（ext/fs）：从 read_dir 中显示非 UTF-8 文件名（#34623）</li>
+<li>修复（ext/http）：拒绝从 respondWith 返回类似响应的内容（#34589）</li>
+<li>修复（ext/http）：拒绝来自服务处理程序的类似响应的返回（#34416）</li>
+<li>修复（ext/io）：取消关闭时挂起的 FileResource 读取（#34544）</li>
+<li>修复（ext/napi）：清除链接到node.exe的Windows插件的错误
+(#34696)</li>
+<li>修复(ext/napi): 禁止在 napi_new_instance 期间执行 JS (#34496)</li>
+<li>修复（ext/napi）：polyfill libuv 线程 + 信号量原语 (#34571)</li>
+<li>修复（ext/napi）：从 compat 层填充更多 libuv 符号（#34488）</li>
+<li>修复（ext/net）：重新启用 QUIC 中的 0-RTT 支持 (#34520)</li>
+<li>修复（ext/node）：添加模块 findPackageJSON 导出（#34597）</li>
+<li>修复（ext/node）：添加内置节点：test/reporters（#34595）</li>
+<li>修复（ext/node）：添加 stripTypeScriptTypes 导出（#34594）</li>
+<li>修复（ext/node）：急切地捕获IPC句柄以修复集群发送死锁
+(#34661)</li>
+<li>修复（ext/node）：覆盖节点：模块 SourceMap 导出（#34591）</li>
+<li>修复（ext/node）：在提供自定义 eval 时禁用 repl 预览 (#34498)</li>
+<li>修复（ext/node）：删除伪造的 Buffer.prototype._isBuffer 标记（#34502）</li>
+<li>修复（ext/node）：从节点导出syncBuiltinESMExports：模块（#34593）</li>
+<li>修复（ext/node）：从 v8 setFlagsFromString 暴露 gc (#34604)</li>
+<li>修复（ext/node）：修复 latin1Slice 太慢（#34503）</li>
+<li>修复（ext/node）：在子进程生成中尊重 windowsHide (#34627)</li>
+<li>修复（ext/node）：防止缓冲区解码分离竞争（#34632）</li>
+<li>修复（ext/node）：重新导出 module.exports = require(X).Y 的内部规范（#34363）</li>
+<li>修复（ext/node）：在用户回调运行时拒绝 sqlite close() (#34515)</li>
+<li>修复（ext/node）：报告失败的 dns.lookup 的真实错误代码（#34697）</li>
+<li>修复（ext/node）：当需要引荐来源网址在外部时解析全局缓存包
+德诺迪尔 (#34497)</li>
+<li>修复（ext/node）：通过 FileSystem 特征路由 node:fs.statfs (#34444)</li>
+<li>修复（ext/node）：支持 vm.Module.prototype.link() 中的 cyclic 导入 (#34472)</li>
+<li>修复（ext/node）：支持 vm 动态导入回调（#34572）</li>
+<li>修复（ext/node）：容忍 require._nodeModulePaths 中不可读的 cwd (#34542)</li>
+<li>修复（ext/node）：vm动态导入没有回调抛出
+ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING (#34427)</li>
+<li>修复（ext/web）：将 console.group 标签转发到检查器日志（#34341）</li>
+<li>修复（ext/web）：尊重 PerformanceObserver 缓冲标志（#34748）</li>
+<li>修复（ext/web）：使 MessageEvent.ports 成为冻结数组（#34773）
+-fix(fmt)：更新 markup_fmt 以修复二次内联 CSS 格式 (#34663)</li>
+<li>修复（安装）：允许没有“age”的“minimumDependencyAge”对象（#34523）</li>
+<li>修复（安装）：处理 Windows 上预先存在的 node_modules 符号链接（#34659）</li>
+<li>修复（安装）：在复制的 deno.json 中重写相对导入/范围（#34562）</li>
+<li>修复（安装）：使用成员运行工作区成员依赖生命周期脚本
+初始化_CWD (#34700)</li>
+<li>修复（安装）：<code>deno ci</code> 期间仅供应商类型导入 (#34459)</li>
+<li>修复（jupyter）：发送关闭回复后退出内核进程（#34554）</li>
+<li>修复（jupyter）：在短暂的对等点断开连接时保持内核处于活动状态（#34550）</li>
+<li>修复（jupyter）：使内核 ZMTP 握手与 libzmq 兼容（#34755）</li>
+<li>修复（jupyter）：在execute_result中发送transient：{}，这样nbclient就不会崩溃
+(#34483)</li>
+<li>修复（jupyter）：使用稳定的 PATH 条目作为内核二进制路径（#34492）</li>
+<li>修复（lsp）：避免空导入说明符完成（#34647）</li>
+<li>修复（lsp）：完成 npm 包导出（#34675）</li>
+<li>修复（lsp）：包含点的完整字符串联合文字（#34664）</li>
+<li>修复（lsp）：当名称重复时发现所有测试（#34624）</li>
+<li>修复（lsp）：处理空的 jsx 完成范围（#34651）</li>
+<li>修复（lsp）：在解析文档时处理解析器恐慌（＃34640）</li>
+<li>修复（lsp）：npm dir 导入遵循 <code>moduleResolution: "bundler"</code> （#34643）</li>
+<li>修复（lsp）：在自动导入中包含配置的依赖项（#34650）</li>
+<li>修复（lsp）：限制node_modules自动导入别名（#34674）</li>
+<li>修复（lsp）：合并重复的完成导入（#34658）</li>
+<li>修复（lsp）：在 <code>typeof import(...)</code> 悬停中保留 URL 扩展（#34565）</li>
+<li>修复（lsp）：从 TSC 恢复隔离 OOM，而不是使语言服务器崩溃
+(#34693)</li>
+<li>修复（lsp）：将空闲内存释放回操作系统（#34727）</li>
+<li>修复（lsp）：当 PID 不可见时跳过父进程检查（#34744）</li>
+<li>修复（lsp）：Jupyter 笔记本单元中的虚假诊断（#34734）</li>
+<li>修复（lsp）：支持导入助手的测试步骤（#34648）</li>
+<li>修复（lsp）：表面CSS作为.js导入到TypeScript（#34419）</li>
+<li>修复（lsp）：测试运行中出现模块级未捕获错误（#34641）</li>
+<li>修复（lsp）：离线时使用缓存的注册表配置（#34723）</li>
+<li>修复（lsp）：使用文件 uris 进行 neovim 虚拟定义（#34653）</li>
+<li>修复（lsp）：走到启用的嵌套工作区（#34654）</li>
+<li>修复（napi）：报告遗留 V8/nan 原生插件的明显错误（#34683）</li>
+<li>修复（napi）：支持 ZeroMQ libuv 插件符号（#34657）</li>
+<li>修复（节点）：避免 process.stdout/stderr 上出现虚假 ERR_MULTIPLE_CALLBACK
+(#34728)</li>
+<li>修复（node）：默认将所需的 js 文件分类为 commonjs (#34673)</li>
+<li>修复（节点）：无法解析的成员重新导出的完全重新导出后备（#34689）</li>
+<li>修复（节点）：解决 CJS 需要多级相对说明符
+Windows (#34655)</li>
+<li>修复（节点）：支持模块同步导出条件（#34599）</li>
+<li>修复（node/repl）：通过 V8 检查器 throwOnSideEffect 进行门预览（#34566）</li>
+<li>修复（npm）：将范围注册表身份验证应用于同源 tarball（＃34698）</li>
+<li>修复（npm）：在 deno 删除后清理 node_modules（#34110）</li>
+<li>修复（npm）：降级发布年龄的最新标签（＃34581）</li>
+<li>修复 (npm)：从 npm 包 bin 条目执行本机二进制文件 (#34375)</li>
+<li>修复（npm）：将直接依赖提升到更高的传递版本（#34470）</li>
+<li>修复（npm）：通过类标识的符号链接共享复制包变体（#34691）</li>
+<li>修复（解析器）：不通过裸说明符解析链接包（#34519）</li>
+<li>修复(rt)：在独立运行时支持主机 FS CJS 文件 (#34560)</li>
+<li>修复（运行时）：当 Deno.consoleSize() 没有 tty 时更好的错误消息 (#34538)</li>
+<li>修复（运行时）：针对 <code>bindings</code> 本机插件错误建议 —allow-scripts
+(#34666)</li>
+<li>修复（运行时）：建议旧版 V8/nan 插件的 N-API 替代方案 (#34695)</li>
+<li>修复（运行时）：建议 npm:isolated-vm 的 Worker/node:vm 替代方案 (#34702)</li>
+<li>修复（运行时/操作）：在 FsWatcher 关闭时取消监视共享的RecommendedWatcher
+(#34467)</li>
+<li>修复（任务）：保留任务参数中的尾部反斜杠（#34505）</li>
+<li>修复（任务）：在 Windows 上任务退出后恢复终端模式（#34685）</li>
+<li>修复（测试）：当测试退出并禁用 sanitizeExit 时，中止并显示消息
+(#34491)</li>
+<li>修复（测试）：不要终止顶级 Deno.exit() 上的 deno 进程 (#34564)</li>
+<li>修复（测试）：等待检查员在退出之前断开连接（#34559）</li>
+<li>修复（tsc）：将 Web 全局变量解析为 npm 包中的 Deno 版本（#34634）</li>
+<li>修复（watch）：使用文件观察器注册动态原始导入（#34463）</li>
+<li>修复（watch）：在 watcher 重新启动之间恢复原始 cwd (#34465)</li>
+<li>修复：应该使用目录函数处理绝对链接（#34218）</li>
+<li>修复：链接到 JSON 导入错误消息中的文档 (#34611)</li>
+<li>修复：直接加载经典 Blob Worker 主脚本 (#34592)</li>
+<li>修复：选择加入 React RCE/DoS CVE 缓解措施 (#34676)</li>
+<li>修复：拒绝 package.json 依赖项中的空包名称 (#34514)</li>
+<li>修复：删除 node_shim exec 依赖项 (#34739)</li>
+<li>修复：当文件夹名称与导入映射包匹配时解析本地文件
+(#32854)</li>
+<li>修复：在关闭之前发送 BroadcastChannel 消息 (#34628)</li>
+<li>perf(cli)：删除未使用的 eno_ast 捆绑器功能 (#34424)</li>
+<li>perf(ext/fetch)：缓存每个 Headers 实例的小写标头名称 (#33683)</li>
+<li>perf(ext/node)：批量构建标头数组并修剪标头 OWS (#34443)</li>
+<li>perf(ext/node)：缓存成员导出属性分析 (#34471)</li>
+<li>perf(ext/node): 门节点:http 异步资源条目 (#34608)</li>
+<li>perf(ext/node): 优化空节点:http 响应结束 (#34493)</li>
+<li>perf(ext/node): 优化节点:http header 匹配 (#34484)</li>
+<li>perf(ext/node)：跳过节点：没有观察者的 http 性能计时 (#34409)</li>
+<li>perf(ext/web)：将热流队列转换为O(1)队列，缓存_state读取
+(#34437)</li>
+<li>perf(http)：从 eno_http 中删除旧版 hyper 0.14 (#34557)</li>
+<li>perf(node)：lazy stdio + 修复 LazyEsmModuleLoader 源消耗 (#34440)</li>
+<li>perf(node)：延迟加载节点：快照之外的流/Web 集群 (#34548)</li>
+<li>perf(node)：在完全授予读取权限时跳过需要的权限检查 (#34722)</li>
+<li>perf（运行时）：更新通知观察程序依赖项（#34567）</li>
+<li>perf(web)：减少 Brotli CompressionStream 二进制大小 (#34432)</li>
+<li>perf：链接时启用安全 ICF（相同代码折叠）（#34478）</li>
+<li>perf：用 ipnet 替换 ipnetwork (#34580)</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/denoland/deno">denoland/deno</a> · 🏷️ 版本：<code>v2.8.2</code> · 📅 发布：2026-06-03 · <a href="https://github.com/denoland/deno/releases/tag/v2.8.2">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/deno/deno_v2.8.3"> <span class="k">← 下一个</span> <span class="t">v2.8.3</span> </a> <a href="/zh/release_note/deno/deno_v2.8.1"> <span class="k">上一个 →</span> <span class="t">v2.8.1</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/denoland/deno/releases/tag/v2.8.2" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/denoland/deno" target="_blank" rel="noopener"> <span>denoland/deno</span> <span class="d">↗</span> </a> </li> </ul> </div>  <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/deno/deno_v2.9.8"> <span class="v">v2.9.8</span> <span class="d">26-10-21</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.7"> <span class="v">v2.9.7</span> <span class="d">26-09-17</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.6"> <span class="v">v2.9.6</span> <span class="d">26-08-27</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.5"> <span class="v">v2.9.5</span> <span class="d">26-08-06</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.4"> <span class="v">v2.9.4</span> <span class="d">26-07-23</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.3"> <span class="v">v2.9.3</span> <span class="d">26-07-15</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.2"> <span class="v">v2.9.2</span> <span class="d">26-07-08</span> </a> </li><li> <a href="/zh/release_note/deno/deno_v2.9.1"> <span class="v">v2.9.1</span> <span class="d">26-07-01</span> </a> </li> </ul> <a href="/zh/releases/deno" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

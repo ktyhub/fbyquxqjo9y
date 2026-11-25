@@ -1,0 +1,532 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>sglang v0.5.19 — STAGS NextStack</title><meta name="description" content="786 PRs from 214 contributors."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.19/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/sglang/0.5.19"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.19/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/sglang/0.5.19"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="sglang v0.5.19 — STAGS NextStack"><meta property="og:description" content="786 PRs from 214 contributors."><meta property="og:url" content="https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.19/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.19/#article","headline":"sglang v0.5.19 release notes","datePublished":"2026-09-05","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/sgl-project/sglang"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/sglang/0.5.19/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/sglang/sglang_v0.5.19/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/sglang/0.5.19/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/sglang/0.5.19/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/sglang/0.5.19/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/sglang/0.5.19/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/sglang/0.5.19/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/sglang">sglang</a> </nav> <h1 class="detail-title"> <span class="p">sglang</span> v0.5.19 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年9月5日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/sgl-project/sglang" target="_blank" rel="noopener"> <span class="k">来源</span>sgl-project/sglang </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/sglang/0.5.19"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.19/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="sglang-v0519">sglang v0.5.19</h1>
+<h1 id="亮点">亮点</h1>
+<p><em>来自 214 位贡献者的 786 个 PR。</em>
+<strong>此版本中的新型号</strong>（有关所有支持的型号，请参阅 <a href="https://docs.sglang.io/cookbook">说明书</a>）：</p>
+<table>
+<thead>
+<tr>
+<th>型号</th>
+<th>类型</th>
+<th>公关</th>
+<th>食谱</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qwen3.8(2.4T-A95B)</td>
+<td>自回归</td>
+<td><a href="https://github.com/sgl-project/sglang/pull/35758">#35758</a> ⭐</td>
+<td><a href="https://docs.sglang.io/cookbook/autoregressive/Qwen/Qwen3.8">链接</a></td>
+</tr>
+<tr>
+<td>Qwen3.8-27B</td>
+<td>自回归</td>
+<td><a href="https://github.com/sgl-project/sglang/pull/34859">#34859</a></td>
+<td><a href="https://docs.sglang.io/cookbook/autoregressive/Qwen/Qwen3.8-27B">链接</a></td>
+</tr>
+<tr>
+<td>点3.note</td>
+<td>自回归</td>
+<td><a href="https://github.com/sgl-project/sglang/pull/33829">#33829</a> ⭐</td>
+<td><a href="https://docs.sglang.io/cookbook/autoregressive/RedNote/Dots3-Note">链接</a></td>
+</tr>
+<tr>
+<td>灵-3.0-flash</td>
+<td>自回归</td>
+<td><a href="https://github.com/sgl-project/sglang/pull/33561">#33561</a></td>
+<td><a href="https://docs.sglang.io/cookbook/autoregressive/InclusionAI/Ling-3.0-flash">链接</a></td>
+</tr>
+<tr>
+<td>凌-3.0-tiny</td>
+<td>自回归</td>
+<td><a href="https://github.com/sgl-project/sglang/pull/33561">#33561</a></td>
+<td><a href="https://docs.sglang.io/cookbook/autoregressive/InclusionAI/Ling-3.0-tiny">链接</a></td>
+</tr>
+<tr>
+<td>Spark2.5</td>
+<td>自回归</td>
+<td><a href="https://github.com/sgl-project/sglang/pull/35963">#35963</a> ⭐</td>
+<td></td>
+</tr>
+<tr>
+<td>MiniCPM-SALA</td>
+<td>自回归</td>
+<td><a href="https://github.com/sgl-project/sglang/pull/30360">#30360</a></td>
+<td></td>
+</tr>
+<tr>
+<td>花岗岩 4.2</td>
+<td>自回归</td>
+<td><a href="https://github.com/sgl-project/sglang/pull/36286">#36286</a></td>
+<td><a href="https://docs.sglang.io/cookbook/autoregressive/IBM/Granite-4.2">链接</a></td>
+</tr>
+<tr>
+<td>LongCat-图像-编辑&#x26;编辑-Turbo</td>
+<td>扩散</td>
+<td><a href="https://github.com/sgl-project/sglang/pull/35829">#35829</a></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>食谱更新：</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>GLM-5.3部署指南：<a href="https://docs.sglang.io/cookbook/autoregressive/GLM/GLM-5.3">链接</a></li>
+<li>PaddleOCR-VL部署指南：<a href="https://docs.sglang.io/cookbook/autoregressive/Baidu/PaddleOCR-VL">链接</a></li>
+<li>Ascend A3 上的 Kimi-K3：<a href="https://github.com/sgl-project/sglang/pull/35508">#35508</a></li>
+<li>MI355X 上的 Kimi-K2.7-Code-MXFP4：<a href="https://github.com/sgl-project/sglang/pull/36246">#36246</a></li>
+<li>MI355X 上的 Qwen3.5 MXFP4，具有 FP8 KV 缓存或 HiCache 主机内存层：<a href="https://github.com/sgl-project/sglang/pull/35445">#35445</a>、<a href="https://github.com/sgl-project/sglang/pull/36245">#36245</a></li>
+<li>24 GB GPU 或 DGX Spark 上的 MiniMax-H3，带有消费者 GPU 调优指南：<a href="https://github.com/sgl-project/sglang/pull/36169">#36169</a>、<a href="https://github.com/sgl-project/sglang/pull/35816">#35816</a></li>
+<li>DGX Spark 上的 Ling-3.0-flash：<a href="https://github.com/sgl-project/sglang/pull/36364">#36364</a></li>
+<li>RTX 5090、RTX PRO 6000 和 DGX Spark 上的 Qwen3.8-27B，重新测量：<a href="https://github.com/sgl-project/sglang/pull/35825">#35825</a>
+<strong>集束搜索。</strong> SGLang 现在可以进行集束搜索。在您的请求中传递 <code>beam_width</code>，您将得到 <code>n</code> 最佳序列而不是单个样本。它在常规请求旁边开箱即用，尽管它尚未与推测解码、分解、DP 注意力或 HiCache 混合（<a href="https://github.com/sgl-project/sglang/pull/31626">#31626</a>）。
+<strong>DeepEP v2.</strong> DeepEP 的新 ElasticBuffer 引擎在 FP8 中以 <code>--moe-a2a-backend deepep_v2</code> 形式提供给 DeepSeek-V3/V4 和 Qwen3-MoE。它的缓冲区具有固定大小，因此解码可以在 CUDA 图下甚至跨节点运行。性能与经典后端（<a href="https://github.com/sgl-project/sglang/pull/35634">#35634</a>、<a href="https://github.com/sgl-project/sglang/pull/34923">#34923</a>）相当。
+<strong>LayerNorm 序列并行性。</strong> 使用 <code>--enable-layernorm-sp</code>，每个张量并行等级仅标准化其自己的预填充令牌份额，而不是全部。这使得 H100 上的 Qwen3-8B 预填充节省了 3.5%，B200 上的 Qwen3-8B 预填充节省了 5.6%，并且节省的费用随着 TP 程度的增加而增加。目前仅使用 Dense Qwen3 模型 (<a href="https://github.com/sgl-project/sglang/pull/30915">#30915</a>)。
+<strong>Hopper 上的 W4A8 MoE。</strong> 如果您在 Hopper 上为 MXFP4 专家提供服务，您现在可以使用 <code>--flashinfer-mxfp4-moe-precision fp8</code> 将激活量化为 FP8。 DeepSeek-V4-Flash 获得约 12% 的输出吞吐量，而 GSM8K 精度没有变化。需要 FlashInfer 0.6.18 (<a href="https://github.com/sgl-project/sglang/pull/34967">#34967</a>)。
+<strong>默认 Blackwell MLA 后端上的 DCP。</strong> 解码上下文并行性现在在 <code>trtllm_mla</code> 上运行，而不仅仅是 CuTe DSL 和 Tokenspeed。它在长上下文中得到了回报：在 128K 输入下，普通 TP 在 8 个 B200 上停止每秒扩展约 680 个令牌，而 DCP 随着并发量的增长而继续扩展（<a href="https://github.com/sgl-project/sglang/pull/33926">#33926</a>）。
+<strong>更快的推测内核。</strong> DSA 预填充 top-k 移动到 v2 内核，在 B200 上 1.3 到 1.8 的速度快了几倍（<a href="https://github.com/sgl-project/sglang/pull/35175">#35175</a>）。 KDA 模型获得一个选择加入的融合接受路径 <code>SGLANG_OPT_KDA_FUSED_ACCEPT_STATE=1</code>，可将具有相同位输出的 Kimi-Linear 形状上的 MTP 验证和提交时间缩短 45% 至 63% (<a href="https://github.com/sgl-project/sglang/pull/33722">#33722</a>)。
+**默认情况下统一基数树。**统一树现在是每个模型的缓存，而不仅仅是混合模型（<a href="https://github.com/sgl-project/sglang/pull/35081">#35081</a>，请参阅重大更改）。它还在本周期中实现了三件事：PD 解码工作人员可以重用 SWA 混合模型（如 gpt-oss）的缓存前缀（<a href="https://github.com/sgl-project/sglang/pull/27770">#27770</a>），您可以在正在运行的服务器上附加或分离 L3 存储（<a href="https://github.com/sgl-project/sglang/pull/35269">#35269</a>），并且 HiCache L3 的管道并行性在各个级别之间保持一致（<a href="https://github.com/sgl-project/sglang/pull/27010">#27010</a>）。
+<strong>重点关注 AMD。</strong> 长时间或不均匀的解码批次曾导致 MI300X 和 MI355X 上的许多计算单元处于闲置状态。新的持久精益内核将工作分散到所有这些内核上，在 MI355X 上吞吐量提高了 1.52 倍，令牌间延迟降低了 3.62 倍。它会在有帮助的地方自行打开，而 <code>SGLANG_DISABLE_LEAN_ATTENTION=1</code> 将其关闭（<a href="https://github.com/sgl-project/sglang/pull/33576">#33576</a>）。
+<strong>ROCm 上的 DSA 模型。</strong> 分解的 GLM-5.2 服务现在使用融合的 top-k 种子重新映射，这将八个 MI355X 上的解码 TPOT 从 23 毫秒缩短到 8 毫秒 (<a href="https://github.com/sgl-project/sglang/pull/36714">#36714</a>)。 DeepSeek-V4 获得 v2 top-k 内核，速度提高了三倍 (<a href="https://github.com/sgl-project/sglang/pull/36684">#36684</a>)，并且共享专家门修复使 GLM-5.2 的 TPOT 提高了 16% (<a href="https://github.com/sgl-project/sglang/pull/36124">#36124</a>)。
+<strong>依赖项。</strong> FlashInfer 移动到 0.6.18 (<a href="https://github.com/sgl-project/sglang/pull/36954">#36954</a>)，sql-deep-ep 移动到 0.1.2 (<a href="https://github.com/sgl-project/sglang/pull/35450">#35450</a>)，sql-deep-gemm 移动到 0.1.7 (<a href="https://github.com/sgl-project/sglang/pull/37279">#37279</a>)，以及月饼到 0.3.13 (<a href="https://github.com/sgl-project/sglang/pull/36493">#36493</a>)。 Rubin 新增了 CUDA 13.4 预览映像 (<a href="https://github.com/sgl-project/sglang/pull/36233">#36233</a>)，gfx942、gfx950 和 gfx1250 新增了 ROCm 10 映像 (<a href="https://github.com/sgl-project/sglang/pull/36434">#36434</a>、<a href="https://github.com/sgl-project/sglang/pull/36871">#36871</a>)。
+<em>按以下类别列出的完整 release note；重大变更和已知问题位于最后。</em></li>
+</ul>
+<h2 id="rust-服务器">Rust 服务器</h2>
+<ul>
+<li>[功能] 添加进程本地内存中 KV 索引器和路由器集成：<a href="https://github.com/sgl-project/sglang/pull/33370">#33370</a></li>
+<li>[Rust 服务器] 添加 e2e 延迟元数据并修复 Sarashina 导入：<a href="https://github.com/sgl-project/sglang/pull/35125">#35125</a></li>
+<li>[Rust] 派生服务器地址并接受签名的环境值：<a href="https://github.com/sgl-project/sglang/pull/37221">#37221</a></li>
+<li>[Rust] 保持采样和调度程序线模式同步：<a href="https://github.com/sgl-project/sglang/pull/37222">#37222</a></li>
+<li>添加可配置的 HTTP/2 连接窗口: <a href="https://github.com/sgl-project/sglang/pull/36920">#36920</a>
+*修复（网关）：将wfaas提升到1.0.2，以便ContinueNextStep解锁依赖项：[＃37249]（<a href="https://github.com/sgl-project/sglang/pull/37249%EF%BC%89">https://github.com/sgl-project/sglang/pull/37249）</a></li>
+</ul>
+<h2 id="推测性解码">推测性解码</h2>
+<ul>
+<li>[KDA] FlashInfer KDA MTP 验证的融合接受状态提前：<a href="https://github.com/sgl-project/sglang/pull/33722">#33722</a> ⭐</li>
+<li>[规格] DFlash2：本地卷积 + 候选选择器（第 1 批时比无规格高出 3.43 倍，并发 64 时比 DFlash 高出约 24%）：<a href="https://github.com/sgl-project/sglang/pull/35371">#35371</a></li>
+<li>[规格] 在 DFlash2 选择器中支持量化目标 lm_head: <a href="https://github.com/sgl-project/sglang/pull/35496">#35496</a></li>
+<li>[规格] 添加 LFM2 和 LFM2-MoE DSpark 推测解码支持（1.05 在 LFM2.5 目标上解码速度提高 2.42 倍，1xH100）：<a href="https://github.com/sgl-project/sglang/pull/31041">#31041</a></li>
+<li>[型号] 支持 Nemotron 3.5 Lightning 推测解码（GB300 上的 MTP、DFlash 和 DSpark 上的 GSM8K 94.6% 到 95.8%）：<a href="https://github.com/sgl-project/sglang/pull/36186">#36186</a></li>
+<li>[规格][LoRA] 支持带有 EAGLE/NEXTN/DFLASH/DSPARK 推测解码的多适配器 LoRA：<a href="https://github.com/sgl-project/sglang/pull/34337">#34337</a></li>
+<li>[规范][DSA] 添加 —speculative-dsa-topk-backend: <a href="https://github.com/sgl-project/sglang/pull/36313">#36313</a></li>
+<li>[2/N][混合]启用规格的混合块预填充：<a href="https://github.com/sgl-project/sglang/pull/36933">#36933</a></li>
+<li>支持 DSpark 中的自定义草稿工人类别：<a href="https://github.com/sgl-project/sglang/pull/35397">#35397</a></li>
+<li>使草稿关注后端可扩展：<a href="https://github.com/sgl-project/sglang/pull/35932">#35932</a></li>
+<li>[内存] 借用 CUDA 图池存储用于 EAGLE 采样：<a href="https://github.com/sgl-project/sglang/pull/35375">#35375</a></li>
+<li>[规格] 修复 Dspark 和 Dflash 跨 TP 等级的状态差异：<a href="https://github.com/sgl-project/sglang/pull/33614">#33614</a></li>
+<li>[修复][规范]修复启动崩溃并减少推测自适应的 CUDA 图形内存使用量：<a href="https://github.com/sgl-project/sglang/pull/35275">#35275</a></li>
+<li>修复 DSV4 DSpark 锚点采样初始化：<a href="https://github.com/sgl-project/sglang/pull/36419">#36419</a></li>
+<li>[修复] 删除重复的 DSpark 草稿 Sample_block 调用：<a href="https://github.com/sgl-project/sglang/pull/36934">#36934</a></li>
+<li>修复(gemma4)：量化 MTP 桥投影（Gemma-4 FP8 MTP 接受度从 0% 到 60%）：<a href="https://github.com/sgl-project/sglang/pull/32440">#32440</a></li>
+</ul>
+<h2 id="分段且可破坏的-cuda-图">分段且可破坏的 CUDA 图</h2>
+<ul>
+<li>[功能] 支持 PP 完全预填充 CUDA 图形：<a href="https://github.com/sgl-project/sglang/pull/35451">#35451</a></li>
+<li>[功能] 跨 DP-attention 等级协调 FullCG 预填充：<a href="https://github.com/sgl-project/sglang/pull/35640">#35640</a></li>
+<li>[PP] 支持预填充 CUDA 图代理张量（在 Qwen3.5-397B、GB300 上 2K 代币转发时 PP 预填充高达 2.48 倍）：<a href="https://github.com/sgl-project/sglang/pull/36248">#36248</a></li>
+<li>[性能] 减少易碎预填充 CUDA 图中的空闲 DP 工作（中值 TTFT -18.9%，QPS +12.9%）：<a href="https://github.com/sgl-project/sglang/pull/33871">#33871</a></li>
+<li>[Cohere Command-A-Plus] 优化 SM10X 上的解码和 BCG 捕获（第 1 批解码 TPOT 速度提高 2.28 倍，在 4xGB300 上高达 9,152 tok/s）：<a href="https://github.com/sgl-project/sglang/pull/36624">#36624</a></li>
+<li>[修复] 修复完整预填充 CUDA 图形填充和 EAGLE 捕获：<a href="https://github.com/sgl-project/sglang/pull/35588">#35588</a></li>
+<li>收敛两个 SWA 谓词，并停止调节池上的捕获接收器：<a href="https://github.com/sgl-project/sglang/pull/37550">#37550</a></li>
+</ul>
+<h2 id="注意后端">注意后端</h2>
+<ul>
+<li>[DCP] 支持 trtllm_mla 解码路径上的解码上下文并行性：<a href="https://github.com/sgl-project/sglang/pull/33926">#33926</a> ⭐</li>
+<li>[DSA] 将不规则的预填充 top-k 路由到 v2 内核：<a href="https://github.com/sgl-project/sglang/pull/35175">#35175</a> ⭐</li>
+<li>[DSA] 修剪 top-k v2 输出模式并收紧其 PDL 等待：<a href="https://github.com/sgl-project/sglang/pull/35041">#35041</a></li>
+<li>为 SM90/120 添加 fmha_v2 注意力后端（在内核级别比 FA3 快约 15%）：<a href="https://github.com/sgl-project/sglang/pull/23112">#23112</a></li>
+<li>[FlashInfer 0.6.18] feat(dsv4): 支持 —dsa-topk-backend flashinfer 与融合的 top-k: <a href="https://github.com/sgl-project/sglang/pull/33237">#33237</a></li>
+<li>[DeepSeek-V4] 添加 Q8KV8 稀疏 MLA 预填充运行时后端（H20 上从 3.5K 到 160K 输入的预填充吞吐量 +4.4% 到 +7.5%）：<a href="https://github.com/sgl-project/sglang/pull/32327">#32327</a></li>
+<li>按 KV 序列长度分割 TRTLLM MHA 解码批次（GB300 上的混合长度解码步骤 -10.2%）：<a href="https://github.com/sgl-project/sglang/pull/34888">#34888</a></li>
+<li>[性能] 调整 FlashInfer EXTEND 以实现 DP 预填充（DP 预填充吞吐量 +4.9% 至 +6.8%）：<a href="https://github.com/sgl-project/sglang/pull/36219">#36219</a></li>
+<li>[Triton] 绑定滑动窗口扩展注意力 KV 循环：-86.6% 在 SWA 层上，-9.4% 预填充 GPU，位相同：<a href="https://github.com/sgl-project/sglang/pull/34462">#34462</a></li>
+<li>[内核] 跳过 MLA KV 缓存中的保留写入: <a href="https://github.com/sgl-project/sglang/pull/36003">#36003</a></li>
+<li>[修复] 跳过分块 GDN 内核中的填充状态槽：<a href="https://github.com/sgl-project/sglang/pull/33431">#33431</a></li>
+<li>[修复] 修复 Nemotron-H Mamba 在 CUDA 图的 DP 注意下非法内存访问：<a href="https://github.com/sgl-project/sglang/pull/34561">#34561</a></li>
+</ul>
+<h2 id="moe-和专家并行性">MoE 和专家并行性</h2>
+<ul>
+<li>[功能] 添加 DeepEPv2 (ElasticBuffer) MoE A2A 后端: <a href="https://github.com/sgl-project/sglang/pull/35634">#35634</a> ⭐</li>
+<li>应用最新的 DeepEP 分支: <a href="https://github.com/sgl-project/sglang/pull/34923">#34923</a> ⭐</li>
+<li>[MoE] 添加 FlashInfer SM90 MXFP4 W4A8 CUTLASS MoE（W4A8 内核 1.63 比 W4A16 快 2.08 倍，+DeepSeek-V4-Flash 上的 11.7% 输出吞吐量）：<a href="https://github.com/sgl-project/sglang/pull/34967">#34967</a> ⭐</li>
+<li>[DeepSeek V4] 添加 W4A4 MegaMoE 服务器标志：<a href="https://github.com/sgl-project/sglang/pull/35918">#35918</a></li>
+<li>[DeepSeek V4] FlashInfer MXFP4 MoE 的默认 FP4 检查点：<a href="https://github.com/sgl-project/sglang/pull/35919">#35919</a></li>
+<li>[DeepSeek-V4] 在 flashinfer_mxfp4 (trtllm-gen) MoE 路径上启用共享专家融合（TTFT -13% 至 -21%，预热的 GSM8K e2e +5-7%）：<a href="https://github.com/sgl-project/sglang/pull/35505">#35505</a></li>
+<li>支持 SSD 上的 deepseek v4 和 kimi k3（DeepSeek-V4-Flash 预填充速度比 5090 上的 llama.cpp 快 2.24 倍，解码速度快 1.49 倍）：<a href="https://github.com/sgl-project/sglang/pull/35314">#35314</a></li>
+<li>perf：Qwen 共享专家与 DeepEP 路由专家重叠（24xGB300 分解 Qwen3.5-397B 上的 +2.1% 输出吞吐量）：<a href="https://github.com/sgl-project/sglang/pull/34938">#34938</a></li>
+<li>壮举（嗡嗡声）：用于嗡嗡声 MoE 后端的 FP8 DeepEP 调度（TPOT -35% 和 TTFT -23% 对比 H20 上的 BF16 调度）：<a href="https://github.com/sgl-project/sglang/pull/31429">#31429</a></li>
+<li>feat(humming)：支持原生 W4AFP8 检查点模式（H20 上的 TPOT -22% 到 -29%，TTFT -10% 到 -11%）：<a href="https://github.com/sgl-project/sglang/pull/32033">#32033</a></li>
+<li>[MoE] 使模拟专家路由支持DP>1，并融合到一个triton内核中：<a href="https://github.com/sgl-project/sglang/pull/29718">#29718</a></li>
+<li>[Blackwell] 为 DeepGEMM MegaMoE 网格障碍保留 SM：<a href="https://github.com/sgl-project/sglang/pull/36657">#36657</a></li>
+<li>[DeepGEMM] 跨本地等级删除重复的 JIT 预编译：<a href="https://github.com/sgl-project/sglang/pull/36231">#36231</a></li>
+<li>[Perf] 调整 W4AFP8 DeepEP 低延迟重新量化启动几何结构（在 256 个专家的情况下重新量化内核速度提高了 10.6 倍）：<a href="https://github.com/sgl-project/sglang/pull/35760">#35760</a></li>
+<li>[Kimi K3] 为 SM107 自动 MoE 选择 FlashInfer MXFP4: <a href="https://github.com/sgl-project/sglang/pull/35554">#35554</a></li>
+<li>[修复] 通过 Kimi K3 的 EP-A2A / SP-MoE 快速路径路由 Mooncake MoE A2A 后端：<a href="https://github.com/sgl-project/sglang/pull/36862">#36862</a></li>
+<li>Laguna：配置驱动的 MoE 路由器评分：<a href="https://github.com/sgl-project/sglang/pull/35362">#35362</a></li>
+<li>跨 TP 等级同步 FlashInfer 自动调整策略选择：<a href="https://github.com/sgl-project/sglang/pull/35343">#35343</a></li>
+<li>修复 Hopper 上的 mxfp4 MoE 体重秤中的 OOB 读取：<a href="https://github.com/sgl-project/sglang/pull/36456">#36456</a></li>
+<li>修复运行时权重更新后过时的 GLM MoE 路由：<a href="https://github.com/sgl-project/sglang/pull/35883">#35883</a></li>
+</ul>
+<h2 id="量化">量化</h2>
+<ul>
+<li>[FlashInfer 0.6.18] 添加 FlashInfer CuTe DSL NVFP4 W4A16 模式（Qwen3-30B-A3B W4A16 GSM8K 0.965 至 0.980，1,662 至 1,858 tok/s）：<a href="https://github.com/sgl-project/sglang/pull/35120">#35120</a></li>
+<li>[Quant] 加载量化的压缩张量 lm_head 而不是对其进行值转换：<a href="https://github.com/sgl-project/sglang/pull/35228">#35228</a></li>
+<li>[Quant] 加载压缩张量 kv_cache_scheme 尺度：<a href="https://github.com/sgl-project/sglang/pull/35455">#35455</a></li>
+<li>PD传输中支持mxfp8 KV缓存：<a href="https://github.com/sgl-project/sglang/pull/35718">#35718</a></li>
+<li>支持 mxfp8 KV 缓存的 CPU 卸载：<a href="https://github.com/sgl-project/sglang/pull/35888">#35888</a></li>
+<li>[内核] 使用基准 M/K/N 路由修复 SM90 FP8 解码回归（在 SM90 FP8 路由回归后从 190 恢复约 215 tok/s 解码）：<a href="https://github.com/sgl-project/sglang/pull/37018">#37018</a></li>
+<li>[NVIDIA] 修复 SM107 MXFP8 激活准备：<a href="https://github.com/sgl-project/sglang/pull/35405">#35405</a></li>
+<li>修复 GPU 内核排序和 MXFP8 量化调度：<a href="https://github.com/sgl-project/sglang/pull/37331">#37331</a>
+*修复（kimi-k3）：保留密集的ModelSlim MLA权重：[＃36603]（<a href="https://github.com/sgl-project/sglang/pull/36603%EF%BC%89">https://github.com/sgl-project/sglang/pull/36603）</a></li>
+<li>支持 Intern-S2-Mobius FP8: <a href="https://github.com/sgl-project/sglang/pull/34908">#34908</a></li>
+</ul>
+<h2 id="并行性和分解">并行性和分解</h2>
+<ul>
+<li>[功能]威震天 LayerNorm 序列并行性 (—enable-layernorm-sp): <a href="https://github.com/sgl-project/sglang/pull/30915">#30915</a> ⭐</li>
+<li>[PD] SWA 混合模型的解码端基数缓存（统一基数树）：<a href="https://github.com/sgl-project/sglang/pull/27770">#27770</a> ⭐</li>
+<li>[重构]新EPD：<a href="https://github.com/sgl-project/sglang/pull/30398">#30398</a></li>
+<li>[PD] Pack DCP1→DCP-N PD KV 传输到目标连续 RDMA 块（Kimi-Linear-48B、8xB300 上的 PD 传输时间为 -28% 至 -39%）：<a href="https://github.com/sgl-project/sglang/pull/35762">#35762</a></li>
+<li>[PD] 延迟解码端 KV 释放以中止传输中途：<a href="https://github.com/sgl-project/sglang/pull/35049">#35049</a></li>
+<li>[PD] NIXL 后端的延迟解码端 KV 版本：<a href="https://github.com/sgl-project/sglang/pull/35360">#35360</a></li>
+<li>[PD] 重叠预填充 DP 排序引导查询：<a href="https://github.com/sgl-project/sglang/pull/35071">#35071</a></li>
+<li>[PD] 修复 MORI-IO ABORT 引导消息处理：<a href="https://github.com/sgl-project/sglang/pull/29133">#29133</a></li>
+<li>[修复] 在两个 PD 解码预分配路径上断言页面对齐的 SWA 逐出层：<a href="https://github.com/sgl-project/sglang/pull/35396">#35396</a>
+*修复（disagg）：刷新陈旧的预填充引导元数据：[＃36029]（<a href="https://github.com/sgl-project/sglang/pull/36029%EF%BC%89">https://github.com/sgl-project/sglang/pull/36029）</a></li>
+<li>[修复] DP注意力：更正解码->扩展前缀关闭一位（DP注意力GSM8K在Qwen3-30B-A3B上从70.4返回到94.2）：<a href="https://github.com/sgl-project/sglang/pull/37505">#37505</a></li>
+<li>[修复] 通过拓扑能力选择自定义 all-reduce v2: <a href="https://github.com/sgl-project/sglang/pull/35061">#35061</a></li>
+<li>[Kernel] 将自定义的 all-reduce Communicator 拆分为推/拉平面：<a href="https://github.com/sgl-project/sglang/pull/35735">#35735</a></li>
+<li>TP/PP 共识检查器：<a href="https://github.com/sgl-project/sglang/pull/34406">#34406</a></li>
+<li>[CP V1 弃用 1/5] 将测试迁移到基于策略的预填充 CP：<a href="https://github.com/sgl-project/sglang/pull/36222">#36222</a></li>
+</ul>
+<h2 id="调度程序和运行时">调度程序和运行时</h2>
+<ul>
+<li>[功能] 束搜索支持：<a href="https://github.com/sgl-project/sglang/pull/31626">#31626</a> ⭐</li>
+<li>[1/N][混合]混合块预填充底座：<a href="https://github.com/sgl-project/sglang/pull/36288">#36288</a></li>
+<li>[调度程序] 在预填充后添加可配置的解码间隔: <a href="https://github.com/sgl-project/sglang/pull/35017">#35017</a></li>
+<li>在负载感知路由器的专用套接字上发布每个调度程序的负载：<a href="https://github.com/sgl-project/sglang/pull/34608">#34608</a></li>
+<li>[修复] 修复最小新代币 EOS 处理：<a href="https://github.com/sgl-project/sglang/pull/31378">#31378</a></li>
+<li>修复：保留输出 logprobs 而不输入 logprobs：<a href="https://github.com/sgl-project/sglang/pull/34627">#34627</a></li>
+<li>[采样] 恢复采样掩码的有限 top-k 要求：<a href="https://github.com/sgl-project/sglang/pull/35205">#35205</a></li>
+<li>[采样] 修复 top-k renorm Triton 内核中的 int32 偏移溢出：<a href="https://github.com/sgl-project/sglang/pull/35571">#35571</a></li>
+<li>处理无限的分词器上下文长度：<a href="https://github.com/sgl-project/sglang/pull/37054">#37054</a></li>
+<li>[受限] XGrammar 后端支持 MistralCommon 分词器：<a href="https://github.com/sgl-project/sglang/pull/35215">#35215</a></li>
+<li>[OpenAI] 为mistral_common tokenizers 放置空助手回合：<a href="https://github.com/sgl-project/sglang/pull/35915">#35915</a></li>
+<li>[修复]将人类思维历史作为自定义聊天编码器的reasoning_content传递：<a href="https://github.com/sgl-project/sglang/pull/35480">#35480</a></li>
+<li>[修复] 通过顶级anyOf/oneOf/allOf解析工具参数类型: <a href="https://github.com/sgl-project/sglang/pull/36626">#36626</a></li>
+<li>feat(openai): 接受聊天完成中的 input_audio 内容部分: <a href="https://github.com/sgl-project/sglang/pull/33606">#33606</a></li>
+<li>让调度程序跟踪发布的权重版本：<a href="https://github.com/sgl-project/sglang/pull/35925">#35925</a></li>
+<li>在生成元信息中报告每个代币权重版本跨度：<a href="https://github.com/sgl-project/sglang/pull/35926">#35926</a></li>
+<li>[FEAT] 权重守护进程抽象：<a href="https://github.com/sgl-project/sglang/pull/33279">#33279</a></li>
+<li>[权重缓存] 支持静态 DP/EP 布局：<a href="https://github.com/sgl-project/sglang/pull/33684">#33684</a></li>
+<li>[修复] KV 大小调整中帐户驻留权重内存: <a href="https://github.com/sgl-project/sglang/pull/34053">#34053</a></li>
+<li>修复当仍引用权重加载内存时 KV 缓存池大小过小的问题：<a href="https://github.com/sgl-project/sglang/pull/36583">#36583</a></li>
+<li>分析增强功能 [2/3]：详细执行步骤注释：<a href="https://github.com/sgl-project/sglang/pull/24911">#24911</a></li>
+</ul>
+<h2 id="hicache-和基数缓存">HiCache 和基数缓存</h2>
+<ul>
+<li>所有情况默认使用统一基数树：<a href="https://github.com/sgl-project/sglang/pull/35081">#35081</a></li>
+<li>[统一树]功能：支持运行时附加/分离历史存储：<a href="https://github.com/sgl-project/sglang/pull/35269">#35269</a> ⭐</li>
+<li>[HiCache] 修复 PP 与 HiCache L3 不一致的问题 (#22607): <a href="https://github.com/sgl-project/sglang/pull/27010">#27010</a> ⭐</li>
+<li>[Radix Cache] 添加带有共享奇偶校验测试的 Rust TreeCore 后端：<a href="https://github.com/sgl-project/sglang/pull/32710">#32710</a></li>
+<li>[统一缓存][1/N]: 支持外部链接器的缓存契约: <a href="https://github.com/sgl-project/sglang/pull/37091">#37091</a></li>
+<li>[统一缓存][4/N]: 为外部链接器添加 Mooncake 后端: <a href="https://github.com/sgl-project/sglang/pull/37205">#37205</a></li>
+<li>[HiCache] HiCache 主机内存层的仅缓冲区模式：<a href="https://github.com/sgl-project/sglang/pull/34798">#34798</a></li>
+<li>[HiCache] 缓冲模式：决定针对活动树的分阶段获取命运：<a href="https://github.com/sgl-project/sglang/pull/36834">#36834</a></li>
+<li>修复缓冲模式 HiCache 回载所有权竞争；添加可选的预取锚锁：<a href="https://github.com/sgl-project/sglang/pull/35769">#35769</a></li>
+<li>[HiCache] 批量PP写入和加载完成同步：<a href="https://github.com/sgl-project/sglang/pull/33473">#33473</a></li>
+<li>[HiCache] 停止两次填充主机池 mmap（-13% 分配时间）：<a href="https://github.com/sgl-project/sglang/pull/36705">#36705</a></li>
+<li>[HiCache] 尝试失败后重试 L3 存储预取：<a href="https://github.com/sgl-project/sglang/pull/36227">#36227</a></li>
+<li>[HiSparse] 支持 hisparse 多步交换 io 内核（H20 上的 Batch-64 交换延迟 -48.2%）：<a href="https://github.com/sgl-project/sglang/pull/32162">#32162</a>
+*壮举（统一内存）：均匀行MHA/SWA模型的密集KV视图：[＃34602]（<a href="https://github.com/sgl-project/sglang/pull/34602%EF%BC%89">https://github.com/sgl-project/sglang/pull/34602）</a></li>
+<li>feat(unified-memory): 从注意力后端读取统一池 fa3/flashinfer/trtllm_mha/flashmla: <a href="https://github.com/sgl-project/sglang/pull/34613">#34613</a>
+*壮举（统一内存）：mamba +混合SWA模型的三个子池：[＃35177]（<a href="https://github.com/sgl-project/sglang/pull/35177%EF%BC%89">https://github.com/sgl-project/sglang/pull/35177）</a>
+*壮举（统一内存）：字节预算大小、可行性底线和保护验证器：[＃35158]（<a href="https://github.com/sgl-project/sglang/pull/35158%EF%BC%89">https://github.com/sgl-project/sglang/pull/35158）</a></li>
+<li>[统一内存] 当共享分配容量足够时停止驱逐（缓存生存 35.7% 到 67.9%，重播 E2E -37.9%）：<a href="https://github.com/sgl-project/sglang/pull/33091">#33091</a></li>
+</ul>
+<h2 id="多式联运">多式联运</h2>
+<ul>
+<li>[Perf] PaddleOCR-VL：重叠页面预处理，打包 ViT，启用预填充 CUDA 图形（1080p 页 TTFT 235 ms 至 120 ms，H200 上 1.84x req/s）：<a href="https://github.com/sgl-project/sglang/pull/35318">#35318</a></li>
+<li>[VLM] 通过工作池的调用站点路由每个多模式处理器：<a href="https://github.com/sgl-project/sglang/pull/35342">#35342</a></li>
+<li>[VLM] CUDA IPC 包装之前的 Split Pixtral 多图像功能：<a href="https://github.com/sgl-project/sglang/pull/35463">#35463</a></li>
+<li>使用行index_copy_而不是masked_scatter_分散mm嵌入来减少瞬态GPU内存：<a href="https://github.com/sgl-project/sglang/pull/37070">#37070</a></li>
+<li>[修复] 缓存不匹配后重新编码多模态嵌入：<a href="https://github.com/sgl-project/sglang/pull/36595">#36595</a></li>
+<li>[修复][VLM]保留 Qwen3-VL MoE 推理深栈顺序：<a href="https://github.com/sgl-project/sglang/pull/34690">#34690</a></li>
+<li>[Kimi-K3] 修复 DP 分片视觉预处理中“错误网格”崩溃的问题：<a href="https://github.com/sgl-project/sglang/pull/35305">#35305</a></li>
+<li>修复 ASR/音频/语音模型的转录和音频理解：<a href="https://github.com/sgl-project/sglang/pull/32611">#32611</a></li>
+</ul>
+<h2 id="模型支持和优化">模型支持和优化</h2>
+<ul>
+<li>通过现有 Granite 模型添加 SGLang Granite SWA 支持：<a href="https://github.com/sgl-project/sglang/pull/35794">#35794</a></li>
+<li>[修复] Transformers-fallback (GPT-NeoX) + KV 池配置 (DeepSeek-VL2): <a href="https://github.com/sgl-project/sglang/pull/35244">#35244</a></li>
+<li>修复 BailingMoeV3 读取实时拓扑中的 enable_dp_lm_head 而不是配置：<a href="https://github.com/sgl-project/sglang/pull/36584">#36584</a></li>
+<li>[k3] 在 <code>KimiK3ForConditionalGeneration</code> 上声明 Packed_modules_mapping: <a href="https://github.com/sgl-project/sglang/pull/36211">#36211</a></li>
+<li>[修复][Qwen3.8] 通过在 mamba 基数缓存白名单中注册 Qwen3_5 纯文本架构来支持 Qwen3.8-MXFP4 DCP：<a href="https://github.com/sgl-project/sglang/pull/35297">#35297</a></li>
+<li>修复 DeepSeek V4 多流 QKV 缓冲区寿命：<a href="https://github.com/sgl-project/sglang/pull/36547">#36547</a></li>
+</ul>
+<h2 id="内核库">内核库</h2>
+<ul>
+<li>[内核] 为 Qwen3.5 和 Qwen3.6 添加 H200 MoE 配置（Qwen3.5 FP8 上的 +3.8% 吞吐量和 Qwen3.6 FP8 上的 +7.1%，H200）：<a href="https://github.com/sgl-project/sglang/pull/35374">#35374</a></li>
+<li>[内核] 为 GLM-4.5 FP8 添加 GB300 Triton MoE 配置（GB300 上解码吞吐量 +21.9%）：<a href="https://github.com/sgl-project/sglang/pull/37159">#37159</a></li>
+<li>[内核] 提高共享 FLA 和 MoE 内核中的形状限制（从 #36507 移植）：<a href="https://github.com/sgl-project/sglang/pull/37317">#37317</a></li>
+<li>[内核] 在 sglang-kernel 轮子中声明 PyTorch ABI 依赖项：<a href="https://github.com/sgl-project/sglang/pull/36465">#36465</a></li>
+</ul>
+<h2 id="配置系统">配置系统</h2>
+<ul>
+<li>[核心] 重构服务器参数选择：<a href="https://github.com/sgl-project/sglang/pull/36586">#36586</a></li>
+<li>配置：构建配置不再解决它：<a href="https://github.com/sgl-project/sglang/pull/35907">#35907</a></li>
+<li>配置：ServerArgs 保存原始输入：<a href="https://github.com/sgl-project/sglang/pull/36255">#36255</a></li>
+<li>配置：分辨率声明，并且没有任何写入字段：<a href="https://github.com/sgl-project/sglang/pull/36618">#36618</a></li>
+<li>[配置]回合5.1：发布端读者问包，平台事实得到一个地址：<a href="https://github.com/sgl-project/sglang/pull/37086">#37086</a></li>
+<li>[Config] Round 5.2：每个模型的声明都有自己的模块：<a href="https://github.com/sgl-project/sglang/pull/37087">#37087</a></li>
+</ul>
+<h2 id="sglang-扩散">SGLang-扩散</h2>
+<ul>
+<li>[Diffusion] 针对消费级 GPU 优化 MiniMax-H3：INT8 Linear + 可插拔 DiT 注意力后端（在一个 24 GB GPU 上的 MiniMax-H3，在精确注意力的情况下，降噪速度提高 1.34 倍，在近似注意力的情况下，降噪速度提高到 2.48 倍）：<a href="https://github.com/sgl-project/sglang/pull/34581">#34581</a></li>
+<li>[扩散] 壮举：加载 GGUF 变压器检查点 (MiniMax-H3)：<a href="https://github.com/sgl-project/sglang/pull/35370">#35370</a></li>
+<li>[Diffusion] 支持 MiniMax-H3 修剪安全张量检查点：<a href="https://github.com/sgl-project/sglang/pull/35418">#35418</a></li>
+<li>[扩散] 加载舒适的 NVFP4 MiniMax H3 检查点：<a href="https://github.com/sgl-project/sglang/pull/36044">#36044</a></li>
+<li>[扩散] 加载 MiniMax H3 GGUF 文本编码器：<a href="https://github.com/sgl-project/sglang/pull/36055">#36055</a></li>
+<li>[扩散] 原生加载扩散器 MiniMax H3 组件：<a href="https://github.com/sgl-project/sglang/pull/36067">#36067</a></li>
+<li>[Diffusion][MiniMax H3] 支持 SM90 上的子块稀疏注意力：<a href="https://github.com/sgl-project/sglang/pull/34680">#34680</a></li>
+<li>[Diffusion][MiniMax H3] 将 MiniMax-H3 SubBlock 稀疏性限制为视频查询（1.31 速度提高 1.46 倍，音频更一致）：<a href="https://github.com/sgl-project/sglang/pull/35850">#35850</a></li>
+<li>[Diffusion] ComfyUI：添加 MiniMax-H3 节点和通用额外字段直通：<a href="https://github.com/sgl-project/sglang/pull/35352">#35352</a></li>
+<li>修复（扩散）：MiniMax-H3 dp_size>1 死锁和交叉请求音频确定性：<a href="https://github.com/sgl-project/sglang/pull/36398">#36398</a></li>
+<li>[Cosmos3]添加cosmos3传输能力：<a href="https://github.com/sgl-project/sglang/pull/34747">#34747</a></li>
+<li>[Diffusion] RL 推出对 Cosmos3 管道的支持：<a href="https://github.com/sgl-project/sglang/pull/34197">#34197</a></li>
+<li>[Diffusion] 优化 Pi0.5 推理和有界图服务（Pi0.5 端到端 -9% eager，-68% 在 H200 上有界图）：<a href="https://github.com/sgl-project/sglang/pull/34599">#34599</a></li>
+<li>[扩散] 每个请求有损加速：Cache-DiT、CFG 门控、注意力后端覆盖：<a href="https://github.com/sgl-project/sglang/pull/35339">#35339</a></li>
+<li>[扩散] 允许 Cache-DiT 与 DiT 分层卸载（Cache-DiT 与分层卸载在 24 GB 4090 D 上的 30.1 dB PSNR 上速度提高 1.84 倍）：<a href="https://github.com/sgl-project/sglang/pull/35858">#35858</a></li>
+<li>[Diffusion] 壮举：支持树外模型和管道：<a href="https://github.com/sgl-project/sglang/pull/35713">#35713</a></li>
+<li>[扩散] 将编码器并行性与 DiT 并行布局解耦：<a href="https://github.com/sgl-project/sglang/pull/34713">#34713</a></li>
+<li>[扩散] 重用SRT Qwen视觉和文本模块：<a href="https://github.com/sgl-project/sglang/pull/35006">#35006</a></li>
+<li>[Diffusion] 重用 SRT 量化合约和 MXFP8 内核：<a href="https://github.com/sgl-project/sglang/pull/36063">#36063</a></li>
+<li>[扩散] 加载序列化 Comfy ConvRot INT8 DiTs：<a href="https://github.com/sgl-project/sglang/pull/35994">#35994</a></li>
+<li>[扩散] 加载序列化的 Comfy W4A8 检查点：<a href="https://github.com/sgl-project/sglang/pull/36036">#36036</a></li>
+<li>[扩散] 添加组件范围的量化覆盖：<a href="https://github.com/sgl-project/sglang/pull/36035">#36035</a></li>
+<li>[扩散] 添加可组合组件权重路径 CLI: <a href="https://github.com/sgl-project/sglang/pull/36078">#36078</a></li>
+<li>[扩散] 壮举：让每个分层组件都可配置：<a href="https://github.com/sgl-project/sglang/pull/35688">#35688</a></li>
+<li>[扩散] 壮举：针对 cgroup 上限而不是机器规划固定主机内存（RTX 4090 上的文本编码速度快 2.01 倍）：<a href="https://github.com/sgl-project/sglang/pull/35641">#35641</a></li>
+<li>[Diffusion] 启用 LongCat 可破坏 CUDA 图（B300 上的 LongCat-Image 降噪 -11.9%、e2e -3.4%）：<a href="https://github.com/sgl-project/sglang/pull/35724">#35724</a></li>
+<li>[扩散] 启用 SANA-Video 可破坏 CUDA 图（SANA-Video 降噪 -13.5%）：<a href="https://github.com/sgl-project/sglang/pull/35729">#35729</a></li>
+<li>[扩散] 加速 SANA-Video 线性注意力质量=高（SANA-Video 质量=高 e2e -7.2% on B300）：<a href="https://github.com/sgl-project/sglang/pull/35728">#35728</a></li>
+<li>[扩散] 加速 LingBot 视频 RMSNorm 质量=高 (LingBot-视频质量=高降噪 -25.7%, e2e -22%): <a href="https://github.com/sgl-project/sglang/pull/35969">#35969</a></li>
+<li>[扩散] 熔断 SANA-Video 交错 RoPE (SANA-Video e2e -8.2%): <a href="https://github.com/sgl-project/sglang/pull/35695">#35695</a></li>
+<li>[扩散] 保险丝 LTX-2.5 解码器 3D RoPE (LTX-2.5 解码器 -17%): <a href="https://github.com/sgl-project/sglang/pull/35698">#35698</a></li>
+<li>[扩散] 融合 LongCat-Image QKNorm 和交错 RoPE (LongCat-Image e2e -17%): <a href="https://github.com/sgl-project/sglang/pull/35995">#35995</a></li>
+<li>[扩散] 将 Cosmos3 Nano T2I 注意力融合到 Hopper 上（Cosmos3 Nano 降噪 -12%，e2e -8%）：<a href="https://github.com/sgl-project/sglang/pull/36571">#36571</a></li>
+<li>[扩散][内核] Fuse Wan FFN GELU 尾声 (Wan2.1 降噪 -1.9%): <a href="https://github.com/sgl-project/sglang/pull/36592">#36592</a></li>
+<li>[扩散][内核]在 Blackwell 上融合 Wan2.2 NVFP4 偏差 + GELU (Wan2.2 NVFP4 降噪 -3.0%): <a href="https://github.com/sgl-project/sglang/pull/37075">#37075</a></li>
+<li>[Diffusion] 优化 Qwen-Image TP 集合和注意力 (Qwen-Image-2512 TP2 e2e -8.6%): <a href="https://github.com/sgl-project/sglang/pull/36680">#36680</a></li>
+<li>[扩散] 跨串行 CFG 分支的缓存 Qwen-Image 调制：<a href="https://github.com/sgl-project/sglang/pull/37090">#37090</a></li>
+<li>[Diffusion] 融合 Qwen-Image FP8 QKV 投影和 Blackwell 尾声：<a href="https://github.com/sgl-project/sglang/pull/37123">#37123</a></li>
+<li>[扩散] 融合 Qwen-Image 残差范数和 NVFP4 量化（GB300 上的降噪 -1.2%）：<a href="https://github.com/sgl-project/sglang/pull/37129">#37129</a></li>
+<li>[扩散] Blackwell 上的 Fuse FLUX.2 门控残差归一化：<a href="https://github.com/sgl-project/sglang/pull/37112">#37112</a></li>
+<li>[Diffusion] 融合 FLUX.2 令牌串联和 NVFP4 量化：<a href="https://github.com/sgl-project/sglang/pull/37141">#37141</a></li>
+<li>[Diffusion] Fuse FLUX.2 ModelOpt FP8 生产商和 QKV 包装：<a href="https://github.com/sgl-project/sglang/pull/37162">#37162</a></li>
+<li>[Diffusion] 默认 Hunyuan VAE 为平铺解码（Hunyuan e2e +18% 且 FastHunyuan 在 4xH200 上的 VAE 解码中不再出现 OOM）：<a href="https://github.com/sgl-project/sglang/pull/36012">#36012</a></li>
+</ul>
+<h2 id="本地和桌面人工智能">本地和桌面人工智能</h2>
+<ul>
+<li>[Multimodal] 修复 sm_120 (RTX PRO 6000 / RTX 50xx) 上的 NVFP4 扩散模型：<a href="https://github.com/sgl-project/sglang/pull/35739">#35739</a></li>
+<li>[SM120] flash_mla: 在推理模式之外分配页分割缓冲区: <a href="https://github.com/sgl-project/sglang/pull/35116">#35116</a></li>
+<li>[MLX] 升级到 Torch 2.13/MLX 0.32+ 并重新设计 Torch-MLX 张量桥：<a href="https://github.com/sgl-project/sglang/pull/32984">#32984</a></li>
+<li>[MLX] 修复报告预加载权重时启动崩溃的问题：<a href="https://github.com/sgl-project/sglang/pull/37035">#37035</a></li>
+</ul>
+<h2 id="amd--rocm">AMD / ROCm</h2>
+<ul>
+<li>[AMD] 添加以工作为中心（精益）的注意力：用于长上下文服务的持久 CTA 解码内核（在 MI355X 上吞吐量高达 1.52 倍，ITL 中值降低 3.62 倍）：<a href="https://github.com/sgl-project/sglang/pull/33576">#33576</a></li>
+<li>[AMD] 在 ROCM 10 上支持 gfx1250：<a href="https://github.com/sgl-project/sglang/pull/36871">#36871</a></li>
+<li>[AMD] 添加 ROCm 10 (gfx942 / gfx950) 发布图像：<a href="https://github.com/sgl-project/sglang/pull/36434">#36434</a></li>
+<li>[AMD] 在 kimi-k3 (GSM8K 0.951) 上启用 Mori-EP：<a href="https://github.com/sgl-project/sglang/pull/35630">#35630</a></li>
+<li>[AMD][修复]通过 Qwen MoE 全部路径路由 MoRI（Qwen3.5 MoRI GSM8K 0.006 到 0.967）：<a href="https://github.com/sgl-project/sglang/pull/32039">#32039</a></li>
+<li>[AMD] 为 DeepSeek-V4 预填充上下文并行性启用 moe_a2a_backend=mori：<a href="https://github.com/sgl-project/sglang/pull/35611">#35611</a></li>
+<li>[AMD] 为 Kimi-K3 路由添加 Radix-4 MoE top-k 路由器内核：<a href="https://github.com/sgl-project/sglang/pull/34490">#34490</a></li>
+<li>[AMD] 通过 Kimi K3 的填充 attn 头启用 aiter mla asm 路径（GSM8K 0.947 到 0.958）：<a href="https://github.com/sgl-project/sglang/pull/36356">#36356</a></li>
+<li>[AMD] 改进 K3 dspark 草案 attn 内核性能：<a href="https://github.com/sgl-project/sglang/pull/35499">#35499</a></li>
+<li>[AMD] 启用 12 头 MLA aiter fp8 Gluon 解码（批处理 bh16bn128）。：<a href="https://github.com/sgl-project/sglang/pull/34647">#34647</a></li>
+<li>[AMD] DeepSeek-V4：添加 aiter fused mHC post+pre 并具有跨层边界调度：<a href="https://github.com/sgl-project/sglang/pull/32577">#32577</a></li>
+<li>[AMD] DeepSeek-V4：将 wo_a bf16 批量 matmul 解码路由到 aiter batched_gemm_bf16：<a href="https://github.com/sgl-project/sglang/pull/33313">#33313</a></li>
+<li>[AMD] DeepSeek-V4 MI355X：消除生产者站点的 bpreshuffle fp8 规模副本（MoE down，MLA o_proj bmm）：<a href="https://github.com/sgl-project/sglang/pull/33166">#33166</a></li>
+<li>[AMD][DSV4] perf：解码期间绑定 MoRI 接收缓冲区：<a href="https://github.com/sgl-project/sglang/pull/36130">#36130</a></li>
+<li>[AMD] 启用 deepseek-v4 topk_transform v2 内核（top-k 内核 2.66 速度提高 2.97 倍，端到端速度提高 1.07 倍）：<a href="https://github.com/sgl-project/sglang/pull/36684">#36684</a></li>
+<li>[AMD] 为 HIP DSA 后端启用 Draft_extend CUDA 图：<a href="https://github.com/sgl-project/sglang/pull/35672">#35672</a></li>
+<li>[AMD][Spec][PD] 在 ROCm 上启用 PD DSA 融合 TopK 种子重新映射（GLM-5.2 PD 在 8xMI355X 上将 TPOT 23.16 ms 解码为 7.94 ms）：<a href="https://github.com/sgl-project/sglang/pull/36714">#36714</a></li>
+<li>[AMD] Qwen3.5 ASM FMHA 分块预填充上下文注意（上下文块内核 14.24 ms 到 4.04 ms，70K 输入时 E2E 延迟 -24.6% 到 -28.5%）：<a href="https://github.com/sgl-project/sglang/pull/36758">#36758</a></li>
+<li>[AMD] 优化 Qwen3.5 MTP 在 gfx950 上的统一关注（并发 8、70K 输入时 +9.6% 吞吐量）：<a href="https://github.com/sgl-project/sglang/pull/36330">#36330</a></li>
+<li>[AMD] MiniMax-M3 : block-fp8 的保险丝 QKV+索引项目: <a href="https://github.com/sgl-project/sglang/pull/32099">#32099</a></li>
+<li>[AMD] feat(moe): 折叠 padded-topk_ids 填充到融合共享专家中 追加+重映射: <a href="https://github.com/sgl-project/sglang/pull/31370">#31370</a></li>
+<li>[AMD] [sql-kernel] 绕过 ROCm 自定义 all-reduce 中对等流量的缓存：<a href="https://github.com/sgl-project/sglang/pull/32832">#32832</a></li>
+<li>[ROCm] 将 gfx950 扩展注意力图块扩展到 head_dim &#x3C;= 128：-43% 内核，-14% TTFT，位相同：<a href="https://github.com/sgl-project/sglang/pull/34461">#34461</a></li>
+<li>[ROCm] 修复 QuickReduce fp16 饱和破坏 bf16 all-reduce (106M 非有限 -> 0, +0.3%): <a href="https://github.com/sgl-project/sglang/pull/34484">#34484</a></li>
+<li>[ROCm] 在 HIP 上定义 DSA head-gate 图形助手：<a href="https://github.com/sgl-project/sglang/pull/37118">#37118</a></li>
+<li>[ROCm][修复]将 DSA MQA-logits 预算限制在 AITER 的 buffer_store 限制：<a href="https://github.com/sgl-project/sglang/pull/36960">#36960</a></li>
+<li>[ROCm][修复]在 aiter ASM 上下文预填充收集中使用令牌级 KV 索引：<a href="https://github.com/sgl-project/sglang/pull/36852">#36852</a></li>
+<li>[AMD][规范] 修复 NEXTN 规范关注中的 aiter GQA 打包 + split-KV 路由（验证和草稿扩展）（草案在 88K 上从 ~773 ms 扩展到 ~5 ms，NEXTN 现在 1.35 比无规范快 1.76 倍）：<a href="https://github.com/sgl-project/sglang/pull/30105">#30105</a></li>
+<li>[AMD] 修复 DSv4 草稿扩展在预填充期间采用目标压缩路径的问题：<a href="https://github.com/sgl-project/sglang/pull/37713">#37713</a></li>
+<li>[AMD] Fix v4 topk issue: <a href="https://github.com/sgl-project/sglang/pull/37439">#37439</a></li>
+<li>[AMD] 修复 aiter 无法获得启发式内核回归: <a href="https://github.com/sgl-project/sglang/pull/37438">#37438</a></li>
+<li>[AMD] 在环境变量后面设置 aiter 内存保留豁免：<a href="https://github.com/sgl-project/sglang/pull/37242">#37242</a></li>
+<li>[AMD] 修复 Qwen3.5 MTP 删除融合共享专家权重的问题：<a href="https://github.com/sgl-project/sglang/pull/35719">#35719</a></li>
+<li>[AMD] Quark 共享专家门：识别尾部 MTP 层（并发数为 4 时的 GLM-5.2 中值 TPOT -16.0%，并发数为 64 时的 -8.4%）：<a href="https://github.com/sgl-project/sglang/pull/36124">#36124</a></li>
+<li>[AMD] 修复 QuickReduce bf16 转换无法为 CDNA 构建的问题：<a href="https://github.com/sgl-project/sglang/pull/37132">#37132</a></li>
+<li>修复（lora）：在 ROCm 上构建 MoE LoRA 对齐 JIT 内核：<a href="https://github.com/sgl-project/sglang/pull/36379">#36379</a></li>
+<li>[AMD] 修复夜间 ROCm 7.0 映像构建：AITER topk 内核中包含缺少 <code>&#x3C;optional></code> 的补丁：<a href="https://github.com/sgl-project/sglang/pull/36216">#36216</a></li>
+<li>[AMD] 在 ROCm 上保持 PTX-inline-asm 扩散范数融合关闭（修复 FLUX 预热崩溃）：<a href="https://github.com/sgl-project/sglang/pull/34481">#34481</a></li>
+<li>[AMD] 让扩散 AITer 后端采用分组查询 K/V（修复 Cosmos3-Nano 启动）：<a href="https://github.com/sgl-project/sglang/pull/34485">#34485</a></li>
+<li>[AMD] [Docker] ROCm 7.2.4 中升级 Python 3.12 + 火炬 2.11 + triton 3.7: <a href="https://github.com/sgl-project/sglang/pull/30984">#30984</a></li>
+<li>[AMD] 将 ROCm AITER 引脚更新为 c16d44b：<a href="https://github.com/sgl-project/sglang/pull/35810">#35810</a></li>
+<li>[AMD][MORI] 将 MoRI 升级到 7c51d18 以进行 ionic RoCE dmabuf 修复 (#509): <a href="https://github.com/sgl-project/sglang/pull/37286">#37286</a></li>
+</ul>
+<h2 id="npu--升腾">NPU / 升腾</h2>
+<ul>
+<li>[NPU] DeepSeek-V4 适配 sql-kernel-npu ops (compressor/sparse-attn/sparse-attn-metadata): <a href="https://github.com/sgl-project/sglang/pull/35676">#35676</a></li>
+<li>[NPU] 为 NPU 添加 mxfp4-w4a4 MOE 量化支持：<a href="https://github.com/sgl-project/sglang/pull/30319">#30319</a></li>
+<li>[NPU] 为 ascend kda 后端添加因果 conv1d: <a href="https://github.com/sgl-project/sglang/pull/35021">#35021</a></li>
+<li>[NPU] [Diffusion] 在 Ascend NPU 上支持 MiniMax H3（激光注意力 1.26 比 Ascend 闪光注意力快 1.45 倍）：<a href="https://github.com/sgl-project/sglang/pull/33569">#33569</a></li>
+<li>[NPU] [Diffusion] 支持 GLM-Image 的分布式推理管道（14 降噪器分解比单片批处理快 3.7 倍）：<a href="https://github.com/sgl-project/sglang/pull/31320">#31320</a></li>
+<li>[NPU] [Diffusion] 修复关键的 Ascend NPU Diffusion 回归/错误并恢复 2-NPU CI 测试用例：<a href="https://github.com/sgl-project/sglang/pull/34855">#34855</a></li>
+<li>支持 NPU 上的流会话：<a href="https://github.com/sgl-project/sglang/pull/32597">#32597</a></li>
+<li>[NPU] 修复：通过 torch._C 延迟到达 torch>=2.8 CUDA 内存池 API：<a href="https://github.com/sgl-project/sglang/pull/29100">#29100</a></li>
+<li>[NPU][Fix] 修复空闲池紧张时解码 KV 分配中的 OOB 聚集问题：<a href="https://github.com/sgl-project/sglang/pull/35727">#35727</a></li>
+<li>[NPU][Fix] 修复 GLM4.7‑Flash 中 FIA 操作员输入不连续的问题：<a href="https://github.com/sgl-project/sglang/pull/36170">#36170</a></li>
+<li>修复 NPUMHATokenToKVPool 缺少 k_data_ptrs/v_data_ptrs: <a href="https://github.com/sgl-project/sglang/pull/35820">#35820</a></li>
+</ul>
+<h2 id="cpu--英特尔--xpu">CPU / 英特尔 / XPU</h2>
+<ul>
+<li>[XPU] XPU 支持 INT4 密集线性 (AWQ/GPTQ): <a href="https://github.com/sgl-project/sglang/pull/30236">#30236</a></li>
+<li>[XPU] 在 XPU 上使用 DeepSeek V4 MHC 的 SYCL 内核：<a href="https://github.com/sgl-project/sglang/pull/32166">#32166</a></li>
+<li>[XPU] 在 XPU 上使用 SYCL 内核进行 topk_transform：<a href="https://github.com/sgl-project/sglang/pull/33318">#33318</a></li>
+<li>[XPU] 对 Qwen3.5 使用 sql-kernel 中的融合 GDN 内核（Qwen3.5 GDN 预填充 165 毫秒到 59 毫秒）：<a href="https://github.com/sgl-project/sglang/pull/33354">#33354</a></li>
+<li>[Intel XPU] 支持仅预填充 xpu 型号：<a href="https://github.com/sgl-project/sglang/pull/35072">#35072</a></li>
+<li>修复（xpu）：在 XPU 上启用压缩张量 FP8 W8A8（RedHatAI FP8 动态型号）：<a href="https://github.com/sgl-project/sglang/pull/33057">#33057</a></li>
+<li>XPU：删除 SGLANG_USE_SGL_XPU 标志：<a href="https://github.com/sgl-project/sglang/pull/34492">#34492</a></li>
+<li>[Intel XPU] 修复 B580 运行器上的交叉编码器重新排名挂起：<a href="https://github.com/sgl-project/sglang/pull/36360">#36360</a></li>
+<li>[CPU] 在CPU上启用ERNIE模型：<a href="https://github.com/sgl-project/sglang/pull/35222">#35222</a></li>
+<li>[CPU] 修复 DP 等级的 NUMA/核心绑定：<a href="https://github.com/sgl-project/sglang/pull/32856">#32856</a></li>
+<li>修复 DP 对 CPU 的关注: <a href="https://github.com/sgl-project/sglang/pull/12961">#12961</a></li>
+<li>[CPU] 修复错误的因果屏蔽双向注意力：<a href="https://github.com/sgl-project/sglang/pull/35434">#35434</a></li>
+<li>[CPU] 修复 intel_amx 规范验证中 KV 前缀被截断的问题：<a href="https://github.com/sgl-project/sglang/pull/36430">#36430</a></li>
+<li>[CPU] 修复 Qwen 3.5 的 GPTQ INT4 的 fused_input_proj_cpu 中权重丢失的问题：<a href="https://github.com/sgl-project/sglang/pull/35805">#35805</a></li>
+</ul>
+<h2 id="安全">安全</h2>
+<ul>
+<li>修复：绑定 CUDA 内存以实现快速图像预处理：<a href="https://github.com/sgl-project/sglang/pull/36295">#36295</a></li>
+<li>修复（前端）：绑定停止字符串和正则表达式模式：<a href="https://github.com/sgl-project/sglang/pull/37029">#37029</a></li>
+<li>[CI] 评论者 trust 上的 Gate <code>/rerun-test</code> 并删除 <code>/rerun-stage</code>：<a href="https://github.com/sgl-project/sglang/pull/35750">#35750</a></li>
+</ul>
+<h2 id="依赖关系">依赖关系</h2>
+<ul>
+<li>更新 Deepep 的 SBO 功能：<a href="https://github.com/sgl-project/sglang/pull/35450">#35450</a></li>
+<li>[Deps] 将 FlashInfer 升级为 0.6.18：<a href="https://github.com/sgl-project/sglang/pull/36954">#36954</a> ⭐</li>
+<li>使用 Flashinfer 0.6.18 版本用于 CUDA 13.4 包：<a href="https://github.com/sgl-project/sglang/pull/37073">#37073</a></li>
+<li>将 sql-deep-gemm 升级为 v0.1.6：<a href="https://github.com/sgl-project/sglang/pull/36998">#36998</a></li>
+<li>将 sql-deep-gemm 升级为 0.1.7：<a href="https://github.com/sgl-project/sglang/pull/37279">#37279</a>
+*杂务：将月饼版本升级为0.3.13：<a href="https://github.com/sgl-project/sglang/pull/36493">#36493</a>
+*杂务：将tilelang撞到0.1.12：<a href="https://github.com/sgl-project/sglang/pull/30874">#30874</a></li>
+<li>修复（deps）：将压缩张量固定到 0.18.0：<a href="https://github.com/sgl-project/sglang/pull/36794">#36794</a></li>
+<li>[NVIDIA] 添加 CUDA 13.4 容器以实现初始 Rubin 支持：<a href="https://github.com/sgl-project/sglang/pull/36233">#36233</a></li>
+</ul>
+<h2 id="重大变更和升级说明">重大变更和升级说明</h2>
+<ul>
+<li><strong>统一的基数树现在是每个配置的默认缓存</strong>，包括仅完全注意模型； <code>SGLANG_ENABLE_UNIFIED_RADIX_TREE</code> 已弃用，可以取消设置：<a href="https://github.com/sgl-project/sglang/pull/35081">#35081</a></li>
+<li><strong>Spark3 在配置（<code>Spark2_5Config</code>、<code>model_type</code> <code>spark2_5</code>）、模型类和函数调用解析器上更名为 Spark2.5</strong>；工具调用解析器名称从 <code>spark</code> 更改为 <code>spark25</code>：<a href="https://github.com/sgl-project/sglang/pull/36416">#36416</a></li>
+<li><strong>当 <code>--moe-runner-backend</code> 留在 <code>auto</code> 时，SM90、SM100 和 SM120 上的 DeepSeek-V4 FP4 专家检查点默认为 FlashInfer MXFP4 MoE 运行程序</strong>；保留显式后端：<a href="https://github.com/sgl-project/sglang/pull/35919">#35919</a></li>
+<li><strong>W4A4 MegaMoE 移至 <code>--enable-w4a4-megamoe</code></strong>； <code>SGLANG_OPT_DEEPGEMM_MEGA_MOE_USE_FP4_ACTS</code> and <code>SGLANG_OPT_DEEPGEMM_MEGA_MOE_USE_MXF4_KIND</code> now only warn: <a href="https://github.com/sgl-project/sglang/pull/35918">#35918</a></li>
+<li><strong>需要 FlashInfer 0.6.18</strong>； <code>--dsa-topk-backend flashinfer</code> 和 CuTe DSL NVFP4 W4A16 模式对于早期 FlashInfer API 没有后备方案：<a href="https://github.com/sgl-project/sglang/pull/36954">#36954</a>、<a href="https://github.com/sgl-project/sglang/pull/33237">#33237</a>、<a href="https://github.com/sgl-project/sglang/pull/35120">#35120</a></li>
+<li><strong>Constructing a <code>ServerArgs</code> no longer resolves it.</strong> Programs that build their own record must call <code>resolve_once()</code> before reading resolved values; the launcher does this for the engine: <a href="https://github.com/sgl-project/sglang/pull/35907">#35907</a></li>
+<li><strong>Kimi 混合模型再次在 CUDA 图表下尊重 <code>--enable-symm-mem</code></strong>，因为 Torch 2.13.0 修复了强制其关闭的分配器错误：<a href="https://github.com/sgl-project/sglang/pull/34842">#34842</a></li>
+<li><strong>精益（以工作为中心）解码注意力在 ROCm Triton 后端自动启用</strong>，其门预测获胜，包括在 CUDA 图表下； force it off with <code>--enable-lean-attention=False</code> or <code>SGLANG_DISABLE_LEAN_ATTENTION=1</code>: <a href="https://github.com/sgl-project/sglang/pull/33576">#33576</a></li>
+<li><strong>ROCm 7.2.4 图像移至 Python 3.12、火炬 2.11 和 triton 3.7</strong>； new ROCm 10 images ship for gfx942, gfx950, and gfx1250: <a href="https://github.com/sgl-project/sglang/pull/30984">#30984</a>, <a href="https://github.com/sgl-project/sglang/pull/36434">#36434</a>, <a href="https://github.com/sgl-project/sglang/pull/36871">#36871</a></li>
+<li><strong><code>SGLANG_USE_SGL_XPU</code> 标志已删除</strong>； XPU now uses the sgl-kernel MoE kernels by default, and <code>--moe-runner-backend triton</code> restores the Triton path: <a href="https://github.com/sgl-project/sglang/pull/34492">#34492</a></li>
+<li><strong>扩散缓存-DiT、CFG 门控和 DiT 注意力后端成为每个请求的采样参数</strong>； <code>SGLANG_CACHE_DIT_*</code> 环境变量保留为服务器默认值，并计划弃用：<a href="https://github.com/sgl-project/sglang/pull/35339">#35339</a></li>
+<li><strong>混源视频VAE默认为平铺解码</strong>：<a href="https://github.com/sgl-project/sglang/pull/36012">#36012</a></li>
+<li><strong>请求限制为 32 个停止字符串和 32 个停止正则表达式模式，每个模式最多 256 个字节</strong>，超出范围返回 HTTP 400：<a href="https://github.com/sgl-project/sglang/pull/37029">#37029</a></li>
+<li><strong><code>/rerun-stage</code> is removed and <code>/rerun-test</code> is gated on commenter trust</strong> (zero cooldown or repo write): <a href="https://github.com/sgl-project/sglang/pull/35750">#35750</a></li>
+<li><strong><code>kill_process_tree</code> waits for the reap by default</strong> in CLI, benchmark, and test teardowns: <a href="https://github.com/sgl-project/sglang/pull/36589">#36589</a></li>
+</ul>
+<h2 id="新贡献者">新贡献者</h2>
+<ul>
+<li>@zetyquickly made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/35107">https://github.com/sgl-project/sglang/pull/35107</a></li>
+<li>@vijay-kodamalla 在 <a href="https://github.com/sgl-project/sglang/pull/34327">https://github.com/sgl-project/sglang/pull/34327</a> 中做出了第一个贡献</li>
+<li>@HeYao0714 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/35162">https://github.com/sgl-project/sglang/pull/35162</a></li>
+<li>@jain-ria 在 <a href="https://github.com/sgl-project/sglang/pull/34627">https://github.com/sgl-project/sglang/pull/34627</a> 中做出了第一个贡献</li>
+<li>@yangweigbh made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/35130">https://github.com/sgl-project/sglang/pull/35130</a></li>
+<li>@SubSir made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/35371">https://github.com/sgl-project/sglang/pull/35371</a></li>
+<li>@QNan0513 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/34862">https://github.com/sgl-project/sglang/pull/34862</a></li>
+<li>@Dayuxiaoshui 在 <a href="https://github.com/sgl-project/sglang/pull/34993">https://github.com/sgl-project/sglang/pull/34993</a> 中做出了第一个贡献</li>
+<li>@MengYu10151 在 <a href="https://github.com/sgl-project/sglang/pull/29525">https://github.com/sgl-project/sglang/pull/29525</a> 中做出了第一个贡献</li>
+<li>@ayush1399 made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/32440">https://github.com/sgl-project/sglang/pull/32440</a></li>
+<li>@jason136 在 <a href="https://github.com/sgl-project/sglang/pull/33606">https://github.com/sgl-project/sglang/pull/33606</a> 中做出了第一个贡献</li>
+<li>@ECMGit made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/34679">https://github.com/sgl-project/sglang/pull/34679</a></li>
+<li>@shiyang814-cpu made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/32327">https://github.com/sgl-project/sglang/pull/32327</a></li>
+<li>@wuyl1 在 <a href="https://github.com/sgl-project/sglang/pull/33370">https://github.com/sgl-project/sglang/pull/33370</a> 中做出了第一个贡献</li>
+<li>@beyondHJM made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/35361">https://github.com/sgl-project/sglang/pull/35361</a></li>
+<li>@wenkaidu made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/32832">https://github.com/sgl-project/sglang/pull/32832</a></li>
+<li>@lgy1027 在 <a href="https://github.com/sgl-project/sglang/pull/35796">https://github.com/sgl-project/sglang/pull/35796</a> 中做出了第一个贡献</li>
+<li>@daviswer made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/35794">https://github.com/sgl-project/sglang/pull/35794</a></li>
+<li>@alecsolder made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/35747">https://github.com/sgl-project/sglang/pull/35747</a></li>
+<li>@jianfei-wangg made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/33829">https://github.com/sgl-project/sglang/pull/33829</a></li>
+<li>@fullz 在 <a href="https://github.com/sgl-project/sglang/pull/35305">https://github.com/sgl-project/sglang/pull/35305</a> 中做出了第一个贡献</li>
+<li>@fatday made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/34237">https://github.com/sgl-project/sglang/pull/34237</a></li>
+<li>@YangKai0616 在 <a href="https://github.com/sgl-project/sglang/pull/30236">https://github.com/sgl-project/sglang/pull/30236</a> 中做出了第一个贡献</li>
+<li>@seokwoosong 在 <a href="https://github.com/sgl-project/sglang/pull/34066">https://github.com/sgl-project/sglang/pull/34066</a> 中做出了第一个贡献</li>
+<li>@cyxlily made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/32166">https://github.com/sgl-project/sglang/pull/32166</a></li>
+<li>@ITerydh made their first contribution in <a href="https://github.com/sgl-project/sglang/pull/35829">https://github.com/sgl-project/sglang/pull/35829</a></li>
+<li>@unclezhou486 在 <a href="https://github.com/sgl-project/sglang/pull/35676">https://github.com/sgl-project/sglang/pull/35676</a> 中做出了第一个贡献</li>
+<li>@jiaryang 在 <a href="https://github.com/sgl-project/sglang/pull/35672">https://github.com/sgl-project/sglang/pull/35672</a> 中做出了第一个贡献</li>
+<li>@cognaiger9 在 <a href="https://github.com/sgl-project/sglang/pull/35188">https://github.com/sgl-project/sglang/pull/35188</a> 中做出了第一个贡献</li>
+<li>@shikicloud 在 <a href="https://github.com/sgl-project/sglang/pull/35505">https://github.com/sgl-project/sglang/pull/35505</a> 中做出了第一个贡献</li>
+<li>@yuanlehome 在 <a href="https://github.com/sgl-project/sglang/pull/35646">https://github.com/sgl-project/sglang/pull/35646</a> 中做出了第一个贡献</li>
+<li>@ActiveSky 在 <a href="https://github.com/sgl-project/sglang/pull/36275">https://github.com/sgl-project/sglang/pull/36275</a> 中做出了第一个贡献</li>
+<li>@FxxxxU 在 <a href="https://github.com/sgl-project/sglang/pull/36301">https://github.com/sgl-project/sglang/pull/36301</a> 中做出了第一个贡献</li>
+<li>@kuma-loong 在 <a href="https://github.com/sgl-project/sglang/pull/36465">https://github.com/sgl-project/sglang/pull/36465</a> 中做出了第一个贡献</li>
+<li>@Promisewjx 在 <a href="https://github.com/sgl-project/sglang/pull/33871">https://github.com/sgl-project/sglang/pull/33871</a> 中做出了第一个贡献</li>
+<li>@Deleter-D 在 <a href="https://github.com/sgl-project/sglang/pull/35275">https://github.com/sgl-project/sglang/pull/35275</a> 中做出了第一个贡献</li>
+<li>@galletas1712 在 <a href="https://github.com/sgl-project/sglang/pull/34053">https://github.com/sgl-project/sglang/pull/34053</a> 中做出了第一个贡献</li>
+<li>@koppulac 在 <a href="https://github.com/sgl-project/sglang/pull/35290">https://github.com/sgl-project/sglang/pull/35290</a> 中做出了第一个贡献</li>
+<li>@kyx1999 在 <a href="https://github.com/sgl-project/sglang/pull/36862">https://github.com/sgl-project/sglang/pull/36862</a> 中做出了第一个贡献</li>
+<li>@omirosh 在 <a href="https://github.com/sgl-project/sglang/pull/36852">https://github.com/sgl-project/sglang/pull/36852</a> 中做出了第一个贡献</li>
+<li>@tianxiao Jiang4 在 <a href="https://github.com/sgl-project/sglang/pull/36714">https://github.com/sgl-project/sglang/pull/36714</a> 中做出了第一个贡献</li>
+<li>@joeltg 在 <a href="https://github.com/sgl-project/sglang/pull/34639">https://github.com/sgl-project/sglang/pull/34639</a> 中做出了第一个贡献</li>
+<li>@tech-cow 在 <a href="https://github.com/sgl-project/sglang/pull/29100">https://github.com/sgl-project/sglang/pull/29100</a> 中做出了第一个贡献</li>
+<li>@zomglings 在 <a href="https://github.com/sgl-project/sglang/pull/37054">https://github.com/sgl-project/sglang/pull/37054</a> 中做出了第一个贡献</li>
+<li>@noron12234 在 <a href="https://github.com/sgl-project/sglang/pull/33048">https://github.com/sgl-project/sglang/pull/33048</a> 中做出了第一个贡献</li>
+<li>@caihuali95 在 <a href="https://github.com/sgl-project/sglang/pull/34602">https://github.com/sgl-project/sglang/pull/34602</a> 中做出了第一个贡献</li>
+<li>@ainergiz 在 <a href="https://github.com/sgl-project/sglang/pull/37035">https://github.com/sgl-project/sglang/pull/37035</a> 中做出了第一个贡献</li>
+<li>@TarangKhanna 在 <a href="https://github.com/sgl-project/sglang/pull/36101">https://github.com/sgl-project/sglang/pull/36101</a> 中做出了第一个贡献</li>
+<li>@Juhyun-Kim-Memphis 在 <a href="https://github.com/sgl-project/sglang/pull/37249">https://github.com/sgl-project/sglang/pull/37249</a> 中做出了第一个贡献</li>
+<li>@qtris123 在 <a href="https://github.com/sgl-project/sglang/pull/33926">https://github.com/sgl-project/sglang/pull/33926</a> 中做出了第一个贡献</li>
+<li>@chien-an-chen 在 <a href="https://github.com/sgl-project/sglang/pull/34647">https://github.com/sgl-project/sglang/pull/34647</a> 中做出了第一个贡献</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/sgl-project/sglang">sgl-project/sglang</a> · 🏷️ 版本：<code>v0.5.19</code> · 📅 发布：2026-09-05 · <a href="https://github.com/sgl-project/sglang/releases/tag/v0.5.19">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/sglang/sglang_v0.5.20"> <span class="k">← 下一个</span> <span class="t">v0.5.20</span> </a> <a href="/zh/release_note/sglang/sglang_v0.5.18"> <span class="k">上一个 →</span> <span class="t">v0.5.18</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/sgl-project/sglang/releases/tag/v0.5.19" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/sgl-project/sglang" target="_blank" rel="noopener"> <span>sgl-project/sglang</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#rust-服务器" class>Rust 服务器</a><a href="#推测性解码" class>推测性解码</a><a href="#分段且可破坏的-cuda-图" class>分段且可破坏的 CUDA 图</a><a href="#注意后端" class>注意后端</a><a href="#moe-和专家并行性" class>MoE 和专家并行性</a><a href="#量化" class>量化</a><a href="#并行性和分解" class>并行性和分解</a><a href="#调度程序和运行时" class>调度程序和运行时</a><a href="#hicache-和基数缓存" class>HiCache 和基数缓存</a><a href="#多式联运" class>多式联运</a><a href="#模型支持和优化" class>模型支持和优化</a><a href="#内核库" class>内核库</a><a href="#配置系统" class>配置系统</a><a href="#sglang-扩散" class>SGLang-扩散</a><a href="#本地和桌面人工智能" class>本地和桌面人工智能</a><a href="#amd--rocm" class>AMD / ROCm</a><a href="#npu--升腾" class>NPU / 升腾</a><a href="#cpu--英特尔--xpu" class>CPU / 英特尔 / XPU</a><a href="#安全" class>安全</a><a href="#依赖关系" class>依赖关系</a><a href="#重大变更和升级说明" class>重大变更和升级说明</a><a href="#新贡献者" class>新贡献者</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/sglang/sglang_v0.5.23"> <span class="v">v0.5.23</span> <span class="d">26-11-02</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.22"> <span class="v">v0.5.22</span> <span class="d">26-10-19</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.21"> <span class="v">v0.5.21</span> <span class="d">26-10-02</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.20"> <span class="v">v0.5.20</span> <span class="d">26-09-18</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.19" aria-current="true"> <span class="v">v0.5.19</span> <span class="d">26-09-05</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.18"> <span class="v">v0.5.18</span> <span class="d">26-08-22</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.17"> <span class="v">v0.5.17</span> <span class="d">26-08-08</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.16"> <span class="v">v0.5.16</span> <span class="d">26-07-25</span> </a> </li> </ul> <a href="/zh/releases/sglang" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

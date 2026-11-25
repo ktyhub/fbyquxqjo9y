@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>openclaw v2026.10.7 — STAGS NextStack</title><meta name="description" content="Replay-safe session recovery: interrupted sessions now retain recovery provenance and unfinished tool outcomes, stopped conversations retire terminal recovery residue before accepting the next message, rejected Claude…"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/openclaw/openclaw_v2026.10.7/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/openclaw/2026.10.7"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/openclaw/openclaw_v2026.10.7/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/openclaw/2026.10.7"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="openclaw v2026.10.7 — STAGS NextStack"><meta property="og:description" content="Replay-safe session recovery: interrupted sessions now retain recovery provenance and unfinished tool outcomes, stopped conversations retire terminal recovery residue before accepting the next message, rejected Claude…"><meta property="og:url" content="https://www.stags.cn/zh/release_note/openclaw/openclaw_v2026.10.7/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/openclaw/openclaw_v2026.10.7/#article","headline":"openclaw v2026.10.7 release notes","datePublished":"2026-10-24","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/openclaw/openclaw"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/openclaw/2026.10.7/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/openclaw/openclaw_v2026.10.7/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/openclaw/2026.10.7/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/openclaw/2026.10.7/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/openclaw/2026.10.7/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/openclaw/2026.10.7/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/openclaw/2026.10.7/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/openclaw">openclaw</a> </nav> <h1 class="detail-title"> <span class="p">openclaw</span> v2026.10.7 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年10月24日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener"> <span class="k">来源</span>openclaw/openclaw </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/openclaw/2026.10.7"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/openclaw/openclaw_v2026.10.7/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="openclaw-v2026107">openclaw v2026.10.7</h1>
+<h2 id="2026107">2026.10.7</h2>
+<h3 id="亮点">亮点</h3>
+<ul>
+<li><strong>重播安全会话恢复：</strong> 中断的会话现在保留恢复来源和未完成的工具结果，停止的对话在接受下一条消息之前退出终端恢复残留，拒绝的 Claude CLI 草稿不参与最终回复，大型子完成批次保留在请求者上下文中，Codex 预览在上下文刷新后不再阻止回复。 （#153728、#168764、#172068、#177716、#176682、#176783、#176675、#159715、#181801）谢谢@zhangguiping-xydt、@ruel225、@Oliver4Spot、@jjjhenriksen、@enki、@PennyVibe， @mbelinky、@RomneyDa 和 @krjcolby-svg。</li>
+<li><strong>更安全的更新激活和恢复：</strong> 经过验证的激活在以后的维护或分类帐错误中保持成功，中断的软件包更新安全恢复，激活后医生等待有限，过时的收据无法否决有效的修复，并且 Windows 深层或 8.3 状态路径不再中止加入或迁移。 （＃181166，＃181307，＃173862，＃167459，＃172768，＃172769，＃181389）谢谢@najef1979-code，@agroman1993，@shanselman，@RomneyDa，@dor-sr，@wangmiao0668000666，以及@brucemccurdy。</li>
+<li><strong>数据库和工作人员连续性：</strong> 维护拒绝保护同行读者和借用者，不兼容的保留代理数据库保持隔离，空记录删除跳过不必要的存档实现，Bun 准入截止日期保持线程本地，工作人员关闭在库存报废后完成。 （#175987、#179320、#170122、#171372、#172756、#168862）感谢@LifeViwer、@Captain69G、@RomneyDa、@shanselman、@dor-sr、@wangmiao0668000666 和@brucemccurdy。</li>
+<li>**备份和状态持久性：**快照保留支持的旧版执行批准策略，中断的 R2 验证和安全恢复，配置观察在截断写入期间保留最后一个已知的良好快照，失败的多文件补丁保留早期文件，内存 Wiki 重新导入保留人工编写的注释。 （#164297、#171292、#152565、#160409、#175707）谢谢@wangmiao0668000666、@davidcittadini、@LiuwqGit、@yetval、@masatohoshino、@YangManBOBO、@RomneyDa、@shanselman、@dor-sr、@cristianoc 和@brucemccurdy。</li>
+<li><strong>操作员控制连续性：</strong> 本机计算机控制在会话到期后恢复，后期附加的 GitHub 操作员可以发布 PR，同步节点输出不会复制为完成唤醒，cron 公告保留 CLI 聊天记录，历史维护在有效负载之前读取身份。 （#169385、#169400、#164511、#176218、#174530）感谢@stackingrockss、@Gigaxel、@holgergruenhagen、@eliavb43、@wangmiao0668000666、@asikorskiy 和@RomneyDa。</li>
+<li>**提供程序和插件连续性：**模型刷新、配置帐户准备就绪、GPT-5.6 工具轮换、OpenRouter 载入、增量插件加载以及更快的外部 TypeScript 插件启动保留当前状态，而不是拒绝有效设置或丢弃提供程序。 （#176709、#178522、#173366、#173292、#162226、#161267、#168391）感谢@ericcaiwx-star、@eduardonunesfreire-rgb、@chandraveshchaudhari、@netcrazed、@obviyus、@jakeaadams 和@RomneyDa。</li>
+<li>**托管集成可靠性：**保存的 Linux 网关仪表板在重新启动时保持配对，缓慢的 macOS Talk 运行保留其回复，应用程序升级会聚官方插件，Copilot 设置正确验证 SDK 支持的代理，Claude CLI 缓存前缀在子进程完成后保持稳定，并在仅调用者工具出现或消失时保留上下文，并且密钥提示不再阻止无头浏览器 clicks。 （＃158908，＃164485，＃174257，＃163578，＃172026，＃178955，＃170857）谢谢@dor-sr，@PollyBot13，@kazuyuki-eguchi，@lifuyue，@Marvinthebored，@VACInc，@trukhinyuri，@Peetiegonzalez， @RomneyDa、@shanselman、@wangmiao0668000666、@brucemccurdy 和 @rsaeks。</li>
+<li>**跨平台应用程序管理的升级：**本机状态修复、恢复快照、网关运行时准入和升级后服务恢复现在可以融合，而不会失去跨 macOS 和 Windows 的代理访问权限。 （＃171508，＃174297，＃175007，＃176174，＃178155，＃178779，＃180010，＃180576，＃180769）谢谢@tjarrau-dev，@DonnieFi，@jayzhou2309，@lostsock1，@sglion777， @Almost-Certified-ops、@billpang1-sketch 和 @RomneyDa。</li>
+</ul>
+<h3 id="变化">变化</h3>
+<ul>
+<li><strong>Google 型号：</strong> 添加 Gemini 4 Argon 支持。 (#171852) 谢谢@RomneyDa。</li>
+</ul>
+<h3 id="修复">修复</h3>
+<ul>
+<li><strong>更新指南：</strong> 当包管理器丢失时避免不相关的数据库修复建议，并在成功更新后删除被取代的警告。 （#173293、#173395）感谢@DonnieFi、@RomneyDa、@wangmiao0668000666、@sunlit-deng 和@bhedanikhilkumar-code。</li>
+<li><strong>macOS 入门：</strong> 允许新的配置文件启动网关并完成自动设置。 (#173246) 谢谢@RomneyDa。</li>
+<li>**网关日志记录：**防止已删除或过时的临时日志目录在日期翻转期间使网关处于满 CPU 状态。 (#160433) 修复#130807 感谢@masatohoshino、@WadeOwenWatts 和@RomneyDa。</li>
+<li><strong>控制 UI 队列状态：</strong> 在队列命令被消耗后清除斜线引导芯片。 (#180024) 谢谢@RomneyDa。
+###完整贡献记录
+此审核记录涵盖完整的 v2026.10.6..5c4a797362e0d9c94ce82ed0b6be2c9827ad9c45 历史记录：49 个范围内 PR + 21 个保留的仅种子 PR = 70 个唯一 PR。生成清单还提供直接提交作为编辑输入；上面分组的注释优先考虑用户影响。</li>
+</ul>
+<h4 id="拉取请求">拉取请求</h4>
+<ul>
+<li><strong>PR #181867</strong> 向后移植#181801。谢谢@RomneyDa。</li>
+<li><strong>公关#181487</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #181801</strong> 相关#181770。感谢@najef1979-code 和@RomneyDa。</li>
+<li><strong>PR #173293</strong> 相关#173084。感谢@DonnieFi、@RomneyDa、@wangmiao0668000666 和@sunlit-deng。</li>
+<li><strong>PR #173395</strong> 相关#173089。感谢@DonnieFi、@RomneyDa 和@bhedanikhilkumar-code。</li>
+<li><strong>PR #178155</strong> 相关#177697。谢谢@DonnieFi 和@RomneyDa。</li>
+<li><strong>PR #175707</strong> 相关#175700。感谢@YangManBOBO 和@RomneyDa。</li>
+<li><strong>公关#180024</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #180010</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #178779</strong> 相关#167385。感谢@jayzhou2309、@RomneyDa 和@lostsock1。</li>
+<li><strong>公关#180576</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #176675</strong> 感谢@enki 和@RomneyDa。</li>
+<li><strong>PR #176682</strong> 感谢@RomneyDa 和@enki。</li>
+<li><strong>PR #172026</strong> 感谢@Marvinthebored、@VACInc、@RomneyDa 和@Peetiegonzalez。</li>
+<li><strong>公关#170122</strong></li>
+<li><strong>公关#178955</strong> 谢谢@Marvinthebored。</li>
+<li><strong>公关#179933</strong></li>
+<li><strong>公关#179951</strong></li>
+<li><strong>公关#182030</strong></li>
+<li><strong>公关#176892</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #159715</strong> 感谢@mbelinky 和@RomneyDa。</li>
+<li><strong>PR #162226</strong> 感谢@netcrazed 和@RomneyDa。</li>
+<li><strong>PR #161267</strong> 感谢@obviyus 和@RomneyDa。</li>
+<li><strong>公关#171852</strong> 谢谢@RomneyDa。</li>
+<li><strong>公关#176709</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #180769</strong> 相关#180636、#180701、#180707。感谢@RomneyDa 和@sglion777 以及@Almost-Certified-ops 和@billpang1-sketch。</li>
+<li><strong>PR #178522</strong> 相关#178502。感谢@ericcaiwx-star、@RomneyDa 和@eduardonunesfreire-rgb。</li>
+<li><strong>PR #152565</strong> 相关#152509。感谢@LiuwqGit、@RomneyDa 和@yetval。</li>
+<li><strong>PR #160409</strong> 感谢@masatohoshino 和@RomneyDa。</li>
+<li><strong>PR #163578</strong> 感谢@lifuyue 和@RomneyDa。</li>
+<li><strong>公关#180482</strong> 谢谢@RomneyDa。</li>
+<li><strong>公关#180989</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #164297</strong> 相关#164146、#156945。感谢@wangmiao0668000666、@RomneyDa、@shanselman、@dor-sr、@cristianoc 和@brucemccurdy。</li>
+<li><strong>PR #158908</strong> 相关#156945。感谢@dor-sr、@RomneyDa、@shanselman、@wangmiao0668000666 和@brucemccurdy。</li>
+<li><strong>PR #175987</strong> 相关#156945。感谢@RomneyDa、@shanselman、@dor-sr、@wangmiao0668000666 和@brucemccurdy。</li>
+<li><strong>PR #179320</strong> 相关#156945。感谢@RomneyDa、@shanselman、@dor-sr、@wangmiao0668000666 和@brucemccurdy。</li>
+<li><strong>PR #181389</strong> 相关#156945。感谢@shanselman、@RomneyDa、@dor-sr、@wangmiao0668000666 和@brucemccurdy。</li>
+<li><strong>PR #167459</strong> 相关#167441、#156945。感谢@RomneyDa、@shanselman、@dor-sr、@wangmiao0668000666 和@brucemccurdy。</li>
+<li><strong>PR #153728</strong> 相关#144842。感谢@zhangguiping-xydt、@RomneyDa 和@krjcolby-svg。</li>
+<li><strong>PR #164485</strong> 相关#153145。感谢@PollyBot13、@RomneyDa 和@rsaeks。</li>
+<li><strong>PR #168391</strong> 相关#168130。感谢@RomneyDa 和@jakeaadams。</li>
+<li><strong>公关#168629</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #168764</strong> 相关#168676。感谢@ruel225、@RomneyDa 和@Oliver4Spot。</li>
+<li><strong>PR #168862</strong> 相关#158126。感谢@RomneyDa 和@Captain69G。</li>
+<li><strong>PR #169385</strong> 相关#169353。感谢@stackingrockss 和@RomneyDa。</li>
+<li><strong>PR #169400</strong> 相关#169377。感谢@Gigaxel 和@RomneyDa。</li>
+<li><strong>PR #171292</strong> 相关#171165。感谢@RomneyDa 和@davidcittadini。</li>
+<li><strong>PR #171372</strong> 相关#171348。感谢@RomneyDa 和@LifeViwer。</li>
+<li><strong>公关#172068</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #164511</strong> 感谢@holgergruenhagen 和@RomneyDa。</li>
+<li><strong>公关#172756</strong> 谢谢@RomneyDa。</li>
+<li><strong>公关#172768</strong> 谢谢@RomneyDa。</li>
+<li><strong>公关#172769</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #173862</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #176218</strong> 相关#176208。感谢@eliavb43 和@RomneyDa。</li>
+<li><strong>PR #177716</strong> 感谢@jjjhenriksen 和@RomneyDa。</li>
+<li><strong>PR #174530</strong> 相关#174078。感谢@wangmiao0668000666、@RomneyDa 和@asikorskiy。</li>
+<li><strong>PR #181166</strong> 相关#181020。谢谢@najef1979-code。</li>
+<li><strong>PR #181307</strong> 相关#181235。感谢@RomneyDa 和@agroman1993。</li>
+<li><strong>PR #176783</strong> 相关#176669。感谢@RomneyDa 和@PennyVibe。</li>
+<li><strong>PR #173366</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #173292</strong> 感谢@chandraveshchaudhari 和@RomneyDa。</li>
+<li><strong>PR #174257</strong> 相关#174120。感谢@RomneyDa 和@kazuyuki-eguchi。</li>
+<li><strong>PR #170857</strong> 感谢@trukhinyuri 和@RomneyDa。</li>
+<li><strong>PR #171508</strong> 谢谢@RomneyDa。</li>
+<li><strong>公关#174297</strong> 谢谢@RomneyDa。</li>
+<li><strong>公关#175007</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #176174</strong> 相关#176163。感谢@RomneyDa 和@tjarrau-dev。</li>
+<li><strong>公关#173246</strong> 谢谢@RomneyDa。</li>
+<li><strong>PR #160433</strong> 相关#130807。感谢@masatohoshino、@RomneyDa 和@WadeOwenWatts。</li>
+</ul>
+<h3 id="发布验证">发布验证</h3>
+<ul>
+<li>npm 包：<a href="https://www.npmjs.com/package/openclaw/v/2026.10.7">https://www.npmjs.com/package/openclaw/v/2026.10.7</a></li>
+<li>注册表压缩包：<a href="https://registry.npmjs.org/openclaw/-/openclaw-2026.10.7.tgz">https://registry.npmjs.org/openclaw/-/openclaw-2026.10.7.tgz</a></li>
+<li>完整性：<code>sha512-iiZO+kFFBgQvxm17wn3Sc/MSC/GQu01PubAFVNA2Nn736HOHUbR0ra7a9NeW9wpjq3kDkSJ1RB7dTP+qVJFXig==</code></li>
+<li>发布SHA：<code>157d8c2bc3ea2fa183afdc11088e69690bf8e64e</code></li>
+<li>完整发布 CI 报告：<a href="https://github.com/openclaw/releases/blob/main/evidence/2026.10.7/release-evidence.md">https://github.com/openclaw/releases/blob/main/evidence/2026.10.7/release-evidence.md</a></li>
+<li>发布发布：<a href="https://github.com/openclaw/openclaw/actions/runs/40081926023">https://github.com/openclaw/openclaw/actions/runs/40081926023</a></li>
+<li>npm 预检：<a href="https://github.com/openclaw/openclaw/actions/runs/40055378381">https://github.com/openclaw/openclaw/actions/runs/40055378381</a></li>
+<li>完整发布验证：<a href="https://github.com/openclaw/openclaw/actions/runs/40054950351">https://github.com/openclaw/openclaw/actions/runs/40054950351</a></li>
+<li>插件 npm 发布：<a href="https://github.com/openclaw/openclaw/actions/runs/40082487401">https://github.com/openclaw/openclaw/actions/runs/40082487401</a></li>
+<li>插件 ClawHub 提交：<a href="https://github.com/openclaw/openclaw/actions/runs/40082490562">https://github.com/openclaw/openclaw/actions/runs/40082490562</a>; 公开最终确定和精确工件验证遵循终端发布-父级完成</li>
+<li>插件 ClawHub 引导程序：不需要</li>
+<li>OpenClaw npm 发布：<a href="https://github.com/openclaw/openclaw/actions/runs/40073183916/attempts/1">https://github.com/openclaw/openclaw/actions/runs/40073183916/attempts/1</a></li>
+<li>npm Telegram beta E2E：未提供</li>
+<li>Android APK：跳过 — apps/android/version.json 是 2026.8.2，发布列车是 2026.10.7；在下一个标签之前运行 pnpm android:version:pin — —from-gateway 。</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/openclaw/openclaw">openclaw/openclaw</a> · 🏷️ 版本：<code>v2026.10.7</code> · 📅 发布：2026-10-24 · <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.10.7">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/openclaw/openclaw_v2026.9.34"> <span class="k">← 下一个</span> <span class="t">v2026.9.34</span> </a> <a href="/zh/release_note/openclaw/openclaw_v2026.10.6"> <span class="k">上一个 →</span> <span class="t">v2026.10.6</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.10.7" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/openclaw/openclaw" target="_blank" rel="noopener"> <span>openclaw/openclaw</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#2026107" class>2026.10.7</a><a href="#亮点" class="lv3">亮点</a><a href="#变化" class="lv3">变化</a><a href="#修复" class="lv3">修复</a><a href="#发布验证" class="lv3">发布验证</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.7"> <span class="v">v2026.11.7</span> <span class="d">26-11-23</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.6"> <span class="v">v2026.11.6</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.10.33"> <span class="v">v2026.10.33</span> <span class="d">26-11-18</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.5"> <span class="v">v2026.11.5</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.4"> <span class="v">v2026.11.4</span> <span class="d">26-11-16</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.9.37"> <span class="v">v2026.9.37</span> <span class="d">26-11-10</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.3"> <span class="v">v2026.11.3</span> <span class="d">26-11-10</span> </a> </li><li> <a href="/zh/release_note/openclaw/openclaw_v2026.11.2"> <span class="v">v2026.11.2</span> <span class="d">26-11-08</span> </a> </li> </ul> <a href="/zh/releases/openclaw" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

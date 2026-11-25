@@ -1,0 +1,942 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>vitess v23.0.0 — STAGS NextStack</title><meta name="description" content="Major Changes · Breaking Changes · Flag Naming Convention Migration · New default versions"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/vitess/vitess_v23.0.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/vitess/23.0.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/vitess/vitess_v23.0.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/vitess/23.0.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="vitess v23.0.0 — STAGS NextStack"><meta property="og:description" content="Major Changes · Breaking Changes · Flag Naming Convention Migration · New default versions"><meta property="og:url" content="https://www.stags.cn/zh/release_note/vitess/vitess_v23.0.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/vitess/vitess_v23.0.0/#article","headline":"vitess v23.0.0 release notes","datePublished":"2025-11-04","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/vitessio/vitess"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/vitess/23.0.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/vitess/vitess_v23.0.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/vitess/23.0.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/vitess/23.0.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/vitess/23.0.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/vitess/23.0.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/vitess/23.0.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/vitess">vitess</a> </nav> <h1 class="detail-title"> <span class="p">vitess</span> v23.0.0 </h1> <div class="detail-meta"> <span class="chip chip--major">大版本</span> <span><span class="k">发布时间</span>2025年11月4日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/vitessio/vitess" target="_blank" rel="noopener"> <span class="k">来源</span>vitessio/vitess </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/vitess/23.0.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/vitess/vitess_v23.0.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="vitess-v2300">vitess v23.0.0</h1>
+<h1 id="发布vitess-v2300">发布Vitess v23.0.0</h1>
+<h2 id="总结">总结</h2>
+<h3 id="目录">目录</h3>
+<ul>
+<li><strong><a href="#major-changes">主要变更</a></strong>
+<ul>
+<li><strong><a href="#break-changes">重大变更</a></strong></li>
+<li><strong><a href="#flag-naming-convention-migration">标志命名约定迁移</a></strong></li>
+<li><strong><a href="#new-default-versions">新的默认版本</a></strong>
+<ul>
+<li><a href="#%E5%8D%87%E7%BA%A7%E8%87%B3mysql-8-4">升级至MySQL 8.4</a></li>
+</ul>
+</li>
+<li><strong><a href="#new-support">新支持</a></strong>
+<ul>
+<li><a href="#multi-query-execution">多查询执行</a></li>
+<li><a href="#transaction-timeout-session-variable">交易超时会话变量</a></li>
+<li><a href="#query-throttler">实验：查询节流器</a></li>
+<li><a href="#multiple-lookup-vindexes-support">多重查找 Vindexes 支持</a></li>
+<li><a href="#reference-tables-in-materialize-workflows">Materialize 工作流程中的参考表</a></li>
+<li><a href="#online-ddl-shard-specific-completion">在线 DDL 分片特定完成</a></li>
+<li><a href="#with-recursive-ctes">使用递归 CTE</a></li>
+<li><a href="#create-table-select-support">创建表…选择支持</a></li>
+</ul>
+</li>
+<li><strong><a href="#deprecations">弃用</a></strong>
+<ul>
+<li><a href="#deprecated-metrics">指标</a></li>
+<li><a href="#deprecated-cli-flags">CLI 标志</a></li>
+</ul>
+</li>
+<li><strong><a href="#deletions">删除</a></strong>
+<ul>
+<li><a href="#deleted-metrics">指标</a></li>
+</ul>
+</li>
+<li><strong><a href="#new-metrics">新指标</a></strong>
+<ul>
+<li><a href="#new-vtgate-metrics">VTGate</a></li>
+<li><a href="#new-vttablet-metrics">VTTablet</a></li>
+<li><a href="#new-vtorc-metrics">VTORc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes">小改动</a></strong>
+<ul>
+<li><strong><a href="#new-cli-flags">新 CLI 标志</a></strong>
+<ul>
+<li><a href="#new-vreplication-flags">VReplication/Materialize</a></li>
+<li><a href="#new-observability-flags">可观察性</a></li>
+<li><a href="#new-vtorc-flags">VTORc</a></li>
+<li><a href="#new-backup-flags">备份/恢复</a></li>
+<li><a href="#new-cli-%E5%B7%A5%E5%85%B7%E6%A0%87%E5%BF%97">CLI 工具</a></li>
+<li><a href="#new-vtadmin-flags">VTAdmin</a></li>
+<li><a href="#new-vtgate-flags-section">VTGate</a></li>
+</ul>
+</li>
+<li><strong><a href="#modified-metrics">修改后的指标</a></strong></li>
+<li><strong><a href="#parser-sql-enhancements">解析器/SQL 增强</a></strong></li>
+<li><strong><a href="#query-planning-improvements">查询规划改进</a></strong></li>
+<li><strong><a href="#minor-changes-topo">拓扑</a></strong>
+<ul>
+<li><a href="#consul-auth-static-file-check-creds"><code>--consul-auth-static-file</code> 需要 1 个或多个凭据</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-vtorc">VTORc</a></strong>
+<ul>
+<li><a href="#aggreerated-discovery-metrics-api-removed">聚合发现指标 HTTP API 已删除</a></li>
+<li><a href="#vtorc-dynamic-ers-disabled">基于 <code>EmergencyReparentShard</code> 的恢复的动态控制</a></li>
+<li><a href="#recoveries-stats-keyspace-shard">恢复统计数据包括密钥空间/碎片</a></li>
+<li><a href="#replication-analysis-api-%E5%BC%83%E7%94%A8"><code>/api/replication-analysis</code> HTTP API 弃用</a></li>
+</ul>
+</li>
+<li><strong><a href="#minor-changes-vttablet">VTTablet</a></strong>
+<ul>
+<li><a href="#api-%E5%8F%98%E6%9B%B4">API 变更</a></li>
+<li><a href="#flags-vttablet">CLI 标志</a></li>
+<li>[托管 MySQL 配置默认为缓存 sha2 密码](#mysql-缓存 sha2 密码)</li>
+<li><a href="#mysql-timezone-env">MySQL时区环境传播</a></li>
+<li><a href="#grpctmclient-err-changes">gRPC <code>tabletmanager</code> client 错误更改</a></li>
+</ul>
+</li>
+<li><strong><a href="#docker">Docker</a></strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="主要变化"><a id="major-changes">主要变化</a></h2>
+<h3 id="重大变更"><a id="writing-changes">重大变更</a></h3>
+<h4 id="已删除的-vtgate-指标"><a id="deleted-metrics-writing">已删除的 VTGate 指标</a></h4>
+<p>v23.0.0 中已完全删除四个已弃用的 VTGate 指标。这些指标在 v22.0.0 中已弃用：</p>
+<table>
+<thead>
+<tr>
+<th>指标名称</th>
+<th>组件</th>
+<th>已弃用于</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>QueriesProcessed</code></td>
+<td>虚拟门</td>
+<td>v22.0.0</td>
+</tr>
+<tr>
+<td><code>QueriesRouted</code></td>
+<td>虚拟门</td>
+<td>v22.0.0</td>
+</tr>
+<tr>
+<td><code>QueriesProcessedByTable</code></td>
+<td>虚拟门</td>
+<td>v22.0.0</td>
+</tr>
+<tr>
+<td><code>QueriesRoutedByTable</code></td>
+<td>虚拟门</td>
+<td>v22.0.0</td>
+</tr>
+<tr>
+<td><strong>影响</strong>：使用这些指标的任何监控仪表板或警报系统都必须更新为使用 v22.0.0 中引入的替换指标：</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>使用<code>QueryExecutions</code>代替<code>QueriesProcessed</code></li>
+<li>使用<code>QueryRoutes</code>代替<code>QueriesRouted</code></li>
+<li>使用<code>QueryExecutionsByTable</code>代替<code>QueriesProcessedByTable</code>和<code>QueriesRoutedByTable</code>
+有关新指标的详细信息，请参阅 <a href="https://github.com/vitessio/vitess/blob/main/changelog/22.0/22.0.0/release_notes.md#new-vtgate-metrics">v22.0.0 release notes</a>。</li>
+</ul>
+<h4 id="executefetchasdba-不再接受多语句-sql"><a id="executefetchasdba-multistatement">ExecuteFetchAsDba 不再接受多语句 SQL</a></h4>
+<p>TabletManager 中的 <code>ExecuteFetchAsDba</code> RPC 方法现在显式拒绝包含多个语句的 SQL 查询（截至 <a href="https://github.com/vitessio/vitess/pull/18183">PR #18183</a>）。
+<strong>影响</strong>：之前将多个分号分隔的 SQL 语句传递给 <code>ExecuteFetchAsDba</code> 的代码或自动化现在将收到错误。每个 SQL 语句必须在单独的 RPC 调用中发送。
+<strong>迁移</strong>：将多语句 SQL 拆分为单独的 RPC 调用：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">// Before (no longer works):</span></span>
+<span class="line"><span style="color:#6F42C1">ExecuteFetchAsDba</span><span style="color:#24292E">(</span><span style="color:#032F62">"CREATE TABLE t1 (id INT); CREATE TABLE t2 (id INT);"</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// After (required in v23+):</span></span>
+<span class="line"><span style="color:#6F42C1">ExecuteFetchAsDba</span><span style="color:#24292E">(</span><span style="color:#032F62">"CREATE TABLE t1 (id INT);"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#6F42C1">ExecuteFetchAsDba</span><span style="color:#24292E">(</span><span style="color:#032F62">"CREATE TABLE t2 (id INT);"</span><span style="color:#24292E">)</span></span></code></pre>
+<h4 id="grpc-tabletmanager-错误代码更改"><a id="grpc-error-codes">gRPC TabletManager 错误代码更改</a></h4>
+<p><code>vttablet</code> gRPC <code>tabletmanager</code> client 现在返回由内部 <code>go/vt/vterrors</code> 包封装的错误 (<a href="https://github.com/vitessio/vitess/pull/18565">PR #18565</a>)。
+<strong>影响</strong>：依赖 google-gRPC 错误代码的外部自动化必须更新为使用 <code>vterrors.Code(err)</code> 来检查错误代码，这会返回 <a href="https://github.com/vitessio/vitess/blob/main/proto/vtrpc.proto#L60">proto/vtrpc.proto</a> 中定义的 <code>vtrpcpb.Code</code>。
+<strong>迁移</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">// Before:</span></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#24292E"> status.</span><span style="color:#6F42C1">Code</span><span style="color:#24292E">(err) </span><span style="color:#D73A49">==</span><span style="color:#24292E"> codes.NotFound { </span><span style="color:#D73A49">...</span><span style="color:#24292E"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// After:</span></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#24292E"> vterrors.</span><span style="color:#6F42C1">Code</span><span style="color:#24292E">(err) </span><span style="color:#D73A49">==</span><span style="color:#24292E"> vtrpcpb.Code_NOT_FOUND { </span><span style="color:#D73A49">...</span><span style="color:#24292E"> }</span></span></code></pre>
+<h4 id="gtid-api-签名更改"><a id="gtid-api-changes">GTID API 签名更改</a></h4>
+<p>作为 GTID 性能优化的一部分，<a href="https://github.com/vitessio/vitess/pull/18196">PR #18196</a> 中更改了几个与 GTID 相关的 API 签名：
+<strong>更改</strong>：<code>BinlogEvent.GTID()</code> 方法签名
+<strong>影响</strong>：直接使用GTID解析APIs的代码可能需要更新。大多数用户不受影响，因为这些是内部 API。</p>
+<h4 id="generateshardranges-api-签名更改"><a id="generateshardranges-api">GenerateShardRanges API 签名更改</a></h4>
+<h2 id="pr-18633-中的-keygenerateshardranges-函数签名已更改添加了新的-hexchars-int-参数来控制生成的分片名称的十六进制宽度影响必须更新直接调用-generateshardranges-的代码才能传递新参数相应的-vtctldclient-命令获得了一个新的---chars-标志来控制此行为"><a href="https://github.com/vitessio/vitess/pull/18633">PR #18633</a> 中的 <code>key.GenerateShardRanges()</code> 函数签名已更改，添加了新的 <code>hexChars int</code> 参数来控制生成的分片名称的十六进制宽度。
+<strong>影响</strong>：必须更新直接调用 <code>GenerateShardRanges()</code> 的代码才能传递新参数。
+相应的 vtctldclient 命令获得了一个新的 <code>--chars</code> 标志来控制此行为。</h2>
+<h3 id="标志命名约定迁移"><a id="flag-naming-convention-migration">标志命名约定迁移</a></h3>
+<p>Vitess v23.0.0 包括所有二进制文件中 CLI 标志命名约定的主要标准化。 <a href="https://github.com/vitessio/vitess/pull/18280">PR #18280</a> 和相关 PR 中的 <strong>989 标志</strong> 已从下划线表示法 (<code>flag_name</code>) 迁移到破折号表示法 (<code>flag-name</code>)。</p>
+<h4 id="向后兼容性">向后兼容性</h4>
+<ul>
+<li><strong>v23.0.0 和 v24.0.0</strong>：支持下划线和破折号格式。下划线格式已<strong>弃用</strong>，但仍可用。</li>
+<li><strong>v25.0.0</strong>：下划线格式将被<strong>删除</strong>。仅接受破折号格式。</li>
+</ul>
+<h4 id="自动标准化">自动标准化</h4>
+<p>标志标准化在 <code>pflag</code> 级别自动发生（<a href="https://github.com/vitessio/vitess/pull/18642">PR #18642</a>），因此两种格式都可以接受，无需在 v23/v24 中更改代码。</p>
+<h4 id="标志重命名示例">标志重命名示例</h4>
+<p>受影响的常见标志（PR #18280 中提供了 989 个标志的完整列表）：
+<strong>备份标志</strong>：</p>
+<ul>
+<li><code>--azblob_backup_account_name</code> → <code>--azblob-backup-account-name</code></li>
+<li><code>--s3_backup_storage_bucket</code> → <code>--s3-backup-storage-bucket</code></li>
+<li><code>--xtrabackup_root_path</code> → <code>--xtrabackup-root-path</code>
+<strong>复制标志</strong>：</li>
+<li><code>--heartbeat_enable</code> → <code>--heartbeat-enable</code></li>
+<li><code>--replication_connect_retry</code> → <code>--replication-connect-retry</code>
+<strong>gRPC 标志</strong>（<a href="https://github.com/vitessio/vitess/pull/18009">PR #18009</a>）：</li>
+<li>所有 gRPC 相关标志标准化（30 多个标志）</li>
+</ul>
+<h4 id="需要采取行动">需要采取行动</h4>
+<h2 id="在升级到-v2500-之前用户应更新配置文件脚本和自动化以使用基于破折号的标志名称迁移在-v23-和-v24-中向后兼容允许逐步更新">在升级到 v25.0.0 之前，用户应更新配置文件、脚本和自动化以使用基于破折号的标志名称。迁移在 v23 和 v24 中向后兼容，允许逐步更新。</h2>
+<h3 id="新的默认版本"><a id="new-default-versions">新的默认版本</a></h3>
+<h4 id="升级到-mysql-84"><a id="upgrade-to-mysql-8-4">升级到 MySQL 8.4</a></h4>
+<p>我们的 <code>vitess/lite:latest</code> 映像使用的默认主要 MySQL 版本是从 <code>8.0.40</code> 到 <code>8.4.6</code>。
+此更改已合并到 <a href="https://github.com/vitessio/vitess/pull/18569">#18569</a> 中。
+VTGate 还默认宣传 MySQL 版本 <code>8.4.6</code>，而不是 <code>8.0.40</code>。如果这不是您正在运行的版本，您可以设置 <code>mysql_server_version</code> 标志来通告所需的版本。</p>
+<blockquote>
+<p>⚠️ 使用 vitess-operator 升级到此版本：</p>
+<p>如果您使用的是 <code>vitess-operator</code>，考虑到我们正在将 MySQL 版本从 <code>8.0.40</code> 升级到 <code>8.4.6</code>，您将需要手动升级：</p>
+<ol>
+<li>将 <code>innodb_fast_shutdown=0</code> 添加到 YAML 文件中的额外 cnf 中。</li>
+<li>应用此文件。</li>
+<li>等待所有 pod 都健康。</li>
+<li>然后更改您的 YAML 文件以使用新的 Docker 图像 (<code>vitess/lite:v23.0.0</code>)。</li>
+<li>从 YAML 文件的额外 cnf 中删除 <code>innodb_fast_shutdown=0</code>。</li>
+<li>应用此文件。</li>
+</ol>
+<p>仅当从最新的 <code>8.0.x</code> 升级到 <code>8.4.x</code> 时才需要一次。一旦您使用 <code>8.4.x</code>，就可以在 <code>8.4.x</code> 版本之间升级和降级，而无需运行 <code>innodb_fast_shutdown=0</code>。</p>
+</blockquote>
+<hr>
+<h3 id="新支持"><a id="new-support">新支持</a></h3>
+<h4 id="多查询执行"><a id="multi-query-execution">多查询执行</a></h4>
+<p>Vitess v23.0.0 通过新的 <code>ExecuteMulti</code> 和 <code>StreamExecuteMulti</code> API (<a href="https://github.com/vitessio/vitess/pull/18059">PR #18059</a>) 引入了对在单个 RPC 调用中执行多个查询的本机支持。
+此功能提供更高效的批量查询执行，无需手动查询拆分或多次往返。
+<strong>使用示例</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#24292E">queries </span><span style="color:#D73A49">:=</span><span style="color:#24292E"> []</span><span style="color:#D73A49">string</span><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#032F62">    "SELECT * FROM users WHERE id = 1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">    "SELECT * FROM orders WHERE user_id = 1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#032F62">    "SELECT * FROM payments WHERE user_id = 1"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"><span style="color:#24292E">results, err </span><span style="color:#D73A49">:=</span><span style="color:#24292E"> vtgateConn.</span><span style="color:#6F42C1">ExecuteMulti</span><span style="color:#24292E">(ctx, queries)</span></span></code></pre>
+<p><strong>配置</strong>：使用 VTGate 上的 <code>--mysql-server-multi-query-protocol</code> 标志启用。</p>
+<h4 id="交易超时会话变量"><a id="transaction-timeout-session-variable">交易超时会话变量</a></h4>
+<p>添加了新的 <code>transaction_timeout</code> 会话变量 (<a href="https://github.com/vitessio/vitess/pull/18560">PR #18560</a>)，允许按会话控制事务超时持续时间。
+<strong>用法</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Set transaction timeout to 30 seconds for this session</span></span>
+<span class="line"><span style="color:#D73A49">SET</span><span style="color:#24292E"> transaction_timeout </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 30</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">-- Begin a transaction that will automatically rollback if not committed within 30s</span></span>
+<span class="line"><span style="color:#D73A49">BEGIN</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#6A737D">-- ... perform operations ...</span></span>
+<span class="line"><span style="color:#D73A49">COMMIT</span><span style="color:#24292E">;</span></span></code></pre>
+<p>与全局服务器设置相比，这提供了更精细的超时控制，可用于：</p>
+<ul>
+<li>需要延长超时时间的长时间运行的批处理操作</li>
+<li>应该快速失败的交互式会话</li>
+<li>每个应用程序工作负载的超时要求不同</li>
+</ul>
+<h4 id="实验查询节流器"><a id="query-throttler">实验：查询节流器</a></h4>
+<p>Vitess v23.0.0 引入了一个新的实验性查询节流器框架，用于限制传入查询的速率（<a href="https://github.com/vitessio/vitess/issues/18412">RFC 问题 #18412</a>、<a href="https://github.com/vitessio/vitess/pull/18449">PR #18449</a>、<a href="https://github.com/vitessio/vitess/pull/18657">PR #18657</a>）。这种新型节流阀的开发工作正在进行中，未来可能会发生重大变化。
+对此实验性功能的反馈欢迎在 GitHub 问题或 <a href="https://vitess.io/slack">Vitess Community Slack</a> 的 <code>#feat-handling-overload</code> 频道中获得。
+<strong>特点</strong>：</p>
+<ul>
+<li>基于文件的限制规则配置</li>
+<li>空运行模式，用于测试节流而不强制执行</li>
+<li>动态规则重新加载
+<strong>配置</strong>：</li>
+<li><code>--query-throttler-config-refresh-interval</code> - 重新加载油门配置的频率
+<strong>试运行模式</strong>：在不实际阻止查询的情况下测试限制规则，对于在执行之前验证配置很有用。</li>
+</ul>
+<h4 id="多查找-vindexes-支持"><a id="multiple-lookup-vindexes-support">多查找 Vindexes 支持</a></h4>
+<p>现在通过 <code>--params-file</code> 标志支持在单个工作流程中创建多个查找 vindex（<a href="https://github.com/vitessio/vitess/pull/17566">PR #17566</a>）。
+<strong>用法</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Create multiple lookup vindexes from JSON configuration</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> LookupVindexCreate</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --workflow</span><span style="color:#032F62"> my_lookup_workflow</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --params-file</span><span style="color:#032F62"> /path/to/params.json</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#032F62">  commerce</span></span></code></pre>
+<p><strong>params.json 示例</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E">{</span></span>
+<span class="line"><span style="color:#005CC5">  "vindexes"</span><span style="color:#24292E">: [</span></span>
+<span class="line"><span style="color:#24292E">    {</span></span>
+<span class="line"><span style="color:#005CC5">      "name"</span><span style="color:#24292E">: </span><span style="color:#032F62">"user_email_lookup"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "type"</span><span style="color:#24292E">: </span><span style="color:#032F62">"consistent_lookup_unique"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "table_owner"</span><span style="color:#24292E">: </span><span style="color:#032F62">"users"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "table_owner_columns"</span><span style="color:#24292E">: [</span><span style="color:#032F62">"email"</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#24292E">    },</span></span>
+<span class="line"><span style="color:#24292E">    {</span></span>
+<span class="line"><span style="color:#005CC5">      "name"</span><span style="color:#24292E">: </span><span style="color:#032F62">"user_name_lookup"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "type"</span><span style="color:#24292E">: </span><span style="color:#032F62">"consistent_lookup"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "table_owner"</span><span style="color:#24292E">: </span><span style="color:#032F62">"users"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#005CC5">      "table_owner_columns"</span><span style="color:#24292E">: [</span><span style="color:#032F62">"name"</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">  ]</span></span>
+<span class="line"><span style="color:#24292E">}</span></span></code></pre>
+<p>这显着提高了设置多个 vindex 时的工作流程效率，减少了所需的单独操作的数量。</p>
+<h4 id="materialize-工作流程中的参考表"><a id="reference-tables-in-materialize-workflows">Materialize 工作流程中的参考表</a></h4>
+<p>现在可以使用新的 <code>Materialize ... update</code> 子命令 (<a href="https://github.com/vitessio/vitess/pull/17804">PR #17804</a>) 将参考表添加到现有的具体化工作流程中。
+<strong>用法</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Add reference tables to an existing workflow</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> Materialize</span><span style="color:#005CC5"> --workflow</span><span style="color:#032F62"> my_workflow</span><span style="color:#032F62"> update</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --add-reference-tables</span><span style="color:#032F62"> ref_table1,ref_table2</span><span style="color:#005CC5"> \</span></span>
+<span class="line"><span style="color:#005CC5">  --target-keyspace</span><span style="color:#032F62"> my_keyspace</span></span></code></pre>
+<p><strong>用例</strong>：增量添加引用表来运行具体化工作流程，而无需重新创建整个工作流程，从而提高操作灵活性。</p>
+<h4 id="在线-ddl-分片特定完成"><a id="online-ddl-shard-specific-completion">在线 DDL 分片特定完成</a></h4>
+<p>现在可以使用新的 <code>COMPLETE VITESS_SHARDS</code> 语法（<a href="https://github.com/vitessio/vitess/pull/18331">PR #18331</a>）在每个分片的基础上完成在线 DDL 迁移。
+<strong>用法</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Complete migration on specific shards only</span></span>
+<span class="line"><span style="color:#D73A49">ALTER</span><span style="color:#24292E"> VITESS_MIGRATION </span><span style="color:#032F62">'9e8a9249_3976_11ed_9442_0a43f95f28a3'</span></span>
+<span class="line"><span style="color:#24292E">  COMPLETE VITESS_SHARDS </span><span style="color:#032F62">'-80,80-'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">-- Complete migration on all remaining shards</span></span>
+<span class="line"><span style="color:#D73A49">ALTER</span><span style="color:#24292E"> VITESS_MIGRATION </span><span style="color:#032F62">'9e8a9249_3976_11ed_9442_0a43f95f28a3'</span></span>
+<span class="line"><span style="color:#24292E">  COMPLETE;</span></span></code></pre>
+<p><strong>好处</strong>：</p>
+<ul>
+<li>跨分片逐步推出架构更改</li>
+<li>能够在全面推出之前验证分片子集的更改</li>
+<li>更好地控制迁移时间和影响</li>
+</ul>
+<h4 id="使用递归-cte"><a id="with-recursive-ctes">使用递归 CTE</a></h4>
+<p>Vitess 现在支持 <code>WITH RECURSIVE</code> 公用表表达式 (<a href="https://github.com/vitessio/vitess/pull/18590">PR #18590</a>)，从而能够对分层数据进行递归查询。
+<strong>示例</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Find all employees in a management hierarchy</span></span>
+<span class="line"><span style="color:#D73A49">WITH</span><span style="color:#D73A49"> RECURSIVE</span><span style="color:#24292E"> employee_hierarchy </span><span style="color:#D73A49">AS</span><span style="color:#24292E"> (</span></span>
+<span class="line"><span style="color:#D73A49">    SELECT</span><span style="color:#24292E"> id, </span><span style="color:#D73A49">name</span><span style="color:#24292E">, manager_id, </span><span style="color:#005CC5">1</span><span style="color:#D73A49"> as</span><span style="color:#D73A49"> level</span></span>
+<span class="line"><span style="color:#D73A49">    FROM</span><span style="color:#24292E"> employees</span></span>
+<span class="line"><span style="color:#D73A49">    WHERE</span><span style="color:#24292E"> manager_id </span><span style="color:#D73A49">IS</span><span style="color:#D73A49"> NULL</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    UNION ALL</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">    SELECT</span><span style="color:#005CC5"> e</span><span style="color:#24292E">.</span><span style="color:#005CC5">id</span><span style="color:#24292E">, </span><span style="color:#005CC5">e</span><span style="color:#24292E">.</span><span style="color:#005CC5">name</span><span style="color:#24292E">, </span><span style="color:#005CC5">e</span><span style="color:#24292E">.</span><span style="color:#005CC5">manager_id</span><span style="color:#24292E">, </span><span style="color:#005CC5">eh</span><span style="color:#24292E">.</span><span style="color:#005CC5">level</span><span style="color:#D73A49"> +</span><span style="color:#005CC5"> 1</span></span>
+<span class="line"><span style="color:#D73A49">    FROM</span><span style="color:#24292E"> employees e</span></span>
+<span class="line"><span style="color:#D73A49">    INNER JOIN</span><span style="color:#24292E"> employee_hierarchy eh </span><span style="color:#D73A49">ON</span><span style="color:#005CC5"> e</span><span style="color:#24292E">.</span><span style="color:#005CC5">manager_id</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> eh</span><span style="color:#24292E">.</span><span style="color:#005CC5">id</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> employee_hierarchy </span><span style="color:#D73A49">ORDER BY</span><span style="color:#D73A49"> level</span><span style="color:#24292E">, </span><span style="color:#D73A49">name</span><span style="color:#24292E">;</span></span></code></pre>
+<p>这是针对具有分层或类似图形数据结构的应用程序的主要 SQL 兼容性增强功能。</p>
+<h4 id="创建表选择支持"><a id="create-table-select-support">创建表…选择支持</a></h4>
+<p>SQL 解析器现在支持 <code>CREATE TABLE ... SELECT</code> 语句 (<a href="https://github.com/vitessio/vitess/pull/18443">PR #18443</a>)，提高了 MySQL 兼容性。
+<strong>示例</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Create a table from a query result</span></span>
+<span class="line"><span style="color:#D73A49">CREATE</span><span style="color:#D73A49"> TABLE</span><span style="color:#6F42C1"> recent_orders</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> orders</span></span>
+<span class="line"><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> order_date </span><span style="color:#D73A49">></span><span style="color:#24292E"> DATE_SUB(</span><span style="color:#D73A49">NOW</span><span style="color:#24292E">(), INTERVAL </span><span style="color:#005CC5">30</span><span style="color:#D73A49"> DAY</span><span style="color:#24292E">);</span></span></code></pre>
+<hr>
+<h3 id="弃用"><a id="deprecations">弃用</a></h3>
+<h4 id="指标"><a id="deprecated-metrics">指标</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">组件</th>
+<th align="center">指标名称</th>
+<th align="center">笔记</th>
+<th align="center">弃用公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>vtorc</code></td>
+<td align="center"><code>DiscoverInstanceTimings</code></td>
+<td align="center">替换为<code>DiscoveryInstanceTimings</code></td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18406">#18406</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="cli-标志"><a id="deprecated-cli-flags">CLI 标志</a></h4>
+<p>作为 <a href="#flag-naming-convention-migration">标志命名约定迁移</a> 的一部分，所有 Vitess 二进制文件中的 <strong>989 CLI 标志</strong> 均已弃用其下划线格式。今后应使用破折号格式。
+<strong>弃用时间表</strong>：</p>
+<ul>
+<li><strong>v23.0.0 和 v24.0.0</strong>：下划线格式已弃用，但可用</li>
+<li><strong>v25.0.0</strong>：下划线格式将被删除
+<strong>需要采取的行动</strong>：迁移到 v25.0.0 之前基于破折号的标志名称。有关详细信息，请参阅<a href="#flag-naming-convention-migration">标志命名约定迁移</a>。</li>
+</ul>
+<hr>
+<h3 id="删除"><a id="deletions">删除</a></h3>
+<h4 id="指标-1"><a id="deleted-metrics">指标</a></h4>
+<table>
+<thead>
+<tr>
+<th align="center">组件</th>
+<th align="center">指标名称</th>
+<th align="center">已弃用于</th>
+<th align="center">弃用公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>vtgate</code></td>
+<td align="center"><code>QueriesProcessed</code></td>
+<td align="center"><code>v22.0.0</code></td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/17727">#17727</a></td>
+</tr>
+<tr>
+<td align="center"><code>vtgate</code></td>
+<td align="center"><code>QueriesRouted</code></td>
+<td align="center"><code>v22.0.0</code></td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/17727">#17727</a></td>
+</tr>
+<tr>
+<td align="center"><code>vtgate</code></td>
+<td align="center"><code>QueriesProcessedByTable</code></td>
+<td align="center"><code>v22.0.0</code></td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/17727">#17727</a></td>
+</tr>
+<tr>
+<td align="center"><code>vtgate</code></td>
+<td align="center"><code>QueriesRoutedByTable</code></td>
+<td align="center"><code>v22.0.0</code></td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/17727">#17727</a></td>
+</tr>
+<tr>
+<td align="center">请参阅<a href="#deleted-metrics-breaking">重大更改</a> 了解迁移指南。</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="新指标"><a id="new-metrics">新指标</a></h3><a id="new-metrics">
+</a><h4 id="vtgate"><a id="new-metrics"></a><a id="new-vtgate-metrics">VTGate</a></h4><a id="new-vtgate-metrics">
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">尺寸</th>
+<th align="center">描述</th>
+<th align="center">公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>TransactionsProcessed</code></td>
+<td align="center">ZZPH100​​ZZ、<code>Type</code></td>
+<td align="center">按分片分布和交易类型对 VTGate 处理的交易进行计数。</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18171">#18171</a></td>
+</tr>
+<tr>
+<td align="center"><code>OptimizedQueryExecutions</code></td>
+<td align="center">不适用</td>
+<td align="center">使用延迟优化执行路径的计数器跟踪查询。</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18067">#18067</a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>TransactionsProcessed</code> 中的交易类型</strong>：</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>Single</code> - 单分片交易</li>
+<li><code>Multi</code> - 多分片交易</li>
+<li><code>TwoPC</code> - 两阶段提交事务
+<strong>用例</strong>：<code>TransactionsProcessed</code> 指标有助于识别事务模式和分片分布，可用于：</li>
+<li>监控整个部署中的事务类型</li>
+<li>识别可以优化为单分片的查询</li>
+<li>跟踪两阶段提交使用情况和潜在瓶颈</li>
+</ul>
+</a><h4 id="vttablet"><a id="new-vtgate-metrics"></a><a id="new-vttablet-metrics">VTTablet</a></h4><a id="new-vttablet-metrics">
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">尺寸</th>
+<th align="center">描述</th>
+<th align="center">公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>OnlineDDLStaleMigrationMinutes</code></td>
+<td align="center">不适用</td>
+<td align="center">自提交最早的待处理/就绪迁移以来的分钟数。</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18417">#18417</a></td>
+</tr>
+<tr>
+<td align="center"><code>vttablet_tablet_server_state</code></td>
+<td align="center"><code>type</code>、<code>keyspace</code>、<code>shard</code></td>
+<td align="center">通过附加维度进行增强，以获得更好的可观察性。</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18451">#18451</a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>OnlineDDLStaleMigrationMinutes</code> 的用例</strong>：针对长时间未取得进展的停滞在线 DDL 迁移发出警报，帮助识别可能需要干预的迁移。</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+</a><h4 id="vtorc"><a id="new-vttablet-metrics"></a><a id="new-vtorc-metrics">VTORc</a></h4><a id="new-vtorc-metrics">
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">尺寸</th>
+<th align="center">描述</th>
+<th align="center">公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><code>SkippedRecoveries</code></td>
+<td align="center"><code>RecoveryName</code>、<code>Keyspace</code>、<code>Shard</code>、<code>Reason</code></td>
+<td align="center">带有原因跟踪的跳过恢复计数。</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/18644">#18644</a></td>
+</tr>
+<tr>
+<td align="center"><code>EmergencyReparentShardDisabled</code></td>
+<td align="center"><code>Keyspace</code>、<code>Shard</code></td>
+<td align="center">指示每个密钥空间/分片是否禁用 ERS ​​的仪表。</td>
+<td align="center"><a href="https://github.com/vitessio/vitess/pull/17985">#17985</a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>EmergencyReparentShardDisabled</code> 的用例</strong>：创建警报以确保基于 EmergencyReparentShard 的恢复不会在不需要的时间内被禁用，从而保持高可用性状态。</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><strong><code>SkippedRecoveries</code> 原因</strong>：<code>Reason</code> 维度跟踪跳过恢复的原因（例如“ERSDisabled”、“ReplicationLagHigh”、“NotEnoughReplicas”），为操作故障排除提供可操作的见解。</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</a><h2 id="小改动"><a id="new-vtorc-metrics"></a><a id="minor-changes">小改动</a></h2>
+<h3 id="新-cli-标志"><a id="new-cli-flags">新 CLI 标志</a></h3>
+<h4 id="vreplicationmaterialize"><a id="new-vreplication-flags">VReplication/Materialize</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">旗帜</th>
+<th align="left">组件</th>
+<th align="left">描述</th>
+<th align="left">公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--params-file</code></td>
+<td align="left">vtctldclient</td>
+<td align="left">JSON 文件包含查找 vindex 参数，用于在单个工作流程中创建多个查找 vindex。与 <code>--type</code>、<code>--table-owner</code> 和 <code>--table-owner-columns</code> 互斥。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/17566">#17566</a></td>
+</tr>
+<tr>
+<td align="left"><code>--add-reference-tables</code></td>
+<td align="left">vtctldclient</td>
+<td align="left">使用 <code>update</code> 子命令添加到现有具体化工作流程的以逗号分隔的参考表列表。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/17804">#17804</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="可观测性"><a id="new-observability-flags">可观测性</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">旗帜</th>
+<th align="left">组件</th>
+<th align="left">描述</th>
+<th align="left">公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--skip-user-metrics</code></td>
+<td align="left">平板电脑</td>
+<td align="left">如果启用，则将基于用户的指标中的用户名标签替换为“UserLabelDisabled”，以防止在具有许多唯一用户的环境中指标基数爆炸。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18085">#18085</a></td>
+</tr>
+<tr>
+<td align="left"><code>--querylog-emit-on-any-condition-met</code></td>
+<td align="left">vtgate、vttablet、vtcombo</td>
+<td align="left">将查询日志发出更改为在满足任何日志记录条件（行阈值、时间阈值、过滤器标记或错误）时发出，而不是要求所有条件。默认值：假。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18546">#18546</a></td>
+</tr>
+<tr>
+<td align="left"><code>--querylog-time-threshold</code></td>
+<td align="left">vtgate、vttablet</td>
+<td align="left">查询日志记录的持续时间阈值。超过此持续时间的查询将被记录。与 <code>--querylog-emit-on-any-condition-met</code> 配合使用。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18520">#18520</a></td>
+</tr>
+<tr>
+<td align="left"><code>--grpc-enable-orca-metrics</code></td>
+<td align="left">vtgate、vttablet</td>
+<td align="left">通过 gRPC 启用 ORCA（开放请求成本聚合）后端指标报告以进行负载平衡决策。默认值：假。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18282">#18282</a></td>
+</tr>
+<tr>
+<td align="left"><code>--datadog-trace-debug-mode</code></td>
+<td align="left">所有组件</td>
+<td align="left">使 Datadog 跟踪调试模式可配置，而不是始终开启。默认值：假。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18347">#18347</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="vtorc-1"><a id="new-vtorc-flags">VTORc</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">旗帜</th>
+<th align="left">组件</th>
+<th align="left">描述</th>
+<th align="left">公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--allow-recovery</code></td>
+<td align="left">垂直方向</td>
+<td align="left">用于从启动时禁用所有 VTORc 恢复操作的布尔标志。当为 false 时，VTORc 在仅监视模式下运行。默认值：true。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18005">#18005</a></td>
+</tr>
+<tr>
+<td align="left"><strong>用例</strong>：<code>--allow-recovery=false</code> 标志可用于：</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>在推出之前测试 VTORc 容量/发现性能，例如：从另一个解决方案迁移到 VTORc。</li>
+<li>应防止自动故障转移的维护窗口</li>
+<li>调试 VTORc 行为而不触发恢复</li>
+<li>在仅观察模式下运行 VTORc</li>
+</ul>
+<h4 id="备份恢复"><a id="new-backup-flags">备份/恢复</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">旗帜</th>
+<th align="left">组件</th>
+<th align="left">描述</th>
+<th align="left">公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--xtrabackup-should-drain</code></td>
+<td align="left">平板电脑</td>
+<td align="left">使 ShouldDrainForBackup 行为可配置为 xtrabackup 引擎。如果为 true，平板电脑会在备份之前耗尽流量。默认值：true。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18431">#18431</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="cli-工具"><a id="new-cli-tool-flags">CLI 工具</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">旗帜</th>
+<th align="left">组件</th>
+<th align="left">描述</th>
+<th align="left">公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--chars</code></td>
+<td align="left">vtctldclient</td>
+<td align="left">指定使用 <code>GenerateShardRanges</code> 命令生成分片范围时要使用的十六进制宽度（十六进制字符数）。允许对分片命名进行细粒度控制。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18633">#18633</a></td>
+</tr>
+<tr>
+<td align="left"><strong>示例</strong>：</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Generate shard ranges with 4 hex characters</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> GenerateShardRanges</span><span style="color:#005CC5"> --shards</span><span style="color:#005CC5"> 16</span><span style="color:#005CC5"> --chars</span><span style="color:#005CC5"> 4</span></span>
+<span class="line"><span style="color:#6A737D"># Output: -1000,1000-2000,2000-3000,...,f000-</span></span></code></pre>
+<h4 id="vtadmin"><a id="new-vtadmin-flags">VTAdmin</a></h4>
+<p>为安全 vtctld 连接添加了五个新的 TLS 相关标志（<a href="https://github.com/vitessio/vitess/pull/18556">PR #18556</a>）：</p>
+<table>
+<thead>
+<tr>
+<th align="left">旗帜</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--vtctld-grpc-ca</code></td>
+<td align="left">vtctld gRPC TLS 的 CA 证书文件</td>
+</tr>
+<tr>
+<td align="left"><code>--vtctld-grpc-cert</code></td>
+<td align="left">vtctld gRPC TLS 的 Client 证书文件</td>
+</tr>
+<tr>
+<td align="left"><code>--vtctld-grpc-key</code></td>
+<td align="left">vtctld gRPC TLS 的 Client 密钥文件</td>
+</tr>
+<tr>
+<td align="left"><code>--vtctld-grpc-server-name</code></td>
+<td align="left">vtctld gRPC TLS 验证的服务器名称</td>
+</tr>
+<tr>
+<td align="left"><code>--vtctld-grpc-crl</code></td>
+<td align="left">vtctld gRPC TLS 的证书吊销列表</td>
+</tr>
+<tr>
+<td align="left">这些标志在 VTAdmin 和 vtctld 之间启用 mTLS（相互 TLS）身份验证，以增强安全性。</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="vtgate-1"><a id="new-vtgate-flags-section">VTGate</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">旗帜</th>
+<th align="left">组件</th>
+<th align="left">描述</th>
+<th align="left">公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>--vtgate-grpc-fail-fast</code></td>
+<td align="left">虚拟门</td>
+<td align="left">启用 gRPC 快速失败模式，以便在后端不可用时更快地响应错误。默认值：假。</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18551">#18551</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="修改后的指标"><a id="modified-metrics">修改后的指标</a></h3>
+<h4 id="使用键空间分片标签增强-vtorc-恢复指标">使用键空间/分片标签增强 VTORc 恢复指标</h4>
+<p>除了现有的 <code>RecoveryType</code> 标签之外，以下 VTORc 恢复指标现在还包括 <code>Keyspace</code> 和 <code>Shard</code> 标签 (<a href="https://github.com/vitessio/vitess/pull/18304">PR #18304</a>)：
+1.<code>FailedRecoveries</code>
+2.<code>PendingRecoveries</code>
+3.<code>RecoveriesCount</code>
+4.<code>SuccessfulRecoveries</code>
+<strong>影响</strong>：使用这些指标监控查询和仪表板可能需要更新以考虑其他标签维度。
+<strong>好处</strong>：</p>
+<ul>
+<li>更精细地观察键空间/分片遇到的恢复问题</li>
+<li>能够针对每个密钥空间/分片的恢复模式发出警报</li>
+<li>更好地解决集群特定问题
+<strong>PromQL 查询示例</strong>：</li>
+</ul>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span># Before (v22): Recovery count by type only</span></span>
+<span class="line"><span>sum(rate(RecoveriesCount[5m])) by (RecoveryType)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># After (v23): Recovery count by type, keyspace, and shard</span></span>
+<span class="line"><span>sum(rate(RecoveriesCount[5m])) by (RecoveryType, Keyspace, Shard)</span></span></code></pre>
+<h4 id="vtgate-queryexecutionsbytable-行为更改">VTGate QueryExecutionsByTable 行为更改</h4>
+<p><code>QueryExecutionsByTable</code> 指标现在仅计算成功的查询执行次数 (<a href="https://github.com/vitessio/vitess/pull/18584">PR #18584</a>)。以前，它会计算所有查询尝试，无论成功/失败。
+<strong>影响</strong>：</p>
+<ul>
+<li>如果您的工作负载出现严重的查询失败，指标值可能会减少</li>
+<li>更准确地表示成功的查询量</li>
+<li>通过错误指标单独跟踪失败的查询</li>
+</ul>
+<hr>
+<h3 id="解析器sql-增强"><a id="parser-sql-enhancements">解析器/SQL 增强</a></h3>
+<p>Vitess v23.0.0 对 SQL 解析器进行了重大改进，以实现更好的 MySQL 兼容性：</p>
+<h4 id="新的-sql-语法支持">新的 SQL 语法支持</h4>
+<table>
+<thead>
+<tr>
+<th align="left">特色</th>
+<th align="left">描述</th>
+<th align="left">公关</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>CREATE TABLE ... SELECT</code></td>
+<td align="left">完全支持从 SELECT 查询结果创建表</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18443">#18443</a></td>
+</tr>
+<tr>
+<td align="left"><code>WITH RECURSIVE</code></td>
+<td align="left">分层查询的递归公用表表达式</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18590">#18590</a></td>
+</tr>
+<tr>
+<td align="left"><code>SET NAMES binary</code></td>
+<td align="left">支持二进制字符集规范</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18582">#18582</a></td>
+</tr>
+<tr>
+<td align="left"><code>ALTER VITESS_MIGRATION ... POSTPONE COMPLETE</code></td>
+<td align="left">推迟在线 DDL 迁移完成的语法</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18118">#18118</a></td>
+</tr>
+<tr>
+<td align="left">INSERT/REPLACE 中的 <code>VALUE</code> 关键字</td>
+<td align="left">除了 <code>VALUES</code> 之外还支持 <code>VALUE</code>（单数）</td>
+<td align="left"><a href="https://github.com/vitessio/vitess/pull/18116">#18116</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="创建过程改进">创建过程改进</h4>
+<p>增强的 <code>CREATE PROCEDURE</code> 语句解析（<a href="https://github.com/vitessio/vitess/pull/18142">PR #18142</a>、<a href="https://github.com/vitessio/vitess/pull/18279">PR #18279</a>）：</p>
+<ul>
+<li>更好地处理各种格式的 <code>DEFINER</code> 子句</li>
+<li><code>BEGIN...END</code> 块和 <code>START TRANSACTION</code> 语句之间的区别</li>
+<li>支持程序体内的 <code>SET</code> 语句</li>
+<li>改进了过程定义中分号的处理</li>
+</ul>
+<h4 id="运算符优先级修复">运算符优先级修复</h4>
+<ul>
+<li>修复了 <code>MEMBER OF</code> 运算符与 <code>AND</code> 的优先级（<a href="https://github.com/vitessio/vitess/pull/18237">PR #18237</a>）</li>
+<li>将 JSON 操作与布尔逻辑结合时确保正确的查询评估</li>
+</ul>
+<hr>
+<h3 id="查询计划改进"><a id="query-planning-improvements">查询计划改进</a></h3>
+<h4 id="单分片查询中的窗口函数">单分片查询中的窗口函数</h4>
+<p>现在可以将窗口函数下推到单分片查询（<a href="https://github.com/vitessio/vitess/pull/18103">PR #18103</a>），从而提高分析工作负载的性能。
+<strong>v23 之前</strong>：窗口函数始终在 VTGate 级别执行，即使对于单分片查询也是如此。
+<strong>v23之后</strong>：当查询针对单个分片时，窗口函数被下推，减少数据传输并提高性能。
+<strong>示例</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- This query now executes entirely on the target shard</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span></span>
+<span class="line"><span style="color:#24292E">    user_id,</span></span>
+<span class="line"><span style="color:#24292E">    order_date,</span></span>
+<span class="line"><span style="color:#24292E">    amount,</span></span>
+<span class="line"><span style="color:#005CC5">    SUM</span><span style="color:#24292E">(amount) </span><span style="color:#D73A49">OVER</span><span style="color:#24292E"> (</span><span style="color:#D73A49">PARTITION</span><span style="color:#D73A49"> BY</span><span style="color:#24292E"> user_id </span><span style="color:#D73A49">ORDER BY</span><span style="color:#24292E"> order_date) </span><span style="color:#D73A49">as</span><span style="color:#24292E"> running_total</span></span>
+<span class="line"><span style="color:#D73A49">FROM</span><span style="color:#24292E"> orders</span></span>
+<span class="line"><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> user_id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 12345</span><span style="color:#24292E">;  </span><span style="color:#6A737D">-- Single-shard query</span></span></code></pre>
+<h4 id="union-查询合并改进">UNION 查询合并改进</h4>
+<p>UNION 查询优化已得到显着增强（<a href="https://github.com/vitessio/vitess/pull/18289">PR #18289</a>、<a href="https://github.com/vitessio/vitess/pull/18393">PR #18393</a>）：
+<strong>扩展 UNION 合并</strong>：使用 <code>Equal</code> 和 <code>IN</code> 操作码的 UNION 查询现在可以更积极地合并，生成更简单的 SQL。
+<strong>派生表消除</strong>：UNION 查询避免了不必要的派生表换行，从而生成更干净、更高效的 SQL。
+<strong>示例</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Query:</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 1</span></span>
+<span class="line"><span style="color:#D73A49">UNION</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 2</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">-- Before v23: Wrapped in derived table</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> (</span></span>
+<span class="line"><span style="color:#D73A49">    SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 1</span></span>
+<span class="line"><span style="color:#D73A49">    UNION</span></span>
+<span class="line"><span style="color:#D73A49">    SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 2</span></span>
+<span class="line"><span style="color:#24292E">) </span><span style="color:#D73A49">AS</span><span style="color:#24292E"> dt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">-- After v23: Direct UNION (simpler, more efficient)</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 1</span></span>
+<span class="line"><span style="color:#D73A49">UNION</span></span>
+<span class="line"><span style="color:#D73A49">SELECT</span><span style="color:#D73A49"> *</span><span style="color:#D73A49"> FROM</span><span style="color:#24292E"> t1 </span><span style="color:#D73A49">WHERE</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 2</span><span style="color:#24292E">;</span></span></code></pre>
+<h4 id="single-模式下的多分片只读事务">SINGLE 模式下的多分片只读事务</h4>
+<p>使用 <code>SINGLE</code> 事务模式时，只读事务现在可以跨越多个分片（<a href="https://github.com/vitessio/vitess/pull/18173">PR #18173</a>）。
+<strong>v23 之前</strong>：SINGLE 模式将所有事务限制为单个分片，甚至是只读分片。
+<strong>v23之后</strong>：只读事务可以以SINGLE模式访问多个分片，在不牺牲一致性保证的情况下提高灵活性。
+<strong>影响</strong>：使用 SINGLE 事务模式的应用程序现在可以在事务内执行多分片读取查询，而无需升级到 MULTI 或 TWOPC 模式。</p>
+<h4 id="准备语句的延迟优化">准备语句的延迟优化</h4>
+<p>准备好的语句现在支持延迟优化 (<a href="https://github.com/vitessio/vitess/pull/18126">PR #18126</a>)，即使在计划生成需要运行时值时也允许准备成功。
+<strong>好处</strong>：</p>
+<ul>
+<li>更多准备好的语句在准备时成功</li>
+<li>通过参数相关的优化更好地支持查询</li>
+<li>减少了 PREPARE 语句失败导致的应用程序错误
+<strong>行为</strong>：当准备好的语句在准备时无法完全优化时，优化将推迟到绑定变量值可用时的执行时。</li>
+</ul>
+<h4 id="即时-ddl-的查询缓冲">即时 DDL 的查询缓冲</h4>
+<p>已针对 <code>INSTANT</code> DDL 操作实现查询缓冲（<a href="https://github.com/vitessio/vitess/pull/17945">PR #17945</a>），从而减少架构更改期间的查询失败。
+<strong>特点</strong>：</p>
+<ul>
+<li>在 INSTANT DDL 执行期间自动缓冲查询</li>
+<li>强制终止阻塞交易</li>
+<li>对应用程序透明
+<strong>影响</strong>：应用程序在架构更改期间遇到的查询错误更少，从而提高了 DDL 操作期间的可用性。</li>
+</ul>
+<hr>
+<h3 id="拓扑"><a id="minor-changes-topo">拓扑</a></h3>
+<h4 id="--consul-auth-static-file-需要-1-个或多个凭据"><a id="consul-auth-static-file-check-creds"><code>--consul-auth-static-file</code> 需要 1 个或多个凭据</a></h4>
+<h2 id="多个组件中使用的---consul-auth-static-file-标志现在要求可以从提供的-json-文件加载-1-个或多个凭据-pr-18152影响具有空或无效凭证文件的配置现在将在启动时失败而不是在不进行身份验证的情况下静默继续">多个组件中使用的 <code>--consul-auth-static-file</code> 标志现在要求可以从提供的 json 文件加载 1 个或多个凭据 (<a href="https://github.com/vitessio/vitess/pull/18152">PR #18152</a>)。
+<strong>影响</strong>：具有空或无效凭证文件的配置现在将在启动时失败，而不是在不进行身份验证的情况下静默继续。</h2>
+<h3 id="vtorc-2"><a id="minor-changes-vtorc">VTORc</a></h3>
+<h4 id="已删除聚合发现指标-http-api"><a id="aggreerated-discovery-metrics-api-removed">已删除聚合发现指标 HTTP API</a></h4>
+<p>VTORc 未记录的 <code>/api/aggregated-discovery-metrics</code> HTTP API 端点已被删除（<a href="https://github.com/vitessio/vitess/pull/18672">PR #18672</a>）。记录的 VTORc API 列表可以在<a href="https://vitess.io/docs/current/reference/vtorc/ui_api_metrics/#apis">此处</a> 找到。
+我们建议使用标准 VTORc 指标来收集相同的指标。如果您发现标准指标中缺少某个指标，请提出问题或 PR 来解决此问题。</p>
+<h4 id="基于-emergencyreparentshard-的恢复的动态控制"><a id="vtorc-dynamic-ers-disabled">基于 <code>EmergencyReparentShard</code> 的恢复的动态控制</a></h4>
+<p><strong>注意：禁用基于 <code>EmergencyReparentShard</code> 的恢复会带来可用性风险；请极其谨慎使用！如果您经常依赖此功能（例如在自动化中），这可能是反模式的迹象。如果是这样，请提出一个问题来讨论在 VTORc 中本地支持您的用例。</strong>
+引入了新的 <code>vtctldclient</code> RPC <code>SetVtorcEmergencyReparent</code>（<a href="https://github.com/vitessio/vitess/pull/17985">PR #17985</a>），以允许在每个密钥空间和/或每个分片的基础上禁用涉及 <code>EmergencyReparentShard</code> 操作的 VTORc 恢复。在此版本之前，只能全局/每个 VTORc 实例禁用基于 EmergencyReparentShard 的恢复。 VTORc 现在将考虑每次恢复时从拓扑刷新的键空间/分片级别设置。通过首先检查键空间，然后检查分片状态来确定禁用状态。删除键空间级覆盖不会删除每个分片的覆盖。
+为了在禁用基于 EmergencyReparentShard 的 VTORc 恢复的情况下提供键空间/分片的可观察性，添加了 <code>EmergencyReparentShardDisabled</code> 指标。此指标标签可用于创建警报，以确保基于 EmergencyReparentShard 的恢复不会在不需要的时间段内被禁用。
+<strong>示例</strong>：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Disable ERS recoveries for a keyspace</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> SetVtorcEmergencyReparent</span><span style="color:#005CC5"> --keyspace</span><span style="color:#032F62"> commerce</span><span style="color:#005CC5"> --enabled=false</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Disable ERS recoveries for a specific shard</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> SetVtorcEmergencyReparent</span><span style="color:#005CC5"> --keyspace</span><span style="color:#032F62"> commerce</span><span style="color:#005CC5"> --shard</span><span style="color:#032F62"> 80-</span><span style="color:#005CC5"> --enabled=false</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Re-enable ERS recoveries</span></span>
+<span class="line"><span style="color:#6F42C1">vtctldclient</span><span style="color:#032F62"> SetVtorcEmergencyReparent</span><span style="color:#005CC5"> --keyspace</span><span style="color:#032F62"> commerce</span><span style="color:#005CC5"> --enabled=true</span></span></code></pre>
+<h4 id="包含密钥空间分片的恢复统计信息"><a id="recoveries-stats-keyspace-shard">包含密钥空间/分片的恢复统计信息</a></h4>
+<p>以下与恢复相关的统计信息现在包括键空间和分片的标签（<a href="https://github.com/vitessio/vitess/pull/18304">PR #18304</a>）：
+1.<code>FailedRecoveries</code>
+2.<code>PendingRecoveries</code>
+3.<code>RecoveriesCount</code>
+4.<code>SuccessfulRecoveries</code>
+在此版本之前，标签中仅包含恢复“类型”。有关更多详细信息，请参阅<a href="#modified-metrics">修改的指标</a>。</p>
+<h4 id="apireplication-analysis-http-api-弃用"><a id="replication-analysis-api-deprecation"><code>/api/replication-analysis</code> HTTP API 弃用</a></h4>
+<h2 id="apireplication-analysis-http-api-端点现已弃用并替换为-apidetection-analysis-pr-18615它当前返回相同的响应格式时间表apireplication-analysis-端点将在未来版本中删除用户应迁移到-apidetection-analysis"><code>/api/replication-analysis</code> HTTP API 端点现已弃用，并替换为 <code>/api/detection-analysis</code> (<a href="https://github.com/vitessio/vitess/pull/18615">PR #18615</a>)，它当前返回相同的响应格式。
+<strong>时间表</strong>：<code>/api/replication-analysis</code> 端点将在未来版本中删除。用户应迁移到 <code>/api/detection-analysis</code>。</h2>
+<h3 id="vttablet-1"><a id="minor-changes-vttablet">VTTablet</a></h3>
+<h4 id="api-更改"><a id="api-changes">API 更改</a></h4>
+<ul>
+<li><strong>向 <code>TabletManagerClient</code> 接口添加</strong> <code>RestartReplication</code> 方法（<a href="https://github.com/vitessio/vitess/pull/18628">PR #18628</a>）。这个新的 RPC 允许在一次调用中使用半同步配置停止和重新启动 MySQL 复制，为单独的 <code>StopReplication</code> 和 <code>StartReplication</code> 调用提供了便捷的替代方案。</li>
+<li><strong>添加了</strong> <code>GetMaxValueForSequences</code> 和 <code>UpdateSequenceTables</code> gRPC RPC (<a href="https://github.com/vitessio/vitess/pull/18172">PR #18172</a>)，用于 <code>SwitchWrites</code> 操作期间的 VReplication 序列管理。</li>
+</ul>
+<h4 id="cli-标志-1"><a id="flags-vttablet">CLI 标志</a></h4>
+<ul>
+<li><code>--skip-user-metrics</code> 标志（如果启用）将用“UserLabelDisabled”替换用户名标签，以防止在具有许多唯一用户的环境中指标爆炸（<a href="https://github.com/vitessio/vitess/pull/18085">PR #18085</a>）。
+有关新标志的完整列表，请参阅<a href="#new-cli-flags">新 CLI 标志</a>。</li>
+</ul>
+<h4 id="托管-mysql-配置默认为-caching-sha2-password"><a id="mysql-caching-sha2-password">托管 MySQL 配置默认为 caching-sha2-password</a></h4>
+<p>MySQL 8.0.26 及更高版本的默认身份验证插件现在是 <code>caching_sha2_password</code> 而不是 <code>mysql_native_password</code> (<a href="https://github.com/vitessio/vitess/pull/18010">PR #18010</a>)。进行此更改是因为 <code>mysql_native_password</code> 已弃用并在未来的 MySQL 版本中删除。 <code>mysql_native_password</code> 仍启用向后兼容。
+此更改特别影响复制用户。如果您的用户配置了显式密码，建议在升级到 v23 后确保使用如下语句升级该用户：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#D73A49">ALTER</span><span style="color:#D73A49"> USER</span><span style="color:#032F62"> 'vt_repl'</span><span style="color:#24292E">@</span><span style="color:#032F62">'%'</span><span style="color:#24292E"> IDENTIFIED </span><span style="color:#D73A49">WITH</span><span style="color:#24292E"> caching_sha2_password </span><span style="color:#D73A49">BY</span><span style="color:#032F62"> 'your-existing-password'</span><span style="color:#24292E">;</span></span></code></pre>
+<p>在未来的 Vitess 版本中，将为托管 MySQL 实例禁用 <code>mysql_native_password</code> 身份验证插件。</p>
+<h4 id="mysql-时区环境传播"><a id="mysql-timezone-env">MySQL 时区环境传播</a></h4>
+<p>修复了 <code>TZ</code> 等环境变量未从 mysqlctl 传播到 mysqld 进程的错误 (<a href="https://github.com/vitessio/vitess/pull/18561">PR #18561</a>)。
+因此，环境中的时区设置之前被忽略。现在mysqld正确继承环境变量。
+⚠️ <strong>部署影响</strong>：依赖旧行为并显式设置非 UTC 时区的部署可能会发现 DATETIME 值的解释方式发生变化。为了保持兼容性，请在 MySQL Pod 中显式设置 <code>TZ=UTC</code>。</p>
+<h4 id="grpc-tabletmanager-client-错误更改"><a id="grpctmclient-err-changes">gRPC <code>tabletmanager</code> client 错误更改</a></h4>
+<h2 id="vttablet-grpc-tabletmanager-client-现在返回由内部-govtvterrors-包封装的错误-pr-18565依赖-google-grpc-错误代码的外部自动化现在应该使用-vterrorscodeerr-来检查错误代码该代码返回-protovtrpcproto-protobuf-中定义的-vtrpcpbcode请参阅重大更改-了解迁移指南"><code>vttablet</code> gRPC <code>tabletmanager</code> client 现在返回由内部 <code>go/vt/vterrors</code> 包封装的错误 (<a href="https://github.com/vitessio/vitess/pull/18565">PR #18565</a>)。依赖 google-gRPC 错误代码的外部自动化现在应该使用 <code>vterrors.Code(err)</code> 来检查错误代码，该代码返回 <a href="https://github.com/vitessio/vitess/blob/main/proto/vtrpc.proto#L60"><code>proto/vtrpc.proto</code> protobuf</a> 中定义的 <code>vtrpcpb.Code</code>。
+请参阅<a href="#grpc-error-codes">重大更改</a> 了解迁移指南。</h2>
+<h3 id="docker"><a id="docker">Docker</a></h3>
+<h2 id="bullseye-已于-1-年前停产因此从-v23-开始我们将不再基于-debianbullseye-构建或发布镜像-pr-18609debian-bookworm-的构建将继续并添加最近发布的-debian-trixie-v23-明确不会将默认-debian-标签更改为-trixie"><a href="https://www.debian.org/releases/">Bullseye 已于 1 年前停产</a>，因此从 v23 开始，我们将不再基于 debian:bullseye 构建或发布镜像 (<a href="https://github.com/vitessio/vitess/pull/18609">PR #18609</a>)。
+Debian Bookworm 的构建将继续，并添加最近发布的 Debian Trixie。 v23 明确不会将默认 Debian 标签更改为 Trixie。</h2>
+<h2 id="附加信息">附加信息</h2>
+<p>此版本的整个 changelog 可以在<a href="https://github.com/vitessio/vitess/blob/main/changelog/23.0/23.0.0/changelog.md">此处</a> 找到。
+该版本包括 246 个合并的 Pull 请求。
+感谢我们所有的贡献者：@Arshdeep54、@BenjaminLockhart、@GrahamCampbell、@GuptaManan100、@HenryCaiHaiying、@app/dependabot、@app/vitess-bot、@arthurschreiber、@bantyK、@beingnoble03、@canoriz、@chapsuk、@chrisplim、@corbantek、@davidpiegza、 @dbussink、@deepthi、@demmer、@derekperkins、@frouioui、@harshit-gangal、@jdoupe、@jeefy、@leejones、@mattlord、@maxenglander、@mdlayher、@mhamza15、@morgo、@mounicasruthi、@nickvanw、@notfelineit、@rohit-nayak-ps、@rvrangel、 @shlomi-noach、@siddharth16396、@stankevich、@stutibiyani、@systay、@timvaillancourt、@twthorn、@vitess-bot、@wukuai、@yoheimuta</p>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/vitessio/vitess">vitessio/vitess</a> · 🏷️ 版本：<code>v23.0.0</code> · 📅 发布：2025-11-04 · <a href="https://github.com/vitessio/vitess/releases/tag/v23.0.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/vitess/vitess_v21.0.6"> <span class="k">← 下一个</span> <span class="t">v21.0.6</span> </a> <a href="/zh/release_note/vitess/vitess_v22.0.1"> <span class="k">上一个 →</span> <span class="t">v22.0.1</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/vitessio/vitess/releases/tag/v23.0.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/vitessio/vitess" target="_blank" rel="noopener"> <span>vitessio/vitess</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#总结" class>总结</a><a href="#目录" class="lv3">目录</a><a href="#主要变化" class>主要变化</a><a href="#重大变更" class="lv3">重大变更</a><a href="#pr-18633-中的-keygenerateshardranges-函数签名已更改添加了新的-hexchars-int-参数来控制生成的分片名称的十六进制宽度影响必须更新直接调用-generateshardranges-的代码才能传递新参数相应的-vtctldclient-命令获得了一个新的---chars-标志来控制此行为" class>PR #18633 中的 key.GenerateShardRanges() 函数签名已更改，添加了新的 hexChars int 参数来控制生成的分片名称的十六进制宽度。
+影响：必须更新直接调用 GenerateShardRanges() 的代码才能传递新参数。
+相应的 vtctldclient 命令获得了一个新的 --chars 标志来控制此行为。</a><a href="#标志命名约定迁移" class="lv3">标志命名约定迁移</a><a href="#在升级到-v2500-之前用户应更新配置文件脚本和自动化以使用基于破折号的标志名称迁移在-v23-和-v24-中向后兼容允许逐步更新" class>在升级到 v25.0.0 之前，用户应更新配置文件、脚本和自动化以使用基于破折号的标志名称。迁移在 v23 和 v24 中向后兼容，允许逐步更新。</a><a href="#新的默认版本" class="lv3">新的默认版本</a><a href="#新支持" class="lv3">新支持</a><a href="#弃用" class="lv3">弃用</a><a href="#删除" class="lv3">删除</a><a href="#新指标" class="lv3">新指标</a><a href="#小改动" class>小改动</a><a href="#新-cli-标志" class="lv3">新 CLI 标志</a><a href="#修改后的指标" class="lv3">修改后的指标</a><a href="#解析器sql-增强" class="lv3">解析器/SQL 增强</a><a href="#查询计划改进" class="lv3">查询计划改进</a><a href="#拓扑" class="lv3">拓扑</a><a href="#多个组件中使用的---consul-auth-static-file-标志现在要求可以从提供的-json-文件加载-1-个或多个凭据-pr-18152影响具有空或无效凭证文件的配置现在将在启动时失败而不是在不进行身份验证的情况下静默继续" class>多个组件中使用的 --consul-auth-static-file 标志现在要求可以从提供的 json 文件加载 1 个或多个凭据 (PR #18152)。
+影响：具有空或无效凭证文件的配置现在将在启动时失败，而不是在不进行身份验证的情况下静默继续。</a><a href="#vtorc-2" class="lv3">VTORc</a><a href="#apireplication-analysis-http-api-端点现已弃用并替换为-apidetection-analysis-pr-18615它当前返回相同的响应格式时间表apireplication-analysis-端点将在未来版本中删除用户应迁移到-apidetection-analysis" class>/api/replication-analysis HTTP API 端点现已弃用，并替换为 /api/detection-analysis (PR #18615)，它当前返回相同的响应格式。
+时间表：/api/replication-analysis 端点将在未来版本中删除。用户应迁移到 /api/detection-analysis。</a><a href="#vttablet-1" class="lv3">VTTablet</a><a href="#vttablet-grpc-tabletmanager-client-现在返回由内部-govtvterrors-包封装的错误-pr-18565依赖-google-grpc-错误代码的外部自动化现在应该使用-vterrorscodeerr-来检查错误代码该代码返回-protovtrpcproto-protobuf-中定义的-vtrpcpbcode请参阅重大更改-了解迁移指南" class>vttablet gRPC tabletmanager client 现在返回由内部 go/vt/vterrors 包封装的错误 (PR #18565)。依赖 google-gRPC 错误代码的外部自动化现在应该使用 vterrors.Code(err) 来检查错误代码，该代码返回 proto/vtrpc.proto protobuf 中定义的 vtrpcpb.Code。
+请参阅重大更改 了解迁移指南。</a><a href="#docker" class="lv3">Docker</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/vitess/vitess_v24.0.5"> <span class="v">v24.0.5</span> <span class="d">26-10-13</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v23.0.8"> <span class="v">v23.0.8</span> <span class="d">26-10-13</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v24.0.4"> <span class="v">v24.0.4</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v23.0.7"> <span class="v">v23.0.7</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v24.0.3"> <span class="v">v24.0.3</span> <span class="d">26-09-03</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v23.0.6"> <span class="v">v23.0.6</span> <span class="d">26-09-03</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v24.0.2"> <span class="v">v24.0.2</span> <span class="d">26-06-24</span> </a> </li><li> <a href="/zh/release_note/vitess/vitess_v23.0.5"> <span class="v">v23.0.5</span> <span class="d">26-06-24</span> </a> </li> </ul> <a href="/zh/releases/vitess" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

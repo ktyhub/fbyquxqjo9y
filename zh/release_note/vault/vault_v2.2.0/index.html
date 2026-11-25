@@ -1,0 +1,694 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>vault v2.2.0 — STAGS NextStack</title><meta name="description" content="containers: Remove cap_ipc_lock capability on vault at build time to allow running Vault in common container runtimes. Vault in containers will no longer be able to call mlock() to lock memory."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/vault/vault_v2.2.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/vault/2.2.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/vault/vault_v2.2.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/vault/2.2.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="vault v2.2.0 — STAGS NextStack"><meta property="og:description" content="containers: Remove cap_ipc_lock capability on vault at build time to allow running Vault in common container runtimes. Vault in containers will no longer be able to call mlock() to lock memory."><meta property="og:url" content="https://www.stags.cn/zh/release_note/vault/vault_v2.2.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/vault/vault_v2.2.0/#article","headline":"vault v2.2.0 release notes","datePublished":"2026-10-15","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/hashicorp/vault"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/vault/2.2.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/vault/vault_v2.2.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/vault/2.2.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/vault/2.2.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/vault/2.2.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/vault/2.2.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/vault/2.2.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/vault">vault</a> </nav> <h1 class="detail-title"> <span class="p">vault</span> v2.2.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年10月15日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/hashicorp/vault" target="_blank" rel="noopener"> <span class="k">来源</span>hashicorp/vault </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/vault/2.2.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/vault/vault_v2.2.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="vault-v220">vault v2.2.0</h1>
+<h3 id="2026-年-10-月-15-日">2026 年 10 月 15 日</h3>
+<p>重大变更：</p>
+<ul>
+<li>容器：在构建时删除 <code>vault</code> 上的 <code>cap_ipc_lock</code> 功能，以允许在公共容器运行时运行 Vault。容器中的 Vault 将不再能够调用 <code>mlock()</code> 来锁定内存。操作员应在 Vault 的配置中设置 <code>disable_mlock = true</code>。建议运行时操作员禁用交换以保证数据安全。</li>
+<li>容器：以下软件包已从基于 UBI 的容器镜像中删除：gnupg、openssl、procps。</li>
+<li>容器：在构建时在Vault上设置cap_ipc_lock功能。运行 Vault 容器时，容器运行时需要添加 <code>IPC_LOCK</code> 功能。</li>
+<li>物理/postgresql：重大更改 - PostgreSQL 存储后端身份验证现在更喜欢 Azure 工作负载身份而不是托管身份。将 <code>go-pgmultiauth</code> 更新为 v1.1.0。如果配置了工作负载身份，现有的基于托管身份的 PostgreSQL 配置可能会停止工作。  受影响的用户必须将 PostgreSQL 身份验证迁移到 Workload Identity。</li>
+<li>pki：使用默认 <code>sign-verbatim</code> 目录策略的 ACME 现在会拒绝包含 URI SAN、电子邮件 SAN 或其他 SAN 的 CSR。 ACME 挑战仅验证 DNS 名称和 IP 地址；这些 SAN 类型从未经过验证，并且不得出现在颁发的证书中。需要先前行为的运营商可以在 <code>config/acme</code> 中设置 <code>default_directory_policy = "sign-verbatim-unsafe"</code>，接受生成的证书可能包含未经验证的身份声明。</li>
+<li>sdk/helpers/docker：将 docker 助手从 github.com/docker/docker 迁移到 github.com/moby/moby。这是必要的，因为 github.com/docker/docker 不再维护。解决 GHSA-x744-4wpc-v9h2 和 GHSA-pxq6-2prw-chj9。
+安全：</li>
+<li>将 <code>cloudflare/circl</code> 升级到 v1.6.3 以解决 CVE-2026-1229</li>
+<li>将<code>filippo.io/edwards25519</code>升级到v1.1.1以解决GO-2026-4503</li>
+<li>acl：修复权限升级漏洞，其中 <code>policies</code> 请求字段上的 <code>denied_parameters</code> 约束可以通过提交大小写混合的策略名称（例如“超级管理员”而不是“超级管理员”）来绕过。 Vault 现在在评估 <code>allowed_parameters</code>/<code>denied_parameters</code> 约束之前将 <code>policies</code> 参数标准化为小写。</li>
+<li>api/auth/gcp：更新 go.opentelemetry.io/otel/sdk 以修复 CVE-2026-39883。</li>
+<li>api/auth：更新github.com/go-jose/go-jose以修复安全漏洞CVE-2026-34986和GHSA-78h2-9frx-2jm8。</li>
+<li>api：更新 golang.org/x/net 以解决 GO-2026-4918</li>
+<li>auth/aws：修复了由于 AWS client 缓存不正确而导致用户可能能够绕过 Vault 身份验证的问题</li>
+<li>auth/cert：确保正在更新的证书与附加到会话的证书匹配。</li>
+<li>auth/radius：添加了 case_insensitive_names 切换以防止用户名冲突并启用不区分大小写的用户处理。</li>
+<li>核心（企业）：防止 ACL 参数限制中的策略名称规范化绕过。</li>
+<li>core/acl：修复了 LIST ACL 绕过问题，其中尾部斜杠请求可能会跳过更具体的拒绝规则。</li>
+<li>core/identity：拒绝呈现的身份模板中的通配符。</li>
+<li>核心/插件：修复从 raft 快照恢复、通过 <code>sys/raw</code> 写入或复制的插件目录条目，以便能够在 <code>plugin_directory</code> 之外运行二进制文件。</li>
+<li>核心/策略：强化请求时 ACL 构造，以忽略包含路径导航段（<code>.</code> 或 <code>..</code>）的格式错误的遗留策略引用，因此永远不会解析或应用遍历样式名称。</li>
+<li>核心：当此标头转发到插件后端时，正确地从授权标头中删除任何 Vault 令牌。仅当“Authorization”明确包含在直通请求标头列表中时，才会转发该标头。</li>
+<li>核心：修复了绕过精确拒绝 ACL 策略的问题，其中大小写变化的 AppRole、AWS、Azure、GCP、Kubernetes、SCEP 或 TPM 角色名称、GitHub 团队或用户策略映射密钥、证书或 CRL 名称、ACL/RGP/EGP 策略名称或用户通行用户名可能会逃避拒绝，并由后端解析为同一受保护资源。 Okta 组名称、挂载上的 LDAP 和 RADIUS 名称保留在其默认的不区分大小写的配置中，以及 Enterprise SCIM client 名称（<code>identity/scim/client/&#x3C;name></code>，其中大小写变体写入会覆盖现有的 client）不在此修复范围内，并且仍然受到相同绕过的影响；避免将通配符允许与这些安装和路径上的精确拒绝结合起来。</li>
+<li>核心：通过删除对 github.com/jackc/pgx/v3 和 github.com/jackc/pgx/v4 的依赖来解决 GHSA-j88v-2chj-qfwx</li>
+<li>核心：通过升级到 github.com/jackc/pgx/v5 解决 GO-2026-4518 和 GHSA-jqcq-xjh3-6g23</li>
+<li>核心：更新github.com/Azure/go-ntlmssp修复安全漏洞v0.1.1。</li>
+<li>核心：更新github.com/apache/thrift修复安全漏洞GHSA-wf45-q9ch-q8gh</li>
+<li>核心：将github.com/apache/thrift更新为v0.24.0，修复安全漏洞ghsa-8wv5-x4w7-5gww。</li>
+<li>核心：更新 github.com/aws/aws-sdk-go-v2/ 以修复安全漏洞 GHSA-xmrv-pmrh-hhx2。</li>
+<li>核心：更新github.com/go-jose/go-jose修复安全漏洞CVE-2026-34986和GHSA-78h2-9frx-2jm8。</li>
+<li>核心：更新github.com/hashicorp/go-getter修复安全漏洞GHSA-92mm-2pjq-r785。</li>
+<li>核心：更新github.com/jackc/pgx/v5修复安全漏洞GHSA-j88v-2chj-qfwx。</li>
+<li>核心：更新 go.etcd.io/etcd/client/pkg/v3 为 v3.7.1，修复安全漏洞 GO-2026-6107。</li>
+<li>核心：更新 go.opentelemetry.io/otel/sdk 以修复 CVE-2026-39883。</li>
+<li>核心：更新 golang.org/x/crypto 为 v0.56.0，修复安全漏洞 GO-2026-6354 和 GO-2026-6355。</li>
+<li>核心：更新 golang.org/x/net 以解决 GO-2026-4918”</li>
+<li>核心：更新 google.golang.org/grpc 为 v1.83.2，修复安全漏洞 GHSA-2v4p-qf9q-27wj。</li>
+<li>核心：更新software.sslmate.com/src/go-pkcs12至v0.7.2，修复安全漏洞GO-2026-5052。</li>
+<li>核心：使用常数时间恢复令牌比较。</li>
+<li>core: 验证<code>path</code>和<code>file_path</code>对于<code>sys/audit/{path}</code>的请求不能为空</li>
+<li>core: 拒绝未指定规范路径的 URL 编码路径。</li>
+<li>http：添加可配置的 <code>max_token_header_size</code> 侦听器选项（默认 8 KB）以限制身份验证令牌标头（<code>X-Vault-Token</code> 和 <code>Authorization: Bearer</code>）的大小，防止通过过大的标头内容进行潜在的拒绝服务攻击。现在还在 HTTP 服务器上设置了 stdlib 级别的 <code>MaxHeaderBytes</code> backstop。设置 <code>max_token_header_size = -1</code> 以禁用限制。</li>
+<li>身份/scim（企业）：<code>identity/entity/merge</code> 端点现在拒绝涉及任何 SCIM 管理实体的请求，防止特权操作员绕过 SCIM 所有权护栏跨 SCIM 边界传输别名、组成员身份或策略。</li>
+<li>Identity：防止实体批量删除端点（identity/entity/batch-delete）删除属于另一个命名空间的实体的底层存储。</li>
+<li>身份：实体名称更新现在拒绝不匹配的 id 或 external_id 选择器，以防止将更新重定向到不同的实体。</li>
+<li>sdk：通过删除对 github.com/jackc/pgx/v3 和 github.com/jackc/pgx/v4 的依赖来解决 GHSA-j88v-2chj-qfwx</li>
+<li>sdk：通过升级到 github.com/jackc/pgx/v5 解决 GO-2026-4518 和 GHSA-jqcq-xjh3-6g23</li>
+<li>sdk：更新 github.com/Azure/go-ntlmssp 以修复安全漏洞 v0.1.1。</li>
+<li>sdk：更新github.com/go-jose/go-jose以修复安全漏洞CVE-2026-34986和GHSA-78h2-9frx-2jm8。</li>
+<li>sdk：更新github.com/jackc/pgx/v5以修复安全漏洞GHSA-j88v-2chj-qfwx。</li>
+<li>sdk：更新 golang.org/x/net 以解决 GO-2026-4918”</li>
+<li>Secrets/spiffe（企业）：确保模板值正确转义。</li>
+<li>转换（企业）：添加适当的数据库特定引用和 escaping。</li>
+<li>ui: 升级 dompurify 至 3.4.0</li>
+<li>ui：禁用 ui 构建的围巾分析。
+*Vault/sdk：将<code>cloudflare/circl</code>升级到v1.6.3以解决CVE-2026-1229
+*Vault/sdk：将<code>go.opentelemetry.io/otel/sdk</code>升级到v1.40.0以解决GO-2026-4394
+变化：</li>
+<li>许可证：将 Agentic IAM 条款添加到 client 许可模型并更新 Vault 平台许可模型的条款。</li>
+<li>api：从 <code>sys/seal-status</code> 响应中删除了 <code>hcp_link_status</code> 和 <code>hcp_link_resource_ID</code> 字段。</li>
+<li>审核：名为 <code>supplemental_audit_data</code> 的新顶级密钥现在可以出现在请求和响应数据结构中“响应”类型的审核条目中。这些新字段可以包含进一步描述请求/响应数据的数据，主要用于基于非 JSON 的请求和响应，以帮助审核。 <code>audit-non-hmac-request-keys</code> 和 <code>audit-non-hmac-response-keys</code> 适用于 <code>supplemental_audit_data</code> 中的键，以删除字段值的 HMAC（如果需要）。</li>
+<li>auth/alicloud: 更新插件为<a href="https://github.com/hashicorp/vault-plugin-auth-alicloud/releases/tag/v0.24.0">v0.24.0</a></li>
+<li>auth/azure: 将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-auth-azure/releases/tag/v0.25.1">v0.25.1</a></li>
+<li>auth/cf: 将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-auth-cf/releases/tag/v0.24.0">v0.24.0</a></li>
+<li>auth/gcp: 将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-auth-gcp/releases/tag/v0.24.1">v0.24.1</a></li>
+<li>auth/jwt: 将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-auth-jwt/releases/tag/v0.27.1">v0.27.1</a></li>
+<li>auth/kerberos: 将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-auth-kerberos/releases/tag/v0.18.0">v0.18.0</a></li>
+<li>auth/kubernetes：将插件更新为<a href="https://github.com/hashicorp/vault-plugin-auth-kubernetes/releases/tag/v0.25.0">v0.25.0</a></li>
+<li>auth/oci: 将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-auth-oci/releases/tag/v0.22.0">v0.22.0</a></li>
+<li>auth/saml: 将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-auth-saml/releases/tag/v0.9.0">v0.9.0</a></li>
+<li>身份验证/令牌：不再支持通过 <code>auth/token/revoke-self</code> 和 <code>auth/token/revoke-accessor</code> 进行 JWT 撤销。 <code>auth/token/revoke</code> 和 <code>auth/token/revoke-orphan</code> 现在需要完整的 JWT 来撤销 OAuth JWT 并拒绝内部存储的 JWT ID 表单。非 JWT Vault 令牌行为保持不变。</li>
+<li>cli：<code>vault operator diagnose</code> 不再运行 HCP Link 连接检查，<code>vault status</code> 不再显示 HCP Link 状态。</li>
+<li>cli/status：<code>vault status</code> 在查询密封状态时不再强制使用根命名空间。它现在遵循通过 <code>VAULT_NAMESPACE</code> 或 <code>-namespace</code> 标志设置的命名空间，与其他 CLI 命令一致。</li>
+<li>core/acl：带有尾部斜杠的 LIST 请求现在可以正确遵循更具体的拒绝策略。以前，如果还存在更广泛的允许 <code>path "kv/*"</code>，则可以绕过 <code>LIST kv/private/</code> 对 <code>path "kv/*" { deny }</code> 的拒绝。依赖于先前（不正确）行为的保单现在可能会被拒绝。</li>
+<li>core/managed-keys（企业）：对 API 端点 GET sys/managed-keys/:type/:name now 的响应
+返回用于键用法的字符串值数组，而不是整数值数组。使用的字符串是“加密”(1)、“解密”(2)、“签名”(3)、“验证”(4)、“包装”(5)、“解包”(6)、“生成随机”(7) 和“mac”(8)。</li>
+<li>core/oauth-resource-server（企业）：<code>sys/config/oauth-resource-server/:name</code> 的写入响应现在返回带有完整配置文件对象的 HTTP 200，而不是带有空正文的 HTTP 204。验证警告与配置文件数据一起返回，而不是代替它。</li>
+<li>核心/插件：插件目录条目现在在使用时都会根据 <code>plugin_directory</code> 进行检查，而不仅仅是在注册时。其命令在目录外部解析（包括通过符号链接）的条目会被 <code>plugin command is outside of configured plugin directory</code> 拒绝，并且使用它的挂载在启动时会被跳过，同时保留其数据。此类插件必须使用 <code>plugin_directory</code> 中的二进制文件再次注册。</li>
+<li>核心/策略：Vault 现在通过分段感知检查来验证策略名称。对于新策略写入和分配，空名称和包含 <code>.</code> 或 <code>..</code> 路径段的名称将被拒绝，而包含 <code>/</code> 和 <code>\</code> 的名称仍受支持。在请求时 ACL 构建期间，不会应用旧的遍历式策略引用（被视为无效和未解析），这可能会减少有效令牌权限。运营商应在升级前审核并重命名受影响的策略。</li>
+<li>core/raft：将并发重试加入工作线程限制为 20 个。在 20 个进程正在进行时，任何进一步的重试加入尝试都将导致错误 (<code>too many concurrent raft retry joins in progress</code>)。</li>
+<li>核心：针对特定 AppRole、AWS、Azure、GCP、Kubernetes、SCEP 或 TPM 角色、GitHub 团队或用户策略映射密钥、证书或 CRL 名称、ACL/RGP/EGP 策略名称或用户密码用户名的 ACL 和 Sentinel EGP 规则路径现在与小写资源名称匹配，因为这些后端不区分大小写地解析这些名称。使用大小写混合的资源名称（例如 <code>auth/approle/role/MyRole</code>）编写的规则不再匹配对该资源的请求，必须使用小写名称（<code>auth/approle/role/myrole</code>）重写。小写形式也是 Sentinel RGP 和 EGP 策略观察到的 <code>request.path</code>，因此将该值与混合大小写路径（例如 <code>request.path is "auth/approle/role/MyRole"</code>）进行比较的策略规则也必须更新。外部身份验证和秘密插件不受此规范化的影响，并继续以其原始大小写接收请求。使用混合大小写资源名称的现有拒绝规则在升级后将无法打开（变为允许全部），直到使用小写名称重写为止。</li>
+<li>核心：Bump Go版本为1.27.1。</li>
+<li>核心：<code>sys/mounts/auth/&#x3C;path>/tune</code> 需要 sudo 功能，匹配 <code>sys/auth/&#x3C;path>/tune</code>。</li>
+<li>核心：Vault 现在拒绝不规范的路径，例如包含双斜杠的路径 (<code>path//to/resource</code>)</li>
+<li>核心：Vault 现在会将非规范化路径（包含 <code>/./</code>、<code>/../</code> 或 <code>//</code>）重定向到已清理的路径，而不是拒绝这些请求</li>
+<li>核心：将 github.com/hashicorp/cap 升级为 v0.12.0</li>
+<li>核心：删除对 HCL 配置文件和策略定义中重复属性的支持。现在，解析具有重复属性的 HCL 总是失败，并且之前恢复旧行为的 VAULT_ALLOW_PENDING_REMOVAL_DUPLICATE_HCL_ATTRIBUTES 环境变量已被删除。</li>
+<li>核心：现在可以使用主设备上生成的根令牌对辅助 DR 请求进行身份验证。</li>
+<li>核心：sys/generate-root 和 sys/replication/dr/ secondary/generate-operation-token 端点现在默认进行身份验证，通过设置新的 HCL 配置键 enable_unauthenticated_access 分别包含值“generate-root”或“generate-operation-token”来启用旧的未经身份验证的行为。</li>
+<li>核心：sys/rekey 端点现在默认经过身份验证，通过设置新的 HCL 配置密钥 enable_unauthenticated_access 以包含值“rekey”来启用旧的未经身份验证的行为。</li>
+<li>core：删除了对 HCP Link 的支持，该链接将自我管理的 Vault 集群连接到 HashiCorp 云平台 (HCP)。 Vault 不再启动 HCP Link 连接，并且服务器配置中的 <code>cloud</code> 节不再具有任何效果，并且将无法识别。</li>
+<li>数据库/couchbase：将插件更新为<a href="https://github.com/hashicorp/vault-plugin-database-couchbase/releases/tag/v0.17.0">v0.17.0</a></li>
+<li>数据库/elasticsearch：将插件更新为<a href="https://github.com/hashicorp/vault-plugin-database-elasticsearch/releases/tag/v0.21.0">v0.21.0</a></li>
+<li>数据库/mongodbatlas：将插件更新为<a href="https://github.com/hashicorp/vault-plugin-database-mongodbatlas/releases/tag/v0.18.0">v0.18.0</a></li>
+<li>数据库/redis-elasticache：将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-database-redis-elasticache/releases/tag/v0.9.1">v0.9.1</a></li>
+<li>数据库/redis：将插件更新为<a href="https://github.com/hashicorp/vault-plugin-database-redis/releases/tag/v0.9.0">v0.9.0</a></li>
+<li>数据库/雪花：将插件更新为<a href="https://github.com/hashicorp/vault-plugin-database-snowflake/releases/tag/v0.17.0">v0.17.0</a></li>
+<li>http：当令牌标头大小验证失败时，返回 431 状态代码而不是 400。</li>
+<li>Identity/scim（企业）：添加了“allow_group_adoption”开关以允许或禁止 SCIM client 采用组。</li>
+<li>Identity/scim（企业）：添加了对大小写重复的身份资源的检查，如果检测到该资源，将导致 SCIM 操作失败并显示错误消息。要删除重复的身份，请使用 <code>force-identity-deduplication</code> 激活标志。</li>
+<li>Identity/scim（企业）：加载 SCIM client 现在将测试并删除重复的 client 名称。 SCIM client 现在正确不区分大小写。</li>
+<li>Identity/scim：去掉SCIM激活标志； SCIM v2 端点现在始终可用，无需事先激活</li>
+<li>身份：需要 <code>sudo</code> 能力来调用身份实体合并 API 端点 (<code>identity/entity/merge</code>)。</li>
+<li>许可证利用率报告（企业）：<code>vault operator utilization</code> 生成的手动报告包的格式已更改。值得注意的是，它们包含 <code>snapshot_records</code> 数组而不是 <code>snapshots</code>。每条记录中的 <code>decoded_snapshot</code> 字段包含先前位于 <code>snapshots</code> 数组中的人类可读数据。</li>
+<li>mfa/duo：将 duo_api_golang client 升级到 0.2.0 以包含新的 Duo 证书颁发机构</li>
+<li>oauth-resource-server：防止 Issuer_id 在 OAuth 资源服务器配置文件创建后发生变化。操作员必须删除并重新创建配置文件才能更改 Issuer_id。</li>
+<li>oauth-resource-server：防止 unique_id_claim 在 OAuth 资源服务器配置文件创建后发生变化。操作员必须删除并重新创建配置文件才能更改 unique_id_claim。</li>
+<li>oauth-resource-server：OAuth 资源服务器功能不再需要通过 <code>sys/activation-flags/oauth-resource-server/activate</code> 端点激活。</li>
+<li>oauth-resource-server：更新 OAuth 资源服务器配置以包含令牌的唯一标识符和参与者的自定义声明选项。</li>
+<li>打包：容器映像现在使用压缩的 OCI 映像布局导出。</li>
+<li>打包：UBI 容器镜像现在构建在 UBI 10 最小镜像上。</li>
+<li>秘密/广告：将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-secrets-ad/releases/tag/v0.23.0">v0.23.0</a></li>
+<li>Secrets/alicloud: 更新插件至 <a href="https://github.com/hashicorp/vault-plugin-secrets-alicloud/releases/tag/v0.23.0">v0.23.0</a></li>
+<li>Secrets/azure：更新 Azure Enterprise Secrets 插件以包含静态角色。</li>
+<li>Secrets/azure: 将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-secrets-azure/releases/tag/v0.28.3+ent">v0.28.3+ent</a></li>
+<li>Secrets/GCP：将插件更新为<a href="https://github.com/hashicorp/vault-plugin-secrets-gcp/releases/tag/v0.25.0">v0.25.0</a></li>
+<li>Secrets/gcpkms：将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-secrets-gcpkms/releases/tag/v0.25.0">v0.25.0</a></li>
+<li>Secrets/keymgmt：将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-secrets-keymgmt/releases/tag/v0.20.1+ent">v0.20.1+ent</a></li>
+<li>Secrets/kmip：更新插件至 v0.20.0</li>
+<li>Secrets/kubernetes：将插件更新为<a href="https://github.com/hashicorp/vault-plugin-secrets-kubernetes/releases/tag/v0.14.0">v0.14.0</a></li>
+<li>Secrets/kv: 将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-secrets-kv/releases/tag/v0.27.0">v0.27.0</a></li>
+<li>Secrets/ldap（企业）：静态角色将从插件管理的队列迁移到 Vault Enterprise Rotation Manager 系统。可以通过新的静态迁移端点检查和管理静态角色迁移进度。有关此过程的更多详细信息，请参阅 <a href="https://developer.hashicorp.com/vault/docs/secrets/ldap#static-role-migration-to-rotation-manager">LDAP 文档</a>。</li>
+<li>Secrets/mongodbatlas：将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-secrets-mongodbatlas/releases/tag/v0.18.0">v0.18.0</a></li>
+<li>Secrets/openldap: 将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-secrets-openldap/releases/tag/v0.19.3+ent">v0.19.3+ent</a></li>
+<li>Secrets/pki：逐字签名端点不再忽略 CSR 中的基本约束扩展，如果 isCA=false，则在生成的证书中使用它们；如果 isCA=true，则返回错误</li>
+<li>Secrets/ssh：RSA 密钥大小现在限制为最大 8192 位，解决 CVE-2026-39829</li>
+<li>Secrets/terraform：将插件更新为 <a href="https://github.com/hashicorp/vault-plugin-secrets-terraform/releases/tag/v0.15.0">v0.15.0</a></li>
+<li>secure-plugin-api：更新至v0.2.0</li>
+<li>存储：将 aerospike client 库升级到 v8。</li>
+<li>ui/secrets：秘密引擎 URL 路径从“/secrets”重命名为“/secrets-engines”</li>
+<li>ui：在弃用 HCP Link 后删除 HCP Link 状态指示器。</li>
+<li>ui：删除从列表视图中批量删除秘密引擎的功能。
+特点：</li>
+<li><strong>转换 FF1 支持（企业）</strong>：添加对 NIST 批准的 FF1 格式保留加密 (FPE) 算法的支持，以及新的重新包装操作以协助转换
+从 FF3-1 到 FF1。</li>
+<li><strong>PKI 外部 CA（企业）</strong>：一个新插件，提供通过 ACME 协议从公共 CA 提供商获取 PKI 证书的能力</li>
+<li><strong>AI 代理支持（测试版/企业版）</strong>：添加对一流 AI 代理的测试版支持。添加代理注册表以注册代理，并添加对使用 Vault 作为注册代理实体的 OAuth 资源服务器的支持。配置后，允许使用 OAuth 2.0 JWT 直接授权对 Vault 的请求，而无需 Vault 令牌。</li>
+<li><strong>AI 代理支持（企业）</strong>：Vault 对一流 AI 代理的支持现已全面可用。添加代理注册表以注册代理，并添加对使用 Vault 作为注册代理实体的 OAuth 资源服务器的支持。配置后，允许使用 OAuth 2.0 JWT 直接授权对 Vault 的请求，而无需 Vault 令牌。</li>
+<li><strong>代理注册表 UI（企业）</strong>：通过代理注册表页面向主导航添加新的代理安全部分，操作员可以在其中查看、搜索和管理注册的 AI 代理、其关联的 Vault 实体和别名、分配的策略以及操作状态。</li>
+<li><strong>PKI 外部 CA 自动完成 DNS-01 质询</strong>：与以下 DNS 提供商集成以自动完成 DNS-01 质询：AWS Route53、Azure DNS、Google Cloud DNS 以及 BIND 和其他符合 RFC2136 标准的服务器。</li>
+<li><strong>自动 TLS 证书重新加载</strong>：TCP 侦听器接受新的 <code>tls_reload_interval</code> 选项。设置后，Vault 会定期检查 <code>tls_cert_file</code> 和 <code>tls_key_file</code> 是否有更改并自动重新加载证书，因此无需重新启动节点或发送 SIGHUP 即可拾取轮换证书。</li>
+<li><strong>计费指标仪表板</strong>：使用响应式布局创建新的计费仪表板以显示指标数据。</li>
+<li><strong>深色模式（测试版）</strong>：为 Vault UI 添加了深色模式支持。用户现在可以从用户首选项的“外观”部分中选择浅色、深色或系统首选主题。</li>
+<li><strong>运行状况检查管理器</strong>：添加专用系统来管理和监控 Vault Enterprise 插件的运行状况。这为运营商和平台工程师提供了一种明确的机制来验证外部系统的连接和身份验证。</li>
+<li><strong>IBM PAO 许可证集成</strong>：添加了 IBM PAO 许可证支持，允许通过 IBM PAO 许可证密钥使用 Vault Enterprise。 Vault 配置中需要新的配置节 <code>license_entitlement</code> 才能使用 IBM 许可证。有关更多详细信息，请参阅<a href="https://developer.hashicorp.com/vault/docs/license#ibm-pao-license-keys">许可证文档</a>。</li>
+<li><strong>KMIP 自带 CA</strong>：添加新的 API 来管理多个 CA 以进行 client 验证，并可以导入外部 CA。</li>
+<li><strong>LDAP Secrets Engine 企业插件</strong>：添加新的 LDAP Secrets Engine 企业插件。此企业版本添加了对自我管理静态角色的支持以及对自动静态角色轮换的轮换管理器支持。新的插件配置可以设置为“自我管理”，跳过对 Bindpass 字段的要求，并允许静态角色使用自己的密码来轮换其凭据。自动静态角色凭证轮换支持通过 Vault Enterprise 进行细粒度计划轮换和重试策略。</li>
+<li><strong>LDAP 机密引擎读取时轮换（企业）</strong>：在 LDAP 机密引擎中添加对静态角色的读取时轮换支持，在读取时触发立即凭证轮换，并具有可配置的冷却时间和每个角色覆盖。</li>
+<li><strong>登录 MFA TOTP 自行注册（企业）</strong>：简化用户创建登录 MFA TOTP 凭据的过程，允许他们使用登录期间生成的 QR 码（TOTP 机密）自行注册 MFA TOTP。新功能可在 TOTP 登录 MFA 方法配置屏幕上以及通过 API 中的 <code>enable_self_enrollment</code> 参数进行配置。</li>
+<li><strong>PKI 中的 ML-DSA 支持</strong>：在 PKI 秘密引擎中添加对使用 ML-DSA 密钥的后量子签名的支持。</li>
+<li><strong>命名空间（企业）</strong>：将 <code>operator_namespace_path</code> 添加到侦听器配置中，以限制对特定命名空间子树的 HTTP 访问，从而启用每个侦听器命名空间隔离。</li>
+<li><strong>PKI BYOK CA 密钥迁移（企业）</strong>：受 sudo 保护的新 <code>POST /pki/keys/:uuid/export</code> 端点使用 RSA-OAEP-SHA256、ECDH-ES 或 ML-KEM 将 CA 私钥与调用者提供的公钥包装在一起。目标 Vault 实例可以使用 <code>wrapped_key</code> 和 <code>export_key_hmac</code> 通过 <code>POST /pki/keys/import</code> 导入 blob。导出事件被记录为以 CA 密钥的 SPKI 指纹为密钥的防篡改审计记录，这些记录在删除和重新导入周期中幸存下来，并在发行者读取时显示为警告。</li>
+<li><strong>PKI PKCS#12 和 JKS 支持</strong>：向相关 PKI 端点添加对 PKCS#12 (PFX) 和 Java keytool (JKS) 证书包的支持。捆绑包以 Base64 编码、受密码保护的文件形式返回。</li>
+<li><strong>PKI 安全密钥导出（企业）</strong>：添加导出密钥管理 CRUD 端点（LIST/WRITE/READ/DELETE /pki/export）以支持 PKI 挂载之间的安全 CA 私钥迁移。</li>
+<li><strong>插件（企业）</strong>：创建和更新数据库引擎时允许覆盖固定版本</li>
+<li><strong>插件（企业）</strong>：启用和调整身份验证和机密后端时允许覆盖固定版本</li>
+<li><strong>轮换策略</strong>：在轮换策略中添加对自动轮换参数的支持</li>
+<li><strong>SCIM 2.0 身份配置测试版（测试版/企业版）</strong>：添加对 Vault 的测试版支持以充当 SCIM 2.0 服务器，从而允许对 Vault 实体、别名和组进行外部管理。</li>
+<li><strong>SCIM 令牌支持（企业）</strong>：通过 <code>token_type=scim</code> 添加对 SCIM 令牌的支持，并具有每个 client 的活动令牌限制和最大 TTL 上限。</li>
+<li><strong>Transit 引擎（企业）中混合签名/验证的 SLH-DSA 支持</strong>：添加对 SLH-DSA 作为混合签名/验证操作的 PQC 组件的支持。这与 ECDSA（p-256、P-384、P-521）和 Ed25519 兼容。</li>
+<li><strong>Secrets Sync UI</strong>：在 AWS、Azure 和 GCP 同步目标的 UI 中添加了工作负载联合身份验证 (WIF) 支持</li>
+<li><strong>Secrets Sync UI</strong>：添加对同步数据库静态角色的支持</li>
+<li><strong>Secrets Sync UI</strong>：实现 AWS KMS 密钥 ID 和区域 KMS 密钥支持</li>
+<li><strong>Secrets Sync UI</strong>：实现 GCP 副本区域和加密支持</li>
+<li><strong>秘密引擎 UI 目录改造</strong>：重新设计启用引擎时秘密引擎目录的视图，添加更多引擎描述符以及搜索目录以找到要使用的理想引擎的能力。</li>
+<li><strong>遥测同意横幅</strong>：添加同意横幅，允许用户接受或取消匿名使用数据收集，以帮助改进 Vault。</li>
+<li><strong>PublicPKICA 的模板集成</strong>：现在，当颁发或续订 PKI 外部 CA 证书时，Vault 代理模板会自动重新呈现。</li>
+<li><strong>Terraform 代码生成器</strong>：将 TFVP 代码片段添加到 ACL 策略界面（显示、弹出和表单），由新的可重用映射引擎提供支持，用于从 Vault API 有效负载生成 HCL。</li>
+<li><strong>Transit Crypto Agility</strong>：允许客户更改传输引擎中的加密原语。这添加了新端点 <code>/transit/keys/:name/algorithm</code> 和 <code>/transit/keys/:name/import_version</code>。</li>
+<li><strong>UI ACL 策略介绍</strong>：入门介绍，为用户提供功能上下文。</li>
+<li><strong>UI 身份验证方法介绍</strong>：入门介绍，为用户提供功能上下文。</li>
+<li><strong>UI 命名空间向导（企业）</strong>：入门向导，根据用户的预期用途向用户提供建议，并指导他们完成命名空间创建。</li>
+<li><strong>UI 策略生成器（企业）</strong>：将策略生成器弹出窗口添加到 KV V2 和 PKI 秘密引擎，并预先填充了每个页面的相关 API 请求。</li>
+<li><strong>UI Secret 引擎介绍</strong>：入门介绍，为用户提供功能上下文。</li>
+<li><strong>UI TLS 证书登录</strong>：添加对 TLS 证书（cert）身份验证的 UI 登录支持。</li>
+<li><strong>UI：Hashi 构建的外部插件支持</strong>：作为外部二进制文件运行时识别并支持 Hashi 构建的插件</li>
+<li><strong>UI：Hashi-Built 外部插件支持</strong>：通过 GUI 支持外部插件版本更新。</li>
+<li><strong>UI：安装版本控制的外部插件</strong>：添加了安装先前注册的外部插件并在启用秘密引擎时指定版本的功能。</li>
+<li><strong>UI：PKI 外部 CA</strong>：添加视图以检查 ACME 订单（按角色的活动订单、按订单 ID 或证书查找）、ACME 帐户、DNS 提供商和角色配置，并检索缓存的证书。</li>
+<li><strong>用户首选项设置</strong>：添加了可从帐户菜单访问的用户首选项页面 (<code>/vault/&#x3C;cluster>/user-preferences</code>)。包括数据和隐私部分，以及每个浏览器在 localStorage 中保留的遥测同意切换。</li>
+<li><strong>Vault Agent：ACME 协议支持</strong>：添加支持以原生支持公共 CA ACME 工作流程</li>
+<li><strong>Vault Client（企业）</strong>：引入 <code>vault-client</code>，这是一个较小的二进制文件，其中包括 Vault 代理、Vault 代理和用于与 Vault 服务器交互的 CLI 命令，但不包括服务器本身。它以 zip 包和 Alpine 容器镜像的形式提供。</li>
+<li><strong>oauth-resource-server</strong>：添加了 <code>oauth_denylist.entries.gauge</code> 指标来监控活动的 OAuth 令牌拒绝列表条目。</li>
+<li><strong>secrets-sync（企业）</strong>：添加了对数据库机密引擎作为同步源的支持，允许将静态角色凭据同步到外部目标。</li>
+<li>oauth-resource-server：添加了 OAuth 受保护资源元数据端点 (RFC 9728)，用于发布授权详细信息类型并启用授权服务器通过 /.well-known/oauth-protected-resource 自动发现</li>
+<li>秘密同步：实现了对秘密同步流的工作负载身份联合支持。</li>
+<li>秘密：增加了查看 YAML 格式秘密的能力
+改进：</li>
+<li><strong>秘密引擎 UI 改进</strong>：更新了配置视图并添加了对所有兼容秘密引擎配置的调整支持。</li>
+<li><strong>侧边栏 UI 改进</strong>：添加顶部导航栏，更新侧边栏导航结构，并更新页面标题。</li>
+<li>更新 github.com/dvsekhvalnov/jose2go 以修复安全漏洞 CVE-2025-63811。</li>
+<li>活动（企业）：在 <code>sys/internal/counters/activity/cumulative</code> 处添加累积命名空间 client 计数 API。对于响应中的每个命名空间，它返回其自己的 client 计数及其所有子命名空间的计数总和。</li>
+<li>代理注册（企业）：向代理注册添加 <code>local</code> 标志。当 <code>local=true</code> 时，注册不会复制到其他性能复制集群，而是保留在当前集群本地。</li>
+<li>agent-registry（企业）：删除了上限策略中不允许使用“拒绝”的限制，从而导致请求错误。</li>
+<li>agent/pkiexternalca：将 go.uber.org/atomic 替换为sync/atomic (stdlib)，以实现 pkiexternalca 包中的原子布尔操作。</li>
+<li>api：<code>/sys/billing/overview</code>端点添加<code>start_month</code>和ZZPH100​​ZZ参数，以允许查询特定时间范围的计费数据。</li>
+<li>api：将 SHA256 和字段添加到外部插件的 json 列表响应中。</li>
+<li>api：将 migration_done_at_epoch 添加到 sys/seal-status 响应。</li>
+<li>api：添加了 sudo 权限的 <code>sys/reporting/scan</code> 端点，它将输出一组包含有关 Vault 状态信息的文件到 <code>reporting_scan_directory</code> 配置项指定的位置。</li>
+<li>auth/aws：为 aws auth 端点添加了缺少的 OpenAPI 元数据</li>
+<li>auth/aws：将 AWS auth 方法、其公共 API client (<code>api/auth/aws</code>) 和共享登录数据帮助程序 (<code>internal/awsutil/v2</code>) 从适用于 Go v1 的 AWS SDK 迁移到 v2。</li>
+<li>auth/cert：即使在 Vault 侦听器上禁用 tls，也支持通过 x 转发的证书标头登录。</li>
+<li>auth/jwt (OAuth RS)：向 OAuth 资源服务器 JWT 验证路径添加 EdDSA/Ed25519 支持。 Ed25519 公钥现在可以通过 <code>public_keys</code> 注册，并且现在在配置时和运行时接受 <code>supported_algorithms = ["EdDSA"]</code>。</li>
+<li>auth/jwt：将参数约束字段（allowed_parameters、denied_parameters、required_parameters）添加到Vault:path_access RAR类型架构和元数据，以实现完整的OAuth资源授权请求支持</li>
+<li>auth/ldap：登录命令要求非空密码，以防止未经身份验证访问 Vault。</li>
+<li>auth/okta：为 /auth/{okta_mount_path}/verify/{nonce} 路径添加缺少的 OpenAPI 路径描述。</li>
+<li>auth/okta：为 auth Okta 插件端点添加了缺少的 OpenAPI 元数据</li>
+<li>auth/spiffe（企业）：添加 SPIFFE 登录 cli 处理程序。</li>
+<li>auth/token：添加用于撤销 OAuth JWT 的全局拒绝列表，以防止跨所有命名空间对特定令牌进行授权。</li>
+<li>auth/token：添加 <code>revoke-oauth</code> 端点以通过其颁发者和唯一 ID 撤销外部 OAuth 令牌。</li>
+<li>auth/token：auth/token/revoke-accessor 现在支持通过访问者撤销 JWT 令牌</li>
+<li>ci（企业）：将构建阶段持续时间指标上传到 Instana 以实现 CI 可观察性。</li>
+<li>cli：将 spiffe 和 tpm CLI 登录方法移至 CE。</li>
+<li>命令/代理：将 AWS client 从 aws-sdk-go v1 迁移到 aws-sdk-go-v2。</li>
+<li>配置/侦听器：记录有关无效 x-forwarded-for 配置的警告。</li>
+<li>消费计费：添加新的 <code>sys/billing/config</code> 端点以允许配置计费数据保留（最短 13 个月，最长 6 年）。
+*消费计费：添加LDAP和OpenLDAP服务帐户的计费跟踪
+库集作为 HWM 角色指标和运行计数产品使用指标的一部分。</li>
+<li>消费计费：为操作系统本地帐户静态角色添加计费跟踪，以支持基于消费的计费指标和高水位线 (HWM) 跟踪。</li>
+<li>消耗计费：添加了 GCP KMS 数据保护操作的消耗计费指标。</li>
+<li>消费计费：添加了 OIDC 代币的消费计费指标。</li>
+<li>消费计费：添加了 PKI 外部 CA 证书的消费计费指标。</li>
+<li>消费计费：添加了 SPIFFE JWT 令牌的消费计费指标。</li>
+<li>消费计费：添加一个新的 <code>sys/billing/overview</code> 端点，该端点返回当前和上个月的消费计费指标。可通过 API client 方法 <code>client.Sys().BillingOverview()</code> 访问。</li>
+<li>消费计费：在管理命名空间中启用 <code>sys/billing/overview</code> 端点。</li>
+<li>消费计费：<code>sys/billing/overview</code> 返回的 Float64 值现在四舍五入到小数点后 4 位。</li>
+<li>消费账单：账单数据保留时间从 2 个月增加到 37 个月。 <code>/sys/internal/billing/overview</code> API 端点现在默认返回 37 个月的历史消费账单数据。</li>
+<li>消费计费：安装归因数据现在存储用于消费计费指标。可以通过 <code>sys/billing/config</code> 上的新 <code>attribution_retention_months</code> 参数配置保留期（0-72 个月，默认 37）。设置为 0 将禁用归因存储并立即擦除所有现有归因数据。</li>
+<li>消费计费：<code>/sys/internal/billing/overview</code> API 端点现在始终返回响应中的所有指标类型，即使它们的值为零。这确保了一致的响应结构，以便更轻松地进行 client 端解析。</li>
+<li>核心（企业）：通过将“sealwrap”添加到现有配置 detector_deadlocks 中，使 sealwrap 中的死锁检测可配置。</li>
+<li>核心（企业）：清理后的配置现在显示 kms_library 配置。
+*核心（企业）：添加OAuth资源服务器authorization_details类型发现端点，并将vault:path_access声明匹配语义与路径/功能评估对齐；发现端点未经身份验证。</li>
+<li>核心（企业）：在 PKCS#11 中添加 <code>disallow_env_vars</code> 以允许 RSA 加密算法的每个密钥配置。</li>
+<li>核心（企业）：添加 <code>sys/config/ui/checklist-state</code> 端点以保存和检索入职清单进度。</li>
+<li>核心（企业）：在 <code>sys/config/oauth-resource-server/id/:config_id</code> 添加端点以通过 <code>config_id</code> 读取 oauth 资源服务器配置文件</li>
+<li>核心（企业）：添加 common_criteria_mode feature_flags 设置，限制侦听器 TLS 密码套件。</li>
+<li>核心（企业）：添加了新的遥测指标 <code>vault.core.license.termination_time_epoch</code>。</li>
+<li>核心（企业）：通过允许缺少 <code>typ</code> 标头，同时将当前的 <code>typ</code> 值限制为 <code>at+jwt</code>、<code>application/at+jwt</code> 和 <code>JWT</code>，使 OAuth 资源服务器 JWT <code>typ</code> 验证对来自 IdP（例如 Okta）的令牌更加宽松。</li>
+<li>核心（企业）：允许通过身份验证和/或安装调整来更改 Secretmounts 的密封包装配置，而不是仅在安装创建时更改。</li>
+<li>核心（企业）：使轮换管理器能够在注册和轮换操作期间发送插件后端所需的轮换信息。这允许插件后端拥有有效管理其旋转状态所需的上下文。</li>
+<li>核心（企业）：使轮换管理器能够使用可配置的重试策略来限制轮换条目的重试行为，并包括孤立机制来处理超过最大重试尝试次数的条目。</li>
+<li>核心（企业）：通过在重新排队失败的轮换时实施退避来改进轮换管理器错误处理</li>
+<li>核心（企业）：Ameriolate sealwrap 核心路径的锁争用。</li>
+<li>core/acl：添加全局 <code>deny_slash_in_templated_path</code> 配置选项，以拒绝策略中呈现的身份模板中存在斜杠，默认为 <code>false</code>。</li>
+<li>核心/普查：添加 <code>vault.secret.engine.transform.role.count</code> 产品使用指标，报告 Transform 秘密引擎角色的数量。</li>
+<li>核心/普查：添加产品使用指标 <code>vault.auth.method.cert.role.count</code>、<code>vault.auth.method.cert.crl.count</code>、<code>vault.auth.method.spiffe.role.count</code> 和 <code>vault.auth.method.scep.role.count</code>，报告所有命名空间和安装中的 Cert 身份验证角色和 CRL、SPIFFE 身份验证角色和 SCEP 身份验证角色的数量，以及报告 SPIFFE 身份验证方法是否已启用的 <code>vault.auth.method.spiffe_enabled</code>。</li>
+<li>核心/普查：添加产品使用指标，报告 Transform 秘密引擎转换、模板、字母表和存储的数量，以及 KMIP 秘密引擎范围、范围角色和 CA。</li>
+<li>core/identity：为别名API添加两个新字段，external_id和issuer。这些字段本身并没有做任何有意义的事情，而是未来功能的一部分。</li>
+<li>core/identity：添加全局 <code>deny_slash_in_templated_path</code> 配置选项，以拒绝策略中呈现的身份模板中存在斜杠，默认为 <code>false</code>。</li>
+<li>核心/托管密钥（企业）：允许 GCP 托管密钥利用工作负载身份联合凭据</li>
+<li>core/managed-keys/PKCS#11（企业）：添加 PKCS#11 后端参数 <code>rsa_oaep_hash</code> 以用于通过 CKM_RSA_PKCS_OAEP 机制进行 RSA-OAEP 加密。</li>
+<li>core/managed-keys/PKCS#11（企业）：为一个字段提供非空值而另一字段已保存将被拒绝。要切换寻址模式，您必须通过在同一请求中将旧字段作为空字符串 ("") 与新值一起发送来显式清除旧字段。</li>
+<li>core/managed-keys/PKCS#11（企业）：slot 和 token_label 现在严格强制作为 HSM 令牌的互斥标识符</li>
+<li>核心/指标：现在通过 <code>vault.route.read-snapshot.{mount_point}</code> 和 <code>vault.route.list-snapshot.{mount_point}</code> 指标跟踪快照的读取和列出。</li>
+<li>core/oauth-resource-server（企业）：读取和列出 <code>sys/config/oauth-resource-server</code> 的响应现在包括一个 <code>mount_accessor</code> 字段，其中包含预组装的合成访问器字符串 (<code>oauth-resource-server_&#x3C;namespace_id>_&#x3C;config_id></code>)。这是为身份和审核输出中配置文件支持的别名报告的访问器，以及用于在模板化策略中选择这些别名的值。</li>
+<li>core/oauth-resource-server（企业）：支持在 OAuth 资源配置中设置备用声明名称，指定在所提供的 JWT 中读取授权详细信息的位置。新选项“authorization_details_claim”默认为“authorization_details”。</li>
+<li>core/oauth-resource-server（企业）：<code>sys/config/oauth-resource-server</code> 的列表响应现在包括按配置文件名称键入的 <code>key_info</code> 映射，每个条目都携带 <code>config_id</code> 和 <code>mount_accessor</code>。列出的配置文件名称现在已排序，并且无法读取详细信息的配置文件会在响应警告中报告。</li>
+<li>core/oauth-resource-server：支持 OAuth 资源服务器配置文件（非复制配置文件）的数据局部性。</li>
+<li>core/seal（企业）：使新节点能够加入配置了 Seal 高可用性的集群。</li>
+<li>core/seal（企业）：更新 Oracle Cloud 库以实现与较新区域的 seal 集成。</li>
+<li>core/seal：增强 sys/seal-backend-status 以提供有关 seal 后端的更多信息。</li>
+<li>核心：添加带有 <code>ui_telemetry</code> 选项的 <code>ui_settings</code> 配置节，通过 <code>sys/internal/ui/settings</code> 端点显示在 UI 上，用于控制匿名 UI 使用遥测。</li>
+<li>core: 在关闭时自动将 goroutine 转储写入临时目录 (SIGTERM/SIGINT)。可以使用 <code>VAULT_STACKTRACE_FILE_PATH</code> 覆盖输出目录，并且可以使用配置字段 <code>disable_goroutine_trace_dump</code> 抑制转储。</li>
+<li>核心：通过严格的路径/功能和参数级控制强制实施 OAuthauthorization_detailsVault:path_access 约束。</li>
+<li>核心：改进预密封期间的 goroutine 终止。</li>
+<li>核心：每 5 秒而不是 10 秒检查轮换管理器队列以提高响应能力</li>
+<li>dockerfile：容器现在默认以保管库用户身份运行</li>
+<li>事件（企业）：添加对租赁事件的事件通知支持。</li>
+<li>events（企业）：将事件通知从主集群转发到辅助集群</li>
+<li>events：添加<code>VAULT_EVENT_NOTIFICATIONS_BOUNDED_QUEUE_SIZE</code>环境变量来为事件通知订阅者配置有界事件队列。设置为正整数（例如 16）以启用该大小（最大 1000）的缓冲通道。这可以防止订阅者数量较多的部署中的资源耗尽，但代价是订阅者可能会错过事件。默认为 0（无缓冲）以实现向后兼容性。</li>
+<li>events/sqs：将 SQS 事件订阅插件从 aws-sdk-go v1 迁移到 aws-sdk-go-v2。</li>
+<li>go：将 golang/x/crypto 更新为 v0.45.0 以解析 GHSA-f6x5-jh6r-wrfv、GHSA-j5w8-q4qc-rx2x、GO-2025-4134 和 GO-2025-4135。</li>
+<li>身份/实体别名：添加了 <code>profile_name</code> 和 <code>config_id</code> 字段作为创建实体别名时解析 OAuth 资源服务器配置文件的快捷方式，而不需要 <code>mount_accessor</code>。解析配置文件还会将别名绑定到该配置文件的颁发者，这是 OAuth 资源服务器身份验证所需要的。这些字段彼此互斥并且与 <code>mount_accessor</code> 互斥。</li>
+<li>身份/scim（企业）：添加 <code>POST identity/scim/client/&#x3C;client-name>/link-entity</code> 端点以在非托管实体上重新建立 SCIM 所有权，恢复托管别名和组成员身份。</li>
+<li>Identity/scim（企业）：添加 <code>POST identity/scim/client/&#x3C;client-name>/link-group</code> 和 <code>POST identity/scim/client/&#x3C;client-name>/unlink-group</code> 管理端点。 <code>link-group</code> 将现有非托管 Vault 身份组的所有权转移到名为 SCIM client；所有当前组成员必须已属于该 client。 <code>unlink-group</code> 从 client 当前拥有的组中删除 SCIM 所有权，将其返回到非托管状态。</li>
+<li>Identity/scim（企业）：添加 <code>POST identity/scim/client/&#x3C;client-name>/unlink-entity</code> 端点以从实体中删除 SCIM 所有权链接而不删除它。</li>
+<li>Identity/scim（企业）：将 <code>allow_user_adoption</code> 字段添加到 SCIM client 配置中。当设置为 <code>true</code> 时，<code>userName</code> 与现有登录别名匹配的 <code>POST /Users</code> 请求将采用预先存在的实体，而不是返回冲突。默认为 <code>false</code>。</li>
+<li>Identity/scim（企业）：在 SCIM 用户和组端点上添加对 <code>attributes</code> 和 <code>excludedAttributes</code> 查询参数的支持，允许调用者根据 RFC 7644 请求响应中属性的子集或排除。</li>
+<li>Identity/scim（企业）：根据 RFC 7644 添加了对 <code>GET /scim/v2/Users</code> 和 <code>GET /scim/v2/Groups</code> 端点的过滤支持。支持的过滤器：用户的 <code>userName eq</code>、<code>externalId eq</code>、<code>active eq</code> 和 <code>meta.lastModified gt/ge/lt/le</code>； <code>displayName eq</code> 和 <code>meta.lastModified gt/ge/lt/le</code> 适用于团体。不受支持的过滤器表达式返回 HTTP 400。<code>ServiceProviderConfig</code> 现在通告 <code>filter.supported: true</code>。</li>
+<li>Identity/scim（企业）：修复组 PATCH 以支持 <code>add</code> 和 <code>replace</code> 操作的 <code>members[value eq "uuid"]</code> 形式的过滤成员路径，匹配 <code>remove</code> 已支持的路径格式。这解决了组推送成员资格更新期间的 Okta 错误（“路径不受支持”）。组所有权不匹配现在返回 403 Forbidden（之前为 404 Not Found）；尝试添加/替换由不同 SCIM client 拥有的成员现在返回 403（之前为 400，具有未找到样式的详细信息）。</li>
+<li>Identity/scim（企业）：通过使用前缀排序而不是单独的排序过程来提高 SCIM 用户和组列表端点性能。</li>
+<li>Identity/scim（企业）：将 <code>unlink_aliases</code> 同意参数重命名为 <code>unlink_secondary_aliases</code>，并将响应负载分为 <code>unlinked_main_alias_id</code> 和 <code>unlinked_secondary_alias_ids</code>。</li>
+<li>Identity/scim（企业）：2.1 用户扩展现在支持 client 管理的 <code>aliases</code> 属性。 SCIM clients 可以推送 <code>POST</code>、<code>PUT</code> 和 <code>PATCH /Users</code> 上的 <code>{mount_accessor, name}</code> 条目数组，以在 <code>alias_mount_accessor</code> 控制的主要别名之外的实体上创建、重命名或删除辅助别名。</li>
+<li>Identity/scim（企业）：更新 scim/v2/Users 上的 PATCH 操作，以允许在同一补丁调用中进行多次修改，除了活动状态之外，还支持对用户元数据和名称进行补丁操作，并允许在补丁操作中指定 <code>path</code> 值</li>
+<li>Identity/scim：支持用户和组的新 SCIM 扩展，但与用户元数据扩展互斥。</li>
+<li>Identity/scim：当用户名与目标挂载上的现有登录别名匹配时，具有 alias_mount_accessor 的 client 的 POST /Users 现在采用预先存在的实体，而不是因冲突而失败。</li>
+<li>Identity/scim：非托管组（无 SCIM 所有者）现在可通过 GET /Groups 和 GET /Groups/<id> 对所有 SCIM clients 可见。不同 client 拥有的组保持隐藏（直接读取为 403）。对于非托管组，成员数组在读取时会被过滤为仅包含请求的 client 拥有的成员。</id></li>
+<li>Identity/scim：<code>externalId</code> 现在在 <code>POST /Users</code> 上是可选的，并且不再要求在命名空间内是唯一的。多个用户可以共享相同的 <code>externalId</code> 值。</li>
+<li>身份/scim：仅在 PUT 或 PATCH SCIM 请求时允许采用非托管 Vault 组。</li>
+<li>身份：在实体列表 key_info 响应中包含实体状态和实体/别名时间戳详细信息。</li>
+<li>jwt/oauth-resource-server：配置文件解析现在遍历命名空间祖先链，允许在父命名空间中注册 OAuth 资源服务器配置配置文件的 JWT 对针对子命名空间中的资源的请求进行身份验证。</li>
+<li>kmip（企业）：添加实验性 API 来执行 KMIP 请求。</li>
+<li>许可证利用率报告（企业）：添加已颁发 PKI 证书数量的指标。</li>
+<li>许可证利用率报告（企业）：利用率报告现在包括新的许可证元数据字段 <code>issuer</code>、<code>edition</code>、<code>add_ons</code>、<code>license_start_time</code>、<code>license_expiration_time</code> 和 <code>license_termination_time</code>。</li>
+<li>许可证利用率报告：添加了消耗计费指标。</li>
+<li>oauth-resource-server：在丰富的授权请求（RAR）中添加对细粒度策略控制选项（参数约束）的支持，包括 <code>authorization_details</code> 中的 <code>allowed_parameters</code>、<code>denied_parameters</code> 和 <code>required_parameters</code>。</li>
+<li>oauth-resource-server：添加对丰富授权请求 (RAR) 中身份模板表达式（例如 <code>{{identity.entity.id}}</code>）的支持。</li>
+<li>oauth-resource-server：改进了当权限被上限策略拒绝时返回的错误正文，以指示上限策略拒绝了请求（<code>CEILING_POLICY_DENIED</code>）。</li>
+<li>pki：在 ACME HTTP-01 和 TLS-ALPN-01 质询验证期间拒绝明显不安全的验证目标</li>
+<li>策略：添加使用 allowed_parameters 或 Denied_parameters 时有关列表比较的警告</li>
+<li>产品使用情况报告（企业）：添加 <code>vault.secure_hub_connected</code> Census 产品使用情况指标以报告集群是否连接到 Secure Hub。</li>
+<li>轮换：确保共享路径的轮换仅在主集群的活动节点上执行。确保本地路径的轮换在集群本地活动节点上执行。</li>
+<li>scim：SCIM Group PATCH 处理程序现在支持删除操作中的members[value eq “id”] 形式的路径字段。</li>
+<li>scim：用户资源现在包含一个只读 <code>groups</code> 字段，根据 RFC 7643，列出由请求 SCIM client 管理的直接组成员身份。</li>
+<li>sdk/helper/keysutil：锁定管理器的 GetPolicy 函数现在始终返回锁定的策略，即使启用了缓存也是如此。 PolicyRequest 结构有一个新字段来指示调用者是否需要策略上的写锁。</li>
+<li>sdk/rotation：防止在只读存储上进行旋转尝试</li>
+<li>sdk：添加 NewTestDockerCluster 支持，以便在与服务器相同的容器中运行外部插件。  还添加对这些插件的支持以公开它们自己的侦听器，就像 KMIP 所做的那样。</li>
+<li>sdk：将 alias_metadata 添加到身份验证方法角色使用的 tokenutil 字段。</li>
+<li>sdk：扩展对 docker 测试集群选项（如密封、kms 库和熵增强）的支持。 DockerClusterNode.UpdateConfig 现在采用全套集群选项，而不仅仅是节点配置。</li>
+<li>sdk：添加 WIF 和旋转助手来检查参数是否已更新，以允许消费者知道何时需要将更改保存到存储中</li>
+<li>秘密同步（企业）：添加了用于协调循环操作的遥测计数器，包括检测到的更正次数、重试尝试和操作结果（带有内部/外部原因标签的成功或失败）。</li>
+<li>秘密同步（企业）：添加了用于同步/不同步操作的遥测计数器，其中按目标类型划分状态细分，并在目标列表 API 响应中公开操作计数器。</li>
+<li>秘密同步：为秘密密钥粒度关联的同步和不同步操作添加并行化支持</li>
+<li>秘密导入：在 <code>source_aws</code> 和 <code>source_azure</code> 配置块中添加对 <code>allowed_ipv4_cidrs</code> 的支持，以允许连接到明确允许的私有 IPv4 范围。</li>
+<li>Secrets-pki（企业）：将解析格式的响应数据添加到注册协议的审核日志中。</li>
+<li>Secrets-sync（企业）：添加了对布尔force_delete标志的支持（默认值：false）。当设置为 true 时，此标志允许删除目标，即使其关联无法取消同步。此选项仅应用作最后手段的删除机制，因为任何已同步到外部提供程序的机密都将保持孤立状态并需要手动清理。</li>
+<li>机密同步（企业）：通过在删除或禁用机密引擎安装时触发外部机密的立即取消同步，改进了安装生命周期更改期间的用户体验。通过将此逻辑从后台协调循环移动到直接回调，系统可以防止感知到的“泄漏”，并确保外部秘密资源与 Vault 卸载同步清理。</li>
+<li>机密同步：在 AWS 目标的机密同步流中添加对客户控制（CSP 托管）加密的支持。</li>
+<li>Secrets/aws：为 aws 秘密引擎端点添加了缺少的 OpenAPI 元数据</li>
+<li>Secrets/aws：将 AWS client 从 aws-sdk-go v1 迁移到 aws-sdk-go-v2。</li>
+<li>秘密/数据库：使用密钥对凭证为 Snowflake 数据库秘密引擎添加根轮换支持。</li>
+<li>Secrets/keymgmt（企业）：添加对多区域 AWS KMS 密钥的支持。</li>
+<li>Secrets/kmip（企业）：转发 kmip 请求时遵守配置的 best_effort_wal_wait_duration。</li>
+<li>Secrets/kv（企业）：支持从加载的快照中读取和恢复 KVv2 机密，包括同一安装和命名空间内的就地恢复和从路径复制。</li>
+<li>Secrets/ldap：用户现在可以完全管理和调整 LDAP 机密引擎。这包括查看、编辑和配置 LDAP 引擎的能力。</li>
+<li>Secrets/pki（企业）：允许 SCEP 使用由基于 RSA 的 PKCS#11 托管密钥支持的颁发者</li>
+<li>Secrets/pki（企业）：返回 SCEP GetCACaps 端点内的 POSTPKIOperation 功能，以获得更好的旧版 client 支持。</li>
+<li>Secrets/pki（企业）：以通用标准模式验证整个链；添加字段以启用验证时间检查</li>
+<li>Secrets/pki（企业）：当启用 common_criteria_mode 功能标志时，NotBefore 将始终被视为零。</li>
+<li>Secrets/pki（企业）：启用 common_criteria_mode 功能标志后，在 PKI 角色更新期间，根据 RFC 5280 第 4.2.1.12 部分，为每个 ext 密钥使用集强制执行最小密钥使用集。</li>
+<li>Secrets/pki：添加 ACME 配置字段challenge_permissed_ip_ranges 和challenge_excluded_ip_ranges 配置来控制允许或禁止哪些IP 地​​址进行质询验证。</li>
+<li>Secrets/pki：将最新的 CRL 扩展（Delta CRL 分发点）添加到基本 CRL 中</li>
+<li>Secrets/pki：将 <code>extra_subject_names_oids</code> 字段添加到角色以允许指定其他 OID 主题名称组件。</li>
+<li>Secrets/pki：避免每次叶证书签名多次加载颁发者信息</li>
+<li>Secrets/pki：在颁发、签名或获取证书的 API 端点的响应字段中包含证书的 AuthorityKeyID。</li>
+<li>Secrets/pki：OCSP 在审核日志响应条目的新 <code>supplemental_audit_data</code> 部分中填充响应的详细信息。默认情况下，诸如 Issuer_id、next_update、ocsp_status、serial_number、revoked_at 之类的详细信息将显示为 hmac 值，除非添加到安装的 <code>audit-non-hmac-response-keys</code> 键集。</li>
+<li>Secrets/pki：添加一个附加字段以包含 (/pki/revoke) 和 (/pki/revoke-with-key) 的 RFC 5280 撤销原因。</li>
+<li>Secrets/pki：在通用标准模式下，不允许上传没有 trust 链的证书。</li>
+<li>Secrets/transit（企业）：实现 OAEP/PKCS1v15 填充支持以对托管密钥进行加密/解密操作。</li>
+<li>Secrets/transit，核心：提高通过随机字节 API 可检索的随机字节的限制。  并添加选项以获取由随机源播种的 PRNG 随机字节。请注意，大量字节的请求将相应增加 Vault 内存使用量。</li>
+<li>Secrets/transit：在 RSA 密钥的加密/解密操作中添加 hash_algorithm 参数。</li>
+<li>Secrets/transit：更改为使用 Trail of Bits 库在 Transit 中实现 PQC 签名</li>
+<li>秘密/传输：改进非 PKCS#8 密钥的导入错误，以明确要求 PKCS#8。</li>
+<li>storage/dynamodb：将 DynamoDB 存储后端从 aws-sdk-go v1 迁移到 aws-sdk-go-v2。</li>
+<li>storage/s3：将 S3 物理存储后端和自动快照测试从 AWS SDK v1 迁移到 AWS SDK v2。</li>
+<li>sys（企业）：添加 sys/billing/certificates API 端点以检索已颁发的 PKI 证书的数量。</li>
+<li>token：添加调试日志记录以实现外部服务器端一致的令牌处理</li>
+<li>中转（企业）：将上下文参数添加到数据密钥和派生密钥端点，以允许 DEK 的派生密钥加密。</li>
+<li>运输（企业）：现在支持所有托管密钥的加密/解密
+支持托管密钥后端。</li>
+<li>ui（企业）：将入门清单小部件添加到仪表板，指导新操作员完成初始 Vault 设置步骤，并提供进度跟踪和步骤级完成状态。</li>
+<li>ui（企业）：代理注册表导航项现在根据许可证模块的存在而隐藏。</li>
+<li>ui（企业）：在 Client 使用概述和 Vault 使用仪表板中将图表从线性图表迁移到碳图表。</li>
+<li>ui/activity（企业）：添加澄清文本以解释“初始使用”列将仅具有升级到版本 1.21 后最初使用的 clients 的时间戳</li>
+<li>ui/activity（企业）：如果检索许可证开始时间出现问题，允许手动查询 client 使用情况。</li>
+<li>ui/activity（企业）：通过仅在仪表板最初加载或手动刷新时获取新数据，减少对活动导出 API 的请求。</li>
+<li>ui/activity（企业）：支持按 ISO 时间戳或显示值过滤月份下拉列表。</li>
+<li>ui/activity：显示 HCP 托管集群的总计而不是新的每月 clients</li>
+<li>ui/dashboard：重新组织仪表板小部件以改进布局和可用性。更新了小部件以使用 HDS 表组件以获得更好的一致性。通过常用链接和现有操作增强了快速操作卡。</li>
+<li>ui/pki：添加了对配置 <code>server_flag</code>、<code>client_flag</code>、<code>code_signing_flag</code> 和 <code>email_protection_flag</code> 参数以创建/更新角色的支持。</li>
+<li>ui/secrets-sync：通过在键入的角色名称前添加“static-roles/”前缀并将同步角色链接到其正确的安装路径，改进同步数据库静态角色。</li>
+<li>ui/secrets-sync：从 Secrets 同步页面标题中删除空字幕和面包屑元素。</li>
+<li>ui：将“关于此引擎”部分添加到 KV、AWS、Azure、GCP 和数据库引擎的机密引擎安装表单中。</li>
+<li>ui：将“配置路径”和“配置元数据路径”字段添加到 KV v2 秘密路径页面，显示不带 /v1/ 前缀的路径，以便在策略、Vault 代理配置和引用逻辑路径的其他工具中使用。</li>
+<li>ui：在左侧导航侧边栏和帮助菜单下拉列表中添加“提交反馈”按钮，以在新选项卡中打开反馈调查。适用于社区、企业和 HVD。</li>
+<li>ui：将只读 YAML 视图选项添加到 KV v2 秘密详细信息页面，以及现有的 UI 和 JSON 视图。</li>
+<li>ui：添加选择加入浏览器遥测事件，当启用 UI 遥测且用户同意时，将事件发送到 Segment。涵盖命名空间向导、资源创建（秘密引擎、身份验证方法和策略）、仪表板快速操作、秘密引擎小部件和介绍页面。</li>
+<li>ui：添加对从快照读取和恢复 KV v2 机密的支持。从快照读取时添加 YAML 视图格式选项。</li>
+<li>ui：添加对自我管理的LDAP静态角色的支持，包括在创建和编辑页面设置帐户密码以及从角色详细信息页面查看。</li>
+<li>ui：添加测试覆盖率，断言自动化片段在编辑现有 ACL 策略时保持可见</li>
+<li>ui: 添加了 Page::Tabs 组件并将所有 Hds::Tabs 用法迁移到其中</li>
+<li>ui：添加实体的入门介绍，为用户提供功能上下文。</li>
+<li>ui：添加群组入门介绍，为用户提供功能上下文。</li>
+<li>ui：添加 OIDC 提供商的入门介绍，为用户提供功能上下文。</li>
+<li>ui：在未保存的更改模式中 clicking 保存或放弃后，用户现在将导航到预期的目标链接。</li>
+<li>ui：当用户接受同意横幅时，现在会缓存并应用分析身份，确保即使在集群路由加载后授予同意时也能正确识别会话。</li>
+<li>ui：将 <code>@hashicorp/design-system-components</code> 从 4.24.1 升级到 5.2.0 并迁移已弃用的侧导航 SCSS 令牌。</li>
+<li>ui：将 <code>dompurify</code> 从 <code>3.4.6</code> 更改为 <code>3.4.13</code>。</li>
+<li>ui：将 dompurify 更改为 3.4.15 以解决 SECVULN 警告</li>
+<li>ui：将 js-yaml 从 5.2.1 提升到 5.4.1</li>
+<li>ui：将 <code>tmp</code> 的条目从 0.2.6 更改为 0.2.7。</li>
+<li>ui：将 <code>ws</code> 的条目从 8.20.1 更改为 8.21.0。</li>
+<li>ui：将 shell 引用从 1.8.4 更改为 1.9.0。</li>
+<li>ui：取消 LDAP 角色或库编辑现在返回到其详细信息页面而不是列表。</li>
+<li>ui：仪表板功能聚光灯小部件现在循环显示多个“新增内容”卡，并具有随机开始位置和后退/下一页分页。</li>
+<li>ui：在整个应用程序中一致地显示错误，并在可用时显示 API 消息。</li>
+<li>ui：为生产中的自我管理 Vault 集群启用分段分析</li>
+<li>ui：使用雪花数据库机密引擎生成凭据时，在 UI 中公开 RSA 私钥字段。此前，该字段仅在 cli 中显示。</li>
+<li>ui：向组或实体添加策略时增加列表项宽度以显示更长的名称并添加用于显示完整标签的工具提示。</li>
+<li>ui：将ExternalLink 组件迁移到HDS 链接。</li>
+<li>ui：在事件有效负载中传递角色，并在未设置角色时发出“未知”。</li>
+<li>ui：优化分段分析提供程序以使用集群 ID 作为实例 ID，省略社区集群的订阅 ID。添加事件跟踪并修剪未使用的事件属性。</li>
+<li>ui：删除 2022 年 Storybook 删除中遗留的未使用的 Vercel Storybook 工件（<code>vercel.json</code>、<code>metadata.json</code>）</li>
+<li>ui：将用户首选项路由、组件和静态资产重命名为首选项以保持一致性</li>
+<li>ui：用 Segment 替换 PostHog，作为 HVD 集群的唯一遥测提供程序，并在 Segment 分析特征中区分 HVD 与自我管理部署。</li>
+<li>ui：将复制机密下拉列表中的旧下拉列表组件替换为 HDS 下拉列表。</li>
+<li>ui：将 PKI 颁发者页面中的旧式下拉组件替换为 HDS 下拉组件。</li>
+<li>ui：加载命名空间创建向导的第 3 步时滚动到页面顶部</li>
+<li>ui：秘密引擎删除确认模式现在需要输入 <code>delete-engine</code> 进行确认，显示引擎名称、秘密计数（仅限 KV 引擎）以及将永久删除的内容的列表。 ConfirmModal 现已更新，包含可选的确认类型。</li>
+<li>ui：将自定义消息列表视图的分页大小设置为 10，并根据筛选器选择切换“应用筛选器”按钮的可见性。</li>
+<li>ui：当用户在策略弹出窗口中创建没有任何功能的策略时显示警告。</li>
+<li>ui：在 UI 遥测同意横幅中提供 UI 遥测事件文档的链接</li>
+<li>ui：当用户更改其配色方案偏好时跟踪分析事件</li>
+<li>ui：更新 ACL/EGP/RGP 策略、身份组、组别名、命名空间和机密引擎列表视图。</li>
+<li>ui：使用新的表格组件和弹出详细信息面板更新身份实体列表页面。</li>
+<li>ui：更新 KV 版本下拉列表以使用 HDS 组件。</li>
+<li>ui：更新自动完成输入下拉列表以使用 HDS 下拉组件。</li>
+<li>ui：更新用户首选项页面上的副本和样式</li>
+<li>ui：更新合并实体页面上的副本，以指定实体 ID 是合并实体时所需的数据输入。</li>
+<li>ui：更新侧导航设计并添加顶部导航栏。</li>
+<li>ui：更新了页面容器对齐和最大宽度以减少大视口中的空白</li>
+<li>ui：将HashiCorp设计系统（HDS）升级到6.5.0，并将设计代币升级到5.1.0。</li>
+<li>ui：升级路径分析器默认选择最新的可用版本，并在用户已是最新版本时显示状态消息。</li>
+<li>ui：升级路径分析器出现 API 错误</li>
+<li>ui：用户首选项页面现在包含“您的角色”角色选择器，以便用户可以将自己标识为开发人员、平台工程师/Vault 管理员、安全分析师或其他。</li>
+<li>ui：用户首选项页面不再显示 HVD 管理的集群的数据和隐私（遥测）部分，其中段切换不适用。</li>
+<li>ui：<code>unsafe-inline</code> 不再包含在 <code>style-src</code> CSP 指令中。</li>
+<li>ui：向 ACL 可视化策略编辑器添加验证，以防止其保存具有空路径或功能的策略。</li>
+<li>ui：允许侧导航栏可折叠</li>
+<li>各种：用 jellydator/ttlcache 替换 patrickmn/go-cache 的使用，以更好地控制处理项目过期的看门人 goroutine。
+*Vault/acl_util_entVault/policy_util_entVault/Logical_system_helpers_ent：将 github.com/hashicorp/sentinel 从 v0.26.3 更新到最新版本，以从 aws-sdk-go v1 迁移到 aws-sdk-go-v2。
+*Vault/managed_key：将 AWS client 从 aws-sdk-go v1 迁移到 aws-sdk-go-v2。
+错误修复：</li>
+<li>代理/代理：修复了身份验证方法标头在重新身份验证周期中累积在共享 API client 上的错误。</li>
+<li>代理：修复了 Vault 令牌标头在静态秘密缓存更新程序中通过 WebSocket 重新连接累积重复值的错误。</li>
+<li>Secrets Recovery（企业）：对于对 <code>sys/storage/raft/snapshot-load</code> 的列表请求或对 <code>sys/storage/raft/snapshot-load/{id}</code> 的读取/删除请求，不要重定向到主动节点。如果可能，请在性能备用节点上处理这些请求，否则将请求转发到活动节点。</li>
+<li>Secrets Recovery（企业）：修复在没有路径的情况下运行 <code>vault recover</code> 时 cli 中的 Vault 恐慌。</li>
+<li>Activity（企业）：sys/internal/counters/activity 从非根命名空间调用时输出正确的安装类型</li>
+<li>agent/gcp：当未显式配置 <code>service_account</code> 时，从 <code>GOOGLE_APPLICATION_CREDENTIALS</code> 派生服务帐户，而不是硬编码 <code>"default"</code>，使用非默认服务帐户修复 Cloud Run 和 GCE 上的 <code>Error 400: Invalid form of account ID</code></li>
+<li>agent/pki-external-ca：修复了从 Vault PKI API 响应中提取 CA 链的问题，其中由于数组响应的类型处理不正确，<code>ca_chain</code> 字段在模板中始终为空</li>
+<li>agent/pkiexternalca：修复 PKI 系统的令牌分发和 HTTP-01 质询服务器关闭，以防止证书获取和重试</li>
+<li>代理：修复 Vault 代理在出现暂时性服务器错误时丢弃缓存的令牌而不是重试的问题</li>
+<li>代理：修复了配置 <code>pki_external_ca</code> 时 <code>AuthHandler.Run</code> 中的永久死锁，其中令牌通道发送可能在重新身份验证后无限期阻塞，以静默方式停止所有证书更新和模板渲染。</li>
+<li>api：在计算租约的剩余生命周期时考虑 HTTP Age 标头，以便通过缓存代理（例如 Vault Agent）读取或续订的租约在到期之前续订。</li>
+<li>审计/文件：阻止在审计设备上设置可执行位的逻辑是在解封时强制执行的，而不仅仅是在创建新审计设备时强制执行的，如果现有审计设备具有执行权限，则会在解封时导致错误。  该逻辑现在发出警告并清除执行位以防止开封错误。</li>
+<li>审核：修复了 CVE-2025-6000 的回归，该回归在配置插件目录时破坏了在 Windows 上启用审核设备。</li>
+<li>审计：使文件和套接字审计接收器序列化上下文感知，因此取消或过期的请求将停止在阻塞的审计写入后面等待，从而减少审计接收器争用期间的 goroutine、内存、连接和文件描述符的累积</li>
+<li>auth/approle（企业）：修复了阻止在性能辅助上定期整洁运行的错误</li>
+<li>auth/approle（企业）：角色参数 <code>alias_metadata</code> 现在填充别名自定义元数据字段而不是别名元数据。</li>
+<li>auth/approle：修复使用 /128 块作为角色和秘密 ID 时的 <code>token_bound_cidrs</code> 验证</li>
+<li>auth/aws（企业）：角色参数 <code>alias_metadata</code> 现在填充别名自定义元数据字段而不是别名元数据。</li>
+<li>auth/aws：修复了一些未使用角色缓存的情况，而是我们直接访问存储。</li>
+<li>auth/aws：修复旋转和 Wif 配置更新未持久保存到存储的错误</li>
+<li>auth/cert（企业）：角色参数 <code>alias_metadata</code> 现在填充别名自定义元数据字段而不是别名元数据。</li>
+<li>auth/cert：添加对来自 AWS ALB 的 x 转发的证书标头的支持。</li>
+<li>auth/gcp：修复工作负载身份联合 (WIF) 身份验证的间歇性上下文取消失败</li>
+<li>auth/github（企业）：角色参数 <code>alias_metadata</code> 现在填充别名自定义元数据字段而不是别名元数据。</li>
+<li>auth/jwt：修复三个关键的 OAuth/RAR 问题：authorization_details 未记录在审核日志的 auth 部分中、RAR 强制逻辑错误地要求配置文件和注册都存在，以及 OAuth 受保护资源元数据中的 rar_types_metadata_endpoint 路径</li>
+<li>auth/jwt：修复了代理上限策略评估期间返回的不正确的 HTTP 状态代码。</li>
+<li>auth/jwt：仅从 JOSE 标头验证 JWT <code>typ</code>，因此 JWT 验证会忽略 JWT 有效负载中出现的特定标头声明（如 <code>typ</code>）。</li>
+<li>auth/ldap（企业）：角色参数 <code>alias_metadata</code> 现在填充别名自定义元数据字段而不是别名元数据。</li>
+<li>auth/okta（企业）：角色参数 <code>alias_metadata</code> 现在填充别名自定义元数据字段而不是别名元数据。</li>
+<li>auth/radius（企业）：角色参数 <code>alias_metadata</code> 现在填充别名自定义元数据字段而不是别名元数据。</li>
+<li>auth/scep（企业）：角色参数 <code>alias_metadata</code> 现在填充别名自定义元数据字段而不是别名元数据。</li>
+<li>auth/spiffe（企业）：验证证书时使用完整的对等证书链。</li>
+<li>auth/spiffe：解决使用先前包含的重叠的工作负载_id_模式值更新角色的问题。</li>
+<li>auth/token：修复 JWT 撤销后跳过 PR 辅助集群上的本地令牌状态清理的错误</li>
+<li>auth/token：修复了 <code>auth/token/lookup</code> 和 <code>auth/token/lookup-self</code> 在非根命名空间中为 JWT 令牌返回 403 的错误。</li>
+<li>auth/token：防止性能辅助节点写入 OAuth JWT 拒绝列表。</li>
+<li>auth/tpm：修复别名查找和解析角色操作的损坏实现。</li>
+<li>auth/tpm：改进登录操作期间的锁定。  使用无效角色进行登录更新时返回权限被拒绝。  修复登录端点上不一致的案例处理。</li>
+<li>auth/tpm：对存储中的 CA 使用 sealwrap。</li>
+<li>auth/userpass（企业）：角色参数 <code>alias_metadata</code> 现在填充别名自定义元数据字段而不是别名元数据。</li>
+<li>auth：修复了续订时提供整数作为 Lease_id 时出现的恐慌。</li>
+<li>aws/auth：从 AWS auth 错误消息中编辑 EC2 实例元数据值。</li>
+<li>cli/login：修复使用 /dev/tpm0 等原始 tpm 设备时 <code>vault login -method=tpm</code> 中的句柄泄漏。</li>
+<li>client/ocsp：添加宽限期以更新 OCSP 响应的缓存条目。</li>
+<li>消费计费：修复了 OIDC 身份令牌计费单位在定期刷新周期中计算不正确的问题。计费标量现在应用每个令牌持续时间调整，因此报告的标量和每个安装的归因细分始终一致。</li>
+<li>消费计费：修复来自性能备用节点的 PKI、SSH 和 SSH OTP 证书计费单元未转发到活动节点进行存储，导致备用节点上的计费事件丢失的错误。</li>
+<li>消费计费：修复来自性能备用节点的 SPIFFE JWT 令牌计费单元未转发到活动节点进行存储，导致备用节点上的计费事件丢失的错误。</li>
+<li>消费计费：修复了无法从存储中读回 SSH 持续时间调整证书计数和以“4”开头的十进制表示形式的 OTP 计数的错误，导致 <code>sys/billing/overview</code> 返回 500 错误，并显示“lz4：错误的幻数”。存储编码现在使用与其他计费指标一致的纯十进制字符串，避免误识别为 lz4 压缩数据。</li>
+<li>消费计费：修复了来自性能备用节点的 OIDC 令牌持续时间计数未转发到活动节点进行存储，导致备用节点上的计费事件丢失的错误。</li>
+<li>消费计费：通过避免在挂载和插件枚举期间获取嵌套锁，修复了 KMIP 和挂载扫描计费路径中的死锁。</li>
+<li>消费计费：修复了用例计费中的 LDAP 和 OpenLDAP 动态和静态角色计数，以使用专用计数端点（角色计数、静态角色计数），而不是基于 LIST 的计数，后者低估了角色。
+*消费计费：修复了在检索的计数中反序列化换行符导致恐慌的错误。现在从检索到的计数中去除前导和尾随空格。</li>
+<li>核心（企业）：修复 32 位平台上复制代码中未对齐的原子恐慌。</li>
+<li>核心（企业）：避免重复的密封重新包装，并确保集群辅助节点在密封迁移后重新包装。</li>
+<li>核心（企业）：在二进制路径上缓冲 POST 正文，以允许在非逻辑转发尝试时重新读取。解决了 SCEP、EST 和 CMPv2 证书颁发与实体复制速度缓慢的问题</li>
+<li>核心（企业）：修复导致不必要的密封重新包装的错误。
+*核心（企业）：修复密封/解封期间的数据争用和潜在的恐慌
+*核心（企业）：修复密封/解封期间的数据争用和潜在的恐慌</li>
+<li>核心（企业）：修复密封 HSM 断开连接时崩溃的问题</li>
+<li>核心（企业）：修复在性能辅助节点上读取 KVv2 元数据期间，当 <code>router.Route</code> 返回 nil 响应且没有错误时 <code>collectOperatorImportMetrics</code> 中的恐慌。这种情况发生在初始连接的 WAL 流部分同步阶段。</li>
+<li>核心（企业）：当控制组解开重播返回包装响应的批准请求时，保留包装元数据。</li>
+<li>核心（企业）：更新在性能辅助集群上使用时服务器端一致令牌（SSCT）的状态检查。对于向辅助活动节点发出无效的跨集群令牌请求，403 响应代码将优先于 412。</li>
+<li>core/activitylog（企业）：通过在策略更改时安全处理暂时缺失的策略和零策略路径/权限数据，修复 CensusReport ACL 策略指标收集中的恐慌。</li>
+<li>core/activitylog（企业）：解决了 Vault Enterprise 在月末计费活动延期期间可能遇到恐慌的稳定性问题。</li>
+<li>core/identity（企业）：修复更新现有别名时过多的日志记录</li>
+<li>核心/登录：修复格式错误的登录请求引起的恐慌。 Vault 现在会针对格式错误的登录有效负载返回错误，而不是删除 client 连接（不会丢失数据）。</li>
+<li>核心/托管密钥（企业）：允许 PKCS#11 托管密钥中的槽编号超过 32 位。</li>
+<li>core/managed-keys（企业）：修复了导致 PKCS#11 托管密钥的 max_parallel 字段无法更新的错误。</li>
+<li>core/managed-keys（企业）：修复了阻止设置“mac”和“generate_random”密钥用法的问题。</li>
+<li>核心/托管密钥（企业）：在托管密钥中使用 Azure 托管标识时，不需要 client 凭据。</li>
+<li>核心/指标：修复了 log_format = “json” 对 statsd 和 statsite 后端的遥测接收器错误没有影响的错误。</li>
+<li>core/mounts：修复了当目标路径具有前导斜杠时 <code>vault secrets move</code>（和 <code>vault auth move</code>）错误地将安装放置在根命名空间中的问题。</li>
+<li>core/rotation：通过忽略 cron.SpecSchedule 避免改变时区</li>
+<li>core/rotationMgr：修复命名空间中本地挂载的存储路由，以防止元数据复制并确保 GDPR 合规性。</li>
+<li>core/seal：修复了加密和解密函数超时时发生的 goroutine 泄漏。</li>
+<li>核心/快照：修复了单项快照恢复操作期间的问题，其中在身份验证之前检查快照锁，导致某些失败的请求未被审核。</li>
+<li>core/wrapping：sys/wrapping/wrap 现在强制执行 uuid 格式的包装令牌，忽略任何调用者请求的包装格式。</li>
+<li>核心：修复迁移到raft集成存储时的<code>vault operator migrate -start</code>命令。</li>
+<li>核心：修复了用于清理 MFA 响应身份验证队列的后台线程在 PR 和 DR 辅助节点上运行的错误。</li>
+<li>核心：修复totp密钥存储写入期间无法检测错误的问题。</li>
+<li>核心：将包含重复斜杠的 API 请求重定向到其规范路径时保留 URL 查询参数。以前，重定向会删除 <code>?list=true</code> 等参数，这可能会更改请求的结果。</li>
+<li>核心：当调用 <code>sys/metrics</code> 时，备用集群现在会填充 <code>cluster:</code> 字段。
+*核心：将所有新的轮换管理器rotation_schedules解释为UTC以避免无意中使用tz-local</li>
+<li>核心：vault kv put/get 现在可与外部 OAuth 令牌配合使用。</li>
+<li>cubbyhole：修复 cubbyhole 在非根命名空间中写入 JWT 令牌的问题</li>
+<li>数据库/mssql：通过用粒度元数据查询替换未记录的 <code>sp_msloginmappings</code> 过程，修复租约撤销期间的“sysadmin”要求。这允许插件使用 <code>VIEW ANY DEFINITION</code> 而不是完整的 <code>sysadmin</code> 权限。</li>
+<li>数据库/mssql：通过将自定义语句作为单个批次执行而不是按分号分割来修复动态秘密撤销</li>
+<li>数据库/雪花：修复密钥对根凭证轮换的 WAL 回滚问题。</li>
+<li>数据库：通过在 UpdateUser 和 Initialize 周围添加超时，防止静态角色轮换和连接 init 在数据库调用阻塞时无限期挂起</li>
+<li>default-auth：修复在默认身份验证 UI 中显式指定“root”时的问题</li>
+<li>默认身份验证：修复了旧版默认身份验证配置的问题，该配置在升级到较新版本的 Vault 时可能会损坏。</li>
+<li>事件（企业）：修复了活动节点重新启动或发生更改事件（密封/解封等）后事件停止转发到性能辅助节点的错误。</li>
+<li>事件（企业）：修复当多个事件 client 指定相同的命名空间和事件类型过滤器且其中一个 client 断开连接时丢失的事件。
+*事件（企业）：修复复制租约事件时的恐慌。
+*导出API：将活动导出API中的end_time参数规范化为月底，以匹配文档中所述的行为。</li>
+<li>go-plugin：升级go-plugin以修复生成外部插件时文件描述符可能泄漏的错误</li>
+<li>http: 跳过集群侦听器上的 JSON 限制解析</li>
+<li>身份/实体别名（企业）：当显式 <code>mount_accessor</code> 命名 OAuth 资源服务器配置文件（其颁发者与提供的 <code>issuer</code> 不同）时，拒绝创建别名。这样的别名以前毫无怨言地被存储，然后绑定它指定的颁发者而不是访问者指向的配置文件。已经存储的具有该矛盾的别名继续有效，并且不会重新验证，但重新向 <code>identity/entity-alias</code> 提交别名现在被拒绝；改为通过<code>identity/entity-alias/id/{id}</code>更新，不受影响。</li>
+<li>身份/实体：修复了实体合并期间 <code>from_entity</code> 的实体别名未正确删除的问题。</li>
+<li>Identity/scim（企业）：修复组响应，以便根据 client 的默认架构版本或显式请求的架构返回 2.1 扩展架构。</li>
+<li>Identity/scim（企业）：修复 SCIM <code>meta.location</code> 和 <code>Location</code> 响应标头返回内部集群地址，而不是 client 使用的地址。位置 URL 现在从传入请求的 <code>Host</code> 标头派生，确保在通过负载均衡器或反向代理（例如 HVD）访问 Vault 时获得正确的值。</li>
+<li>身份：当 JWT/OIDC 登录令牌在组声明中携带重复的组名称条目时，修复外部组中重复的 member_entity_ids 条目。</li>
+<li>身份：修复了在重身份验证负载下 Vault 可能消耗比预期更多内存的问题。</li>
+<li>身份：修复了通过性能复制辅助集群合并实体使源实体在主集群上留下幽灵的问题。</li>
+<li>身份：修复了在命名空间上下文中使用合成挂载访问器时实体别名创建失败并出现“挂载访问器命名空间与请求命名空间不匹配”的问题</li>
+<li>身份：在 ACL 评估之前将组和实体名称路径标准化为小写，以防止通过大小写变化绕过拒绝策略</li>
+<li>身份：修复重复和/或悬空实体别名的完整性。</li>
+<li>身份：修复了罕见但可能的身份数据竞争问题。</li>
+<li>身份：处理创建/更新没有 external_id 或颁发者的别名</li>
+<li>jwt/oauth-resource-server：令牌功能检查现在支持 OAuth JWT 并根据令牌允许的访问返回权限。</li>
+<li>kmip（企业）：修复了阻止旧 CA 在指定侦听器上工作的错误。</li>
+<li>kmip（企业）：修复了一个错误，该错误可能会导致创建密钥对操作出现恐慌，因为该操作未指定私钥或公钥的属性。</li>
+<li>ldap auth（企业）：通过实施 UTF-16LE 编码和特定于架构的处理来修复 Active Directory 的根密码轮换。添加新的“schema”配置字段（默认为“openldap”以实现向后兼容性）。</li>
+<li>日志记录：修复了当设置为“关闭”或从配置文件中删除时，在 SIGHUP 重新加载时不遵守 <code>log_requests_level</code> 配置的问题。</li>
+<li>oauth-resource-server（企业）：修复了当令牌的 <code>iss</code> 声明与资源服务器配置文件中存储的发行者相比存在外观差异（例如不同的大小写或尾部斜杠）时，RAR 强制执行被跳过的问题。</li>
+<li>oauth-resource-server（企业）：修复当主题没有代理注册时委派 (OBO) 工作流程错误地忽略 <code>optional_authorization_details</code> 的问题，导致这些请求中不强制使用 RAR。</li>
+<li>oauth-resource-server（企业）：当授权详细信息可选时，OAuth 资源服务器授权现在将空 <code>authorization_details</code> 数组视为缺失声明。以前，包含空数组的令牌会被 <code>RAR_NO_MATCH</code> 拒绝，而不是继续通过正常的身份和策略授权。</li>
+<li>oauth-resource-server（企业）：修复 <code>vault:path_access</code> 授权详细信息，拒绝非根命名空间中使用 <code>RAR_NO_MATCH</code> 的允许请求，并将 <code>*</code> 和 <code>+</code> 通配符视为文字字符。现在，路径像验证令牌的 OAuth 资源服务器配置文件的命名空间中的 ACL 策略路径一样进行匹配，包括在子命名空间中使用令牌时。</li>
+<li>插件（企业）：修复了对修改存储的外部插件的请求未填充 X-Vault-Index 响应标头的错误。
+*plugins/database/hana：通过在 ALTER USER 和 DROP USER 语句之前安全地引用用户名作为 SQL 标识符，修复了默认删除用户撤销路径中的 SQL 注入风险。
+*plugins/database/redshift：通过在调用terminateloop(…)时安全地将用户名引用为SQL字符串文字，修复了默认DeleteUser撤销路径中的SQL注入风险，防止语句结构操纵。</li>
+<li>插件：修复在根命名空间中运行时 <code>vault plugin reload -mounts</code> 命令的问题</li>
+<li>插件：修复注册插件时因 pgp 密钥过期导致插件签名验证失败的问题。</li>
+<li>插件：修复插件 sdk 中的回归，其中外部插件在执行存储写入/删除时可能会出现恐慌。</li>
+<li>插件：在不指定 <code>-version</code> 的情况下读取仅限版本的插件现在会在仅存在一个版本时自动选择它，或者返回列出可用版本的错误，而不是静默的 404。</li>
+<li>代理/缓存（企业）：修复了静态秘密缓存中的一个错误，其中带有 <code>?list=true</code> 的 <code>GET</code> 请求被错误地缓存并且服务过时。</li>
+<li>配额：Vault 现在可以保护具有 ResolveRole 操作的插件免遭恐慌
+关于配额创建。</li>
+<li>复制（企业）：允许操作员使用 DR 操作令牌管理 DR 辅助节点上的自动快照配置。</li>
+<li>复制（企业）：修复启用具有 Consul 存储的辅助节点时由于竞争而导致的罕见恐慌。</li>
+<li>轮换：修复了一个错误，如果对本地挂载进行写入，性能辅助设备会出现紧急情况</li>
+<li>sdk/ldaputil：修复嵌入文字 <code>{{err}}</code> 占位符和 <code>%!(EXTRA ...)</code> 标记的格式错误的错误消息，并包装底层错误，以便 <code>errors.Is</code>/<code>errors.As</code> 工作。</li>
+<li>sdk/旋转：后续调用将不再允许同时设置 <code>rotation_period</code> 和 <code>rotation_schedule</code> 字段。 SDK 现在明确清空对方字段以保证互斥。</li>
+<li>sdk/testcluster：从 Docker 测试集群助手中的跟踪级别日志消息中编辑根令牌值。</li>
+<li>sdk：与 docker 测试容器清理和映像构建相关的小错误修复。</li>
+<li>秘密同步（企业）：修复使用具有令牌绑定 CIDR 的 Vault 代理时设置关联 API 中的恐慌。由于 CIDR 验证期间缺少连接信息而发生恐慌。</li>
+<li>秘密同步（企业）：修复了协调关联时由于零指针取消引用而导致的恐慌。添加了防护检查以防止访问零引用，使关联处理更加健壮。</li>
+<li>秘密同步（企业）：修复 Vault 重新启动后 GCP Secret Manager 复制策略的持久性。</li>
+<li>Secret-sync（企业）：通过序列化 MemDB 事务访问来修复 SecretsSetRemoveHandler 中的竞争条件。</li>
+<li>秘密同步（企业）：通过将目标不再存在的情况视为成功来改进不同步错误处理。</li>
+<li>Secret/pki：修复了 ACME 订单最终确定竞争条件，其中并发请求可能会双重颁发证书并从订单密钥跟踪中获得孤立证书</li>
+<li>Secret/pki：防止密钥重命名接受已由不同密钥持有的名称。</li>
+<li>秘密 (pki)：允许在不使用 SCEP、EST 和 CMPV2 协议的 server_flag 密钥的情况下颁发证书。</li>
+<li>Secrets-sync（企业）：纠正了删除最新 KV-V2 密钥版本导致关联的外部密钥被完全删除的错误。同步作业现在实现版本回退机制来查找并同步最高的可用活动版本，确保连续性并防止意外删除外部秘密资源。</li>
+<li>秘密同步（企业）：修复 <code>LIST /v1/sys/sync/associations</code> 通过将请求转发到活动节点间歇性返回零关联/秘密，而不是允许它由性能备用节点或性能辅助节点在本地提供服务。</li>
+<li>Secrets-sync（企业）：修复 WIF Identity_token_ttl 规范化和 GCP service_account_email 解码的目标 PATCH 处理。</li>
+<li>秘密同步（企业）：修复使用 <code>allowed_ipv4_addresses</code> 或 <code>allowed_ipv6_addresses</code> 配置的目标在领导变更后因 <code>INTERNAL_VAULT_ERROR</code> 失败，直到重新应用目标配置为止。</li>
+<li>秘密同步（企业）：修复了目标配置更改后秘密未正确取消同步的问题。</li>
+<li>Secrets-sync（企业）：修复了禁用同步时可能尝试删除同步存储的问题。</li>
+<li>Secrets-sync（企业）：修复了 GCP Secrets Sync 客户控制加密验证的不正确错误响应代码映射，该代码返回为 500 内部服务器错误，而不是 400 错误请求。</li>
+<li>机密同步：修复 GCP Secret Manager 目标在 Vault 重新启动时丢失其按区域 KMS 密钥的问题。</li>
+<li>Secrets-sync：修复详细信息视图中的自定义标签字段以显示具有空值的密钥</li>
+<li>Secrets-sync：当请求无效时，secrets-sync APIs 返回适当的 client 端错误代码。</li>
+<li>Secrets/aws：修复 AWS SDK v2 迁移后的 STS HTTP 连接重用</li>
+<li>Secrets/azure：确保正确安装 Azure 企业机密插件。</li>
+<li>Secrets/database（企业）：修复数据库连接初始化失败时数据库插件子进程和资源的清理。</li>
+<li>Secrets/database/mssql：当 MySQL 连接 TLS 设置更改或连接关闭时，取消注册过时的 TLS 配置，从而防止保留的证书池累积。</li>
+<li>Secrets/database：修复 rsa_private_key 静态角色的 WAL 恢复；中断的旋转将丢弃正在运行的密钥对，而不是将其向前滚动。</li>
+<li>秘密/数据库：修复没有自我管理支持的数据库类型的缺失凭据错误，错误地建议自我管理选项。</li>
+<li>Secrets/database：在生成的用户名中使用调用者控制的 DisplayName 之前对其进行清理，以防止通过用户名模板进行 SQL 注入。当 username_template 引用不带截断函数的 DisplayName 时添加配置警告。</li>
+<li>Secrets/kmip（企业）：在托管对象的失效处理程序中寻址 nil 指针。</li>
+<li>Secrets/ldap：对“openldap”插件别名启用正确的许可证检查。这会在使用“openldap”别名配置安装时启用企业功能。</li>
+<li>Secrets/ldap（企业）：手动静态角色轮换正确重置 <code>TTL</code> 和 <code>next_vault_rotation</code> 时间戳并相应调整其自动轮换节奏</li>
+<li>Secrets/Nomad：通过引入具有每主机连接上限的共享池化 HTTP client，修复高并发下的连接耗尽问题。以前，为每个凭证请求打开一个新的 TCP 连接，导致 Nomad 在同时生成超过 100 个租约时返回 HTTP 429“并发连接过多”错误。</li>
+<li>Secrets/pki（企业）：解决性能备用节点上 CMPv2 的缓存失效问题。</li>
+<li>Secrets/pki（企业）：解决在性能备用节点上使用 SCEP 时由于配置无效问题以及写入存储时出现错误而失败的问题</li>
+<li>Secrets/pki（企业）：修复审核数据中的 SCEP 随机数记录。</li>
+<li>Secrets/pki（企业）：修复当请求包含复合八位字节字符串时与 SCEP 相关的摘要错误</li>
+<li>Secrets/pki（企业）：修复当证书请求消息为空时 CMPv2 哨兵字段解析中的恐慌。</li>
+<li>Secrets/pki（企业）：修复后台传输将本地吊销的证书复制到统一存储后，统一 CRL 未重建的问题。</li>
+<li>Secrets/pki（企业）：当根是直接颁发者时，将根 CA 包含在 CIEPS 端点的链中，除非 <code>remove_roots_from_chain</code> 为 true。</li>
+<li>Secrets/pki（企业）：修改 SCEP GetCACaps 端点以动态反映配置的加密和摘要算法。</li>
+<li>Secrets/pki：修复 PKI 证书颁发 not_after 时间以尊重最大 TTL。</li>
+<li>Secrets/pki：从支持的 ACME 算法列表中删除无效值。</li>
+<li>Secrets/pki：颁发/签署 NotAfter 早于 NotBefore 或其有效期不包含在 CA 中的证书时，返回错误。</li>
+<li>Secrets/pki：根/签名中间端点 max_path_length 参数现在受到签名 CA 的 max_path_length（如果设置）的限制。</li>
+<li>Secrets/pki：当提供具有包含 isCa 设置为 true 的基本约束扩展的 CSR 时，根/签名中间端点不应失败</li>
+<li>Secrets/pki：如果角色上的国家/地区字段以及生成 CA 时的国家/地区字段不符合 ISO 3166，则发出警告</li>
+<li>Secrets/pki：允许 alt_names 中使用 glob 样式的 DNS 名称。</li>
+<li>Secrets/transit（企业）：向 CSR 签名添加托管密钥支持并设置证书链端点。</li>
+<li>秘密/传输（企业）：解决使用 Azure 托管密钥进行加密和解密操作时的恐慌。</li>
+<li>Secrets/transit（企业）：修复从存储读取策略后阻止使用 ML-DSA 和 SLH-DSA 密钥的错误。</li>
+<li>Secrets/transit：向 Transit 重新包装端点添加托管密钥支持。</li>
+<li>Secrets/transit：修复恢复格式错误的备份数据时的 nil 指针恐慌。</li>
+<li>秘密/传输：修复 CSR 重新签名以保留扩展关键标志并防止在主题备用名称和额外扩展同时存在时出现格式错误的 ASN.1 输出</li>
+<li>serviceregistration/consul：修复了当发送 SIGHUP/reload 信号并且配置使用 Consul 作为存储后端而没有显式 <code>service_registration</code> 节时，Vault 会从 Consul 服务目录中永久注销自身的问题。
+*存储/筏：拒绝小于或等于零的<code>performance_multiplier</code>值</li>
+<li>tpm cli：修复了使用显式 -tpm-device-path（该路径不是具有 <code>vault tpm</code> 和 <code>vault login -method=tpm</code> 命令的套接字）时出现的错误。</li>
+<li>ui（企业）：修复 KV v2 不显示命名空间中的机密的问题。</li>
+<li>ui（企业）：修复 Secrets Sync 登录页面说明，该说明错误地将支持的秘密引擎限制为 KV v2</li>
+<li>ui（企业）：修复了登录表单，以便当令牌是命名空间的首选登录方法时，输入可以正确呈现。</li>
+<li>ui（企业）：修复由于 checklistStateManager 中的存储为零而仪表板在初始加载时挂起的问题</li>
+<li>ui/pki：修复了 <code>key_usage</code> 扩展的证书解析，以便详细信息准确反映证书值。</li>
+<li>ui/pki：修复了创建和更新角色的问题，以便正确设置 <code>basic_constraints_valid_for_non_ca</code>。</li>
+<li>ui/secrets/pki：修复当发行者数量超过 10 时无法加载发行者列表页面</li>
+<li>ui/transit：修复编辑公交密钥时密钥版本下拉选择状态。</li>
+<li>ui：将名称字段验证添加到 LDAP 创建和编辑角色表单。</li>
+<li>ui：在集群配置小部件中显示 TLS 状态时，正确处理 <code>tls_disable</code> 的字符串值（“true”/“false”）。</li>
+<li>ui：修复 auth 方法配置页面上的 403 错误，以获取授予 sys/auth* 读取权限但不授予 sys/auth/* 读取权限的策略。</li>
+<li>ui：通过发送主根令牌作为 X-Vault-Token 标头，修复 DR 操作令牌生成失败并出现 403 错误的问题。</li>
+<li>ui：修复了路径中没有尾部斜杠的策略的 KV v2 元数据列表请求失败的问题。</li>
+<li>ui：修复 Kubernetes 身份验证方法不保存 <code>token_reviewer_jwt</code> — 使用了错误的 OpenAPI 架构密钥 (<code>KubernetesConfigureRequest</code>) 而不是 <code>KubernetesConfigureAuthRequest</code>，导致 JWT 字段在保存时从表单和 API 有效负载中被省略。</li>
+<li>ui: 修复 UI 中的 LDAP 分层角色导航</li>
+<li>ui：修复代理注册表上限策略由于属性名称不正确而未显示的问题</li>
+<li>ui：通过应用溢出隐藏样式修复仪表板小部件表格上的边框 clipping。</li>
+<li>ui：修复实体页面以在成功编辑实体后显示成功消息。</li>
+<li>ui: 修复 OIDC 提供商路由中的开放重定向错误。</li>
+<li>ui：修复从可视化编辑器切换到代码编辑器时策略创建自动化片段不更新的问题</li>
+<li>ui：修复策略生成器弹出窗口在未为规则选择功能时拒绝保存的问题。</li>
+<li>ui：修复了 client 计数计费配置请求省略根命名空间标头的回归，导致从子命名空间查看时在“监控 > Client 计数”上出现 404 错误</li>
+<li>ui：修复切换页面大小时秘密表分页。</li>
+<li>ui：将秘密修复为书签 URL 的秘密引擎重定向。</li>
+<li>ui：修复了手动轮换凭据后自我管理的 LDAP 静态角色详细信息页面显示空白密码的问题。</li>
+<li>ui：修复机密同步概述页面上的总机密计数绑定，以匹配 API 响应密钥。</li>
+<li>ui：修复了以下问题：即使挂载已成功创建，从性能备用或性能辅助设备启用 KV 机密引擎也会显示错误。现在，UI 会等待请求被转发并且挂载变得可用，然后再加载新引擎。</li>
+<li>ui：通过调用分段提供程序上的重置，修复了注销后分析身份持续存在的问题。</li>
+<li>ui：修复了自定义消息列表，以显示非活动消息徽章上的过期时间。</li>
+<li>ui：修复了编辑策略代码块以与用户策略输入同步。</li>
+<li>ui：修复侧边栏导航动画问题</li>
+<li>ui：修复了 PKI 生成根，因此在正确控制证书过期输入后无效。</li>
+<li>ui：修复了登录表单，以便当使用 <code>listing_visibility="unauth"</code> 配置相同身份验证类型的多个安装时，<code>?with=&#x3C;path></code> 查询参数仅正确显示指定的安装</li>
+<li>ui：当令牌没有允许的操作时，隐藏 LDAP 角色和库详细信息页面上的“管理”菜单，并且仅当令牌可以更新轮换角色路径时才显示轮换凭据。</li>
+<li>ui：当分析许可被 declined 时，清除分段 localStorage 密钥，因此在用户选择退出后，永远不会保留跟踪的数据</li>
+<li>ui：从版本服务报告企业计划名称，而不是从licenseId推断</li>
+<li>ui: 解决字段中命名空间添加尾部斜杠时登录页面闪烁的问题。</li>
+<li>ui：解决了阻止具有 KV v1 密钥创建和更新权限的用户打开编辑视图的回归问题。 UI 现在可以正确识别这些功能并允许进行编辑，而无需完全读取访问权限。</li>
+<li>ui：恢复秘密和命名空间表的可调整大小的列。</li>
+<li>ui：将 Kubernetes CA 证书身份验证方法配置表单字段类型恢复为文件选择器</li>
+<li>ui：更新 DR 操作令牌生成以接受主根令牌进行身份验证。</li>
+<li>ui：更新 KV max_version 验证以禁止负值。</li>
+<li>ui：更新 LDAP 帐户签入表以显示分层 LDAP 库</li>
+<li>ui：更新 LDAP 库计数以反映节点总数而不是目录数</li>
+<li>ui：当令牌无法读取引擎配置时，在 LDAP 创建角色页面发出警告；当令牌无法创建角色时，隐藏创建角色；当编辑角色页面留空时，保留存储的密码。</li>
+<li>ui：添加totalItems属性以修复过滤列表分页显示不正确的总页数</li>
+<li>ui：修复拒绝更新自我的更新令牌按钮渲染。</li>
+<li>ui：修复导航到 URL 中包含 <code>?namespace=root</code> 的 Vault UI 时虚假的“无法访问”横幅</li>
+<li>ui：防止创建仅包含空格名称的策略，并修剪策略名称中的前导/尾随空格。</li>
+<li>ui：生成 AWS 密钥时删除不必要的“凭证类型”表单输入</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/hashicorp/vault">hashicorp/vault</a> · 🏷️ 版本：<code>v2.2.0</code> · 📅 发布：2026-10-15 · <a href="https://github.com/hashicorp/vault/releases/tag/v2.2.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/vault/vault_v2.2.1"> <span class="k">← 下一个</span> <span class="t">v2.2.1</span> </a> <a href="/zh/release_note/vault/vault_v2.1.2"> <span class="k">上一个 →</span> <span class="t">v2.1.2</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/hashicorp/vault/releases/tag/v2.2.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/hashicorp/vault" target="_blank" rel="noopener"> <span>hashicorp/vault</span> <span class="d">↗</span> </a> </li> </ul> </div>  <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/vault/vault_v2.2.2"> <span class="v">v2.2.2</span> <span class="d">26-11-12</span> </a> </li><li> <a href="/zh/release_note/vault/vault_v2.2.1"> <span class="v">v2.2.1</span> <span class="d">26-10-22</span> </a> </li><li> <a href="/zh/release_note/vault/vault_v2.2.0" aria-current="true"> <span class="v">v2.2.0</span> <span class="d">26-10-15</span> </a> </li><li> <a href="/zh/release_note/vault/vault_v2.1.2"> <span class="v">v2.1.2</span> <span class="d">26-10-07</span> </a> </li><li> <a href="/zh/release_note/vault/vault_v2.1.1"> <span class="v">v2.1.1</span> <span class="d">26-09-16</span> </a> </li><li> <a href="/zh/release_note/vault/vault_v2.1.0"> <span class="v">v2.1.0</span> <span class="d">26-09-01</span> </a> </li><li> <a href="/zh/release_note/vault/vault_v2.0.4"> <span class="v">v2.0.4</span> <span class="d">26-08-04</span> </a> </li><li> <a href="/zh/release_note/vault/vault_v2.0.3"> <span class="v">v2.0.3</span> <span class="d">26-06-17</span> </a> </li> </ul> <a href="/zh/releases/vault" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

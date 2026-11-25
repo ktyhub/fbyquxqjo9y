@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>servers v1.0.0 — STAGS NextStack</title><meta name="description" content="This release contains many bug and security fixes, and represents the final release of the legacy era servers."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/servers/servers_v1.0.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/servers/1.0.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/servers/servers_v1.0.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/servers/1.0.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="servers v1.0.0 — STAGS NextStack"><meta property="og:description" content="This release contains many bug and security fixes, and represents the final release of the legacy era servers."><meta property="og:url" content="https://www.stags.cn/zh/release_note/servers/servers_v1.0.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/servers/servers_v1.0.0/#article","headline":"servers v1.0.0 release notes","datePublished":"2026-10-11","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/modelcontextprotocol/servers"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/servers/1.0.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/servers/servers_v1.0.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/servers/1.0.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/servers/1.0.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/servers/1.0.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/servers/1.0.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/servers/1.0.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/servers">servers</a> </nav> <h1 class="detail-title"> <span class="p">servers</span> v1.0.0 </h1> <div class="detail-meta"> <span class="chip chip--major">大版本</span> <span><span class="k">发布时间</span>2026年10月11日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener"> <span class="k">来源</span>modelcontextprotocol/servers </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/servers/1.0.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/servers/servers_v1.0.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="servers-v100">servers v1.0.0</h1>
+<h2 id="最终旧版服务器版本">最终旧版服务器版本</h2>
+<p>此版本包含许多错误和安全修复，代表旧时代服务器的最终版本。</p>
+<h2 id="套餐">套餐</h2>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>版本</th>
+<th>登记处</th>
+<th>在此版本中</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@modelcontextprotocol/server-everything</code></td>
+<td><code>1.0.0</code></td>
+<td>npm</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>@modelcontextprotocol/server-filesystem</code></td>
+<td><code>1.0.0</code></td>
+<td>npm</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>@modelcontextprotocol/server-memory</code></td>
+<td><code>1.0.0</code></td>
+<td>npm</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>@modelcontextprotocol/server-sequential-thinking</code></td>
+<td><code>1.0.0</code></td>
+<td>npm</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>mcp-server-fetch</code></td>
+<td><code>2026.10.10</code></td>
+<td>PyPI</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>mcp-server-git</code></td>
+<td><code>2026.10.10</code></td>
+<td>PyPI</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td><code>mcp-server-time</code></td>
+<td><code>2026.10.10</code></td>
+<td>PyPI</td>
+<td><strong>已发布</strong></td>
+</tr>
+<tr>
+<td>发布账本：<a href="https://claude.ai/artifact/GP9jycCFtcYBaikubx3xwc">v2/chore/5080-release-v1.0.0-sdk1</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="modelcontextprotocol服务器-一切-100">@modelcontextprotocol/服务器-一切 1.0.0</h2>
+<h3 id="发生了什么变化">发生了什么变化</h3>
+<ul>
+<li>修复（所有内容）：在 <a href="https://github.com/modelcontextprotocol/servers/pull/4712">https://github.com/modelcontextprotocol/servers/pull/4712</a> 中清理 @arimu1 会话断开时的订阅</li>
+<li>代理软件工厂第2部分：AGENTS.md，绝对规则；删除 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4894">https://github.com/modelcontextprotocol/servers/pull/4894</a> 中的 CLAUDE.md</li>
+<li>代理软件工厂第 4 部分：TypeScript 工作区门（Prettier、ESLint、根验证、CI），作者：@cliffhall，位于 <a href="https://github.com/modelcontextprotocol/servers/pull/4896">https://github.com/modelcontextprotocol/servers/pull/4896</a>
+*壮举：TypeScript 服务器的变更集，GitHub-Release 触发由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4927">https://github.com/modelcontextprotocol/servers/pull/4927</a> 中发布</li>
+<li>修复（所有内容）：SSE 报告 <a href="https://github.com/modelcontextprotocol/servers/pull/4936">https://github.com/modelcontextprotocol/servers/pull/4936</a> 中的 @cliffhall 的端口已在使用中，而不是“服务器正在运行”</li>
+<li>测试（一切）：协议级表征套件和每个文件 90% 的覆盖率门，由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4978">https://github.com/modelcontextprotocol/servers/pull/4978</a> 中完成
+*修复（一切）：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5005%E4%B8%AD%E7%9A%84@cliffhall%E6%A0%87%E8%AE%B0%E5%8A%A8%E6%80%81blob%E8%B5%84%E6%BA%90%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/%E5%85%AB%E4%BD%8D%E5%AD%97%E8%8A%82%E6%B5%81">https://github.com/modelcontextprotocol/servers/pull/5005中的@cliffhall标记动态blob资源应用程序/八位字节流</a></li>
+<li>修复（所有问题）：通过 <a href="https://github.com/modelcontextprotocol/servers/pull/5020">https://github.com/modelcontextprotocol/servers/pull/5020</a> 中的 @cliffhall 回答未知且重复的 HTTP+SSE 会话（#4981）</li>
+<li>修复（所有内容）：<a href="https://github.com/modelcontextprotocol/servers/pull/5032">https://github.com/modelcontextprotocol/servers/pull/5032</a> 中的@cliffhall 将会话资源范围限制到其服务器（#4808）
+*修复（一切）：指令限定功能门控工具； @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5034">https://github.com/modelcontextprotocol/servers/pull/5034</a> 中对表单模式进行门触发-诱导-请求</li>
+<li>修复（所有内容）：将异步任务工具保留在 client 任务中（#4986、#4987），作者为 <a href="https://github.com/modelcontextprotocol/servers/pull/5014">https://github.com/modelcontextprotocol/servers/pull/5014</a> 中的 @cliffhall</li>
+<li>修复（所有内容）：未知会话的流式 HTTP 404、每个流重播、关闭关闭会话（@cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5006">https://github.com/modelcontextprotocol/servers/pull/5006</a> 中）</li>
+<li>杂务（一切）：将已编译的测试和 vitest 配置保留在 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5053">https://github.com/modelcontextprotocol/servers/pull/5053</a> 中发布的包之外</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5087">https://github.com/modelcontextprotocol/servers/pull/5087</a> 中的 @cliffhall 对 SDK 1.x 发布分支的发布审核</li>
+<li>v1.0.0：将挂起的变更集折叠到<a href="https://github.com/modelcontextprotocol/servers/pull/5088%E4%B8%AD%E7%9A%84@cliffhall%E7%9A%841.0.0">https://github.com/modelcontextprotocol/servers/pull/5088中的@cliffhall的1.0.0</a> CHANGELOG（发布分支）中</li>
+<li>发布 v1.0.0：将 v2/release/1.0.0 合并到 <a href="https://github.com/modelcontextprotocol/servers/pull/5090">https://github.com/modelcontextprotocol/servers/pull/5090</a> 中的 @cliffhall 的 main 中</li>
+</ul>
+<h2 id="modelcontextprotocol服务器文件系统-100">@modelcontextprotocol/服务器文件系统 1.0.0</h2>
+<h3 id="发生了什么变化-1">发生了什么变化</h3>
+<ul>
+<li>修复：在<a href="https://github.com/modelcontextprotocol/servers/pull/4289%E4%B8%AD%E9%80%9A%E8%BF%87@he-yufeng%E5%A3%B0%E6%98%8Ezod%E8%BF%90%E8%A1%8C%E6%97%B6%E4%BE%9D%E8%B5%96">https://github.com/modelcontextprotocol/servers/pull/4289中通过@he-yufeng声明zod运行时依赖</a></li>
+<li>代理软件工厂第 4 部分：TypeScript 工作区门（Prettier、ESLint、根验证、CI），作者：@cliffhall，位于 <a href="https://github.com/modelcontextprotocol/servers/pull/4896">https://github.com/modelcontextprotocol/servers/pull/4896</a></li>
+<li>文件系统：通过 <a href="https://github.com/modelcontextprotocol/servers/pull/4901">https://github.com/modelcontextprotocol/servers/pull/4901</a> 中的 @cliffhall 修复 macOS 上的 unicode-paths 测试
+*壮举：TypeScript 服务器的变更集，GitHub-Release 触发由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4927">https://github.com/modelcontextprotocol/servers/pull/4927</a> 中发布</li>
+<li>测试（文件系统）：<a href="https://github.com/modelcontextprotocol/servers/pull/4977">https://github.com/modelcontextprotocol/servers/pull/4977</a> 中的 @cliffhall 的进程内表征套件和每个文件 90% 覆盖率门</li>
+<li>修复（文件系统）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5009">https://github.com/modelcontextprotocol/servers/pull/5009</a> 中解析仅以 Unicode 形式（#1970）与磁盘不同的路径</li>
+<li>修复（文件系统）：在 <a href="https://github.com/modelcontextprotocol/servers/pull/5010">https://github.com/modelcontextprotocol/servers/pull/5010</a> 中允许 @cliffhall 允许的 UNC 共享根目录下的路径
+*修复（文件系统）：在工具调用之前等待初始根； @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5025">https://github.com/modelcontextprotocol/servers/pull/5025</a> 中没有目录，明显失败</li>
+<li>修复（文件系统）：通过 <a href="https://github.com/modelcontextprotocol/servers/pull/5030">https://github.com/modelcontextprotocol/servers/pull/5030</a> 中的 @cliffhall 在每个工具架构上声明 JSON 架构 2020-12</li>
+<li>修复（文件系统）：通过 <a href="https://github.com/modelcontextprotocol/servers/pull/5022">https://github.com/modelcontextprotocol/servers/pull/5022</a> 中的 @cliffhall 覆盖现有文件（#4512、#3199）</li>
+<li>修复（文件系统）：在<a href="https://github.com/modelcontextprotocol/servers/pull/5011%E4%B8%AD%E9%80%9A%E8%BF%87@cliffhall%E5%9C%A8edit_file%E4%B8%AD%E4%BF%9D%E7%95%99%E8%A1%8C%E7%BB%93%E5%B0%BE%E5%92%8C%E7%BC%A9%E8%BF%9B">https://github.com/modelcontextprotocol/servers/pull/5011中通过@cliffhall在edit_file中保留行结尾和缩进</a></li>
+<li>Chore(ci)：在 <a href="https://github.com/modelcontextprotocol/servers/pull/5047">https://github.com/modelcontextprotocol/servers/pull/5047</a> 中的 @cliffhall 在 Windows 运行器上运行测试套件</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5087">https://github.com/modelcontextprotocol/servers/pull/5087</a> 中的 @cliffhall 对 SDK 1.x 发布分支的发布审核</li>
+<li>v1.0.0：将挂起的变更集折叠到<a href="https://github.com/modelcontextprotocol/servers/pull/5088%E4%B8%AD%E7%9A%84@cliffhall%E7%9A%841.0.0">https://github.com/modelcontextprotocol/servers/pull/5088中的@cliffhall的1.0.0</a> CHANGELOG（发布分支）中</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5096">https://github.com/modelcontextprotocol/servers/pull/5096</a> 中的 @cliffhall 将 #5094 根吊销修复挑选到发布分支上</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5099">https://github.com/modelcontextprotocol/servers/pull/5099</a> 中的@cliffhall 将 #5097 根刷新排序修复挑选到发布分支上</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5103">https://github.com/modelcontextprotocol/servers/pull/5103</a> 中的 @cliffhall 将 #5101 根刷新屏障挑选到发布分支上</li>
+<li>发布 v1.0.0：将 v2/release/1.0.0 合并到 <a href="https://github.com/modelcontextprotocol/servers/pull/5090">https://github.com/modelcontextprotocol/servers/pull/5090</a> 中的 @cliffhall 的 main 中</li>
+</ul>
+<h2 id="modelcontextprotocol服务器内存-100">@modelcontextprotocol/服务器内存 1.0.0</h2>
+<h3 id="发生了什么变化-2">发生了什么变化</h3>
+<p>*修复（内存）：解决<a href="https://github.com/modelcontextprotocol/servers/pull/3893%E4%B8%AD@JosephDoUrden%E9%A2%84%E6%9C%9F%E6%8B%92%E7%BB%9D%E7%9A%84Vitest%E8%AF%AF%E6%8A%A5">https://github.com/modelcontextprotocol/servers/pull/3893中@JosephDoUrden预期拒绝的Vitest误报</a></p>
+<ul>
+<li>修复（内存）：通过<a href="https://github.com/modelcontextprotocol/servers/pull/4407%E4%B8%AD%E7%9A%84@syf2211%E4%BB%8Epackage.json%E8%AF%BB%E5%8F%96serverInfo.version">https://github.com/modelcontextprotocol/servers/pull/4407中的@syf2211从package.json读取serverInfo.version</a></li>
+<li>修复（内存）：拒绝<a href="https://github.com/modelcontextprotocol/servers/pull/4477%E4%B8%AD@jstar0%E7%9A%84%E6%82%AC%E7%A9%BA%E5%85%B3%E7%B3%BB">https://github.com/modelcontextprotocol/servers/pull/4477中@jstar0的悬空关系</a></li>
+<li>修复：在<a href="https://github.com/modelcontextprotocol/servers/pull/4289%E4%B8%AD%E9%80%9A%E8%BF%87@he-yufeng%E5%A3%B0%E6%98%8Ezod%E8%BF%90%E8%A1%8C%E6%97%B6%E4%BE%9D%E8%B5%96">https://github.com/modelcontextprotocol/servers/pull/4289中通过@he-yufeng声明zod运行时依赖</a></li>
+<li>修复（内存）：将尾随换行符添加到 <a href="https://github.com/modelcontextprotocol/servers/pull/3653">https://github.com/modelcontextprotocol/servers/pull/3653</a> 中 @nickveenhof 的 JSONL 输出</li>
+<li>修复（内存）：将 MEMORY_FILE_PATH 中的前导 ~ 扩展到 <a href="https://github.com/modelcontextprotocol/servers/pull/4447">https://github.com/modelcontextprotocol/servers/pull/4447</a> 中 @ameyypawar 的主目录
+*修复（内存）：停止报告<a href="https://github.com/modelcontextprotocol/servers/pull/4738%E4%B8%AD@ConnorMoss02%E6%9C%AA%E5%8F%91%E7%94%9F%E7%9A%84%E5%88%A0%E9%99%A4">https://github.com/modelcontextprotocol/servers/pull/4738中@ConnorMoss02未发生的删除</a>
+*修复（内存）：在<a href="https://github.com/modelcontextprotocol/servers/pull/4717%E4%B8%AD%E9%80%9A%E8%BF%87@Ethanz11-creat%E4%BB%8E%E7%A3%81%E7%9B%98%E5%8A%A0%E8%BD%BD%E6%97%B6%E9%AA%8C%E8%AF%81%E7%9F%A5%E8%AF%86%E5%9B%BE%E6%9D%A1%E7%9B%AE">https://github.com/modelcontextprotocol/servers/pull/4717中通过@Ethanz11-creat从磁盘加载时验证知识图条目</a></li>
+<li>修复（内存）：通过 @feiiiiiii5 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4662">https://github.com/modelcontextprotocol/servers/pull/4662</a> 中约束 search_nodes 查询长度</li>
+<li>修复（内存）：通过 <a href="https://github.com/modelcontextprotocol/servers/pull/4383">https://github.com/modelcontextprotocol/servers/pull/4383</a> 中的 @JSap0914 跳过单个批次中的重复实体和关系</li>
+<li>修复（内存）：序列化图突变以防止 @Nandini-Inuguru 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4555">https://github.com/modelcontextprotocol/servers/pull/4555</a> 中并发写入竞争</li>
+<li>代理软件工厂第 4 部分：TypeScript 工作区门（Prettier、ESLint、根验证、CI），作者：@cliffhall，位于 <a href="https://github.com/modelcontextprotocol/servers/pull/4896">https://github.com/modelcontextprotocol/servers/pull/4896</a>
+*壮举：TypeScript 服务器的变更集，GitHub-Release 触发由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4927">https://github.com/modelcontextprotocol/servers/pull/4927</a> 中发布</li>
+<li>修复（内存）：通过 <a href="https://github.com/modelcontextprotocol/servers/pull/4937">https://github.com/modelcontextprotocol/servers/pull/4937</a> 中的 @cliffhall 在临时目录中运行文件路径测试</li>
+<li>测试（内存）：<a href="https://github.com/modelcontextprotocol/servers/pull/4973">https://github.com/modelcontextprotocol/servers/pull/4973</a> 中的 @cliffhall 的协议级表征套件和每个文件 90% 的覆盖率门</li>
+<li>修复（内存）：在 <a href="https://github.com/modelcontextprotocol/servers/pull/5035">https://github.com/modelcontextprotocol/servers/pull/5035</a> 中通过 @cliffhall 保存图形时保留不可读的行（#4885）</li>
+<li>修复（内存）：报告 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5008">https://github.com/modelcontextprotocol/servers/pull/5008</a> 中跳过的 create_entities 实体（#4887）</li>
+<li>修复（内存）：跨进程锁定图形文件，以便一个文件上的两个服务器保留两个写入 (#4797) by @cliffhall in <a href="https://github.com/modelcontextprotocol/servers/pull/5037">https://github.com/modelcontextprotocol/servers/pull/5037</a></li>
+<li>修复（内存）：在保存过程中保持内存文件的模式并拒绝 <a href="https://github.com/modelcontextprotocol/servers/pull/5013">https://github.com/modelcontextprotocol/servers/pull/5013</a> 中 @cliffhall 的只读文件 (#4827)</li>
+<li>杂务（一切）：将已编译的测试和 vitest 配置保留在 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5053">https://github.com/modelcontextprotocol/servers/pull/5053</a> 中发布的包之外</li>
+<li>v1.0.0：@cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5086">https://github.com/modelcontextprotocol/servers/pull/5086</a> 中将 #5077 和 #5078 挑选到发布分支上</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5087">https://github.com/modelcontextprotocol/servers/pull/5087</a> 中 @cliffhall 对 SDK 1.x 发布分支的发布审核</li>
+<li>v1.0.0：将挂起的变更集折叠到<a href="https://github.com/modelcontextprotocol/servers/pull/5088%E4%B8%AD%E7%9A%84@cliffhall%E7%9A%841.0.0">https://github.com/modelcontextprotocol/servers/pull/5088中的@cliffhall的1.0.0</a> CHANGELOG（发布分支）中</li>
+<li>发布 v1.0.0：将 v2/release/1.0.0 合并到 <a href="https://github.com/modelcontextprotocol/servers/pull/5090">https://github.com/modelcontextprotocol/servers/pull/5090</a> 中的 @cliffhall 的 main 中</li>
+</ul>
+<h2 id="modelcontextprotocol服务器顺序思维-100">@modelcontextprotocol/服务器顺序思维 1.0.0</h2>
+<h3 id="发生了什么变化-3">发生了什么变化</h3>
+<ul>
+<li>修复：在<a href="https://github.com/modelcontextprotocol/servers/pull/4289%E4%B8%AD%E9%80%9A%E8%BF%87@he-yufeng%E5%A3%B0%E6%98%8Ezod%E8%BF%90%E8%A1%8C%E6%97%B6%E4%BE%9D%E8%B5%96">https://github.com/modelcontextprotocol/servers/pull/4289中通过@he-yufeng声明zod运行时依赖</a></li>
+<li>代理软件工厂第 4 部分：TypeScript 工作区门（Prettier、ESLint、根验证、CI），作者：@cliffhall，位于 <a href="https://github.com/modelcontextprotocol/servers/pull/4896">https://github.com/modelcontextprotocol/servers/pull/4896</a>
+*壮举：TypeScript 服务器的变更集，GitHub-Release 触发由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4927">https://github.com/modelcontextprotocol/servers/pull/4927</a> 中发布</li>
+<li>测试（顺序思维）：<a href="https://github.com/modelcontextprotocol/servers/pull/4970">https://github.com/modelcontextprotocol/servers/pull/4970</a> 中的 @cliffhall 的进程内协议套件和每个文件 90% 覆盖率门</li>
+<li>修复（顺序思考）：通过 <a href="https://github.com/modelcontextprotocol/servers/pull/5015">https://github.com/modelcontextprotocol/servers/pull/5015</a> 中的 @cliffhall 将 readOnlyHint 和 idempotencyHint 设置为 false
+*修复（顺序思考）：跟踪名为Object.prototype键的branchIds； @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5036">https://github.com/modelcontextprotocol/servers/pull/5036</a> 中失败时保持状态不变
+*修复（顺序思考）：思想日志标题中没有“未定义”，边框大小由<a href="https://github.com/modelcontextprotocol/servers/pull/5031%E4%B8%AD%E7%9A%84@cliffhall%E7%9A%84%E5%8F%AF%E8%A7%81%E6%96%87%E6%9C%AC%E5%86%B3%E5%AE%9A">https://github.com/modelcontextprotocol/servers/pull/5031中的@cliffhall的可见文本决定</a></li>
+<li>杂务（一切）：将已编译的测试和 vitest 配置保留在 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5053">https://github.com/modelcontextprotocol/servers/pull/5053</a> 中发布的包之外</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5087">https://github.com/modelcontextprotocol/servers/pull/5087</a> 中的 @cliffhall 对 SDK 1.x 发布分支的发布审核</li>
+<li>v1.0.0：将挂起的变更集折叠到<a href="https://github.com/modelcontextprotocol/servers/pull/5088%E4%B8%AD%E7%9A%84@cliffhall%E7%9A%841.0.0">https://github.com/modelcontextprotocol/servers/pull/5088中的@cliffhall的1.0.0</a> CHANGELOG（发布分支）中</li>
+<li>发布 v1.0.0：将 v2/release/1.0.0 合并到 <a href="https://github.com/modelcontextprotocol/servers/pull/5090">https://github.com/modelcontextprotocol/servers/pull/5090</a> 中的 @cliffhall 的 main 中</li>
+</ul>
+<h2 id="mcp-服务器获取-20261010">mcp 服务器获取 2026.10.10</h2>
+<h3 id="发生了什么变化-4">发生了什么变化</h3>
+<ul>
+<li>代理软件工厂第 5 部分：Python 门奇偶校验（验证：py，CI 中的 ruff），作者：<a href="https://github.com/modelcontextprotocol/servers/pull/4893">https://github.com/modelcontextprotocol/servers/pull/4893</a> 中的 @cliffhall</li>
+<li>代理软件工厂第 9 部分：贡献模型：问题而非 PR、问题表格、积压计划，作者：<a href="https://github.com/modelcontextprotocol/servers/pull/4904">https://github.com/modelcontextprotocol/servers/pull/4904</a> 中的 @cliffhall</li>
+<li>测试（获取）：<a href="https://github.com/modelcontextprotocol/servers/pull/4971">https://github.com/modelcontextprotocol/servers/pull/4971</a> 中 @cliffhall 的协议级表征测试和每个文件覆盖率</li>
+<li>修复(fetch,git,time): 在<a href="https://github.com/modelcontextprotocol/servers/pull/5019%E4%B8%AD%E9%80%9A%E8%BF%87@cliffhall%E6%8A%A5%E5%91%8AserverInfo%E4%B8%AD%E7%9A%84%E5%8C%85%E7%89%88%E6%9C%AC">https://github.com/modelcontextprotocol/servers/pull/5019中通过@cliffhall报告serverInfo中的包版本</a></li>
+<li>修复（获取）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5017">https://github.com/modelcontextprotocol/servers/pull/5017</a> 中发出 max_length 的包含最小值/最大值（#1624）
+*修复（获取）：拒绝<a href="https://github.com/modelcontextprotocol/servers/pull/5016%E4%B8%AD@cliffhall%E7%9A%84%E6%9C%AA%E7%9F%A5%E5%B7%A5%E5%85%B7%E5%92%8C%E6%8F%90%E7%A4%BA%E5%90%8D%E7%A7%B0">https://github.com/modelcontextprotocol/servers/pull/5016中@cliffhall的未知工具和提示名称</a></li>
+<li>修复（获取）：<a href="https://github.com/modelcontextprotocol/servers/pull/5018">https://github.com/modelcontextprotocol/servers/pull/5018</a> 中的 @cliffhall 将没有 Node 的空页面报告为简化失败</li>
+<li>修复（获取）：支持 SOCKS 代理并将错误的代理设置报告为 <a href="https://github.com/modelcontextprotocol/servers/pull/5024">https://github.com/modelcontextprotocol/servers/pull/5024</a> 中的 @cliffhall 的工具错误</li>
+<li>修复(fetch): 默认拒绝私有、环回和元数据地址 (#4838) by @cliffhall in <a href="https://github.com/modelcontextprotocol/servers/pull/5033">https://github.com/modelcontextprotocol/servers/pull/5033</a></li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5087">https://github.com/modelcontextprotocol/servers/pull/5087</a> 中的 @cliffhall 对 SDK 1.x 发布分支的发布审核</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5089">https://github.com/modelcontextprotocol/servers/pull/5089</a> 中 @cliffhall 为 2026.10.10（发布分支）标记 Python CalVer 版本</li>
+<li>v1.0.0：在<a href="https://github.com/modelcontextprotocol/servers/pull/5113%E4%B8%AD%E9%80%9A%E8%BF%87@cliffhall%E6%B3%A8%E9%87%8A%E8%8E%B7%E5%8F%96%E5%B7%A5%E5%85%B7%EF%BC%88%E5%8F%91%E5%B8%83%E5%88%86%E6%94%AF%EF%BC%89">https://github.com/modelcontextprotocol/servers/pull/5113中通过@cliffhall注释获取工具（发布分支）</a></li>
+<li>发布 v1.0.0：将 v2/release/1.0.0 合并到 <a href="https://github.com/modelcontextprotocol/servers/pull/5090">https://github.com/modelcontextprotocol/servers/pull/5090</a> 中的 @cliffhall 的 main 中</li>
+</ul>
+<h2 id="mcp-服务器-git-20261010">mcp-服务器-git 2026.10.10</h2>
+<h3 id="发生了什么变化-5">发生了什么变化</h3>
+<p>*修复（git）：统一git_log输出模式并从<a href="https://github.com/modelcontextprotocol/servers/pull/4658%E4%B8%AD@AbhiPra24%E7%9A%84server.run%E4%B8%AD%E5%88%A0%E9%99%A4raise_exceptions">https://github.com/modelcontextprotocol/servers/pull/4658中@AbhiPra24的server.run中删除raise_exceptions</a></p>
+<ul>
+<li>代理软件工厂第 5 部分：Python 门奇偶校验（验证：py，CI 中的 ruff），作者：<a href="https://github.com/modelcontextprotocol/servers/pull/4893">https://github.com/modelcontextprotocol/servers/pull/4893</a> 中的 @cliffhall</li>
+<li>test(git)：通过协议表征serve()； @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4974">https://github.com/modelcontextprotocol/servers/pull/4974</a> 中的每个文件 90% 覆盖率</li>
+<li>Chore(ci)：在 <a href="https://github.com/modelcontextprotocol/servers/pull/5047">https://github.com/modelcontextprotocol/servers/pull/5047</a> 中的 @cliffhall 在 Windows 运行器上运行测试套件</li>
+<li>修复(fetch,git,time): 在<a href="https://github.com/modelcontextprotocol/servers/pull/5019%E4%B8%AD%E9%80%9A%E8%BF%87@cliffhall%E6%8A%A5%E5%91%8AserverInfo%E4%B8%AD%E7%9A%84%E5%8C%85%E7%89%88%E6%9C%AC">https://github.com/modelcontextprotocol/servers/pull/5019中通过@cliffhall报告serverInfo中的包版本</a></li>
+<li>修复(git): 拒绝空提交并报告 no-op git_add (#4762, #4763) by @cliffhall in <a href="https://github.com/modelcontextprotocol/servers/pull/5007">https://github.com/modelcontextprotocol/servers/pull/5007</a></li>
+<li>修复（git）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5023">https://github.com/modelcontextprotocol/servers/pull/5023</a> 中报告 git_checkout 中分离的 HEAD（#4804）
+*修复（git）：将未知的branch_type和现有分支名称报告为<a href="https://github.com/modelcontextprotocol/servers/pull/5026%E4%B8%AD%E7%9A%84@cliffhall%E7%9A%84%E9%94%99%E8%AF%AF">https://github.com/modelcontextprotocol/servers/pull/5026中的@cliffhall的错误</a>
+*修复（git）：git_show打印git的格式，解码非UTF-8补丁并显示@cliffhall在<a href="https://github.com/modelcontextprotocol/servers/pull/5029%E4%B8%AD%E7%9A%84">https://github.com/modelcontextprotocol/servers/pull/5029中的</a><rev>：<path>
+*修复（git）：将—repository解析为repo根； @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5039">https://github.com/modelcontextprotocol/servers/pull/5039</a> 中缺少路径的一行错误
+*修复（git）：报告未知工具和标志注入拒绝，如@cliffhall在<a href="https://github.com/modelcontextprotocol/servers/pull/5038%E4%B8%AD%E6%89%80%E5%86%99">https://github.com/modelcontextprotocol/servers/pull/5038中所写</a></path></rev></li>
+<li>修复（git）：当 git_commit 完成 <a href="https://github.com/modelcontextprotocol/servers/pull/5054">https://github.com/modelcontextprotocol/servers/pull/5054</a> 中 @cliffhall 的合并时，重新应用合并自动存储</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5087">https://github.com/modelcontextprotocol/servers/pull/5087</a> 中 @cliffhall 对 SDK 1.x 发布分支的发布审核</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5089">https://github.com/modelcontextprotocol/servers/pull/5089</a> 中 @cliffhall 为 2026.10.10（发布分支）标记 Python CalVer 版本</li>
+<li>发布 v1.0.0：将 v2/release/1.0.0 合并到 <a href="https://github.com/modelcontextprotocol/servers/pull/5090">https://github.com/modelcontextprotocol/servers/pull/5090</a> 中的 @cliffhall 的 main 中</li>
+</ul>
+<h2 id="mcp-服务器时间-20261010">mcp-服务器时间 2026.10.10</h2>
+<h3 id="发生了什么变化-6">发生了什么变化</h3>
+<ul>
+<li>代理软件工厂第 5 部分：Python 门奇偶校验（验证：py，CI 中的 ruff），作者：<a href="https://github.com/modelcontextprotocol/servers/pull/4893">https://github.com/modelcontextprotocol/servers/pull/4893</a> 中的 @cliffhall</li>
+<li>代理软件工厂第 9 部分：贡献模型：问题而非 PR、问题表格、<a href="https://github.com/modelcontextprotocol/servers/pull/4904">https://github.com/modelcontextprotocol/servers/pull/4904</a> 中@cliffhall 的积压计划</li>
+<li>test(time)：通过协议表征serve()，<a href="https://github.com/modelcontextprotocol/servers/pull/4972%E4%B8%AD@cliffhall%E7%9A%84%E6%AF%8F%E4%B8%AA%E6%96%87%E4%BB%B6%E8%A6%86%E7%9B%96%E7%8E%87">https://github.com/modelcontextprotocol/servers/pull/4972中@cliffhall的每个文件覆盖率</a></li>
+<li>修复(fetch,git,time): 在<a href="https://github.com/modelcontextprotocol/servers/pull/5019%E4%B8%AD%E9%80%9A%E8%BF%87@cliffhall%E6%8A%A5%E5%91%8AserverInfo%E4%B8%AD%E7%9A%84%E5%8C%85%E7%89%88%E6%9C%AC">https://github.com/modelcontextprotocol/servers/pull/5019中通过@cliffhall报告serverInfo中的包版本</a></li>
+<li>修复（时间）：在 <a href="https://github.com/modelcontextprotocol/servers/pull/5027">https://github.com/modelcontextprotocol/servers/pull/5027</a> 中的@cliffhall 在无效的 —local-timezone (#5001) 上退出一行</li>
+<li>修复（时间）：通过<a href="https://github.com/modelcontextprotocol/servers/pull/5028%E4%B8%AD%E7%9A%84@cliffhall%E6%8B%92%E7%BB%9Dconvert_time%E4%B8%AD%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E6%9C%AC%E5%9C%B0%E6%97%B6%E9%97%B4">https://github.com/modelcontextprotocol/servers/pull/5028中的@cliffhall拒绝convert_time中不存在的本地时间</a></li>
+<li>修复（时间）：<a href="https://github.com/modelcontextprotocol/servers/pull/5021">https://github.com/modelcontextprotocol/servers/pull/5021</a> 中的@cliffhall 将空的convert_time 时区报告为缺失参数</li>
+<li>v1.0.0：@cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5086">https://github.com/modelcontextprotocol/servers/pull/5086</a> 中将 #5077 和 #5078 挑选到发布分支上</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5087">https://github.com/modelcontextprotocol/servers/pull/5087</a> 中 @cliffhall 对 SDK 1.x 发布分支的发布审核</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5089">https://github.com/modelcontextprotocol/servers/pull/5089</a> 中 @cliffhall 为 2026.10.10（发布分支）标记 Python CalVer 版本</li>
+<li>发布 v1.0.0：将 v2/release/1.0.0 合并到 <a href="https://github.com/modelcontextprotocol/servers/pull/5090">https://github.com/modelcontextprotocol/servers/pull/5090</a> 中的 @cliffhall 的 main 中</li>
+</ul>
+<h2 id="存储库">存储库</h2>
+<h3 id="发生了什么变化-7">发生了什么变化</h3>
+<ul>
+<li>ci：在 pull_request_target 上运行 readme-pr-check，以便分支 PR 可以在 <a href="https://github.com/modelcontextprotocol/servers/pull/4739">https://github.com/modelcontextprotocol/servers/pull/4739</a> 中由 @olaservo 标记</li>
+<li>文档：代理软件工厂启动 (docs/agent-guidance-inception.md)，作者：@cliffhall，位于 <a href="https://github.com/modelcontextprotocol/servers/pull/4861">https://github.com/modelcontextprotocol/servers/pull/4861</a></li>
+<li>代理软件工厂第 3 部分：技能基础设施（验证：技能、验证：技能：cli、技能：评估），作者：<a href="https://github.com/modelcontextprotocol/servers/pull/4895">https://github.com/modelcontextprotocol/servers/pull/4895</a> 中的 @cliffhall</li>
+<li>代理软件工厂第 6 部分：董事会操作和问题创建技能；由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4899">https://github.com/modelcontextprotocol/servers/pull/4899</a> 制作的家务标签</li>
+<li>壮举（技能）：<a href="https://github.com/modelcontextprotocol/servers/pull/4903">https://github.com/modelcontextprotocol/servers/pull/4903</a> 中@cliffhall 的 pr-flow 技能（工厂第 7 部分）</li>
+<li>代理软件工厂第 8 部分：问题分类技能和董事会审计，作者：@cliffhall，<a href="https://github.com/modelcontextprotocol/servers/pull/4906">https://github.com/modelcontextprotocol/servers/pull/4906</a></li>
+<li>代理软件工厂第10部分：安全咨询技能；由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4905">https://github.com/modelcontextprotocol/servers/pull/4905</a> 中重写 SECURITY.md</li>
+<li>壮举：本地：大门、大门租赁、引导烟雾和 <a href="https://github.com/modelcontextprotocol/servers/pull/4920">https://github.com/modelcontextprotocol/servers/pull/4920</a> 中 @cliffhall 的预推大门技能</li>
+<li>在 <a href="https://github.com/modelcontextprotocol/servers/pull/4921">https://github.com/modelcontextprotocol/servers/pull/4921</a> 中添加 @cliffhall 的项目结构、本地开发、测试和 client-smoke 技能</li>
+<li>文档：从 Copilot 审核循环中删除圆帽；在 <a href="https://github.com/modelcontextprotocol/servers/pull/4932">https://github.com/modelcontextprotocol/servers/pull/4932</a> 中添加 @cliffhall 的范围蠕变警告</li>
+<li>壮举：<a href="https://github.com/modelcontextprotocol/servers/pull/4928">https://github.com/modelcontextprotocol/servers/pull/4928</a> 中@cliffhall 的里程碑发布流程、发布技能、拆分和固定release.yml</li>
+<li>文档（贡献）：通过 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4959">https://github.com/modelcontextprotocol/servers/pull/4959</a> 中删除过渡空白问题后备</li>
+<li>文档：将 PR 模板缩减为 <a href="https://github.com/modelcontextprotocol/servers/pull/4961">https://github.com/modelcontextprotocol/servers/pull/4961</a> 中的 @cliffhall 的 issues-not-PRs 横幅</li>
+<li>文档（贡献模型）：删除<a href="https://github.com/modelcontextprotocol/servers/pull/4963%E4%B8%AD@cliffhall%E7%9A%84%E8%BF%87%E6%B8%A1%E6%80%A7%E7%A9%BA%E7%99%BD%E9%97%AE%E9%A2%98%E6%8E%AA%E8%BE%9E">https://github.com/modelcontextprotocol/servers/pull/4963中@cliffhall的过渡性空白问题措辞</a></li>
+<li>文档（问题表单）：在 <a href="https://github.com/modelcontextprotocol/servers/pull/4965">https://github.com/modelcontextprotocol/servers/pull/4965</a> 中的 @cliffhall 的 bug 表单占位符中显示两个版本方案
+*杂务：在 v2.0.0 合并之前将贡献政策引入 <a href="https://github.com/modelcontextprotocol/servers/pull/4939">https://github.com/modelcontextprotocol/servers/pull/4939</a> 中的 @cliffhall</li>
+<li>docs(contribution-model): 记录<a href="https://github.com/modelcontextprotocol/servers/pull/4967%E4%B8%AD%E7%9A%84@cliffhall%E5%85%B3%E9%97%AD%E4%BA%86%E5%A4%96%E9%83%A8PR%E5%88%9B%E5%BB%BA">https://github.com/modelcontextprotocol/servers/pull/4967中的@cliffhall关闭了外部PR创建</a></li>
+<li>ci(coverage)：在 CI 和 local:gate 中强制执行 TypeScript 每个文件覆盖门，在 <a href="https://github.com/modelcontextprotocol/servers/pull/4969">https://github.com/modelcontextprotocol/servers/pull/4969</a> 中由 @cliffhall 执行</li>
+<li>杂务（python）：CI 和 local:gate 中每个文件 90% 的覆盖门（#4855），作者：<a href="https://github.com/modelcontextprotocol/servers/pull/4976">https://github.com/modelcontextprotocol/servers/pull/4976</a> 中的 @cliffhall</li>
+<li>ci：仅由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5049">https://github.com/modelcontextprotocol/servers/pull/5049</a> 中推送时运行 Python 和 TypeScript 工作流程</li>
+<li>文档（代理）：说明守卫在 <a href="https://github.com/modelcontextprotocol/servers/pull/5051">https://github.com/modelcontextprotocol/servers/pull/5051</a> 中由 @cliffhall 强制执行的 dep-lockstep 规则</li>
+<li>修复（脚本）：验证：action-pins 与 <a href="https://github.com/modelcontextprotocol/servers/pull/5052">https://github.com/modelcontextprotocol/servers/pull/5052</a> 中的 @cliffhall 不区分大小写地匹配上下文和作业 ID</li>
+<li>通过<a href="https://github.com/modelcontextprotocol/servers/pull/5055%E4%B8%AD%E7%9A%84@cliffhall%E5%90%91CI%E5%92%8Cgate%E6%B7%BB%E5%8A%A0DCO%E7%AD%BE%E6%A0%B8%E6%A3%80%E6%9F%A5">https://github.com/modelcontextprotocol/servers/pull/5055中的@cliffhall向CI和gate添加DCO签核检查</a></li>
+<li>杂务（脚本）：为每个服务器 release note 编写脚本，并由记者感谢部分（发布：注释），作者：<a href="https://github.com/modelcontextprotocol/servers/pull/5064">https://github.com/modelcontextprotocol/servers/pull/5064</a> 中的 @cliffhall</li>
+<li>用问题提交扫描替换 Dependabot PR；在 <a href="https://github.com/modelcontextprotocol/servers/pull/5065">https://github.com/modelcontextprotocol/servers/pull/5065</a> 中添加 @cliffhall 的 SDK 手表和工厂概述</li>
+<li>在<a href="https://github.com/modelcontextprotocol/servers/pull/5070%E4%B8%AD%E8%AE%B0%E5%BD%95@cliffhall">https://github.com/modelcontextprotocol/servers/pull/5070中记录@cliffhall</a> SDK手表接受的凭证通道风险</li>
+<li>文档（贡献）：在 v1.0.0 合并之前将 main 与 v2/main 同步，由 @cliffhall 在 <a href="https://github.com/modelcontextprotocol/servers/pull/5081">https://github.com/modelcontextprotocol/servers/pull/5081</a> 中进行</li>
+<li>v1.0.0：<a href="https://github.com/modelcontextprotocol/servers/pull/5106">https://github.com/modelcontextprotocol/servers/pull/5106</a> 中的@cliffhall 将#5104 发布运行时修复挑选到发布分支上</li>
+</ul>
+<h2 id="新贡献者">新贡献者</h2>
+<ul>
+<li>@JosephDoUrden 在 <a href="https://github.com/modelcontextprotocol/servers/pull/3893">https://github.com/modelcontextprotocol/servers/pull/3893</a> 中做出了第一个贡献</li>
+<li>@syf2211 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4407">https://github.com/modelcontextprotocol/servers/pull/4407</a> 中做出了第一个贡献</li>
+<li>@jstar0 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4477">https://github.com/modelcontextprotocol/servers/pull/4477</a> 中做出了第一个贡献</li>
+<li>@he-yufeng 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4289">https://github.com/modelcontextprotocol/servers/pull/4289</a> 中做出了第一个贡献</li>
+<li>@nickveenhof 在 <a href="https://github.com/modelcontextprotocol/servers/pull/3653">https://github.com/modelcontextprotocol/servers/pull/3653</a> 中做出了第一个贡献</li>
+<li>@ameyypawar 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4447">https://github.com/modelcontextprotocol/servers/pull/4447</a> 中做出了第一个贡献</li>
+<li>@ConnorMoss02 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4738">https://github.com/modelcontextprotocol/servers/pull/4738</a> 中做出了第一个贡献</li>
+<li>@Ethanz11-creat 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4717">https://github.com/modelcontextprotocol/servers/pull/4717</a> 中做出了第一个贡献</li>
+<li>@feiiiiiii5 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4662">https://github.com/modelcontextprotocol/servers/pull/4662</a> 中做出了第一个贡献</li>
+<li>@JSap0914 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4383">https://github.com/modelcontextprotocol/servers/pull/4383</a> 中做出了第一个贡献</li>
+<li>@Nandini-Inuguru 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4555">https://github.com/modelcontextprotocol/servers/pull/4555</a> 中做出了第一个贡献</li>
+<li>@arimu1 在 <a href="https://github.com/modelcontextprotocol/servers/pull/4712">https://github.com/modelcontextprotocol/servers/pull/4712</a> 中做出了第一个贡献
+<strong>完整 Changelog</strong>：<a href="https://github.com/modelcontextprotocol/servers/compare/2026.8.31...v1.0.0">https://github.com/modelcontextprotocol/servers/compare/2026.8.31…v1.0.0</a></li>
+</ul>
+<h2 id="感谢您帮助我们改进">感谢您帮助我们改进</h2>
+<p>此版本解决了这些社区成员报告的问题。感谢您花时间提交这些文件：
+*@BlueX888（＃4808，＃4813，＃4827）</p>
+<ul>
+<li>@ConnorMoss02 (#4740, #4762, #4763)</li>
+<li>@yotambraun (#4885, #4887)</li>
+<li>@buyan201430-代码 (#4804)</li>
+<li>@ch3rn0v (#767)</li>
+<li>@chirag127 (#4469)</li>
+<li>@chrisbartoloburlo (#4457)</li>
+<li>@daichiyasunami-vottia (#4797)</li>
+<li>@DannyAmmon (#4512)</li>
+<li>@davidw-飞利浦 (#3073)</li>
+<li>@Drakhanas (#3527)</li>
+<li>@DrewGei (#4406)</li>
+<li>@egoes (#2044)</li>
+<li>@EllipticElysium (#1819)</li>
+<li>@fabn (#3029)</li>
+<li>@GrzywN (#4288)</li>
+<li>@hummbl-agent (#4721)</li>
+<li>@jagansanikommu (#1970)</li>
+<li>@JavieHush (#1682)</li>
+<li>@Jinx-1120 (#1401)</li>
+<li>@KonecSvetta (#4213)</li>
+<li>@kuviki (#3199)</li>
+<li>@murphyXu (#1624)</li>
+<li>@Nokel81 (#4087)</li>
+<li>@sasan1200 (#4792)</li>
+<li>@Shellishack (#3204)</li>
+<li>@tiagovilasboas (#4838)</li>
+<li>@tomekep (#4841)
+感谢这些贡献者，他们的拉取请求原型修复了此版本中提供的修复。根据存储库的 <a href="https://github.com/modelcontextprotocol/servers/blob/v2/main/CONTRIBUTING.md">问题，而不是拉取请求</a> 政策，他们的 PR 已关闭，维护者重建了修复程序，将问题归功于他们：</li>
+<li>@Yi-111-a（#4925，#4923 的 SSE 端口使用修复）</li>
+<li>@nielskaspers (#3580)、@Chelebii (#3876) 和 @piyushbag (#4428)，#3572 的获取工具注释</li>
+<li>@SamMorrowDrums (#3260)，用于 everything 服务器的 MCP 接口差异 CI，改编为 #4975；发货时为 2.0.0</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/modelcontextprotocol/servers">modelcontextprotocol/servers</a> · 🏷️ 版本：<code>v1.0.0</code> · 📅 发布：2026-10-11 · <a href="https://github.com/modelcontextprotocol/servers/releases/tag/v1.0.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/servers/servers_v2.0.0"> <span class="k">← 下一个</span> <span class="t">v2.0.0</span> </a> <a href="/zh/release_note/servers/servers_2026.8.31"> <span class="k">上一个 →</span> <span class="t">2026.8.31</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/modelcontextprotocol/servers/releases/tag/v1.0.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/modelcontextprotocol/servers" target="_blank" rel="noopener"> <span>modelcontextprotocol/servers</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#最终旧版服务器版本" class>最终旧版服务器版本</a><a href="#套餐" class>套餐</a><a href="#modelcontextprotocol服务器-一切-100" class>@modelcontextprotocol/服务器-一切 1.0.0</a><a href="#发生了什么变化" class="lv3">发生了什么变化</a><a href="#modelcontextprotocol服务器文件系统-100" class>@modelcontextprotocol/服务器文件系统 1.0.0</a><a href="#发生了什么变化-1" class="lv3">发生了什么变化</a><a href="#modelcontextprotocol服务器内存-100" class>@modelcontextprotocol/服务器内存 1.0.0</a><a href="#发生了什么变化-2" class="lv3">发生了什么变化</a><a href="#modelcontextprotocol服务器顺序思维-100" class>@modelcontextprotocol/服务器顺序思维 1.0.0</a><a href="#发生了什么变化-3" class="lv3">发生了什么变化</a><a href="#mcp-服务器获取-20261010" class>mcp 服务器获取 2026.10.10</a><a href="#发生了什么变化-4" class="lv3">发生了什么变化</a><a href="#mcp-服务器-git-20261010" class>mcp-服务器-git 2026.10.10</a><a href="#发生了什么变化-5" class="lv3">发生了什么变化</a><a href="#mcp-服务器时间-20261010" class>mcp-服务器时间 2026.10.10</a><a href="#发生了什么变化-6" class="lv3">发生了什么变化</a><a href="#存储库" class>存储库</a><a href="#发生了什么变化-7" class="lv3">发生了什么变化</a><a href="#新贡献者" class>新贡献者</a><a href="#感谢您帮助我们改进" class>感谢您帮助我们改进</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/servers/servers_v2.5.0"> <span class="v">v2.5.0</span> <span class="d">26-11-18</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v2.4.0"> <span class="v">v2.4.0</span> <span class="d">26-11-11</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v2.3.0"> <span class="v">v2.3.0</span> <span class="d">26-11-04</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v2.2.0"> <span class="v">v2.2.0</span> <span class="d">26-10-28</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v2.1.0"> <span class="v">v2.1.0</span> <span class="d">26-10-25</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v2.0.0"> <span class="v">v2.0.0</span> <span class="d">26-10-19</span> </a> </li><li> <a href="/zh/release_note/servers/servers_v1.0.0" aria-current="true"> <span class="v">v1.0.0</span> <span class="d">26-10-11</span> </a> </li><li> <a href="/zh/release_note/servers/servers_2026.8.31"> <span class="v">2026.8.31</span> <span class="d">26-08-31</span> </a> </li> </ul> <a href="/zh/releases/servers" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

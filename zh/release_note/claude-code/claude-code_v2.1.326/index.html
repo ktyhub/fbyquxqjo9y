@@ -1,0 +1,403 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>claude-code v2.1.326 — STAGS NextStack</title><meta name="description" content="Added support for turning on Code Mode while agent teams are enabled; if you already turned it on, sessions with teams on now start in Code Mode"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/claude-code/claude-code_v2.1.326/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/claude-code/2.1.326"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/claude-code/claude-code_v2.1.326/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/claude-code/2.1.326"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="claude-code v2.1.326 — STAGS NextStack"><meta property="og:description" content="Added support for turning on Code Mode while agent teams are enabled; if you already turned it on, sessions with teams on now start in Code Mode"><meta property="og:url" content="https://www.stags.cn/zh/release_note/claude-code/claude-code_v2.1.326/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/claude-code/claude-code_v2.1.326/#article","headline":"claude-code v2.1.326 release notes","datePublished":"2026-11-16","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/anthropics/claude-code"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/claude-code/2.1.326/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/claude-code/claude-code_v2.1.326/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/claude-code/2.1.326/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/claude-code/2.1.326/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/claude-code/2.1.326/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/claude-code/2.1.326/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/claude-code/2.1.326/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/claude-code">claude-code</a> </nav> <h1 class="detail-title"> <span class="p">claude-code</span> v2.1.326 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年11月16日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener"> <span class="k">来源</span>anthropics/claude-code </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/claude-code/2.1.326"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/claude-code/claude-code_v2.1.326/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h2 id="发生了什么变化">发生了什么变化</h2>
+<ul>
+<li>添加了在启用代理团队时打开代码模式的支持；如果您已经打开它，与团队的会话现在会在代码模式下开始</li>
+<li>添加了当 <code>--allowedTools</code>、<code>--disallowedTools</code> 或 <code>--tools</code> 值具有看起来不像完整规则的条目时的启动警告</li>
+<li>添加了一条消息，解释当管理员在会话期间添加 <code>managed-mcp.json</code> 时，为什么 MCP 服务器停止加载</li>
+<li>在 <code>/status</code> 中添加了一行，说明您的提供程序或环境变量（例如 <code>DISABLE_TELEMETRY</code>）何时关闭功能</li>
+<li>当忽略格式错误的 <code>plugin.json</code> 字段（例如 <code>author</code> 或 <code>homepage</code>）时，在 <code>/plugin</code> 和 <code>claude plugin list</code> 中添加了注释</li>
+<li>添加了 Ctrl+O 显示隐藏的启动通知</li>
+<li>在空提示中添加了提示，说明请求失败后该怎么做</li>
+<li>在子代理视图中添加了 <code>esc to stop</code> 页脚提示，Esc 将停止它</li>
+<li>添加了 <code>OTEL_RESOURCE_INCLUDE_HOST</code> 以将 <code>host.name</code> 和 <code>host.id</code> 包含在 OpenTelemetry 资源属性中（默认情况下关闭）</li>
+<li>在 mod 的 <code>Box</code> 上添加了 <code>overflowX="scroll"</code>，在其 <code>Text</code> 上添加了 <code>maxLines</code> 和 <code>wrap="clip"</code></li>
+<li>修复了当 <code>Edit</code> 拒绝规则仅覆盖其源时文件的 <code>cp</code> 被拒绝的问题</li>
+<li>修复了删除或覆盖文件（<code>find -delete</code>、<code>cat a > b</code>、<code>sort -o</code>）的 Bash 命令在记录中总结为搜索或读取</li>
+<li>修正了一些没有 rm 的命令的 Bash 权限提示中的误导性“危险 rm 操作”警告，导致 Claude Code 无法可靠地读取</li>
+<li>修复了后台会话在崩溃后、从另一个文件夹重新打开后或后台服务缺少时丢失 shell 导出的 LLM 网关的问题：它们现在在任何模型请求之前停止</li>
+<li>修复了当列表中的进程号已被其他用户的进程重用时后台服务会结束您自己的进程（例如 SSH 登录）的问题</li>
+<li>修复了在 <code>/permissions</code> 或主对话工具提示以及 <code>/add-dir</code> 文件夹中添加的规则，当设置文件无法写入时看起来已保存；终端现在发出警告并为其命名</li>
+<li>修复了失败的 MCP <code>headersHelper</code>，或者未在 untrusted 文件夹中运行的 MCP <code>headersHelper</code>，使得其他会话在没有该服务器的情况下启动，对于大多数没有存储 OAuth 刷新令牌的服务器</li>
+<li>修复了某些键名称的托管设置，阻止克劳德代码启动或影响其他托管文件</li>
+<li>修复了设置文件，其值嵌套了数千层，导致克劳德代码崩溃或仅在某些时候应用；现在，超过 64 个级别的值将被丢弃并发出警告</li>
+<li>修复了保存的设置文件在会话中出现错误而被静默跳过的问题；现在会出现警告命名文件</li>
+<li>修复了托管设置中设置的子代理模型不适用于 Claude Desktop 的“代码”选项卡；它现在会覆盖您自己的设置，就像在终端中一样，除非这些设置也选择了提供商或网关</li>
+<li>修复了当通过 <code>/net</code> 的符号链接到达主目录或配置目录且沙箱设置拒绝读取它时，沙箱命令无法在 Linux 上启动的问题</li>
+<li>修复了空占位符文件（包括 <code>.git/config.lock</code>），当 Claude Code 在沙盒命令期间停止时，有时会留在 Linux 上的项目中</li>
+<li>修复了在已 trusted 父文件夹下显示的文件夹 trust 提示中回答“是”的问题</li>
+<li>修复了安装结束时的额外 Enter 接受提议，使自动模式成为默认模式</li>
+<li>修复了在启动自动模式优惠中输入的消息丢失，并且其 Enter 接受该优惠</li>
+<li>修正了在选项卡隐藏后发送给克劳德的权限提示上键入的注释</li>
+<li>修复了托管设置中的 PreToolUse 挂钩，当它们拒绝直接工具调用时，不会留下 OpenTelemetry <code>tool_decision</code> 事件或 <code>permission_denials</code> 条目</li>
+<li>修复了在 <code>/sandbox</code> 上输入的字母或在 <code>/permissions</code> 中移动选择的删除问题</li>
+<li>修复了当上一回合以空回复结束时，恢复的会话在崩溃后丢失最近回合的问题</li>
+<li>修复了当 Claude Code 内存不足时恢复的会话丢失早期对话历史记录的问题</li>
+<li>修复了在 Linux 上的远程控制和云会话中重新发送的文件覆盖克劳德更改的副本而未加载功能标志的问题：副本移至 <code>.kept-</code> 文件夹，或者未保存新文件</li>
+<li>修复了当您打开、停止或删除已恢复对话的旧会话时后台会话被终止及其请求丢失的问题</li>
+<li>修复了 <code>claude purge</code> 在标准输出重定向时隐藏其提示的问题，其中一个看不见的 Enter 可能会删除项目的数据；他们现在显示在终端上</li>
+<li>修复了支出限制菜单，删除了每月限制，而不询问何时在打开时按下 Backspace 和 Enter</li>
+<li>修复了运行 <code>/branch</code> 两次而慢速备份副本仍在运行时 <code>/rewind</code> 仅恢复某些文件的问题</li>
+<li>修复了当 shell 命令更改无法恢复的文件时 <code>/rewind</code> 提示“无代码更改”的问题；未跟踪更改的回合现在显示为“代码更改未知”</li>
+<li>修复了 <code>/rewind</code>：Esc 现在取消其摘要，其列表在全屏显示多个过去的提示，并且长提示不再隐藏有关丢失后续文件更改的警告</li>
+<li>修复了 <code>/skills</code> 中按 Ctrl+C 或 Ctrl+D 两次退出克劳德代码并删除更改的问题；现在保存并关闭面板</li>
+<li>修复了使用限制菜单在您打字时擦除草稿并打开的问题</li>
+<li>修复了当 ↑ 调用 Esc Esc 清除的草稿时粘贴的文本和图像被丢弃的问题</li>
+<li>修正了克劳德问题的编辑键入答案，当您继续前进而不按 Enter 键时发送旧文本</li>
+<li>修正了返回到您从列表中回答的问题时将光标放在第一个选项上，其中 Enter 替换了您的答案</li>
+<li>修复了当您在确认屏幕上键入空格时 <code>/feedback</code> 和 <code>/bug</code> 发送报告，以及在 Ctrl+O 或 Ctrl+Z 后丢失键入的报告的问题</li>
+<li>修复了在删除 <code>--add-dir</code>、<code>--allowedTools</code> 或其他列表选项后键入的提示而没有消息</li>
+<li>修复了当计划模式已开启时 <code>/plan &#x3C;description></code> 忽略描述的问题</li>
+<li>修复了 API 拒绝同一批次中的不同 PDF 读取后有效 PDF 从对话中删除的问题</li>
+<li>修复了绘制屏幕时一次内存分配失败后会话结束的问题</li>
+<li>修正了基岩、顶点和铸造厂的压缩，并且在遥测关闭的情况下，有时会回复您的一条消息而不是总结，或者将克劳德的最后回复排除在摘要之外</li>
+<li>修复了 Vertex AI 上的大量图像会话陷入有关请求大小超过 30 MB 限制的 400 错误的问题，而不是压缩并重试</li>
+<li>修复了 <code>max_tokens</code> 超出模型限制时的错误：克劳德代码现在使用 Anthropic API 报告的最大值重试请求</li>
+<li>修复了 Bash 工具中的 <code>grep</code> 默默地跳过一些文本文件</li>
+<li>修复了崩溃的 Node 或 Python 挂钩，仅显示其堆栈跟踪的第一行；现在会显示错误，并且 Ctrl+O 显示最多 10,000 个字符的输出</li>
+<li>修复了在停止挂钩正在运行且后台工作仍在进行中时键入时 <code>/goal clear</code> 或新的 <code>/goal</code> 不会粘住的问题</li>
+<li>修复了在按使用积分计费的回复后发送的自动会话回顾； <code>/recap</code>仍然有效</li>
+<li>修复了自动模式停留在其本地分类器上的问题，该分类器由于保存的值过时（例如来自较旧的克劳德代码的值）而会计入使用</li>
+<li>修复了当浏览器登录使用您的 Claude 计划而不是控制台组织时，<code>/login</code> 中的“使用您的控制台帐户登录”替换您的 Claude 订阅登录信息</li>
+<li>修复了 <code>/login</code> 以“登录成功”结尾，但仍使用经批准的 <code>ANTHROPIC_API_KEY</code> 的问题；现在它说请求仍然使用密钥</li>
+<li>修复了<code>/config</code>中打开API键后停留“未登录”的问题； “未登录”，<code>/login</code> 和 <code>/status</code> 现在命名为未使用的 <code>ANTHROPIC_API_KEY</code></li>
+<li>修复了当只有控制台配置文件的凭据位于拒绝文件夹时间戳的驱动器上时，<code>claude auth logout</code> 留下凭据以及令牌刷新失败的问题</li>
+<li>修复了当服务没有终端的 API 密钥或令牌时，在后台服务登录时发送的从代理视图恢复的过去对话</li>
+<li>修复了 Claude Desktop 的“代码”选项卡中的一次性身份验证错误 (401) 导致模型请求失败的问题：现在首先再次发送它们</li>
+<li>修复了 <code>forceLoginOrgUUID</code> 和 <code>forceRemoteSettingsRefresh</code> 启动错误，当网络阻止页面 (HTTP 403) 导致时，告诉您重新登录</li>
+<li>修复了 <code>claude auth login</code> 不显示粘贴的登录代码，因此在 Enter 之前无法看到或更正错误的粘贴</li>
+<li>修复了提交粘贴代码后 <code>/login</code> 和 <code>claude setup-token</code> 不显示任何内容的问题；他们现在显示“正在完成登录…”</li>
+<li>修复了首次运行登录等待浏览器或粘贴代码时 Esc 不执行任何操作的问题；现在返回一个屏幕</li>
+<li>修复了 <code>/logout</code> 在全屏模式下退出时不会在屏幕上留下注销消息的问题</li>
+<li>修复了在登录或首次运行步骤中使用 Ctrl+C 或 Ctrl+D 退出后在最后一个屏幕上绘制的 shell 提示符</li>
+<li>修复了两次 Ctrl+C 在首次运行主题选择时不执行任何操作，并在启动问题时冻结设置屏幕或后台会话上的终端</li>
+<li>修正了您在保存时、启动时和 <code>/privacy-settings</code> 中键入按键时被替换的更新术语的关闭答案</li>
+<li>修复了 <code>/privacy-settings</code> 切换有时会保存与快速双击时屏幕显示的内容相反的内容，更改 Esc 后按下的按键的设置，并且在保存失败时不显示</li>
+<li>修复了在另一个终端登录不同帐户后，<code>/privacy-settings</code> 将您的选择保存在错误的帐户上的问题</li>
+<li>修复了当您在开启后立即选择关闭时，<code>/privacy-settings</code> 会说“设置为真”的问题</li>
+<li>修复了当内联 <code>!</code> 命令需要批准时，技能和斜线命令在自动模式下无法在代码模式下加载的问题；克劳德现在被要求运行它</li>
+<li>修复了在代码模式下启动的后台子代理在使用内联 <code>!</code> 命令预加载技能时失败的问题</li>
+<li>修复了 mods 在代码模式下无法通过 <code>$.tool.call</code> 和 <code>$.tool.check</code> 使用 Bash、Read 和其他工具的问题</li>
+<li>修复了当两个长结果在同一毫秒内到达时并行 MCP 工具调用读取另一个调用保存的结果的问题 (anthropics/claude-code#105138)</li>
+<li>修复了工具搜索有时会在按确切名称询问工具时加载另一个 MCP 服务器的工具；系统可能会再次要求您提供该工具</li>
+<li>修复了当两个服务器具有几乎相同的名称时 MCP 提示消失的问题</li>
+<li>修复了对 SDK 主机刚刚删除的 MCP 服务器的工具调用，重新连接到它，或报告它需要身份验证</li>
+<li>修正了当服务器工具调用失败时克劳德没有被告知远程 MCP 服务器的问题是 declined</li>
+<li>修复了根 <code>anyOf</code> 或 <code>oneOf</code> 的 MCP 工具，仅向 Claude 显示参数的第一个分支形式；诸如 <code>42</code> 之类的文本现在可以作为数字到达，而另一个分支则需要一个数字</li>
+<li>修复了在更换云会话工作人员后，当批准的 MCP 资源工具不可用时克劳德没有被告知的问题</li>
+<li>修复了 <code>/mcp</code> 不显示本地（stdio）MCP 服务器启动失败的原因</li>
+<li>修复了 MCP 服务器重新连接时 Esc 不执行任何操作：Esc 或按两次 Ctrl+C，现在关闭等待并在后台继续重新连接</li>
+<li>修复了 <code>/mcp</code> 中的“启用”显示慢速服务器没有进度，第二个 Enter 再次禁用它的问题</li>
+<li>修复了 <code>claude mcp add-json</code> 回答大多数错误“无效配置：：无效输入”的问题；它现在说明要更改什么</li>
+<li>修复了当第二次按下将问题留待稍后回答时，后台 MCP 任务的问题上的 Ctrl+C 提示显示“取消”的问题</li>
+<li>修复了按 <code>c</code> 复制 MCP 登录 URL 时在粘贴字段中留下零散 <code>c</code> 的问题</li>
+<li>修复了 Tab 和 Shift+Tab 不在 MCP 服务器输入表单中的字段之间移动，以及必填字段在清空后保持勾选状态的问题</li>
+<li>远程控制：修复了服务器短暂不可用时会话在回复中断开的问题</li>
+<li>远程控制：修复了 <code>/remote-control</code> 中的二维码在短终端窗口（例如 80×24）中被切断的问题</li>
+<li>远程控制：修复了当后台子代理仍在运行时终端会话在手机上显示为空闲的问题；停止在你的手机或网络上，现在将它们与转弯一起结束</li>
+<li>修复了远程控制在等待只能在终端中应答的提示时显示会话正在运行的问题，以及在工具运行时打开会话时显示为空闲的问题</li>
+<li>修复了在 Claude Code 重新启动时按下“停止”按钮后重新启动后再次运行的远程会话中的回复</li>
+<li>修复了云中的停止和自托管运行器会话有时会等待慢速 MCP 服务器连接才能生效的问题</li>
+<li>修复了当代理使用自己的 HTTP 502、504 或 520 到 524 应答上传时，克劳德从云和远程控制会话发送的文件立即失败的问题；现在可以再次尝试上传</li>
+<li>修复了在检查密钥时选择“发送”后，claude.ai 聊天和 Cowork 任务有时不发送文件的问题</li>
+<li>修复了 claude.ai 聊天和 Cowork 任务仅因为包含 Word、Excel 或其他 zip 类型文件而询问插件文件的问题；现在首先读取此类文件的密钥</li>
+<li>修复了当刷新的令牌已经到期时（例如当机器的时钟提前运行时）<code>claude self-hosted-runner</code> 不间断地请求新令牌的问题</li>
+<li>修复了当云会话无法停止时 <code>/autofix-pr</code> 报告运行已取消的问题；它现在链接会话，以便您可以停止它</li>
+<li>修复了 <code>/teleport</code> 在狭窄终端的列表中隐藏会话的问题</li>
+<li>修复了工件发布拒绝后台会话临时文件夹中的文件的问题</li>
+<li>修复了 <code>disallowedTools</code> 列出 <code>Artifact</code> 的子代理在某些云会话中仍提供工件工具的问题</li>
+<li>修复了当有权访问其文件夹的人可以打开刚刚发布的工件时，克劳德将其称为私有的问题</li>
+<li>修复了克劳德发布或更新后终端不显示工件的链接的问题</li>
+<li>修复了终端会话的主要对话，默默地等待另一个子代理发送消息的后台子代理：现在被告知子代理向哪个代理报告</li>
+<li>修复了当退出对话框中按 Ctrl+C 两次结束会话时或界面崩溃后后台代理被告知您拒绝其工具调用的问题</li>
+<li>修复了向上和 Esc 将主对话的排队消息移动到您正在查看的子代理或队友的提示框中的问题</li>
+<li>修复了提示下的代理行在轮次结束后显示代理忙的问题：该行现在显示正在等待的内容，并且 <code>/tasks</code> 在每个后台命令后面命名子代理</li>
+<li>修复了已停止和失败的代理看起来像在提示下的代理行中正在运行的代理，或者在并行运行时显示“完成”，并且已停止代理的最后一个命令仍显示“正在运行…”</li>
+<li>修复了打开的后台代理在重试其请求时显示正常旋转器的问题</li>
+<li>修复了当克劳德在一次回复中启动三个或更多代理时，“启动后台代理”行停止在两个位置的问题</li>
+<li>修复了后台任务运行时每个较早回合的“完成”行显示“1 shell 仍在运行”</li>
+<li>修复了自动模式下的子代理工具计数，包括提供代理最终报告的调用</li>
+<li>修复了在全屏模式外显示会话模型的欢迎标题，同时查看在不同模型上运行的子代理或队友</li>
+<li>修复了查看以文本 <code>[Image #1]</code> 形式到达的后台代理时粘贴的图像</li>
+<li>修复了长后台代理和后台命令结果包裹在项目符号下而不是与其文本对齐的问题</li>
+<li>修复了设置慢速工作树时 <code>claude --worktree</code> 不显示任何内容的问题</li>
+<li>修复了工作树退出对话框将新文件夹计为一个未提交的文件</li>
+<li>修复了工作流程恢复，告诉克劳德每个完成的代理将在呼叫失败后重新使用；克劳德现在被告知有多少结果被重复使用以及重复使用在哪里停止</li>
+<li>修复了设置、插件市场条目和 Grep 文件过滤器中格式错误的 glob 模式的挂起</li>
+<li>修复了当 <code>ALL_PROXY</code> 是唯一代理集并且代理永远不会应答时插件和市场请求永远等待的问题；他们现在会在 25 秒后失败</li>
+<li>修复了当一个地方的两个技能或命令共享名称时，<code>/</code> 菜单、<code>/skills</code> 和 <code>/plugin</code> 重复行并丢失光标的问题</li>
+<li>修复了 <code>/resume</code>、<code>/plugin</code>、<code>/permissions</code> 和 <code>/config</code> 中的搜索忽略 IME 输入、听写和快速打字的问题</li>
+<li>修复了清除 <code>/plugin</code> 已安装选项卡上的搜索后光标消失的问题</li>
+<li>修复了 mod 的 <code>Text</code> 和 <code>wrap="truncate-end"</code> 在保留换行符时在终端上丢失行的问题</li>
+<li>修复了 <code>/model</code> 将您保存的模型显示为“默认（推荐）”：默认现在命名您计划的默认模型，并在终端中选择它会将您切换回默认值</li>
+<li>修复了在会话期间创建的第一个技能、命令或代理无法立即找到的问题</li>
+<li>修复了 <code>/clear --help</code> 和其他内置命令在空闲提示符下运行而不是显示用法的问题；添加 <code>/help &#x3C;command></code></li>
+<li>修复了克劳德代码在中间响应服务器错误后重试时，半写回复冻结且没有旋转器的问题</li>
+<li>修复了 API 重试通知在下一次尝试期间位于“0 秒内重试”，现在“正在重试…”，以及当回复停滞或打开“减少”动作时“将重试”倒计时冻结</li>
+<li>修复了当回复开始流式传输时，文字记录会丢失几行，或者提示会跳起来的问题</li>
+<li>修复了长列表或代码块中的一行在回滚时丢失，以及文本在响应流时跳转一行的问题</li>
+<li>修复了一条长队消息在流式传输时隐藏克劳德的回复，并在经典渲染器中将其从回滚中删除</li>
+<li>修复了当您向上滚动或回答“编辑”或“写入”提示后回复完成时全屏文本跳转，以及在调整大小时丢失位置或跳转的问题</li>
+<li>修复了在长时间会话中搜索或向后跳转时全屏文字记录变为空白，以及在快速滚动过程中冻结的问题</li>
+<li>修复了全屏固定提示在回复流时显示较旧的问题，以及当您将选择拖过顶部时与回复一起复制的问题</li>
+<li>修复了在 <code>/model</code>、<code>/model &#x3C;alias></code> 和 <code>/effort &#x3C;level></code> 中选择模型后屏幕变黑并丢失按键的问题，短暂隐藏提示并丢失之后键入的字母</li>
+<li>修复了长时间对话中 <code>/tui default</code> 后或 <code>tui</code> 设置在另一个窗口中更改时的屏幕乱码 (anthropics/claude-code#94879)</li>
+<li>修复了在权限提示和 Ctrl+O 记录中显示长的新创建文件时屏幕冻结几秒钟的问题</li>
+<li>修复了一些很长的 Bash 或 PowerShell 命令冻结会话几秒钟的问题</li>
+<li>修复了粘贴后立即按下 Shift+Enter 或 Option+Enter 发送提示而不是添加新行的问题</li>
+<li>修复了向上、向下、结束和鼠标 clicks 将光标放在换行提示的错误行上的问题</li>
+<li>修复了删除行或单词后按下撤消 (Ctrl+_) 时丢失最后输入的单词的问题</li>
+<li>修复了粘贴到提示中的代码或差异在转录中丢失缩进，以及粘贴差异的添加行显示为已删除的问题</li>
+<li>修复了粘贴后立即输入时 <code>[Image #N]</code> 落在单词中间的问题，以及删除其占位符并使用 Ctrl+Y 将其粘贴回来后粘贴的图像未发送的问题</li>
+<li>修复了星号从您自己的文字记录提示中消失的问题，例如 <code>src/**/*.ts</code> 或 <code>2*3*4</code></li>
+<li>修复了 <code>claude -p</code> 在重试过载或失败的 API 请求时，或者在其文本输出重定向或捕获失败时在终端中不显示任何内容的问题</li>
+<li>修复了 Claude 响应中的 Windows 路径在 <code>.claude</code> 或 <code>_build</code> 等文件夹之前丢失反斜杠的问题</li>
+<li>修复了日语、中文和韩语回复中以标点符号开头或结尾时显示为原始 <code>**</code> 的粗体文本问题</li>
+<li>修复了 <code>/memory</code> 打开只读文件时没有警告更改可能无法保存的问题</li>
+<li>修复了克劳德编辑 <code>~/.claude/keybindings.json</code> 的问题，当要求更改那里的快捷方式时，该编辑在克劳德桌面中没有效果</li>
+<li>修正了克劳德说，当您的组织的策略禁用它时，管理员可以在提供其工具（例如克劳德桌面的代码选项卡）的应用程序中在 Chrome 中打开克劳德</li>
+<li>修复了建议的下一个提示有时是裸标签的问题，例如 <code>&#x3C;signal type="empty" /></code></li>
+<li>修复了长命令输出在展开视图中以中线结束且没有被剪切的迹象；它现在命名保存的文件</li>
+<li>修复了折叠工具行在仍在请求许可的情况下读取“Ran”或“Called”的问题，以及在呼叫停止或拒绝后打开面板时再次“Running…”或“Reading…”的问题</li>
+<li>修复了失败、阻止或拒绝的命令，看起来像是在折叠的工具行中传递命令：它现在显示“· 1 失败”或说它们没有运行</li>
+<li>修复了在权限提示下失败或被拒绝的回合后显示的“完成”行</li>
+<li>修复了失败或拒绝的技能和代理呼叫仍显示“正在初始化…”</li>
+<li>修复了 <code>/btw</code> 仅显示导入内容，例如“让我检查该文件”。当模型尝试使用工具时没有任何通知（anthropics/claude-code#90314）</li>
+<li>修复了长 <code>/btw</code> 答案看起来已完成并忽略 PgUp、PgDn、Home、End 和鼠标滚轮的问题</li>
+<li>修复了 <code>/resume</code> 搜索对存在的旧会话显示“没有会话匹配”的问题，以及输入数字打开会话而不是搜索的问题</li>
+<li>修复了在全屏提示搜索中再次按 Ctrl+R 不会移至下一个旧匹配的问题</li>
+<li>修复了在 shell 模式 (<code>!</code>) 下 Tab 无法完成没有斜杠的文件名，以及未引用空格或 shell 字符的完整路径</li>
+<li>修复了当斜杠命令或@文件菜单打开时，反弹<code>chat:submit</code>键不执行任何操作的问题</li>
+<li>修复了在清除文本后按住 Esc 键在键入的文本上打开“倒带”的问题</li>
+<li>修复了键入文本上的 Esc 取消挂起的 <code>/loop</code> 的问题</li>
+<li>修复了第二次 Esc 后“再次 Esc 清除”停留在屏幕上将不再清除提示的问题</li>
+<li>修复了返回到问题注释或在外部编辑器中编辑问题注释后在错误位置输入登陆的问题</li>
+<li>修复了发送或删除粘贴后隐藏模式的“再次粘贴以展开”提示和“ESC 以中断”</li>
+<li>修复了“再次粘贴以展开”在全屏模式下隐藏超过 10,000 个字符的粘贴中间部分，以及当您输入超过该长度时提示崩溃的问题</li>
+<li>修复了箭头键和 <code>q</code> 在 <code>claude --help</code> 通过管道传输到的寻呼机中不起作用的问题，如 <code>claude --help | less</code> 中那样</li>
+<li>修复了当无法验证证书签名时 Claude Desktop 的“代码”选项卡会指责互联网连接的问题</li>
+<li>修复了重试请求时 Web 搜索不显示任何内容的问题</li>
+<li>修复了默认设置下桌面通知未在 tmux 内发送（启用 <code>allow-passthrough</code>）或通过 SSH 发送到 iTerm2 的问题</li>
+<li>修复了 <code>/copy</code> 和 <code>/export</code> 在终端可能未复制任何内容时通过 SSH 提示“已复制到 clipboard”的问题</li>
+<li>修复了 <code>/usage-credits</code> 在请求被拒绝时显示“请求已发送至您的管理员”的问题；本身具有计费访问权限的人现在会被指向使用设置页面</li>
+<li>修复了 Pro 和 Max 用户在下一条消息 <code>/clear</code> 或 <code>/resume</code> 后保持打开状态的成绩单共享问题</li>
+<li>修复了重置限制后旧使用限制消息下出现的升级提示</li>
+<li>修复了每次权限提示或对话框后重新出现工作量级别通知，以及在上下文警告显示时不出现使用限制警告和其他通知的问题</li>
+<li>修复了 <code>/tui default</code> 说当设置保持全屏打开时它已切换回经典渲染器的问题；在 <code>/tui</code> 无法切换之后，Claude Code 现在会说明是什么让渲染器保持不变</li>
+<li>修复了新帐户的第一个会话使用与后续帐户不同的渲染器的问题</li>
+<li>修复了仅适用于当前文件夹的 <code>/config</code> 中的减少运动和显示提示</li>
+<li>修复了在 tmux 3.7 中重绘整个窗格的打字和旋转器</li>
+<li>修复了 Option+T 键入 †，而不是在 Option 未设置为 Meta 时从 iTerm2 切换对 SSH 的思考</li>
+<li>修复了 <code>/terminal-setup</code> 未命名 Shift+Enter 所需的 tmux 设置，并承诺在 1.25 之前在 Windows 终端中按 Shift+Enter 发送提示的问题</li>
+<li>修复了程序状态协议 (OSC 7501) 终端在空闲压缩后显示已完成的转弯，或者使用 <code>claude agents</code>、<code>claude attach</code> 或 <code>--resume</code> 打开的后台会话没有状态的问题</li>
+<li>修复了支持程序状态协议 (OSC 7501) 的终端在文件夹 trust 提示打开时看不到 Claude Code 正在等待您的问题 (anthropics/claude-code#105801)</li>
+<li>修复了终端进度条在等待您的答复时显示克劳德正在工作或使用 Ctrl+Z 暂停，并在克劳德仍在工作时 15 秒后在 Ghostty 中消失的问题</li>
+<li>修复了全屏向上滚动时没有任何迹象表明权限提示或问题正在等待的问题</li>
+<li>修复了全屏工具组标题命名已完成或排队的呼叫而不是正在运行的呼叫</li>
+<li>修复了全屏中已完成的工具组，也将搜索或列表也作为 shell 命令进行计数，并且工具计时器在权限提示下计数时间或在另一个命令后面排队</li>
+<li>修复了多行 shell 命令在运行时以全屏方式填充屏幕的问题</li>
+<li>修复了 <code>!</code> shell 命令在前三秒内没有显示输出的问题</li>
+<li>修复了当折叠行 clicked 在全屏模式下打开时，运行命令显示没有输出或计时器的问题</li>
+<li>修复了跳至底部药丸在全屏下消失而更多回复仍在下方的问题</li>
+<li>修复了提示在短全屏窗口中消失而上方显示调查或通知的问题</li>
+<li>修复了在 <code>!</code> shell 模式下粘贴图像时自定义状态行消失和按 Ctrl+C 时屏幕跳转的问题</li>
+<li>修复了自定义状态行在终端调整大小、<code>/cd</code> 或 <code>/rename</code> 后保留其旧宽度、文件夹和会话名称的问题 (anthropics/claude-code#107291)</li>
+<li>修复了自定义状态行旁边缺少“ESC 中断”并在 Esc 转到面板或页脚项目时显示的问题</li>
+<li>修复了退出全屏模式后在 shell 中输入鼠标转义代码的问题</li>
+<li>修复了全屏之外的提示框上 Ctrl+Z 消息打印问题</li>
+<li>修复了 <code>claude logs</code> 的绘制并与终端中已有的内容混合</li>
+<li>修复了回复完成时旋转器尖端闪烁和屏幕弹跳的问题</li>
+<li>修复了工具调用完成流式传输时“正在读取 1 个文件…”行闪烁和提示跳转的问题</li>
+<li>修复了 <code>claude --resume</code> 会话预览出现乱码并且在全屏模式下不滚动的问题</li>
+<li>修复了 Esc 未离开“自动连接到您的 IDE？”的问题<code>/ide</code> 中的问题，其中 Ctrl+C 两次退出 Claude Code</li>
+<li>修复了首次运行的终端设置，没有说明其更改或无法设置的内容</li>
+<li>修复了 <code>/status</code> 显示两次安装警告的问题</li>
+<li>修复了页脚的 PR 徽章在切换分支后显示上一个分支的拉取请求的问题</li>
+<li>修复了当首先提取或拉取命令时命名提取分支的“推送到”摘要，以及当 <code>gh</code> 拒绝操作且隐藏退出代码时显示的“合并 PR”或“关闭 PR”</li>
+<li>修复了在具有 Claude Code 无法识别的链接支持的终端中无法 clickable 的多行 URL，以及 Rex 终端中的标记链接</li>
+<li>修复了 Ctrl+O 记录提示 Ctrl+B 在全屏中将命令置于后台的问题，该命令会向上翻页，并且没有显示克劳德仍在工作的迹象</li>
+<li>修复了 Ctrl+R 搜索、模型选择器、计划批准、问题预览、后台 shell 输出和 <code>/plugin</code> 安装选项在短全屏窗口中被切断的问题</li>
+<li>修复了 <code>/context</code> 网格、API 错误，例如“信用余额过低”、“等待 API 响应”和重试通知、“ESC 中断”和“中断”在狭窄终端中被切断或混乱</li>
+<li>修复了宽表在计划和子代理提示中分开、将长单元格旁边的短单词切成两半以及在绘制为标签和值列表时显示杂散单词和空白行的问题</li>
+<li>修复了代码关键字，添加了差异行，缓慢回复的旋转器和“思考”在某些主题和终端中难以阅读</li>
+<li>修复了当主题和终端背景不同时差异和文件预览中的代码不可见的问题</li>
+<li>修复了 <code>/usage</code> 条未使用的部分在灯光和 ANSI 主题下看起来完整的问题</li>
+<li>修复了 <code>/effort</code> 滑块在全屏模式下忽略鼠标 clicks</li>
+<li>修复了终端中的肤色或连接表情符号、✌和☝等符号以及印地语、泰米尔语和其他印度语元音符号后绘制不正确的文本，这些元音符号将它们拉得更宽</li>
+<li>修复了加入的表情符号在 GNU 屏幕中将行推错位的问题</li>
+<li>修复了 JSON 列表的最后一项和右对齐数字在命令和工具输出中丢失缩进的问题</li>
+<li>修复了将“文件末尾无换行符”编号为代码行的差异编号，这会移动其后的行号</li>
+<li>修复了显示“（隐藏 0 行）”而不是隐藏了多少文本的长单行消息</li>
+<li>修复了当克劳德遗漏单元格类型或删除单元格时笔记本编辑不显示工具行，以及在顶部插入单元格时显示 <code>@undefined</code></li>
+<li>修复了“切换型号？”和“改变努力水平？”没有显示关键提示的问题</li>
+<li>修复了 <code>?</code> 快捷方式列表在狭窄的终端中一起运行其列，并在短的全屏窗口中在底部被切断</li>
+<li>修复了规则列表高于终端时关闭 <code>/permissions</code> 搜索后 macOS 和 Linux 上屏幕阅读器模式下的剩余提示文本</li>
+<li>改进了 Bash 权限检查：某些命令现在首先询问，或者在无人回答的情况下被拒绝</li>
+<li>改进了代码模式中的权限检查；更多沙盒命令现在询问或被拒绝</li>
+<li>改进了无法打开代码模式时显示的消息，以便它们告诉您可以做什么</li>
+<li>改进了 macOS、Linux 和 WSL 上的 Bash 沙箱保护</li>
+<li>更改了会话 mods 文件夹中的编辑以更频繁地询问，并更改了沙盒命令以写入更少的文件夹；如果每次编辑都要求，请删除指向不可读或网络路径的任何链接</li>
+<li>改进了 Linux 上的克劳德沙箱指令，以解释服务器只能通过启动它的命令访问</li>
+<li>改进了远程控制和云会话的推送通知中隐藏秘密的方式</li>
+<li>改进了终端中的 <code>/logout</code> 和 <code>claude auth logout</code> 重试撤销登录，并说明如果服务器未确认则在哪里撤销登录</li>
+<li>改进的远程控制：来自 <code>claude remote-control</code>、Claude Desktop 和 VS Code 会话的回复现在会在写入时流式传输到您的手机或浏览器</li>
+<li>改进了打字、流媒体和调整大小的响应能力，尤其是在长时间会话中</li>
+<li>改进了读取或编辑文件后的响应时间，尤其是在 Windows 上</li>
+<li>改进了空闲 CPU 使用情况：空闲会话现在唤醒机器的频率降低了</li>
+<li>改进了运行 20 个以上子代理时的 CPU 使用情况：未打开脚本的后台代理的令牌计数现在每 5 秒更新一次</li>
+<li>Windows：将会话第一个 Bash 命令的速度提高了约一秒</li>
+<li>改进了 git 存储库中 <code>/compact</code> 后第一条消息的响应时间</li>
+<li>改进了克劳德桌面中克劳德完成回复时排队消息的响应时间</li>
+<li>改进了 Claude Desktop 新会话中的首次响应时间：对于按需加载工具的本地 MCP 服务器，第一轮不再等待长达 500 毫秒</li>
+<li>改进了当多个钩子应答工具调用时 PreToolUse 钩子的 <code>updatedInput</code> 的保留方式；重写现在在更多情况下运行</li>
+<li>改进了 PreToolUse 挂钩退出时的错误 127，表示其检查可能尚未运行</li>
+<li>改进了记录中的钩子失败、阻塞和超时：失败现在是红色而不是灰色，阻止克劳德的钩子是黄色的，原因显示在它们下面</li>
+<li>改进了启动时和 <code>/cd</code> 中的文件夹 trust 提示，以命名 Claude Code 将加载的项目设置文件；在启动时它还标记运行命令的文件</li>
+<li>改进了文件夹trust提示说为什么Claude Code退出</li>
+<li>改进了权限检查因错误而失败时非交互式运行和后台代理中的消息，因此它指出了原因</li>
+<li>改进了 Chrome 中通过远程控制从终端会话发出的 Claude 权限请求：在 claude.ai 上，他们现在将 Claude 想要操作的网站命名为 Claude 想要操作的网站（当该网站已被允许时）</li>
+<li>改进了云会话中的 MCP 工具错误：当通过会话代理的呼叫在发送后被切断时，Claude 被告知结果未知</li>
+<li>改进了终端中的 <code>/update-config</code>，使用大约 13,000 个上下文标记而不是 93,000 个，并且拒绝设置编辑以仅引用更改的设置</li>
+<li>改进的程序状态协议 (OSC 7501) 报告：列出后台命令、监视器和 MCP 任务，等待它们的会话显示为正在运行而不是已完成</li>
+<li>改进的监视器：当手表过期且没有事件且其命令写入 stderr 时，Claude 现在会被告知并被告知哪个文件保存输出</li>
+<li>改进了 Chrome 中的 Claude：较长的 <code>browser_batch</code> 呼叫现在有 150 秒的时间来应答（从 90 秒增加到），因此丢失的最终结果更少</li>
+<li>改进了 <code>/doctor</code>，以便在工作时分享发现，而不是在完整报告发布之前保持沉默</li>
+<li>改进了 JSON 损坏的设置或 <code>.mcp.json</code> 文件的错误：它现在给出行和列</li>
+<li>改进了对您的提供商、登录或环境变量（例如 <code>DISABLE_TELEMETRY</code>）关闭的命令，以说明原因而不是“未知命令”</li>
+<li>改进了 <code>CERT_SIGNATURE_FAILURE</code> 连接错误，以指出 CA 续订后可能的原因以及 IT 可以更改的内容</li>
+<li>改进了当团队的集体预算用完时显示的消息：现在显示预算何时重置</li>
+<li>改进了 API 拒绝控制台登录时显示的错误：现在显示运行 <code>/login</code> 而不是指向管理设置</li>
+<li>改进的登录提示：粘贴验证码或网址现在会显示要做什么，并且提示会保留，以便您可以粘贴正确的代码 (anthropics/claude-code#97)</li>
+<li>改进了 <code>/login</code> 屏幕：代码进入正确的文本字段，被拒绝的代码在其下方说明原因，粘贴到短窗口中会将字段滚动到视图中</li>
+<li>改进了 <code>/design-login</code>、<code>/install-github-app</code> 和 MCP 登录屏幕以匹配 <code>/login</code>；前两个现在掩盖了粘贴的代码</li>
+<li>改进了 Claude 应用程序网关登录屏幕：登录地址是一个链接，<code>c</code> 会复制它</li>
+<li>改进的 <code>/plugin</code> 发现和市场列表：它们适合带有光标和屏幕上按键提示的短窗口，并且 Home、End、PgUp、PgDn、鼠标滚轮和 clicks 现在可以使用</li>
+<li>改进了 <code>/plugin</code> 市场和添加市场：紧凑的列表、更清晰的删除确认、清晰的文本字段以及添加失败时更短的错误</li>
+<li>改进了 <code>/plugin</code>“已安装”选项卡：Home、End、PgUp、PgDn 和 clicks 现在可以工作，并且隐藏行会被计数</li>
+<li>改进了 <code>/plugin</code> 错误和统计选项卡：长错误不再填满屏幕，首先从错误中卸载，长技能名称不再破坏表格</li>
+<li>改进了终端上的 <code>claude plugin</code>、<code>mcp</code>、<code>update</code>、<code>doctor</code> 和 <code>auth logout</code> 输出，以相同的方式标记成功、失败和警告（管道输出保持其旧形式）</li>
+<li>改进了整个终端的措辞：<code>/plugin</code>、<code>/mcp</code>、登录、设置、设置、代理视图、<code>/teleport</code>、远程控制、更新消息、微调提示、<code>/powerup</code> 和 <code>claude --help</code></li>
+<li>改进了许多对话框和 <code>?</code> 列表中的按键提示：它们以一种顺序和措辞显示可用的按键，并且适合狭窄的窗口； <code>/hooks</code> 和 <code>/permissions</code> 中更深的屏幕表示 Esc 会返回</li>
+<li>改进了 <code>/add-dir</code>、<code>/export</code>、<code>/permissions</code>、<code>/feedback</code>、<code>/install-github-app</code> 以及基岩和顶点设置中的文本字段：一看、长文本换行以及可以就地纠正拒绝值</li>
+<li>改进的对话框、面板和文字记录：许多对话框中的错误、警告和确认以 ✘、⚠ 或 ✔ 开头，加载行、状态行、计数和持续时间看起来和读起来更加相似</li>
+<li>改进了长菜单，例如 <code>/permissions</code>、<code>/resume</code> 和 <code>/model</code> 来说明上方和下方有多少行，以及 <code>/</code> 和 <code>@</code> 菜单来计算全屏和屏幕阅读器模式之外的隐藏行数</li>
+<li>改进的列表导航：更多列表在两端换行，斜线命令中的复选框列表采用 Home 和 End，当搜索找不到任何内容时，<code>/permissions</code> 会显示</li>
+<li>改进了座席视图中的选择器，以选择“Home”、“End”和“paging”</li>
+<li>改进了座席视图和提示下的座席行，以与其他列表相同的指针和颜色标记所选行</li>
+<li>改进了 Ctrl+C 停止后台代理后的页脚：现在在列出已停止的子代理时提供 <code>↓ to resume subagent</code></li>
+<li>改进的全屏模式：提示的边框现在显示长提示中有多少行在视图之外</li>
+<li>改进了 <code>/autocompact</code> 和 <code>/scroll-speed</code>，带有可显示每个值的滑块，带 Home、End 和（全屏）clicks，并适合窄终端</li>
+<li>改进了在 <code>/config</code>、<code>/memory</code> 和自动模式设置中读取 <code>on</code> / <code>off</code> 的开/关设置</li>
+<li>改进了排队消息下的立即发送提示：它现在显示“已排队”，并且不再看起来像消息的一部分</li>
+<li>改进了终端设置，可在进行更改之前列出所有更改</li>
+<li>改进了 <code>/btw</code>、<code>/help</code>、<code>/scroll-speed</code> 中的对齐和间距、设置错误对话框以及建议插件或设置的对话框</li>
+<li>将具有 Claude Code + Cowork HIPAA 配置的组织中的终端和 VS Code 会话更改为默认以自动模式启动； <code>disableAutoMode</code> 将其关闭</li>
+<li>当组织的策略尚未加载时，将没有模式设置的终端和 VS Code 会话更改为以自动模式启动，而不是手动模式</li>
+<li>更改了在会话中添加的 <code>managed-mcp.json</code>，以便它可以在下次检查时应用；重新启动开放会话以使其完全应用</li>
+<li>更改了代码模式的 <code>$</code> shell 帮助程序，以拒绝某些带有错误的值；没有运行</li>
+<li>更改了自动模式以停止之前运行的一些 shell 命令</li>
+<li>更改了 macOS 上之前运行的一些 Bash 命令来询问或被拒绝</li>
+<li>更改了钩子的 <code>"decision": "block"</code> 以在更多情况下保持，因此始终打印一个的钩子可能会开始阻止调用</li>
+<li>更改了默认情况下自动启动的会话，以便在加载设置后采用服务器管理的 <code>defaultMode</code>，或者如果设置失败且没有存储副本并且策略失败或需要它，则更改为手动</li>
+<li>更改了具有 Claude Code + Cowork HIPAA 配置的组织的自动模式：在直接 Anthropic API 连接上，服务器端分类器现在检查操作，与其他组织一样</li>
+<li>更改了 Bash 沙箱，使其在会话期间的某些情况下保持其状态，直到您运行 <code>/sandbox</code> 或 <code>/cd</code>； Bash 可能会先询问</li>
+<li>更改了 macOS、Linux 和 WSL 上的沙盒命令，默认情况下不再写入某些敏感的主文件夹；在用户或托管设置中，<code>sandbox.filesystem.allowWrite</code> 可以允许某些功能</li>
+<li>更改了 Bash 沙箱，以在执行命令后在存储库的 <code>.git</code> 文件夹中保留意外条目</li>
+<li>更改了 Linux 和 WSL 上的 Bash 沙箱，以在每个沙箱命令之前创建一些缺失的 <code>--add-dir</code> 文件夹，因此创建它们的命令可能会失败、跳过或落在其中</li>
+<li>更改了权限挂钩或 SDK 主机在批准保留在沙箱中时重写的命令（如果原始版本被检查为沙箱）；审批人可以添加<code>dangerouslyDisableSandbox: true</code></li>
+<li>更改了 <code>claude mcp serve</code> 以忽略 <code>sandbox.excludedCommands</code></li>
+<li>更改了 macOS、Linux 和 WSL 上的 <code>/rewind</code>，以保持某些文件不变，并在沙盒打开时将其报告为已跳过</li>
+<li>更改了 Bash 沙箱，以在自动允许关闭时设置环境变量的某些行之前进行询问；无人值守运行可以拒绝它们</li>
+<li>更改了 Claude 的文件工具，以拒绝写入 Claude Code 的登录文件，例如 <code>.credentials.json</code></li>
+<li>更改了 Bash 权限检查，以在更多命令到达 Claude Code 的登录文件之前进行询问</li>
+<li>更改了一些文件工具以拒绝某些设备和进程文件</li>
+<li>更改了一些 <code>cp</code> 和 <code>mv</code> 命令首先询问</li>
+<li>更改了绕过权限模式下的一些工具调用以请求批准，或者在无人可以请求的情况下被拒绝</li>
+<li>更改了 Bash 权限检查，以询问一些无法完成检查的具有很长值的命令，或者在可能适用拒绝规则或无人回答的情况下拒绝它们</li>
+<li>更改了工作树中隔离的子代理，以拒绝任何存储库中的 Bash 中的某些 git 命令，这些命令可以重写与结账共享的分支；会话不受影响</li>
+<li>更改了 <code>ExitWorktree</code> 以拒绝删除工作树，同时后台子代理或 shell 命令可能仍在其中运行，除非克劳德通过 <code>discard_changes</code></li>
+<li>更改了计算机使用 macOS 权限面板以忽略 j 和 k；箭头键和 Ctrl+P/Ctrl+N 仍然会移动所选内容</li>
+<li>更改了 PowerShell 工具，以在更多命令之前询问；无人值守运行会拒绝它们，除非允许规则、自动模式或绕过权限模式允许它们</li>
+<li>更改了 PowerShell 工具，以询问更多命令，即使在绕过权限模式下也是如此，并拒绝其中一些命令</li>
+<li>更改了一些格式错误的 PowerShell 命令被拒绝的情况</li>
+<li>更改了一些 PowerShell 工具命令，这些命令定义的函数名称类似于要拒绝的内置命令，因此 Claude 可以重命名它</li>
+<li>更改了自动模式以忽略某些通配符 shell 允许规则，例如未命名程序或以 <code>$HOME</code> 开头的规则，因此安全检查决定这些命令</li>
+<li>更改了自动模式来判断程序是Windows反斜杠路径的通配符允许规则，因此可以阻止这些调用；确切的规则保持其允许；我们计划恢复以 <code>.\</code> 开头的规则</li>
+<li>更改了没有 <code>"$defaults"</code> 的托管 <code>autoMode.environment</code> 列表，以替换 Claude Desktop 和 Agent SDK 应用程序中的每个内置条目；添加 <code>"$defaults"</code> 或复制敏感目标</li>
+<li>更改了本地终端会话中的 <code>--add-dir</code> 和 <code>/add-dir</code>，以显示尚未 trust 的文件夹的 trust 提示； <code>claude --bg</code>拒绝这样的文件夹</li>
+<li>更改了 <code>--trust-workspace false</code> 下的自托管运行器以忽略更多存储库设置；在用户或托管设置中设置此类值</li>
+<li>更改了通过远程控制和自托管运行器保存“始终允许”选项的权限应答方式</li>
+<li>更改了因格式错误的 <code>plugin.json</code> 显示字段而被拒绝的已启用插件：它们现在使用其挂钩和 MCP 服务器加载；管理员应该检查他们部署的插件</li>
+<li>更改了 <code>allowedHttpHookUrls</code> 和 <code>httpHookAllowedEnvVars</code> 从托管设置应用于挂钩的方式</li>
+<li>更改了 HTTP 挂钩以忽略 <code>headers</code> 设置中的 <code>Content-Length</code> 和 <code>Transfer-Encoding</code>；请求的长度来自其正文</li>
+<li>更改了插件卸载，同时删除从插件的 MCP 捆绑包（<code>.mcpb</code>、<code>.dxt</code>）中提取的文件，除非另一个插件使用相同的捆绑包</li>
+<li>更改了一些工作树会话以跳过一些插件设置；通知指出了跳过的内容</li>
+<li>更改了 <code>/plugin</code> 卸载、删除和切换问题至使用箭头键和 Enter 或 Esc 取消回答的列表； <code>y</code>、<code>n</code> 和 <code>u</code> 不再回答</li>
+<li>更改了计划模式下的自动压缩以使用回答您的模型，例如带有 <code>opusplan</code> 的 Opus，因此可能会花费更多</li>
+<li>更改了 Cowork 云会话以保留组织的 OpenTelemetry 导出直到第一轮；没有收到消息的会话现在不会发送任何内容，因此 <code>claude_code.session.count</code> 可能会崩溃</li>
+<li>将 Claude 的消息更改为另一台计算机上的会话，当您的会话在保存的 claude.ai 登录旁边使用 API 密钥、身份验证令牌、配置文件或工作负载身份时，该消息将被拒绝</li>
+<li>在未经批准的 API 密钥上更改了 <code>--bare</code> 会话：现在在大多数设置中拒绝将其移至后台，如果后台服务缺少密钥，则 <code>claude --bare --bg</code> 会退出并出现错误</li>
+<li>更改了“在使用限制时自动继续”，以在您的登录更改或在等待期间结束时停止并发出通知，不发送任何内容</li>
+<li>远程控制：更改了通过代理连接的方式：请求现在使用 CONNECT 隧道，因此拒绝 CONNECT 的代理会停止远程控制并出现错误</li>
+<li>远程控制：将 <code>--verbose</code> 下写入的会话调试日志更改为转到 <code>~/.claude/child-logs/</code></li>
+<li>自托管运行器：将没有 <code>gh</code> 的 Linux 和 macOS 会话更改为默认情况下通过 Anthropic 获得内置 <code>gh api</code>，这会添加 GitHub 登录（如果有）； <code>--use-anthropic-gh false</code> 将其关闭</li>
+<li>更改了代理视图，以便在空对话中按 <code>←</code> 后使用 Ctrl+C 两次、Ctrl+D 两次或 <code>/exit</code> 退出会结束该会话，而不是让它运行 5 分钟</li>
+<li>将 <code>--await-initialize</code> 更改为使用 <code>--bg</code> 或 <code>--worktree --tmux</code> 拒绝，它们从不读取初始化请求，而不是在没有其携带的字段的情况下启动</li>
+<li>更改了工作树创建、<code>/teleport</code> 和 IDE 签出，以使用更严格的 <code>PATH</code> 运行 git； git 过滤器或助手可能需要其完整路径</li>
+<li>将用于批准子代理计划的卡更改为两个选项，“是，并切换到此会话的默认值（每次询问）”和“否”，使用箭头键和 Enter 选择（键入的文本移至“否”）</li>
+<li>更改了 <code>/claude-api</code> 技能以默认在托管代理上构建代理，除非您想自己托管代理循环</li>
+<li>更改了全屏模式下的 <code>/usage</code>，以在订阅者的会话费用之前显示计划限制栏； <code>/cost</code>依然以成本起步</li>
+<li>更改了 <code>claude</code> 子命令打印的一些消息的措辞； JSON输出不变</li>
+<li>更改了首次运行设置以预先选择“自动（匹配终端）”主题而不是黑暗模式</li>
+<li>将全屏 <code>/cd</code> 更改为拒绝“是”，而其 trust 提示符不适合，并有一行表示使窗口更高</li>
+<li>删除了tmux提示，全屏时鼠标滚轮需要<code>set -g mouse on</code>；没有它滚轮就会滚动</li>
+<li>删除了建议 <code>/clear</code> 30 分钟运行转弯的旋转器尖端</li>
+<li>[VSCode] 添加了 <code>claudeCode.promptSuggestions</code> 设置，可关闭提示建议</li>
+<li>[VSCode] 修复了分叉对话中的“将代码倒回此处”有时会撤消一轮过多并删除该轮中创建的文件的问题</li>
+<li>[VSCode] 修复了沙箱关闭时沙箱对话框在主目录和项目的 <code>.git</code> 文件夹中创建空文件和文件夹的问题</li>
+<li>[VSCode] 修复了保存的登录在某些网络上丢失的问题</li>
+<li>[VSCode] 修复了粘贴验证码、网址或其他登录尝试的代码时登录结束的问题；面板现在显示要粘贴的内容</li>
+<li>[VSCode] 修复了在没有 API 密钥的情况下登录控制台时每次打开面板或窗口时短暂显示的登录屏幕</li>
+<li>[VSCode] 修复了使用限制横幅的“请求更多”按钮，以便团队和企业成员在会话期间再次登录后每次按下后返回而不发送任何内容</li>
+<li>[VSCode] 修复了第二个 Claude Code 会话中的 <code>/ide</code> 默默地失去与第一个会话的编辑器连接；现在最新的连接获胜，替换的会话显示如何切换回来</li>
+<li>[VSCode] 修复了当内存文件夹持有符号链接循环时，保存的内存未在“内存”对话框中列出，或 RAM 使用量无休止地增长，以及当它持有命名管道时挂起的问题</li>
+<li>[VSCode] 修复了正在运行的命令的实时输出在一次读取失败后停止的问题</li>
+<li>[VSCode] 修复了当 <code>claude</code> 无法启动时“在终端中打开”仅显示 shell 的错误：在 bash、zsh、fish 和 Git Bash 中，现在有一条通知解释了原因并链接到安装指南</li>
+<li>[VSCode] 修复了 Claude 发布工件后面板不显示“打开工件”链接的问题</li>
+<li>[VSCode] 修复了聊天面板未聚焦时隐藏“附加所选文本”提示的提示建议</li>
+<li>[VSCode] 修复了高对比度主题中没有可见边框的按钮以及浅高对比度登录屏幕上的深色欢迎艺术</li>
+<li>[VSCode] 改进的编辑和写入速度：当编辑器未报告未在选项卡中打开的文件时，无需等待此类文件出现新问题</li>
+<li>[VSCode] 更改了聊天中正在运行的命令的实时输出，使其看起来像命令卡的 OUT 行</li>
+<li>[VSCode] 更改了事件侦听器、视图和激活中的扩展错误文本，以远离编辑器自己的错误遥测</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>来源</strong> <a href="https://github.com/anthropics/claude-code">anthropics/claude-code</a> · <code>v2.1.326</code> · 2026-11-16 · <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.326">上游发布</a>
+<em>逐字镜像以进行索引。所有权利属于上游项目。</em></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/anthropics/claude-code">anthropics/claude-code</a> · 🏷️ 版本：<code>v2.1.326</code> · 📅 发布：2026-11-16 · <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.326">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/claude-code/claude-code_v2.1.327"> <span class="k">← 下一个</span> <span class="t">v2.1.327</span> </a> <a href="/zh/release_note/claude-code/claude-code_v2.1.325"> <span class="k">上一个 →</span> <span class="t">v2.1.325</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.326" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener"> <span>anthropics/claude-code</span> <span class="d">↗</span> </a> </li> </ul> </div>  <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/releases/claude-code/2.1.331"> <span class="v">v2.1.331</span> <span class="d">26-11-23</span> </a> </li><li> <a href="/zh/release_note/claude-code/claude-code_v2.1.330"> <span class="v">v2.1.330</span> <span class="d">26-11-20</span> </a> </li><li> <a href="/zh/release_note/claude-code/claude-code_v2.1.329"> <span class="v">v2.1.329</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/claude-code/claude-code_v2.1.328"> <span class="v">v2.1.328</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/claude-code/claude-code_v2.1.327"> <span class="v">v2.1.327</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/claude-code/claude-code_v2.1.326" aria-current="true"> <span class="v">v2.1.326</span> <span class="d">26-11-16</span> </a> </li><li> <a href="/zh/release_note/claude-code/claude-code_v2.1.325"> <span class="v">v2.1.325</span> <span class="d">26-11-13</span> </a> </li><li> <a href="/zh/release_note/claude-code/claude-code_v2.1.323"> <span class="v">v2.1.323</span> <span class="d">26-11-12</span> </a> </li> </ul> <a href="/zh/releases/claude-code" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 92 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

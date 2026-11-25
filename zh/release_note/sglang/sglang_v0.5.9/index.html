@@ -1,0 +1,1005 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>sglang v0.5.9 — STAGS NextStack</title><meta name="description" content="LoRA Weight Loading Overlap with Computation: Overlap LoRA weight loading with computation during inference, reducing TTFT by 78% and TPOT by 34.88% on large adaptors: #15512"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.9/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/sglang/0.5.9"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.9/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/sglang/0.5.9"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="sglang v0.5.9 — STAGS NextStack"><meta property="og:description" content="LoRA Weight Loading Overlap with Computation: Overlap LoRA weight loading with computation during inference, reducing TTFT by 78% and TPOT by 34.88% on large adaptors: #15512"><meta property="og:url" content="https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.9/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.9/#article","headline":"sglang v0.5.9 release notes","datePublished":"2026-02-24","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/sgl-project/sglang"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/sglang/0.5.9/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/sglang/sglang_v0.5.9/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/sglang/0.5.9/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/sglang/0.5.9/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/sglang/0.5.9/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/sglang/0.5.9/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/sglang/0.5.9/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/sglang">sglang</a> </nav> <h1 class="detail-title"> <span class="p">sglang</span> v0.5.9 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年2月24日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/sgl-project/sglang" target="_blank" rel="noopener"> <span class="k">来源</span>sgl-project/sglang </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/sglang/0.5.9"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/sglang/sglang_v0.5.9/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="sglang-v059">sglang v0.5.9</h1>
+<h1 id="亮点">亮点</h1>
+<ul>
+<li><strong>LoRA 权重加载与计算重叠</strong>：在推理期间将 LoRA 权重加载与计算重叠，在大型适配器上将 TTFT 减少约 78%，将 TPOT 减少约 34.88%：#15512</li>
+<li><strong>DeepSeek V3.2 的 TRT-LLM NSA 内核集成</strong>：集成 TRT-LLM DSA 内核以实现本机稀疏注意力，将 Blackwell 平台上的 DeepSeek V3.2 性能提高 3 倍至 5 倍，同时使用 trtllm 实现 —nsa-prefill-backend 和 —nsa-decode-backend
+（精度略有下降）：#16758、#17662、#18389</li>
+<li><strong>Flashinfer 多对多 MoE 调度程序</strong>：添加 Flashinfer 多对多 MoE 调度程序以实现高效的专家并行通信，从而在 MoE 模型中实现优化路由：#14668</li>
+<li><strong>FA4 (FP4 Attention) 支持多模态编码器</strong>：为多模态编码器引入 FP4 注意力后端和可变长度注意力功能，从而实现视觉语言模型的低精度推理：#13539</li>
+<li><strong>Anthropic 兼容 API 端点</strong>：将本机 Anthropic API 兼容性添加到 SGLang，允许直接与为 Anthropic API 格式构建的工具和 clients 集成：#18630</li>
+<li><strong>SGLang-Diffusion 高级优化</strong>：生产就绪的改进，包括令牌级序列分片、并行 VAE 解码、融合内核、Nunchaku 和 FP8 支持以及 ComfyUI 插件中的多个新模型：<a href="https://lmsys.org/blog/">博客</a></li>
+<li><strong>Spec V2 严重错误修复</strong>：修复推测解码 v2 中由 torch 垃圾收集引起的索引外错误，提高推测验证的可靠性：#18958</li>
+<li><strong>在 GB300 NVL72 上部署 DeepSeek</strong>：在 NVIDIA 最新的 GB300 平台上使用预填充解码分解和其他 SGLang 功能进行长上下文推理的优化工作：<a href="https://lmsys.org/blog/">博客</a></li>
+<li><strong>将 AITER 版本升级为 0.1.10.post3</strong>：支持 FP8 预填充/解码/KV 缓存</li>
+<li><strong>在 docs.sglang.io 中进行提交版本查找</strong>：轻松查找包含给定 PR 或提交的最早正式版本，简化用户和开发人员的发布跟踪：#18450，<a href="https://docs.sglang.io/references/release_lookup.html">链接</a></li>
+</ul>
+<h2 id="新模型支持">新模型支持</h2>
+<ul>
+<li>Kimi-K2.5：#17789，<a href="https://cookbook.sglang.io/autoregressive/Moonshotai/Kimi-K2.5">食谱</a></li>
+<li>GLM-5：<a href="https://cookbook.sglang.io/autoregressive/GLM/GLM-5">食谱</a>（仍然需要定制 docker 来进行变压器升级，后续将发布 rc 版本，因为变压器升级有风险）</li>
+<li>Qwen 3.5：#18489，#18926，#18937，<a href="https://cookbook.sglang.io/autoregressive/Qwen/Qwen3.5">食谱</a></li>
+<li>MiniMax 2.5：<a href="https://cookbook.sglang.io/autoregressive/MiniMax/MiniMax-M2.5">食谱</a></li>
+<li>Ernie4.5-VL：#15679</li>
+<li>步骤3-VL：#17513</li>
+<li>步骤-3.5-Flash：#18084，<a href="https://cookbook.sglang.io/autoregressive/StepFun/Step3.5">食谱</a></li>
+<li>LLaDA 2.1：<a href="https://cookbook.sglang.io/autoregressive/LLaDA/LLaDA-2.1">食谱</a></li>
+<li>环2.5 1T / 铃2.5 1T：#18598，<a href="https://cookbook.sglang.io/autoregressive/InclusionAI/Ring-2.5-1T">食谱</a>，<a href="https://cookbook.sglang.io/autoregressive/InclusionAI/Ling-2.5-1T">食谱</a></li>
+<li>MOVA（扩散）：#17704</li>
+<li>GLM-OCR：#17582，<a href="https://cookbook.sglang.io/autoregressive/GLM/GLM-OCR">食谱</a></li>
+<li>DeepSeek-OCR-2：#17897</li>
+</ul>
+<h2 id="sglang-扩散">SGLang-扩散</h2>
+<ul>
+<li>ComfyUI插件支持多种新模型</li>
+<li>并行折叠和并行 VAE 解码可加快图像/视频生成速度</li>
+<li>Nunchaku 和 FP8 支持扩散模型</li>
+<li>序列分片（代币级）取代帧分片以提高效率</li>
+<li>LTX-2 支持：#17495、#17496</li>
+<li>MOVA模型支持：#17704</li>
+<li>Cache-DiT 优化和融合内核改进</li>
+<li>扩散管道中的许多错误修复和重构</li>
+</ul>
+<h2 id="性能">性能</h2>
+<ul>
+<li>集成 TRT-LLM NSA 内核，在 Blackwell 上加速高达 3-5 倍：#16758、#17662、#18389</li>
+<li>LoRA 重量加载重叠将 TTFT 减少约 78%：#15512</li>
+<li>Flashinfer 多对多 MoE 调度程序：#14668</li>
+<li>多模态编码器 FA4：#13539</li>
+<li>优化 Qwen3 的 GDN 解码 Next: #17094</li>
+<li>调整 Llama-4-Scout、MiniMax M2 的融合 MoE 内核：#17891、#18851、#18833</li>
+<li>对称内存预分配以避免碎片：#17089</li>
+<li>优化 fused_moe triton 内核 TMA：#18782</li>
+<li>用于 Ernie4.5-VL 旋转嵌入的融合 Triton 内核：#18856</li>
+<li>支持 MxINT4 Flashinfer TRT-LLM MoE GEMM: #16892</li>
+<li>AITER 偏向 MoE 对 GPT-OSS MxFP4 的支持：#17735</li>
+</ul>
+<h2 id="预填充解码分解">预填充解码分解</h2>
+<ul>
+<li>支持与 MORI-IO 的 KV 传输：#14626</li>
+<li>Mooncake节点内NVLink KV传输：#17866</li>
+<li>改进不同 TP 大小的 MHA 模型的 KV 偏移计算：#18163</li>
+<li>文档SGLANG_MOONCAKE_CUSTOM_MEM_POOL：#18259</li>
+</ul>
+<h2 id="扩散法学硕士-dllm">扩散法学硕士 (dLLM)</h2>
+<ul>
+<li>删除 cuda graph 批量大小限制：#17458</li>
+<li>用于联合 M2T 和 T2T 解码的 JointThreshold 算法：#18171</li>
+<li>dLLM基本调度策略和实施：#17484</li>
+</ul>
+<h2 id="推测性解码">推测性解码</h2>
+<ul>
+<li>修复 Spec V2 中由 torch 垃圾回收引起的索引外错误：#18958</li>
+<li>在验证之前向前移动超时以修复 Eagle v1 过滤器不匹配问题：#18760</li>
+</ul>
+<h2 id="依赖关系">依赖关系</h2>
+<ul>
+<li>Flashinfer 更新为 0.6.3：#17700</li>
+<li>AITER 更新为 0.1.10.post3：#18741</li>
+<li>月饼传输引擎更新为 0.3.9：#18316</li>
+</ul>
+<h2 id="amd-硬件">AMD 硬件</h2>
+<ul>
+<li>AITER 更新至 v0.1.10.post3，支持 FP8 预填充、FP8 解码、FP8 KV 缓存</li>
+<li>ROCm 7 标准化和 ROCm 6.3 弃用：#17785</li>
+<li>Kimi K2.5 第 0 天 ROCm 支持：#17863</li>
+<li>FP8 预填充注意内核集成：#18528</li>
+<li>MORI EP 的两批重叠：#17953</li>
+<li>DeepSeek V3.2 和 Kimi-K2 每晚 CI 测试：#17523</li>
+</ul>
+<h2 id="npu升腾">NPU/升腾</h2>
+<ul>
+<li>支持 MiniCPM3-4B：#16866</li>
+<li>Qwen 3.5 对 Ascend 的支持：#18544</li>
+<li>StableLM-2 的准确性改进：#17470</li>
+<li>DeepSeek V3.2 和 DeepSeek-VL2 的错误修复：#17007</li>
+</ul>
+<h2 id="cpu-后端">CPU 后端</h2>
+<ul>
+<li>在 CPU 上优化 Qwen3-Next 模型：#12525</li>
+<li>优化 flash_attn_varlen_func: #15708</li>
+<li>为 CPU 添加 INT4 内核：#8226</li>
+</ul>
+<h2 id="内核瘦身">内核瘦身</h2>
+<ul>
+<li>将 GPTQ-Marlin 重新打包内核迁移到 JIT：#18543</li>
+<li>将 AWQ Marlin 重新打包内核迁移到 JIT：#18949</li>
+</ul>
+<h2 id="文档">文档</h2>
+<ul>
+<li>添加强化学习文档：#17663</li>
+<li>更新 torch 编译说明：#17819</li>
+<li>细化 SpecV2/STANDALONE/NGRAM 的规范解码文档：#18321</li>
+<li>合并扩散文档：#18095</li>
+</ul>
+<h1 id="改变了什么">改变了什么</h1>
+<ul>
+<li>使用 CI 注册表文档和 @alisonshao 在 <a href="https://github.com/sgl-project/sglang/pull/17368">https://github.com/sgl-project/sglang/pull/17368</a> 中的 5090/H100 指南更新测试自述文件</li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/17573%E4%B8%AD%E7%9A%84@amote-i%E6%9B%B4%E6%96%B0npu%E7%9A%84%E4%BE%9D%E8%B5%96%E6%96%87%E6%A1%A3">https://github.com/sgl-project/sglang/pull/17573中的@amote-i更新npu的依赖文档</a></li>
+<li>[AMD] CI - 通过 @yctseng0211 在 <a href="https://github.com/sgl-project/sglang/pull/17340">https://github.com/sgl-project/sglang/pull/17340</a> 中迁移性能测试并修复 stage-b-test-1-gpu-amd</li>
+<li>跳过 mm 特征池初始化以避免 EPD OOM by @liusy58 in <a href="https://github.com/sgl-project/sglang/pull/16388">https://github.com/sgl-project/sglang/pull/16388</a></li>
+<li>通过 @ispobock 在 <a href="https://github.com/sgl-project/sglang/pull/17566">https://github.com/sgl-project/sglang/pull/17566</a> 中更新曼巴环境设置</li>
+<li>[NPU]错误修复：通过@JiaruiChang5268在<a href="https://github.com/sgl-project/sglang/pull/17007%E4%B8%AD%E4%BF%AE%E5%A4%8Ddsv3.2%E5%92%8Cdsvl2">https://github.com/sgl-project/sglang/pull/17007中修复dsv3.2和dsvl2</a></li>
+<li>[AMD CI] 在 <a href="https://github.com/sgl-project/sglang/pull/17555">https://github.com/sgl-project/sglang/pull/17555</a> 中添加 @bingxche 的 2-GPU sql-kernel 测试</li>
+<li>@merrymercy 在 <a href="https://github.com/sgl-project/sglang/pull/17626">https://github.com/sgl-project/sglang/pull/17626</a> 中懒惰导入 torchao</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17438">https://github.com/sgl-project/sglang/pull/17438</a> 中由@alisonshao 重新启用unit-test-deepep-8-gpu 和unit-test-backend-4-gpu-gb200</li>
+<li>通过 @zminglei 在 <a href="https://github.com/sgl-project/sglang/pull/17532">https://github.com/sgl-project/sglang/pull/17532</a> 中修复 gpt-oss 分段 cuda 图启动失败问题</li>
+<li>[NPU] [CI] 暂时禁用 <a href="https://github.com/sgl-project/sglang/pull/17614">https://github.com/sgl-project/sglang/pull/17614</a> 中 @iforgetmyname 的 mtp 测试</li>
+<li>[NPU] <a href="https://github.com/sgl-project/sglang/pull/17621">https://github.com/sgl-project/sglang/pull/17621</a> 中 @Hexq0210 更新 Ascend NPU 文档</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17569">https://github.com/sgl-project/sglang/pull/17569</a> 中通过 @zyzshishui 关闭 rocm 上 wan 的 dit_layerwise_offload</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/17637%E4%B8%AD@liusy58%E5%B0%86liusy58%E7%9A%84cooldown_interval_%E5%88%86%E9%92%9F%E8%AE%BE%E7%BD%AE%E4%B8%BA0">https://github.com/sgl-project/sglang/pull/17637中@liusy58将liusy58的cooldown_interval_分钟设置为0</a></li>
+<li>支持<a href="https://github.com/sgl-project/sglang/pull/17089%E4%B8%AD@nvcastet%E7%9A%84%E5%AF%B9%E7%A7%B0%E5%86%85%E5%AD%98%E9%A2%84%E5%88%86%E9%85%8D%E4%BB%A5%E9%81%BF%E5%85%8D%E7%A2%8E%E7%89%87">https://github.com/sgl-project/sglang/pull/17089中@nvcastet的对称内存预分配以避免碎片</a></li>
+<li>[DeepSeek V3.2] 通过 @akhilg-nv 在 <a href="https://github.com/sgl-project/sglang/pull/16758">https://github.com/sgl-project/sglang/pull/16758</a> 中启用带有 bf16 kvcache 的 trtllm NSA</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/13539">https://github.com/sgl-project/sglang/pull/13539</a> 中添加 @vincentzed 的 fa4 mm 后端和 varlen 函数</li>
+<li>[重构] nextn 配置的代数数据类型 + @xyjixyjixyji 在 <a href="https://github.com/sgl-project/sglang/pull/17347">https://github.com/sgl-project/sglang/pull/17347</a> 中的一些基本重构</li>
+<li>[DLLM] 删除<a href="https://github.com/sgl-project/sglang/pull/17458%E4%B8%AD@btw616%E7%9A%84cuda">https://github.com/sgl-project/sglang/pull/17458中@btw616的cuda</a> graph批量大小限制</li>
+<li>通过 @mansoor-s 在 <a href="https://github.com/sgl-project/sglang/pull/17434">https://github.com/sgl-project/sglang/pull/17434</a> 中将返回路由专家添加到完成和聊天/完成端点</li>
+<li>[MUSA][1/N] sglang.check_env by @yeahdongcn in <a href="https://github.com/sgl-project/sglang/pull/16959">https://github.com/sgl-project/sglang/pull/16959</a></li>
+<li>[MUSA][2/N] sql-kernel 由 @yeahdongcn 在 <a href="https://github.com/sgl-project/sglang/pull/17053">https://github.com/sgl-project/sglang/pull/17053</a> 中构建</li>
+<li>由 @nanjianwill 在 <a href="https://github.com/sgl-project/sglang/pull/17286">https://github.com/sgl-project/sglang/pull/17286</a> 中更普遍地修复 post_residual_addition
+*功能：在<a href="https://github.com/sgl-project/sglang/pull/17219%E4%B8%AD%E6%B7%BB%E5%8A%A0openai%E5%85%BC%E5%AE%B9%E7%9A%84API%E8%AF%B7%E6%B1%82%E5%88%B0@dougyster%E7%9A%84bench_serving">https://github.com/sgl-project/sglang/pull/17219中添加openai兼容的API请求到@dougyster的bench_serving</a></li>
+<li>[NPU]支持模型 MiniCPM3-4B for npu by @McZyWu in <a href="https://github.com/sgl-project/sglang/pull/16866">https://github.com/sgl-project/sglang/pull/16866</a></li>
+<li>[NPU] 通过 @McZyWu 在 <a href="https://github.com/sgl-project/sglang/pull/17470">https://github.com/sgl-project/sglang/pull/17470</a> 中解决 npu stablelm-2-1-6b 的精度问题</li>
+<li>[Docker] 为 cuda 13 映像安装 cudnn==9.16 以避免 <a href="https://github.com/sgl-project/sglang/pull/17668">https://github.com/sgl-project/sglang/pull/17668</a> 中 @Fridge003 检查错误</li>
+<li>重构：通过<a href="https://github.com/sgl-project/sglang/pull/16969%E4%B8%AD%E7%9A%84@DotSlash-A%E5%B0%86DeepSeek%E5%B8%B8%E7%94%A8%E5%AE%9E%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%8F%90%E5%8F%96%E5%88%B0%E5%85%B1%E4%BA%AB%E6%A8%A1%E5%9D%97%E4%B8%AD">https://github.com/sgl-project/sglang/pull/16969中的@DotSlash-A将DeepSeek常用实用程序提取到共享模块中</a></li>
+<li>[扩散] LTX-2 支持 <a href="https://github.com/sgl-project/sglang/pull/17495">https://github.com/sgl-project/sglang/pull/17495</a> 中 @gmixiaojin 的 PR1</li>
+<li>[扩散] LTX-2 支持 <a href="https://github.com/sgl-project/sglang/pull/17496">https://github.com/sgl-project/sglang/pull/17496</a> 中 @gmixiaojin 的 PR2</li>
+<li>修复：@dougyster 在 <a href="https://github.com/sgl-project/sglang/pull/17538">https://github.com/sgl-project/sglang/pull/17538</a> 中对非帖子版本进行夜间轮命名</li>
+<li>[JIT Kernel]通过 @HydraQYH 在 <a href="https://github.com/sgl-project/sglang/pull/17588">https://github.com/sgl-project/sglang/pull/17588</a> 中为 JIT 内核头添加一些 CUDA 运行时 API 包装器</li>
+<li>修复：@strgrb 在 <a href="https://github.com/sgl-project/sglang/pull/17508">https://github.com/sgl-project/sglang/pull/17508</a> 中的 kda 中的 sigmoid 错误</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/17570%E4%B8%AD@ispobock%E7%9A%84%E6%9B%B4%E5%A4%9A%E6%A8%A1%E5%9E%8B%E5%B5%8C%E5%85%A5%E4%B8%AD%E4%BD%BF%E7%94%A8attn">https://github.com/sgl-project/sglang/pull/17570中@ispobock的更多模型嵌入中使用attn</a> tp组</li>
+<li>[扩散] 在<a href="https://github.com/sgl-project/sglang/pull/17658%E4%B8%AD%E9%80%9A%E8%BF%87@BBuf%E5%90%91jit%E5%86%85%E6%A0%B8%E6%B7%BB%E5%8A%A0%E6%89%A9%E6%95%A3%E6%97%B6%E9%97%B4%E5%B5%8C%E5%85%A5">https://github.com/sgl-project/sglang/pull/17658中通过@BBuf向jit内核添加扩散时间嵌入</a></li>
+<li>通过 <a href="https://github.com/sgl-project/sglang/pull/17353">https://github.com/sgl-project/sglang/pull/17353</a> 中的 @BBuf 将 fa4 从 sql-kernel 移至 jit 内核</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17464">https://github.com/sgl-project/sglang/pull/17464</a> 中添加 @glenliu21 的 LoRA 重叠加载和清理未使用功能的文档示例</li>
+<li>[错误修复] 修复 <a href="https://github.com/sgl-project/sglang/pull/17129">https://github.com/sgl-project/sglang/pull/17129</a> 中@yunkchen 在预填充节点预热中 log-requests-level >=2 时出现的 TypeError</li>
+<li>[Kimi-Linear] 在 <a href="https://github.com/sgl-project/sglang/pull/17506">https://github.com/sgl-project/sglang/pull/17506</a> 中重构 Kimi-Linear 以支持 @yuan-luo 的 RadixLinearAttention</li>
+<li>[NPU] torch_npu profiler 张量板路径类型由 @meng ChengTang 修复在 <a href="https://github.com/sgl-project/sglang/pull/17545">https://github.com/sgl-project/sglang/pull/17545</a> 中</li>
+<li>[NVIDIA] 在 <a href="https://github.com/sgl-project/sglang/pull/14668">https://github.com/sgl-project/sglang/pull/14668</a> 中添加 @trevor-m 的 flashinfer 全对全 MOE 调度程序</li>
+<li>修复@Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17681">https://github.com/sgl-project/sglang/pull/17681</a> 预测试中的测试超时问题</li>
+<li>修复 NSA 索引器测试并将其移至 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17682">https://github.com/sgl-project/sglang/pull/17682</a> 中的预提交测试</li>
+<li>由于 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17683">https://github.com/sgl-project/sglang/pull/17683</a> 中的片状性，暂时禁用 lora 重叠加载测试
+*修复：重构register_image_processor以使用kwarg而不是<a href="https://github.com/sgl-project/sglang/pull/17685%E4%B8%AD@JustinTong0323%E7%9A%84%E4%BD%8D%E7%BD%AEarg">https://github.com/sgl-project/sglang/pull/17685中@JustinTong0323的位置arg</a></li>
+<li>[diffusion]：通过 @dutsc 在 <a href="https://github.com/sgl-project/sglang/pull/17301">https://github.com/sgl-project/sglang/pull/17301</a> 中修复标题和潜在的 ZImage SP 分片</li>
+<li>通过修剪<a href="https://github.com/sgl-project/sglang/pull/17691%E4%B8%AD@Kangyan-Zhou%E7%9A%84%E6%B3%A8%E9%87%8A%E6%9D%A5%E4%BF%AE%E5%A4%8D%E6%96%9C%E6%9D%A0%E5%91%BD%E4%BB%A4%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6">https://github.com/sgl-project/sglang/pull/17691中@Kangyan-Zhou的注释来修复斜杠命令处理程序触发条件</a></li>
+<li>将 PyTorch .bin 文件验证添加到 <a href="https://github.com/sgl-project/sglang/pull/17533">https://github.com/sgl-project/sglang/pull/17533</a> 中@alisonshao 的 CI 权重验证中</li>
+<li>[DeepSeek-V3.2] 修复<a href="https://github.com/sgl-project/sglang/pull/17662%E4%B8%AD@mmangkad%E7%9A%84target_verify/draft_extend%E4%B8%AD%E7%9A%84TRT-LLM">https://github.com/sgl-project/sglang/pull/17662中@mmangkad的target_verify/draft_extend中的TRT-LLM</a> NSA</li>
+<li>使用 <a href="https://github.com/sgl-project/sglang/pull/17630">https://github.com/sgl-project/sglang/pull/17630</a> 中 @ispobock 的规范修复 swa 内存池大小</li>
+<li>[重构] [CI] 删除 <a href="https://github.com/sgl-project/sglang/pull/17584">https://github.com/sgl-project/sglang/pull/17584</a> 中 @Makcum888e 的冗余 CI 测试运行步骤 2</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17701">https://github.com/sgl-project/sglang/pull/17701</a> 中恢复 @Makcum888e 的 <a href="https://github.com/sgl-project/sglang/pull/17584/">https://github.com/sgl-project/sglang/pull/17584/</a> 行</li>
+<li>[重构] 在 <a href="https://github.com/sgl-project/sglang/pull/17118">https://github.com/sgl-project/sglang/pull/17118</a> 中 @luke396 的 JIT 内核基准测试中使用 is_in_ci() 实用程序</li>
+<li>使用 @slin1237 在 <a href="https://github.com/sgl-project/sglang/pull/17709">https://github.com/sgl-project/sglang/pull/17709</a> 中发布的推理解析器箱</li>
+<li>更新为在 <a href="https://github.com/sgl-project/sglang/pull/17710">https://github.com/sgl-project/sglang/pull/17710</a> 中使用 @slin1237 的官方 openai 协议箱</li>
+<li>删除自我管理协议，因为它已被 <a href="https://github.com/sgl-project/sglang/pull/17711">https://github.com/sgl-project/sglang/pull/17711</a> 中的@slin1237 替换为官方 oai 规范</li>
+<li>[扩散]重构：删除<a href="https://github.com/sgl-project/sglang/pull/17659%E4%B8%AD@mickqian%E6%97%A0%E7%94%A8%E7%9A%84lazy-import">https://github.com/sgl-project/sglang/pull/17659中@mickqian无用的lazy-import</a> cache-dit代码</li>
+<li>支持 @HandH1998 在 <a href="https://github.com/sgl-project/sglang/pull/16892">https://github.com/sgl-project/sglang/pull/16892</a> 中的 mxint4 flashinfer_trtllm moe gemm</li>
+<li>@Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17694">https://github.com/sgl-project/sglang/pull/17694</a> 中对夜间测试的一些更新</li>
+<li>在 pyproject.tml 中添加 all 类型，以包含 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17697">https://github.com/sgl-project/sglang/pull/17697</a> 中的扩散支持</li>
+<li>通过 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17718">https://github.com/sgl-project/sglang/pull/17718</a> 中延长 b200 内核测试 CPU 差异的超时</li>
+<li>[杂项] 删除工具解析器和树基准，因为它们对 <a href="https://github.com/sgl-project/sglang/pull/17719">https://github.com/sgl-project/sglang/pull/17719</a> 中的 @slin1237 没有意义</li>
+<li>[杂项]用<a href="https://github.com/sgl-project/sglang/pull/17720%E4%B8%AD@slin1237%E7%9A%84%E6%96%B0crate%E5%8C%85%E6%9B%BF%E6%8D%A2%E7%8E%B0%E6%9C%89%E7%9A%84%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E4%BB%A3%E7%A0%81">https://github.com/sgl-project/sglang/pull/17720中@slin1237的新crate包替换现有的工具调用代码</a></li>
+<li>由@Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17696">https://github.com/sgl-project/sglang/pull/17696</a> 中将夜间测试指标上传到 GH 工件</li>
+<li>通过在 <a href="https://github.com/sgl-project/sglang/pull/17687">https://github.com/sgl-project/sglang/pull/17687</a> 中处理 @Kangyan-Zhou 的 detokenizer 文本缓冲来修复不稳定的流式 logprobs 测试</li>
+<li>[错误修复]在 <a href="https://github.com/sgl-project/sglang/pull/17511">https://github.com/sgl-project/sglang/pull/17511</a> 中@chenxu214 在 NPU 上使用“enable-piecewise-cuda-graph”重复添加 modelslim quant_config 和错误修复</li>
+<li>修复 sql-kernel 安装：当 @alisonshao 在 <a href="https://github.com/sgl-project/sglang/pull/17728">https://github.com/sgl-project/sglang/pull/17728</a> 中缺少工件时，失败而不是 PyPI 回退</li>
+<li>将 EP=2 添加到 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17738">https://github.com/sgl-project/sglang/pull/17738</a> 中的 qwen235b 夜间测试中</li>
+<li>更新 nightly-test-nvidia.yml 以删除 <a href="https://github.com/sgl-project/sglang/pull/17625">https://github.com/sgl-project/sglang/pull/17625</a> 中 @Kangyan-Zhou 的推送触发器</li>
+<li>删除自我管理的 mcp，因为它已被 <a href="https://github.com/sgl-project/sglang/pull/17740">https://github.com/sgl-project/sglang/pull/17740</a> 中的 @slin1237 替换为官方 rmcp 板条箱</li>
+<li>[Kimi-Linear] 删除<a href="https://github.com/sgl-project/sglang/pull/17731%E4%B8%AD@yuan-luo%E5%9C%A8kimi-Linear%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E4%BB%A3%E7%A0%81">https://github.com/sgl-project/sglang/pull/17731中@yuan-luo在kimi-Linear中的重复代码</a></li>
+<li>[NIXL] 通过 @zackyoray 在 <a href="https://github.com/sgl-project/sglang/pull/17146">https://github.com/sgl-project/sglang/pull/17146</a> 中为 KVManager 添加自定义 NIXL 后端选择</li>
+<li>将性能/准确性测试套件合并到 <a href="https://github.com/sgl-project/sglang/pull/17609">https://github.com/sgl-project/sglang/pull/17609</a> 中的 @alisonshao 的常规 stage-b 套件中</li>
+<li>删除自我管理的 wasm，因为它已被官方的 smg wa 取代…作者：<a href="https://github.com/sgl-project/sglang/pull/17746">https://github.com/sgl-project/sglang/pull/17746</a> 中的 @slin1237</li>
+<li>在docker中排除@Kangyan-Zhou在<a href="https://github.com/sgl-project/sglang/pull/17745%E4%B8%AD%E5%8F%91%E5%B8%83%E7%9A%84%E4%B8%80%E4%BA%9BARM%E6%89%A9%E6%95%A3%E5%8C%85">https://github.com/sgl-project/sglang/pull/17745中发布的一些ARM扩散包</a></li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/17748%E4%B8%AD%E7%9A%84@slin1237%E6%9B%B4%E6%96%B0wasm%E7%AB%AF%E7%82%B9">https://github.com/sgl-project/sglang/pull/17748中的@slin1237更新wasm端点</a></li>
+<li>[修复] 在 <a href="https://github.com/sgl-project/sglang/pull/17343">https://github.com/sgl-project/sglang/pull/17343</a> 中通过 @Prozac614 在 pipelines_core 初始化中传递缺少的后端参数</li>
+<li>删除多模式，因为这是 @slin1237 在 <a href="https://github.com/sgl-project/sglang/pull/17750">https://github.com/sgl-project/sglang/pull/17750</a> 中完全死的代码</li>
+<li>@McZyWu 在 <a href="https://github.com/sgl-project/sglang/pull/16868">https://github.com/sgl-project/sglang/pull/16868</a> 中对 npu 的 baichuan2-13B 进行精度增强</li>
+<li>由 @shaharmor98 在 <a href="https://github.com/sgl-project/sglang/pull/17700">https://github.com/sgl-project/sglang/pull/17700</a> 中凹凸 FI 版本</li>
+<li><a href="https://github.com/sgl-project/sglang/pull/17645">https://github.com/sgl-project/sglang/pull/17645</a> 中 @yizhang2077 重构 server_args 中的 mamba 基数缓存逻辑</li>
+<li>[AMD CI] 在 <a href="https://github.com/sgl-project/sglang/pull/17656">https://github.com/sgl-project/sglang/pull/17656</a> 中添加 @sogalin 的 Moonshotai/Kimi-K2-Instruct-0905 测试用例</li>
+<li>[NPU]DeepSeek-V3.2在<a href="https://github.com/sgl-project/sglang/pull/15381%E4%B8%AD%E6%94%AF%E6%8C%81@lawtherWu%E7%9A%84npu">https://github.com/sgl-project/sglang/pull/15381中支持@lawtherWu的npu</a> mlaprolog</li>
+<li>将 test_gpt_oss_4gpu.py 添加到 <a href="https://github.com/sgl-project/sglang/pull/17743">https://github.com/sgl-project/sglang/pull/17743</a> 中 @alisonshao 的 B200 测试套件
+*修复：将夜间whl移动到<a href="https://github.com/sgl-project/sglang/pull/17762%E4%B8%AD@dougyster%E7%9A%84cuda%E7%89%88%E6%9C%AC%E6%96%87%E4%BB%B6%E5%A4%B9">https://github.com/sgl-project/sglang/pull/17762中@dougyster的cuda版本文件夹</a></li>
+<li>[NPU] 将 pyproject npu 从 <a href="https://github.com/sgl-project/sglang/pull/17641">https://github.com/sgl-project/sglang/pull/17641</a> 中的 @Makcum888e 的其他 pyproject 中拆分出来</li>
+<li>@whybeyoung 在 <a href="https://github.com/sgl-project/sglang/pull/17734">https://github.com/sgl-project/sglang/pull/17734</a> 中进行健康检查的特殊逻辑</li>
+<li>[文档] 在 <a href="https://github.com/sgl-project/sglang/pull/17663">https://github.com/sgl-project/sglang/pull/17663</a> 中添加 @zijiexia 的 RL 文档</li>
+<li>修复（处理器）：通过 <a href="https://github.com/sgl-project/sglang/pull/17040">https://github.com/sgl-project/sglang/pull/17040</a> 中的 @Mahdi-CV 在 InternVL 处理器中支持 InternS1 text_config</li>
+<li>[bugfix] hf3fs崩溃的内部处理#16614 by @lei Huang-sketch in <a href="https://github.com/sgl-project/sglang/pull/16938">https://github.com/sgl-project/sglang/pull/16938</a></li>
+<li>[扩散] <a href="https://github.com/sgl-project/sglang/pull/17678">https://github.com/sgl-project/sglang/pull/17678</a> 中支持 Qwen-Image、多 GPU Z-Image 和 @niehen6174 的增强型 ComfyUI 集成</li>
+<li>支持 <a href="https://github.com/sgl-project/sglang/pull/17789">https://github.com/sgl-project/sglang/pull/17789</a> 中 @yhyang201 的 Kimi-K2.5 型号</li>
+<li>[HiCache][HA 1/N] 支持 <a href="https://github.com/sgl-project/sglang/pull/15892">https://github.com/sgl-project/sglang/pull/15892</a> 中 @alphabetc1 的 HiCache 存储运行时附加/分离</li>
+<li>修复：在 <a href="https://github.com/sgl-project/sglang/pull/17253">https://github.com/sgl-project/sglang/pull/17253</a> 中通过 @alphabetc1 保留 api 关键中间件中的断开事件</li>
+<li>[AMD] 更新 dsv3.2 AMD GPU 文档并统一由 @hubertlu-tw 在 <a href="https://github.com/sgl-project/sglang/pull/17783">https://github.com/sgl-project/sglang/pull/17783</a> 中构建的 ROCm TileLang</li>
+<li>[错误修复] 修复 <a href="https://github.com/sgl-project/sglang/pull/17065">https://github.com/sgl-project/sglang/pull/17065</a> 中 @laixinn 的 continue_final_message=true 时的推理解析器</li>
+<li>[GLM-OCR] 在<a href="https://github.com/sgl-project/sglang/pull/17582%E4%B8%AD%E6%94%AF%E6%8C%81@zRzRzRzRzRzRzR%E7%9A%84GLM-OCR%E6%A8%A1%E5%9E%8B">https://github.com/sgl-project/sglang/pull/17582中支持@zRzRzRzRzRzRzR的GLM-OCR模型</a></li>
+<li>修复（量化）：为 <a href="https://github.com/sgl-project/sglang/pull/17816">https://github.com/sgl-project/sglang/pull/17816</a> 中的 @MikkoParkkola 在 Blackwell GPU 上的 FP4 量化添加 sgl_kernel 回退</li>
+<li>[Doc]更新<a href="https://github.com/sgl-project/sglang/pull/17819%E4%B8%AD@Fridge003%E5%AF%B9torch%E7%BC%96%E8%AF%91%E7%9A%84%E6%8F%8F%E8%BF%B0">https://github.com/sgl-project/sglang/pull/17819中@Fridge003对torch编译的描述</a></li>
+<li>[NPU] 适配 cann 8.5：使用来自 cann 的 sfa 和闪电索引器操作以及 <a href="https://github.com/sgl-project/sglang/pull/17615">https://github.com/sgl-project/sglang/pull/17615</a> 中 @monkeyLoveding 的 CI 更新</li>
+<li>[DeepSeek] 更新@Fridge003在<a href="https://github.com/sgl-project/sglang/pull/17657%E4%B8%AD%E5%AF%B9DeepSeek">https://github.com/sgl-project/sglang/pull/17657中对DeepSeek</a> V3.2 NVFP4检查点的测试和文档</li>
+<li>[扩散] @fsygd 在 <a href="https://github.com/sgl-project/sglang/pull/17751">https://github.com/sgl-project/sglang/pull/17751</a> 中的 dit 精度重构</li>
+<li>让 flashMLA 工作于：Cu13、B300 by @vincentzed in <a href="https://github.com/sgl-project/sglang/pull/17600">https://github.com/sgl-project/sglang/pull/17600</a></li>
+<li>[混合模型]通过@zminglei在<a href="https://github.com/sgl-project/sglang/pull/17660%E4%B8%AD%E6%B8%85%E7%90%86%E5%B9%B6%E5%90%88%E5%B9%B6RadixLinearAttention%E4%B8%AD%E7%9A%84%E5%86%97%E4%BD%99%E5%AD%97%E6%AE%B5">https://github.com/sgl-project/sglang/pull/17660中清理并合并RadixLinearAttention中的冗余字段</a></li>
+<li>传递 GPU id 来杀死脚本中指定的设备。作者：@hnyls2002 在 <a href="https://github.com/sgl-project/sglang/pull/17840">https://github.com/sgl-project/sglang/pull/17840</a></li>
+<li>[AMD] 弃用 ROCm 6.3 工件，并通过 @hubertlu-tw 在 <a href="https://github.com/sgl-project/sglang/pull/17785">https://github.com/sgl-project/sglang/pull/17785</a> 中标准化 ROCm 7 上的 gfx942</li>
+<li>[扩散] glm-image 在 <a href="https://github.com/sgl-project/sglang/pull/17689">https://github.com/sgl-project/sglang/pull/17689</a> 中应用 @BBuf 的 flashinfer 绳索</li>
+<li>[扩散]修复：修复<a href="https://github.com/sgl-project/sglang/pull/17712%E4%B8%AD@mickqian%E5%9C%A8%E9%9D%9E%E4%B8%BB%E7%AD%89%E7%BA%A7%E4%B8%8A%E6%8A%91%E5%88%B6%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97%E7%9A%84%E9%97%AE%E9%A2%98">https://github.com/sgl-project/sglang/pull/17712中@mickqian在非主等级上抑制错误日志的问题</a></li>
+<li>[diffusion] feat：在<a href="https://github.com/sgl-project/sglang/pull/17693%E4%B8%AD@mickqian%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AAarg%E6%9D%A5%E6%8E%A7%E5%88%B6Layerwise-offload%E4%B8%AD%E9%A2%84%E5%8F%96%E5%B1%82%E7%9A%84%E6%95%B0%E9%87%8F">https://github.com/sgl-project/sglang/pull/17693中@mickqian添加一个arg来控制Layerwise-offload中预取层的数量</a></li>
+<li>[扩散] 修复@yashikagandhi-google 在 <a href="https://github.com/sgl-project/sglang/pull/17611">https://github.com/sgl-project/sglang/pull/17611</a> 中生成的顶点</li>
+<li>修复：在 <a href="https://github.com/sgl-project/sglang/pull/17690">https://github.com/sgl-project/sglang/pull/17690</a> 中通过 @gongyisheng 启用 mm 后备变体时添加偏差</li>
+<li>[AMD] CI - 在 MI325-8gpu 上启用 deepseekv3.2，并将性能/精度测试套件合并到 <a href="https://github.com/sgl-project/sglang/pull/17633">https://github.com/sgl-project/sglang/pull/17633</a> 中的 @yctseng0211 的 stage-b 套件中</li>
+<li>[DSv32] 重叠索引器 qk 投影和激活量，由 @zianglih 在 <a href="https://github.com/sgl-project/sglang/pull/17688">https://github.com/sgl-project/sglang/pull/17688</a> 中实现</li>
+<li>[扩散] 通过<a href="https://github.com/sgl-project/sglang/pull/17278%E4%B8%AD%E7%9A%84@BBuf%E5%88%A0%E9%99%A4sql-kernel%E8%BF%87%E6%97%B6%E7%9A%84time_embedding%E5%86%85%E6%A0%B8">https://github.com/sgl-project/sglang/pull/17278中的@BBuf删除sql-kernel过时的time_embedding内核</a></li>
+<li>添加性能仪表板服务器和前端，用于 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17725">https://github.com/sgl-project/sglang/pull/17725</a> 中进行夜间 CUDA 测试</li>
+<li>[diffusion] doc: 修复 @mickqian 在 <a href="https://github.com/sgl-project/sglang/pull/17856">https://github.com/sgl-project/sglang/pull/17856</a> 中错误的 docker 运行命令</li>
+<li>[JIT内核] 在<a href="https://github.com/sgl-project/sglang/pull/17842%E4%B8%AD%E9%80%9A%E8%BF%87@BBuf%E6%9B%B4%E6%96%B0jit_kernel%E7%BC%93%E5%AD%98%E5%B9%B6%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3">https://github.com/sgl-project/sglang/pull/17842中通过@BBuf更新jit_kernel缓存并开发文档</a></li>
+<li>[AMD] 将 Kimi-K2、DeepSeek-V3.2 测试添加到 <a href="https://github.com/sgl-project/sglang/pull/17523">https://github.com/sgl-project/sglang/pull/17523</a> 中的@michaelzhang-ai 的夜间 CI 中</li>
+<li>[扩散] comfyui：修复<a href="https://github.com/sgl-project/sglang/pull/17834%E4%B8%AD@triple-mu%E7%9A%84%E5%AF%BC%E5%85%A5%E6%8B%BC%E5%86%99%E9%94%99%E8%AF%AF">https://github.com/sgl-project/sglang/pull/17834中@triple-mu的导入拼写错误</a></li>
+<li>[AMD][Kimi K2.5 Day 0] ROCm：将 W4A16 MoE 路由至 Triton 并通过 @jhinpan 在 <a href="https://github.com/sgl-project/sglang/pull/17863">https://github.com/sgl-project/sglang/pull/17863</a> 修复包装重量装载</li>
+<li>[MUSA][7/N] 增强 CUDA / PyNccl 包装器以支持 @gingerXue 在 <a href="https://github.com/sgl-project/sglang/pull/17499">https://github.com/sgl-project/sglang/pull/17499</a> 中进行 MTLink 连接检测</li>
+<li>[Perf] 通过 @zhendonghua 在 <a href="https://github.com/sgl-project/sglang/pull/17891">https://github.com/sgl-project/sglang/pull/17891</a> 中调整 Llama-4-Scout-17B-16E-Instruct 融合萌内核</li>
+<li><a href="https://github.com/sgl-project/sglang/pull/17885%E4%B8%AD%E7%9A%84@merrymercy%E4%BD%BFlogits_processor.py%E5%92%8Csampler.py%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0%E6%9B%B4%E5%8A%A0%E6%A8%A1%E5%9D%97%E5%8C%96">https://github.com/sgl-project/sglang/pull/17885中的@merrymercy使logits_processor.py和sampler.py中的函数更加模块化</a></li>
+<li>[Diffusion] 支持 <a href="https://github.com/sgl-project/sglang/pull/17704">https://github.com/sgl-project/sglang/pull/17704</a> 中 @CloudRipple 的 MOVA 模型</li>
+<li>[JIT 内核]<a href="https://github.com/sgl-project/sglang/pull/17677">https://github.com/sgl-project/sglang/pull/17677</a> 中的 @HydraQYH 在 JIT 内核中支持 fused_add_rmsnorm</li>
+<li>[修复][trtllm-mha] 当 num_head = 1 时 @xyjixyjixyji 在 <a href="https://github.com/sgl-project/sglang/pull/17732">https://github.com/sgl-project/sglang/pull/17732</a> 中规范化步幅</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17012">https://github.com/sgl-project/sglang/pull/17012</a> 中集成 @kkHuang-amd 的用于 EP a2a 数据通信的 mori 后端</li>
+<li>壮举：在 <a href="https://github.com/sgl-project/sglang/pull/17786">https://github.com/sgl-project/sglang/pull/17786</a> 中添加 @joearedmond 的自定义请求标头日志记录</li>
+<li>通过 @amote-i 在 <a href="https://github.com/sgl-project/sglang/pull/17741">https://github.com/sgl-project/sglang/pull/17741</a> 中更新 ascend 文档</li>
+<li>[修复] @JustinTong0323 在 <a href="https://github.com/sgl-project/sglang/pull/17901">https://github.com/sgl-project/sglang/pull/17901</a> 中的 kimi_k2 推理解析器</li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/17914">https://github.com/sgl-project/sglang/pull/17914</a> 中 @JustinTong0323 的 Kimi K2.5 模型中不稳定的工具调用</li>
+<li>[MUSA][4/N] 在<a href="https://github.com/sgl-project/sglang/pull/17246%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%B8%B8%E8%A7%81%E8%AE%BE%E5%A4%87%E5%AE%9E%E7%94%A8%E7%A8%8B%E5%BA%8F%E3%80%81%E5%88%86%E5%B8%83%E5%BC%8F%E5%90%8E%E7%AB%AF%E5%92%8C@yeahdongcn%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E6%93%8D%E4%BD%9C%E6%8E%A5%E7%BA%BF">https://github.com/sgl-project/sglang/pull/17246中添加常见设备实用程序、分布式后端和@yeahdongcn的自定义操作接线</a></li>
+<li>[PD] <a href="https://github.com/sgl-project/sglang/pull/14626%E4%B8%AD@maning00%E6%94%AF%E6%8C%81%E4%B8%8EMORI-IO%E7%9A%84KV%E4%BC%A0%E8%BE%93">https://github.com/sgl-project/sglang/pull/14626中@maning00支持与MORI-IO的KV传输</a></li>
+<li>[Diffusion][MOVA] 修复：解决调度程序中的库不匹配问题，并通过 <a href="https://github.com/sgl-project/sglang/pull/17916">https://github.com/sgl-project/sglang/pull/17916</a> 中的 @CloudRipple 更新 dit 卸载方法名称</li>
+<li>[扩散]模型：将 tp_rmsnorm 检查移至 <a href="https://github.com/sgl-project/sglang/pull/17792">https://github.com/sgl-project/sglang/pull/17792</a> 中的 @triple-mu 的 WanTransformerBlock</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17735">https://github.com/sgl-project/sglang/pull/17735</a> 中的 @kkHuang-amd 在 gpt-oss mxfp4 模型中添加 aiterbias moe 支持</li>
+<li>[扩散]：将 sglang 扩散 AMD pyproject_other.toml 扩散依赖与 @ZiguanWang 在 <a href="https://github.com/sgl-project/sglang/pull/16225">https://github.com/sgl-project/sglang/pull/16225</a> 中的 pyproject.toml 对齐</li>
+<li>[wip] 与 @yhyang201 在 <a href="https://github.com/sgl-project/sglang/pull/17822">https://github.com/sgl-project/sglang/pull/17822</a> 中的上游 zImage 同步</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17449">https://github.com/sgl-project/sglang/pull/17449</a> 中添加 @zianglih 对在线量化、Triton 密集线性和 CUTLASS MoE 的 mxfp8 支持</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17806">https://github.com/sgl-project/sglang/pull/17806</a> 中支持 @shvmjndl 的 LightOnOCR-2-1B</li>
+<li>[扩散]: 添加虚拟设备属性以修复 <a href="https://github.com/sgl-project/sglang/pull/17949">https://github.com/sgl-project/sglang/pull/17949</a> 中 @Ratish1 的 AttributeError</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17951">https://github.com/sgl-project/sglang/pull/17951</a> 中的 @harvenstar 在 nightly CI 中添加 DeepSeek V3.2 的工具调用测试</li>
+<li>[MUSA] 在<a href="https://github.com/sgl-project/sglang/pull/17923%E4%B8%AD%E6%B7%BB%E5%8A%A0@yeahdongcn%E7%9A%84%E8%B4%B4%E6%A0%87%E9%85%8D%E7%BD%AE">https://github.com/sgl-project/sglang/pull/17923中添加@yeahdongcn的贴标配置</a></li>
+<li>由 @EduardDurech 在 <a href="https://github.com/sgl-project/sglang/pull/15682">https://github.com/sgl-project/sglang/pull/15682</a> 中修复 PEP440 的 <code>torch.__version__</code></li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/17956">https://github.com/sgl-project/sglang/pull/17956</a> 中 @ch-wan 的 pcg 的 capture_sizes 范围</li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/17395">https://github.com/sgl-project/sglang/pull/17395</a> 中 @ch-wan 的仅预填充请求的 logprob_start_len 处理</li>
+<li>壮举：在 <a href="https://github.com/sgl-project/sglang/pull/17831">https://github.com/sgl-project/sglang/pull/17831</a> 中添加 @zhooooong 的转发超时</li>
+<li>[AMD] 修复 <a href="https://github.com/sgl-project/sglang/pull/17950">https://github.com/sgl-project/sglang/pull/17950</a> 中 @yctseng0211 的 pip sglang 版本</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17963">https://github.com/sgl-project/sglang/pull/17963</a> 中@Kangyan-Zhou 的运行器利用率报告中添加并发跟踪</li>
+<li>支持 SGLang 中的 DeepSeek-OCR-2（OCR2 视觉管道、标记化对齐和权重加载修复）#17833，作者：@baonudesifeizhai，<a href="https://github.com/sgl-project/sglang/pull/17897">https://github.com/sgl-project/sglang/pull/17897</a></li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/12813%E4%B8%AD@b8zhong%E4%B8%BALlama">https://github.com/sgl-project/sglang/pull/12813中@b8zhong为Llama</a> 4添加失重qk范数到RMSNorm接口</li>
+<li>GPTJForCausalLM 由 @wenchen76 在 <a href="https://github.com/sgl-project/sglang/pull/7839">https://github.com/sgl-project/sglang/pull/7839</a> 提供支持</li>
+<li>[修复] 删除<a href="https://github.com/sgl-project/sglang/pull/17975%E4%B8%AD@Kangyan-Zhou%E5%9C%A8gpt_j.py%E4%B8%AD%E6%9C%AA%E4%BD%BF%E7%94%A8%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%AF%BC%E5%85%A5">https://github.com/sgl-project/sglang/pull/17975中@Kangyan-Zhou在gpt_j.py中未使用的类型导入</a></li>
+<li>修复<a href="https://github.com/sgl-project/sglang/pull/17808%E4%B8%AD@LHXuuu%E5%9C%A8%E4%BF%9D%E9%87%8Amoe">https://github.com/sgl-project/sglang/pull/17808中@LHXuuu在保释moe</a> nextn权重中量化eh_proj的场景</li>
+<li>[Intel GPU] 修复 DeepseekScalingRotaryEmbedding 中的设备，以在 <a href="https://github.com/sgl-project/sglang/pull/10021">https://github.com/sgl-project/sglang/pull/10021</a> 中的 @polisettyvarma 在 XPU 上运行 DeepSeek-V2-Lite BF16</li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/14592">https://github.com/sgl-project/sglang/pull/14592</a> 中 @gaopengff 提供的工作台预填充延迟性能下降问题</li>
+<li>[Intel GPU] 修复了 <a href="https://github.com/sgl-project/sglang/pull/10858">https://github.com/sgl-project/sglang/pull/10858</a> 中 @polisettyvarma 在 XPU 上使用 BF16 运行 DeepSeek-V2-Lite 模型的导入错误</li>
+<li>[CPU] @jianan-gu 在 <a href="https://github.com/sgl-project/sglang/pull/12525">https://github.com/sgl-project/sglang/pull/12525</a> 中优化 CPU 上的 Qwen3-next 模型</li>
+<li>[CPU] <a href="https://github.com/sgl-project/sglang/pull/15708">https://github.com/sgl-project/sglang/pull/15708</a> 中 @mingfeima 优化 flash_attn_varlen_func</li>
+<li>[CPU][INT4] 通过 @jianan-gu 在 <a href="https://github.com/sgl-project/sglang/pull/8226">https://github.com/sgl-project/sglang/pull/8226</a> 中为 CPU 添加 INT4 内核</li>
+<li>修复（基准测试）：为 <a href="https://github.com/sgl-project/sglang/pull/17974">https://github.com/sgl-project/sglang/pull/17974</a> 中的@cswuyg 添加推测解码基准测试缺少的参数</li>
+<li>[NPU] 提高 <a href="https://github.com/sgl-project/sglang/pull/17480">https://github.com/sgl-project/sglang/pull/17480</a> 中@McZyWu 模型 kimi-vl-a3b-instruct 的准确性</li>
+<li>适配 @Hide-on-bushsh 在 <a href="https://github.com/sgl-project/sglang/pull/17922">https://github.com/sgl-project/sglang/pull/17922</a> 中下载的 MODELSCOPE</li>
+<li>通过 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17977">https://github.com/sgl-project/sglang/pull/17977</a> 中增加 GB200 的安装依赖超时</li>
+<li>SGLang Tracing：通过@zhanghaotong在<a href="https://github.com/sgl-project/sglang/pull/17008%E4%B8%AD%E6%94%B9%E8%BF%9B%E6%A0%B9%E8%B7%A8%E5%BA%A6%E5%B1%9E%E6%80%A7">https://github.com/sgl-project/sglang/pull/17008中改进根跨度属性</a></li>
+<li>通过 @ispobock 在 <a href="https://github.com/sgl-project/sglang/pull/17836">https://github.com/sgl-project/sglang/pull/17836</a> 中将 cuda 图状态添加到预填充日志中</li>
+<li>修复 DP 注意力中的 SHM 指针重新序列化。通过 @FlamingoPg 在 <a href="https://github.com/sgl-project/sglang/pull/17930">https://github.com/sgl-project/sglang/pull/17930</a></li>
+<li>通过 @amote-i 在 <a href="https://github.com/sgl-project/sglang/pull/17987">https://github.com/sgl-project/sglang/pull/17987</a> 中更新 npu 文档</li>
+<li>[型号] 在<a href="https://github.com/sgl-project/sglang/pull/16294%E4%B8%AD%E6%B7%BB%E5%8A%A0@xvyaward%E7%9A%84K-EXAONE%E5%9E%8B%E5%8F%B7%E6%94%AF%E6%8C%81">https://github.com/sgl-project/sglang/pull/16294中添加@xvyaward的K-EXAONE型号支持</a></li>
+<li>[BUGFIX] 修复 <a href="https://github.com/sgl-project/sglang/pull/17624">https://github.com/sgl-project/sglang/pull/17624</a> 中 @zju-stu-lizheng 的 qwen3 vl 模型 dp 大小 > 1</li>
+<li>[Diffusion] 修复 <a href="https://github.com/sgl-project/sglang/pull/17982">https://github.com/sgl-project/sglang/pull/17982</a> 中 @BBuf 的 lora 默认 lora_scale 错误</li>
+<li>优化 <a href="https://github.com/sgl-project/sglang/pull/17094">https://github.com/sgl-project/sglang/pull/17094</a> 中@samuellees 的 Qwen3 Next 的 GDN 解码</li>
+<li>[BugFix] 修复<a href="https://github.com/sgl-project/sglang/pull/17585%E4%B8%AD@SYChen123%E5%90%AF%E7%94%A8req.grammar%E5%92%8Cngram%E8%A7%84%E8%8C%83%E6%97%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B4%A9%E6%BA%83%E7%9A%84%E9%97%AE%E9%A2%98">https://github.com/sgl-project/sglang/pull/17585中@SYChen123启用req.grammar和ngram规范时服务器崩溃的问题</a></li>
+<li>[NPU] <a href="https://github.com/sgl-project/sglang/pull/17492%E4%B8%AD@JiaruiChang5268%E6%94%AF%E6%8C%81NPU%E7%9A%84llama-3.2-11B-vision-instruct%E6%A8%A1%E5%BC%8F">https://github.com/sgl-project/sglang/pull/17492中@JiaruiChang5268支持NPU的llama-3.2-11B-vision-instruct模式</a></li>
+<li>[sglang] 通过 @bixue2010 在 <a href="https://github.com/sgl-project/sglang/pull/17781">https://github.com/sgl-project/sglang/pull/17781</a> 中修复 mm 令牌填充值与文本令牌 id 重叠的问题</li>
+<li>@wangtiance 在 <a href="https://github.com/sgl-project/sglang/pull/18014">https://github.com/sgl-project/sglang/pull/18014</a> 中对 CANN 版本进行文档更新</li>
+<li>[NPU] 修复 <a href="https://github.com/sgl-project/sglang/pull/18017">https://github.com/sgl-project/sglang/pull/18017</a> 中 @22dimensions 的 npu.Docker 文件中的 sql-kernel-npu 包 url 错误</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18018">https://github.com/sgl-project/sglang/pull/18018</a> 中的 @kkHuang-amd 在 rocm.Docker 文件中添加 ROCm + Mori docker 构建指令</li>
+<li>[Diffusion] 修复 <a href="https://github.com/sgl-project/sglang/pull/17988">https://github.com/sgl-project/sglang/pull/17988</a> 中 @BBuf 的 FLUX.1-schnell 时间嵌入参数不匹配问题</li>
+<li>修复了 @mmangkad 在 <a href="https://github.com/sgl-project/sglang/pull/17766">https://github.com/sgl-project/sglang/pull/17766</a> 中对 cu12/cu13 包命名的 cuBLAS >=12.9 检测</li>
+<li>修复.gitignore可能会忽略<a href="https://github.com/sgl-project/sglang/pull/18021%E4%B8%AD@yeahdongcn%E7%9A%84core_attention.py%E7%AD%89%E6%96%87%E4%BB%B6">https://github.com/sgl-project/sglang/pull/18021中@yeahdongcn的core_attention.py等文件</a></li>
+<li>【文档】【NPU】更新 <a href="https://github.com/sgl-project/sglang/pull/17940">https://github.com/sgl-project/sglang/pull/17940</a> 中 @husf1130 的 Ascend NPU 专家并行文档</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18022%E4%B8%AD%E6%B7%BB%E5%8A%A0@harvenstar%E5%AF%B9%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E7%9A%84reasoning_tokens%E4%BD%BF%E7%94%A8%E6%B5%8B%E8%AF%95">https://github.com/sgl-project/sglang/pull/18022中添加@harvenstar对工具调用的reasoning_tokens使用测试</a></li>
+<li>将topk内核共享内存从128KB减少到32KB，以更好地占用<a href="https://github.com/sgl-project/sglang/pull/17747%E4%B8%AD%E7%9A%84@hammersam">https://github.com/sgl-project/sglang/pull/17747中的@hammersam</a></li>
+<li>通过延迟 <a href="https://github.com/sgl-project/sglang/pull/17744">https://github.com/sgl-project/sglang/pull/17744</a> 中 @hsuchifeng 的 dict(weights) 实现来修复 DeepSeek 权重加载中的 OOM</li>
+<li>[EPD][Perf] 通过 @ZhengWG 在 <a href="https://github.com/sgl-project/sglang/pull/16487">https://github.com/sgl-project/sglang/pull/16487</a> 中并行化 ZMQ 发送给编码服务器</li>
+<li>[修复] Triton TP MoE Dpsk V3/Qwen3 编码器与 SwapAB by @b8zhong 在 <a href="https://github.com/sgl-project/sglang/pull/17965">https://github.com/sgl-project/sglang/pull/17965</a></li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/17967%E4%B8%AD@merrymercy%E5%9C%A8%E6%95%85%E9%9A%9C%E8%BD%AC%E5%82%A8%E4%B8%AD%E6%B7%BB%E5%8A%A0launch_command%E5%88%86%E9%85%8D">https://github.com/sgl-project/sglang/pull/17967中@merrymercy在故障转储中添加launch_command分配</a></li>
+<li>[扩散] 重构：在 <a href="https://github.com/sgl-project/sglang/pull/17820">https://github.com/sgl-project/sglang/pull/17820</a> 中通过@mickqian 将 component_loader 拆分为组件文件</li>
+<li>[修复] 在 <a href="https://github.com/sgl-project/sglang/pull/17369">https://github.com/sgl-project/sglang/pull/17369</a> 中恢复使用 @b8zhong 的 CUTLASS <code>mm_fp4</code> 后端</li>
+<li>[MUSA] 将第 3 方目录更新为 <a href="https://github.com/sgl-project/sglang/pull/18035">https://github.com/sgl-project/sglang/pull/18035</a> 中的 @yeahdongcn 的 build/_deps</li>
+<li>[CPU] toml文件由<a href="https://github.com/sgl-project/sglang/pull/17861%E4%B8%AD%E7%9A%84@ZailiWang%E6%9B%B4%E6%96%B0">https://github.com/sgl-project/sglang/pull/17861中的@ZailiWang更新</a></li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18045%E4%B8%AD%E7%9A%84@haojin2%E6%9B%B4%E6%96%B0python/sglang/README.md">https://github.com/sgl-project/sglang/pull/18045中的@haojin2更新python/sglang/README.md</a></li>
+<li>[性能] 优化 Mllama LayerNorm -> 由 @vincentzed 在 <a href="https://github.com/sgl-project/sglang/pull/9725">https://github.com/sgl-project/sglang/pull/9725</a> 中更新</li>
+<li>修复：删除<a href="https://github.com/sgl-project/sglang/pull/17858%E4%B8%AD@tianchongchong%E5%AF%B9use_w4afp8%E7%9A%84%E9%87%8D%E5%A4%8D%E5%88%86%E9%85%8D">https://github.com/sgl-project/sglang/pull/17858中@tianchongchong对use_w4afp8的重复分配</a></li>
+<li>[Perf] 在 <a href="https://github.com/sgl-project/sglang/pull/15514">https://github.com/sgl-project/sglang/pull/15514</a> 中添加 Flashinfer DeepGEMM SM90 用于 SwapAB 优化 @b8zhong</li>
+<li>壮举：通过 <a href="https://github.com/sgl-project/sglang/pull/17598">https://github.com/sgl-project/sglang/pull/17598</a> 中的 @acelyc111 验证服务器参数中的 ib 设备</li>
+<li>改进 <a href="https://github.com/sgl-project/sglang/pull/18053">https://github.com/sgl-project/sglang/pull/18053</a> 中 @Kangyan-Zhou 的每晚 tets 中的错误输出</li>
+<li>跳过 @mattteochen 在 <a href="https://github.com/sgl-project/sglang/pull/18000">https://github.com/sgl-project/sglang/pull/18000</a> 中对 sm100 的警告</li>
+<li>修复了 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/17960">https://github.com/sgl-project/sglang/pull/17960</a> 中合并提交历史记录的重新运行阶段命令</li>
+<li>[BugFix] 修复<a href="https://github.com/sgl-project/sglang/pull/17815%E4%B8%AD@khalil2ji3mp6%E6%8C%87%E5%AE%9A%E7%9A%84%E8%8D%89%E7%A8%BF%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">https://github.com/sgl-project/sglang/pull/17815中@khalil2ji3mp6指定的草稿模型配置文件</a></li>
+<li>通过 <a href="https://github.com/sgl-project/sglang/pull/16802">https://github.com/sgl-project/sglang/pull/16802</a> 中的 @Fridge003 在 pyproject.toml 中设置 torch url 索引</li>
+<li>[公制] @yinghai 在 <a href="https://github.com/sgl-project/sglang/pull/18049">https://github.com/sgl-project/sglang/pull/18049</a> 中提供的可选额外公制标签</li>
+<li>[BugFix] 修复 @zminglei 在 <a href="https://github.com/sgl-project/sglang/pull/18013">https://github.com/sgl-project/sglang/pull/18013</a> 中启用分段 cuda 图时的 gpt-oss 准确性问题</li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/18039">https://github.com/sgl-project/sglang/pull/18039</a> 中 @ispobock 的 swa kv 缓存内存分配</li>
+<li>@alisonshao 在 <a href="https://github.com/sgl-project/sglang/pull/18057">https://github.com/sgl-project/sglang/pull/18057</a> 中暂时禁用 test_mla_int8_deepseek_v3.py</li>
+<li>将 4-GPU/8-GPU 工作流程作业迁移到 stage-c，并在 <a href="https://github.com/sgl-project/sglang/pull/17299">https://github.com/sgl-project/sglang/pull/17299</a> 中添加 @alisonshao 的 CI 注册表装饰器</li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/18050">https://github.com/sgl-project/sglang/pull/18050</a> 中 @Kangyan-Zhou 的 H200 跑步者安装脚本</li>
+<li>[Bugfix] 修复<a href="https://github.com/sgl-project/sglang/pull/17699%E4%B8%AD@lingeben%E7%9A%84%E6%98%BE%E7%A4%BA%E9%94%99%E8%AF%AF%EF%BC%88%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8D%E4%B8%80%E8%87%B4%EF%BC%89">https://github.com/sgl-project/sglang/pull/17699中@lingeben的显示错误（上下文不一致）</a></li>
+<li>[型号] 支持MiniCPM-V 4.5 by @tc-mb in <a href="https://github.com/sgl-project/sglang/pull/9610">https://github.com/sgl-project/sglang/pull/9610</a></li>
+<li>修复扩散请求验证，如果输入仅包含 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/16610">https://github.com/sgl-project/sglang/pull/16610</a> 中的文本，则允许丢失输入工件</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/16483">https://github.com/sgl-project/sglang/pull/16483</a> 中 @rogeryyoungh 优化 minimax_m2 中 RMSNormTP 中的 all_reduce</li>
+<li>修复了 <a href="https://github.com/sgl-project/sglang/pull/17540">https://github.com/sgl-project/sglang/pull/17540</a> 中 @ZhenshengWu 在官方 CUDA 13.x 映像中导入 Mooncake 时对 CUDA 12 的依赖</li>
+<li>[功能] 支持 file:// <a href="https://github.com/sgl-project/sglang/pull/14490">https://github.com/sgl-project/sglang/pull/14490</a> 中 @ppraneth 多模式输入的 URL 格式</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/14607">https://github.com/sgl-project/sglang/pull/14607</a> 中支持 @sleepcoo 的 qwen3-next eagle3</li>
+<li>壮举：在<a href="https://github.com/sgl-project/sglang/pull/15119%E4%B8%AD%E6%B7%BB%E5%8A%A0@yefei12%E5%AF%B9Eagle3%E7%9A%84Ling">https://github.com/sgl-project/sglang/pull/15119中添加@yefei12对Eagle3的Ling</a> Flash v2.0支持</li>
+<li>将已删除的 8-GPU 测试移至 @alisonshao 在 <a href="https://github.com/sgl-project/sglang/pull/18060">https://github.com/sgl-project/sglang/pull/18060</a> 中的 test/manual/ 中</li>
+<li>当@ispobock在<a href="https://github.com/sgl-project/sglang/pull/18059%E4%B8%AD%E6%94%B6%E5%9B%9E%E6%97%B6%E9%87%8D%E7%BD%AE%E9%A9%B1%E9%80%90swa%E7%8A%B6%E6%80%81">https://github.com/sgl-project/sglang/pull/18059中收回时重置驱逐swa状态</a></li>
+<li>[NPU] disaggregation_decode_enable_fake_auto参数适配<a href="https://github.com/sgl-project/sglang/pull/17811%E4%B8%AD%E7%9A%84@Estrella-xx">https://github.com/sgl-project/sglang/pull/17811中的@Estrella-xx</a></li>
+<li>[NPU]支持@jiashaokun-1在<a href="https://github.com/sgl-project/sglang/pull/17025%E4%B8%AD%E5%90%AF%E7%94%A8%E8%BF%94%E5%9B%9E%E8%B7%AF%E7%94%B1%E4%B8%93%E5%AE%B6">https://github.com/sgl-project/sglang/pull/17025中启用返回路由专家</a></li>
+<li>[VLM] 通过@yuan-luo在<a href="https://github.com/sgl-project/sglang/pull/17420%E4%B8%AD%E4%BC%98%E5%8C%96GLM4v%E7%9A%84get_rope_index">https://github.com/sgl-project/sglang/pull/17420中优化GLM4v的get_rope_index</a></li>
+<li>通过@yuan-luo在<a href="https://github.com/sgl-project/sglang/pull/17674%E4%B8%AD%E4%BC%98%E5%8C%96custom-all-reduce">https://github.com/sgl-project/sglang/pull/17674中优化custom-all-reduce</a></li>
+<li>[BUGFIX]：仅使用语言不应为<a href="https://github.com/sgl-project/sglang/pull/18011%E4%B8%AD@koush%E7%9A%84%E8%A7%86%E8%A7%89%E7%BC%96%E7%A0%81%E5%99%A8%E4%BF%9D%E7%95%99%E7%A9%BA%E9%97%B4">https://github.com/sgl-project/sglang/pull/18011中@koush的视觉编码器保留空间</a></li>
+<li>[TestFix] 在<a href="https://github.com/sgl-project/sglang/pull/18047%E4%B8%AD%E9%87%8D%E5%86%99@glenliu21%E7%9A%84LoRA%E9%87%8D%E5%8F%A0%E5%8A%A0%E8%BD%BD%E6%B5%8B%E8%AF%95">https://github.com/sgl-project/sglang/pull/18047中重写@glenliu21的LoRA重叠加载测试</a></li>
+<li>[修复] 删除<a href="https://github.com/sgl-project/sglang/pull/18051%E4%B8%AD@yuan-luo%E5%9C%A8MiMo-V2-Flash%E4%B8%AD%E7%9A%84%E6%97%A0%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%A0%81">https://github.com/sgl-project/sglang/pull/18051中@yuan-luo在MiMo-V2-Flash中的无使用代码</a></li>
+<li>修复：避免在 <a href="https://github.com/sgl-project/sglang/pull/17991">https://github.com/sgl-project/sglang/pull/17991</a> 中 @yhyang201 的 VLM DP Attention 中进行双重归约</li>
+<li>[扩散] cli：在<a href="https://github.com/sgl-project/sglang/pull/18036%E4%B8%AD%E7%94%B1@mickqian%E5%9C%A8ServerArgs%E4%B8%AD%E5%BC%95%E5%85%A5%E9%80%9A%E7%94%A8%E6%B3%A8%E6%84%8F%E5%8A%9B%E5%90%8E%E7%AB%AF%E9%85%8D%E7%BD%AE">https://github.com/sgl-project/sglang/pull/18036中由@mickqian在ServerArgs中引入通用注意力后端配置</a></li>
+<li>[扩散]修复：修复<a href="https://github.com/sgl-project/sglang/pull/18069%E4%B8%AD@mickqian%E4%B8%BAVAELoader%E4%B8%A2%E5%A4%B1%E7%9A%84%E7%BB%84%E4%BB%B6%E5%90%8D%E7%A7%B0">https://github.com/sgl-project/sglang/pull/18069中@mickqian为VAELoader丢失的组件名称</a></li>
+<li>添加 bootstrap_room 验证以检测 <a href="https://github.com/sgl-project/sglang/pull/17430">https://github.com/sgl-project/sglang/pull/17430</a> 中 @Simon-Li 的 PD 分解中的元数据损坏</li>
+<li>[AMD] 通过 @yctseng0211 在 <a href="https://github.com/sgl-project/sglang/pull/18076">https://github.com/sgl-project/sglang/pull/18076</a> 中修复 rocm 映像中的 aiter 版本</li>
+<li>细化<a href="https://github.com/sgl-project/sglang/pull/17986%E4%B8%AD@ch-wan%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E7%9A%84logprob%E9%80%BB%E8%BE%91">https://github.com/sgl-project/sglang/pull/17986中@ch-wan请求处理的logprob逻辑</a></li>
+<li>[EPD][重构]：在<a href="https://github.com/sgl-project/sglang/pull/17921%E4%B8%AD%E5%BC%95%E5%85%A5@liusy58%E7%94%A8%E4%BA%8EgRPC%E4%BC%A0%E8%BE%93%E9%9B%86%E6%88%90%E7%9A%84BaseMMReceiver">https://github.com/sgl-project/sglang/pull/17921中引入@liusy58用于gRPC传输集成的BaseMMReceiver</a></li>
+<li>通过 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/18054">https://github.com/sgl-project/sglang/pull/18054</a> 中改进 sglang-kernel 的每次提交测试作业过滤
+*修复：当主机在<a href="https://github.com/sgl-project/sglang/pull/17929%E4%B8%AD%E9%80%9A%E8%BF%87@RangerCD%E7%9B%91%E5%90%AC0.0.0.0%E6%97%B6zmq_to_tokenizer%E7%BC%96%E7%A0%81%E5%99%A8%E4%BC%A0%E8%BE%93">https://github.com/sgl-project/sglang/pull/17929中通过@RangerCD监听0.0.0.0时zmq_to_tokenizer编码器传输</a></li>
+<li>修复：<a href="https://github.com/sgl-project/sglang/pull/18024">https://github.com/sgl-project/sglang/pull/18024</a> 中 @Lollipop 正确映射 Qwen3-VL 的重量加载前缀</li>
+<li>[扩散] CI：在 <a href="https://github.com/sgl-project/sglang/pull/18038">https://github.com/sgl-project/sglang/pull/18038</a> 中 @yingluosanqian 弃用 CI 中的 WarmupRunner</li>
+<li>[AMD] 使 MoRI 能够在 <a href="https://github.com/sgl-project/sglang/pull/18101">https://github.com/sgl-project/sglang/pull/18101</a> 中由 @HaiShaw 进行发布和夜间构建</li>
+<li>[Diffusion] 修复 <a href="https://github.com/sgl-project/sglang/pull/18062">https://github.com/sgl-project/sglang/pull/18062</a> 中 @BBuf 的 FA4 环并联错误</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/16725">https://github.com/sgl-project/sglang/pull/16725</a> 中 @zhangxin81 支持 per_token_quant_fp8 内核中的 smem</li>
+<li>[Diffusion] 删除<a href="https://github.com/sgl-project/sglang/pull/18026%E4%B8%AD@RubiaCx%E5%AF%B9%E8%AE%BE%E5%A4%87%E6%98%A0%E5%B0%84%E7%9A%84%E5%8A%A0%E9%80%9F%E4%BE%9D%E8%B5%96">https://github.com/sgl-project/sglang/pull/18026中@RubiaCx对设备映射的加速依赖</a></li>
+<li>[NPU]mindspore模型在<a href="https://github.com/sgl-project/sglang/pull/15363%E4%B8%AD%E6%94%AF%E6%8C%81@zzzzzzzxh%E7%9A%84moe">https://github.com/sgl-project/sglang/pull/15363中支持@zzzzzzzxh的moe</a></li>
+<li>文档：将 deepseek_ocr 移至流行模型用法，并在 <a href="https://github.com/sgl-project/sglang/pull/18120">https://github.com/sgl-project/sglang/pull/18120</a> 中添加@sglang-bot 的食谱参考</li>
+<li>[NPU]更新@Sugar920在<a href="https://github.com/sgl-project/sglang/pull/17952%E4%B8%AD%E7%9A%84%E5%A4%9C%E9%97%B4%E6%B5%8B%E8%AF%95">https://github.com/sgl-project/sglang/pull/17952中的夜间测试</a></li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18084%E4%B8%AD%E6%B7%BB%E5%8A%A0@yhyang201%E7%9A%84Step-3.5-Flash%E6%A8%A1%E5%9E%8B%E6%94%AF%E6%8C%81">https://github.com/sgl-project/sglang/pull/18084中添加@yhyang201的Step-3.5-Flash模型支持</a></li>
+<li>[DeepSeek V3.2] [Bugfix] 当 @xu-yfei 在 <a href="https://github.com/sgl-project/sglang/pull/17076">https://github.com/sgl-project/sglang/pull/17076</a> 中无法运行 cuda graph 时，切片索引器和填充 fa3</li>
+<li>[NPU] 在 <a href="https://github.com/sgl-project/sglang/pull/17964">https://github.com/sgl-project/sglang/pull/17964</a> 中通过 @khalil2ji3mp6 支持 dsv32 radixcache</li>
+<li>[MiMoV2Flash] [feat]: 在<a href="https://github.com/sgl-project/sglang/pull/17634%E4%B8%AD%E9%80%9A%E8%BF%87@TZHelloWorld%E6%94%AF%E6%8C%81%E4%B8%A4%E6%89%B9%E9%87%8D%E5%8F%A0">https://github.com/sgl-project/sglang/pull/17634中通过@TZHelloWorld支持两批重叠</a></li>
+<li>[修复] <a href="https://github.com/sgl-project/sglang/pull/17850">https://github.com/sgl-project/sglang/pull/17850</a> 中 @cctry 的 req_to_token 池中的数据争用</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18123">https://github.com/sgl-project/sglang/pull/18123</a> 中 @alisonshao 修复 HF 令牌后重新启用 test_mla_int8_deepseek_v3.py</li>
+<li>功能：在 <a href="https://github.com/sgl-project/sglang/pull/18134">https://github.com/sgl-project/sglang/pull/18134</a> 中添加 @dougyster 的 gpt-oss 120b 夜间测试</li>
+<li>[性能] 通过@YiXR在<a href="https://github.com/sgl-project/sglang/pull/14339%E4%B8%AD%E4%BC%98%E5%8C%96%E5%9F%BA%E6%95%B0%E7%BC%93%E5%AD%98%E9%A9%B1%E9%80%90%E6%80%A7%E8%83%BD">https://github.com/sgl-project/sglang/pull/14339中优化基数缓存驱逐性能</a></li>
+<li>[Diffsuion &#x26; JIT_kernel] QKNorm 十字头内核 by @BBuf in <a href="https://github.com/sgl-project/sglang/pull/18073">https://github.com/sgl-project/sglang/pull/18073</a></li>
+<li>[HiCache]: 支持 @hzh0425 在 <a href="https://github.com/sgl-project/sglang/pull/17415">https://github.com/sgl-project/sglang/pull/17415</a> 中进行 DeepSeek v32 cpu 卸载</li>
+<li>[扩散] UX：通过 @mickqian 在 <a href="https://github.com/sgl-project/sglang/pull/18122">https://github.com/sgl-project/sglang/pull/18122</a> 中改进日志记录</li>
+<li>[将 sql-kernel 内核移至 JIT] 通过 @celve 在 <a href="https://github.com/sgl-project/sglang/pull/17889">https://github.com/sgl-project/sglang/pull/17889</a> 中添加 JIT concat MLA 内核</li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18091%E4%B8%AD%E7%9A%84@HanHan009527%E4%B8%BAGLM-4.7-FP8">https://github.com/sgl-project/sglang/pull/18091中的@HanHan009527为GLM-4.7-FP8</a> tp8 H20 H20-3e添加triton_fused_moe配置</li>
+<li>[Diffusion] 修复 <a href="https://github.com/sgl-project/sglang/pull/18109">https://github.com/sgl-project/sglang/pull/18109</a> 中 @BBuf 提供服务 image_edit 获取输入图像的错误</li>
+<li>MoE 重构：<a href="https://github.com/sgl-project/sglang/pull/16685">https://github.com/sgl-project/sglang/pull/16685</a> 中 @b8zhong 重构 <code>modelopt_quant.py</code> -> <code>flashinfer_trllm.py</code></li>
+<li>支持 Markdown/Notebook 友好的文档导出，以供 <a href="https://github.com/sgl-project/sglang/pull/18131">https://github.com/sgl-project/sglang/pull/18131</a> 中的@klhhhhh 进行下游集成</li>
+<li>[TestFix] 使用 @glenliu21 在 <a href="https://github.com/sgl-project/sglang/pull/18140">https://github.com/sgl-project/sglang/pull/18140</a> 中进行 LoRA 重叠加载测试的单元测试</li>
+<li>[NVIDIA] 在<a href="https://github.com/sgl-project/sglang/pull/18025%E4%B8%AD%E9%80%9A%E8%BF%87@kaixih%E5%90%91run_eval.py%E6%B7%BB%E5%8A%A0--top-k%E5%8F%82%E6%95%B0">https://github.com/sgl-project/sglang/pull/18025中通过@kaixih向run_eval.py添加—top-k参数</a></li>
+<li>Gigachat 3 工具解析器和 @ajpqs 在 <a href="https://github.com/sgl-project/sglang/pull/14765">https://github.com/sgl-project/sglang/pull/14765</a> 中的测试</li>
+<li>[HiCache] 修复：在<a href="https://github.com/sgl-project/sglang/pull/17265%E4%B8%AD@00fish0%E5%9C%A8%E6%9C%88%E9%A5%BCbatch_exists%E4%B8%AD%E5%BA%94%E7%94%A8extra_backend_tag">https://github.com/sgl-project/sglang/pull/17265中@00fish0在月饼batch_exists中应用extra_backend_tag</a></li>
+<li>[Perf] 在多线程加载器中使用安全张量 <code>load_file</code> by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18124">https://github.com/sgl-project/sglang/pull/18124</a></li>
+<li>[Docker] 删除硬编码的 <code>America/Los_Angeles</code> 时区，默认为 UTC by @mmangkad in <a href="https://github.com/sgl-project/sglang/pull/18121">https://github.com/sgl-project/sglang/pull/18121</a></li>
+<li>AMD PD/D PR ci 由 @Lzy17 在 <a href="https://github.com/sgl-project/sglang/pull/17183">https://github.com/sgl-project/sglang/pull/17183</a> 中</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17198">https://github.com/sgl-project/sglang/pull/17198</a> 中 @xiaoweiw-nv 分析动态块大小调整预填充延迟之前的预热</li>
+<li>[PD] feat: 支持 <a href="https://github.com/sgl-project/sglang/pull/17866">https://github.com/sgl-project/sglang/pull/17866</a> 中 @TTThanos 的月饼节点内 nvlink kv 传输</li>
+<li>[错误修复] 修复 Mistral Large 3 NVFP4 TRTLLM MoE by @elvischenv in <a href="https://github.com/sgl-project/sglang/pull/18065">https://github.com/sgl-project/sglang/pull/18065</a></li>
+<li>修复：将 cu13 开发容器添加到 <a href="https://github.com/sgl-project/sglang/pull/18192">https://github.com/sgl-project/sglang/pull/18192</a> 中 @ishandhanani 的版本中</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18193">https://github.com/sgl-project/sglang/pull/18193</a> 中由 @Kangyan-Zhou 恢复路径过滤器中损坏的 sql_kernel 排除模式</li>
+<li>通过 @DiweiSun 在 <a href="https://github.com/sgl-project/sglang/pull/11712">https://github.com/sgl-project/sglang/pull/11712</a> 中启用 xpu 设备的 ut 测试</li>
+<li>[HiCache] 壮举：在 <code>sglext</code> 和 Prometheus 指标中添加 HiCache 的详细缓存命中细分（@vladnosiv 在 <a href="https://github.com/sgl-project/sglang/pull/17648">https://github.com/sgl-project/sglang/pull/17648</a> 中）</li>
+<li>[扩散] 仅在 <a href="https://github.com/sgl-project/sglang/pull/15592">https://github.com/sgl-project/sglang/pull/15592</a> 中 @yeahdongcn 的自定义 op cuda 路径（SiluAndMul 和 RMSNorm）中导入 sql_kernel</li>
+<li>[扩散]硬件：在<a href="https://github.com/sgl-project/sglang/pull/17318%E4%B8%AD%E6%94%AF%E6%8C%81@yeahdongcn%E5%9C%A8MTGPU%EF%BC%88%E5%A4%9AGPU%EF%BC%8C5/N%EF%BC%89%E4%B8%8A%E7%9A%84%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B">https://github.com/sgl-project/sglang/pull/17318中支持@yeahdongcn在MTGPU（多GPU，5/N）上的扩散模型</a></li>
+<li>[扩散]硬件：支持<a href="https://github.com/sgl-project/sglang/pull/17346%E4%B8%AD@yeahdongcn%E5%9C%A8MTGPU%E4%B8%8A%E7%9A%84%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%EF%BC%88doc%EF%BC%8C6/N%EF%BC%89">https://github.com/sgl-project/sglang/pull/17346中@yeahdongcn在MTGPU上的扩散模型（doc，6/N）</a></li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18097%E4%B8%AD%E6%B7%BB%E5%8A%A0@harvenstar%E7%9A%84%E6%B5%81%E5%BC%8F%E5%B9%B6%E8%A1%8C%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B">https://github.com/sgl-project/sglang/pull/18097中添加@harvenstar的流式并行工具调用测试用例</a></li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/17535">https://github.com/sgl-project/sglang/pull/17535</a> 中更新 @satyamk7054 对 Qwen3 嵌入的权重重命名检查
+*修复：确保夜间whls被标记为@dougyster在<a href="https://github.com/sgl-project/sglang/pull/18204%E4%B8%AD%E7%9A%84%E6%9C%80%E6%96%B0%E6%8F%90%E4%BA%A4">https://github.com/sgl-project/sglang/pull/18204中的最新提交</a></li>
+<li>[扩散]修复<a href="https://github.com/sgl-project/sglang/pull/17140%E4%B8%AD@nono-Sang%E8%BF%9E%E7%BB%AD%E5%8A%A8%E6%80%81%E8%AF%B7%E6%B1%82%E4%B8%8B%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8cache-dit%E9%94%99%E8%AF%AF">https://github.com/sgl-project/sglang/pull/17140中@nono-Sang连续动态请求下的服务器cache-dit错误</a></li>
+<li>[文档] 修复 <a href="https://github.com/sgl-project/sglang/pull/18207">https://github.com/sgl-project/sglang/pull/18207</a> 中 @kuafou 的自述文件拼写错误</li>
+<li>修复多模式会话并通过 @aurickq 在 <a href="https://github.com/sgl-project/sglang/pull/18152">https://github.com/sgl-project/sglang/pull/18152</a> 中的 Engine 公开它</li>
+<li>将 qkvbfg 线性融合到一个 gemm 中，将 f_b g_b 融合到批量 gemm 中。通过 @strgrb 在 <a href="https://github.com/sgl-project/sglang/pull/17801">https://github.com/sgl-project/sglang/pull/17801</a>
+*修复：在<a href="https://github.com/sgl-project/sglang/pull/18212%E4%B8%AD%E7%A2%B0%E6%92%9E@dougyster%E7%9A%84%E5%A4%9C%E9%97%B4whl%E7%89%88%E6%9C%AC">https://github.com/sgl-project/sglang/pull/18212中碰撞@dougyster的夜间whl版本</a></li>
+<li>支持 Markdown/Notebook 友好的文档导出以进行下游集成（复制所有 Markdown 和 rst 文件），作者为 <a href="https://github.com/sgl-project/sglang/pull/18223">https://github.com/sgl-project/sglang/pull/18223</a> 中的 @klhhhhh</li>
+<li>[扩散]核融合：<a href="https://github.com/sgl-project/sglang/pull/14717%E4%B8%AD@jianyingzhu%E9%92%88%E5%AF%B9Qwen-Image%E3%80%81WAN%E5%92%8CHunyuanVideo%E7%9A%84%E9%97%A8%E6%8E%A7%E6%AE%8B%E5%B7%AElayernorm%E5%B0%BA%E5%BA%A6%E7%A7%BB%E4%BD%8D%E5%92%8Clayernorm%E5%B0%BA%E5%BA%A6%E7%A7%BB%E4%BD%8D%E6%A0%B8%E8%9E%8D%E5%90%88">https://github.com/sgl-project/sglang/pull/14717中@jianyingzhu针对Qwen-Image、WAN和HunyuanVideo的门控残差layernorm尺度移位和layernorm尺度移位核融合</a></li>
+<li>[DeepGemm] 通过 @Fridge003 在 <a href="https://github.com/sgl-project/sglang/pull/18111">https://github.com/sgl-project/sglang/pull/18111</a> 中添加快速预热标志</li>
+<li>[RadixTree][5/N重构]：在<a href="https://github.com/sgl-project/sglang/pull/18147%E4%B8%AD%E9%80%9A%E8%BF%87@hzh0425%E5%BC%95%E5%85%A5%E6%8C%89%E9%94%AE%E5%8C%B9%E9%85%8D%E7%9A%84%E5%89%8D%E5%90%8E%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95">https://github.com/sgl-project/sglang/pull/18147中通过@hzh0425引入按键匹配的前后处理方法</a></li>
+<li><a href="https://github.com/sgl-project/sglang/pull/18200">https://github.com/sgl-project/sglang/pull/18200</a> 中的 @ch-wan 将 _alloc_extend_naive 从 npu 分配器中移出</li>
+<li>[Diffusion] 通过@BBuf更新<a href="https://github.com/sgl-project/sglang/pull/18247%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%A0%81%E6%89%80%E6%9C%89%E8%80%85">https://github.com/sgl-project/sglang/pull/18247中的代码所有者</a></li>
+<li>[扩散] 将提示日志从信息降级为调试。作者：@Evrard-Nil，<a href="https://github.com/sgl-project/sglang/pull/17813">https://github.com/sgl-project/sglang/pull/17813</a></li>
+<li>确保我们始终在 <a href="https://github.com/sgl-project/sglang/pull/18129">https://github.com/sgl-project/sglang/pull/18129</a> 中通过 @nvcastet 禁用没有 dp 填充的 symm 内存</li>
+<li>通过在 <a href="https://github.com/sgl-project/sglang/pull/16043">https://github.com/sgl-project/sglang/pull/16043</a> 中 @BJWang-ant 融合 get k 和 k_scale triton 内核来优化 get_topk_ragged</li>
+<li>[diffusion][mova] @CloudRipple 在 <a href="https://github.com/sgl-project/sglang/pull/18107">https://github.com/sgl-project/sglang/pull/18107</a> 中的干净代码</li>
+<li>[扩散]修复<a href="https://github.com/sgl-project/sglang/pull/18221%E4%B8%AD@nono-Sang%E5%9C%A8GPU-0%E4%B8%8A%E5%86%97%E4%BD%99%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E7%9A%84bug">https://github.com/sgl-project/sglang/pull/18221中@nono-Sang在GPU-0上冗余内存使用的bug</a></li>
+<li>支持<a href="https://github.com/sgl-project/sglang/pull/17939%E4%B8%AD@RunningLeon%E7%9A%84%E6%AF%8F%E4%B8%AA%E8%AF%B7%E6%B1%82%E4%BC%A0%E9%80%92spaces">https://github.com/sgl-project/sglang/pull/17939中@RunningLeon的每个请求传递spaces</a>_ Between_special_tokens</li>
+<li>支持 @RunningLeon 在 <a href="https://github.com/sgl-project/sglang/pull/18145">https://github.com/sgl-project/sglang/pull/18145</a> 中的 interns1-pro</li>
+<li>[扩散]重构：将model_stages移动到<a href="https://github.com/sgl-project/sglang/pull/18248%E4%B8%AD%E7%9A%84@mickqian%E7%9A%84stages%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD">https://github.com/sgl-project/sglang/pull/18248中的@mickqian的stages文件夹中</a></li>
+<li>[AMD] 在 <a href="https://github.com/sgl-project/sglang/pull/17895">https://github.com/sgl-project/sglang/pull/17895</a> 中添加 kimi mi35x 夜间测试、文件夹组织和 @michaelzhang-ai 的几个稳定性修复</li>
+<li>修复：修复 <a href="https://github.com/sgl-project/sglang/pull/18240">https://github.com/sgl-project/sglang/pull/18240</a> 中 @zack041 注意力测试中的 MockModelRunner</li>
+<li>通过 @mmangkad 在 <a href="https://github.com/sgl-project/sglang/pull/18195">https://github.com/sgl-project/sglang/pull/18195</a> 中为 H100 TP=2 上的 Qwen3-Coder-Next-FP8 添加 MoE 融合配置</li>
+<li>[Bugfix] 修复了@lingebeng在<a href="https://github.com/sgl-project/sglang/pull/18254%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E6%98%8E%E6%98%BE%E7%9A%84%E9%80%BB%E8%BE%91%E9%94%99%E8%AF%AF">https://github.com/sgl-project/sglang/pull/18254中的一个明显的逻辑错误</a></li>
+<li>修复：通过 @zwang86 在 <a href="https://github.com/sgl-project/sglang/pull/18225">https://github.com/sgl-project/sglang/pull/18225</a> 中将 SGLANG_IS_IN_CI 环境变量添加到发布文档工作流程</li>
+<li>通过 @cicirori 在 <a href="https://github.com/sgl-project/sglang/pull/18064">https://github.com/sgl-project/sglang/pull/18064</a> 中修复 kimi k2.5 的 moe gemm 配置初始化</li>
+<li>[扩散]杂务：在<a href="https://github.com/sgl-project/sglang/pull/18249%E4%B8%AD%E7%A6%81%E6%AD%A2%E4%BD%BF%E7%94%A8@mickqian%E7%9A%84%E6%B1%89%E5%AD%97">https://github.com/sgl-project/sglang/pull/18249中禁止使用@mickqian的汉字</a></li>
+<li>[PD] 通过<a href="https://github.com/sgl-project/sglang/pull/18163%E4%B8%AD%E7%9A%84@Ch3ngY1%E6%94%B9%E8%BF%9B%E5%85%B7%E6%9C%89%E4%B8%8D%E5%90%8Ctp%E5%B0%BA%E5%AF%B8%E7%9A%84MHA%E6%A8%A1%E5%9E%8B%E7%9A%84kv%E5%81%8F%E7%A7%BB%E8%AE%A1%E7%AE%97">https://github.com/sgl-project/sglang/pull/18163中的@Ch3ngY1改进具有不同tp尺寸的MHA模型的kv偏移计算</a></li>
+<li>[PD] doc：文档 SGLANG_MOONCAKE_CUSTOM_MEM_POOL 和 @stmatengss 在 <a href="https://github.com/sgl-project/sglang/pull/18259">https://github.com/sgl-project/sglang/pull/18259</a> 中支持的值</li>
+<li>[文档] 修复 <a href="https://github.com/sgl-project/sglang/pull/18276">https://github.com/sgl-project/sglang/pull/18276</a> 中 @app/ 的拼写错误和拼写错误</li>
+<li>支持 Markdown/Notebook 友好的文档导出以供下游集成（将rat文件转换为md文件并保存），作者：<a href="https://github.com/sgl-project/sglang/pull/18278%E4%B8%AD%E7%9A%84@klhhhhh">https://github.com/sgl-project/sglang/pull/18278中的@klhhhhh</a></li>
+<li>修复 test_return_routed_experts 以在 <a href="https://github.com/sgl-project/sglang/pull/18274">https://github.com/sgl-project/sglang/pull/18274</a> 中使用 @alisonshao 的响应级别 sglext</li>
+<li>[Diffusion] 支持 <a href="https://github.com/sgl-project/sglang/pull/18272">https://github.com/sgl-project/sglang/pull/18272</a> 中 @BBuf 对 mova 的分层卸载</li>
+<li>[XPU] 在 <a href="https://github.com/sgl-project/sglang/pull/13561">https://github.com/sgl-project/sglang/pull/13561</a> 中集成 MoE 并由 @airMeng 对 XPU 注意力后端进行小幅改进</li>
+<li>[修复] <a href="https://github.com/sgl-project/sglang/pull/17300">https://github.com/sgl-project/sglang/pull/17300</a> 中 @danielafrimi 的 FP4 Gemm 始终支持 TP > 4</li>
+<li>[分段图]：在<a href="https://github.com/sgl-project/sglang/pull/18217%E4%B8%AD%E6%94%AF%E6%8C%81@hzh0425%E7%9A%84MiniMax-M2">https://github.com/sgl-project/sglang/pull/18217中支持@hzh0425的MiniMax-M2</a></li>
+<li>[PD] @ShangmingCai 在 <a href="https://github.com/sgl-project/sglang/pull/18279">https://github.com/sgl-project/sglang/pull/18279</a> 中对月饼后端进行了小代码清理</li>
+<li>docker：在<a href="https://github.com/sgl-project/sglang/pull/18298%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%A1%A5%E4%B8%81%E4%BB%A5%E5%A2%9E%E5%8A%A0@ishandhanani%E7%9A%84GPU%E6%B7%B1%E5%BA%A6%E8%B6%85%E6%97%B6">https://github.com/sgl-project/sglang/pull/18298中添加补丁以增加@ishandhanani的GPU深度超时</a></li>
+<li>[扩散][热修复]修复<a href="https://github.com/sgl-project/sglang/pull/18296%E4%B8%AD@yingluosanqian%E7%9A%84PR">https://github.com/sgl-project/sglang/pull/18296中@yingluosanqian的PR</a> 14717引起的精度错误</li>
+<li>[内核] 在<a href="https://github.com/sgl-project/sglang/pull/18155%E4%B8%AD%E6%B7%BB%E5%8A%A0@pansiheng%E7%9A%84JIT">https://github.com/sgl-project/sglang/pull/18155中添加@pansiheng的JIT</a> apply_rope_with_cos_sin_cache_inplace</li>
+<li>如果 <a href="https://github.com/sgl-project/sglang/pull/18046">https://github.com/sgl-project/sglang/pull/18046</a> 中的@glenliu21 获得了带有added_tokens 的适配器，则抛出错误</li>
+<li>[扩散]壮举：允许T5的TP组在<a href="https://github.com/sgl-project/sglang/pull/17818%E4%B8%AD%E9%87%8D%E7%94%A8@nono-Sang%E7%9A%84%E5%8F%98%E5%8E%8B%E5%99%A8%E7%9A%84SP%E7%BB%84">https://github.com/sgl-project/sglang/pull/17818中重用@nono-Sang的变压器的SP组</a></li>
+<li>@ovidiusm 在 <a href="https://github.com/sgl-project/sglang/pull/17654">https://github.com/sgl-project/sglang/pull/17654</a> 中对 NixlKVManager 进行优化</li>
+<li>通过在 <a href="https://github.com/sgl-project/sglang/pull/18285">https://github.com/sgl-project/sglang/pull/18285</a> 中使用 @alisonshao 的确定性种子来修复片状 test_Frequency_penalty_reduces_word_repetition</li>
+<li>Refactor(qwen3-vl) 通过@aaaandychen在<a href="https://github.com/sgl-project/sglang/pull/16781%E4%B8%AD%E4%BC%98%E5%8C%96%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81%E6%8F%92%E5%80%BC">https://github.com/sgl-project/sglang/pull/16781中优化位置编码插值</a></li>
+<li>[文档] 通过 @alphabetc1 在 <a href="https://github.com/sgl-project/sglang/pull/18321">https://github.com/sgl-project/sglang/pull/18321</a> 中细化 SpecV2/STANDALONE/NGRAM 的规范解码文档</li>
+<li>[文档] 在 <a href="https://github.com/sgl-project/sglang/pull/18323">https://github.com/sgl-project/sglang/pull/18323</a> 中添加 @alphabetc1 规范解码文档的摘要部分</li>
+<li>[内核] 通过<a href="https://github.com/sgl-project/sglang/pull/18067%E4%B8%AD%E7%9A%84@celve%E5%B0%86GPTQ-Marlin">https://github.com/sgl-project/sglang/pull/18067中的@celve将GPTQ-Marlin</a> GEMM内核迁移到JIT</li>
+<li>通过 @amote-i 在 <a href="https://github.com/sgl-project/sglang/pull/18330">https://github.com/sgl-project/sglang/pull/18330</a> 中修复 NPU 最佳实践</li>
+<li>[扩散][热修复]修复 <a href="https://github.com/sgl-project/sglang/pull/18336">https://github.com/sgl-project/sglang/pull/18336</a> 中 @yingluosanqian 因 torch._dynamo.disable 导致的 torch.compile 图形中断</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/17847%E4%B8%AD%E6%B7%BB%E5%8A%A0@XucSh%E7%9A%84hicache">https://github.com/sgl-project/sglang/pull/17847中添加@XucSh的hicache</a> jit测试</li>
+<li>[扩散]修复：在<a href="https://github.com/sgl-project/sglang/pull/18317%E4%B8%AD@xiaoyewww%E5%9C%A8%E5%9B%BE%E5%83%8F%E7%BC%96%E7%A0%81%E9%98%B6%E6%AE%B5%E5%8D%B8%E8%BD%BD%E6%96%87%E6%9C%AC%E7%BC%96%E7%A0%81%E5%99%A8%E6%A8%A1%E5%9E%8B">https://github.com/sgl-project/sglang/pull/18317中@xiaoyewww在图像编码阶段卸载文本编码器模型</a></li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18119">https://github.com/sgl-project/sglang/pull/18119</a> 中添加 @shaharmor98 的 Nemotron 3 Nano 测试</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18377">https://github.com/sgl-project/sglang/pull/18377</a> 中为 @Fridge003 的 Shukangz、dongjiyingdjy、samuellees 添加 CI 权限</li>
+<li>[文档] 添加 Falcon H1、Hunyuan-Large、Qwen3-Omni 支持并更新 @pokymono 在 <a href="https://github.com/sgl-project/sglang/pull/17888">https://github.com/sgl-project/sglang/pull/17888</a> 中的 Diffusion 使用</li>
+<li>通过 @nealvaidya 在 <a href="https://github.com/sgl-project/sglang/pull/16229">https://github.com/sgl-project/sglang/pull/16229</a> 中将混合模型 PD 添加到 NIXL 连接器</li>
+<li>将 stage-c-test-large-4-gpu 套件合并到 @alisonshao 在 <a href="https://github.com/sgl-project/sglang/pull/18325">https://github.com/sgl-project/sglang/pull/18325</a> 中的分区套件中</li>
+<li>恢复 <a href="https://github.com/sgl-project/sglang/pull/18385">https://github.com/sgl-project/sglang/pull/18385</a> 中@Fridge003 的“[Build] 在 aarch64 轮子中启用完整内核”</li>
+<li>[Qwen3Next] 在<a href="https://github.com/sgl-project/sglang/pull/18271%E4%B8%AD%E9%80%9A%E8%BF%87@hlu1%E4%BC%98%E5%8C%96fused_sigmoid_gating_delta_rule_update_kernel">https://github.com/sgl-project/sglang/pull/18271中通过@hlu1优化fused_sigmoid_gating_delta_rule_update_kernel</a></li>
+<li>支持execute_shell_command以支持<a href="https://github.com/sgl-project/sglang/pull/18390%E4%B8%AD%E7%9A%84@zhaochenyang20%E7%9A%84%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">https://github.com/sgl-project/sglang/pull/18390中的@zhaochenyang20的环境变量</a></li>
+<li>[NPU] 通过 @Hexq0210 在 <a href="https://github.com/sgl-project/sglang/pull/18344">https://github.com/sgl-project/sglang/pull/18344</a> 中更新 npu 文档</li>
+<li>[扩散] 在 <a href="https://github.com/sgl-project/sglang/pull/18257">https://github.com/sgl-project/sglang/pull/18257</a> 中通过 @BBuf 将 fused_norm_scale_shift 应用于 MOVA</li>
+<li>[Doc] 更新 CUDA 13 安装指南，首先由 @mmangkad 在 <a href="https://github.com/sgl-project/sglang/pull/18404">https://github.com/sgl-project/sglang/pull/18404</a> 中安装 torch</li>
+<li>从<a href="https://github.com/sgl-project/sglang/pull/18382%E4%B8%AD@haojin2%E7%9A%84GLM-Image">https://github.com/sgl-project/sglang/pull/18382中@haojin2的GLM-Image</a> dits中删除不必要的norm_type参数</li>
+<li>[Doc] 修复 <a href="https://github.com/sgl-project/sglang/pull/18350">https://github.com/sgl-project/sglang/pull/18350</a> 中@mmangkad 过时的 <code>--fp4-gemm-backend</code> 文档</li>
+<li>[扩散] 修复：尊重 <a href="https://github.com/sgl-project/sglang/pull/18386">https://github.com/sgl-project/sglang/pull/18386</a> 中 @mickqian 的 dist_timeout 选项</li>
+<li>[diffusion] feat：支持将视频直接保存在服务器上，以避免 <a href="https://github.com/sgl-project/sglang/pull/18253">https://github.com/sgl-project/sglang/pull/18253</a> 中@nono-Sang 传输张量的开销</li>
+<li>[Kimi-K2.5] 修复了 <a href="https://github.com/sgl-project/sglang/pull/18370">https://github.com/sgl-project/sglang/pull/18370</a> 中 @mmangkad 的 NVFP4 Kimi-K2.5 权重映射和排除列表</li>
+<li>[NPU][扩散]模型：<a href="https://github.com/sgl-project/sglang/pull/13662%E4%B8%AD@Makcum888e%E5%9C%A8Ascend%E4%B8%8A%E6%94%AF%E6%8C%81WAN/FLUX/Qwen-Image/Qwen-Image-edit">https://github.com/sgl-project/sglang/pull/13662中@Makcum888e在Ascend上支持WAN/FLUX/Qwen-Image/Qwen-Image-edit</a></li>
+<li>[修复]修复<a href="https://github.com/sgl-project/sglang/pull/18364%E4%B8%AD@DarkSharpness%E6%9B%B4%E6%96%B0flashinfer%E7%89%88%E6%9C%AC%E5%90%8E%E7%9A%84%E5%90%8E%E7%AB%AF%E9%80%89%E6%8B%A9">https://github.com/sgl-project/sglang/pull/18364中@DarkSharpness更新flashinfer版本后的后端选择</a></li>
+<li>修复：<a href="https://github.com/sgl-project/sglang/pull/18394">https://github.com/sgl-project/sglang/pull/18394</a> 中 @zack041 检测 FP8 KV 缓存时同步 server_args.kv_cache_dtype</li>
+<li>[diffusion] feat：在<a href="https://github.com/sgl-project/sglang/pull/18161%E4%B8%AD%E6%94%AF%E6%8C%81@nono-Sang%E7%9A%84%E9%AB%98%E6%95%88%E5%BA%8F%E5%88%97%E5%88%86%E7%89%87">https://github.com/sgl-project/sglang/pull/18161中支持@nono-Sang的高效序列分片</a></li>
+<li>[ModelOpt] 修复 @vincentzed 在 <a href="https://github.com/sgl-project/sglang/pull/18189">https://github.com/sgl-project/sglang/pull/18189</a> 中启动损坏的 Qwen3-235B-A22B-Instruct-2507-NVFP4</li>
+<li>[扩散]重构：<a href="https://github.com/sgl-project/sglang/pull/18438%E4%B8%AD@mickqian%E5%B0%86%E7%BB%84%E4%BB%B6%E5%8A%A0%E8%BD%BD%E5%99%A8%E5%88%86%E7%BB%84%E5%88%B0component_loaders/%E7%9B%AE%E5%BD%95%E4%B8%8B">https://github.com/sgl-project/sglang/pull/18438中@mickqian将组件加载器分组到component_loaders/目录下</a></li>
+<li>修复 TRT-LLM MLA 后端通过 @debo3 在 <a href="https://github.com/sgl-project/sglang/pull/18396">https://github.com/sgl-project/sglang/pull/18396</a> 中将 k_scale 应用到 BMM1 中的 BF16 KV 缓存</li>
+<li>[扩散]杂务：由 @mickqian 在 <a href="https://github.com/sgl-project/sglang/pull/18446">https://github.com/sgl-project/sglang/pull/18446</a> 中修改流程标题</li>
+<li>通过 @tugot17 在 <a href="https://github.com/sgl-project/sglang/pull/17777">https://github.com/sgl-project/sglang/pull/17777</a> 中为 LFM2 ShortConv 层添加张量并行支持</li>
+<li>[Kimi-K2.5] 修复 <a href="https://github.com/sgl-project/sglang/pull/18440">https://github.com/sgl-project/sglang/pull/18440</a> 中 @mmangkad 中 <code>KimiK25</code> 中缺失的 <code>quant_config</code></li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18453%E4%B8%AD%E7%9A%84@merrymercy%E6%9B%B4%E6%96%B0pyproject.toml%E4%B8%AD%E7%9A%84%E4%BD%9C%E8%80%85%E4%BF%A1%E6%81%AF">https://github.com/sgl-project/sglang/pull/18453中的@merrymercy更新pyproject.toml中的作者信息</a></li>
+<li>[ModelOPT] 支持 Qwen 3 Next Coder NVFP4 by @vincentzed in <a href="https://github.com/sgl-project/sglang/pull/18224">https://github.com/sgl-project/sglang/pull/18224</a></li>
+<li>@ShangmingCai 在 <a href="https://github.com/sgl-project/sglang/pull/17810">https://github.com/sgl-project/sglang/pull/17810</a> 中将 Mooncake TE 重构为共享分布式组件</li>
+<li>[BugFix][PD]修复<a href="https://github.com/sgl-project/sglang/pull/17483%E4%B8%AD@ZhengWG%E5%9C%A8PD%E4%B8%AD%E4%B8%AD%E6%AD%A2%E6%97%B6metadata_buffer_index%E6%B3%84%E6%BC%8F">https://github.com/sgl-project/sglang/pull/17483中@ZhengWG在PD中中止时metadata_buffer_index泄漏</a></li>
+<li>修复：修复<a href="https://github.com/sgl-project/sglang/pull/18105%E4%B8%AD@acelyc111%E8%8D%89%E7%A8%BF%E6%A8%A1%E5%9E%8B%E8%BF%90%E8%A1%8C%E5%99%A8%E8%BF%94%E5%9B%9E%E5%80%BC%E7%B1%BB%E5%9E%8B%E9%94%99%E8%AF%AF%E7%9A%84%E9%97%AE%E9%A2%98">https://github.com/sgl-project/sglang/pull/18105中@acelyc111草稿模型运行器返回值类型错误的问题</a></li>
+<li>修复：使用 —no-build-isolation 进行 @harvenstar 在 <a href="https://github.com/sgl-project/sglang/pull/18455">https://github.com/sgl-project/sglang/pull/18455</a> 中的人工评估安装</li>
+<li>[AMD] 通过 @bingxche 在 <a href="https://github.com/sgl-project/sglang/pull/18423">https://github.com/sgl-project/sglang/pull/18423</a> 中将 aiter 更新为 v0.1.10.post2</li>
+<li>[AMD] CI - 通过 @yctseng0211 在 <a href="https://github.com/sgl-project/sglang/pull/18452">https://github.com/sgl-project/sglang/pull/18452</a> 中修复 AMD 每日映像发布和安装依赖项</li>
+<li>[DLLM] 在<a href="https://github.com/sgl-project/sglang/pull/18171%E4%B8%AD%E6%B7%BB%E5%8A%A0@edwardzjl%E7%94%A8%E4%BA%8E%E8%81%94%E5%90%88M2T%E5%92%8CT2T%E8%A7%A3%E7%A0%81%E7%9A%84JointThreshold%E7%AE%97%E6%B3%95">https://github.com/sgl-project/sglang/pull/18171中添加@edwardzjl用于联合M2T和T2T解码的JointThreshold算法</a></li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/17828%E4%B8%AD%E7%9A%84@LHXuuu%E4%BD%BF%E5%8E%8B%E7%BC%A9%E5%BC%A0%E9%87%8FMoE%E6%94%AF%E6%8C%81%E5%BF%BD%E7%95%A5%E5%B1%82">https://github.com/sgl-project/sglang/pull/17828中的@LHXuuu使压缩张量MoE支持忽略层</a></li>
+<li>恢复 <a href="https://github.com/sgl-project/sglang/pull/18471">https://github.com/sgl-project/sglang/pull/18471</a> 中 @Fridge003 的“通过融合 get k 和 k_scale triton 内核来优化 get_topk_ragged”</li>
+<li>壮举：在 <a href="https://github.com/sgl-project/sglang/pull/17924">https://github.com/sgl-project/sglang/pull/17924</a> 中添加 @yrk111222 对 multimodal_gen 模型的 ModelScope 支持</li>
+<li>[扩散] 琐事：修复 @mickqian 在 <a href="https://github.com/sgl-project/sglang/pull/18477">https://github.com/sgl-project/sglang/pull/18477</a> 中的不干净关闭和资源泄漏</li>
+<li>[功能] 支持<a href="https://github.com/sgl-project/sglang/pull/10707%E4%B8%AD@zzhbrr%E5%AF%B9Gemma-3%E7%9A%84%E5%8F%8C%E5%90%91%E5%85%B3%E6%B3%A8">https://github.com/sgl-project/sglang/pull/10707中@zzhbrr对Gemma-3的双向关注</a></li>
+<li>通过 @klshuster 在 <a href="https://github.com/sgl-project/sglang/pull/18273">https://github.com/sgl-project/sglang/pull/18273</a> 中将 <code>quantize_config</code> 传递给 <code>_initialize_model</code></li>
+<li>修复 MMLU 基准测试以自动下载数据并解决 @JustinTong0323 在 <a href="https://github.com/sgl-project/sglang/pull/18486">https://github.com/sgl-project/sglang/pull/18486</a> 中的路径问题</li>
+<li>[MODEL] 在<a href="https://github.com/sgl-project/sglang/pull/18489%E4%B8%AD%E6%B7%BB%E5%8A%A0@zju-stu-lizheng%E5%AF%B9Qwen3.5%E5%9E%8B%E5%8F%B7%E7%9A%84%E6%94%AF%E6%8C%81">https://github.com/sgl-project/sglang/pull/18489中添加@zju-stu-lizheng对Qwen3.5型号的支持</a></li>
+<li>[AMD] 在 <a href="https://github.com/sgl-project/sglang/pull/17476">https://github.com/sgl-project/sglang/pull/17476</a> 中添加 @bingxche 的 amd ci 监视器</li>
+<li>feat(kv-events)：在 <a href="https://github.com/sgl-project/sglang/pull/18205">https://github.com/sgl-project/sglang/pull/18205</a> 中为 KV 事件类型添加中型字段，以便 @ishandhanani 进行存储层跟踪</li>
+<li>文档：通过 @zack041 在 <a href="https://github.com/sgl-project/sglang/pull/18479">https://github.com/sgl-project/sglang/pull/18479</a> 中扩展和更新 modelopt 文档</li>
+<li>添加cache_config_info指标。通过 @kartikx 在 <a href="https://github.com/sgl-project/sglang/pull/17273">https://github.com/sgl-project/sglang/pull/17273</a></li>
+<li>[HiCache][PP]在<a href="https://github.com/sgl-project/sglang/pull/16395%E4%B8%AD%E6%B7%BB%E5%8A%A0@stmatengss%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B">https://github.com/sgl-project/sglang/pull/16395中添加@stmatengss的兼容性测试用例</a></li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/18379">https://github.com/sgl-project/sglang/pull/18379</a> 中@Qiaolin-Yu 规范 v2 中的空闲批量预测数据类型</li>
+<li>使 bench_one_batch_server 兼容更多后端（<a href="https://github.com/sgl-project/sglang/pull/18512">https://github.com/sgl-project/sglang/pull/18512</a> 中的@mao Cheng23）</li>
+<li>[EPD] 添加通知机制以修复服务器挂起并通过 @liusy58 在 <a href="https://github.com/sgl-project/sglang/pull/18229">https://github.com/sgl-project/sglang/pull/18229</a> 中添加超时环境变量</li>
+<li>Deepseekv32 与 <a href="https://github.com/sgl-project/sglang/pull/18297">https://github.com/sgl-project/sglang/pull/18297</a> 中 @JustinTong0323 的 Transformer v5 的兼容性</li>
+<li>支持 <a href="https://github.com/sgl-project/sglang/pull/18521">https://github.com/sgl-project/sglang/pull/18521</a> 中@JustinTong0323 的 GlmMoeDsaForCausalLM</li>
+<li>[AMD] 在 <a href="https://github.com/sgl-project/sglang/pull/18425">https://github.com/sgl-project/sglang/pull/18425</a> 中通过 @yctseng0211 打开 aiter-prebuild</li>
+<li>[HiCache]修复：StorageMetricsCollector在<a href="https://github.com/sgl-project/sglang/pull/18354%E4%B8%AD%E8%A2%AB@alphabetc1%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BA%86%E4%B8%A4%E6%AC%A1">https://github.com/sgl-project/sglang/pull/18354中被@alphabetc1初始化了两次</a></li>
+<li>[DLLM] 基本的 dLLM 调度策略和 @ClawSeven 在 <a href="https://github.com/sgl-project/sglang/pull/17484">https://github.com/sgl-project/sglang/pull/17484</a> 中的实现</li>
+<li>[diffusion] feat: 支持 @nono-Sang 在 <a href="https://github.com/sgl-project/sglang/pull/18179">https://github.com/sgl-project/sglang/pull/18179</a> 中并行 wan-vae 解码</li>
+<li>[NPU] [CI] 仅在 <a href="https://github.com/sgl-project/sglang/pull/18523">https://github.com/sgl-project/sglang/pull/18523</a> 中的 @Makcum888e 更改 multimodal_gen 时启用运行多模式 NPU CI</li>
+<li>[扩散]修复：修复<a href="https://github.com/sgl-project/sglang/pull/18187%E4%B8%AD@mickqian%E7%9A%84fsdp">https://github.com/sgl-project/sglang/pull/18187中@mickqian的fsdp</a></li>
+<li>[sql-kernel] 在<a href="https://github.com/sgl-project/sglang/pull/18362%E4%B8%AD%E9%80%9A%E8%BF%87@BBuf%E5%8D%87%E7%BA%A7deepgemm">https://github.com/sgl-project/sglang/pull/18362中通过@BBuf升级deepgemm</a></li>
+<li>[NPU][文档] 通过 @husf1130 在 <a href="https://github.com/sgl-project/sglang/pull/18360">https://github.com/sgl-project/sglang/pull/18360</a> 中改进 Ascend NPU 最佳实践文档</li>
+<li>[NPU] 通过 @Hexq0210 在 <a href="https://github.com/sgl-project/sglang/pull/18474">https://github.com/sgl-project/sglang/pull/18474</a> 中更新 npu 文档</li>
+<li>修复(config): 支持<a href="https://github.com/sgl-project/sglang/pull/18532%E4%B8%AD@zju-stu-lizheng%E9%80%9A%E8%BF%87%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AEMamba%E7%8A%B6%E6%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">https://github.com/sgl-project/sglang/pull/18532中@zju-stu-lizheng通过配置文件设置Mamba状态数据类型</a></li>
+<li>[NPU][文档]修复有关 <a href="https://github.com/sgl-project/sglang/pull/18561">https://github.com/sgl-project/sglang/pull/18561</a> 中 @husf1130 的 ascend npu 最佳实践超链接的错误</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18562%E4%B8%AD%E6%81%A2%E5%A4%8D@Fridge003%E7%9A%84%E2%80%9C%5Bsql-kernel%5D%E5%8D%87%E7%BA%A7deepgemm%E2%80%9D">https://github.com/sgl-project/sglang/pull/18562中恢复@Fridge003的“[sql-kernel]升级deepgemm”</a></li>
+<li><a href="https://github.com/sgl-project/sglang/pull/18488">https://github.com/sgl-project/sglang/pull/18488</a> 中 @1am9trash 为 dsv32 mi355 进行 Tilelang 稀疏解码转发</li>
+<li>修复基数缓存密钥，以包含 @ycchen-tw 在 <a href="https://github.com/sgl-project/sglang/pull/16521">https://github.com/sgl-project/sglang/pull/16521</a> 中的多轮（回归）中生成的令牌</li>
+<li>修复错误的预填充日志。作者：@hnyls2002 在 <a href="https://github.com/sgl-project/sglang/pull/18570">https://github.com/sgl-project/sglang/pull/18570</a></li>
+<li>[文档] 综合指南：导航 DP、DPA 和 SMG 最佳实践，作者：@zhaohaidao，<a href="https://github.com/sgl-project/sglang/pull/18096">https://github.com/sgl-project/sglang/pull/18096</a></li>
+<li>通过 <a href="https://github.com/sgl-project/sglang/pull/18588">https://github.com/sgl-project/sglang/pull/18588</a> 中的 @zhaochenyang20 增强 RL 推出系统的 SMG 指南优势</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18566%E4%B8%AD%E6%B7%BB%E5%8A%A0@hnyls2002%E7%9A%84%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E7%8E%87UT">https://github.com/sgl-project/sglang/pull/18566中添加@hnyls2002的缓存命中率UT</a></li>
+<li>[AMD] 修复 Janus-Pro 崩溃问题并在 <a href="https://github.com/sgl-project/sglang/pull/18269">https://github.com/sgl-project/sglang/pull/18269</a> 中添加@michaelzhang-ai 的 Kimi-K2.5 夜间测试</li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/18553">https://github.com/sgl-project/sglang/pull/18553</a> 中 @BourneSun0527 的 dsv3.2 错误</li>
+<li>@1am9trash 在 <a href="https://github.com/sgl-project/sglang/pull/18528">https://github.com/sgl-project/sglang/pull/18528</a> 中进行 Fp8 预填充 attn 内核集成</li>
+<li>通过 <a href="https://github.com/sgl-project/sglang/pull/17756">https://github.com/sgl-project/sglang/pull/17756</a> 中的 @wangfakang 将 cp-atten-allgather 缓冲区注册到 symm 内存</li>
+<li>[NPU] 支持 <a href="https://github.com/sgl-project/sglang/pull/16947">https://github.com/sgl-project/sglang/pull/16947</a> 中 @McZyWu 的 skywork-reward-gemma2-2-27B-v0.2 模型</li>
+<li>[V3.2] 通过<a href="https://github.com/sgl-project/sglang/pull/18613%E4%B8%AD%E7%9A%84@Fridge003%E5%B0%86%E9%BB%98%E8%AE%A4%E7%9A%84CP%E4%BB%A4%E7%89%8C%E5%88%86%E5%89%B2%E6%96%B9%E6%B3%95%E6%9B%B4%E6%94%B9%E4%B8%BA%60--round-robin-split%60">https://github.com/sgl-project/sglang/pull/18613中的@Fridge003将默认的CP令牌分割方法更改为`—round-robin-split`</a></li>
+<li>添加支持，以通过 <a href="https://github.com/sgl-project/sglang/pull/17780">https://github.com/sgl-project/sglang/pull/17780</a> 中的 @vedantjh2 启用 lora 的嵌入模型</li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/18632">https://github.com/sgl-project/sglang/pull/18632</a> 中 @ispobock 的 dllm 预填充统计信息</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/17997%E4%B8%AD%E6%B7%BB%E5%8A%A0@tugot17%E7%9A%84LMF2">https://github.com/sgl-project/sglang/pull/17997中添加@tugot17的LMF2</a> MoE模型架构</li>
+<li>清理嘈杂的启动日志消息并通过 @merrymercy 在 <a href="https://github.com/sgl-project/sglang/pull/18531">https://github.com/sgl-project/sglang/pull/18531</a> 中重构 loader.py</li>
+<li>[diffusion] docs：将diffusion文档合并为@qianyue76在<a href="https://github.com/sgl-project/sglang/pull/18095%E4%B8%AD%E7%9A%84%E6%96%87%E6%A1%A3">https://github.com/sgl-project/sglang/pull/18095中的文档</a></li>
+<li>[PCG] <a href="https://github.com/sgl-project/sglang/pull/18405">https://github.com/sgl-project/sglang/pull/18405</a> 中的 @Oasis-Git 支持 GPT OSS Triton 内核</li>
+<li>[Bugfix] 修复 <a href="https://github.com/sgl-project/sglang/pull/18535">https://github.com/sgl-project/sglang/pull/18535</a> 中 @1195343015 的 PR #18273 引起的配置错误</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/16186">https://github.com/sgl-project/sglang/pull/16186</a> 中避免 @vincentzed 的 kimi 线性流同步</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18494%E4%B8%AD%E6%B7%BB%E5%8A%A0@Chen-0210%E5%AF%B9Chen-0210%E7%9A%84CI%E6%9D%83%E9%99%90">https://github.com/sgl-project/sglang/pull/18494中添加@Chen-0210对Chen-0210的CI权限</a></li>
+<li>glm5 md 由 @liupeng374 在 <a href="https://github.com/sgl-project/sglang/pull/18655">https://github.com/sgl-project/sglang/pull/18655</a></li>
+<li>[diffusion]修复：webui无法正确显示<a href="https://github.com/sgl-project/sglang/pull/18473%E4%B8%AD@yeahdongcn%E4%BD%BF%E7%94%A8wan2.2%E7%94%9F%E6%88%90%E7%9A%84%E8%A7%86%E9%A2%91">https://github.com/sgl-project/sglang/pull/18473中@yeahdongcn使用wan2.2生成的视频</a></li>
+<li>列出 @hnyls2002 在 <a href="https://github.com/sgl-project/sglang/pull/18650">https://github.com/sgl-project/sglang/pull/18650</a> 中针对 <code>pr-test</code> 的更多 CI 运行</li>
+<li>由 @xiaobaicxy 在 <a href="https://github.com/sgl-project/sglang/pull/18657">https://github.com/sgl-project/sglang/pull/18657</a> 中更新 npu 上的 glm5 自述文件</li>
+<li>通过 @hnyls2002 在 <a href="https://github.com/sgl-project/sglang/pull/18658">https://github.com/sgl-project/sglang/pull/18658</a> 中修复 <code>/rerun-stage</code> 的最大并行度
+*更新<a href="https://github.com/sgl-project/sglang/pull/13919%E4%B8%AD@Edwardf0t1%E7%9A%84modelopt%E9%87%8F%E5%8C%96%E9%85%8D%E7%BD%AE%E8%A7%A3%E6%9E%90">https://github.com/sgl-project/sglang/pull/13919中@Edwardf0t1的modelopt量化配置解析</a></li>
+<li>[Mamba] 在 <a href="https://github.com/sgl-project/sglang/pull/18444">https://github.com/sgl-project/sglang/pull/18444</a> 中添加 @danielafrimi 对 SSM 缓存数据类型的 float16 支持</li>
+<li>再次尝试修复手动触发测试的最大并行度。作者：@hnyls2002 在 <a href="https://github.com/sgl-project/sglang/pull/18686">https://github.com/sgl-project/sglang/pull/18686</a></li>
+<li>通过 @ispobock 在 <a href="https://github.com/sgl-project/sglang/pull/18693">https://github.com/sgl-project/sglang/pull/18693</a> 中更新 ci 权限</li>
+<li>[AMD] rocm 7.2 镜像发布、PR 测试、@yctseng0211 在 <a href="https://github.com/sgl-project/sglang/pull/17799">https://github.com/sgl-project/sglang/pull/17799</a> 中的夜间测试</li>
+<li>[Flashinfer Autotune] 通过删除<a href="https://github.com/sgl-project/sglang/pull/18500%E4%B8%AD@YAMY1234%E5%AF%B9hidden_states_scale%E7%9A%84%E4%B8%8D%E6%AD%A3%E7%A1%AE%E5%B1%95%E5%B9%B3%E6%9D%A5%E4%BF%AE%E5%A4%8DFlashInfer">https://github.com/sgl-project/sglang/pull/18500中@YAMY1234对hidden_states_scale的不正确展平来修复FlashInfer</a> FP4 MoE自动调整崩溃</li>
+<li>[Qwen3_5] <a href="https://github.com/sgl-project/sglang/pull/18538%E4%B8%AD@zju-stu-lizheng%E9%87%8D%E6%9E%84%60Qwen3_5ForCausalLMMTP%60%E7%B1%BB%E5%AE%9E%E7%8E%B0">https://github.com/sgl-project/sglang/pull/18538中@zju-stu-lizheng重构`Qwen3_5ForCausalLMMTP`类实现</a></li>
+<li>更新 README 命令以包含 <a href="https://github.com/sgl-project/sglang/pull/18557">https://github.com/sgl-project/sglang/pull/18557</a> 中 @wplf 的模型路径选项</li>
+<li>修复：<a href="https://github.com/sgl-project/sglang/pull/18552">https://github.com/sgl-project/sglang/pull/18552</a> 中的 @2JooYeon 在 PD 分解模式下 /metrics 端点始终报告 engine_type=“unified”</li>
+<li>[Z-Image] 将 <a href="https://github.com/sgl-project/sglang/pull/18560">https://github.com/sgl-project/sglang/pull/18560</a> 中 @rootonchair 的 TextEncoderConfig 替换为 Qwen3TextConfig</li>
+<li>[AMD] 通过 @akao-amd 在 <a href="https://github.com/sgl-project/sglang/pull/18698">https://github.com/sgl-project/sglang/pull/18698</a> 中启用 ROCm 7.2.0 的发布映像构建</li>
+<li>[Ascend]<a href="https://github.com/sgl-project/sglang/pull/18544%E6%94%AF%E6%8C%81@chenxu214%E7%9A%84qwen3.5">https://github.com/sgl-project/sglang/pull/18544支持@chenxu214的qwen3.5</a></li>
+<li>[AMD] 通过<a href="https://github.com/sgl-project/sglang/pull/18707%E4%B8%AD%E7%9A%84@yctseng0211%E9%87%8D%E7%BD%AEAMD%E9%95%9C%E5%83%8F%E5%8F%91%E5%B8%83%E6%97%B6%E9%97%B4%E5%B9%B6%E5%87%8F%E5%B0%91CI%E9%98%9F%E5%88%97%E6%97%B6%E9%97%B4">https://github.com/sgl-project/sglang/pull/18707中的@yctseng0211重置AMD镜像发布时间并减少CI队列时间</a></li>
+<li>[AMD] 修复 @1am9trash 在 <a href="https://github.com/sgl-project/sglang/pull/18607">https://github.com/sgl-project/sglang/pull/18607</a> 中使用 mtp 运行 TP4 dsv3 模型时的准确性问题</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18302">https://github.com/sgl-project/sglang/pull/18302</a> 中添加 @harvenstar 的 tool_choice=auto nightly 测试用例</li>
+<li>使基于 PR 的 docker 和 pypi 工作流程适用于 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/18720">https://github.com/sgl-project/sglang/pull/18720</a> 中的分叉 PR</li>
+<li>通过@alisonshao在<a href="https://github.com/sgl-project/sglang/pull/18380%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%9B%B4%E9%AB%98%E7%9A%84%E6%B8%A9%E5%BA%A6%E8%BF%9B%E8%A1%8C%E6%95%88%E6%9E%9C%E6%AF%94%E8%BE%83%E6%9D%A5%E4%BF%AE%E5%A4%8D%E7%89%87%E7%8A%B6%E6%83%A9%E7%BD%9A%E6%B5%8B%E8%AF%95">https://github.com/sgl-project/sglang/pull/18380中使用更高的温度进行效果比较来修复片状惩罚测试</a></li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18332%E4%B8%AD%E6%B7%BB%E5%8A%A0@scottjlee%E7%9A%84%60spec_accept_histogram%60%E8%AF%B7%E6%B1%82%E7%BB%9F%E8%AE%A1">https://github.com/sgl-project/sglang/pull/18332中添加@scottjlee的`spec_accept_histogram`请求统计</a></li>
+<li>重构：用<a href="https://github.com/sgl-project/sglang/pull/18682%E4%B8%AD@slin1237%E7%9A%84smg-grpc-proto%E5%8C%85%E6%9B%BF%E6%8D%A2%E6%9C%AC%E5%9C%B0proto%E7%BC%96%E8%AF%91">https://github.com/sgl-project/sglang/pull/18682中@slin1237的smg-grpc-proto包替换本地proto编译</a></li>
+<li>[BUGFIX] 修复 <a href="https://github.com/sgl-project/sglang/pull/18723">https://github.com/sgl-project/sglang/pull/18723</a> 中 @yizhang2077 在 server_args 中处理曼巴基数缓存的错误</li>
+<li>修复@Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/18725">https://github.com/sgl-project/sglang/pull/18725</a> 中安装 B200 的问题</li>
+<li>重构：通过 <a href="https://github.com/sgl-project/sglang/pull/18730">https://github.com/sgl-project/sglang/pull/18730</a> 中的 @slin1237 将 gRPC client 合并到共享板条箱依赖项中</li>
+<li>通过 @BBuf 在 <a href="https://github.com/sgl-project/sglang/pull/18586">https://github.com/sgl-project/sglang/pull/18586</a> 中加速 sql-kernel 构建</li>
+<li>修复：<a href="https://github.com/sgl-project/sglang/pull/18735">https://github.com/sgl-project/sglang/pull/18735</a> 中 @dougyster 的 pypi pr 工作流程中的图像版本</li>
+<li>重构：通过 <a href="https://github.com/sgl-project/sglang/pull/18737">https://github.com/sgl-project/sglang/pull/18737</a> 中的 @slin1237 从 lib.rs 中删除 crate 重新导出别名</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18460%E4%B8%AD%E9%87%8D%E7%94%A8@ShangmingCai%E5%9C%A8%E6%9C%88%E9%A5%BC%E5%BA%97%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%BC%A0%E8%BE%93%E5%BC%95%E6%93%8E">https://github.com/sgl-project/sglang/pull/18460中重用@ShangmingCai在月饼店初始化的传输引擎</a></li>
+<li>使用@HaiShaw 在 <a href="https://github.com/sgl-project/sglang/pull/18741">https://github.com/sgl-project/sglang/pull/18741</a> 中使用最新的 AITER v0.1.10.post3 构建 ROCm7.2 映像</li>
+<li>[扩散] [BUG] 修复 <a href="https://github.com/sgl-project/sglang/pull/18704">https://github.com/sgl-project/sglang/pull/18704</a> 中 @haojin2 缺少的 GLM-Image 文本编码器配置初始化</li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/18757">https://github.com/sgl-project/sglang/pull/18757</a> 中 @alisonshao 的 glm_image.py 中无效的导入路径</li>
+<li>恢复<a href="https://github.com/sgl-project/sglang/pull/18759%E4%B8%AD@merrymercy%E5%AF%B9weight_utils.py%E7%9A%84%E6%9B%B4%E6%94%B9">https://github.com/sgl-project/sglang/pull/18759中@merrymercy对weight_utils.py的更改</a></li>
+<li>功能：支持 @alphabetc1 在 <a href="https://github.com/sgl-project/sglang/pull/18450">https://github.com/sgl-project/sglang/pull/18450</a> 中查找版本</li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18768%E4%B8%AD%E7%9A%84@BourneSun0527%E4%BF%AE%E6%94%B9npu%E4%B8%8A%E7%9A%84glm5%E8%87%AA%E8%BF%B0%E6%96%87%E4%BB%B6">https://github.com/sgl-project/sglang/pull/18768中的@BourneSun0527修改npu上的glm5自述文件</a></li>
+<li>[AMD] 通过 @bingxche 在 <a href="https://github.com/sgl-project/sglang/pull/18716">https://github.com/sgl-project/sglang/pull/18716</a> 中修复 Multimodal Test 1 GPU</li>
+<li>[扩散]允许通过请求调整生成的图像/视频的质量。通过 @IPostYellow 在 <a href="https://github.com/sgl-project/sglang/pull/17937">https://github.com/sgl-project/sglang/pull/17937</a></li>
+<li>[BUG] 修复了 @blazingbhavneek 在 <a href="https://github.com/sgl-project/sglang/pull/18687">https://github.com/sgl-project/sglang/pull/18687</a> 中多模态生成测试中的本地模型加载问题</li>
+<li>[内核] 在<a href="https://github.com/sgl-project/sglang/pull/17934%E4%B8%AD%E6%B7%BB%E5%8A%A0@pansiheng%E7%9A%84JITrotary_embedding_kernel">https://github.com/sgl-project/sglang/pull/17934中添加@pansiheng的JITrotary_embedding_kernel</a></li>
+<li>[规格] 在验证之前向前移动超时以修复 <a href="https://github.com/sgl-project/sglang/pull/18760">https://github.com/sgl-project/sglang/pull/18760</a> 中 @hnyls2002 的 Eagle v1 过滤器不匹配问题</li>
+<li>[diffusion] feat: 支持 @xiaoyewww 在 <a href="https://github.com/sgl-project/sglang/pull/18619">https://github.com/sgl-project/sglang/pull/18619</a> 中对 qwen-image-edit-2511 的 tp</li>
+<li>由 @hnyls2002 在 <a href="https://github.com/sgl-project/sglang/pull/18766">https://github.com/sgl-project/sglang/pull/18766</a> 中重命名等待/运行阶段的请求超时环境变量</li>
+<li>[Bugfix] 在<a href="https://github.com/sgl-project/sglang/pull/18727%E4%B8%AD@ShangmingCai%E6%B7%BB%E5%8A%A0PD%E6%A8%A1%E5%9D%97%E4%B8%ADNSA%E7%B4%A2%E5%BC%95%E5%99%A8%E7%BC%93%E5%AD%98%E7%B4%A2%E5%BC%95%E4%B8%8D%E5%8C%B9%E9%85%8D%E6%97%B6%E7%9A%84%E8%AD%A6%E5%91%8A">https://github.com/sgl-project/sglang/pull/18727中@ShangmingCai添加PD模块中NSA索引器缓存索引不匹配时的警告</a></li>
+<li>支持@ant-yy在<a href="https://github.com/sgl-project/sglang/pull/18598%E4%B8%AD%E7%9A%84LingV2_5%E6%A8%A1%E5%9E%8B">https://github.com/sgl-project/sglang/pull/18598中的LingV2_5模型</a></li>
+<li>[扩散] 壮举：在 <a href="https://github.com/sgl-project/sglang/pull/17507">https://github.com/sgl-project/sglang/pull/17507</a> 中支持 @tie-pilot-qxw 的 SparseVideoGen2 注意力后端</li>
+<li>[日程] 修复<a href="https://github.com/sgl-project/sglang/pull/18654%E4%B8%AD@yinghai%E7%9A%84customized_info%E7%9A%84%E6%B5%81%E5%BC%8F%E8%BF%94%E5%9B%9E">https://github.com/sgl-project/sglang/pull/18654中@yinghai的customized_info的流式返回</a></li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18788">https://github.com/sgl-project/sglang/pull/18788</a> 中清理 @ispobock 未使用的重新运行阶段</li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18786%E4%B8%AD%E7%9A%84@ispobock%E8%B0%83%E6%95%B4mamba%E7%BC%93%E5%AD%98%E5%88%86%E9%85%8D">https://github.com/sgl-project/sglang/pull/18786中的@ispobock调整mamba缓存分配</a></li>
+<li>增强 @ispobock 在 <a href="https://github.com/sgl-project/sglang/pull/18791">https://github.com/sgl-project/sglang/pull/18791</a> 中的 gsm8k 测试</li>
+<li>由 @ispobock 在 <a href="https://github.com/sgl-project/sglang/pull/18793">https://github.com/sgl-project/sglang/pull/18793</a> 中清理 Ring 模型的调试日志</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18480">https://github.com/sgl-project/sglang/pull/18480</a> 中添加了@mattteochen 的 cuda 可用性防护</li>
+<li>[扩散]重构：<a href="https://github.com/sgl-project/sglang/pull/18789%E4%B8%AD@mickqian%E5%90%88%E5%B9%B6FSDP%E5%8A%A0%E8%BD%BD%E5%99%A8%E4%B8%AD%E5%86%97%E4%BD%99%E7%9A%84default_dtype%E5%92%8Cparam_dtype%E5%8F%82%E6%95%B0">https://github.com/sgl-project/sglang/pull/18789中@mickqian合并FSDP加载器中冗余的default_dtype和param_dtype参数</a></li>
+<li>[扩散]修复：<a href="https://github.com/sgl-project/sglang/pull/18462%E4%B8%AD@yeahdongcn%E6%A3%80%E6%9F%A5webui%E4%BB%BB%E5%8A%A1%E7%B1%BB%E5%9E%8B">https://github.com/sgl-project/sglang/pull/18462中@yeahdongcn检查webui任务类型</a></li>
+<li>[扩散] 修复<a href="https://github.com/sgl-project/sglang/pull/18790%E4%B8%AD@triple-mu%E7%9A%84%E6%8B%BC%E5%86%99%E9%94%99%E8%AF%AF">https://github.com/sgl-project/sglang/pull/18790中@triple-mu的拼写错误</a></li>
+<li>[扩散]杂务：在 <a href="https://github.com/sgl-project/sglang/pull/18728">https://github.com/sgl-project/sglang/pull/18728</a> 中 @mickqian 在 VAE 并行解码中使用批量 P2P 操作</li>
+<li>[内核瘦身] 通过<a href="https://github.com/sgl-project/sglang/pull/18543%E4%B8%AD%E7%9A%84@celve%E5%B0%86GPTQ-Marlin%E9%87%8D%E6%96%B0%E6%89%93%E5%8C%85%E5%86%85%E6%A0%B8%E8%BF%81%E7%A7%BB%E5%88%B0JIT">https://github.com/sgl-project/sglang/pull/18543中的@celve将GPTQ-Marlin重新打包内核迁移到JIT</a></li>
+<li>@dongjiyingdjy 在 <a href="https://github.com/sgl-project/sglang/pull/17213">https://github.com/sgl-project/sglang/pull/17213</a> 中重构上下文并行状态</li>
+<li>[bugfix] 修复在 <a href="https://github.com/sgl-project/sglang/pull/16067">https://github.com/sgl-project/sglang/pull/16067</a> 中 @kuafou 的基数缓存调度失败时曼巴插槽泄漏 (#15840)
+*修复了<a href="https://github.com/sgl-project/sglang/pull/18694%E4%B8%AD@JD-ETH%E6%8A%A2%E5%8D%A0%E6%9C%9F%E9%97%B4%E5%B7%B2%E7%BB%8F%E5%AE%8C%E6%88%90%E5%B9%B6%E8%A2%AB%E9%87%8A%E6%94%BE%E7%9A%84%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8F%8C%E9%87%8A%E6%94%BEkv%E7%BC%93%E5%AD%98">https://github.com/sgl-project/sglang/pull/18694中@JD-ETH抢占期间已经完成并被释放的请求的双释放kv缓存</a></li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18817%E4%B8%AD%E7%9A%84@Kangyan-Zhou%E6%9B%B4%E6%96%B0post_ci_failures_to_slack.py%E4%B8%AD%E7%9A%84%E9%80%9A%E7%9F%A5%E7%94%A8%E6%88%B7">https://github.com/sgl-project/sglang/pull/18817中的@Kangyan-Zhou更新post_ci_failures_to_slack.py中的通知用户</a></li>
+<li>[FlashInfer] 将 <a href="https://github.com/sgl-project/sglang/pull/18448">https://github.com/sgl-project/sglang/pull/18448</a> 中的 @mmangkad 将 FlashInfer 版本从 0.6.2 升级到 0.6.3</li>
+<li>由 @Kangyan-Zhou 在 <a href="https://github.com/sgl-project/sglang/pull/18824">https://github.com/sgl-project/sglang/pull/18824</a> 中更新夜间测试的性能仪表板</li>
+<li>[Perf] 通过 @zminglei 在 <a href="https://github.com/sgl-project/sglang/pull/17613">https://github.com/sgl-project/sglang/pull/17613</a> 中重构 Qwen3-Next 的分段 cuda 图支持</li>
+<li>壮举：在 <a href="https://github.com/sgl-project/sglang/pull/18743">https://github.com/sgl-project/sglang/pull/18743</a> 中添加 @YazhiGao 的 SGLANG_DISTRIBUTED_INIT_METHOD_OVERRIDE 环境变量</li>
+<li>[PD-Disagg] 修复预建批次中止时的双重释放问题。作者：@hnyls2002 在 <a href="https://github.com/sgl-project/sglang/pull/18822">https://github.com/sgl-project/sglang/pull/18822</a></li>
+<li>添加正常/老鹰的超时中止套件。作者：@hnyls2002 在 <a href="https://github.com/sgl-project/sglang/pull/18815">https://github.com/sgl-project/sglang/pull/18815</a></li>
+<li>[Env] 通过<a href="https://github.com/sgl-project/sglang/pull/17204%E4%B8%AD%E7%9A%84@alphabetc1%E5%B0%86hicache%E5%8F%98%E9%87%8F%E9%9B%86%E4%B8%AD%E5%9C%A8environ.py%E4%B8%AD">https://github.com/sgl-project/sglang/pull/17204中的@alphabetc1将hicache变量集中在environ.py中</a></li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18705%E4%B8%AD%E7%9A%84@qmzznbxhl%E5%A4%84%E7%90%86disagg%E8%A7%A3%E7%A0%81%E9%A2%84%E5%88%86%E9%85%8D%E9%98%9F%E5%88%97%E4%B8%AD%E6%92%A4%E5%9B%9E%E8%AF%B7%E6%B1%82%E7%9A%84%E4%B8%AD%E6%AD%A2">https://github.com/sgl-project/sglang/pull/18705中的@qmzznbxhl处理disagg解码预分配队列中撤回请求的中止</a></li>
+<li>[diffusion][MUSA] 修复：<a href="https://github.com/sgl-project/sglang/pull/18456">https://github.com/sgl-project/sglang/pull/18456</a> 中 @yeahdongcn 的 PR #13662 导致 MUSA 平台损坏</li>
+<li>修复/部分生成 <a href="https://github.com/sgl-project/sglang/pull/17610">https://github.com/sgl-project/sglang/pull/17610</a> 中 @JD-ETH 等待队列丢失元数据的问题</li>
+<li>[VLM][LLM] 由 @yuan-luo 在 <a href="https://github.com/sgl-project/sglang/pull/18782">https://github.com/sgl-project/sglang/pull/18782</a> 中优化 fused_moe triton 内核 tma</li>
+<li>[AMD] 修复 @bingxche 在 <a href="https://github.com/sgl-project/sglang/pull/18836">https://github.com/sgl-project/sglang/pull/18836</a> 中发布的 ROCm Docker 中的 sql-model-gateway 构建错误</li>
+<li>内核：通过 @Johnsonms 在 <a href="https://github.com/sgl-project/sglang/pull/17554">https://github.com/sgl-project/sglang/pull/17554</a> 中使用融合内核优化 NSA 多规格后端中的解码元数据</li>
+<li>通过 @whybeyoung 在 <a href="https://github.com/sgl-project/sglang/pull/18126">https://github.com/sgl-project/sglang/pull/18126</a> 中修复 dsv32 编码消息</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18829%E4%B8%AD%E6%B7%BB%E5%8A%A0@ispobock%E5%AF%B9%E7%8E%AF%E6%A8%A1%E5%9E%8B%E7%9A%84ci%E6%B5%8B%E8%AF%95">https://github.com/sgl-project/sglang/pull/18829中添加@ispobock对环模型的ci测试</a></li>
+<li>壮举：在 <a href="https://github.com/sgl-project/sglang/pull/13313">https://github.com/sgl-project/sglang/pull/13313</a> 中支持 <code>mrope_section</code> 和 <code>rope_type: "yarn"</code> by @raayandhar</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18719">https://github.com/sgl-project/sglang/pull/18719</a> 中启用 SGLANG_ENABLE_SPEC_V2 以进行@Kangyan-Zhou 的夜间推测解码测试</li>
+<li>[内核瘦身] <a href="https://github.com/sgl-project/sglang/pull/18475">https://github.com/sgl-project/sglang/pull/18475</a> 中通过 @BBuf 将 fast_hadamard_transform 移至 jit_kernel</li>
+<li>[扩散] 在<a href="https://github.com/sgl-project/sglang/pull/18540%E4%B8%AD%E9%80%9A%E8%BF%87@BBuf%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8%60channels_last_3d%60%E8%BF%9B%E8%A1%8Cvae%E8%A7%A3%E7%A0%81">https://github.com/sgl-project/sglang/pull/18540中通过@BBuf选择使用`channels_last_3d`进行vae解码</a></li>
+<li>通过@mmangkad在<a href="https://github.com/sgl-project/sglang/pull/18847%E4%B8%AD%E6%B7%BB%E5%8A%A0CI%E6%9D%83%E9%99%90">https://github.com/sgl-project/sglang/pull/18847中添加CI权限</a></li>
+<li>通过 @bingps 在 <a href="https://github.com/sgl-project/sglang/pull/16907">https://github.com/sgl-project/sglang/pull/16907</a> 中修复 DeepSeek-V3.2-AWQ 的模型加载</li>
+<li>[文档] 通过 <a href="https://github.com/sgl-project/sglang/pull/18395">https://github.com/sgl-project/sglang/pull/18395</a> 中的 @alphabetc1 将推测解码笔记本转换为 markdow</li>
+<li>型号：支持 IBM Granite (Dense/Mamba + MoE) by @blazingbhavneek in <a href="https://github.com/sgl-project/sglang/pull/18040">https://github.com/sgl-project/sglang/pull/18040</a></li>
+<li>[修复] 使用过时的驱动程序元数据在较新的 GPU 上更正 JIT 内核编译。作者：<a href="https://github.com/sgl-project/sglang/pull/18496">https://github.com/sgl-project/sglang/pull/18496</a> 中的 @muse-coder</li>
+<li>[AMD] 由 @andyluo7 在 <a href="https://github.com/sgl-project/sglang/pull/18753">https://github.com/sgl-project/sglang/pull/18753</a> 中修复/qwen3 5 amd rodedsl 回退</li>
+<li>[Perf] 在 <a href="https://github.com/sgl-project/sglang/pull/18851">https://github.com/sgl-project/sglang/pull/18851</a> 中由 @zhendonghua 在 H100 GPU 上调优 MiniMax M2 融合萌内核</li>
+<li>perf: 在 <a href="https://github.com/sgl-project/sglang/pull/18833">https://github.com/sgl-project/sglang/pull/18833</a> 中添加 @zhangxiaolei123456 为 h20 添加 minimax-2.5 fused_moe 调整配置</li>
+<li>[diffusion]: 在 <a href="https://github.com/sgl-project/sglang/pull/18840">https://github.com/sgl-project/sglang/pull/18840</a> 中为 UlyssesAttention 启用 torch.compile @Ratish1</li>
+<li>修复 kimi2.5 上 dp2 tp4 时的错误（@haowen-han 在 <a href="https://github.com/sgl-project/sglang/pull/18604">https://github.com/sgl-project/sglang/pull/18604</a> 中）</li>
+<li>提取转储器和预填充延迟器测试 @fzyzcjy 在 <a href="https://github.com/sgl-project/sglang/pull/18857">https://github.com/sgl-project/sglang/pull/18857</a> 中的常见实用程序</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18859">https://github.com/sgl-project/sglang/pull/18859</a> 中添加 @fzyzcjy 缺少的转储测试</li>
+<li>[AMD] 修复 @michaelzhang-ai 在 <a href="https://github.com/sgl-project/sglang/pull/18761">https://github.com/sgl-project/sglang/pull/18761</a> 中的夜间 1-GPU 测试失败和 bench_serving 回归</li>
+<li>[diffusion] quant：在 <a href="https://github.com/sgl-project/sglang/pull/18549">https://github.com/sgl-project/sglang/pull/18549</a> 中添加 @mickqian 对 svdquant 和 nunchaku 的支持</li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18835%E4%B8%AD%E7%9A%84@chenxu214%E6%9B%B4%E6%94%B9npu.docker%E6%96%87%E4%BB%B6">https://github.com/sgl-project/sglang/pull/18835中的@chenxu214更改npu.docker文件</a></li>
+<li>[扩散]：通过 <a href="https://github.com/sgl-project/sglang/pull/18611">https://github.com/sgl-project/sglang/pull/18611</a> 中的 @Ratish1 改进分层卸载缓冲区重用和共享存储处理</li>
+<li>功能：通过 @dougyster 在 <a href="https://github.com/sgl-project/sglang/pull/18853">https://github.com/sgl-project/sglang/pull/18853</a> 中将构建提交添加到 sql 内核工作流程</li>
+<li>在 CI 中启用 DeepGemm 快速预热，以防止 <a href="https://github.com/sgl-project/sglang/pull/18823">https://github.com/sgl-project/sglang/pull/18823</a> 中的 @alisonshao 冷缓存超时</li>
+<li>通过 @SoluMilken 在 <a href="https://github.com/sgl-project/sglang/pull/18860">https://github.com/sgl-project/sglang/pull/18860</a> 中更新预提交配置</li>
+<li>修复：更新 Blackwell 日志/错误消息以在 <a href="https://github.com/sgl-project/sglang/pull/18751">https://github.com/sgl-project/sglang/pull/18751</a> 中包含 @blake-snc 的 SM12x</li>
+<li>修复：将 SM110 (Jetson AGX Thor) 添加到 <a href="https://github.com/sgl-project/sglang/pull/18787">https://github.com/sgl-project/sglang/pull/18787</a> 中 @WiwilZ 的 Blackwell 能力检查</li>
+<li>测试：在 <a href="https://github.com/sgl-project/sglang/pull/18463">https://github.com/sgl-project/sglang/pull/18463</a> 中通过 @zack041 添加对 SM90 上 Modelopt FP8 的测试</li>
+<li>由 @tom-zju 在 <a href="https://github.com/sgl-project/sglang/pull/18459">https://github.com/sgl-project/sglang/pull/18459</a> 中修复_get_quant_method_in_fused_moe_condition</li>
+<li>通过 @chanh 在 <a href="https://github.com/sgl-project/sglang/pull/18009">https://github.com/sgl-project/sglang/pull/18009</a> 中的 get_free_port() 使用临时 nccl 端口</li>
+<li>壮举：在 Python 路由器 CLI args 中通过 <a href="https://github.com/sgl-project/sglang/pull/17972">https://github.com/sgl-project/sglang/pull/17972</a> 中的 @bledden 暴露一致的哈希策略</li>
+<li>通过 @akhilg-nv 在 <a href="https://github.com/sgl-project/sglang/pull/16991">https://github.com/sgl-project/sglang/pull/16991</a> 中改进 bench_serving 的分析器选项</li>
+<li>修复 @QiuMike 在 <a href="https://github.com/sgl-project/sglang/pull/15355">https://github.com/sgl-project/sglang/pull/15355</a> 中 libnuma.so 不存在的问题</li>
+<li>修复（sql-kernel）：支持 <a href="https://github.com/sgl-project/sglang/pull/18747">https://github.com/sgl-project/sglang/pull/18747</a> 中 @blake-snc 对 DGX Spark 的 CUDA 13 运行时预加载</li>
+<li>修复（sql-kernel）：使用 >= 120 进行 <a href="https://github.com/sgl-project/sglang/pull/18750">https://github.com/sgl-project/sglang/pull/18750</a> 中 @blake-snc 调度的 SM12x CUDA 内核</li>
+<li>由@chenxu214在<a href="https://github.com/sgl-project/sglang/pull/18864%E4%B8%AD%E5%88%9B%E5%BB%BAascend_npu_qwen3_5_examples.md">https://github.com/sgl-project/sglang/pull/18864中创建ascend_npu_qwen3_5_examples.md</a></li>
+<li>由<a href="https://github.com/sgl-project/sglang/pull/18868%E4%B8%AD%E7%9A%84@chenxu214%E6%9B%B4%E6%96%B0ascend_npu_support.rst">https://github.com/sgl-project/sglang/pull/18868中的@chenxu214更新ascend_npu_support.rst</a></li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18855">https://github.com/sgl-project/sglang/pull/18855</a> 中通过 @BBuf 添加 sql-kernel 和 jit-kernel 的 claude 技能</li>
+<li>Nsa trtllm mla 稀疏 fp8 支持 Deepseek v3.2 NVFP4 by @rainj-me in <a href="https://github.com/sgl-project/sglang/pull/18389">https://github.com/sgl-project/sglang/pull/18389</a></li>
+<li>修复：<a href="https://github.com/sgl-project/sglang/pull/18873">https://github.com/sgl-project/sglang/pull/18873</a> 中 @dougyster 的每晚 whl 开发日期后缀</li>
+<li>[VLM] 通过 @yuan-luo 在 <a href="https://github.com/sgl-project/sglang/pull/18856">https://github.com/sgl-project/sglang/pull/18856</a> 中使用融合 Triton 内核优化 Ernie4.5-VL 旋转嵌入</li>
+<li>[扩散] 修复：避免在 <a href="https://github.com/sgl-project/sglang/pull/18867">https://github.com/sgl-project/sglang/pull/18867</a> 中保存 @mickqian 的预热请求的输出</li>
+<li>[扩散]重构：重构server_args，通过@mickqian在<a href="https://github.com/sgl-project/sglang/pull/18863%E4%B8%AD%E8%B0%83%E6%95%B4%E5%92%8C%E9%AA%8C%E8%AF%81%E9%80%BB%E8%BE%91">https://github.com/sgl-project/sglang/pull/18863中调整和验证逻辑</a></li>
+<li>[差异]：<a href="https://github.com/sgl-project/sglang/pull/18454">https://github.com/sgl-project/sglang/pull/18454</a> 中@Johnsonms 支持 SGLANG_TORCH_PROFILER_DIR 环境变量作为探查器日志目录</li>
+<li>[AMD] <a href="https://github.com/sgl-project/sglang/pull/18437">https://github.com/sgl-project/sglang/pull/18437</a> 中 @Duyi-Wang 的 MORI-EP 内核类型开关</li>
+<li>翻转转储程序默认禁用，并通过 @fzyzcjy 在 <a href="https://github.com/sgl-project/sglang/pull/18878">https://github.com/sgl-project/sglang/pull/18878</a> 中重构环境处理</li>
+<li>通过 <a href="https://github.com/sgl-project/sglang/pull/18879">https://github.com/sgl-project/sglang/pull/18879</a> 中的 @fzyzcjy 将转储输出格式更改为带有值和元数据的字典</li>
+<li>收集上层元数据以转储 @fzyzcjy 在 <a href="https://github.com/sgl-project/sglang/pull/18880">https://github.com/sgl-project/sglang/pull/18880</a> 中的输出</li>
+<li>支持<a href="https://github.com/sgl-project/sglang/pull/18881%E4%B8%AD@fzyzcjy%E8%BD%AC%E5%82%A8%E6%A2%AF%E5%BA%A6%E3%80%81%E5%8F%82%E6%95%B0%E3%80%81%E6%83%B0%E6%80%A7%E5%80%BC">https://github.com/sgl-project/sglang/pull/18881中@fzyzcjy转储梯度、参数、惰性值</a></li>
+<li>修复：通过 @dougyster 在 <a href="https://github.com/sgl-project/sglang/pull/18814">https://github.com/sgl-project/sglang/pull/18814</a> 中统一 docker 映像构建管道</li>
+<li>修复：通过 @dougyster 在 <a href="https://github.com/sgl-project/sglang/pull/18023">https://github.com/sgl-project/sglang/pull/18023</a> 中添加夜间扩散的性能日志记录</li>
+<li>修复 test_lora_qwen3 每晚失败：用 <a href="https://github.com/sgl-project/sglang/pull/18884">https://github.com/sgl-project/sglang/pull/18884</a> 中 @alisonshao 的 added_tokens 替换适配器</li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18888%E4%B8%AD%E7%9A%84@realray808%E6%9B%B4%E6%96%B0ascend_npu_qwen3_5_examples.md">https://github.com/sgl-project/sglang/pull/18888中的@realray808更新ascend_npu_qwen3_5_examples.md</a></li>
+<li>[Diffusion] 修复 <a href="https://github.com/sgl-project/sglang/pull/18883">https://github.com/sgl-project/sglang/pull/18883</a> 中 @ChangyiYang 取消合并时 LoRA 权重快照混叠问题</li>
+<li>当 @alisonshao 在 <a href="https://github.com/sgl-project/sglang/pull/18885">https://github.com/sgl-project/sglang/pull/18885</a> 中 glm_ocr 不可用时修复 GLM-4V 处理器注册</li>
+<li>[JIT 内核] JIT QK 规范（基于 cta）中的 hd=512,1024，@vincentzed 在 <a href="https://github.com/sgl-project/sglang/pull/17515">https://github.com/sgl-project/sglang/pull/17515</a> 中</li>
+<li>[扩散] 日志记录：通过 @mickqian 在 <a href="https://github.com/sgl-project/sglang/pull/18865">https://github.com/sgl-project/sglang/pull/18865</a> 中改进峰值 vram 日志记录</li>
+<li>恢复 <a href="https://github.com/sgl-project/sglang/pull/18866">https://github.com/sgl-project/sglang/pull/18866</a> 中 @mickqian 的“[扩散]：改进分层卸载缓冲区重用和共享存储处理”</li>
+<li>[模型] 在<a href="https://github.com/sgl-project/sglang/pull/17992%E4%B8%AD%E6%B7%BB%E5%8A%A0Qwen3ForRewardModel%E5%B9%B6%E9%80%9A%E8%BF%87@shvmjndl%E4%BF%AE%E5%A4%8DQwen3ForSequenceClassification">https://github.com/sgl-project/sglang/pull/17992中添加Qwen3ForRewardModel并通过@shvmjndl修复Qwen3ForSequenceClassification</a></li>
+<li>[Perf] @mmangkad 在 <a href="https://github.com/sgl-project/sglang/pull/18858">https://github.com/sgl-project/sglang/pull/18858</a> 中的 Blackwell MXFP4 MoE 重量加载速度提高约 9.5 倍</li>
+<li>[diffusion][Wan]：修复<a href="https://github.com/sgl-project/sglang/pull/17596%E4%B8%AD@Ratish1%E5%BA%94%E7%94%A8%E4%BA%8E%E4%BA%A4%E5%8F%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E7%A8%80%E7%96%8F%E6%B3%A8%E6%84%8F%E5%8A%9B%E5%90%8E%E7%AB%AF">https://github.com/sgl-project/sglang/pull/17596中@Ratish1应用于交叉注意力的稀疏注意力后端</a></li>
+<li>重构 FAKE 传输后端并删除 <a href="https://github.com/sgl-project/sglang/pull/18345">https://github.com/sgl-project/sglang/pull/18345</a> 中 @Estrella-xx 的 —disaggregation-decode-enable-fake-auto 参数</li>
+<li>[2/N] 量化重构：<a href="https://github.com/sgl-project/sglang/pull/17503">https://github.com/sgl-project/sglang/pull/17503</a> 中 @TamirBaydasov 的压缩张量 MoE 方案</li>
+<li>修复了 @danielafrimi 在 <a href="https://github.com/sgl-project/sglang/pull/18447">https://github.com/sgl-project/sglang/pull/18447</a> 中 modelopt FP8 创建权重的问题</li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/18804">https://github.com/sgl-project/sglang/pull/18804</a> 中 @FrankMinions 的 GLM-5 融合共享专家</li>
+<li>[扩散]：修复<a href="https://github.com/sgl-project/sglang/pull/17890%E4%B8%AD@Ratish1%E5%9C%A8ZMQ%E6%B6%88%E6%81%AF%E4%B8%8A%E5%87%BA%E7%8E%B0%E6%84%8F%E5%A4%96%E5%B8%A7%E8%AE%A1%E6%95%B0%E6%97%B6%E8%B0%83%E5%BA%A6%E7%A8%8B%E5%BA%8F%E5%B4%A9%E6%BA%83%E7%9A%84%E9%97%AE%E9%A2%98">https://github.com/sgl-project/sglang/pull/17890中@Ratish1在ZMQ消息上出现意外帧计数时调度程序崩溃的问题</a></li>
+<li>为变压器改编Qwen2Model._update_causal_mask==4.57.1 by @pansiheng in <a href="https://github.com/sgl-project/sglang/pull/18774">https://github.com/sgl-project/sglang/pull/18774</a></li>
+<li>[扩散]算子：在<a href="https://github.com/sgl-project/sglang/pull/18164%E4%B8%AD%E9%80%9A%E8%BF%87@triple-mu%E7%BB%9F%E4%B8%80%E6%97%8B%E8%BD%AC%E5%B5%8C%E5%85%A5%E5%AE%9E%E7%8E%B0">https://github.com/sgl-project/sglang/pull/18164中通过@triple-mu统一旋转嵌入实现</a></li>
+<li>[杂项] 在 <a href="https://github.com/sgl-project/sglang/pull/18821">https://github.com/sgl-project/sglang/pull/18821</a> 中的 @happierpig 在 UpdateWeightFromDiskReqInput 中添加元数据字段</li>
+<li>跳过 @alisonshao 在 <a href="https://github.com/sgl-project/sglang/pull/18889">https://github.com/sgl-project/sglang/pull/18889</a> 中为 Mistral 进行的片状 test_tool_choice_required_non_streaming</li>
+<li>[AMD] 修复 AMD/ROCm 上的 RotaryEmbedding 崩溃（从 #17934 回归），作者为 <a href="https://github.com/sgl-project/sglang/pull/18903">https://github.com/sgl-project/sglang/pull/18903</a> 中的 @michaelzhang-ai</li>
+<li>[TBO] 修复 cuda graph 间歇性禁用的错误，作者为 <a href="https://github.com/sgl-project/sglang/pull/18320">https://github.com/sgl-project/sglang/pull/18320</a> 中的 @billishyahao</li>
+<li>[Diffusion] [NPU] [Doc] 通过 @Makcum888e 在 <a href="https://github.com/sgl-project/sglang/pull/18894">https://github.com/sgl-project/sglang/pull/18894</a> 中添加 sglang-diffusion 的 NPU 文档</li>
+<li>恢复 @HaiShaw 在 <a href="https://github.com/sgl-project/sglang/pull/18922">https://github.com/sgl-project/sglang/pull/18922</a> 中的“[AMD] 修复 AMD/ROCm 上的 RotaryEmbedding 崩溃（从 #17934 回归）”</li>
+<li>[扩散]：修复稀疏视频第 2 代后端被 @Ratish1 在 <a href="https://github.com/sgl-project/sglang/pull/18900">https://github.com/sgl-project/sglang/pull/18900</a> 中应用于交叉注意力的问题</li>
+<li>[Diffusion] 修复 <a href="https://github.com/sgl-project/sglang/pull/18918">https://github.com/sgl-project/sglang/pull/18918</a> 中 @Makcum888e 当模型本地路径以“/”结尾时获取模型名称的问题</li>
+<li>ROCm 在 <a href="https://github.com/sgl-project/sglang/pull/18920">https://github.com/sgl-project/sglang/pull/18920</a> 中使用 @HaiShaw 的 sql-kernel 中的rotary_embedding</li>
+<li>[Diffusion] [NPU] 修复 @Makcum888e 在 <a href="https://github.com/sgl-project/sglang/pull/18921">https://github.com/sgl-project/sglang/pull/18921</a> 中运行的 CI</li>
+<li>恢复 <a href="https://github.com/sgl-project/sglang/pull/18929">https://github.com/sgl-project/sglang/pull/18929</a> 中 @mickqian 的“[扩散]运算符：统一旋转嵌入实现”</li>
+<li>[PCG] 支持 <a href="https://github.com/sgl-project/sglang/pull/18849">https://github.com/sgl-project/sglang/pull/18849</a> 中 @zminglei 的 kimi 线性模型的分段 cuda 图</li>
+<li>[扩散]: MOVA torch.compile 在<a href="https://github.com/sgl-project/sglang/pull/18914%E4%B8%AD%E7%94%B1@triple-mu%E9%80%89%E6%8B%A9">https://github.com/sgl-project/sglang/pull/18914中由@triple-mu选择</a></li>
+<li>[gRPC] 修复 <a href="https://github.com/sgl-project/sglang/pull/18933">https://github.com/sgl-project/sglang/pull/18933</a> 中 @slin1237 因上下文并行重构而破坏的调度程序启动</li>
+<li>[扩散]通过<a href="https://github.com/sgl-project/sglang/pull/18495%E4%B8%AD%E7%9A%84@ping1jing2%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81%E6%89%80%E6%9C%89%E8%80%85">https://github.com/sgl-project/sglang/pull/18495中的@ping1jing2更新代码所有者</a></li>
+<li>[3/N] 量化重构：<a href="https://github.com/sgl-project/sglang/pull/17993">https://github.com/sgl-project/sglang/pull/17993</a> 中 @TamirBaydasov 的 ModelSlim MoE 方案</li>
+<li>修复（glm-image）：单 GPU T5 配置 + SP 对 4D 潜伏的支持（#18… by @Nickcp39 in <a href="https://github.com/sgl-project/sglang/pull/18739">https://github.com/sgl-project/sglang/pull/18739</a></li>
+<li>修复 @Qiaolin-Yu 在 <a href="https://github.com/sgl-project/sglang/pull/18769">https://github.com/sgl-project/sglang/pull/18769</a> 中生成的共享前缀 bench_serving</li>
+<li>通过 @satyamk7054 在 <a href="https://github.com/sgl-project/sglang/pull/18940">https://github.com/sgl-project/sglang/pull/18940</a> 中修复 benchmark_sglang_fused_moe_triton.py</li>
+<li>清理预填充指标记录以修复 <a href="https://github.com/sgl-project/sglang/pull/18778">https://github.com/sgl-project/sglang/pull/18778</a> 中 @Ratish1 的 dp-attn 指标</li>
+<li>壮举：在 <a href="https://github.com/sgl-project/sglang/pull/18909">https://github.com/sgl-project/sglang/pull/18909</a> 中添加 @hnyls2002 的 cuda 核心转储 CI 扭曲器</li>
+<li>重构采样器：使用更好的哈希函数进行确定性采样，并通过 @merrymercy 在 <a href="https://github.com/sgl-project/sglang/pull/18915">https://github.com/sgl-project/sglang/pull/18915</a> 中明确调度 probs/logprobs/logits 采样路径</li>
+<li>修复 @alisonshao 在 <a href="https://github.com/sgl-project/sglang/pull/18886">https://github.com/sgl-project/sglang/pull/18886</a> 中评估测试未捕获服务器启动失败的问题</li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18944%E4%B8%AD%E7%9A%84@PeaBrane%E5%85%AC%E5%BC%80Engine.generate()%E5%92%8CEngine.async_generate()%E4%B8%AD%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7%E5%8F%82%E6%95%B0">https://github.com/sgl-project/sglang/pull/18944中的@PeaBrane公开Engine.generate()和Engine.async_generate()中的优先级参数</a></li>
+<li>feat: [Qwen3.5] 支持<a href="https://github.com/sgl-project/sglang/pull/18926%E4%B8%AD@zju-stu-lizheng%E7%9A%84%E9%80%90%E5%9D%97FP8%E9%87%8F%E5%8C%96%E5%92%8C%E6%A8%A1%E5%9E%8B%E9%80%82%E9%85%8D">https://github.com/sgl-project/sglang/pull/18926中@zju-stu-lizheng的逐块FP8量化和模型适配</a></li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18956">https://github.com/sgl-project/sglang/pull/18956</a> 中恢复 @hnyls2002 的“修复生成的共享前缀 bench_serving”</li>
+<li>壮举：通过 @nealvaidya 在 <a href="https://github.com/sgl-project/sglang/pull/18939">https://github.com/sgl-project/sglang/pull/18939</a> 中的 nixl 添加 nsa 和 swa disagg 支持</li>
+<li>[feat] 将 return_routed_experts 参数添加到 async_generate 中，以便与 <a href="https://github.com/sgl-project/sglang/pull/18508">https://github.com/sgl-project/sglang/pull/18508</a> 中 @Aphoh 生成的奇偶校验</li>
+<li>[重构] 修复<a href="https://github.com/sgl-project/sglang/pull/18555%E4%B8%AD@DarkSharpness%E7%9A%84%E6%B5%8B%E8%AF%95%E5%92%8C%E6%B8%85%E7%90%86hicache%E4%BB%A3%E7%A0%81">https://github.com/sgl-project/sglang/pull/18555中@DarkSharpness的测试和清理hicache代码</a></li>
+<li>[扩散] 重构：统一 SamplingParams 构造并改进 <a href="https://github.com/sgl-project/sglang/pull/18928">https://github.com/sgl-project/sglang/pull/18928</a> 中 @mickqian 的 DiffGenerator 返回类型</li>
+<li>推理模型修复了 @HaiShaw 在 <a href="https://github.com/sgl-project/sglang/pull/18963">https://github.com/sgl-project/sglang/pull/18963</a> 中的文档</li>
+<li>通过 <a href="https://github.com/sgl-project/sglang/pull/18927">https://github.com/sgl-project/sglang/pull/18927</a> 中的 @BBuf 删除未使用的 fast-hadamard-transform PyTorch 扩展源</li>
+<li>[微小修复] 超级微小修复 @BBuf 在 <a href="https://github.com/sgl-project/sglang/pull/18964">https://github.com/sgl-project/sglang/pull/18964</a> 中的 mul_add naive Forward 错误</li>
+<li>通过@Qiaolin-Yu在<a href="https://github.com/sgl-project/sglang/pull/18756%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%BA%94%E7%9A%84%E6%A0%87%E5%BF%97%E7%BC%96%E8%AF%91fa3">https://github.com/sgl-project/sglang/pull/18756中使用相应的标志编译fa3</a> PDL来启用fa3 PDL</li>
+<li>[AMD] ROCm7.2：通过<a href="https://github.com/sgl-project/sglang/pull/18972%E4%B8%AD%E7%9A%84@HaiShaw%E5%B0%86/sql-workspace/aiter%E6%B7%BB%E5%8A%A0%E5%88%B0PYTHONPATH">https://github.com/sgl-project/sglang/pull/18972中的@HaiShaw将/sql-workspace/aiter添加到PYTHONPATH</a></li>
+<li>[BUG] <a href="https://github.com/sgl-project/sglang/pull/18948%E4%B8%AD@zijiexia%E9%87%8D%E6%9E%84%E5%A4%9A%E6%A8%A1%E6%80%81%E7%94%9F%E6%88%90%E5%9F%BA%E5%87%86%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%E4%BB%BB%E5%8A%A1%E8%A7%A3%E6%9E%90%E9%80%BB%E8%BE%91">https://github.com/sgl-project/sglang/pull/18948中@zijiexia重构多模态生成基准函数中的任务解析逻辑</a></li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18689%E4%B8%AD%E6%B7%BB%E5%8A%A0@yhyang201%E5%AF%B9Kimi">https://github.com/sgl-project/sglang/pull/18689中添加@yhyang201对Kimi</a> K2.5的DP ViT支持</li>
+<li>[修复] 在<a href="https://github.com/sgl-project/sglang/pull/18634%E4%B8%AD%E6%B7%BB%E5%8A%A0@yushengsu-thu%E7%9A%84lora%E7%BB%91LM%E5%A4%B4%E6%94%AF%E6%8C%81%EF%BC%88%E7%94%A8%E4%BA%8EQwen2.5%EF%BC%8CGemma%E7%AD%89%E6%A8%A1%E5%9E%8B%E9%9C%80%E8%A6%81%EF%BC%89">https://github.com/sgl-project/sglang/pull/18634中添加@yushengsu-thu的lora绑LM头支持（用于Qwen2.5，Gemma等模型需要）</a></li>
+<li>[4/N] 量化重构：@TamirBaydasov 在 <a href="https://github.com/sgl-project/sglang/pull/18252">https://github.com/sgl-project/sglang/pull/18252</a> 中的 Quark MoE 方案</li>
+<li>[功能] 为 SGLang-D 实现 update_weights_from_disk (Diffusion … by @dreamyang-liu in <a href="https://github.com/sgl-project/sglang/pull/18306">https://github.com/sgl-project/sglang/pull/18306</a></li>
+<li>[文档] 通过 @mmangkad 在 <a href="https://github.com/sgl-project/sglang/pull/18982">https://github.com/sgl-project/sglang/pull/18982</a> 中将 <code>flashinfer_deepgemm</code> 添加到 <code>--fp8-gemm-backend</code></li>
+<li>通过恢复 @alisonshao 在 <a href="https://github.com/sgl-project/sglang/pull/18910">https://github.com/sgl-project/sglang/pull/18910</a> 中发布的曼巴槽来修复不稳定的 Qwen3-Next KL 发散测试</li>
+<li>[AMD] 在 <a href="https://github.com/sgl-project/sglang/pull/18978">https://github.com/sgl-project/sglang/pull/18978</a> 中由 @bingxche 每晚修复 mi35x dsv32 mtp</li>
+<li>通过 @hxieustc 在 <a href="https://github.com/sgl-project/sglang/pull/18850">https://github.com/sgl-project/sglang/pull/18850</a> 中将批量零拷贝添加到 NIXL 后端</li>
+<li>[Qwen3.5] 在<a href="https://github.com/sgl-project/sglang/pull/18937%E4%B8%AD%E9%80%9A%E8%BF%87@hlu1%E5%90%AF%E7%94%A8nvfp4%E6%A3%80%E6%9F%A5%E7%82%B9">https://github.com/sgl-project/sglang/pull/18937中通过@hlu1启用nvfp4检查点</a></li>
+<li>通过 @Oasis-Git 修复 <a href="https://github.com/sgl-project/sglang/pull/17739">https://github.com/sgl-project/sglang/pull/17739</a> 中的 PCG MoE 错误</li>
+<li>由 @shaharmor98 在 <a href="https://github.com/sgl-project/sglang/pull/18070">https://github.com/sgl-project/sglang/pull/18070</a> 中进行 Feat/add fi 选择性状态更新内核调用</li>
+<li>[RadixTree][4/N 重构]：<a href="https://github.com/sgl-project/sglang/pull/17852">https://github.com/sgl-project/sglang/pull/17852</a> 中@pansi Cheng 将 available_and_evictable_str 移动到各个基数缓存类</li>
+<li>[扩散] 在<a href="https://github.com/sgl-project/sglang/pull/18966%E4%B8%AD%E9%80%9A%E8%BF%87@BBuf%E9%87%8D%E6%9E%84%E6%89%A9%E6%95%A3triton%E5%86%85%E6%A0%B8">https://github.com/sgl-project/sglang/pull/18966中通过@BBuf重构扩散triton内核</a></li>
+<li>[修复]修复<a href="https://github.com/sgl-project/sglang/pull/18975%E4%B8%AD@Prozac614%E5%9C%A8enable_cfg_parallel%E4%B8%BA%E5%81%87%E6%97%B6%E5%9C%A8%E5%B9%B6%E8%A1%8C%E6%89%A7%E8%A1%8C%E5%99%A8%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84%E7%AD%89%E7%BA%A7">https://github.com/sgl-project/sglang/pull/18975中@Prozac614在enable_cfg_parallel为假时在并行执行器中使用的等级</a></li>
+<li>[Diffusion] [NPU] 在 <a href="https://github.com/sgl-project/sglang/pull/17807">https://github.com/sgl-project/sglang/pull/17807</a> 中通过 @Makcum888e 在 NPU 上启用分析器</li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/18962%E4%B8%AD%E7%9A%84@satyamk7054%E5%B0%86lora%E8%AF%B7%E6%B1%82%E9%AA%8C%E8%AF%81%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A7%BB%E8%87%B3tokenizer_manager">https://github.com/sgl-project/sglang/pull/18962中的@satyamk7054将lora请求验证从服务器移至tokenizer_manager</a></li>
+<li>[扩散]杂务：通过 @mickqian 在 <a href="https://github.com/sgl-project/sglang/pull/18997">https://github.com/sgl-project/sglang/pull/18997</a> 中改善消费级 GPU 的内存使用情况</li>
+<li>[扩散] CI：<a href="https://github.com/sgl-project/sglang/pull/19010">https://github.com/sgl-project/sglang/pull/19010</a> 中 @mickqian 默认启用预热</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18318%E4%B8%AD%E6%B7%BB%E5%8A%A0@">https://github.com/sgl-project/sglang/pull/18318中添加@</a> Chengshuang18的SDAR模型支持</li>
+<li>[spec v2]通过@hnyls2002在<a href="https://github.com/sgl-project/sglang/pull/18958%E4%B8%AD%E4%BF%AE%E5%A4%8D%E6%9C%AA%E6%9D%A5%E6%8C%87%E6%95%B0%E7%9A%84%E7%81%AB%E7%82%ACGC">https://github.com/sgl-project/sglang/pull/18958中修复未来指数的火炬GC</a></li>
+<li>恢复 <a href="https://github.com/sgl-project/sglang/pull/19032">https://github.com/sgl-project/sglang/pull/19032</a> 中 @ch-wan 的“添加 SDAR 模型支持”</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/18643%E4%B8%AD%E9%80%9A%E8%BF%87@nvcastet%E4%B8%BAqwen%E6%B3%A8%E5%86%8C%E5%85%B7%E6%9C%89%E5%AF%B9%E7%A7%B0%E5%86%85%E5%AD%98%E7%9A%84%E5%BC%A0%E9%87%8F">https://github.com/sgl-project/sglang/pull/18643中通过@nvcastet为qwen注册具有对称内存的张量</a></li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18250">https://github.com/sgl-project/sglang/pull/18250</a> 中超过 @ch-wan 的 Triton 张量限制时，通过回退到火炬本机 API 来修复长提示 KV 分配</li>
+<li>修复 flashinfer 自动调谐，使其仅在 <a href="https://github.com/sgl-project/sglang/pull/19004">https://github.com/sgl-project/sglang/pull/19004</a> 中包装 @ch-wan 的 run_once()</li>
+<li>支持<a href="https://github.com/sgl-project/sglang/pull/19013%E4%B8%AD@fzyzcjy%E6%B8%85%E7%90%86%E8%BD%AC%E5%82%A8%E5%99%A8%E4%B8%AD%E4%BB%A5%E5%89%8D%E7%9A%84%E8%BD%AC%E5%82%A8">https://github.com/sgl-project/sglang/pull/19013中@fzyzcjy清理转储器中以前的转储</a></li>
+<li><a href="https://github.com/sgl-project/sglang/pull/19014%E4%B8%AD@fzyzcjy%E5%9C%A8%E8%BD%AC%E5%82%A8%E5%99%A8%E4%B8%AD%E9%94%99%E8%AF%AF%E6%89%A7%E8%A1%8C%E9%83%A8%E5%88%86%E6%8E%92%E5%90%8D%E6%97%B6%E6%8F%90%E7%A4%BA%E7%94%A8%E6%88%B7">https://github.com/sgl-project/sglang/pull/19014中@fzyzcjy在转储器中错误执行部分排名时提示用户</a></li>
+<li>支持 <a href="https://github.com/sgl-project/sglang/pull/19017">https://github.com/sgl-project/sglang/pull/19017</a> 中@fzyzcjy 捕获的转储输出和转储器中的控制台输出控制</li>
+<li><a href="https://github.com/sgl-project/sglang/pull/19018%E4%B8%AD%E6%94%AF%E6%8C%81@fzyzcjy%E8%BF%87%E6%BB%A4dumper%E4%B8%AD%E7%9A%84%E6%A0%87%E7%AD%BE">https://github.com/sgl-project/sglang/pull/19018中支持@fzyzcjy过滤dumper中的标签</a></li>
+<li>通过 <a href="https://github.com/sgl-project/sglang/pull/19034">https://github.com/sgl-project/sglang/pull/19034</a> 中的 @fzyzcjy 增强转储器中的配置和环境解析</li>
+<li>支持<a href="https://github.com/sgl-project/sglang/pull/19046%E4%B8%AD@fzyzcjy%E9%87%8D%E7%BD%AE%E5%92%8C%E5%A2%9E%E5%BC%BAdumper%E7%9A%84HTTP%E7%AB%AF%E7%82%B9">https://github.com/sgl-project/sglang/pull/19046中@fzyzcjy重置和增强dumper的HTTP端点</a></li>
+<li>支持在<a href="https://github.com/sgl-project/sglang/pull/19038%E4%B8%AD@fzyzcjy%E5%9C%A8%E8%BD%AC%E5%82%A8%E5%99%A8%E4%B8%AD%E4%BD%BF%E7%94%A8SGLang%E7%AB%AF%E5%8F%A3">https://github.com/sgl-project/sglang/pull/19038中@fzyzcjy在转储器中使用SGLang端口</a></li>
+<li><a href="https://github.com/sgl-project/sglang/pull/19044">https://github.com/sgl-project/sglang/pull/19044</a> 中 @hengshuang18 的功能/sdar 支持</li>
+<li>[修复][Qwen3.5] 通过 <a href="https://github.com/sgl-project/sglang/pull/19002">https://github.com/sgl-project/sglang/pull/19002</a> 中的 @YAMY1234 将 max_mamba_cache_size 传递到分解解码路径中的 mamba 池</li>
+<li>[AMD] 将 MORI-IO 中的 msgpack 替换为 <a href="https://github.com/sgl-project/sglang/pull/19007">https://github.com/sgl-project/sglang/pull/19007</a> 中 @Duyi-Wang 的 msgspec</li>
+<li>通过 @ch-wan 在 <a href="https://github.com/sgl-project/sglang/pull/19052">https://github.com/sgl-project/sglang/pull/19052</a> 中修复 main 上的 lint</li>
+<li>功能：@dougyster 在 <a href="https://github.com/sgl-project/sglang/pull/19025">https://github.com/sgl-project/sglang/pull/19025</a> 中的 docker 补丁工作流程</li>
+<li>通过 @fzyzcjy 在 <a href="https://github.com/sgl-project/sglang/pull/19054">https://github.com/sgl-project/sglang/pull/19054</a> 中修复 main 上的 lint</li>
+<li>[扩散] 日志记录：<a href="https://github.com/sgl-project/sglang/pull/18998">https://github.com/sgl-project/sglang/pull/18998</a> 中的@mickqian 在调试级别启动每个阶段时记录可用的内存</li>
+<li>[jit 内核] 在 <a href="https://github.com/sgl-project/sglang/pull/18905">https://github.com/sgl-project/sglang/pull/18905</a> 中支持 @yuan-luo 的 per_token_group_quant_8bit jit 内核</li>
+<li>[diffusion] 壮举：在 <a href="https://github.com/sgl-project/sglang/pull/18959">https://github.com/sgl-project/sglang/pull/18959</a> 中支持 @mickqian 的 Z-Image-Turbo 和 Flux.1 (int4) 双节棍</li>
+<li>修复 @mmangkad 在 <a href="https://github.com/sgl-project/sglang/pull/18931">https://github.com/sgl-project/sglang/pull/18931</a> 中的 Both-trtllm MHA one-shot 的 NSA FP8 KV 缓存路径</li>
+<li>[修复] 不要在 <a href="https://github.com/sgl-project/sglang/pull/19020">https://github.com/sgl-project/sglang/pull/19020</a> 中通过 @DarkSharpness 跳过 dllm 的 save_kv_cache</li>
+<li>[修复] 在非默认流上运行 FlashInfer 自动调谐，以实现 <a href="https://github.com/sgl-project/sglang/pull/18987">https://github.com/sgl-project/sglang/pull/18987</a> 中 @nvcastet 的 NCCL 2.29+ 兼容性</li>
+<li>修复 <a href="https://github.com/sgl-project/sglang/pull/19051">https://github.com/sgl-project/sglang/pull/19051</a> 中@ch-wan 的 adjustment_num_token_non_padded_for_attn_tp 返回 CPU 张量的问题</li>
+<li>[AMD] 支持 <a href="https://github.com/sgl-project/sglang/pull/17953">https://github.com/sgl-project/sglang/pull/17953</a> 中 @billishyahao 的 mori ep 两批重叠</li>
+<li>[feat] feat: 支持 <a href="https://github.com/sgl-project/sglang/pull/18970">https://github.com/sgl-project/sglang/pull/18970</a> 中 @LuYanFCP 的 trtllm_mha 中的 swa</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/18986">https://github.com/sgl-project/sglang/pull/18986</a> 中 @Qiaolin-Yu 在 bench_one_batch 中添加生成的共享前缀数据集</li>
+<li>[GPT-OSS] 支持 @zminglei 在 <a href="https://github.com/sgl-project/sglang/pull/18988">https://github.com/sgl-project/sglang/pull/18988</a> 中对 gpt-oss bf16 进行 fp8 在线量化</li>
+<li>@ch-wan 在 <a href="https://github.com/sgl-project/sglang/pull/18991">https://github.com/sgl-project/sglang/pull/18991</a> 中重构图形输入缓冲区</li>
+<li>[DSv32] 通过 @vladnosiv 修复 <a href="https://github.com/sgl-project/sglang/pull/19062">https://github.com/sgl-project/sglang/pull/19062</a> 中的 MTP 和 CP 兼容性</li>
+<li>修复<a href="https://github.com/sgl-project/sglang/pull/19082%E4%B8%AD@nvcastet%E9%BB%98%E8%AE%A4%E7%9A%84symm">https://github.com/sgl-project/sglang/pull/19082中@nvcastet默认的symm</a> mem预分配中的错误</li>
+<li>删除 <a href="https://github.com/sgl-project/sglang/pull/19105">https://github.com/sgl-project/sglang/pull/19105</a> 中 @zhaochenyang20 的 basic_useage 中的错误 dllm 和扩散文档</li>
+<li>[Quantization] 支持 config.json quantization_config 格式，修复 except_modules 匹配，并修复 @danielafrimi 在 <a href="https://github.com/sgl-project/sglang/pull/18546">https://github.com/sgl-project/sglang/pull/18546</a> 中为 Nemotron 加载 KV 缓存规模的问题</li>
+<li>[扩散]重构：减少冗余并改进 <a href="https://github.com/sgl-project/sglang/pull/19060">https://github.com/sgl-project/sglang/pull/19060</a> 中的 @mickqian 阶段 api</li>
+<li>[FEAT] 通过 @JustinTong0323 在 <a href="https://github.com/sgl-project/sglang/pull/18630">https://github.com/sgl-project/sglang/pull/18630</a> 中添加 Anthropic 兼容的 API 端点</li>
+<li>[diffusion] feat: 支持在 <a href="https://github.com/sgl-project/sglang/pull/19108">https://github.com/sgl-project/sglang/pull/19108</a> 中通过 @mickqian 通过服务器参数传递组件路径</li>
+<li>[功能]重写rope内核；通过 <a href="https://github.com/sgl-project/sglang/pull/18844">https://github.com/sgl-project/sglang/pull/18844</a> 中的 @DarkSharpness 删除 flashinfer 依赖项</li>
+<li>[Diffusion] 通过@BBuf在<a href="https://github.com/sgl-project/sglang/pull/19064%E4%B8%AD%E9%87%8D%E5%BB%BA%E5%92%8C%E6%B8%85%E7%90%86Diffusion%E6%97%8B%E8%BD%AC%E5%B5%8C%E5%85%A5">https://github.com/sgl-project/sglang/pull/19064中重建和清理Diffusion旋转嵌入</a></li>
+<li>通过 <a href="https://github.com/sgl-project/sglang/pull/18996">https://github.com/sgl-project/sglang/pull/18996</a> 中的 @JustinTong0323 修复 OpenAIServingChat 中的工具处理</li>
+<li>使用 @JustinTong0323 在 <a href="https://github.com/sgl-project/sglang/pull/19120">https://github.com/sgl-project/sglang/pull/19120</a> 中的 re.DOTALL 修复 KimiK2Detector 正则表达式模式</li>
+<li>[sql]视图可能会占用内存太久，并由@bixue2010在<a href="https://github.com/sgl-project/sglang/pull/19109%E4%B8%AD%E5%BC%95%E5%85%A5%E4%BA%86%E5%A4%A7%E5%86%85%E5%AD%98">https://github.com/sgl-project/sglang/pull/19109中引入了大内存</a></li>
+<li>[FlashInfer] 将<a href="https://github.com/sgl-project/sglang/pull/18341%E4%B8%AD@mmangkad%E7%9A%84FlashInfer">https://github.com/sgl-project/sglang/pull/18341中@mmangkad的FlashInfer</a> allreduce fusion切换到统一的API</li>
+<li>[重构] 基准测试阶段 1：从 <a href="https://github.com/sgl-project/sglang/pull/19077">https://github.com/sgl-project/sglang/pull/19077</a> 中的@Ratish1 的 bench_serving 中提取实用程序和数据集</li>
+<li>[基准测试] 删除<a href="https://github.com/sgl-project/sglang/pull/19130%E4%B8%AD@hnyls2002%E4%BB%8Ebench_serving.py%E4%B8%AD%E7%9A%84%E9%87%8D%E6%96%B0%E5%AF%BC%E5%87%BA">https://github.com/sgl-project/sglang/pull/19130中@hnyls2002从bench_serving.py中的重新导出</a></li>
+<li>恢复<a href="https://github.com/sgl-project/sglang/pull/19131%E4%B8%AD@hnyls2002%E7%9A%84%E2%80%9C%5Bjit">https://github.com/sgl-project/sglang/pull/19131中@hnyls2002的“[jit</a> kernel]支持per_token_group_quant_8bit jit kernel”</li>
+<li>通过在 <a href="https://github.com/sgl-project/sglang/pull/18947">https://github.com/sgl-project/sglang/pull/18947</a> 中添加 @Kangyan-Zhou 的 docker 系统修剪，修复开发 Docker 在 ARM64 cu13 上构建 OOM</li>
+<li>[修复] 快速修复<a href="https://github.com/sgl-project/sglang/pull/19076%E4%B8%AD@YAMY1234%E5%9C%A8Mooncakes%E7%9A%84send_kvcache_slice%E4%B8%ADint32%E6%BA%A2%E5%87%BA%E9%97%AE%E9%A2%98">https://github.com/sgl-project/sglang/pull/19076中@YAMY1234在Mooncakes的send_kvcache_slice中int32溢出问题</a></li>
+<li>[扩散] 通过<a href="https://github.com/sgl-project/sglang/pull/17023%E4%B8%AD%E7%9A%84@fy1214%E5%B0%86FP8%E7%BA%BF%E6%80%A7%E8%B0%83%E6%95%B4%E4%B8%BAsgld%E7%89%B9%E5%BE%81%EF%BC%88Rebase%EF%BC%89">https://github.com/sgl-project/sglang/pull/17023中的@fy1214将FP8线性调整为sgld特征（Rebase）</a></li>
+<li>[BUG] [DLLM] <a href="https://github.com/sgl-project/sglang/pull/18740">https://github.com/sgl-project/sglang/pull/18740</a> 中 @blazingbhavneek 缺少 max_running_requests 值</li>
+<li>由 @Qiaolin-Yu 在 <a href="https://github.com/sgl-project/sglang/pull/19134">https://github.com/sgl-project/sglang/pull/19134</a> 中修复 nsa 后端中的规范 v2+dp 注意力</li>
+<li>[Qwen3-Next] 启用 fused_qkvzba_split_reshape_cat 也可用于 <a href="https://github.com/sgl-project/sglang/pull/18917">https://github.com/sgl-project/sglang/pull/18917</a> 中 @YAMY1234 的预填充</li>
+<li>[PD] <a href="https://github.com/sgl-project/sglang/pull/19141">https://github.com/sgl-project/sglang/pull/19141</a> 中@ShangmingCai 将 bootstrap_room 元数据数据类型从 int64 更改为 uint64</li>
+<li>重构转储器并通过 @fzyzcjy 在 <a href="https://github.com/sgl-project/sglang/pull/19065">https://github.com/sgl-project/sglang/pull/19065</a> 中更改 on_forward_pass_start API</li>
+<li>支持<a href="https://github.com/sgl-project/sglang/pull/19068%E4%B8%AD@fzyzcjy%E5%9C%A8dumper%E4%B8%AD%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E8%BD%AC%E5%82%A8">https://github.com/sgl-project/sglang/pull/19068中@fzyzcjy在dumper中非侵入式转储</a></li>
+<li>支持在<a href="https://github.com/sgl-project/sglang/pull/19069%E4%B8%AD%E9%80%9A%E8%BF%87@fzyzcjy%E5%9C%A8%E8%BD%AC%E5%82%A8%E5%99%A8%E4%B8%AD%E5%90%AF%E7%94%A8%E9%83%A8%E5%88%86%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F%E8%BD%AC%E5%82%A8">https://github.com/sgl-project/sglang/pull/19069中通过@fzyzcjy在转储器中启用部分非侵入式转储</a></li>
+<li><a href="https://github.com/sgl-project/sglang/pull/19071">https://github.com/sgl-project/sglang/pull/19071</a> 中的 @fzyzcjy 自动注释转储器中的上下文</li>
+<li>在<a href="https://github.com/sgl-project/sglang/pull/19072%E4%B8%AD%E9%80%9A%E8%BF%87@fzyzcjy%E5%9C%A8dumper%E4%B8%AD%E6%8F%90%E5%8F%96%E6%A1%86%E6%9E%B6%E6%8F%92%E4%BB%B6">https://github.com/sgl-project/sglang/pull/19072中通过@fzyzcjy在dumper中提取框架插件</a></li>
+<li>通过@fzyzcjy在<a href="https://github.com/sgl-project/sglang/pull/19073%E4%B8%AD%E5%A2%9E%E5%BC%BAdumper%E4%B8%AD%E7%9A%84hook%E6%9C%BA%E5%88%B6">https://github.com/sgl-project/sglang/pull/19073中增强dumper中的hook机制</a></li>
+<li>通过<a href="https://github.com/sgl-project/sglang/pull/19093%E4%B8%AD%E7%9A%84@fzyzcjy%E5%9C%A8%E4%B8%BBSGLang%E9%80%BB%E8%BE%91%E4%B8%AD%E9%85%8D%E7%BD%AE%E5%B9%B6%E8%B0%83%E7%94%A8%E8%BD%AC%E5%82%A8%E5%99%A8">https://github.com/sgl-project/sglang/pull/19093中的@fzyzcjy在主SGLang逻辑中配置并调用转储器</a></li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/19094">https://github.com/sgl-project/sglang/pull/19094</a> 中支持多共置转储程序，名为 exp cleanup、argparse 配置（@fzyzcjy）</li>
+<li>在 <a href="https://github.com/sgl-project/sglang/pull/19095">https://github.com/sgl-project/sglang/pull/19095</a> 中通过 @fzyzcjy 增强转储器中的重置、状态和 http</li>
+<li>修复错误的大转储文件并通过 <a href="https://github.com/sgl-project/sglang/pull/19124">https://github.com/sgl-project/sglang/pull/19124</a> 中的 @fzyzcjy 处理转储器中的非侵入式钩子重置</li>
+<li>[DSv32] [GLM5] 通过避免 <code>weights_proj</code> 中的 FP32 精度损失来提高模型质量，@zianglih 在 <a href="https://github.com/sgl-project/sglang/pull/19041">https://github.com/sgl-project/sglang/pull/19041</a> 中</li>
+<li>支持<a href="https://github.com/sgl-project/sglang/pull/19138%E4%B8%AD@fzyzcjy%E5%9C%A8dumper%E4%B8%AD%E7%9A%84kwargs%E5%92%8Cmegatron%E6%A0%B8%E5%BF%83%E5%BC%A0%E9%87%8F%E8%A7%A3%E6%9E%90">https://github.com/sgl-project/sglang/pull/19138中@fzyzcjy在dumper中的kwargs和megatron核心张量解析</a></li>
+<li>[扩散]杂务：@mickqian 在 <a href="https://github.com/sgl-project/sglang/pull/19123">https://github.com/sgl-project/sglang/pull/19123</a> 中进行的小清理</li>
+<li>[扩散] CI：放宽 <a href="https://github.com/sgl-project/sglang/pull/19154">https://github.com/sgl-project/sglang/pull/19154</a> 中 @mickqian 的性能检查阈值</li>
+<li>修复因 @talorabr 在 <a href="https://github.com/sgl-project/sglang/pull/19011">https://github.com/sgl-project/sglang/pull/19011</a> 中并发写入而导致的 JSONL 指标文件损坏</li>
+<li>[扩散]重构：在<a href="https://github.com/sgl-project/sglang/pull/19142%E4%B8%AD%E9%80%9A%E8%BF%87@mickqian%E9%87%8D%E5%91%BD%E5%90%8D%E9%87%8F%E5%8C%96%E6%A8%A1%E5%9E%8B%E8%B7%AF%E5%BE%84%E6%9C%8D%E5%8A%A1%E5%99%A8arg">https://github.com/sgl-project/sglang/pull/19142中通过@mickqian重命名量化模型路径服务器arg</a></li>
+<li>恢复 <a href="https://github.com/sgl-project/sglang/pull/19161">https://github.com/sgl-project/sglang/pull/19161</a> 中@Fridge003 的“[AMD] 支持 mori ep #17953 的两批重叠”</li>
+<li>修复（扩散）：在 <a href="https://github.com/sgl-project/sglang/pull/14825">https://github.com/sgl-project/sglang/pull/14825</a> 中通过 @Ratish1 对 T2V 强制执行严格的 input_reference 验证</li>
+<li>恢复 <a href="https://github.com/sgl-project/sglang/pull/19173">https://github.com/sgl-project/sglang/pull/19173</a> 中 @Fridge003 的“重构图形输入缓冲区 (#18991)”</li>
+<li>更新 rocm7.2 Docker 文件以安装 amdsmi，以通过 @clintg6 在 <a href="https://github.com/sgl-project/sglang/pull/19091">https://github.com/sgl-project/sglang/pull/19091</a> 中进行 QuickReduce 初始化</li>
+<li>通过移动<a href="https://github.com/sgl-project/sglang/pull/19175%E4%B8%AD@Qiaolin-Yu%E7%9A%84%E6%89%93%E5%8D%B0%E8%AF%AD%E5%8F%A5%E6%9D%A5%E4%BF%AE%E5%A4%8Dbench_one_batch_server">https://github.com/sgl-project/sglang/pull/19175中@Qiaolin-Yu的打印语句来修复bench_one_batch_server</a></li>
+<li>[AMD] <a href="https://github.com/sgl-project/sglang/pull/19176">https://github.com/sgl-project/sglang/pull/19176</a> 中 @HaiShaw 的 ENV 标志调整和清理</li>
+<li>[Diffusion] 从<a href="https://github.com/sgl-project/sglang/pull/19170%E4%B8%AD%E7%9A%84@ChangyiYang%E7%9A%84component_paths%E4%B8%AD%E6%A3%80%E6%B5%8BFlux2%E8%87%AA%E5%AE%9A%E4%B9%89VAE%E8%B7%AF%E5%BE%84">https://github.com/sgl-project/sglang/pull/19170中的@ChangyiYang的component_paths中检测Flux2自定义VAE路径</a></li>
+<li>[ROCm] 在<a href="https://github.com/sgl-project/sglang/pull/19162%E4%B8%AD@zyzshishui%E5%9C%A8CUDA%E5%9B%BE%E6%8D%95%E8%8E%B7%E6%9C%9F%E9%97%B4%E4%BD%BF%E7%94%A8unreg%E8%B7%AF%E5%BE%84%E8%BF%9B%E8%A1%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E5%85%A8%E5%BD%92%E7%BA%A6">https://github.com/sgl-project/sglang/pull/19162中@zyzshishui在CUDA图捕获期间使用unreg路径进行自定义全归约</a></li>
+<li>重新组织topk逻辑以清理代码并通过<a href="https://github.com/sgl-project/sglang/pull/16945%E4%B8%AD%E7%9A%84@ocss884%E5%85%AC%E5%BC%80%E9%80%BB%E8%BE%91%E4%B8%93%E5%AE%B6">https://github.com/sgl-project/sglang/pull/16945中的@ocss884公开逻辑专家</a></li>
+<li>在 FA 中使用单个 mma warp 组来实现短 q_len 以优化 <a href="https://github.com/sgl-project/sglang/pull/18985">https://github.com/sgl-project/sglang/pull/18985</a> 中的 @Qiaolin-Yu 的解码性能</li>
+<li>[NPU] 通过 @iforgetmyname 在 <a href="https://github.com/sgl-project/sglang/pull/19178">https://github.com/sgl-project/sglang/pull/19178</a> 中将 sql-kernel-npu 提升到 2026.02.01.post2</li>
+<li>[重构]在<a href="https://github.com/sgl-project/sglang/pull/19144%E4%B8%AD%E9%80%9A%E8%BF%87@BBuf%E5%B0%86rotary_embedding.py%E6%8B%86%E5%88%86%E4%B8%BA%E6%A8%A1%E5%9D%97%E5%8C%96%E5%8C%85">https://github.com/sgl-project/sglang/pull/19144中通过@BBuf将rotary_embedding.py拆分为模块化包</a></li>
+<li>[Diffusion] 在<a href="https://github.com/sgl-project/sglang/pull/19179%E4%B8%AD%E9%80%9A%E8%BF%87@BBuf%E5%8C%B9%E9%85%8Drotary_embedding%E6%A8%A1%E5%9D%97%E5%90%8D%E7%A7%B0%E6%A0%B7%E5%BC%8F">https://github.com/sgl-project/sglang/pull/19179中通过@BBuf匹配rotary_embedding模块名称样式</a></li>
+<li>[内核瘦身] 通过 @celve 在 <a href="https://github.com/sgl-project/sglang/pull/18949">https://github.com/sgl-project/sglang/pull/18949</a> 中将 AWQ marlin 重新打包内核迁移到 JIT</li>
+<li>[PD-Disagg] 支持从 bootstrap 服务器查询 dp 排名。作者：@hnyls2002 在 <a href="https://github.com/sgl-project/sglang/pull/19168">https://github.com/sgl-project/sglang/pull/19168</a></li>
+<li>通过 @narutolhy 在 <a href="https://github.com/sgl-project/sglang/pull/19133">https://github.com/sgl-project/sglang/pull/19133</a> 添加新的 ci 用户</li>
+</ul>
+<h2 id="新贡献者">新贡献者</h2>
+<ul>
+<li>@00fish0 在 <a href="https://github.com/sgl-project/sglang/pull/17265">https://github.com/sgl-project/sglang/pull/17265</a> 中做出了第一个贡献</li>
+<li>@1195343015 在 <a href="https://github.com/sgl-project/sglang/pull/18535">https://github.com/sgl-project/sglang/pull/18535</a> 中做出了第一个贡献</li>
+<li>@1am9trash 在 <a href="https://github.com/sgl-project/sglang/pull/18488">https://github.com/sgl-project/sglang/pull/18488</a> 中做出了第一个贡献</li>
+<li>@22dimensions 在 <a href="https://github.com/sgl-project/sglang/pull/18017">https://github.com/sgl-project/sglang/pull/18017</a> 中做出了第一个贡献</li>
+<li>@2JooYeon 在 <a href="https://github.com/sgl-project/sglang/pull/18552">https://github.com/sgl-project/sglang/pull/18552</a> 中做出了第一个贡献</li>
+<li>@Aphoh 在 <a href="https://github.com/sgl-project/sglang/pull/18508">https://github.com/sgl-project/sglang/pull/18508</a> 中做出了第一个贡献</li>
+<li>@BJWang-ant 在 <a href="https://github.com/sgl-project/sglang/pull/16043">https://github.com/sgl-project/sglang/pull/16043</a> 中做出了第一个贡献</li>
+<li>@BourneSun0527 在 <a href="https://github.com/sgl-project/sglang/pull/18553">https://github.com/sgl-project/sglang/pull/18553</a> 中做出了第一个贡献</li>
+<li>@Ch3ngY1 在 <a href="https://github.com/sgl-project/sglang/pull/18163">https://github.com/sgl-project/sglang/pull/18163</a> 中做出了第一个贡献</li>
+<li>@ChangyiYang 在 <a href="https://github.com/sgl-project/sglang/pull/18883">https://github.com/sgl-project/sglang/pull/18883</a> 中做出了第一个贡献</li>
+<li>@CloudRipple 在 <a href="https://github.com/sgl-project/sglang/pull/17704">https://github.com/sgl-project/sglang/pull/17704</a> 中做出了第一个贡献</li>
+<li>@DiweiSun 在 <a href="https://github.com/sgl-project/sglang/pull/11712">https://github.com/sgl-project/sglang/pull/11712</a> 中做出了第一个贡献</li>
+<li>@DotSlash-A 在 <a href="https://github.com/sgl-project/sglang/pull/16969">https://github.com/sgl-project/sglang/pull/16969</a> 中做出了第一个贡献</li>
+<li>@Duyi-Wang 在 <a href="https://github.com/sgl-project/sglang/pull/18437">https://github.com/sgl-project/sglang/pull/18437</a> 中做出了第一个贡献</li>
+<li>@EduardDurech 在 <a href="https://github.com/sgl-project/sglang/pull/15682">https://github.com/sgl-project/sglang/pull/15682</a> 中做出了第一个贡献</li>
+<li>@Estrella-xx 在 <a href="https://github.com/sgl-project/sglang/pull/17811">https://github.com/sgl-project/sglang/pull/17811</a> 中做出了第一个贡献</li>
+<li>@Evrard-Nil 在 <a href="https://github.com/sgl-project/sglang/pull/17813">https://github.com/sgl-project/sglang/pull/17813</a> 中做出了第一个贡献</li>
+<li>@FrankMinions 在 <a href="https://github.com/sgl-project/sglang/pull/18804">https://github.com/sgl-project/sglang/pull/18804</a> 中做出了第一个贡献</li>
+<li>@HaiShaw 在 <a href="https://github.com/sgl-project/sglang/pull/18101">https://github.com/sgl-project/sglang/pull/18101</a> 中做出了第一个贡献</li>
+<li>@HanHan009527 在 <a href="https://github.com/sgl-project/sglang/pull/18091">https://github.com/sgl-project/sglang/pull/18091</a> 中做出了第一个贡献</li>
+<li>@HandH1998 在 <a href="https://github.com/sgl-project/sglang/pull/16892">https://github.com/sgl-project/sglang/pull/16892</a> 中做出了第一个贡献</li>
+<li>@Hide-on-bushsh 在 <a href="https://github.com/sgl-project/sglang/pull/17922">https://github.com/sgl-project/sglang/pull/17922</a> 中做出了第一个贡献</li>
+<li>@JD-ETH 在 <a href="https://github.com/sgl-project/sglang/pull/18694">https://github.com/sgl-project/sglang/pull/18694</a> 中做出了第一个贡献</li>
+<li>@JiaruiChang5268 在 <a href="https://github.com/sgl-project/sglang/pull/17007">https://github.com/sgl-project/sglang/pull/17007</a> 中做出了第一个贡献</li>
+<li>@Lollipop 在 <a href="https://github.com/sgl-project/sglang/pull/18024">https://github.com/sgl-project/sglang/pull/18024</a> 中做出了第一个贡献</li>
+<li>@LuYanFCP 在 <a href="https://github.com/sgl-project/sglang/pull/18970">https://github.com/sgl-project/sglang/pull/18970</a> 中做出了第一个贡献</li>
+<li>@Lzy17 在 <a href="https://github.com/sgl-project/sglang/pull/17183">https://github.com/sgl-project/sglang/pull/17183</a> 中做出了第一个贡献</li>
+<li>@Mahdi-CV 在 <a href="https://github.com/sgl-project/sglang/pull/17040">https://github.com/sgl-project/sglang/pull/17040</a> 中做出了第一个贡献</li>
+<li>@Makcum888e 在 <a href="https://github.com/sgl-project/sglang/pull/17584">https://github.com/sgl-project/sglang/pull/17584</a> 中做出了第一个贡献</li>
+<li>@McZyWu 在 <a href="https://github.com/sgl-project/sglang/pull/16866">https://github.com/sgl-project/sglang/pull/16866</a> 中做出了第一个贡献</li>
+<li>@MikkoParkkola 在 <a href="https://github.com/sgl-project/sglang/pull/17816">https://github.com/sgl-project/sglang/pull/17816</a> 中做出了第一个贡献</li>
+<li>@Nickcp39 在 <a href="https://github.com/sgl-project/sglang/pull/18739">https://github.com/sgl-project/sglang/pull/18739</a> 中做出了第一个贡献</li>
+<li>@PeaBrane 在 <a href="https://github.com/sgl-project/sglang/pull/18944">https://github.com/sgl-project/sglang/pull/18944</a> 中做出了第一个贡献</li>
+<li>@RangerCD 在 <a href="https://github.com/sgl-project/sglang/pull/17929">https://github.com/sgl-project/sglang/pull/17929</a> 中做出了第一个贡献</li>
+<li>@RubiaCx 在 <a href="https://github.com/sgl-project/sglang/pull/18026">https://github.com/sgl-project/sglang/pull/18026</a> 中做出了第一个贡献</li>
+<li>@RunningLeon 在 <a href="https://github.com/sgl-project/sglang/pull/17939">https://github.com/sgl-project/sglang/pull/17939</a> 中做出了第一个贡献</li>
+<li>@Simon-Li 在 <a href="https://github.com/sgl-project/sglang/pull/17430">https://github.com/sgl-project/sglang/pull/17430</a> 中做出了第一个贡献</li>
+<li>@SoluMilken 在 <a href="https://github.com/sgl-project/sglang/pull/18860">https://github.com/sgl-project/sglang/pull/18860</a> 中做出了第一个贡献</li>
+<li>@Sugar920 在 <a href="https://github.com/sgl-project/sglang/pull/17952">https://github.com/sgl-project/sglang/pull/17952</a> 中做出了第一个贡献</li>
+<li>@TTThanos 在 <a href="https://github.com/sgl-project/sglang/pull/17866">https://github.com/sgl-project/sglang/pull/17866</a> 中做出了第一个贡献</li>
+<li>@TamirBaydasov 在 <a href="https://github.com/sgl-project/sglang/pull/17503">https://github.com/sgl-project/sglang/pull/17503</a> 中做出了第一个贡献</li>
+<li>@WiwilZ 在 <a href="https://github.com/sgl-project/sglang/pull/18787">https://github.com/sgl-project/sglang/pull/18787</a> 中做出了第一个贡献</li>
+<li>@YazhiGao 在 <a href="https://github.com/sgl-project/sglang/pull/18743">https://github.com/sgl-project/sglang/pull/18743</a> 中做出了第一个贡献</li>
+<li>@ZhenshengWu 在 <a href="https://github.com/sgl-project/sglang/pull/17540">https://github.com/sgl-project/sglang/pull/17540</a> 中做出了第一个贡献</li>
+<li>@ZiguanWang 在 <a href="https://github.com/sgl-project/sglang/pull/16225">https://github.com/sgl-project/sglang/pull/16225</a> 中做出了第一个贡献</li>
+<li>@aaaandychen 在 <a href="https://github.com/sgl-project/sglang/pull/16781">https://github.com/sgl-project/sglang/pull/16781</a> 中做出了第一个贡献</li>
+<li>@airMeng 在 <a href="https://github.com/sgl-project/sglang/pull/13561">https://github.com/sgl-project/sglang/pull/13561</a> 中做出了第一个贡献</li>
+<li>@ajpqs 在 <a href="https://github.com/sgl-project/sglang/pull/14765">https://github.com/sgl-project/sglang/pull/14765</a> 中做出了第一个贡献</li>
+<li>@akao-amd 在 <a href="https://github.com/sgl-project/sglang/pull/18698">https://github.com/sgl-project/sglang/pull/18698</a> 中做出了第一个贡献</li>
+<li>@akhilg-nv 在 <a href="https://github.com/sgl-project/sglang/pull/16758">https://github.com/sgl-project/sglang/pull/16758</a> 中做出了第一个贡献</li>
+<li>@amote-i 在 <a href="https://github.com/sgl-project/sglang/pull/17573">https://github.com/sgl-project/sglang/pull/17573</a> 中做出了第一个贡献</li>
+<li>@andyluo7 在 <a href="https://github.com/sgl-project/sglang/pull/18753">https://github.com/sgl-project/sglang/pull/18753</a> 中做出了第一个贡献</li>
+<li>@ant-yy 在 <a href="https://github.com/sgl-project/sglang/pull/18598">https://github.com/sgl-project/sglang/pull/18598</a> 中做出了第一个贡献</li>
+<li>@aurickq 在 <a href="https://github.com/sgl-project/sglang/pull/18152">https://github.com/sgl-project/sglang/pull/18152</a> 中做出了第一个贡献</li>
+<li>@billishyahao 在 <a href="https://github.com/sgl-project/sglang/pull/18320">https://github.com/sgl-project/sglang/pull/18320</a> 中做出了第一个贡献</li>
+<li>@bingps 在 <a href="https://github.com/sgl-project/sglang/pull/16907">https://github.com/sgl-project/sglang/pull/16907</a> 中做出了第一个贡献</li>
+<li>@bixue2010 在 <a href="https://github.com/sgl-project/sglang/pull/17781">https://github.com/sgl-project/sglang/pull/17781</a> 中做出了第一个贡献</li>
+<li>@blake-snc 在 <a href="https://github.com/sgl-project/sglang/pull/18751">https://github.com/sgl-project/sglang/pull/18751</a> 中做出了第一个贡献</li>
+<li>@blazingbhavneek 在 <a href="https://github.com/sgl-project/sglang/pull/18687">https://github.com/sgl-project/sglang/pull/18687</a> 中做出了第一个贡献</li>
+<li>@bledden 在 <a href="https://github.com/sgl-project/sglang/pull/17972">https://github.com/sgl-project/sglang/pull/17972</a> 中做出了第一个贡献</li>
+<li>@cctry 在 <a href="https://github.com/sgl-project/sglang/pull/17850">https://github.com/sgl-project/sglang/pull/17850</a> 中做出了第一个贡献</li>
+<li>@celve 在 <a href="https://github.com/sgl-project/sglang/pull/17889">https://github.com/sgl-project/sglang/pull/17889</a> 中做出了第一个贡献</li>
+<li>@chanh 在 <a href="https://github.com/sgl-project/sglang/pull/18009">https://github.com/sgl-project/sglang/pull/18009</a> 中做出了第一个贡献</li>
+<li>@hengshuang18 在 <a href="https://github.com/sgl-project/sglang/pull/18318">https://github.com/sgl-project/sglang/pull/18318</a> 中做出了第一个贡献</li>
+<li>@chenxu214 在 <a href="https://github.com/sgl-project/sglang/pull/17511">https://github.com/sgl-project/sglang/pull/17511</a> 中做出了第一个贡献</li>
+<li>@cicirori 在 <a href="https://github.com/sgl-project/sglang/pull/18064">https://github.com/sgl-project/sglang/pull/18064</a> 中做出了第一个贡献</li>
+<li>@clintg6 在 <a href="https://github.com/sgl-project/sglang/pull/19091">https://github.com/sgl-project/sglang/pull/19091</a> 中做出了第一个贡献</li>
+<li>@cswuyg 在 <a href="https://github.com/sgl-project/sglang/pull/17974">https://github.com/sgl-project/sglang/pull/17974</a> 中做出了第一个贡献</li>
+<li>@debo3 在 <a href="https://github.com/sgl-project/sglang/pull/18396">https://github.com/sgl-project/sglang/pull/18396</a> 中做出了第一个贡献</li>
+<li>@dongjiyingdjy 在 <a href="https://github.com/sgl-project/sglang/pull/17213">https://github.com/sgl-project/sglang/pull/17213</a> 中做出了第一个贡献</li>
+<li>@dreamyang-liu 在 <a href="https://github.com/sgl-project/sglang/pull/18306">https://github.com/sgl-project/sglang/pull/18306</a> 中做出了第一个贡献</li>
+<li>@dutsc 在 <a href="https://github.com/sgl-project/sglang/pull/17301">https://github.com/sgl-project/sglang/pull/17301</a> 中做出了第一个贡献</li>
+<li>@edwardzjl 在 <a href="https://github.com/sgl-project/sglang/pull/18171">https://github.com/sgl-project/sglang/pull/18171</a> 中做出了第一个贡献</li>
+<li>@fsygd 在 <a href="https://github.com/sgl-project/sglang/pull/17751">https://github.com/sgl-project/sglang/pull/17751</a> 中做出了第一个贡献</li>
+<li>@fy1214 在 <a href="https://github.com/sgl-project/sglang/pull/17023">https://github.com/sgl-project/sglang/pull/17023</a> 中做出了第一个贡献</li>
+<li>@gaopengff 在 <a href="https://github.com/sgl-project/sglang/pull/14592">https://github.com/sgl-project/sglang/pull/14592</a> 中做出了第一个贡献</li>
+<li>@gingerXue 在 <a href="https://github.com/sgl-project/sglang/pull/17499">https://github.com/sgl-project/sglang/pull/17499</a> 中做出了第一个贡献</li>
+<li>@glenliu21 在 <a href="https://github.com/sgl-project/sglang/pull/17464">https://github.com/sgl-project/sglang/pull/17464</a> 中做出了第一个贡献</li>
+<li>@gongyisheng 在 <a href="https://github.com/sgl-project/sglang/pull/17690">https://github.com/sgl-project/sglang/pull/17690</a> 中做出了第一个贡献</li>
+<li>@hammersam 在 <a href="https://github.com/sgl-project/sglang/pull/17747">https://github.com/sgl-project/sglang/pull/17747</a> 中做出了第一个贡献</li>
+<li>@haojin2 在 <a href="https://github.com/sgl-project/sglang/pull/18045">https://github.com/sgl-project/sglang/pull/18045</a> 中做出了第一个贡献</li>
+<li>@haowen-han 在 <a href="https://github.com/sgl-project/sglang/pull/18604">https://github.com/sgl-project/sglang/pull/18604</a> 中做出了第一个贡献</li>
+<li>@happierpig 在 <a href="https://github.com/sgl-project/sglang/pull/18821">https://github.com/sgl-project/sglang/pull/18821</a> 中做出了第一个贡献</li>
+<li>@hsuchifeng 在 <a href="https://github.com/sgl-project/sglang/pull/17744">https://github.com/sgl-project/sglang/pull/17744</a> 中做出了第一个贡献</li>
+<li>@hxieustc 在 <a href="https://github.com/sgl-project/sglang/pull/18850">https://github.com/sgl-project/sglang/pull/18850</a> 中做出了第一个贡献</li>
+<li>@jhinpan 在 <a href="https://github.com/sgl-project/sglang/pull/17863">https://github.com/sgl-project/sglang/pull/17863</a> 中做出了第一个贡献</li>
+<li>@jianyingzhu 在 <a href="https://github.com/sgl-project/sglang/pull/14717">https://github.com/sgl-project/sglang/pull/14717</a> 中做出了第一个贡献</li>
+<li>@jiashaokun-1 在 <a href="https://github.com/sgl-project/sglang/pull/17025">https://github.com/sgl-project/sglang/pull/17025</a> 中做出了第一个贡献</li>
+<li>@joearedmond 在 <a href="https://github.com/sgl-project/sglang/pull/17786">https://github.com/sgl-project/sglang/pull/17786</a> 中做出了第一个贡献</li>
+<li>@kaixih 在 <a href="https://github.com/sgl-project/sglang/pull/18025">https://github.com/sgl-project/sglang/pull/18025</a> 中做出了第一个贡献</li>
+<li>@kartikx 在 <a href="https://github.com/sgl-project/sglang/pull/17273">https://github.com/sgl-project/sglang/pull/17273</a> 中做出了第一个贡献</li>
+<li>@klhhhhh 在 <a href="https://github.com/sgl-project/sglang/pull/18131">https://github.com/sgl-project/sglang/pull/18131</a> 中做出了第一个贡献</li>
+<li>@klshuster 在 <a href="https://github.com/sgl-project/sglang/pull/18273">https://github.com/sgl-project/sglang/pull/18273</a> 中做出了第一个贡献</li>
+<li>@koush 在 <a href="https://github.com/sgl-project/sglang/pull/18011">https://github.com/sgl-project/sglang/pull/18011</a> 中做出了第一个贡献</li>
+<li>@kuafou 在 <a href="https://github.com/sgl-project/sglang/pull/18207">https://github.com/sgl-project/sglang/pull/18207</a> 中做出了第一个贡献</li>
+<li>@laixinn 在 <a href="https://github.com/sgl-project/sglang/pull/17065">https://github.com/sgl-project/sglang/pull/17065</a> 中做出了第一个贡献</li>
+<li>@lawtherWu 在 <a href="https://github.com/sgl-project/sglang/pull/15381">https://github.com/sgl-project/sglang/pull/15381</a> 中做出了第一个贡献</li>
+<li>@lingeben 在 <a href="https://github.com/sgl-project/sglang/pull/17699">https://github.com/sgl-project/sglang/pull/17699</a> 中做出了第一个贡献</li>
+<li>@luke396 在 <a href="https://github.com/sgl-project/sglang/pull/17118">https://github.com/sgl-project/sglang/pull/17118</a> 中做出了第一个贡献</li>
+<li>@maning00 在 <a href="https://github.com/sgl-project/sglang/pull/14626">https://github.com/sgl-project/sglang/pull/14626</a> 中做出了第一个贡献</li>
+<li>@mansoor-s 在 <a href="https://github.com/sgl-project/sglang/pull/17434">https://github.com/sgl-project/sglang/pull/17434</a> 中做出了第一个贡献</li>
+<li>@maoheng23 在 <a href="https://github.com/sgl-project/sglang/pull/18512">https://github.com/sgl-project/sglang/pull/18512</a> 中做出了第一个贡献</li>
+<li>@mattteochen 在 <a href="https://github.com/sgl-project/sglang/pull/18000">https://github.com/sgl-project/sglang/pull/18000</a> 中做出了第一个贡献</li>
+<li>@meng ChengTang 在 <a href="https://github.com/sgl-project/sglang/pull/17545">https://github.com/sgl-project/sglang/pull/17545</a> 中做出了第一个贡献</li>
+<li>@michaelzhang-ai 在 <a href="https://github.com/sgl-project/sglang/pull/17523">https://github.com/sgl-project/sglang/pull/17523</a> 中做出了第一个贡献</li>
+<li>@mmangkad 在 <a href="https://github.com/sgl-project/sglang/pull/17662">https://github.com/sgl-project/sglang/pull/17662</a> 中做出了第一个贡献</li>
+<li>@muse-coder 在 <a href="https://github.com/sgl-project/sglang/pull/18496">https://github.com/sgl-project/sglang/pull/18496</a> 中做出了第一个贡献</li>
+<li>@nanjianwill 在 <a href="https://github.com/sgl-project/sglang/pull/17286">https://github.com/sgl-project/sglang/pull/17286</a> 中做出了第一个贡献</li>
+<li>@nono-Sang 在 <a href="https://github.com/sgl-project/sglang/pull/17140">https://github.com/sgl-project/sglang/pull/17140</a> 中做出了第一个贡献</li>
+<li>@nvcastet 在 <a href="https://github.com/sgl-project/sglang/pull/17089">https://github.com/sgl-project/sglang/pull/17089</a> 中做出了第一个贡献</li>
+<li>@ovidiusm 在 <a href="https://github.com/sgl-project/sglang/pull/17654">https://github.com/sgl-project/sglang/pull/17654</a> 中做出了第一个贡献</li>
+<li>@pansiheng 在 <a href="https://github.com/sgl-project/sglang/pull/18155">https://github.com/sgl-project/sglang/pull/18155</a> 中做出了第一个贡献</li>
+<li>@ping1jing2 在 <a href="https://github.com/sgl-project/sglang/pull/18495">https://github.com/sgl-project/sglang/pull/18495</a> 中做出了第一个贡献</li>
+<li>@pokymono 在 <a href="https://github.com/sgl-project/sglang/pull/17888">https://github.com/sgl-project/sglang/pull/17888</a> 中做出了第一个贡献</li>
+<li>@polisettyvarma 在 <a href="https://github.com/sgl-project/sglang/pull/10021">https://github.com/sgl-project/sglang/pull/10021</a> 中做出了第一个贡献</li>
+<li>@qianyue76 在 <a href="https://github.com/sgl-project/sglang/pull/18095">https://github.com/sgl-project/sglang/pull/18095</a> 中做出了第一个贡献</li>
+<li>@qmzznbxhl 在 <a href="https://github.com/sgl-project/sglang/pull/18705">https://github.com/sgl-project/sglang/pull/18705</a> 中做出了第一个贡献</li>
+<li>@raayandhar 在 <a href="https://github.com/sgl-project/sglang/pull/13313">https://github.com/sgl-project/sglang/pull/13313</a> 中做出了第一个贡献</li>
+<li>@realray808 在 <a href="https://github.com/sgl-project/sglang/pull/18888">https://github.com/sgl-project/sglang/pull/18888</a> 中做出了第一个贡献</li>
+<li>@rootonchair 在 <a href="https://github.com/sgl-project/sglang/pull/18560">https://github.com/sgl-project/sglang/pull/18560</a> 中做出了第一个贡献</li>
+<li>@shaharmor98 在 <a href="https://github.com/sgl-project/sglang/pull/17700">https://github.com/sgl-project/sglang/pull/17700</a> 中做出了第一个贡献</li>
+<li>@shvmjndl 在 <a href="https://github.com/sgl-project/sglang/pull/17806">https://github.com/sgl-project/sglang/pull/17806</a> 中做出了第一个贡献</li>
+<li>@sleepcoo 在 <a href="https://github.com/sgl-project/sglang/pull/14607">https://github.com/sgl-project/sglang/pull/14607</a> 中做出了第一个贡献</li>
+<li>@sogalin 在 <a href="https://github.com/sgl-project/sglang/pull/17656">https://github.com/sgl-project/sglang/pull/17656</a> 中做出了第一个贡献</li>
+<li>@strgrb 在 <a href="https://github.com/sgl-project/sglang/pull/17508">https://github.com/sgl-project/sglang/pull/17508</a> 中做出了第一个贡献</li>
+<li>@talorabr 在 <a href="https://github.com/sgl-project/sglang/pull/19011">https://github.com/sgl-project/sglang/pull/19011</a> 中做出了第一个贡献</li>
+<li>@tc-mb 在 <a href="https://github.com/sgl-project/sglang/pull/9610">https://github.com/sgl-project/sglang/pull/9610</a> 中做出了第一个贡献</li>
+<li>@tianchongchong 在 <a href="https://github.com/sgl-project/sglang/pull/17858">https://github.com/sgl-project/sglang/pull/17858</a> 中做出了第一个贡献</li>
+<li>@tie-pilot-qxw 在 <a href="https://github.com/sgl-project/sglang/pull/17507">https://github.com/sgl-project/sglang/pull/17507</a> 中做出了第一个贡献</li>
+<li>@tom-zju 在 <a href="https://github.com/sgl-project/sglang/pull/18459">https://github.com/sgl-project/sglang/pull/18459</a> 中做出了第一个贡献</li>
+<li>@triple-mu 在 <a href="https://github.com/sgl-project/sglang/pull/17834">https://github.com/sgl-project/sglang/pull/17834</a> 中做出了第一个贡献</li>
+<li>@tugot17 在 <a href="https://github.com/sgl-project/sglang/pull/17777">https://github.com/sgl-project/sglang/pull/17777</a> 中做出了第一个贡献</li>
+<li>@vedantjh2 在 <a href="https://github.com/sgl-project/sglang/pull/17780">https://github.com/sgl-project/sglang/pull/17780</a> 中做出了第一个贡献</li>
+<li>@wangfakang 在 <a href="https://github.com/sgl-project/sglang/pull/17756">https://github.com/sgl-project/sglang/pull/17756</a> 中做出了第一个贡献</li>
+<li>@wenchen76 在 <a href="https://github.com/sgl-project/sglang/pull/7839">https://github.com/sgl-project/sglang/pull/7839</a> 中做出了第一个贡献</li>
+<li>@xiaobaicxy 在 <a href="https://github.com/sgl-project/sglang/pull/18657">https://github.com/sgl-project/sglang/pull/18657</a> 中做出了第一个贡献</li>
+<li>@xiaoweiw-nv 在 <a href="https://github.com/sgl-project/sglang/pull/17198">https://github.com/sgl-project/sglang/pull/17198</a> 中做出了第一个贡献</li>
+<li>@xiaoyewww 在 <a href="https://github.com/sgl-project/sglang/pull/18317">https://github.com/sgl-project/sglang/pull/18317</a> 中做出了第一个贡献</li>
+<li>@xu-yfei 在 <a href="https://github.com/sgl-project/sglang/pull/17076">https://github.com/sgl-project/sglang/pull/17076</a> 中做出了第一个贡献</li>
+<li>@xvyaward 在 <a href="https://github.com/sgl-project/sglang/pull/16294">https://github.com/sgl-project/sglang/pull/16294</a> 中做出了第一个贡献</li>
+<li>@xyjixyjixyji 在 <a href="https://github.com/sgl-project/sglang/pull/17347">https://github.com/sgl-project/sglang/pull/17347</a> 中做出了第一个贡献</li>
+<li>@ycchen-tw 在 <a href="https://github.com/sgl-project/sglang/pull/16521">https://github.com/sgl-project/sglang/pull/16521</a> 中做出了第一个贡献</li>
+<li>@yefei12 在 <a href="https://github.com/sgl-project/sglang/pull/15119">https://github.com/sgl-project/sglang/pull/15119</a> 中做出了第一个贡献</li>
+<li>@yingluosanqian 在 <a href="https://github.com/sgl-project/sglang/pull/18038">https://github.com/sgl-project/sglang/pull/18038</a> 中做出了第一个贡献</li>
+<li>@yunkchen 在 <a href="https://github.com/sgl-project/sglang/pull/17129">https://github.com/sgl-project/sglang/pull/17129</a> 中做出了第一个贡献</li>
+<li>@zack041 在 <a href="https://github.com/sgl-project/sglang/pull/18240">https://github.com/sgl-project/sglang/pull/18240</a> 中做出了第一个贡献</li>
+<li>@zackyoray 在 <a href="https://github.com/sgl-project/sglang/pull/17146">https://github.com/sgl-project/sglang/pull/17146</a> 中做出了第一个贡献</li>
+<li>@zhangxiaolei123456 在 <a href="https://github.com/sgl-project/sglang/pull/18833">https://github.com/sgl-project/sglang/pull/18833</a> 中做出了第一个贡献</li>
+<li>@zhangxin81 在 <a href="https://github.com/sgl-project/sglang/pull/16725">https://github.com/sgl-project/sglang/pull/16725</a> 中做出了第一个贡献</li>
+<li>@zhaochenyang20 在 <a href="https://github.com/sgl-project/sglang/pull/18390">https://github.com/sgl-project/sglang/pull/18390</a> 中做出了第一个贡献</li>
+<li>@zhaohaidao 在 <a href="https://github.com/sgl-project/sglang/pull/18096">https://github.com/sgl-project/sglang/pull/18096</a> 中做出了第一个贡献</li>
+<li>@zhendonghua 在 <a href="https://github.com/sgl-project/sglang/pull/17891">https://github.com/sgl-project/sglang/pull/17891</a> 中做出了第一个贡献</li>
+<li>@zianglih 在 <a href="https://github.com/sgl-project/sglang/pull/17688">https://github.com/sgl-project/sglang/pull/17688</a> 中做出了第一个贡献</li>
+<li>@zijiexia 在 <a href="https://github.com/sgl-project/sglang/pull/17663">https://github.com/sgl-project/sglang/pull/17663</a> 中做出了第一个贡献</li>
+<li>@zju-stu-lizheng 在 <a href="https://github.com/sgl-project/sglang/pull/17624">https://github.com/sgl-project/sglang/pull/17624</a> 中做出了第一个贡献</li>
+<li>@zwang86 在 <a href="https://github.com/sgl-project/sglang/pull/18225">https://github.com/sgl-project/sglang/pull/18225</a> 中做出了第一个贡献</li>
+<li>@zzhbrr 在 <a href="https://github.com/sgl-project/sglang/pull/10707">https://github.com/sgl-project/sglang/pull/10707</a> 中做出了第一个贡献</li>
+<li>@zzzzzzzxh 在 <a href="https://github.com/sgl-project/sglang/pull/15363">https://github.com/sgl-project/sglang/pull/15363</a> 中做出了第一个贡献
+<strong>完整 Changelog</strong>：<a href="https://github.com/sgl-project/sglang/compare/v0.5.8...v0.5.9">https://github.com/sgl-project/sglang/compare/v0.5.8…v0.5.9</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/sgl-project/sglang">sgl-project/sglang</a> · 🏷️ 版本：<code>v0.5.9</code> · 📅 发布：2026-02-24 · <a href="https://github.com/sgl-project/sglang/releases/tag/v0.5.9">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/sglang/sglang_v0.5.10"> <span class="k">← 下一个</span> <span class="t">v0.5.10</span> </a> <a href="/zh/release_note/sglang/sglang_v0.5.8"> <span class="k">上一个 →</span> <span class="t">v0.5.8</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/sgl-project/sglang/releases/tag/v0.5.9" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/sgl-project/sglang" target="_blank" rel="noopener"> <span>sgl-project/sglang</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#新模型支持" class>新模型支持</a><a href="#sglang-扩散" class>SGLang-扩散</a><a href="#性能" class>性能</a><a href="#预填充解码分解" class>预填充解码分解</a><a href="#扩散法学硕士-dllm" class>扩散法学硕士 (dLLM)</a><a href="#推测性解码" class>推测性解码</a><a href="#依赖关系" class>依赖关系</a><a href="#amd-硬件" class>AMD 硬件</a><a href="#npu升腾" class>NPU/升腾</a><a href="#cpu-后端" class>CPU 后端</a><a href="#内核瘦身" class>内核瘦身</a><a href="#文档" class>文档</a><a href="#新贡献者" class>新贡献者</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/sglang/sglang_v0.5.23"> <span class="v">v0.5.23</span> <span class="d">26-11-02</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.22"> <span class="v">v0.5.22</span> <span class="d">26-10-19</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.21"> <span class="v">v0.5.21</span> <span class="d">26-10-02</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.20"> <span class="v">v0.5.20</span> <span class="d">26-09-18</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.19"> <span class="v">v0.5.19</span> <span class="d">26-09-05</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.18"> <span class="v">v0.5.18</span> <span class="d">26-08-22</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.17"> <span class="v">v0.5.17</span> <span class="d">26-08-08</span> </a> </li><li> <a href="/zh/release_note/sglang/sglang_v0.5.16"> <span class="v">v0.5.16</span> <span class="d">26-07-25</span> </a> </li> </ul> <a href="/zh/releases/sglang" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

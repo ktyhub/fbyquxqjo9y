@@ -1,0 +1,974 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>next.js v16.4.0 — STAGS NextStack</title><meta name="description" content="Check out the 16.4 announcement post to get an overview of the changes."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/next.js/next.js_v16.4.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/next.js/16.4.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/next.js/next.js_v16.4.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/next.js/16.4.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="next.js v16.4.0 — STAGS NextStack"><meta property="og:description" content="Check out the 16.4 announcement post to get an overview of the changes."><meta property="og:url" content="https://www.stags.cn/zh/release_note/next.js/next.js_v16.4.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/next.js/next.js_v16.4.0/#article","headline":"next.js v16.4.0 release notes","datePublished":"2026-10-07","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/vercel/next.js"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/next.js/16.4.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/next.js/next.js_v16.4.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/next.js/16.4.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/next.js/16.4.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/next.js/16.4.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/next.js/16.4.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/next.js/16.4.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/next.js">next.js</a> </nav> <h1 class="detail-title"> <span class="p">next.js</span> v16.4.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年10月7日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/vercel/next.js" target="_blank" rel="noopener"> <span class="k">来源</span>vercel/next.js </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/next.js/16.4.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/next.js/next.js_v16.4.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="nextjs-v1640">next.js v16.4.0</h1>
+<p>查看 <a href="https://nextjs.org/blog/next-16-4">16.4 公告帖子</a> 以了解更改的概述。</p>
+<h3 id="核心变化">核心变化</h3>
+<ul>
+<li>在更多情况下显示编译器插件警告：#75682</li>
+<li>修复（脚本）：更正 rm.mjs 错误消息中的拼写错误：#87015</li>
+<li>文档：提高自述文件中的清晰度和标点符号：#86096</li>
+<li>修复调试构建路径 Pages Router 支持条目：#93529
+-bundle-analyzer：记录每次分析运行的历史快照：#93520</li>
+<li>修复：使用复合 pageExtensions 正确检测 proxy.ts：#93246</li>
+<li>feat(turbopack)：支持 <code>resolveAlias</code> 配置的 <code>false</code> 值：#93331</li>
+</ul>
+<h3 id="其他更改">其他更改</h3>
+<ul>
+<li>文档：对dynamicParams迁移的更正：#96624</li>
+<li>文档：代理事件参数：#96435</li>
+<li>文档：从运行时预取中删除实验注释：#96615</li>
+<li>动态导航后保留每段预取：#96583</li>
+<li>将静态生成流选项重命名为 waitForAllReady：#96564</li>
+<li>删除过时的静态生成管道：#96563</li>
+<li>[turbopack] 删除对 <code>exports</code> 的死写：#96381</li>
+<li>[turbopack] 在 <code>module.exports = {}</code> 写入后忽略对 <code>exports</code> 的写入：#96380</li>
+<li>[turbopack] 使用optimizePackageImports 添加副作用测试：#96549</li>
+<li>[turbopack] 在解析 CSS 之前剥离前导 BOM：#96678</li>
+<li>将 React 从 <code>cbb046ab-20260731</code> 升级到 <code>7dfc7ccd-20260803</code>：#96550</li>
+<li>文档：在即时导航错误页面中使用相对文档链接：#96672</li>
+<li>Turbopack：终止失败的插件工作线程：#96592</li>
+<li>修复预渲染绕过规则中 HTML 限制的机器人匹配：#96584</li>
+<li>[ci] 修复 create_release_branch 以获得新的存储库权限：#96641</li>
+<li>测试：跳过操作模块实例部署测试：#96629</li>
+<li>文档：在块引用中引用dynamicParams构建错误：#96633</li>
+<li>[react-sync] 作为创作提交的机器人打开拉取请求：#96682</li>
+<li>[长凳] 修复纯 Fizz 长凳：#96771</li>
+<li>从消费者处获取前台缓存重新验证：#96731</li>
+<li>修复在水合之前导航返回时的竞赛：#96252</li>
+<li>文档：将每个技能呈现为 AI 代理指南中的步骤：#96751</li>
+<li>为请求的其余部分重用已完成的缓存条目：#96727</li>
+<li>将 React 从 <code>7dfc7ccd-20260803</code> 升级到 <code>11eddecd-20260805</code>：#96735</li>
+<li>删除 WorkStore 执行模式：#96674</li>
+<li>删除缓存重新验证执行模式读取：#96670</li>
+<li>单独的应用程序路由渲染和预渲染管道：#96662</li>
+<li>删除应用程序页面执行模式读取：#96660</li>
+<li>测试：修复 css-chunking 测试中缺少的等待：#96725</li>
+<li>文档（技能）：停止假设 app/ 位于根目录和端口 3000：#96696</li>
+<li>将 next/font BeforeResolvePlugins 实现为 ImportMappingReplacement：#95808</li>
+<li>在 create-next-app 中使用 Tailwind Turbopack 加载器：#96606</li>
+<li>文档：带有采用提示的即时导航快速启动：#96663</li>
+<li>单独的应用程序页面渲染和预渲染管道：#96659</li>
+<li>将 App Router 执行意图移至入口点：#96640</li>
+<li>通过 App Render 传递显式渲染功能：#96576</li>
+<li>通过 App Render 传递显式预取提示策略：#96572</li>
+<li>将 WorkStore isStaticGeneration 替换为executionMode：#96570</li>
+<li>文档：文档！ —debug-build-paths 的排除和 src/ 前缀：#96703</li>
+<li>更改 <code>loadManifest</code> 以使用 <code>handleMissing</code> 返回未定义：#96530</li>
+<li>从 CacheNodeSeedData 重构服务器 -> TransportData：#96679</li>
+<li>统一完整/部分导航响应类型：#96439</li>
+<li>统一 client 上的 RouteTree 和 CacheNodeSeedData：#96406</li>
+<li>整合 Promise.withResolvers 填充：#96772</li>
+<li>[ci] 使用 <code>nextjs-bot</code> 打开自动更新拉取请求：#96683</li>
+<li>需要缓存组件进行即时导航测试：#96745</li>
+<li>修复开发中使用缓存过度失效和失效不足的问题：#96235</li>
+<li>修复开发服务器宣布的页面以及时间：#96250</li>
+<li>文档：更新当前目标的重定向链接：#96723</li>
+<li>修复（deployment-id）：防止旧 webkit 出现异常：#94604</li>
+<li>[片段卷轴] 删除 <code>config.experimental.appNewScrollHandler</code>: #95602</li>
+<li>[turbopack] 启用重新导出未知执行测试：#96774</li>
+<li>ci：停止发布@vercel/devlow-bench：#96887</li>
+<li>修复（turbopack）：在非 ESM 可放置错误中命名模块，并停止在跟踪中复制导入器：#96560</li>
+<li>修复（turbopack）：规则中支持 <code>type: 'text'</code>，以及非 ESM 模块的绑定导入错误：#96558</li>
+<li>具有根 eslint 配置的 Lint devlow-bench：#96871</li>
+<li>删除 <code>turbopack/packages</code> 并将 devlow 重新定位到 <code>packages/</code>：#96860</li>
+<li>刷新转发操作错误响应的挂起重新验证：#96945</li>
+<li>处理动态 PPR 后备路由上的服务器操作：#96932</li>
+<li>Turbopack：改进 DiskWatcher 的配置方式并修复轮询观察程序错误：#96440</li>
+<li>Turbopack：允许 DiskWatcher 使用模拟的 DiskFileSystem，添加一个小单元测试：#96353</li>
+<li>[turbopack] 添加使用组件块 + 工作人员的 e2e 测试：#96556</li>
+<li>[turbopack] 支持 <code>experimental.serverMinification</code> 并扩展 <code>experimental.turbopackMinify</code>: #96578</li>
+<li>为页面路由器添加 <code>turbopackChunking</code> 文档页面：#96698</li>
+<li>[turbopack] 不要对仅 Turbopack 的更改运行 Webpack 测试：#96656</li>
+<li>[turbopack] 默认启用共享运行时：#96778</li>
+<li>[turbopack] 默认启用 CJS 树摇动：#96779</li>
+<li>重构：清理不必要列出所有 RenderStages 的位置：#96907</li>
+<li>修复记录的调用以非交互方式生成测试：#96896</li>
+<li>使 NextConfigComplete 输入更加准确：#96700</li>
+<li>升级到 SWC 75：#96702</li>
+<li>文档：将查看转换技能链接到 Skills.sh 并澄清示例提示：#96863</li>
+<li>[ci] 在每周 cron 中重置 Turbopack 部署测试项目：#96822</li>
+<li>文档：使用缓存组件指南和iron-session示例添加身份验证：#95802</li>
+<li>[turbopack]修复scope_and_block中潜在的死锁：#95695</li>
+<li>删除turbopack-build-events跟踪范围，使用<code>next build</code>代替：#96746</li>
+<li>文档：将 <code>export const dynamic = 'force-static'</code> 添加到静态导出的路由处理程序示例：#96964</li>
+<li>[turbopack] 遵循无副作用异步模块的重新导出：#95993</li>
+<li>[turbopack] 将引用其他值的常量视为不安全：#96190</li>
+<li>[重构] 将 <code>encodeCacheTag</code> 重命名为 <code>encodeHeaderSafe</code>: #96936</li>
+<li>修复文档中 Google Fonts 部分的格式：#88447</li>
+<li>修复错误 - 修复拼写错误问题：#97141</li>
+<li>示例：修复 Webiny API 环境变量名称：#97134</li>
+<li>文档：修复链接预取语法和 Client 组件措辞：#97132</li>
+<li>使用发出的应用程序条目进行构建后处理：#97139</li>
+<li>文档（mdx）：修复.md处理部分中的包名称：#97131</li>
+<li>[turbopack] 减少本机 React 编译器工作：#96820</li>
+<li>文档：将存储库重命名为存储库以保持一致性：#87849</li>
+<li>修复数据访问层部分中的拼写错误：#87202</li>
+<li>文档：运行时预取 -> 优化预取：#96934</li>
+<li>[CC] 跟踪导致静态/应用 shell 不兼容的 API：#97040</li>
+<li>修复 client 组件加载跨度计时：#96455</li>
+<li>追踪开发路线编译：#96454</li>
+<li>使用完整指令添加 <code>'use cache'</code> 调试日志前缀：#97037</li>
+<li>恢复“[turbopack] 默认启用 CJS 树抖动 (#96779)”: #97018</li>
+<li>恢复“[turbopack] 遵循无副作用异步模块的重新导出”：#97009</li>
+<li>[片段滚动] 将 <code>ScrollAndMaybeFocusHandler</code> 重命名为 <code>ScrollHandler</code>：#96828</li>
+<li>追踪开发路线准备：#96453</li>
+<li>测试：清理 Turbopack 快照配置：#97013</li>
+<li>从 renderOpts 中删除未使用的 htmlLimitedBots：#96701</li>
+<li>修复（turbopack）：指向与没有模块类型的文件匹配的 glob：#96561</li>
+<li>[turbopack] 在 <code>var x = module.exports = {}</code> 上保释 CJS 树摇动：#97130</li>
+<li>文档：服务器 client 和指令：#96145</li>
+<li>文档：澄清 client 水合后缓存的新鲜度：#97180</li>
+<li>文档：创建 client 端获取指南：#96341</li>
+<li>Turbopack：接受 import.meta.glob 的模块类型参数：#96991</li>
+<li>文档：对齐缓存组件身份验证指南标题：#97143</li>
+<li>测试：重新启用更多通过的 NFT 单元案例：#97017</li>
+<li>[turbopack] 进行范围提升所需的 CJS 分析：#95826</li>
+<li>删除旧的 PPR 代码路径：#96868</li>
+<li>使用缓存组件作为内部 PPR 信号：#96827</li>
+<li>明确遗留 PPR 路径：#96753</li>
+<li>修复：代码注释中的拼写错误：#97137</li>
+<li>修复两条评论中的拼写：#97136</li>
+<li>将加载器树结构与子订单分离：#97192</li>
+<li>凹凸lightningcss：#97159</li>
+<li>更新 gh-stack 技能指南：#97163</li>
+<li>[测试] Unflake <code>use-cache-custom-handler-dev</code> 测试：#97187</li>
+<li>将构建容器 pin 转发到部署测试部署：#97191</li>
+<li>修复共享 Turbopack 运行时初始化竞赛：#97215</li>
+<li>尽管重新验证，但修复导航后的陈旧数据：#95439</li>
+<li>[turbopack] 仅在 Canary 上默认使用共享运行时：#97208</li>
+<li>测试：修复 parseIdsFromCliOutput 中的“输出”拼写错误：#97266</li>
+<li>添加 mtime 后备：#97268</li>
+<li>允许问题参与者请求重新开放：#96947</li>
+<li>[turbopack] 用于分块的文档集群：#97267</li>
+<li>链接到贡献指南中的问题并阻止琐碎的 PR：#97188</li>
+<li>停止序列化 hmr 版本状态：#97146</li>
+<li>[turbopack] 将 <code>clusters</code> 添加到分块启发式：#95157</li>
+<li>[测试] 重定向部署主机以进行代理部署测试：#97260</li>
+<li>[测试] 解开两个 <code>cache-components-dev-streaming</code> 断言：#97246</li>
+<li>[测试] Unflake <code>use-cache-default-profile-expire-zero</code> 测试：#97250</li>
+<li>允许在 <code>pnpm build</code> 之前运行 <code>ncc</code>：#97234</li>
+<li>使延迟的 Webpack 条目源无效：#97205</li>
+<li>统一响应的 shell 和完整有效负载的编写方式：#96878</li>
+<li>将每段预取转换为 NavigationFlightResponse 格式：#96877</li>
+<li>统一服务器响应写入 client 缓存的方式：#96876</li>
+<li>将树预取转换为 NavigationFlightResponse 格式：#96788</li>
+<li>修复（下一个/图像）：初始化磁盘 LRU 缓存时跳过 0 字节条目：#94068</li>
+<li>更新身份验证图 URL：#97320</li>
+<li>添加用于采用 fork pull 请求的脚本：#97252</li>
+<li>将 napi-rs 绑定从 v2 迁移到 v3：#95412</li>
+<li>将 React 从 <code>11eddecd-20260805</code> 升级到 <code>22e4f993-20260811</code>：#97249</li>
+<li>添加 RDC 压缩推出控件：#97247</li>
+<li>[测试模式] 修复测试模式直通获取中的无限递归：#96525</li>
+<li>Turbopack：添加imports_wildcard NFT 单元测试：#97373</li>
+<li>Turbopack：改进 chunk_item_content 文档：#97370</li>
+<li>测试：使用适配器重新启用 Turbopack 的 i18n-api 支持部署测试：#96898</li>
+<li>跟踪仪器启动：#97296</li>
+<li>跟踪路由模块准备：#97295</li>
+<li>跟踪路线模块加载：#97318</li>
+<li>修复（deps）：碰撞 <code>satori</code> 和 <code>@vercel/og</code>：#97276</li>
+<li>[测试] 在路由处理程序中覆盖 <code>'use cache: private'</code>：#97349</li>
+<li>修复适配器页面 API 输出中缺失的页面运行时：#96819</li>
+<li>文档：将 SPA 引导减速器示例与 React 约定对齐：#97341</li>
+<li>更新 blob 版本。：#97342</li>
+<li>将 React 从 <code>22e4f993-20260811</code> 升级到 <code>eb8feb71-20260814</code>：#97382</li>
+<li>采用 SelectedMetadata 进行元数据渲染：#97387</li>
+<li>修复（下一个/图像）：拒绝读取/写入磁盘缓存时的空图像：#97278</li>
+<li>Turbopack：删除已删除路线的陈旧清单：#97333</li>
+<li>Turbopack：使无法访问的代码生成更通用：#97385</li>
+<li>在浏览器中等待水合作用恢复：#97321</li>
+<li>提取元数据解析原语：#97388</li>
+<li>测试：更新 React 18 redbox 快照：#97415</li>
+<li>删除服务器路由匹配器堆栈：#94157</li>
+<li>将异步本地存储实例锚定到全局符号：#97255</li>
+<li>测试：deflake use-cache-size-zero 热重载：#97421
+-并发路由器队列标志的脚手架：#97413</li>
+<li>重组 client 路由器模块：#97402</li>
+<li>修复（turbo-persistence）：允许 32 位 usize 转换：#97288</li>
+<li>测试：恢复丢失的 NFT <code>exports*</code> 单元装置：#97459</li>
+<li>[ci] 修复向后移植金丝雀发布调度：#97383</li>
+<li>Turbo-tasks-backend：在访问任务时强制任务存在：#96043</li>
+<li>Turbo-tasks-backend：为 GC 添加持久性删除/逻辑删除管道：#95975</li>
+<li>涡轮持久性：为多值系列添加键值逻辑删除：#96929</li>
+<li>跟踪延迟应用程序路由模块加载：#97439</li>
+<li>[ci] 在部署测试之前等待 <code>next</code> 版本在 npm 上可用：#97460</li>
+<li>文档：修复贡献指南中过时的 Dev Overlay 自述文件链接：#97486</li>
+<li>文档：应用程序路由器参考准确性：#97477</li>
+<li>测试：不要等待尝试加载不存在的图像：#97488</li>
+<li>测试：使用 i18n 基本路径覆盖动态 API：#97367</li>
+<li>样式（示例）：删除多余的 justify-content 声明：#97222</li>
+<li>文档：在重定向指南中将 Vercel Edge Config 重命名为 Global Config：#97456</li>
+<li>修复：通过将标签与输入关联来提高表单可访问性：#96335</li>
+<li>[文档] 修复：链接和导航指南中的语法拼写错误：#95544</li>
+<li>修复（示例）：更正错误消息拼写错误：#97223</li>
+<li>文档：修复示例链接中的拼写错误：#97149</li>
+<li>模型预渲染作为渲染候选：#97431</li>
+<li>Turbopack：支持正则表达式中的字符类范围：#97502</li>
+<li>文档：捕获 permanentRedirect 时发出警告：#97496</li>
+<li>删除开发调试通道持久性：#97510</li>
+<li>阻止浏览器恢复开发中的过时页面：#97505</li>
+<li>Turbopack：优雅地处理输出文件跟踪包括匹配符号链接：#97507</li>
+<li>文档：在表单指南中提及 Valibot 作为验证库选项：#97468</li>
+<li>[PPF] 删除 <code>unstable_eager</code>: #97524</li>
+<li>[PPF] 不要将完整的 shell 请求标记为部分：#97503</li>
+<li>修复：向仅图标链接添加可访问标签：#96334</li>
+<li>修复技能/中过时的交叉引用：#97566</li>
+<li>文档：generateMetadata 值应该可以使用缓存进行序列化：#97551</li>
+<li>将预览道具移至单独的清单中：#96004</li>
+<li>文档：调整交互式应用程序指南：#97558</li>
+<li>Turbopack：在发布版本中允许 TURBOPACK_PRINT_CHUNK_GROUPS：#97515</li>
+<li>[测试] 将下一个图像旧图像指向可到达的端点：#97545</li>
+<li>测试：改进下一个 codemod 注释上的错误：#97553</li>
+<li>Turbopack：跨模块常量：#90300</li>
+<li>测试：更好地隔离并发安装套件：#97546</li>
+<li>文档：概述和 lcp：#96942</li>
+<li>Turbopack：如果我们检测到 node_modules 发生更改，则更积极地消除文件系统监视事件：#96116</li>
+<li>文档：文档元数据分页字段：#95509</li>
+<li>文档：文档部署Id构建ID覆盖和16.2中的页面路由器倾斜：#97645</li>
+<li>将 React 从 <code>eb8feb71-20260814</code> 升级到 <code>eafeac09-20260819</code>：#97636</li>
+<li>Turbopack：重命名为使用turbopack：无副作用：#94427</li>
+<li>重构：移动 useDynamic{Route,Search}Params 以减少快照流失：#97360</li>
+<li>[PPF]不稳定_导航（）：＃96908</li>
+<li>[PPF] 支架不稳定_导航(): #97236</li>
+<li>文档：显式缓存输出描述：#97548</li>
+<li>改进缓存组件同步 IO 迁移指南：#97572</li>
+<li>[测试] 使用非本机存根进行服务器外部列表测试：#97614</li>
+<li>避免 create-next-app 示例的 GitHub API 速率限制：#97612</li>
+<li>[测试] 使用我们控制的插件覆盖预渲染工作线程后端：#97543</li>
+<li>[测试] 将 <code>prerender-native-module</code> 套件转换为本地夹具包：#97542</li>
+<li>[测试] 用本地插件固定装置替换 <code>turbopack-reports</code> <code>sqlite3</code> 依赖项：#97541</li>
+<li>[测试] 从 <code>sharp-basic</code> 套件中删除已死的 <code>sqlite3</code> 构建批准：#97540</li>
+<li>删除 HmrTarget：#97253</li>
+<li>保持输入 HMR 指令直到序列化：#96569</li>
+<li>仅按值序列化冻结集合：#96686</li>
+<li>feat(turbopack)：跨微前端隔离 HMR 监听器：#95997</li>
+<li>Turbopack：删除重复的 Pages Router 应用程序块：#97664</li>
+<li>[react-sync] 在分配 actor 之前检查可分配性：#97638</li>
+<li>修复：在导出 MPA 回退期间保留尾部斜杠：#97613</li>
+<li>Turbopack：拆分符号链接的读写代码路径数据结构：#97395</li>
+<li>Turbopack：等待文件系统稳定时显示最后修改的文件：#97648</li>
+<li>文档：修复 useSelectedLayoutSegment 中的parallelRouteKey 参数名称：#97710</li>
+<li>Turbopack：如果路径已在地图中，请避免在 fs watcher 中克隆路径：#97655</li>
+<li>删除生成的错误代码：#97687</li>
+<li>[PPF]对unstable_navigation()的即时验证：#97309</li>
+<li>Turbopack：跟踪 Graceful-fs 调用：#97694</li>
+<li>将一些异步块迁移到异步闭包：#97666</li>
+<li>Turbo-tasks：添加scope_unbounded，一个范围内的执行原语，允许发现更多工作：#95974</li>
+<li>测试：使应用程序文档导入顺序更强大：#97682</li>
+<li>添加缺少根布局的 Turbopack 错误：#97639</li>
+<li>改进部分预取采用检查：#97637</li>
+<li>测试：稳定中毒代理错误覆盖：#97609</li>
+<li>文档：更正cacheLife中App Shell排除的过时上限：#97653</li>
+<li>文档：适配器入口页面列出其子页面两次：#97677</li>
+<li>[PPF]不稳定_预取（）：＃97622</li>
+<li>[PPF] 支架不稳定_预取（）：#97618</li>
+<li>文档：澄清根布局的 beforeInteractive 放置：#97643</li>
+<li>修复（turbopack）：为 ESM 命名空间提供渴望的 <code>import.meta.glob</code> 值：#96559</li>
+<li>引入用于构建后端存储的选项结构：#97284</li>
+<li>[devtools] 修复触摸屏上的指示器拖动问题：#97723</li>
+<li>添加下一个/缓存处理程序类型入口点：#97592</li>
+<li>从 getPageStaticInfo 中删除未使用的返回值：#97661</li>
+<li>[turbopack] 延迟 NFT 模块内容哈希：#97773</li>
+<li>测试：deflake basePath 外部导航：#97611</li>
+<li>文档（适配器）：文档 assetHashes 和routing.middlewareMatchers：#96536</li>
+<li>将剩余的异步块迁移到异步闭包：#97701</li>
+<li>默认关闭适配器路由折叠：#97774</li>
+<li>从一个路由条目提供一系列后备 shell：#97738</li>
+<li>[测试] 捕获具有多个参数形状的应用程序的路由表：#97728</li>
+<li>停止为动态路由的 RSC 表单发出单独的路由条目：#97726</li>
+<li>停止为每个预取段发出冗余路由：#97720</li>
+<li>[测试] 捕获构建传递给适配器的动态路由：#97719</li>
+<li>Turbo-tasks：编译条件单元更新一次，而不是每个单元类型：#97763</li>
+<li>Turbopack：为 FileSystemPath::hash_file 添加单元测试覆盖率：#97743</li>
+<li>记录阻塞 PPR 路由的后备缓存生命周期：#97821</li>
+<li>页面路由器的文档 catchError：#97748</li>
+<li>clippy：在有意义的情况下允许不必要的延迟初始化：#96410</li>
+<li>Turbopack：发射/收集：#96631</li>
+<li>文档：请注意，在自定义服务器中调用handle()之前必须设置响应标头：#97693</li>
+<li>对回归、wat/wasmparser 和 base64 依赖项进行重复数据删除：#97762</li>
+<li>perf：分割冷 TurboMalloc 会计路径：#97767</li>
+<li>Turbo-tasks：在读取计划任务时内联执行它们：#96808</li>
+<li>恢复“记录阻塞 PPR 路由的后备缓存生命周期 (#97821)”：#97835</li>
+<li>在开发启动时清除 distDir 中过时的 Turbopack 输出：#97591</li>
+<li>修复搜索参数的元数据预取缓存键：#97729</li>
+<li>Turbopack：改进 realpath_with_links 和模块解析中的文件存在错误处理：#97717</li>
+<li>使用缓冲同步 IO 写入跟踪：#96874</li>
+<li>修复（wasm）：不要为 wasm 目标启用 SWC 的插件主机：#97859</li>
+<li>修复（turbopack-node）：使 process_pool 在 wasm 上惰性：#97858</li>
+<li>修复（turbopack）：使 SWC wasm-plugin 后端仅原生：#97857</li>
+<li>修复（turbopack-trace-utils）：跳过 wasm 上的 ctrl-c 处理程序：#97856</li>
+<li>重构（turbopack-cli-utils）：用 owo-colors 替换 crossterm：#97855</li>
+<li>修复（turbo-tasks-fs）：通过 wasi 上的 WASI API 创建符号链接：#97854</li>
+<li>修复（turbo-tasks）：编译 EventListener::wait on wasm：#97853</li>
+<li>修复（turbo-rcstr）：允许 wasm 目标上的 napi 功能：#97852</li>
+<li>修复（next-napi-bindings）：在 build.rs 中检测目标，而不是主机：#97576</li>
+<li>停止打印错误消息文本的堆栈帧：#97829</li>
+<li>文档：澄清 revalidateTag 配置文件过期语义：#97836</li>
+<li>文档：使用服务器上的参数访问：#97865</li>
+<li>文档：修复 App Router 文档中的拼写错误和正确性问题：#97823</li>
+<li>添加部署发布测试技能：#97563</li>
+<li>[测试] 对字符串配置值的页面配置测试进行碎片整理：#97848</li>
+<li>测试：稳定只读页面娱乐：#97674</li>
+<li>显示原因背后的 AggregateError 错误：#97830</li>
+<li>将 React 从 <code>eafeac09-20260819</code> 升级到 <code>bd6ea412-20260824</code>：#97812</li>
+<li>修复：通过 gzip 管道传输节点流时重用单个排出侦听器：#97698</li>
+<li>测试：编译错误后保留服务器缓存：#97724</li>
+<li>通过链接符号链接修复 Turbopack 分辨率：#97825</li>
+<li>添加评估代理是否实际使用 Next.js：#97816</li>
+<li>evals：判断行为而不是匹配源文本：#97826</li>
+<li>将 @vercel/agent-eval 更改为 2.2.1：#97885</li>
+<li>feat(turbopack)：从项目目录解析 <code>/</code> 根导入：#97799</li>
+<li>[ci] 使用短期访问令牌进行预览构建上传，而不是静态令牌：#97256</li>
+<li>Turbopack：正确追踪 TypeScript <code>__importStar</code>：#97697</li>
+<li>[turbopack] 简化 ecmascript 效果队列：#97771</li>
+<li>更新默认创建下一个应用程序图标：#97634</li>
+<li>修复：当连接的模块 id 为 0 时，不要删除 client 引用：#97936</li>
+<li>用标记后面的 ReactDOM.browser 替换恢复的渲染救援错误：#96844</li>
+<li>将 useSearchParams 救助错误替换为标记后面的 ReactDOM.browser：#96843</li>
+<li>将 CSRBailout 错误替换为标志后面的 <code>ReactDOM.browser</code>：#96826</li>
+<li>修复（下一个/图像）：拒绝非 2xx 内部图像响应：#97957</li>
+<li>[测试] 将 Vercel CLI 固定到节点 20.9 兼容版本：#97960</li>
+<li>重新启用 AVIF 图像优化：#97931</li>
+<li>不要将 client 中止的 RSC 流报告为渲染错误：#96715</li>
+<li>[PPF] 仅在使用 Promise 时跟踪运行时访问：#97165</li>
+<li>修复 Turbopack 重新导出循环死锁：#97933</li>
+<li>将 React 的 @gate 测试指令移植到 e2e 工具：#96228</li>
+<li>从 box_patterns 迁移到 deref_patterns：#97924</li>
+<li>Turbopack：公开非内联环境变量列表：#95310</li>
+<li>feat(turbo-tasks-fetch)：wasm 目标上的存根 HTTP：#97585</li>
+<li>修复（turbo-rcstr）：使 TaggedValue 在 wasm 上可用：#97577</li>
+<li>文档：解释 allowedOrigins 和 allowedDevOrigins 的来源匹配：#97805</li>
+<li>Turbopack：改进 Pat::Assign 分析器中的建模：#97867</li>
+<li>将 rustc 升级到 nightly-2026-08-20: #97665</li>
+<li>将 React 从 <code>bd6ea412-20260824</code> 升级到 <code>f789f203-20260825</code>：#97887</li>
+<li>[测试] 修复片状构建 CLI 输出捕获：#97900</li>
+<li>Turbo-tasks-backend：parent_count 引用计数：#95976</li>
+<li>将 Turbopack 升级到 hashbrown 0.15：#97808</li>
+<li>ci：跳过代理评估和技能的框架测试：#97998</li>
+<li>展开 Turbopack 开发清理：#97833</li>
+<li>将缓存组件选项添加到 create-next-app：#97695</li>
+<li>将部署发布测试技能标记为内部：#97961</li>
+<li>Turbopack：缩短 CSS 模块类名称：#97944</li>
+<li>修剪不完整的并行路由匹配器：#97108</li>
+<li>将 React 从 <code>f789f203-20260825</code> 升级到 <code>29d9d318-20260826</code>：#97995</li>
+<li>文档（技能）：在部分预取采用期间保留预取的 UI：#97712</li>
+<li>从应用程序路由中省略未声明的子插槽：#97184</li>
+<li>Turbopack：将块 ID 哈希从 7 个 Base38 字符扩大到 13 个：#97945</li>
+<li>修复默认使用缓存处理程序中的请求上下文保留：#97941</li>
+<li>文档：改进发现摘要：#97982</li>
+<li>测试：添加对本地字体的测试，部署 ID：#97987</li>
+<li>保留拦截路由主机槽位：#97242</li>
+<li>测试：禁用片状sync-io-blocks-root.test.ts：#97986</li>
+<li>[测试] 启动前排出构建输出：#97947</li>
+<li>在workStore中公开durableUseCacheEntries配置：#97926</li>
+<li>页面路由器：弃用 React 18 支持：#97689</li>
+<li>Turbopack：为应用程序路由调用 loadActionManifest：#97921</li>
+<li>[测试] 取消固定 Vercel CLI 版本：#97974</li>
+<li>Turbopack：不要用分析器中的参数替换单参数调用：#95277</li>
+<li>Turbopack：允许在没有池后端的情况下编译 Turbopack-node：#97943</li>
+<li>使用 <code>output: 'export'</code> 支持不可变的静态资产：#97711</li>
+<li>修复将 <code>typescript</code> 别名为 <code>@typescript/typescript6</code> 时的构建错误：#97942</li>
+<li>修复编码动态参数的乐观路由：#97948</li>
+<li>修复代理重写后拦截的路由参数：#97953</li>
+<li>[PPF] 修复预期运行时预渲染中的导航（）：#98000</li>
+<li>恢复“测试：重新启用同步 IO 根覆盖”：#98050</li>
+<li>Turbopack：删除 rust 分析仪跳过注释：#98047</li>
+<li>Turbopack：添加 next_config.use_react_experimental getter：#98032</li>
+<li>用于使用缓存条目的更细粒度的缓存键：#95233</li>
+<li>[ci] 删除休眠的 <code>code_freeze</code> 工作流程：#97756</li>
+<li>测试：重新启用同步 IO 根覆盖范围：#97996</li>
+<li>[ci] 删除未使用的 <code>wrong-issue-template</code> 工作流程和操作：#97749</li>
+<li>[图像优化器] 重构为轻量级变换模块：#97988</li>
+<li>[ci] 删除陈旧问题工作流程：#97758</li>
+<li>[ci] 使用预签名 URL 上传预览版本：#97922</li>
+<li>Turbopack：允许 <code>get_definable_name</code> 返回列表：#97984</li>
+<li>文档（示例）：Docker 示例中的文档环境变量处理：#97968</li>
+<li>Turbopack：统一 <code>member</code> 和 <code>in</code> 处理：#97985</li>
+<li>更新过时的快照：#98011</li>
+<li>保护文件系统读取未解析的符号链接：#97902</li>
+<li>Turbopack：在生产版本中默认启用导出修改：#97676</li>
+<li>Turbopack：mangle 导出较小包大小的名称：#97672</li>
+<li>[ci] 删除流行的工作流程及其操作：#97753</li>
+<li>将密钥按密钥顺序存储在省略哈希的 SST 块中：#97480</li>
+<li>升级 codemod 提示中支持非交互模式：#98030</li>
+<li>使用 Next.js codemods 转换 .mjs 文件：#98029</li>
+<li>evals：停止要求删除 agent-043 中的 viewTransition 标志：#98116</li>
+<li>错误：缩短“使用缓存”消息并将它们统一到一个工厂中：#94300</li>
+<li>测试：添加采用技能评估：#97759</li>
+<li>将 React 从 <code>29d9d318-20260826</code> 升级到 <code>ff7445e6-20260831</code>：#98113</li>
+<li>[ci] 简化 <code>upload-preview-tarballs</code> 工作流程：#98109</li>
+<li>devlow：使用 Commander 进行 cli 参数解析：#93860</li>
+<li>[PPF] 传入私有缓存页面的原始 searchParams：#98041</li>
+<li>文档：文档 create-next-app 缓存组件提示和标志：#97798</li>
+<li>懒惰服务器 hmr：#96566</li>
+<li>修复 Turbopack HMR 在断开连接后的恢复：#97966</li>
+<li>测试：改进测试缓存处理程序实现：#98098</li>
+<li>文档：修复自定义缓存处理程序的记录合同：#98039</li>
+<li>杂务：从图像优化器中删除未使用的代码：#98060</li>
+<li>文档：添加视频和 iframe 的布局稳定性指南：#98070</li>
+<li>测试：改进使用缓存跨部署测试：#98049</li>
+<li>Turbo-tasks-malloc：从 mimalloc 报告内存：#97761</li>
+<li>删除 use-cache-wrapper 中的 Edge 运行时处理：#98139</li>
+<li>跳过 <code>issue_lock</code> 工作流程中的讨论：#98146</li>
+<li>[ci] 修复 <code>issue_lock</code>: #97755</li>
+<li>文档：使用缓存组件预加载文档：#97864</li>
+<li>杂务：删除过期的锐利发布年龄排除：#98120</li>
+<li>通过按系列压缩减少 Turbopack 缓存大小：#97714</li>
+<li>[测试] 跳过懒惰的 <code>@force-gate</code> 跳过的套件钩子：#98169</li>
+<li>将 SWC 升级到 v77：#97407</li>
+<li>将 React 从 <code>ff7445e6-20260831</code> 升级到 <code>21c89c9f-20260901</code>：#98147</li>
+<li>Turbo-tasks-backend：parent_count 驱动的垃圾收集：#97282</li>
+<li>删除 Turbopack 构建的工作线程：#96862</li>
+<li>Turbo-tasks-malloc：解决 #97761 的审核反馈：#98153</li>
+<li>测试：删除过时的部署清单排除：#98051</li>
+<li>启用每小时下一个维护者自动关闭工作流程：#98225</li>
+<li>对于无法识别的服务器操作返回 client 错误：#98123</li>
+<li>添加下一个维护者自动关闭工作流程：#98197</li>
+<li>perf(turbopack)：在服务器跟踪期间跳过忽略的文件：#97475</li>
+<li>文档：请注意，experimental.taint 污染了 process.env：#98145</li>
+<li>测试：在缓存组件迁移期间保留静态参数：#98209</li>
+<li>将 web-vitals 升级到 v6 并报告软导航：#97232</li>
+<li>将 React 从 <code>21c89c9f-20260901</code> 升级到 <code>f4e439e1-20260902</code>：#98188</li>
+<li>开启适配器路由默认折叠：#98218</li>
+<li>修复：抑制下一个信息中丢失的包管理器错误：#97946</li>
+<li>Turbopack：修复 CSS 源映射中的 <code>source</code> 字段：#88225</li>
+<li>修复：跟踪最终运行时预渲染中的动态访问：#98255</li>
+<li>文档：为skipProxyUrlNormalize和skipTrailingSlashRedirect添加API参考页面：#97967</li>
+<li>修复：路线信息段覆盖不在开发覆盖中更新：#96968</li>
+<li>测试（turbopack）：删除死的顶级任务取消标记：#98246</li>
+<li>修复不稳定的连续 HMR 更改测试：#97610</li>
+<li>文档：从 Pages Router 中的 Turbopack 中删除版本标签：#98316</li>
+<li>跳转到 swc v78：#98268</li>
+<li>使用 <code>pnpm new-test</code> 生成应用程序时创建 next.config.ts：#98364</li>
+<li>测试（evals）：在 App Router 迁移中接受 LayoutProps：#98365</li>
+<li>[测试] 默认情况下针对本地 JavaScript 更改运行部署测试：#98353</li>
+<li>[测试] 将 <code>workspace:*</code> 包解析为测试版本：#98330</li>
+<li>Turbo-tasks：显式 GC 根锚定 + 跨会话孤儿回收：#96857</li>
+<li>[PPF] 修复提示过时时缺少的运行时跟进：#98278</li>
+<li>即时验证从预渲染中排除的缓存：#98342</li>
+<li>[PPF] 使用 <code>stale &#x3C; MIN_SHELL_STALE</code> 作为仅预取数据的模型缓存：#98339</li>
+<li>文档：在预取 g 中排除预取内容的文档…：#98175</li>
+<li>文档：添加unstable_navigation和unstable_prefetch API参考：#98122</li>
+<li>修复 Turbopacks Webpack 加载器设置以支持可选选项：#98270</li>
+<li>[ci] 将构建和部署触发器与构建和测试对齐：#98331</li>
+<li>测试：稳定服务器操作 HMR 更新：#98322</li>
+<li>添加装载机 api 的版本：#98377</li>
+<li>Turbo-tasks-backend：当 GC 阻塞操作时让 GC 结束：#96676</li>
+<li>文档：保留 Next.js 开发状态：#98276</li>
+<li>将 .resolve 添加到加载器 api：#98361</li>
+<li>Turbopack：修复需要使用替代方案处理：#98258</li>
+<li>文档：使用 Suspense 参数澄清 ISR：#98210</li>
+<li>[cd] 更新预发布中的 <code>peerDependencies</code> 以接受当前预发布：#98411</li>
+<li>测试：稳定错误恢复快照计时：#98414</li>
+<li>示例：使用没有依赖项的 Redis cacheHandler：#95346</li>
+<li>使用 client 组件支持持久使用缓存条目：#98140</li>
+<li>将 React 从 <code>f4e439e1-20260902</code> 升级到 <code>6c0e1047-20260908</code>：#98363</li>
+<li>修复：分叉工人时保留重复的 —require/—import 标志：#96651</li>
+<li>ci：检查 Turbopack 是否针对 wasm 进行编译：#97588
+-壮举（next-napi-bindings）：为 wasm 构建 Turbopack：#97586</li>
+<li>Turbopack：修复输出跟踪包括全局遍历：#98382</li>
+<li>测试：支持使用强制门部署排除：#98149</li>
+<li>修复：编辑未安装的合并 CSS 块时出现 Turbopack CSS HMR 错误：#94551</li>
+<li>开发服务器：当我们在开发运行时检测到 .next 时，会更严厉地责骂用户删除它：#98253</li>
+<li>Turbo-persistence：添加 TURBO_PERSISTENCE_MMAP=0 以禁用 mmap：#97873</li>
+<li>修复开发路线发现启动竞赛：#97920</li>
+<li>重新启用@vercel/devlow-bench 发布：#98236</li>
+<li>测试：迁移缓存部署排除以强制门：#98154</li>
+<li>在 CI 中检查 Turbopack ECMAScript 运行时：#98422</li>
+<li>修复初始 Turbopack HMR 更新处理：#98385</li>
+<li>在 next/jest 和测试中跳过捆绑器配置验证：#98392</li>
+<li>删除 <code>tsec</code>：#98423</li>
+<li>稳定scope_unbounded恐慌测试：#98416</li>
+<li>测试：恢复共享缓存组件测试的部署排除：#98464</li>
+<li>跨并行路线独立解析元数据：#97345</li>
+<li>文档：在采用缓存组件期间保留路由行为：#98275</li>
+<li>为“from”为空时的潜在常见情况添加“get_relative_path_to”的快速路径：#98440</li>
+<li>文档：文档 React 浏览器 API：#97621</li>
+<li>默认启用 React 浏览器救援：#98439</li>
+<li>[evals] 涵盖重点缓存组件和部分预取案例：#97813</li>
+<li>Deflake gc_interrupt_is_self_healing：#98445</li>
+<li>为 webpack 加载器添加 this.target：#98436</li>
+<li>测试（evals）：验证委托错误边界组件：#98387</li>
+<li>测试：稳定延迟条目 HMR 断言：#98418</li>
+<li>添加针对 fsevents bug 的工作人员的警告：#98447</li>
+<li>技能：添加部分预取优化器：#96471
+-bundle-analyzer：将表视图添加到单一构建分析器：#93523
+-bundle-analyzer：添加表视图以进行比较模式：#93522</li>
+<li>捆绑分析器：添加与树图差异的比较视图：#93521</li>
+<li>[测试模式] 停止使用已弃用的 <code>url.parse</code>: #98194</li>
+<li>修复（下一个/图像）：不要与内部图像响应共享请求者的套接字：#98168</li>
+<li>修复 <code>'use cache'</code> 的重复后台重新验证：#98446</li>
+<li>Turbopack：重复数据删除项目选项文档：#98465</li>
+<li>报告不兼容的并行路由槽：#97430</li>
+<li>拦截路线需要规范路线：#97428</li>
+<li>应用页面与任何路由不匹配时出错：#97401</li>
+<li>修复（turbopack）：为用作模块请求的路径添加 <code>get_relative_request_to</code>：#98497</li>
+<li>[ci] 清理孤儿 <code>next-stats-action</code>：#98348</li>
+<li>[脚本] 将脚本（和基准测试）移出 <code>node-fetch</code>：#98347</li>
+<li>[测试] 将灯具移离 <code>node-fetch</code>：#98346</li>
+<li>[测试] 将线束移离 <code>node-fetch</code>：#98195</li>
+<li>修复（turbopack）：解析 <code>../</code> 和 <code>/</code>-rooted <code>import.meta.glob</code> 模式：#96557</li>
+<li>持久使用缓存：优化环境变量存在检查：#98504</li>
+<li>为 webpack 加载器添加 this.mode：#98532</li>
+<li>将 React 从 <code>6c0e1047-20260908</code> 升级到 <code>019019be-20260911</code>：#98576</li>
+<li>feat(next/image)：添加实验性 imgOptMozjpeg 配置：#98571</li>
+<li>[turbopack] 在开发中延迟编译动态导入（client 端）：#97203</li>
+<li>修复（devtools）：拖动指示器时处理指针取消：#98506</li>
+<li>[ci] 在 GitHub 操作调试日志记录下显示完整日志：#98501</li>
+<li>修复（typegen）：将cacheLife类型合并到next/cache中，而不是隐藏它：#98252</li>
+<li>[测试] 修复 <code>proxy-request-with-middleware</code> 部署测试：#98553</li>
+<li>[ci] 删除损坏的测试示例工作流程及其测试套件：#98517</li>
+<li>将后备参数暂存与 shell 验证对齐：#98512</li>
+<li>防止同步 IO 进入缓存导航：#98511</li>
+<li>[ci] 修复预定的 Rspack 测试作业：#98508</li>
+<li>[ci] 删除 Turbopack 测试清单管道：#98507</li>
+<li>测试：稳定 OpenTelemetry 收集器生命周期：#98427</li>
+<li>使 TurbopackResult 有效负载不相交：#98575</li>
+<li>持久使用缓存：修复运行时环境变量突变：#98558</li>
+<li>重构（turbopack）：将通用放在 <code>new_atom</code> 上，并停止它复制拥有的字符串：#98520</li>
+<li>序列化涡轮任务 trybuild 测试：#98415</li>
+<li>通过 HMR 暴露 App Router 运行时错误：#98438</li>
+<li>测试：避免 OpenTelemetry 收集器套接字重复使用：#98632</li>
+<li>修复：将供应的@mswjs/拦截器从 0.42.0 提升到 0.42.5：#98607</li>
+<li>记录 codemod 错误和故意迁移异常：#98565</li>
+<li>统一 Codemod 的 TODO 标记并跳过仅采用的 Codemod 进行升级：#98560</li>
+<li>优化严格的模块工厂块：#98421</li>
+<li>按路径全局排序批量块项目：#98433</li>
+<li>测试（turbopack）：强读测试操作：#98247</li>
+<li>添加 <code>next dev</code> 等待 Turbopack 关闭：#98646</li>
+<li>文档：文档默认turbopack.resolveExtensions：#98627</li>
+<li>测试：迁移包 CSS 副作用覆盖率：#98635</li>
+<li>通过 Next.js 模块包装器改进树摇动：#98638</li>
+<li>通过 client 组件代理跟踪导出使用情况：#98621</li>
+<li>修复（turbopack）：跟踪 cyclic 模块到显式条目：#98661</li>
+<li>使用默认的 pnpm 包导入方法：#98703</li>
+<li>修复简写属性中的常量内联：#98662</li>
+<li>测试（turbopack）：添加强读操作根：#98248</li>
+<li>使用 pnpm 进行隔离测试安装：#98425</li>
+<li>[turbopack] 转发再导出的使用信息：#96282</li>
+<li>[turbopack] 使用 ESM 参考的选项对象：#98680</li>
+<li>测试：启用经过验证的运行时部署测试：#98457</li>
+<li>测试：启用经过验证的资产部署测试：#98527</li>
+<li>测试：启用经过验证的页面路由器部署测试：#98526</li>
+<li>测试：启用经过验证的工具部署测试：#98525</li>
+<li>测试：启用经过验证的应用程序路由器部署测试：#98524</li>
+<li>测试：启用经过验证的缓存部署测试：#98523</li>
+<li>修复适配器部署中意外的查询参数：#98584</li>
+<li>将不可预渲染的参数保留在自托管 shell 之外：#98612</li>
+<li>修复 addMissingDependency: #98588</li>
+<li>文档：澄清未找到根中的元数据支持：#98670</li>
+<li>页面路由器：不要返回 <code>__appRouter</code> 预取标记作为浅层导航的路线信息：#98187</li>
+<li>页面路由器：通过 <code>as</code> 路径键入 client 路由器过滤器预取标记：#98182</li>
+<li>文档：向术语表添加介绍段落：#98654</li>
+<li>修复 App Router 区域设置路径与 Pages i18n 匹配：#98095</li>
+<li>将 React 从 <code>019019be-20260911</code> 升级到 <code>ff8f88fc-20260915</code>：#98693</li>
+<li>将代码生成 AST 路径存储在共享 trie 中：#98581</li>
+<li>Turbopack：通过从我们的 wasm 箱中删除死功能选项来从锁定文件中删除 wasmer：#98761</li>
+<li>当你不需要 vec 时，更喜欢使用 join 而不是 try_join：#98547</li>
+<li>在回退期间保留提交的应用程序路由响应状态：#98649</li>
+<li>文档：范围 React cache() 渲染通道指南：#98741</li>
+<li>修复（next-custom-transforms）：永远不要将生成的导入放在指令之前：#98717</li>
+<li>施工期间固定任务：#98688</li>
+<li>修复（使用缓存）：跟踪在“使用缓存”中读取的根参数作为不同参数：#98674</li>
+<li>[测试] 修复 PostCSS 测试中的 Webpack 部署失败问题：#98710</li>
+<li>恢复“修复 App Router 区域设置路径与 Pages i18n 匹配”：#98715</li>
+<li>推动代理未来采用默认设置：#98721</li>
+<li>添加 <code>next upgrade --ai</code> 的未来默认升级范围：#98643</li>
+<li>推动代理进行最新版本升级：#98640</li>
+<li>添加 <code>next upgrade --ai</code> 的“最新”升级范围：#98633</li>
+<li>推动代理进行安全漏洞版本升级：#98637</li>
+<li>添加 <code>next upgrade --ai</code> 和安全漏洞覆盖：#98562</li>
+<li>代理：向 <code>pr-status</code> 脚本添加 <code>--comments-only</code> 标志，减少 AGENTS.md 中的上下文膨胀：#98781</li>
+<li>在恢复所有者交接时保持守卫：#98700</li>
+<li>[turbopack] 跟踪 webpack 加载器构建依赖文件：#98777</li>
+<li>用 lz4_flex 替换 lzzzz：#98799</li>
+<li>跳转到 swc v79：#98809</li>
+<li>[PPF] 修复不必要的运行时预取 prefetch={true}: #98651</li>
+<li>在流模式下保持元数据渲染稳定：#97440</li>
+<li>[测试] 扩展根参数导航回归覆盖范围：#98731</li>
+<li>文档：重写缓存指南中的机器人和爬虫部分：#98782</li>
+<li>修复 isStableBuild() 将提交预览 tarball 视为稳定版本：#98811</li>
+<li>perf(turbo-persistence)：按系列分片元文件：#97703</li>
+<li>涡轮持久性：各种读取路径清理：#97797</li>
+<li>涡轮持久性：为关键块搜索提供自己的密集区域：#97705</li>
+<li>引入 Turbopack GC 的配置选项：#98378</li>
+<li>将复活的任务保留为新任务：#98729</li>
+<li>Rspack：通过turbo-unix-path从rspack中删除bincode依赖：#98855</li>
+<li>跨恢复服务员交接固定任务：#98728</li>
+<li>测试：为 Vercel 部署荣誉跳过启动：#98776</li>
+<li>使用 Turbopack 关闭环境的内部前缀：#98747</li>
+<li>测试：重试在 prefetch-static-shell 中等待 ISR 回退：#98884</li>
+<li>修复生成的 Turbopack GC 选项文档：#98888</li>
+<li>添加代理反馈行为评估：#98887</li>
+<li>添加实验代理反馈工作流程：#98582</li>
+<li>清理不必要的输出资产创建：#98834</li>
+<li>正确禁用 next/dynamic 上的惰性：#98828</li>
+<li>升级成功后设置<code>experimental.agenticAutoUpgrade</code>：#98871</li>
+<li>示例（cache-handler-redis）：修复连接泄漏、挂起的 Redis 和跨页面标签失效：#98716</li>
+<li>代理升级时不检查节点版本：#98852</li>
+<li>测试：也使用 miri 运行货物单元测试：#97535</li>
+<li>测试：unflake 即时验证：#98854</li>
+<li>保留 client 路线预测中的闭参数限制：#98889</li>
+<li>[测试] 修复依赖隐式启动的部署测试：#98935</li>
+<li>Turbopack：添加对指定其他根的支持：#98003</li>
+<li>Turbopack：向 NFT 元数据添加符号链接和附加根：#98469</li>
+<li>为金丝雀启用人工智能升级：#99001</li>
+<li>修复（turbo-persistence）：保留写入器删除时的写入错误：#98840</li>
+<li>跳过美里下的慢值墓碑测试：#98992</li>
+<li>改进代理反馈审核流程：#98937</li>
+<li>使用最新的官方金丝雀运行人工智能升级：#98870</li>
+<li>测试：将整个仅开发套件移出 e2e：#98842</li>
+<li>修复 <code>instant-false</code> codemod 以在路线段文件名上运行：#98880</li>
+<li>测试：迁移旧部署排除调用者：#98473</li>
+<li>按执行上下文拆分重新验证错误：#98993</li>
+<li>默认启用严格路由匹配：#97397</li>
+<li>地表特工反馈门连接失败：#98991</li>
+<li>概括构建时生成器工作单元存储名称：#98891</li>
+<li>在服务器渲染期间使用结构 React 键：#98944</li>
+<li>将 React 从 <code>ff8f88fc-20260915</code> 升级到 <code>59aff3e1-20260918</code>：#98897</li>
+<li>删除未使用的 <code>hasWarnings</code> 和 <code>warnings</code>：#96956</li>
+<li>[PPF] 脚手架 <code>unstable_ensureStatic</code> 段配置：#98190</li>
+<li>[代理反馈] 尊重 CI 和遥测选择退出：#99062</li>
+<li>修复预测路由重定向时的预取循环：#98998</li>
+<li>修复小屏幕上的开发覆盖标题布局：#99049</li>
+<li>[PPF] 单独跟踪 shell 和预取的运行时数据访问：#98129</li>
+<li>哈登 <code>next/og</code> SVG 序列化：#99061</li>
+<li>测试：澄清重复 Sass 警告测试的仅开发意图：#98917</li>
+<li>测试：启用向上 distDir 部署覆盖：#98886</li>
+<li>测试：从模式保护套件中删除冗余部署跳过：#98908</li>
+<li>Turbopack：跟踪包引用的静态项目文件：#98712</li>
+<li>持久使用缓存：修复 NEXT_DEPLOYMENT_ID 中的下一个/图像拉取：#98739</li>
+<li>统一水合错误树详细信息：#99008</li>
+<li>Turbopack：转发模块图、入口点写入，并将跨度发送到 JS 跟踪：#98408</li>
+<li>修复转发的 Turbopack 跟踪跨度的启动时间和关闭交付：#98426</li>
+<li>Turbopack：加载程序更改失效：#95732</li>
+<li>perf：优化 CSS 图循环去除：#98860</li>
+<li>使用 AGENTS.md 获取托管代理指令：#99043</li>
+<li>Turbopack：仅分析模式跟踪导入：#98825</li>
+<li>Turbopack：紧凑型转口注册：#98617</li>
+<li>测试：添加 <code>next/*</code> APIs 的 ESM 和 CJS 出口测试：#98882</li>
+<li>将缓存的根参数保留在通用后备 shell 之外：#98950</li>
+<li>修复缓存导航中缺失的内容：#98767</li>
+<li>[turbopack] 跨命名空间重新导出跟踪成员：#96396</li>
+<li>[PPF] 实施 <code>unstable_ensureStatic = "shell" | "prefetch"</code>：#98191</li>
+<li>[PPF] 验证 <code>unstable_ensureStatic</code> 嵌套：#98357</li>
+<li>用 pnpm 替换 lerna 任务运行器用法：#99040</li>
+<li>[cd] 修复发布分支门并删除 lerna 发布配置：#99039</li>
+<li>Turbopack：修复“找不到 ident 的 ModuleId”回归：#99090</li>
+<li>修复跨根参数的私有缓存段重用：#98810</li>
+<li>Turbopack：修复 webpack 加载器中导入的 <code>Unknown module type</code> 错误：#99088</li>
+<li>推动手动 <code>next dev|build</code> 的未来默认升级：#98874</li>
+<li>手动 <code>next dev|build</code> 的最新版本升级：#98873</li>
+<li>手动 <code>next dev|build</code> 的安全升级：#98872</li>
+<li>将 React 从 <code>59aff3e1-20260918</code> 升级到 <code>8b0da1c6-20260922</code>：#99059</li>
+<li>重构（turbo-rcstr）：删除不支持的 16 字节指针宽度：#98355</li>
+<li>测试（turbo-tasks-backend）：在 wasm 上运行 db_versioning 测试：#97901</li>
+<li>修复（turbo-tasks）：让 parking_lot 在 wasm 上阻塞而不是恐慌：#97860</li>
+<li>测试（turbo-tasks）：使用 Node wasi 主机运行 wasm 测试：#97789</li>
+<li>[cd] 当没有新的提交需要发布时跳过发布作业：#98664</li>
+<li>[测试] 添加后备参数部署回归覆盖率：#98883</li>
+<li>Turbopack：通过外观在 escaping 命名空间后面进行 mangle 导出：#97770</li>
+<li>测试（dev）：添加专用编译器轮询覆盖范围：#97673</li>
+<li>构建（turbopack）：升级通知到 9.0.0-rc.5：#98737</li>
+<li>测试（turbopack）：向文件系统观察器模糊器添加轮询：#98863</li>
+<li>测试（turbopack）：修复文件系统观察程序符号链接期望：#98983</li>
+<li>测试（turbopack）：修复文件系统观察程序读写跟踪：#98982</li>
+<li>不要重新请求 App Shell 升级 ISR 后备：#94808</li>
+<li>修复不稳定的确保静态任务注释：#99075</li>
+<li>测试：更新 React 18 水合错误快照：#99073</li>
+<li>删除多余的 unsafe_ignore 注释：#98961</li>
+<li>删除 TraceRawVcs：#98953</li>
+<li>测试（turbopack）：删除剩余的测试取消标记：#98376</li>
+<li>添加实验性自定义 webpack 支持：#98862</li>
+<li>默认代理升级到单独的工作树：#99111</li>
+<li>改进缺少应用程序的代理升级失败消息：#99117</li>
+<li>在按需部分预渲染中保留错误边界：#99051</li>
+<li>在按需预渲染期间保留错误边界：#99037</li>
+<li>文档：澄清 Turbopack ModulePart 导出示例：#99104</li>
+<li>围绕自定义 <code>distDir</code> 添加更多验证和安全规则：#98997</li>
+<li>在缓存未命中时保留封闭路由准入：#98964</li>
+<li>将暂停移至操作守卫：#99053</li>
+<li>[代理反馈] 缩短托管代理指令：#99065</li>
+<li>文档：澄清缓存组件构建输出：#98274</li>
+<li>更新 Rust 命名空间重新导出快照：#99106</li>
+<li>[ci] 当工件丢失时跳过预览 tarball 上传：#98713</li>
+<li>[cd] 使用退避和更丰富的诊断重试预览 tarball 上传：#99060</li>
+<li>提升下一个分析命令：#99074</li>
+<li>[ai-upgrade] 提醒代理报告轻推：#99127</li>
+<li>调整节点服务器分块以适应所需的开销：#99120</li>
+<li>Turbopack：修复另一个“找不到 ident 的 ModuleId”回归：#99102</li>
+<li>测试：启用 TypeScript 配置错误的部署覆盖：#98849</li>
+<li>测试：启用路由构建错误的部署覆盖：#98848</li>
+<li>测试：启用缓存构建错误的部署覆盖：#98847</li>
+<li>Turbopack：在生产中对每个布局段进行分块：#99100</li>
+<li>捆绑分析器：从输出类型中排除跟踪：#98536</li>
+<li>Turbo-tasks-gc：将大多数聚合图管理推迟到 GC 解决之后：#98591</li>
+<li>当脚本不使用下一个 lint 时跳过 ESLint 迁移：#99103</li>
+<li>Turbopack：将 RcStr 传递给AnalyzeIssue：#99166</li>
+<li>对 client 代理和 WASM 加载程序使用图形支持的代码生成器：#99115</li>
+<li>[PPF] <code>ensureStatic = "shell" | "prefetch"</code> 即时验证：#98249</li>
+<li>修复片状的lazy-dynamic-imports.test：#99057</li>
+<li>[测试] 跳过片状部署测试：#99156</li>
+<li>[cd] 上传预览 tarball 时容忍 409：#99091</li>
+<li>[测试] 修复新的部署套件：#99162</li>
+<li>仅提供代理升级的相关上下文：#99189</li>
+<li>Turbopack：向部署适配器添加对 extraRoots 的支持：#99015</li>
+<li>使用 Sonnet 5 和 1M 上下文进行 AI 升级切换：#99183</li>
+<li>文档：字体每次调用预加载范围和声明 font-family 覆盖：#99167</li>
+<li>恢复“添加实验性自定义 webpack 支持”：#99227</li>
+<li>测试：稳定惰性动态导入错误覆盖：#98730</li>
+<li>Turbo-tasks-gc：收集任务时拆除反向边缘：#99145</li>
+<li>基于分支的 PR 堆栈的序列 CI：#99086</li>
+<li>预取调度程序镜像导航的树行走：#98975</li>
+<li>将路由结构比较与参数比较分开：#98974</li>
+<li>将头部存储为自己的 CacheNode：#98973</li>
+<li>记录CacheNode的数据依赖哪些参数：#98972</li>
+<li>使用 RouteTree<t> 作为 CacheNode 树：#98971</t></li>
+<li>从 RouteTree 中删除页面/布局区别：#98970</li>
+<li>修复根谓词：#98942</li>
+<li>[turbopack] 仅删除那些实际上在儿童时期被删除的追随者：#98843</li>
+<li>Turbo-tasks-backend：简化可收集性谓词并收集瞬态任务：#98615</li>
+<li>Turbo-tasks-gc：使已删除的任务无效应该是无操作：#98614</li>
+<li>避免解码预渲染匹配器参数两次：#99121</li>
+<li>为静态根参数跟踪准备 <code>'use cache'</code>：#99239</li>
+<li>[测试] 调整非适配器部署的预渲染编码开放后备门：#99240</li>
+<li>Turbopack：避免包目录中的项目范围跟踪：#99238</li>
+<li>将解析的路径名提升到应用程序页面路由匹配中：#99259</li>
+<li>文档：图像 API 中的剪纸参考：#99256</li>
+<li>测试：在部署中运行 TypeScript 版本警告套件：#99195</li>
+<li>测试：删除skipDeployment，其中另一个门已排除部署：#99194</li>
+<li>捆绑分析器：加载分析器数据时暂停：#98535</li>
+<li>修复导航到 PPR 页面后服务器操作挂起的问题：#99252</li>
+<li>修复低 DPI 显示器上模糊的捆绑分析器树图：#99197</li>
+<li>重命名捆绑分析器快照命名选项：#99251</li>
+<li>减少堆积的 PR 门轮询并使用 ts-jest：#99215</li>
+<li>命名内部跟踪服务器进程：#99257</li>
+<li>测试：启用资产和编译器错误的部署覆盖：#98850</li>
+<li>测试：在构建错误测试中合并重复模式分支：#99135</li>
+<li>测试：代理运行时构建错误输出的快照：#99136</li>
+<li>避免 pack-next 中过时的 pnpm 覆盖：#99199
+-bundle-analyzer：将比较状态移至 URL：#98530</li>
+<li>通过删除死亡成员来简化 <code>Transition</code>：#94467</li>
+<li>修复：尊重 Edge SSR 中的元数据流策略：#99128</li>
+<li>避免仅用于导出损坏的立面分裂：#99285</li>
+<li>测试：将 __NEXT_PARTIAL_PREFETCHING 转发到测试部署：#99275</li>
+<li>Turbopack：允许 webpack 加载器在读取依赖项时跨文件系统根：#99202</li>
+<li>解释预发布安全升级限制：#99230</li>
+<li>支持预发布渠道的最新代理升级：#99223</li>
+<li>允许在没有 Git 的情况下进行代理升级：#99217</li>
+<li>在 DevTools 中显示安全升级见解：#99002</li>
+<li>使用重点 npm 建议并仅推动准备好的升级：#99222</li>
+<li>[测试] 稳定中间件重新验证测试：#99378</li>
+<li>测试：范围加载器构建对 Turbopack 的依赖项更新：#99380</li>
+<li>删除 CLAUDE.md 符号链接以支持 AGENTS.md：#98910</li>
+<li>对齐 ExecuteContext 任务访问器名称：#99258</li>
+<li>[测试] 稳定响应式开发覆盖标题布局测试：#99376</li>
+<li>Turbopack：跳过 SideEffectsModule 中经过修剪的副作用导入：#95781</li>
+<li>Turbopack：直接绑定时保留导入 <code>with</code> 子句：#95529</li>
+<li>Turbopack：修复应用程序路由器的 split_module 正确性：#95522</li>
+<li>Turbopack：修复空的 tree-shake 块不同步部分 id (#93424): #95516</li>
+<li>修复初始请求时缺少的自定义缓存处理程序：#99372</li>
+<li>允许适配器部署中未列出的封闭路由上的草稿模式：#99370</li>
+<li>修复捆绑分析器源表增量排序：#99369</li>
+<li>测试：修复 <code>unstable_{prefetch,navigation}</code> 重命名后过时的快照：#99371</li>
+<li>虚拟化捆绑分析器源表：#98539</li>
+<li>[PPF] 删除路由器中剩余的调试日志：#99365</li>
+<li>从navigation()和prefetch()中删除unstable_前缀：#99241</li>
+<li>ssr 的惰性动态导入：#98836</li>
+<li>完善Security Insight升级提示：#99354</li>
+<li>[PPF] <code>ensureStatic = "navigation"</code>：#99171</li>
+<li>文档：使用 prefetch={true} 链接到带有缓存组件的 ISR 页面：#99261</li>
+<li>将代理反馈添加到 create-next-app 默认值：#99119</li>
+<li>默认情况下使 next-dev-loop 浏览器无头：#98318</li>
+<li>[测试] 延长略低于它的测试超时：#99305</li>
+<li>文档：拼写错误修复：#99350</li>
+<li>[ai-upgrade] ESC 在提示期间向后移动：#99319</li>
+<li>[ai-upgrade] 要求用户选择权限：#99291</li>
+<li>[ai-upgrade] 要求用户选择模型和工作量：#99235</li>
+<li>[ai-upgrade] 询问用户是否在工作树中开始升级：#99232</li>
+<li>[create-next-app] 在 create-next-app 中默认启用缓存组件：#99436</li>
+<li>在 client 加载指标中包含异步模块评估：#99427</li>
+<li>Turbo-tasks-backend：修复叶距离跟踪编译：#99443</li>
+<li>在部署模式下启用代理导出测试：#99400</li>
+<li>文档：记录 Next.js 16 版本中的 API 稳定性：#99420</li>
+<li>测试：迁移并解释自定义服务器部署排除：#98994</li>
+<li>测试：迁移并解释根推理部署排除：#99012</li>
+<li>在部署模式下启用构建诊断套件：#99402</li>
+<li>测试（turbopack）：删除文件系统模糊器单元测试：#99089</li>
+<li>[turbopack] 支持 webpack loader 构建依赖请求：#99071</li>
+<li>[turbopack] 跟踪 webpack 加载器构建依赖目录：#98838</li>
+<li>[ci] 连线预览一致地构建变量：#99323</li>
+<li>[ci] 在任何仓库中启用 PR 评论：#99315</li>
+<li>修复捆绑分析器路由选择器：#98702</li>
+<li>捆绑分析器：使用 Rust React 编译器：#98695</li>
+<li>将捆绑分析器空状态链接到源模式：#98542</li>
+<li>整合 HTML 渲染完成清理：#99426</li>
+<li>范围 client 组件将指标加载到 HTML 渲染：#99322</li>
+<li>修复：在预渲染期间保留 HTTP 状态代码：#99078</li>
+<li>测试：启用五个经过验证的套件的部署覆盖范围：#99193</li>
+<li>文件代理反馈字段限制：#99415</li>
+<li>测试：迁移工具部署排除以强制门：#98156</li>
+<li>Turbopack：不要强制非递归观察者获取额外的根：#99396</li>
+<li>Turbo-persistence：中间合并采用相似大小的最新文件：#99433</li>
+<li>涡轮持久性：带有自适应哈希碎片的空间放大驱动压缩：#99268</li>
+<li>测试：启用basePath重定向部署覆盖范围：#99401</li>
+<li>修复（增量缓存）：跨实例保留 ISR 条目的缓存生命周期并重新启动：#99289</li>
+<li>避免在验证过程中改变图像质量：#99476</li>
+<li>删除缓存组件部署测试别名：#99446</li>
+<li>在输出完成时完成 App Router 开发指示器：#99384</li>
+<li>[测试] 在适配器部署中覆盖外部 <code>next/image</code>：#99466</li>
+<li>准备图像选项而不改变配置：#99394</li>
+<li>[PPF] 在运行时预渲染中使用 RDC：#98025</li>
+<li>[PPF] 在cachedNavigations 代码路径中使用RDC：#98005</li>
+<li>测试：将 PPF 覆盖范围添加到使用缓存和 RDC 测试中：#99417</li>
+<li>恢复动态路由的静态元数据预渲染：#99463</li>
+<li>从路由处理程序类型验证中排除元数据文件：#99377</li>
+<li>从 <code>agentUpgrade</code> 选项中删除 <code>true</code>：#99461</li>
+<li>修复：当配置文件不同时，revalidateTag 无法到达自定义缓存处理程序：#99359</li>
+<li>默认启用代理升级提醒：#99311</li>
+<li>启用可重用夹具变体的部署测试：#99404</li>
+<li>测试：在部署中启用兼容的机身尺寸案例：#98911</li>
+<li>测试：保留本地进程控制的部署排除：#99392</li>
+<li>在部署模式下启用空配置测试：#99397</li>
+<li>如果明确设置，则始终使用generateBuildId：#99147</li>
+<li>设置跟踪器库版本：#98262</li>
+<li>修复：从 after() 传播重复的标签重新验证：#99499</li>
+<li>稳定 <code>ensureStatic</code>：#99513</li>
+<li>Turbopack：默认启用experimental.turbopackSharedRuntime：#99504</li>
+<li>衡量 AI 升级推动、交接和完成情况：#99465</li>
+<li>涡轮持久性：所用密钥 AMQF 的 32 位指纹：#99333</li>
+<li>删除操作期间的暂停：#99383</li>
+<li>测试：迁移运行时部署排除以强制门：#98159</li>
+<li>测试：迁移资产部署排除以强制门：#98158</li>
+<li>测试：迁移 Pages Router 部署排除以强制设置门：#98157</li>
+<li>修复：unstable_ensureStatic 的过时用法：#99540</li>
+<li>添加与 APIs 匹配的不稳定参数：#97393</li>
+<li>文档：将下一个包安全泄露指向 HackerOne：#99459</li>
+<li>文档：添加 EnsureStatic 参考和验证指南：#99355</li>
+<li>默认情况下为构建启用 Turbopack 导出名称修改：#99362</li>
+<li>允许跳过 React 和 ESLint 升级：#99468</li>
+<li>在升级期间更喜欢声明的包管理器：#99471</li>
+<li>在捆绑分析器 UI 中使用 Next.js 约定：#98780</li>
+<li>通过开发渲染上下文传递应用程序页面 HMR 状态：#99487</li>
+<li>从 App Router 错误报告中删除请求转发：#99488</li>
+<li>文档：自托管不可变静态资产：#97008</li>
+<li>测试：使用 Corepack 和便携式 tarball 启用部署装置：#99192</li>
+<li>解决来自目标应用程序的 React 依赖警告：#99536</li>
+<li>将升级工作流程移出公共文档：#99546</li>
+<li>在整个升级过程中使用特工术语：#99545</li>
+<li>Turbopack：提交更新的生成的本机文件：#99561</li>
+<li>测试：启用 Relay 多项目部署覆盖范围：#99403</li>
+<li>测试：迁移独立的 App Router 部署排除以强制使用门：#99431</li>
+<li>测试：迁移特定于模式的部署排除以强制门：#98160</li>
+<li>通过将协议负担转移到 getters 来优化 esm 导出：#98932</li>
+<li>修复：修复 Docker 示例中的 pnpm 构建：#97352</li>
+<li>断言瞬态任务引用未序列化：#99300</li>
+<li>重新组织捆绑分析器工具栏：#98920</li>
+<li>在捆绑分析器中显示异步模块范围：#98918</li>
+<li>在比较树形图中显示捆绑包更改：#98837</li>
+<li>改进 MustExist 和 AllowMissing 周围的磁盘读取语义：#99249</li>
+<li>允许选择加入外观支持的导出修改：#99309</li>
+<li>添加捆绑分析器路由摘要：#98787</li>
+<li>[turbo-tasks-backend] 正确维护 outdated_collectibles 以防止不必要的过时执行：#99386</li>
+<li>将 React 从 <code>8b0da1c6-20260922</code> 升级到 <code>278794d7-20261002</code>：#99600</li>
+<li>未配置部分预取时发出警告：#99452</li>
+<li>将 Turbopack 模块缓存存储在地图中：#98947</li>
+<li>提高代理反馈报告的可靠性：#99591</li>
+<li>启用空的generateStaticParams部署诊断：#99406</li>
+<li>测试：启用 Nx 部署覆盖范围：#99407</li>
+<li>测试：启用 monorepo 固定装置的部署覆盖范围：#99395</li>
+<li>测试：捕获配置中的部署实验标志：#99534</li>
+<li>测试：提取部署功能标志的共享助手：#99533</li>
+<li>将应用程序页面标头解析移至处理程序入口点：#99506</li>
+<li>文档：澄清dogfooding中的ensureStatic级别：#99590</li>
+<li>在适配器上进行门参数匹配部署测试：#99582</li>
+<li>文档：更新 next-devtools-mcp 0.4 的 MCP 指南：#99583</li>
+<li>Next.js 的文档代理升级：#99293</li>
+<li>[测试] 修复 React 18 的旧图像预加载顺序断言：#99572</li>
+<li>文档：从 AGENTS.md 中删除任务分解和验证样板：#99558</li>
+<li>Turbopack：对 DiskFileSystemMap 使用 FrozenMap：#99569</li>
+<li>[测试] 暴露 CI 中首次运行的 e2e 测试失败：#99528</li>
+<li>Turbopack：<code>resolveFileUrl</code>/<code>placeholderFileUrl</code> 始终使用模块路径调用：#99560</li>
+<li>Turbopack：删除 AfterResolvePluginCondition 的隐式不匹配根失败，接受 None 作为根：#99556</li>
+<li>Turbopack：允许 ResolveMap 条目与所有可能的根匹配：#99555</li>
+<li>Turbopack：支持额外根中的 import.meta.url：#99511</li>
+<li>#99249 的后续删除了一些冗余测试并始终启用缺失的断言：#99605</li>
+<li>简化涡轮任务后端保护和执行上下文：#99599</li>
+<li>将分配和内存数据添加到跟踪服务器 MCP 协议：#98546</li>
+<li>Turbo-tasks-backend：检查 track_modification 中的访问并仅跟踪序列化无效的数据：#99581</li>
+<li>修复 #98932 导致的 CI 中断：#99621</li>
+<li>修复：URL 更新触发不必要的暂挂回退：#99612</li>
+<li>不要在浅 URL 更新时暂停 client 参数：#99611</li>
+<li>添加 React Compiler 记忆保存选项：#98589</li>
+<li>统一捆绑分析器增量颜色：#99607</li>
+<li>Turbopack：缓存没有turbo任务的规范化路径，首先尝试找到最长的缓存前缀：#99270</li>
+<li>在构建元数据中记录参数匹配使用情况：#99594</li>
+<li>捆绑分析器代理技能：流版本化分析器图为 JSON 行：#99387</li>
+<li>恢复“通过将协议负担转移到 getter 来优化 esm 导出 (#98932)”: #99704</li>
+<li>[PPF] 运行时预渲染中记录同步 IO 错误：#99688</li>
+<li>文档：澄清使用 client 指令作为文件级指令：#99703</li>
+<li>稳定 <code>forbidden()</code> 和 <code>unauthorized()</code>：#99689</li>
+<li>Turbopack-ecmascript-runtime：对每个运行时文件进行类型检查：#99670</li>
+<li>测试：unflake use-cache-search-params：#99691</li>
+<li>避免改变默认导出路径的配置：#99496</li>
+<li>将编译模式元数据保留在配置之外：#99491</li>
+<li>将动态资源前缀保留在配置之外：#99490</li>
+<li>eslint-config-next：支持 ESLint 10：#99628</li>
+<li>为 prefetch() 和 navigation() 添加即时见解：#97801</li>
+<li>将 <code>RenderStage.Runtime</code> 重命名为 <code>PrefetchRuntime</code>：#99679</li>
+<li>在构建时收集 <code>'use cache'</code> 的根参数依赖项：#99274</li>
+<li>添加 client 修复完全静态路由错误：#99659</li>
+<li>文档：通过部分预取阐明悬停预取：#99665</li>
+<li>持久使用缓存条目：排序环境变量列表：#99657</li>
+<li>next-swc：嵌入 js/src 文件更改时重建原生：#99669</li>
+<li>改进静态路由错误指导：#99724</li>
+<li>文档：添加 Turbopack 实验配置参考：#99723</li>
+<li>显示代理升级提示的选项：#99727</li>
+<li>文档：添加保持页面静态指南并对齐导航阶段文档：#99493</li>
+<li>Turbopack：在将路径添加到批次之前检查失效器映射：#99711</li>
+<li>文档：添加优化静态 shell 的指南：#97737</li>
+<li>在升级提示期间保持开发和构建运行：#99702</li>
+<li>文档：在示例中使用身份验证中断 APIs：#99698</li>
+<li>文档：建议在错误处理中使用身份验证中断 APIs：#99696</li>
+<li>[测试]更新快照：#99713</li>
+<li>捆绑分析器代理技能：跟踪条件异步和工作块加载：#99174</li>
+<li>捆绑分析器代理技能：显示路由块组：#99170</li>
+<li>Bundle Analyzer Agent 技能：在生成的 JS/CSS 文件中显示模块：#99173</li>
+<li>捆绑分析器代理技能：在分析数据中暴露更多路线细节：#99172</li>
+<li>Turbo-tasks-backend：停止弄脏 GC 收集的任务的依赖项：#99647</li>
+<li>Turbo-tasks-backend：将收集的任务的读取和连接视为错误：#99646</li>
+<li>Turbo-tasks-backend：在恢复期间停止固定任务并始终丢弃丢失的任务：#99645</li>
+<li>捆绑分析器代理技能：添加分析器技能：#99169</li>
+<li>在包捆绑指南中记录下一步分析导出：#99735</li>
+<li>恢复 <code>forbidden()</code> 和 <code>unauthorized()</code> 的稳定性：#99734</li>
+<li>在静态导出期间保留配置的输出目录：#99507</li>
+<li>将技能重命名为 next-bundle-optimizer 并记录其用法：#99731</li>
+<li>[turbo-tasks-backend] 在发布执行完成之前清理任务状态：#99729</li>
+</ul>
+<h3 id="制作人员">制作人员</h3>
+<p>非常感谢@acdlite、@icyJoseph、@lukesandberg、@sampoder、@ztanner、@vercel-release-bot、@marcoshernanz、@mischnic、@timneutkens、@eps1lon、@gaearon、@aurorascharff、@unstubbable、@lubieowoce、@wbinnssmith、@molebox、@kyamaz99、@sokra、 @Janpot、@bgw、@m-kawafuji、@koenpunt、@gnoff、@mayur9210、@Jashnavi25、@jarrensj、@akselipalmer、@DavidIlie、@kelvinampofo、@Stanzilla、@syedsohailhussain1、@gaojude、@hammadxcm、@jimmyhmiller、@lazerg、@styfle、 @bryan-ferry、@gdborton、@hardfist、@niketchandivade、@seanbeirnes、@0ldh、@fabian-hiller、@devjiwonchoi、@biubiukam、@fireairforce、@QingHeSite、@marceloboeira、@leejpsd、@hamidrezahanafi、@jgruica、@zeeshan56656、@mlekhi、@dacgray、 @Xanaado、@mezotv、@anujbolewar、@spirosikmd、@Amusac、@itsybitsci、@ranger-ross、@bmorros94、@jamiboym、@kostyniuk、@alangenfeld、@aryabyte21、@martinfrancois、@kassens、@orzazade、@Samiislam851、@lukahartwig、@uaoa、 @swarnava 和 @6iu8a 提供帮助！</p>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/vercel/next.js">vercel/next.js</a> · 🏷️ 版本：<code>v16.4.0</code> · 📅 发布：2026-10-07 · <a href="https://github.com/vercel/next.js/releases/tag/v16.4.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/next.js/next.js_v15.5.28"> <span class="k">← 下一个</span> <span class="t">v15.5.28</span> </a> <a href="/zh/release_note/next.js/next.js_v16.3.8"> <span class="k">上一个 →</span> <span class="t">v16.3.8</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/vercel/next.js/releases/tag/v16.4.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/vercel/next.js" target="_blank" rel="noopener"> <span>vercel/next.js</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#核心变化" class="lv3">核心变化</a><a href="#其他更改" class="lv3">其他更改</a><a href="#制作人员" class="lv3">制作人员</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/next.js/next.js_v16.4.6"> <span class="v">v16.4.6</span> <span class="d">26-11-09</span> </a> </li><li> <a href="/zh/release_note/next.js/next.js_v16.4.5"> <span class="v">v16.4.5</span> <span class="d">26-11-03</span> </a> </li><li> <a href="/zh/release_note/next.js/next.js_v15.5.29"> <span class="v">v15.5.29</span> <span class="d">26-11-03</span> </a> </li><li> <a href="/zh/release_note/next.js/next.js_v16.4.4"> <span class="v">v16.4.4</span> <span class="d">26-11-02</span> </a> </li><li> <a href="/zh/release_note/next.js/next.js_v16.4.3"> <span class="v">v16.4.3</span> <span class="d">26-10-23</span> </a> </li><li> <a href="/zh/release_note/next.js/next.js_v16.4.2"> <span class="v">v16.4.2</span> <span class="d">26-10-15</span> </a> </li><li> <a href="/zh/release_note/next.js/next.js_v16.4.1"> <span class="v">v16.4.1</span> <span class="d">26-10-14</span> </a> </li><li> <a href="/zh/release_note/next.js/next.js_v15.5.28"> <span class="v">v15.5.28</span> <span class="d">26-10-14</span> </a> </li> </ul> <a href="/zh/releases/next.js" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 14 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

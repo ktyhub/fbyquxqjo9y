@@ -1,0 +1,453 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>druid 24.0.0 — STAGS NextStack</title><meta name="description" content="Apache Druid 24.0.0 contains over 300 new features, bug fixes, performance enhancements, documentation improvements, and additional test coverage from 67 contributors."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/druid/druid_druid-24.0.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/druid/24.0.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/druid/druid_druid-24.0.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/druid/24.0.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="druid 24.0.0 — STAGS NextStack"><meta property="og:description" content="Apache Druid 24.0.0 contains over 300 new features, bug fixes, performance enhancements, documentation improvements, and additional test coverage from 67 contributors."><meta property="og:url" content="https://www.stags.cn/zh/release_note/druid/druid_druid-24.0.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/druid/druid_druid-24.0.0/#article","headline":"druid 24.0.0 release notes","datePublished":"2022-09-16","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/apache/druid"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/druid/24.0.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/druid/druid_druid-24.0.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/druid/24.0.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/druid/24.0.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/druid/24.0.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/druid/24.0.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/druid/24.0.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/druid">druid</a> </nav> <h1 class="detail-title"> <span class="p">druid</span> 24.0.0 </h1> <div class="detail-meta"> <span class="chip chip--major">大版本</span> <span><span class="k">发布时间</span>2022年9月16日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/apache/druid" target="_blank" rel="noopener"> <span class="k">来源</span>apache/druid </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/druid/24.0.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/druid/druid_druid-24.0.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <p>Apache Druid 24.0.0 包含 300 多个新功能、错误修复、性能增强、文档改进以及来自 67 个贡献者的额外测试覆盖范围。 <a href="https://github.com/apache/druid/milestone/46">有关其他详细信息，请参阅完整的更改集</a>。</p>
+<h1 id="-主要版本更新"><a name="24.0.0-new-features" href="#24.0.0-major-version">#</a> 主要版本更新</h1>
+<p>从本版本开始，我们从发布版本中删除了前导 <code>0</code>，并将所有其他数字向左提升一位。 Druid 现在的主要版本为 24，比之前的 0.23.0 版本有所提升。在向后兼容性或重大更改方面，此版本与之前的其他主要版本（例如 0.23.0 或 0.22.0）没有显着不同。我们将继续采用与之前版本相同的策略：最大限度地减少升级时需要特别注意的更改数量，并指出 release note 中确实存在的任何更改。对于此版本，请参阅<a href="#24.0.0-upgrading-to-24.0">升级到 24.0.0 部分</a>，了解此版本中向后不兼容的更改列表。</p>
+<h1 id="-新功能"><a name="24.0.0-new-features" href="#24.0.0-new-features">#</a> 新功能</h1>
+<h2 id="-多阶段查询任务引擎"><a name="24.0.0-new-features-multi-stage-query-task-engine" href="#24.0.0-new-features-multi-stage-query-task-engine">#</a> 多阶段查询任务引擎</h2>
+<p>Apache Druid 的<a href="https://druid.apache.org/docs/latest/multi-stage-query/index.html">基于 SQL 的摄取</a> 采用分布式多阶段查询架构，其中包括一个称为多阶段查询任务引擎（MSQ 任务引擎）的查询引擎。 MSQ 任务引擎扩展了 Druid 的查询功能，因此您可以编写引用外部数据的查询，并使用 SQL INSERT 和 REPLACE 执行摄取。本质上，您可以执行基于 SQL 的摄取，而不是使用 Druid 原生摄取使用的 JSON 摄取规范。除了易于使用的语法之外，SQL 接口还允许您执行涉及多次数据洗牌的转换。
+对于从 Druid 24.0.0 开始的批量摄取，建议使用多阶段查询任务引擎进行基于 SQL 的摄取。还继续支持本机批处理和基于 Hadoop 的摄取。我们建议您在投入生产之前查看<a href="https://druid.apache.org/docs/latest/multi-stage-query/known-issues.html">已知问题</a> 并在暂存环境中测试该功能。使用带有普通 <code>SELECT</code> 语句（不是 <code>INSERT ... SELECT</code> 或 <code>REPLACE ... SELECT</code>）的多阶段查询任务引擎是实验性的。
+如果您要从早期版本的 Druid 升级或者使用 Docker，则需要将 <code>druid-multi-stage-query</code> 扩展添加到 <code>common.runtime.properties</code> 文件中的 <code>druid.extensions.loadlist</code> 中。
+有关详细信息，请参阅基于 SQL 的摄取的<a href="https://druid.apache.org/docs/latest/multi-stage-query/index.html">概述</a> 文档。
+第12524章
+第12386章
+第12523章
+第12589章</p>
+<h2 id="-嵌套列"><a name="24.0.0-new-features-nested-columns-" href="#24.0.0-new-features-nested-columns-">#</a> 嵌套列</h2>
+<p>Druid 现在支持在新添加的 <code>COMPLEX&#x3C;json></code> 列类型中直接存储嵌套数据结构。 <code>COMPLEX&#x3C;json></code> 列存储 JSON 格式的结构化数据的副本以及嵌套文字值（<code>STRING</code>、<code>LONG</code> 和 <code>DOUBLE</code> 类型）的专用内部列和索引。优化的虚拟列允许 Druid 以与标准 Druid <code>LONG</code>、<code>DOUBLE</code> 和 <code>STRING</code> 列一致的速度读取和过滤这些值。
+新添加的 Druid SQL、原生 JSON 函数和虚拟列允许您在查询时提取、转换和创建 <code>COMPLEX&#x3C;json></code> 值。您还可以在基于 SQL 的摄取中的 <code>INSERT</code> 和 <code>REPLACE</code> 语句中使用 JSON 函数，或者在本机摄取的 <code>transformSpec</code> 中使用 JSON 函数，作为使用 <code>flattenSpec</code> 对象“展平”嵌套数据以进行摄取的替代方法。
+请参阅 <a href="docs/querying/sql-json-functions.md">SQL JSON 函数</a>、<a href="docs/misc/math-expr.md#json-functions">原生 JSON 函数</a>、<a href="docs/querying/nested-columns.md">嵌套列</a>、<a href="docs/querying/virtual-columns.md#nested-field-virtual-column">虚拟columns</a>，以及<a href="https://github.com/apache/druid/issues/12695">功能摘要</a> 了解更多详细信息。
+第12753章
+第12714章
+第12753章
+第12920章</p>
+<h2 id="-更新了-java-支持"><a name="24.0.0-new-features-updated-java-support" href="#24.0.0-new-features-updated-java-support">#</a> 更新了 Java 支持</h2>
+<p>Java 11 得到完全支持，不再是实验性的。 Java 17 支持得到改进。
+第12839章</p>
+<h1 id="-查询引擎更新"><a name="24.0.0-query-engine-updates" href="#24.0.0-query-engine-updates">#</a> 查询引擎更新</h1>
+<h3 id="-更新了列索引和过滤器的查询处理"><a name="24.0.0-query-engine-updates-updated-column-indexes-and-query-processing-of-filters" href="#24.0.0-query-engine-updates-updated-column-indexes-and-query-processing-of-filters">#</a> 更新了列索引和过滤器的查询处理</h3>
+<p>重新设计的列索引变得非常灵活，这最终将使我们能够对各种索引类型进行建模。添加了机制来构建使用更新索引的过滤器，同时还允许其他列实现来实现内置索引类型，以提供适配器以在 Druid 提供的当前设置过滤器中使用索引。
+第12388章</p>
+<h3 id="-时间过滤运算符"><a name="24.0.0-query-engine-updates-time-filter-operator" href="#24.0.0-query-engine-updates-time-filter-operator">#</a> 时间过滤运算符</h3>
+<p>您现在可以使用 Druid SQL 运算符 TIME_IN_INTERVAL 根据时间过滤查询结果。优先使用 TIME_IN_INTERVAL 而不是 SQL BETWEEN 运算符来按时间进行过滤。有关详细信息，请参阅<a href="docs/querying/sql-scalar.md#date-and-time-functions">日期和时间函数</a>。
+第12662章</p>
+<h3 id="-空值和in过滤器"><a name="24.0.0-query-engine-updates-null-values-and-the-%22in%22-filter" href="#24.0.0-query-engine-updates-null-values-and-the-%22in%22-filter">#</a> 空值和“in”过滤器</h3>
+<p>如果 <code>values</code> 数组包含 <code>null</code>，则“in”过滤器匹配空值。这与 SQL IN 过滤器不同，后者不匹配空值。
+有关更多信息，请参阅<a href="/docs/querying/filters.md">查询过滤器</a>和<a href="/docs/querying/sql-data-types.md">SQL数据类型</a>。
+第12863章</p>
+<h3 id="-搜索查询中的虚拟列"><a name="24.0.0-query-engine-updates-virtual-columns-in-search-queries" href="#24.0.0-query-engine-updates-virtual-columns-in-search-queries">#</a> 搜索查询中的虚拟列</h3>
+<p>以前，<a href="/docs/querying/searchquery.md">搜索查询</a> 只能搜索数据源中存在的维度。搜索查询现在支持<a href="/docs/querying/virtual-columns.md">虚拟列</a> 作为查询中的参数。
+第12720章</p>
+<h3 id="-优化-__time-上的简单-min--max-sql-查询"><a name="24.0.0-query-engine-updates-optimize-simple-min-%2F-max-sql-queries-on-__time" href="#24.0.0-query-engine-updates-optimize-simple-min-%2F-max-sql-queries-on-__time">#</a> 优化 __time 上的简单 MIN / MAX SQL 查询</h3>
+<p>像 <code>select max(__time) from ds</code> 这样的简单查询现在作为 <code>timeBoundary</code> 查询运行，以利用段中的时间维度排序。您可以设置功能标志来启用此功能。
+第12472章
+第12491章</p>
+<h3 id="-字符串聚合结果"><a name="24.0.0-query-engine-updates-string-aggregation-results" href="#24.0.0-query-engine-updates-string-aggregation-results">#</a> 字符串聚合结果</h3>
+<p>第一个/最后一个字符串聚合器现在仅根据值进行比较。以前，第一个/最后一个字符串聚合器的值首先根据 <code>_time</code> 列进行比较，然后根据值进行比较。
+如果您有现有查询并希望继续使用 <code>_time</code> 列和值，请更新您的查询以使用 ORDER BY MAX(timeCol)。
+第12773章</p>
+<h3 id="-由于-jackson-序列化而减少了分配"><a name="24.0.0-query-engine-updates-reduced-allocations-due-to-jackson-serialization" href="#24.0.0-query-engine-updates-reduced-allocations-due-to-jackson-serialization">#</a> 由于 Jackson 序列化而减少了分配</h3>
+<p>在 <code>JacksonUtils</code> 中引入并实现了新的辅助函数，以实现重用
+<code>SerializerProvider</code> 对象。
+此外，默认情况下禁用 <code>GroupByQueryToolChest</code> 中基于映射的行的向后兼容性，从而无需复制重量级 <code>ObjectMapper</code>。引入了一个配置选项，允许管理员显式启用向后兼容性。
+第12468章</p>
+<h3 id="-更新了-ipaddress-java-库"><a name="24.0.0-query-engine-updates-updated-ipaddress-java-library-" href="#24.0.0-query-engine-updates-updated-ipaddress-java-library-">#</a> 更新了 IPAddress Java 库</h3>
+<p>添加了新的 <a href="https://github.com/seancfoley/IPAddress">IPAddress</a> Java 库依赖项来处理 IP 地址。该库包括 IPv6 支持。此外，还迁移了 IPv4 功能以使用新库。
+第11634章</p>
+<h3 id="-查询性能改进"><a name="24.0.0-query-engine-updates-query-performance-improvements" href="#24.0.0-query-engine-updates-query-performance-improvements">#</a> 查询性能改进</h3>
+<p>优化的SQL操作和功能如下：</p>
+<ul>
+<li>矢量化数字最新聚合器（#12439）</li>
+<li>优化了 RangeSet 上的 <code>isEmpty()</code> 和 <code>equals()</code> (#12477)</li>
+<li>优化 Yielder 对象的重用 (#12475)</li>
+<li>对带有索引的数字列的操作现在更快 (#12830)</li>
+<li>通过减少分配来优化 GroupBy。通过重复使用入口和钥匙持有者减少分配 (#12474)</li>
+<li>添加了字符串最后聚合器的矢量化版本（#12493）</li>
+<li>为 IN 过滤器添加了直接 UTF-8 访问 (#12517)</li>
+<li>启用虚拟列来缓存其输出，以防 Druid 在同一底层行上多次调用它们 (#12577)</li>
+<li>Druid 现在在 IN 连接中尽可能将连接重写为过滤器 (#12225)</li>
+<li>添加了 GroupBy 字典的自动调整大小 (#12763)</li>
+<li>Druid 现在在代理之间更均匀地分配 JDBC 连接 (#12817)</li>
+</ul>
+<h2 id="-流式传输"><a name="24.0.0-streaming-ingestion" href="#24.0.0-streaming-ingestion">#</a> 流式传输</h2>
+<h3 id="-卡夫卡消费者"><a name="24.0.0-streaming-ingestion-kafka-consumers" href="#24.0.0-streaming-ingestion-kafka-consumers">#</a> 卡夫卡消费者</h3>
+<p>以前，注册并用于摄取的消费者会一直存在，直到 Kafka 删除它们为止。它们仅用于确保整个主题被消耗。不再有消费群体徘徊。
+第12842章</p>
+<h3 id="-kinesis-摄取"><a name="24.0.0-streaming-ingestion-kinesis-ingestion" href="#24.0.0-streaming-ingestion-kinesis-ingestion">#</a> Kinesis 摄取</h3>
+<p>现在，即使存在空分片，您也可以执行 Kinesis 摄取。以前，所有分片都必须至少有一条记录。
+第12792章</p>
+<h2 id="-批量摄取"><a name="24.0.0-batch-ingestion" href="#24.0.0-batch-ingestion">#</a> 批量摄取</h2>
+<h3 id="-从-s3-批量摄取"><a name="24.0.0-batch-ingestion-batch-ingestion-from-s3" href="#24.0.0-batch-ingestion-batch-ingestion-from-s3">#</a> 从 S3 批量摄取</h3>
+<p>您现在可以从不同于默认 S3 端点和签名区域的端点提取数据。
+有关更多信息，请参阅 <a href="../development/extensions-core/s3.md#connecting-to-s3-configuration">S3 配置</a>。
+第11798章</p>
+<h2 id="-总体摄取方面的改进"><a name="24.0.0-improvements-to-ingestion-in-general" href="#24.0.0-improvements-to-ingestion-in-general">#</a> 总体摄取方面的改进</h2>
+<p>此版本包括以下一般摄取方面的改进。</p>
+<h3 id="-提高任务管理的稳健性"><a name="24.0.0-improvements-to-ingestion-in-general-increased-robustness-for-task-management" href="#24.0.0-improvements-to-ingestion-in-general-increased-robustness-for-task-management">#</a> 提高任务管理的稳健性</h3>
+<p>添加了 <code>setNumProcessorsPerTask</code> 以防止各种自动调整大小的线程池变得不合理的大。对于每个任务来说，将其池的大小视为整个计算机上唯一的进程并不理想。在大型机器上，这解决了由于“无法创建本机线程”而导致 <code>OutOfMemoryError</code> 的常见原因。
+第12592章</p>
+<h3 id="-avatica-jdbc-驱动程序"><a name="24.0.0-improvements-to-ingestion-in-general-avatica-jdbc-driver" href="#24.0.0-improvements-to-ingestion-in-general-avatica-jdbc-driver">#</a> Avatica JDBC 驱动程序</h3>
+<p>JDBC驱动程序现在遵循JDBC标准并使用两种语句：Statement和PreparedStatement。
+第12709章</p>
+<h3 id="-八小时粒度"><a name="24.0.0-improvements-to-ingestion-in-general-eight-hour-granularity" href="#24.0.0-improvements-to-ingestion-in-general-eight-hour-granularity">#</a> 八小时粒度</h3>
+<p>Druid 现在接受 <code>EIGHT_HOUR</code> 粒度。您可以将传入数据分段到 <code>EIGHT_HOUR</code> 存储桶，并按八小时粒度对查询结果进行分组。
+第12717章</p>
+<h2 id="-摄取常规"><a name="24.0.0-ingestion-general" href="#24.0.0-ingestion-general">#</a> 摄取常规</h2>
+<h3 id="-更新了-avro-扩展"><a name="24.0.0-ingestion-general-updated-avro-extension" href="#24.0.0-ingestion-general-updated-avro-extension">#</a> 更新了 Avro 扩展</h3>
+<p>之前的 Avro 扩展从解析器中泄漏了对象。如果这些对象泄漏到您的摄取中，您的对象将被存储为字符串列，其值为 .toString()。升级后此字符串列将保留，但将返回 <code>Map.toString()</code> 而不是 <code>GenericRecord.toString</code>。如果您依赖以前的行为，则可以使用早期版本中的 Avro 扩展。
+第12828章</p>
+<h3 id="-采样器-api"><a name="24.0.0-ingestion-general-sampler-api" href="#24.0.0-ingestion-general-sampler-api">#</a> 采样器 API</h3>
+<p>采样器 API 有附加限制：<code>maxBytesInMemory</code> 和 <code>maxClientResponseBytes</code>。这些选件增强了现有选件 <code>numRows</code> 和 <code>timeoutMs</code>。  <code>maxBytesInMemory</code> 可用于控制采样时 Overlord 上的内存使用情况。  client 可以使用 <code>maxClientResponseBytes</code> 来指定它们希望处理的最大响应大小。
+第12947章</p>
+<h2 id="-sql"><a name="24.0.0-sql" href="#24.0.0-sql">#</a> SQL</h2>
+<h3 id="-列顺序"><a name="24.0.0-sql-column-order" href="#24.0.0-sql-column-order">#</a> 列顺序</h3>
+<p><code>DruidSchema</code> 和 <code>SegmentMetadataQuery</code> 属性现在保留列顺序，而不是按字母顺序对列进行排序。这意味着查询顺序与摄取顺序更好地匹配。
+第12754章</p>
+<h3 id="-将-join-转换为过滤器"><a name="24.0.0-sql-converting-joins-to-filter" href="#24.0.0-sql-converting-joins-to-filter">#</a> 将 JOIN 转换为过滤器</h3>
+<p>您可以通过将查询的 <code>enableRewriteJoinToFilter</code> 上下文参数设置为 <code>true</code>，在运行时将 JOIN 部分或全部推送到基表作为过滤器，从而提高性能。
+Druid 现在会下推连接过滤器，以防查询计算连接引用右侧的任何列。
+第12749章
+第12868章</p>
+<h3 id="-将-is_active-添加到-syssegments"><a name="24.0.0-sql-add-is_active-to-sys.segments" href="#24.0.0-sql-add-is_active-to-sys.segments">#</a> 将 is_active 添加到 sys.segments</h3>
+<p>添加了 <code>is_active</code> 作为 <code>(is_published = 1 AND is_overshadowed = 0) OR is_realtime = 1)</code> 的简写。这表示“所有应该可查询的段，无论它们现在是否确实存在”。
+第11550章</p>
+<h3 id="-usenativequeryexplain-现在默认为-true"><a name="24.0.0-sql-%60usenativequeryexplain%60-now-defaults-to-true" href="#24.0.0-sql-%60usenativequeryexplain%60-now-defaults-to-true">#</a> <code>useNativeQueryExplain</code> 现在默认为 true</h3>
+<p><code>useNativeQueryExplain</code> 属性现在默认为 <code>true</code>。这意味着 EXPLAIN PLAN FOR 默认将解释计划返回为等效本机查询的 JSON 表示形式。有关更多信息，请参阅<a href="/docs/configuration/index.md">Broker 生成的查询配置补充</a>。
+第12936章</p>
+<h3 id="-使用-druid-查询引擎运行内联数据查询"><a name="24.0.0-inline-query-engine" href="#24.0.0-inline-query-engine">#</a> 使用 Druid 查询引擎运行内联数据查询</h3>
+<p>一些不引用任何表的查询（例如 <code>select 1</code>）现在在执行之前始终会转换为带有 <code>InlineDataSource</code> 的本机 Druid 查询。如果无法翻译，对于 <code>SELECT (1, 2)</code> 等查询，则会出现错误。在早期版本中，此查询仍会运行。
+第12897章</p>
+<h2 id="-协调员霸主"><a name="24.0.0-coordinator%2Foverlord" href="#24.0.0-coordinator%2Foverlord">#</a> 协调员/霸主</h2>
+<h3 id="-您可以将协调器配置为将来删除段"><a name="24.0.0-coordinator%2Foverlord-you-can-configure-the-coordinator-to-kill-segments-in-the-future" href="#24.0.0-coordinator%2Foverlord-you-can-configure-the-coordinator-to-kill-segments-in-the-future">#</a> 您可以将协调器配置为将来删除段</h3>
+<p>您现在可以将 <code>druid.coordinator.kill.durationToRetain</code> 设置为负数周期，以将 Druid 集群配置为杀死 <code>interval_end</code> 为未来日期的段。例如，如果段的interval_end日期是系统生成终止任务时距未来24小时或更短的时间，则PT-24H将允许终止段。
+集群操作员还可以通过设置新配置 <code>druid.coordinator.kill.ignoreDurationToRetain=true</code> 来完全忽略 <code>druid.coordinator.kill.durationToRetain</code>。在查找要终止的段时，这会忽略 <code>interval_end</code> 日期，并且可以终止任何标记为未使用的段。这个新配置默认是关闭的，集群操作者在启用它之前应该充分理解并接受风险。</p>
+<h3 id="-改进了霸主稳定性"><a name="24.0.0-coordinator%2Foverlord-improved-overlord-stability" href="#24.0.0-coordinator%2Foverlord-improved-overlord-stability">#</a> 改进了霸主稳定性</h3>
+<p>减少管理线程与从集群接收状态更新之间的争用。当任务数量较多（1000+）时，这提高了 Overlord 和集群中所有任务的稳定性。
+第12099章</p>
+<h3 id="-改进了协调器分段日志记录"><a name="24.0.0-coordinator%2Foverlord-improved-coordinator-segment-logging" href="#24.0.0-coordinator%2Foverlord-improved-coordinator-segment-logging">#</a> 改进了协调器分段日志记录</h3>
+<p>更新了协调器加载规则日志记录以包括当前的复制级别。添加了一些日志消息中缺少的段 ID 和层信息。
+第12511章</p>
+<h3 id="-优化霸主-get-任务内存使用情况"><a name="24.0.0-coordinator%2Foverlord-optimized-overlord-get-tasks-memory-usage" href="#24.0.0-coordinator%2Foverlord-optimized-overlord-get-tasks-memory-usage">#</a> 优化霸主 GET 任务内存使用情况</h3>
+<p>解决了 Web 控制台间接调用 Overlord 的 GET 任务 API 导致的显着内存开销。当多次打开摄取选项卡时，这可能会导致无响应或 Overlord 失败。
+第12404章</p>
+<h3 id="-减少创建间隔的时间"><a name="24.0.0-coordinator%2Foverlord-reduced-time-to-create-intervals" href="#24.0.0-coordinator%2Foverlord-reduced-time-to-create-intervals">#</a> 减少创建间隔的时间</h3>
+<p>为了通过减少创建间隔所需的时间来优化段成本计算时间，请存储段间隔而不是每次从基元创建它，并通过驻留间隔来减少存储间隔的内存开销。段的间隔集基数较低。
+第12670章</p>
+<h2 id="-经纪人霸主"><a name="24.0.0--brokers%2Foverlord" href="#24.0.0--brokers%2Foverlord">#</a> 经纪人/霸主</h2>
+<p>代理现在每个查询的默认最大排队容量为 25MB。此前，没有默认限制。根据您的使用案例，您可能需要增加该值，特别是当您有大型结果集或大量中间数据时。要调整最大可用内存，请使用 <code>druid.broker.http.maxQueuedBytes</code> 属性。
+更多信息请参见【配置参考】(docs/configuration/index.md)。</p>
+<h2 id="-web-控制台"><a name="24.0.0--brokers%2Foverlord-web-console" href="#24.0.0--brokers%2Foverlord-web-console">#</a> Web 控制台</h2>
+<blockquote>
+<p>准备好提升您的 Web 控制台体验！ - @vogievetsky</p>
+</blockquote>
+<h3 id="-带有选项卡和长时间运行查询支持的新查询视图-workbenchview"><a name="24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support" href="#24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support">#</a> 带有选项卡和长时间运行查询支持的新查询视图 (WorkbenchView)</h3>
+<p><img src="https://user-images.githubusercontent.com/177816/185309077-8840ff85-19a9-4fc0-8398-4f2446ff29b3.png" alt="">
+您可以使用新的查询视图通过 /druid/v2/sql/task 和 /druid/indexer/v1/task/* API 执行多阶段、基于任务的查询，以及本机和 sql-native 查询，就像旧的查询视图一样。基于 sql-msq-task 的查询的一个关键点是它们可能会运行很长时间。这启发/需要许多用户体验更改，包括但不限于以下内容：</p>
+<h4 id="-选项卡"><a name="24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-tabs" href="#24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-tabs">#</a> 选项卡</h4>
+<p>您现在可以同时存储和运行多个查询，从而显着改善查询视图的用户体验。
+<img src="https://user-images.githubusercontent.com/177816/185309114-fe82cccd-a917-415c-a394-a3485403226d.png" alt="">
+您可以打开多个选项卡，复制它们，然后将它们复制为文本以粘贴到任何控制台中并在其中重新打开。</p>
+<h4 id="-进度报告计数器报告"><a name="24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-progress-reports-%28counter-reports%29" href="#24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-progress-reports-%28counter-reports%29">#</a> 进度报告（计数器报告）</h4>
+<p>使用多阶段查询任务引擎运行的查询具有在摘要进度栏中显示的详细进度报告，以及提供每个步骤的计数器摘要的详细执行表。
+<img src="https://user-images.githubusercontent.com/177816/185309244-cba3d640-c48a-49bd-8c72-ed3e842b0cb2.png" alt=""></p>
+<h4 id="-错误和警告报告"><a name="24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-error-and-warning-reports" href="#24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-error-and-warning-reports">#</a> 错误和警告报告</h4>
+<p>如果出现任何问题，使用多阶段查询任务引擎运行的查询会显示用户友好的警告和错误。
+新的查询视图具有可视化这些组件及其完整详细信息（包括堆栈跟踪）的组件。
+<img src="https://user-images.githubusercontent.com/177816/185309488-421e7410-251d-4590-88f1-92fb23f4be13.png" alt=""></p>
+<h4 id="-最近查询任务面板"><a name="24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-recent-query-tasks-panel" href="#24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-recent-query-tasks-panel">#</a> 最近查询任务面板</h4>
+<p>使用多阶段查询任务引擎运行的查询是任务。这使得可以显示当前正在执行的查询和最近执行的查询。
+<img src="https://user-images.githubusercontent.com/177816/185309579-e2ce021c-6bf6-4576-bdee-ff552e1c4c3b.png" alt="">
+对于“最近查询任务”面板中的任何查询，您可以查看其执行详细信息，还可以将其附加为新选项卡并继续迭代查询。还可以下载“查询详细信息存档”，这是一个 JSON 文件，其中包含给定查询的所有重要详细信息，用于故障排除。</p>
+<h4 id="-连接外部数据流"><a name="24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-connect-external-data-flow" href="#24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-connect-external-data-flow">#</a> 连接外部数据流</h4>
+<p>通过连接外部数据流，您可以使用采样器对源数据进行采样、确定其架构并生成完整的 SQL 查询，您可以在启动提取作业之前对其进行编辑以适合您的用例。这个点对点 click 流程将节省您大量的打字时间。
+<img src="https://user-images.githubusercontent.com/177816/185309631-5ceed7d0-2bb2-43b9-83ed-fdcad4a152be.png" alt=""></p>
+<h4 id="-预览按钮"><a name="24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-preview-button" href="#24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-preview-button">#</a> 预览按钮</h4>
+<p>当您键入 INSERT 或 REPLACE SQL 查询时，会出现“预览”按钮。 Click 该按钮可删除 INSERT 或 REPLACE 子句，并将查询作为带限制的“内联”查询执行。这可以让您了解 Druid 应用 SQL 查询中的所有转换后数据的形状。</p>
+<h4 id="-结果表"><a name="24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-results-table" href="#24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-results-table">#</a> 结果表</h4>
+<p>查询结果表在样式和功能上都得到了改进。现在，它会向您显示列类型的键入图标，并支持轻松操作嵌套列的功能。</p>
+<h4 id="-辅助查询"><a name="24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-helper-queries" href="#24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-helper-queries">#</a> 辅助查询</h4>
+<p>Web 控制台现在为笔记本电脑和 CTE 用户提供了一些 UI 功能。您可以从主查询中引用辅助查询（保存查询的可折叠元素），就像使用WITH 语句定义它们一样。当您编写复杂的查询时，将其分解为多个查询以单独预览各个部分会很有帮助。</p>
+<h4 id="-其他-web-控制台工具"><a name="24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-additional-web-console-tools" href="#24.0.0--brokers%2Foverlord-web-console-new-query-view-%28workbenchview%29-with-tabs-and-long-running-query-support-additional-web-console-tools">#</a> 其他 Web 控制台工具</h4>
+<p>… 菜单中提供了更多工具：</p>
+<ul>
+<li>解释查询 - 显示 sql 原生和多阶段查询任务引擎查询的查询计划。</li>
+<li>将摄取规范转换为 SQL - 帮助您将本机批处理和基于 Hadoop 的规范迁移到基于 SQL 的格式。</li>
+<li>打开查询详细信息存档 - 允许您打开之前下载的查询详细信息存档。</li>
+<li>加载演示查询 - 让您加载一组预制查询以使用多阶段查询任务引擎功能。</li>
+</ul>
+<h3 id="-新的基于-sql-的数据加载器"><a name="24.0.0--brokers%2Foverlord-web-console-new-sql-based-data-loader" href="#24.0.0--brokers%2Foverlord-web-console-new-sql-based-data-loader">#</a> 新的基于 SQL 的数据加载器</h3>
+<p>数据加载器作为 GUI 向导存在，可帮助用户使用点和 click 以及快速预览来制作 JSON 摄取规范。 SQL 数据加载器是基于 SQL 的摄取模拟。
+与基于本机的数据加载器一样，基于 SQL 的数据加载器将所有状态存储在 SQL 查询本身中。您可以选择在任何阶段直接操作查询。有关数据加载器与 <strong>连接外部数据</strong> 工作流程有何不同的更多信息，请参阅 (#12919)。</p>
+<h3 id="-其他更改和改进"><a name="24.0.0--brokers%2Foverlord-web-console-other-changes-and-improvements" href="#24.0.0--brokers%2Foverlord-web-console-other-changes-and-improvements">#</a> 其他更改和改进</h3>
+<ul>
+<li>查询视图具有如此多的新功能，它已移至最左侧，作为标题中的第一个可用视图。</li>
+<li>您现在可以在数据源或段上进行 click 以查看其中数据的预览。</li>
+<li>任务表现在以与失败任务不同的颜色明确显示任务是否被取消。</li>
+<li>在 Druid 控制台中查看 JSON 负载时的用户体验已得到改进。现在有语法突出显示和搜索。</li>
+<li>Druid 控制台现在可以使用扫描查询返回的列顺序来确定重新索引数据的列顺序。</li>
+<li>Druid 控制台中显示错误的方式已得到改进。错误不再显示为单行长线。
+有关更多详细信息和其他改进，请参阅 (#12919)</li>
+</ul>
+<h2 id="-指标"><a name="24.0.0--brokers%2Foverlord-metrics" href="#24.0.0--brokers%2Foverlord-metrics">#</a> 指标</h2>
+<h3 id="-peons-的-sysmonitor-统计信息"><a name="24.0.0--brokers%2Foverlord-metrics-sysmonitor-stats-for-peons" href="#24.0.0--brokers%2Foverlord-metrics-sysmonitor-stats-for-peons">#</a> Peons 的 Sysmonitor 统计信息</h3>
+<p>Sysmonitor 统计信息（例如内存或交换）不再报告，因为 Peons 始终与 MiddleManagerse 在同一主机上运行。这意味着将不再报告重复的统计数据。
+第12802章</p>
+<h3 id="-prometheus"><a name="24.0.0--brokers%2Foverlord-metrics-prometheus-" href="#24.0.0--brokers%2Foverlord-metrics-prometheus-">#</a> Prometheus</h3>
+<p>现在，您可以通过将以下属性设置为 true，将主机和服务包含为 Prometheus 的标签：</p>
+<ul>
+<li><code>druid.emitter.prometheus.addHostAsLabel</code></li>
+<li><code>druid.emitter.prometheus.addServiceAsLabel</code>
+第12769章</li>
+</ul>
+<h3 id="-每个段的行数"><a name="24.0.0--brokers%2Foverlord-metrics-rows-per-segment" href="#24.0.0--brokers%2Foverlord-metrics-rows-per-segment">#</a> 每个段的行数</h3>
+<p>（实验性）您现在可以使用以下指标查看段中的平均行数以及预定义存储桶中段的分布：<code>segment/rowCount/avg</code> 和 <code>segment/rowCount/range/count</code>。
+使用以下属性启用指标：<code>org.apache.druid.server.metrics.SegmentStatsMonitor</code>
+第12730章</p>
+<h3 id="-新-sqlqueryplanningtimems-指标"><a name="24.0.0--brokers%2Foverlord-metrics-new-%60sqlquery%2Fplanningtimems%60-metric" href="#24.0.0--brokers%2Foverlord-metrics-new-%60sqlquery%2Fplanningtimems%60-metric">#</a> 新 <code>sqlQuery/planningTimeMs</code> 指标</h3>
+<p>SQL 查询有一个新的 <code>sqlQuery/planningTimeMs</code> 指标，用于计算从 SQL 查询构建本机查询所需的时间。
+第12923章</p>
+<h3 id="-statsd-指标报告器"><a name="24.0.0--brokers%2Foverlord-metrics-statsd-metrics-reporter" href="#24.0.0--brokers%2Foverlord-metrics-statsd-metrics-reporter">#</a> StatsD 指标报告器</h3>
+<p>StatsD 指标报告器扩展现在包括以下指标：</p>
+<ul>
+<li>协调员/时间</li>
+<li>协调员/全球/时间</li>
+<li>等级/要求/容量</li>
+<li>层数/总数/容量</li>
+<li>层/复制/因子</li>
+<li>等级/历史/计数</li>
+<li>紧凑/任务/计数</li>
+<li>紧凑任务/最大槽位/计数</li>
+<li>紧凑任务/可用槽/计数</li>
+<li>段/waitCompact/字节</li>
+<li>分段/等待紧凑/计数</li>
+<li>间隔/等待紧凑/计数</li>
+<li>段/skipCompact/字节</li>
+<li>分段/跳过紧凑/计数</li>
+<li>间隔/跳过紧凑/计数</li>
+<li>段/压缩/字节</li>
+<li>分段/压缩/计数</li>
+<li>间隔/压缩/计数
+第12762章</li>
+</ul>
+<h3 id="-新工作人员级别任务指标"><a name="24.0.0--brokers%2Foverlord-metrics-new-worker-level-task-metrics" href="#24.0.0--brokers%2Foverlord-metrics-new-worker-level-task-metrics">#</a> 新工作人员级别任务指标</h3>
+<p>添加了新的监视器 <code>WorkerTaskCountStatsMonitor</code>，允许每个中层管理人员报告成功/失败任务以及任务槽使用情况的指标。
+第12446章</p>
+<h3 id="-对-jvmmonitor-的改进"><a name="24.0.0--brokers%2Foverlord-metrics-improvements-to-the-jvmmonitor" href="#24.0.0--brokers%2Foverlord-metrics-improvements-to-the-jvmmonitor">#</a> 对 JvmMonitor 的改进</h3>
+<p>JvmMonitor 现在可以处理更多发电和收集场景。该监视器更加强大，并且可以在 Java 11 和 15 上正常运行 ZGC。
+第12469章</p>
+<h3 id="-垃圾收集"><a name="24.0.0--brokers%2Foverlord-metrics-garbage-collection" href="#24.0.0--brokers%2Foverlord-metrics-garbage-collection">#</a> 垃圾收集</h3>
+<p>垃圾收集指标现在使用 MXBean。
+第12481章</p>
+<h3 id="-待处理队列中任务持续时间的指标"><a name="24.0.0--brokers%2Foverlord-metrics-metric-for-task-duration-in-the-pending-queue" href="#24.0.0--brokers%2Foverlord-metrics-metric-for-task-duration-in-the-pending-queue">#</a> 待处理队列中任务持续时间的指标</h3>
+<p>引入了指标 <code>task/pending/time</code> 来衡量任务在待处理队列中停留的时间。
+第12492章</p>
+<h3 id="-在游标创建期间为-scantimeseries-和-groupby-查询发出指标对象"><a name="24.0.0--brokers%2Foverlord-metrics-emit-metrics-object-for-scan%2C-timeseries%2C-and-groupby-queries-during-cursor-creation" href="#24.0.0--brokers%2Foverlord-metrics-emit-metrics-object-for-scan%2C-timeseries%2C-and-groupby-queries-during-cursor-creation">#</a> 在游标创建期间为 Scan、Timeseries 和 GroupBy 查询发出指标对象</h3>
+<p>为扫描、时间序列和分组查询添加矢量化指标。
+第12484章</p>
+<h3 id="-发出替换和附加状态本机批处理任务"><a name="24.0.0--brokers%2Foverlord-metrics-emit-state-of-replace-and-append-for-native-batch-tasks" href="#24.0.0--brokers%2Foverlord-metrics-emit-state-of-replace-and-append-for-native-batch-tasks">#</a> 发出替换和附加状态本机批处理任务</h3>
+<p>Druid 现在会发出指标，以便您可以监控和评估不同类型的批量摄取的使用情况，特别是替换和逻辑删除创建。
+第12488章
+第12840章</p>
+<h3 id="-kafkaemitter-发出-querytype"><a name="24.0.0--brokers%2Foverlord-metrics-kafkaemitter-emits-%60querytype%60" href="#24.0.0--brokers%2Foverlord-metrics-kafkaemitter-emits-%60querytype%60">#</a> KafkaEmitter 发出 <code>queryType</code></h3>
+<p>KafkaEmitter 现在可以正确发出本机查询的 <code>queryType</code> 属性。
+第12915章</p>
+<h2 id="-安全性"><a name="24.0.0--brokers%2Foverlord-security" href="#24.0.0--brokers%2Foverlord-security">#</a> 安全性</h2>
+<p>您现在可以隐藏 <code>/status/properties</code> 的 API 响应中敏感的属性，例如 S3 访问密钥。使用 <code>common.runtime.properties</code> 中的 <code>druid.server.hiddenProperties</code> 属性指定要隐藏的属性（不区分大小写）。
+第12950章</p>
+<h2 id="-其他更改"><a name="24.0.0--brokers%2Foverlord-other-changes" href="#24.0.0--brokers%2Foverlord-other-changes">#</a> 其他更改</h2>
+<ul>
+<li>您现在可以使用 <code>druid.request.logging.durationToRetain</code> 属性配置存储在磁盘上的请求日志的保留期。将保留期设置为长于 <code>P1D</code> (#12559)</li>
+<li>您现在可以在values.yaml 文件中为历史StatefulSet 指定活动性和就绪性探测延迟。默认值为 60 秒 (#12805)</li>
+<li>改进了本机二元运算符的异常消息 (#12335)</li>
+<li>改进了当 URI 指向不存在的文件时的错误消息 (#12490)</li>
+<li>​​改进了模块的构建性能（#12486）</li>
+<li>改进了使用 druid-kafka-extraction-namespace 扩展进行的查找，以处理已从 kafka 主题中删除的记录 (#12819)</li>
+<li>将核心 Apache Kafka 依赖项更新为 3.2.0 (#12538)</li>
+<li>将 ORC 更新为 1.7.5 (#12667)</li>
+<li>将 Jetty 更新为 9.4.41.v20210516 (#12629)</li>
+<li>将 <code>Zstandard</code> 压缩库添加到 <code>CompressionStrategy</code> (#12408)</li>
+<li>将默认 gzip 缓冲区大小更新为 8 KB 以提高性能 (#12579)</li>
+<li>将压缩配置中的默认 <code>inputSegmentSizeBytes</code> 更新为 100,000,000,000,000 (~100TB)</li>
+</ul>
+<h1 id="-错误修复"><a name="24.0.0-bug-fixes" href="#24.0.0-bug-fixes">#</a> 错误修复</h1>
+<p>Druid 24.0 包含超过 68 个错误修复。您可以在[此处]找到完整列表(<a href="https://github.com/apache/druid/issues?q=is%3Aclosed+label%3ABug+milestone%3A24.0.0+">https://github.com/apache/druid/issues?q=is%3Aclosed+label%3ABug+milestone%3A24.0.0+</a>)</p>
+<h1 id="-升级到-240"><a name="24.0.0-upgrading-to-24.0" href="#24.0.0-upgrading-to-24.0">#</a> 升级到 24.0</h1>
+<h2 id="-多阶段查询引擎的权限"><a name="24.0.0-upgrading-to-24.0-permissions-for-multi-stage-query-engine" href="#24.0.0-upgrading-to-24.0-permissions-for-multi-stage-query-engine">#</a> 多阶段查询引擎的权限</h2>
+<p>要使用多阶段查询任务引擎读取外部数据，您必须具有 <a href="/docs/operations/security-user-auth.md">EXTERNAL 资源类型</a> 的 READ 权限。没有正确权限的用户在尝试运行包含 EXTERN 的 SQL 查询时会遇到 403 错误。
+您分配权限的方式取决于您的授权者。例如，对于 Druid 中的 [basic security]((/docs/development/extensions-core/druid-basic-security.md)，通过向 <a href="/docs/development/extensions-core/druid-basic-security.md#permissions">roles API</a> 发送 <code>POST</code> 请求来添加 <code>EXTERNAL READ</code> 权限。
+该示例使用名为 <code>MyBasicMetadataAuthorizer</code> 的基本授权者为具有 <code>admin</code> 角色的用户添加权限。授予以下权限：</p>
+<ul>
+<li>数据源读取</li>
+<li>数据源写入</li>
+<li>配置读取</li>
+<li>配置写入</li>
+<li>状态读取</li>
+<li>状态写入</li>
+<li>外部读取</li>
+</ul>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>curl --location --request POST 'http://localhost:8081/druid-ext/basic-security/authorization/db/MyBasicMetadataAuthorizer/roles/admin/permissions' \</span></span>
+<span class="line"><span>--header 'Content-Type: application/json' \</span></span>
+<span class="line"><span>--data-raw '[</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>  "resource": {</span></span>
+<span class="line"><span>    "name": ".*",</span></span>
+<span class="line"><span>    "type": "DATASOURCE"</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  "action": "READ"</span></span>
+<span class="line"><span>},</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>  "resource": {</span></span>
+<span class="line"><span>    "name": ".*",</span></span>
+<span class="line"><span>    "type": "DATASOURCE"</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  "action": "WRITE"</span></span>
+<span class="line"><span>},</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>  "resource": {</span></span>
+<span class="line"><span>    "name": ".*",</span></span>
+<span class="line"><span>    "type": "CONFIG"</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  "action": "READ"</span></span>
+<span class="line"><span>},</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>  "resource": {</span></span>
+<span class="line"><span>    "name": ".*",</span></span>
+<span class="line"><span>    "type": "CONFIG"</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  "action": "WRITE"</span></span>
+<span class="line"><span>},</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>  "resource": {</span></span>
+<span class="line"><span>    "name": ".*",</span></span>
+<span class="line"><span>    "type": "STATE"</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  "action": "READ"</span></span>
+<span class="line"><span>},</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>  "resource": {</span></span>
+<span class="line"><span>    "name": ".*",</span></span>
+<span class="line"><span>    "type": "STATE"</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  "action": "WRITE"</span></span>
+<span class="line"><span>},</span></span>
+<span class="line"><span>{</span></span>
+<span class="line"><span>  "resource": {</span></span>
+<span class="line"><span>    "name": "EXTERNAL",</span></span>
+<span class="line"><span>    "type": "EXTERNAL"</span></span>
+<span class="line"><span>  },</span></span>
+<span class="line"><span>  "action": "READ"</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span>]'</span></span></code></pre>
+<h2 id="-未使用段的行为"><a name="24.0.0-upgrading-to-24.0-behavior-for-unused-segments" href="#24.0.0-upgrading-to-24.0-behavior-for-unused-segments">#</a> 未使用段的行为</h2>
+<p>Druid 自动保留任何标记为未使用的段。以前，Druid 在保留期限过后从元数据存储和深度存储中永久删除未使用的段。此行为已从 <code>0.23.0</code> 恢复。
+第12693章</p>
+<h2 id="-druidprocessingfifo-的默认值"><a name="24.0.0-upgrading-to-24.0-default-for-%60druid.processing.fifo%60" href="#24.0.0-upgrading-to-24.0-default-for-%60druid.processing.fifo%60">#</a> <code>druid.processing.fifo</code> 的默认值</h2>
+<p><code>druid.processing.fifo</code> 的默认值现在为 true。这意味着同等优先级的任务将以 FIFO 方式处理。对于大多数用例，此更改可以提高负载较重的集群的性能。
+第12571章</p>
+<h2 id="-更新-jdbc-语句闭包"><a name="24.0.0-upgrading-to-24.0-update-to-jdbc-statement-closure" href="#24.0.0-upgrading-to-24.0-update-to-jdbc-statement-closure">#</a> 更新 JDBC 语句闭包</h2>
+<p>在以前的版本中，Druid 在 ResultSet 关闭时自动关闭 JDBC Statement。 Druid 在 EOF 时关闭了 ResultSet。 Druid 关闭了任何异常的声明。然而，这种行为是非标准的。
+在此版本中，Druid 的 JDBC 驱动程序更严格地遵循 JDBC 标准：
+ResultSet 在 EOF 时自动关闭，但不会关闭Statement或PreparedStatement。您的代码必须关闭这些语句，也许可以使用 try-with-resources 块。
+现在可以使用不同的参数多次使用PreparedStatement。 （以前这不是真的，因为关闭 ResultSet 会关闭PreparedStatement。）
+如果对 Statement 或PreparedStatement 的任何调用引发错误，client 代码仍必须显式关闭该语句。根据 JDBC 标准，语句不会在出现错误时自动关闭。这使您可以在关闭失败语句之前获取有关该语句的信息。
+如果您的代码依赖于旧行为，则可能需要更改代码以添加所需的关闭语句。
+第12709章</p>
+<h2 id="-已知问题"><a name="24.0.0-upgrading-to-24.0-known-issues" href="#24.0.0-upgrading-to-24.0-known-issues">#</a> 已知问题</h2>
+<h2 id="-制作人员"><a name="24.0.0-upgrading-to-24.0-credit" href="#24.0.0-upgrading-to-24.0-credit">#</a> 制作人员</h2>
+<h2 id="2bethere317布莱恩a2l007阿巴格劳abhishekagarwal87abhishekrb19adarshsanjeevaggarwalakshayamatyaavadhanula巴特米基capistrantchenrui333churromoralesclintropolis克洛文特codingparsleycryptoe湿蛋糕dependabot机器人dherg迪迪普dongjoon-hyunektravelesoragotospiritexherb弗兰克陈021ginmhellmarbeckerhwballiandr413imply-cheddar贾努克斯jasonk000jihoonsonjon-weikfarazlakshsinglaliujianhuanzzliuxiaohui1221lmsurpreloquisgonmachine424maytasmmc-jymihaylov93nishantmonu51保罗-罗杰斯彼得马沙利奥pjfanningrockc2020rohangargsomu-暗示suneet-ssuperivajtechdocsmithtejaswini-暗示tsfenwickvimil-saju沃吉维茨基vtlimwilliamhyun维权作家吉尔xvrlyuanlihanzachjshzemin-piao">@2bethere
+@317布莱恩
+@a2l007
+@阿巴格劳
+@abhishekagarwal87
+@abhishekrb19
+@adarshsanjeev
+@aggarwalakshay
+@AmatyaAvadhanula
+@巴特米基
+@capistrant
+@chenrui333
+@churromorales
+@clintropolis
+@克洛文特
+@CodingParsley
+@cryptoe
+@湿蛋糕
+@dependabot[机器人]
+@dherg
+@迪迪普
+@dongjoon-hyun
+@ektravel
+@EsoragotoSpirit
+@exherb
+@弗兰克陈021
+@ginm
+@hellmarbecker
+@hwball
+@iandr413
+@imply-cheddar
+@贾努克斯
+@jasonk000
+@jihoonson
+@jon-wei
+@kfaraz
+@LakshSingla
+@liujianhuanzz
+@liuxiaohui1221
+@lmsurpre
+@loquisgon
+@machine424
+@maytasm
+@MC-JY
+@Mihaylov93
+@nishantmonu51
+@保罗-罗杰斯
+@彼得马沙利奥
+@pjfanning
+@rockc2020
+@rohangarg
+@somu-暗示
+@suneet-s
+@superivaj
+@techdocsmith
+@tejaswini-暗示
+@TSFenwick
+@vimil-saju
+@沃吉维茨基
+@vtlim
+@williamhyun
+@维权
+@作家吉尔
+@xvrl
+@yuanlihan
+@zachjsh
+@zemin-piao</h2>
+<blockquote>
+<p><strong>来源</strong> <a href="https://github.com/apache/druid">apache/druid</a> · <code>druid-24.0.0</code> · 2022-09-16 · <a href="https://github.com/apache/druid/releases/tag/druid-24.0.0">上游版本</a>
+<em>逐字镜像以进行索引。所有权利属于上游项目。</em></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/apache/druid">apache/druid</a> · 🏷️ 版本：<code>druid-24.0.0</code> · 📅 发布：2022-09-16 · <a href="https://github.com/apache/druid/releases/tag/druid-24.0.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/druid/druid_druid-24.0.1"> <span class="k">← 下一个</span> <span class="t">24.0.1</span> </a> <a href="/zh/release_note/druid/druid_druid-0.23.0"> <span class="k">上一个 →</span> <span class="t">0.23.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/apache/druid/releases/tag/24.0.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/apache/druid" target="_blank" rel="noopener"> <span>apache/druid</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#-多阶段查询任务引擎" class># 多阶段查询任务引擎</a><a href="#-嵌套列" class># 嵌套列</a><a href="#-更新了-java-支持" class># 更新了 Java 支持</a><a href="#-更新了列索引和过滤器的查询处理" class="lv3"># 更新了列索引和过滤器的查询处理</a><a href="#-时间过滤运算符" class="lv3"># 时间过滤运算符</a><a href="#-空值和in过滤器" class="lv3"># 空值和“in”过滤器</a><a href="#-搜索查询中的虚拟列" class="lv3"># 搜索查询中的虚拟列</a><a href="#-优化-__time-上的简单-min--max-sql-查询" class="lv3"># 优化 __time 上的简单 MIN / MAX SQL 查询</a><a href="#-字符串聚合结果" class="lv3"># 字符串聚合结果</a><a href="#-由于-jackson-序列化而减少了分配" class="lv3"># 由于 Jackson 序列化而减少了分配</a><a href="#-更新了-ipaddress-java-库" class="lv3"># 更新了 IPAddress Java 库</a><a href="#-查询性能改进" class="lv3"># 查询性能改进</a><a href="#-流式传输" class># 流式传输</a><a href="#-卡夫卡消费者" class="lv3"># 卡夫卡消费者</a><a href="#-kinesis-摄取" class="lv3"># Kinesis 摄取</a><a href="#-批量摄取" class># 批量摄取</a><a href="#-从-s3-批量摄取" class="lv3"># 从 S3 批量摄取</a><a href="#-总体摄取方面的改进" class># 总体摄取方面的改进</a><a href="#-提高任务管理的稳健性" class="lv3"># 提高任务管理的稳健性</a><a href="#-avatica-jdbc-驱动程序" class="lv3"># Avatica JDBC 驱动程序</a><a href="#-八小时粒度" class="lv3"># 八小时粒度</a><a href="#-摄取常规" class># 摄取常规</a><a href="#-更新了-avro-扩展" class="lv3"># 更新了 Avro 扩展</a><a href="#-采样器-api" class="lv3"># 采样器 API</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/druid/druid_druid-39.0.0"> <span class="v">39.0.0</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-38.0.0"> <span class="v">38.0.0</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-37.0.0"> <span class="v">37.0.0</span> <span class="d">26-05-08</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-36.0.0"> <span class="v">36.0.0</span> <span class="d">26-02-09</span> </a> </li><li> <a href="/zh/release_note/druid/druid_35.0.1"> <span class="v">35.0.1</span> <span class="d">25-12-15</span> </a> </li><li> <a href="/zh/release_note/druid/druid_35.0.0"> <span class="v">35.0.0</span> <span class="d">25-11-18</span> </a> </li><li> <a href="/zh/release_note/druid/druid_34.0.0"> <span class="v">34.0.0</span> <span class="d">25-08-11</span> </a> </li><li> <a href="/zh/release_note/druid/druid_druid-33.0.0"> <span class="v">33.0.0</span> <span class="d">25-04-29</span> </a> </li> </ul> <a href="/zh/releases/druid" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 71 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

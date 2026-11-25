@@ -1,0 +1,180 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>rust 1.91.0 — STAGS NextStack</title><meta name="description" content="Lower pattern bindings in the order they're written and base drop order on primary bindings' order"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/rust/rust_1.91.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/rust/1.91.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/rust/rust_1.91.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/rust/1.91.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="rust 1.91.0 — STAGS NextStack"><meta property="og:description" content="Lower pattern bindings in the order they're written and base drop order on primary bindings' order"><meta property="og:url" content="https://www.stags.cn/zh/release_note/rust/rust_1.91.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/rust/rust_1.91.0/#article","headline":"rust 1.91.0 release notes","datePublished":"2025-10-30","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/rust-lang/rust"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/rust/1.91.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/rust/rust_1.91.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/rust/1.91.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/rust/1.91.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/rust/1.91.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/rust/1.91.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/rust/1.91.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/rust">rust</a> </nav> <h1 class="detail-title"> <span class="p">rust</span> 1.91.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2025年10月30日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/rust-lang/rust" target="_blank" rel="noopener"> <span class="k">来源</span>rust-lang/rust </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/rust/1.91.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/rust/rust_1.91.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="rust-1910">rust 1.91.0</h1>
+<p><a id="1.91.0-Language"></a></p>
+<h2 id="语言">语言</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/143764">按照写入顺序降低模式绑定，并根据主绑定的顺序放置基本顺序</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/144066">稳定 <code>sysv64</code>、<code>win64</code>、<code>efiapi</code> 和 <code>aapcs</code> ABI 的 C 风格可变参数函数的声明</a>。这使这些 ABI 与 C ABI 保持一致：可变参数函数可以在 extern 块中声明，但不能定义。</li>
+<li><a href="https://github.com/rust-lang/rust/pull/144322">添加 <code>dangling_pointers_from_locals</code> lint 以警告局部变量中的悬空指针</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/144369"><code>semicolon_in_expressions_from_macros</code>从警告升级为拒绝</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/144402">稳定LoongArch32内嵌组装</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/144531">针对整数到指针转换添加默认警告 <code>integer_to_ptr_transmutes</code> lint</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/144542">稳定<code>sse4a</code>和<code>tbm</code>目标特征</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/139451">添加 <code>target_env = "macabi"</code> 和 <code>target_env = "sim"</code> cfgs</a> 作为具有相同值的 <code>target_abi</code> cfgs 的替代品。
+<a id="1.91.0-Compiler"></a></li>
+</ul>
+<h2 id="编译器">编译器</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/144804">不要警告从不将任何 <code>as</code> 强制转换为无法访问</a>
+<a id="1.91.0-Platform-Support"></a></li>
+</ul>
+<h2 id="平台支持">平台支持</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/143031">使用主机工具将 <code>aarch64-pc-windows-gnullvm</code> 和 <code>x86_64-pc-windows-gnullvm</code> 升级到第 2 层。</a> 注意：llvm-tools 和 MSI 安装程序缺失，但将在未来版本中添加。</li>
+<li><a href="https://github.com/rust-lang/rust/pull/145682">将<code>aarch64-pc-windows-msvc</code>提升至一级</a>
+有关 Rust 分层平台支持的更多信息，请参阅 Rust 的<a href="https://doc.rust-lang.org/rustc/platform-support.html">平台支持页面</a>。
+<a id="1.91.0-Libraries"></a></li>
+</ul>
+<h2 id="图书馆">图书馆</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/115746">在紧急消息中打印线程 ID</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/132087">修复 <code>core::panic::Location::file</code> 返回类型中过度限制的生命周期</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/139357"><code>std::cmp</code> 中 <code>min</code> / <code>max</code>/ <code>minmax</code> 的 <code>_by()</code> 变体的保证参数顺序</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/144330/">关于 <code>Clone</code> 和 <code>Eq</code> 性状的文件假设</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/144210"><code>std::thread</code>：如果设置线程堆栈大小失败，则返回错误</a> 这用于在标准库中发生恐慌。
+<a id="1.91.0-Stabilized-APIs"></a></li>
+</ul>
+<h2 id="稳定的-api">稳定的 API</h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/stable/std/path/struct.Path.html#method.file_prefix"><code>Path::file_prefix</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicPtr.html#method.fetch_ptr_add"><code>AtomicPtr::fetch_ptr_add</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicPtr.html#method.fetch_ptr_sub"><code>AtomicPtr::fetch_ptr_sub</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicPtr.html#method.fetch_byte_add"><code>AtomicPtr::fetch_byte_add</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicPtr.html#method.fetch_byte_sub"><code>AtomicPtr::fetch_byte_sub</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicPtr.html#method.fetch_or"><code>AtomicPtr::fetch_or</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicPtr.html#method.fetch_and"><code>AtomicPtr::fetch_and</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/sync/atomic/struct.AtomicPtr.html#method.fetch_xor"><code>AtomicPtr::fetch_xor</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u32.html#method.strict_add"><code>{integer}::strict_add</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u32.html#method.strict_sub"><code>{integer}::strict_sub</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u32.html#method.strict_mul"><code>{integer}::strict_mul</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.i32.html#method.strict_div"><code>{integer}::strict_div</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.i32.html#method.strict_div_euclid"><code>{integer}::strict_div_euclid</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.i32.html#method.strict_rem"><code>{integer}::strict_rem</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.i32.html#method.strict_rem_euclid"><code>{integer}::strict_rem_euclid</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u32.html#method.strict_neg"><code>{integer}::strict_neg</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u32.html#method.strict_shl"><code>{integer}::strict_shl</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u32.html#method.strict_shr"><code>{integer}::strict_shr</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u32.html#method.strict_pow"><code>{integer}::strict_pow</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.i32.html#method.strict_add_unsigned"><code>i{N}::strict_add_unsigned</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.i32.html#method.strict_sub_unsigned"><code>i{N}::strict_sub_unsigned</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.i32.html#method.strict_abs"><code>i{N}::strict_abs</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u32.html#method.strict_add_signed"><code>u{N}::strict_add_signed</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u32.html#method.strict_sub_signed"><code>u{N}::strict_sub_signed</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/panic/struct.PanicHookInfo.html#method.payload_as_str"><code>PanicHookInfo::payload_as_str</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/core/iter/fn.chain.html"><code>core::iter::chain</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u16.html#method.checked_signed_diff"><code>u{N}::checked_signed_diff</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/core/array/fn.repeat.html"><code>core::array::repeat</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/path/struct.PathBuf.html#method.add_extension"><code>PathBuf::add_extension</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/path/struct.PathBuf.html#method.with_added_extension"><code>PathBuf::with_added_extension</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/time/struct.Duration.html#method.from_mins"><code>Duration::from_mins</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/time/struct.Duration.html#method.from_hours"><code>Duration::from_hours</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/path/struct.PathBuf.html#impl-PartialEq%3Cstr%3E-for-PathBuf"><code>impl PartialEq&#x3C;str> for PathBuf</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/path/struct.PathBuf.html#impl-PartialEq%3CString%3E-for-PathBuf"><code>impl PartialEq&#x3C;String> for PathBuf</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/path/struct.Path.html#impl-PartialEq%3Cstr%3E-for-Path"><code>impl PartialEq&#x3C;str> for Path</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/path/struct.Path.html#impl-PartialEq%3CString%3E-for-Path"><code>impl PartialEq&#x3C;String> for Path</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/string/struct.String.html#impl-PartialEq%3CPathBuf%3E-for-String"><code>impl PartialEq&#x3C;PathBuf> for String</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/string/struct.String.html#impl-PartialEq%3CPath%3E-for-String"><code>impl PartialEq&#x3C;Path> for String</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.str.html#impl-PartialEq%3CPathBuf%3E-for-str"><code>impl PartialEq&#x3C;PathBuf> for str</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.str.html#impl-PartialEq%3CPath%3E-for-str"><code>impl PartialEq&#x3C;Path> for str</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/net/struct.Ipv4Addr.html#method.from_octets"><code>Ipv4Addr::from_octets</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/net/struct.Ipv6Addr.html#method.from_octets"><code>Ipv6Addr::from_octets</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/net/struct.Ipv6Addr.html#method.from_segments"><code>Ipv6Addr::from_segments</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/default/trait.Default.html#impl-Default-for-Pin%3CBox%3CT%3E%3E"><code>impl&#x3C;T> Default for Pin&#x3C;Box&#x3C;T>> where Box&#x3C;T>: Default, T: ?Sized</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/default/trait.Default.html#impl-Default-for-Pin%3CRc%3CT%3E%3E"><code>impl&#x3C;T> Default for Pin&#x3C;Rc&#x3C;T>> where Rc&#x3C;T>: Default, T: ?Sized</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/default/trait.Default.html#impl-Default-for-Pin%3CArc%3CT%3E%3E"><code>impl&#x3C;T> Default for Pin&#x3C;Arc&#x3C;T>> where Arc&#x3C;T>: Default, T: ?Sized</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/cell/struct.Cell.html#method.as_array_of_cells"><code>Cell::as_array_of_cells</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u64.html#method.carrying_add"><code>u{N}::carrying_add</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u64.html#method.borrowing_sub"><code>u{N}::borrowing_sub</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u64.html#method.carrying_mul"><code>u{N}::carrying_mul</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.u64.html#method.carrying_mul_add"><code>u{N}::carrying_mul_add</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/collections/struct.BTreeMap.html#method.extract_if"><code>BTreeMap::extract_if</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/collections/struct.BTreeSet.html#method.extract_if"><code>BTreeSet::extract_if</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/os/windows/ffi/struct.EncodeWide.html#impl-Debug-for-EncodeWide%3C&#x27;_%3E"><code>impl Debug for windows::ffi::EncodeWide&#x3C;'_></code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.ceil_char_boundary"><code>str::ceil_char_boundary</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.str.html#method.floor_char_boundary"><code>str::floor_char_boundary</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/num/struct.Saturating.html#impl-Sum-for-Saturating%3Cu32%3E"><code>impl Sum for Saturating&#x3C;u{N}></code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/num/struct.Saturating.html#impl-Sum%3C%26Saturating%3Cu32%3E%3E-for-Saturating%3Cu32%3E"><code>impl Sum&#x3C;&#x26;Self> for Saturating&#x3C;u{N}></code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/num/struct.Saturating.html#impl-Product-for-Saturating%3Cu32%3E"><code>impl Product for Saturating&#x3C;u{N}></code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/num/struct.Saturating.html#impl-Product%3C%26Saturating%3Cu32%3E%3E-for-Saturating%3Cu32%3E"><code>impl Product&#x3C;&#x26;Self> for Saturating&#x3C;u{N}></code></a>
+这些以前稳定的 API 现在在 const 上下文中稳定：</li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.array.html#method.each_ref"><code>&#x3C;[T; N]>::each_ref</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/primitive.array.html#method.each_mut"><code>&#x3C;[T; N]>::each_mut</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/ffi/struct.OsString.html#method.new"><code>OsString::new</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/path/struct.PathBuf.html#method.new"><code>PathBuf::new</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/any/struct.TypeId.html#method.of"><code>TypeId::of</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/ptr/fn.with_exposed_provenance.html"><code>ptr::with_exposed_provenance</code></a></li>
+<li><a href="https://doc.rust-lang.org/stable/std/ptr/fn.with_exposed_provenance_mut.html"><code>ptr::with_exposed_provenance_mut</code></a>
+<a id="1.91.0-Cargo"></a></li>
+</ul>
+<h2 id="货物">货物</h2>
+<ul>
+<li>🎉 稳定 <code>build.build-dir</code>。此配置设置存储中间构建工件的目录。这些工件是由 Cargo 和 rustc 在构建过程中生成的。最终用户通常不需要与它们交互，并且 <code>build-dir</code> 内部的布局是一个实现细节，可能会更改，恕不另行通知。 (<a href="https://doc.rust-lang.org/stable/cargo/reference/config.html#buildbuild-dir">配置文档</a>) (<a href="https://doc.rust-lang.org/stable/cargo/reference/build-cache.html">构建缓存文档</a>) <a href="https://github.com/rust-lang/cargo/pull/15833">#15833</a> <a href="https://github.com/rust-lang/cargo/pull/15840">#15840</a></li>
+<li><code>--target</code> 标志和 <code>build.target</code> 配置现在可以采用文字 <code>"host-tuple"</code> 字符串，该字符串将在内部由主机的目标三元组替换。 <a href="https://github.com/rust-lang/cargo/pull/15838">#15838</a> <a href="https://github.com/rust-lang/cargo/pull/16003">#16003</a> <a href="https://github.com/rust-lang/cargo/pull/16032">#16032</a>
+<a id="1.91.0-Rustdoc"></a></li>
+</ul>
+<h2 id="rustdoc">Rustdoc</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/145100">在搜索结果中，文档别名的排名低于同名的非别名项目</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/145731">原始指针现在可用于基于类型的搜索，如引用</a>。这意味着您现在可以搜索 <code>*const u8 -></code> 之类的内容，此外，接受或返回原始指针的函数现在将在搜索结果中正确显示其签名。
+<a id="1.91.0-Compatibility-Notes"></a></li>
+</ul>
+<h2 id="兼容性说明">兼容性说明</h2>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/144156">始终要求协程捕获实时生效</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/131477">Apple：与 <code>cc</code> 链接时始终传递 SDK 根，并通过 <code>SDKROOT</code> env var 传递它</a>。这应该可以修复 Xcode 中运行的 ZZPH100​​ZZ 的链接问题。 <code>/usr/local/lib</code> 中的库可能不再自动链接，如果您开发或使用依赖于此的包，则应在 <code>build.rs</code> 脚本中显式设置 <code>cargo::rustc-link-search=/usr/local/lib</code>。</li>
+<li><a href="https://github.com/rust-lang/rust/pull/135331">现在正确禁止像 <code>TraitRef&#x3C;AssocTy: ?Sized></code> 中这样的关联类型绑定位置中的放宽边界</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/142681">添加不稳定的 <code>#[sanitize(xyz = "on|off")]</code> 内置属性，该属性会遮蔽同名的程序宏</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/143028">修复了 drop 检查器对于使用 let-else 声明的绑定更加宽松的问题</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/144689">解析属性时更加严格，许多无效属性会出错</a>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/143808">无效 <code>#[should_panic]</code> 属性错误</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/143193">无效 <code>#[link]</code> 属性错误</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/rust-lang/rust/pull/143929">将名称解析中的所有弃用 lint 标记为默认拒绝，并在依赖项中报告</a></li>
+<li>对于表达式位置中扩展为以分号 (<code>;</code>) 结尾的 <code>macro_rules!</code> 宏，lint <code>semicolon_in_expressions_from_macros</code> 现在默认被拒绝。它已经是默认警告，并且未来兼容性警告（FCW）甚至在依赖项中也会发出警告。这个 lint 将来会成为一个硬错误。</li>
+<li><a href="https://github.com/rust-lang/rust/pull/144386">固有 impl 中的 Trait impl 修饰符（例如，<code>unsafe</code>、<code>!</code>、<code>default</code>）在语法上不再有效</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/144544">开始报告依赖项中 <code>ill_formed_attribute_input</code> 的未来损坏</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/145342">限制 Rust Edition 2024 中 <code>if let</code> 审查中的宏 <code>pin!</code>、<code>format_args!</code>、<code>write!</code> 和 <code>writeln!</code> 创建的临时文件的范围。</a> 这适用于 <a href="https://doc.rust-lang.org/edition-guide/rust-2024/temporary-if-let-scope.html">Rust Edition 2024’s <code>if let</code> 临时作用域规则</a> 到这些临时变量，这些临时变量以前可以在 <code>if</code> 表达式之后生存，无论版本如何。</li>
+<li><a href="https://github.com/rust-lang/rust/pull/145463">元组索引、元组结构索引和结构字段名称位置中的无效数字文字后缀现在被正确拒绝</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/145604">标有关键字 <code>static</code> 的闭包现在在语法上无效</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/146211">不再允许在 <code>--cfg</code> 和 <code>--check-cfg</code> 参数中使用 Shebang</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/147056">添加未来不兼容 lint 以暂时缩短 Rust 1.92 的使用寿命</a>
+货物兼容性注意事项：</li>
+<li>设置 <code>build.build-dir</code> 时，<code>cargo publish</code> 不再将 <code>.crate</code> tarball 保留为最终构建工件。这些 tarball 以前由于疏忽而被包含在内，现在被视为中间工件。要获取 <code>.crate</code> tarball 作为最终工件，请使用 <code>cargo package</code>。在未来版本中，无论 <code>build.build-dir</code> 为何，此更改都将适用。 <a href="https://github.com/rust-lang/cargo/pull/15910">#15910</a></li>
+<li>调整货物消息以匹配 rustc 诊断风格。这会更改 Cargo 消息使用的一些终端颜色。 <a href="https://github.com/rust-lang/cargo/pull/15928">#15928</a></li>
+<li>依赖于<a href="https://doc.rust-lang.org/cargo/reference/build-cache.html">Cargo <code>build-dir</code> 的内部细节</a> 的工具和项目可能不适用于更改 <code>build-dir</code> 布局的用户。对于这样做的人，我们建议主动测试这些情况，特别是因为我们正在考虑将来更改 <code>build-dir</code> 的默认位置 (<a href="https://github.com/rust-lang/cargo/issues/16147">cargo#16147</a>)。如果您无法迁移 Cargo 的内部详细信息，我们希望在准备更改 <code>build-dir</code> (<a href="https://github.com/rust-lang/cargo/issues/15010">cargo#15010</a>) 的布局时了解有关您的用例的更多信息。
+<a id="1.91.0-Internal-Changes"></a></li>
+</ul>
+<h2 id="内部变化">内部变化</h2>
+<p>这些更改不会影响 Rust 的任何公共接口，但它们代表了 rustc 及相关工具的性能或内部结构的重大改进。</p>
+<ul>
+<li><a href="https://github.com/rust-lang/rust/pull/143684">更新至 LLVM 21</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/rust-lang/rust">rust-lang/rust</a> · 🏷️ 版本：<code>1.91.0</code> · 📅 发布：2025-10-30 · <a href="https://github.com/rust-lang/rust/releases/tag/1.91.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/rust/rust_1.91.1"> <span class="k">← 下一个</span> <span class="t">1.91.1</span> </a> <a href="/zh/release_note/rust/rust_1.90.0"> <span class="k">上一个 →</span> <span class="t">1.90.0</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/rust-lang/rust/releases/tag/1.91.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/rust-lang/rust" target="_blank" rel="noopener"> <span>rust-lang/rust</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#语言" class>语言</a><a href="#编译器" class>编译器</a><a href="#平台支持" class>平台支持</a><a href="#图书馆" class>图书馆</a><a href="#稳定的-api" class>稳定的 API</a><a href="#货物" class>货物</a><a href="#rustdoc" class>Rustdoc</a><a href="#兼容性说明" class>兼容性说明</a><a href="#内部变化" class>内部变化</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/rust/rust_1.100.0"> <span class="v">1.100.0</span> <span class="d">26-11-12</span> </a> </li><li> <a href="/zh/release_note/rust/rust_1.99.1"> <span class="v">1.99.1</span> <span class="d">26-10-16</span> </a> </li><li> <a href="/zh/release_note/rust/rust_1.99.0"> <span class="v">1.99.0</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/zh/release_note/rust/rust_1.98.1"> <span class="v">1.98.1</span> <span class="d">26-09-03</span> </a> </li><li> <a href="/zh/release_note/rust/rust_1.98.0"> <span class="v">1.98.0</span> <span class="d">26-08-20</span> </a> </li><li> <a href="/zh/release_note/rust/rust_1.97.1"> <span class="v">1.97.1</span> <span class="d">26-07-16</span> </a> </li><li> <a href="/zh/release_note/rust/rust_1.97.0"> <span class="v">1.97.0</span> <span class="d">26-07-09</span> </a> </li><li> <a href="/zh/release_note/rust/rust_1.96.1"> <span class="v">1.96.1</span> <span class="d">26-07-05</span> </a> </li> </ul> <a href="/zh/releases/rust" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

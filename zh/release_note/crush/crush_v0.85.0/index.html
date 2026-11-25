@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>crush v0.85.0 — STAGS NextStack</title><meta name="description" content="This release brings us a question tool (at last!) plus a bunch of bugfixes and niceties. Let's go!"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/crush/crush_v0.85.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/crush/0.85.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/crush/crush_v0.85.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/crush/0.85.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="crush v0.85.0 — STAGS NextStack"><meta property="og:description" content="This release brings us a question tool (at last!) plus a bunch of bugfixes and niceties. Let's go!"><meta property="og:url" content="https://www.stags.cn/zh/release_note/crush/crush_v0.85.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/crush/crush_v0.85.0/#article","headline":"crush v0.85.0 release notes","datePublished":"2026-07-16","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/charmbracelet/crush"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/crush/0.85.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/crush/crush_v0.85.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/crush/0.85.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/crush/0.85.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/crush/0.85.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/crush/0.85.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/crush/0.85.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/crush">crush</a> </nav> <h1 class="detail-title"> <span class="p">crush</span> v0.85.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年7月16日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/charmbracelet/crush" target="_blank" rel="noopener"> <span class="k">来源</span>charmbracelet/crush </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/crush/0.85.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/crush/crush_v0.85.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <p>#粉碎v0.85.0</p>
+<h1 id="如果您有疑问我们有答案">如果您有疑问，我们有答案</h1>
+<p>此版本为我们带来了一个问题工具（终于！）以及一堆错误修复和细节。我们走吧！</p>
+<h2 id="提问工具">提问工具</h2>
+<p>那么！ Crush 现在附带了一流的问题工具，当法学硕士想要拷问你时非常有用。问题工具有多种形式，如单选、多选、自由格式文本和是/否。问题也可以组合在一起构建一个表格。</p>
+<p><img width="600" src="https://github.com/user-attachments/assets/81097b9b-6819-4e7d-9944-6ae771f6dab5"></p>
+你说什么？ “有鼠标支持吗？”为什么，是的。
+<p><img width="600" src="https://github.com/user-attachments/assets/75911693-49c9-4475-b812-935221337f5b"></p>
+这是什么巫术？只有@taciturnaxolotl 知道。他在 [Hyper](https://hyper.charm.land) 上仅使用开源模型单独完成了整个功能。
+## 快点等待吧
+你是否曾经把法学硕士投入到工作中，却忘记了它，回来后想知道它已经运转了多久？ @andrinoff确实做到了。不再好奇了。
+<p><img width="411" alt="输出" src="https://github.com/user-attachments/assets/a2e35914-d89f-4a77-97d6-3283f1de06a3"></p>
+## 还有更多
+就像 80 年代的 Prince 一样，@taciturnaxolotl 与 @andreynering 一起继续他的精彩之旅，让《Crush》在幕后变得更好：
+* 修正：`crush auth` 现在可以在 client/服务器模式之外工作
+* 新功能：Crush 现在在失败时自动在后台重试身份验证
+* 改进：对话现在在小屏幕上呈现出色的效果
+* Perf：滚动条优化以加快渲染速度
+* Perf：记忆标记渲染器以加快渲染速度
+* Perf：如果转弯在开始前取消，则短路 `jq` 内置操作
+* 耶！ OpenAI 合并了我们上游的 PR，所以我们放弃了分叉
+系好安全带，我们还有更多人来。
+呵呵，
+魅力💘
+## Changelog
+### 新！
+* 686a3f46e1876e9025a29bf846f11fac91bbb3f3：壮举（对话框）：当它会拥挤项目名称时隐藏列表信息列（@taciturnaxolotl）
+* 75e7195fbd713d7f13dd242b8f994f11e070fe6b：壮举（问题）：添加 client 服务器集成（@taciturnaxolotl）
+* 6f33b6668505ce0e30ef7e83fa642c9bf8c23c95：壮举（问题）：添加鼠标滚动（@taciturnaxolotl）
+* 321c661e88079a6af12cec7a4606a389a5627a73：壮举（问题）：添加鼠标支持（@taciturnaxolotl）
+* 1b5994c04f5a3e1c0d94cb05c80ccd07a187ebf1：壮举（问题）：在文本区域添加粘贴支持（@taciturnaxolotl）
+* c2a6f76565600492aa2769d66ccd5ef7c00ea6a0：壮举（问题）：添加具有结构化用户界面的问题工具（@taciturnaxolotl）
+* 9f4f145ad7c63bf6526d4517b88e8a98aa5bda96：壮举（问题）：调整问题提示和错误消息（@taciturnaxolotl）
+* 5e611a70a6e48ccb7dbb3ff020ee1efa5d37772d：壮举（问题）：允许换行并制作像 pop 这样的自由文本（@taciturnaxolotl）
+* f69a91e5ab058a78c581af68c4e6bdde569bad44：壮举（问题）：扩展问题工具的长度限制（@taciturnaxolotl）
+* 3bf40358a06e43863dc9689ea2bd286937063ca6：壮举（问题）：使转义取消问题而不是提交空答案（@taciturnaxolotl）
+* 81a8ee4b54a980e4f4d08d1f7edfcbdd7a24b810：壮举（问题）：重做选项卡大小调整和鼠标 - >键盘转换（@taciturnaxolotl）
+* a5a5c6c54b40620ec2fdc20ccdf4b3224961a654：壮举（问题）：调整确认选项卡（@taciturnaxolotl）
+* 29f5691db4a9646910397bf7437e91f30c5d4fa3：壮举（问题）：调整是/否以添加快捷方式（@taciturnaxolotl）
+* dc1609977e53f62843f6a9df78ba4283da62793c：壮举：经过秒计时器（＃3223）（@andrinoff）
+* 64bbbebc430dd5031b92d62f179cbd6a22c09069：壮举：集成幻想 OnAuthRefresh 以进行透明身份验证重试（@taciturnaxolotl）
+* d1489a603d357ab3e07dda66079130d4d5cdccb9：壮举：将 LM Studio 视觉功能连接到 SupportsImages (#3280) (@josh-socium)
+### 已修复
+* f3592bd8c501732e56128be07ce5fa694b008318：修复（对话框）：考虑输入提示宽度，以便长值不会换行（@taciturnaxolotl）
+* 2c6424c179ee6ef21d2190744410ca289a9ad9da：修复（对话框）：全屏居中权限按钮（@taciturnaxolotl）
+* bbf654fb92f578bf5a1e4956b0d38b9297768fef：修复（对话框）：集中键绑定提示渲染并停止溢出（@taciturnaxolotl）
+* d6c63d31e255841038270d4b88ef347986e8da63：修复（对话框）：将 DrawCenter 和 DrawOnboarding 内容固定到屏幕边界（@taciturnaxolotl）
+* f6528f72ff5057fbb40d8e9b4f2ebf67b3fc119f：修复（对话框）：限制窄屏幕上的退出对话框填充（@taciturnaxolotl）
+* 31550cb4f9c04d9fc1d5e552be7745d2333cfee6：修复（对话框）：修复OAuth内容包装和全角布局（@taciturnaxolotl）
+* 352e26515901b9fd563fcbe7b8d945da678135d6：修复（对话框）：修复低宽度的模型提供程序标签截断（@taciturnaxolotl）
+* a69ace5e0bb4e0461c230498c29805446b137083：修复（对话框）：保持对话框在小屏幕上稳定（@taciturnaxolotl）
+* 151b38d424fe561bc19669b10d7ee3aa66a4b19c：修复（对话框）：使 APIKeyInput 宽度响应终端大小（@taciturnaxolotl）
+* 3e2bd1cc4535eb5988c6990224f778256fcfb457：修复（对话框）：使 OAuth 对话框宽度响应终端大小（@taciturnaxolotl）
+* aaf92f866282d0eccacfa5a21025bcd25a504afc：修复（对话框）：静音命令列表快捷方式提示（@taciturnaxolotl）
+* 605dfc9e3d3cc497f7594ced3820312cc32ddc3f：修复（对话框）：删除列表滚动条旁边的死空间（@taciturnaxolotl）
+* 6407b8529ed394e6fef49c08fac3cdab165b8013：修复（对话框）：在小屏幕上缩小 FilePicker （@taciturnaxolotl）
+* 0c61aeee761afa9c967e9c6990e003bc4f5e6de7：修复（对话框）：停止列表项名称超出列表宽度（@taciturnaxolotl）
+* e271cecb3617626d8cf98fe94672c050d1eff2fd：修复（对话框）：减去推理和通知宽度中的边框大小（@taciturnaxolotl）
+* e8c2772d272f179a9073b7214e236a2159429058：修复（对话框）：当 TitleInfo 超过对话框宽度时截断（@taciturnaxolotl）
+* 2b4a01ae994cce7c2c9b5c08bb9d2aafad5dd15a：修复（对话框）：截断对话框标题而不是在小屏幕上换行（@taciturnaxolotl）
+* b5cd46c2381afda7adee567f7abadc101ef4dc2c：修复（错误）：正确抑制上下文取消错误（@taciturnaxolotl）
+* e34e707c175abd1a46f0135a2657d308129adb41：修复（事件）：恢复文件选择器事件（＃3314）（@taciturnaxolotl）
+* b75d6bc27b33bffb59b8ea9f304999515db74ff3：修复（oauth）：修复加载模型端点时的 ui 冻结问题（@taciturnaxolotl）
+* 82e889858c654896b73bcd3e80616b5adc62fe11：修复（问题）：解决公关审查反馈（@tacituraxolotl）
+* ca5a19d7432a50eee59539b7568ce825a0bca2ce：修复（问题）：修复取消选择悬停状态的错误（@taciturnaxolotl）
+* cbb9d4f2614ad87d0d2feaf7b348189fa464e25f：修复（问题）：修复滚动条在单选中消失的问题（@taciturnaxolotl）
+* 9e6175a2ea839a8a875f59e7ca05aa05e8780fde：修复（问题）：使滚动容器一致（@taciturnaxolotl）
+* 70c64b5794ec77cac6735007d68e20ae4e2fddd9：修复（问题）：根据哪个区域正确滚动路线（@taciturnaxolotl）
+* 5e6890de82a029bbb83b5e8205e483ec44e57207：修复（测试）：对handleJQ中预先取消的ctx进行保释（＃3058）（@taciturnaxolotl）
+* 1937ac54c597bb04553e8242e79314b5b1c0a9b7：修复：将问题工具光标颜色与主编辑器匹配（@meowgorithm）
+* ee00ec7bb6d0b698bad0bcda2cbf9e23ef307582：修复：登录时遵循 client 服务器模式 (#3315) (@andreynering)
+### 其他东西
+* 3c51a9f2f03e3f2e9de59a84d7a75e999c5ebe52：bug（client /服务器）：修复非交互式初始化（@taciturnaxolotl）
+* 2b969b2a862c250cbb8c529fe7148574a060f793：杂务：自动更新文件（@charmcli）
+* 4721e53c30a0c51a718b84ff54f42cdee4e63ae0：杂务：自动更新文件（@charmcli）
+* 14483caceb20c1d2283ffc69da1db7d42fb58540：杂务：切换回上游 openai sdk (#3308) (@andreynering)
+* 4d901d1be4d4aec2dd1098b7e39c28e19c505b84：perf（ui）：在大型对话中保持聊天调整大小顺利（@taciturnaxolotl）
+* d29fc2ca6c84404ae40ff7dd72c76a079ed3a1bf：perf（ui）：按文件名记忆色度词法分析器查找（@taciturnaxolotl）
+* 1bfc53f66fb92d9491b00b8602b7dff805bccca4: perf(ui): 记忆色度语法高亮样式 (@taciturnaxolotl)
+* e456a902c30e24fe5f4e7e8aa9060294079ed1a3：重构（对话框）：重复数据删除滚动条连接并驯服权限绘制（@taciturnaxolotl）
+* 492460a854cd890ac362390580b56f38ee2dd359：重构：使协调器使用结构（@taciturnaxolotl）
+---
+&#x3C;详情>
+<summary>验证工件</summary>
+首先，下载[`checksums.txt`文件](https://github.com/charmbracelet/crush/releases/download/v0.85.0/checksums.txt)和[`checksums.txt.sigstore.json`文件](https://github.com/charmbracelet/crush/releases/download/v0.85.0/checksums.txt.sigstore.json)文件，例如`wget`：
+```bash
+wget 'https://github.com/charmbracelet/crush/releases/download/v0.85.0/checksums.txt'
+wget 'https://github.com/charmbracelet/crush/releases/download/v0.85.0/checksums.txt.sigstore.json'
+```
+然后，使用 [`cosign`](https://github.com/sigstore/cosign) 进行验证：
+```bash
+cosign verify-blob \
+  --certificate-identity 'https://github.com/charmbracelet/meta/.github/workflows/goreleaser.yml@refs/heads/main' \
+  --certificate-oidc-issuer 'https://token.actions.githubusercontent.com' \
+  --bundle 'checksums.txt.sigstore.json' \
+  ./checksums.txt
+```
+如果输出是 `Verified OK`，您可以安全地使用它来验证使用 `sha256sum` 从版本下载的其他工件的校验和：
+```bash
+sha256sum --ignore-missing -c checksums.txt
+```
+完成！您的文物现已得到验证！
+<!--详情-->
+<a href="https://charm.land/"><img alt="魅力标志" src="https://stuff.charm.sh/charm-banner-next.jpg" width="400"></a>
+想法？问题？我们很高兴收到您的来信。请随时联系 [X](https://x.com/charmcli)、[Discord](https://charm.land/discord)、[Slack](https://charm.land/slack)、[The Fediverse](https://mastodon.social/@charmcli)、[Bluesky](https://bsky.app/profile/charm.land)。
+---
+> **来源** [charmbracelet/crush](https://github.com/charmbracelet/crush) · `v0.85.0` · 2026-07-16 · [上游发布](https://github.com/charmbracelet/crush/releases/tag/v0.85.0)
+*逐字镜像以进行索引。所有权利属于上游项目。*
+---
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/charmbracelet/crush">charmbracelet/crush</a> · 🏷️ 版本：<code>v0.85.0</code> · 📅 发布：2026-07-16 · <a href="https://github.com/charmbracelet/crush/releases/tag/v0.85.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/crush/crush_v0.86.0"> <span class="k">← 下一个</span> <span class="t">v0.86.0</span> </a> <a href="/zh/release_note/crush/crush_v0.84.1"> <span class="k">上一个 →</span> <span class="t">v0.84.1</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/charmbracelet/crush/releases/tag/v0.85.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/charmbracelet/crush" target="_blank" rel="noopener"> <span>charmbracelet/crush</span> <span class="d">↗</span> </a> </li> </ul> </div>  <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/crush/crush_v0.102.0"> <span class="v">v0.102.0</span> <span class="d">26-11-19</span> </a> </li><li> <a href="/zh/release_note/crush/crush_0.101.0"> <span class="v">v0.101.0</span> <span class="d">26-11-12</span> </a> </li><li> <a href="/zh/release_note/crush/crush_0.100.0"> <span class="v">v0.100.0</span> <span class="d">26-11-05</span> </a> </li><li> <a href="/zh/release_note/crush/crush_0.99.0"> <span class="v">v0.99.0</span> <span class="d">26-10-29</span> </a> </li><li> <a href="/zh/release_note/crush/crush_v0.98.2"> <span class="v">v0.98.2</span> <span class="d">26-10-23</span> </a> </li><li> <a href="/zh/release_note/crush/crush_v0.98.1"> <span class="v">v0.98.1</span> <span class="d">26-10-09</span> </a> </li><li> <a href="/zh/release_note/crush/crush_v0.98.0"> <span class="v">v0.98.0</span> <span class="d">26-10-08</span> </a> </li><li> <a href="/zh/release_note/crush/crush_v0.97.1"> <span class="v">v0.97.1</span> <span class="d">26-09-29</span> </a> </li> </ul> <a href="/zh/releases/crush" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 59 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

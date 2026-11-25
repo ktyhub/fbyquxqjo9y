@@ -1,0 +1,1211 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>pytorch v2.6.0 — STAGS NextStack</title><meta name="description" content="Highlights · Tracked Regressions · Backwards Incompatible Change · Deprecations"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/pytorch/pytorch_v2.6.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/pytorch/2.6.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/pytorch/pytorch_v2.6.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/pytorch/2.6.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="pytorch v2.6.0 — STAGS NextStack"><meta property="og:description" content="Highlights · Tracked Regressions · Backwards Incompatible Change · Deprecations"><meta property="og:url" content="https://www.stags.cn/zh/release_note/pytorch/pytorch_v2.6.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/pytorch/pytorch_v2.6.0/#article","headline":"pytorch v2.6.0 release notes","datePublished":"2025-01-29","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/pytorch/pytorch"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/pytorch/2.6.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/pytorch/pytorch_v2.6.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/pytorch/2.6.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/pytorch/2.6.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/pytorch/2.6.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/pytorch/2.6.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/pytorch/2.6.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/pytorch">pytorch</a> </nav> <h1 class="detail-title"> <span class="p">pytorch</span> v2.6.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2025年1月29日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener"> <span class="k">来源</span>pytorch/pytorch </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/pytorch/2.6.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/pytorch/pytorch_v2.6.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="pytorch-v260">pytorch v2.6.0</h1>
+<ul>
+<li>亮点</li>
+<li>跟踪回归</li>
+<li>向后不兼容的变化</li>
+<li>弃用</li>
+<li>新功能</li>
+<li>改进</li>
+<li>错误修复</li>
+<li>性能</li>
+<li>文档</li>
+<li>开发商</li>
+</ul>
+<h2 id="亮点"><strong>亮点</strong></h2>
+<p>我们很高兴地宣布 PyTorch® 2.6 (<a href="https://github.com/pytorch/pytorch/releases/tag/v2.6.0">release notes</a>) 发布！此版本对 PT2 进行了多项改进：<code>torch.compile</code> 现在可以与 Python 3.13 一起使用；新的性能相关旋钮<code>torch.compiler.set_stance</code>；多项 AOTInductor 增强功能。除了 PT2 的改进之外，另一个亮点是 X86 CPU 上的 FP16 支持。
+注意：从本版本开始，我们将不再在 Conda 上发布，详情请参阅<a href="https://github.com/pytorch/pytorch/issues/138506">[公告]弃用 PyTorch 官方 Anaconda 频道</a>。
+对于此版本，随 CUDA 12.6.3 附带的实验性 Linux 二进制文件（以及 Linux Aarch64、Linux ROCm 6.2.4 和 Linux XPU 二进制文件）是使用 CXX11_ABI=1 构建的，并且<a href="https://dev-discuss.pytorch.org/t/pytorch-linux-wheels-switching-to-new-wheel-build-platform-manylinux-2-28-on-november-12-2024/2581">使用 Manylinux 2.28 构建平台</a>。如果您使用自定义 C++ 或 CUDA 扩展构建 PyTorch 扩展，请更新这些构建以也使用 CXX_ABI=1 并报告您遇到的任何问题。对于下一个 PyTorch 2.7 版本，我们计划将所有 Linux 版本切换为 Manylinux 2.28 和 CXX11_ABI=1，请参阅 <a href="https://github.com/pytorch/pytorch/issues/123649">[RFC] PyTorch 下一个轮子构建平台：manylinux-2.28</a> 了解详细信息和讨论。
+此外，在此版本中，作为一项重要的安全改进措施，我们更改了 <code>torch.load</code> 的 <code>weights_only</code> 参数的默认值。这是一个破坏向后兼容性的更改，请参阅<a href="https://dev-discuss.pytorch.org/t/bc-breaking-change-torch-load-is-being-flipped-to-use-weights-only-true-by-default-in-the-nightlies-after-137602/2573">此论坛帖子</a> 了解更多详细信息。
+自 PyTorch 2.5 以来，此版本由 520 名贡献者的 3892 次提交组成。我们衷心感谢我们热心社区的贡献。一如既往，我们鼓励您尝试这些并在我们改进 PyTorch 时报告任何问题。有关如何开始使用 PyTorch 2 系列的更多信息，请访问我们的<a href="https://pytorch.org/get-started/pytorch-2.0/">入门</a> 页面。
+&#x3C;表></p>
+  
+   测试版
+   
+   原型
+   
+  
+  
+   torch.compiler.set_stance
+   
+   改进了 Intel GPU 上的 PyTorch 用户体验
+   
+  
+  
+   torch.library.triton_op
+   
+   LLM 对 X86 CPU 的 FlexAttention 支持
+   
+  
+  
+   torch.compile 支持 Python 3.13
+   
+   调暗.AUTO
+   
+  
+  
+   AOT电感新包装APIs
+   
+   AOTInductor 的 CUTLASS 和 CK GEMM/CONV 后端
+   
+  
+  
+   AOTInductor：缩小器
+   
+   
+   
+  
+  
+   AOTInductor：ABI 兼容模式代码生成
+   
+   
+   
+  
+  
+   对 X86 CPU 的 FP16 支持
+   
+   
+   
+  
+<!--表-->
+*要查看公开功能提交的完整列表 click [此处](https://docs.google.com/spreadsheets/d/1TzGkWuUMF1yTe88adz1dt2mzbIsZLd3PBasy588VWgk/edit?usp=sharing)。
+### 测试版功能
+#### **[测试版] torch.compiler.set_stance**
+此功能使用户能够指定 `torch.compile` 在编译函数的不同调用之间可以采取的不同行为（“立场”）。例如，其中一种立场是 
+“eager_on_recompile”，指示 PyTorch 在需要重新编译时立即编码，并尽可能重用缓存的编译代码。
+有关更多信息，请参阅 [set_stance 文档](https://pytorch.org/docs/2.6/generated/torch.compiler.set_stance.html#torch.compiler.set_stance) 和 [使用 torch.compiler.set_stance 进行动态编译控制](https://pytorch.org/tutorials/recipes/torch_compiler_set_stance_tutorial.html) 教程。
+**[测试版] torch.library.triton_op**
+`torch.library.triton_op` 提供了一种创建由用户定义的 triton 内核支持的自定义运算符的标准方法。 
+当用户将用户定义的 Triton 内核转换为自定义运算符时，`torch.library.triton_op` 允许 `torch.compile` 窥视实现，从而使 `torch.compile` 能够优化其中的 Triton 内核。
+有关更多信息，请参阅 [triton_op 文档](https://pytorch.org/docs/2.6/library.html#torch.library.triton_op) 和[通过 torch.compile 使用用户定义的 Triton 内核](https://pytorch.org/tutorials/recipes/torch_compile_user_defined_triton_kernel_tutorial.html) 教程。
+**[Beta] torch.compile 支持 Python 3.13**
+`torch.compile` 之前仅支持 Python 至 3.12 版本。用户现在可以在 Python 3.13 中使用 `torch.compile` 优化模型。 
+**[测试版] AOTInductor 的新包装 APIs**
+引入了新的包格式“[PT2 archive](https://docs.google.com/document/d/1RQ4cmywilnFUT1VE-4oTGxwXdc8vowCSZsrRgo3wFA8/edit?usp=sharing)”。这本质上包含 AOTInductor 需要使用的所有文件的 zip 文件，并允许用户将所需的所有内容发送到其他环境。还有一种功能可以将多个模型打包到一个工件中，并在包内存储其他元数据。
+有关更多详细信息，请参阅更新的 [Python 运行时的 torch.export AOTInductor 教程](https://pytorch.org/tutorials/recipes/torch_export_aoti_python.html)。
+**[测试版] AOTInductor：缩小器**
+如果用户在使用 AOTInductor APIs 时遇到错误，AOTInductor Minifier 允许创建重现错误的最小 nn.Module。
+有关更多信息，请参阅 [AOTInductor Minifier 文档](https://pytorch.org/docs/2.6/torch.compiler_aot_inductor_minifier.html)。
+**[Beta] AOTInductor：ABI 兼容模式代码生成**
+AOTInductor 生成的模型代码依赖于 Pytorch cpp 库。随着 Pytorch 的快速发展，确保之前 AOTInductor 编译的模型可以继续在较新的 Pytorch 版本上运行非常重要，即 AOTInductor 向后兼容。 
+为了保证应用程序二进制接口 (ABI) 向后兼容性，我们在 libtorch 中仔细定义了一组稳定的 C 接口，并确保 AOTInductor 生成的代码仅引用特定的 API 集，而不引用 libtorch 中的其他内容。我们将保持 C API 集在 Pytorch 版本中保持稳定，从而为 AOTInductor 编译的模型提供向后兼容性保证。
+**[Beta] FP16 支持 X86 CPU（Eager 模式和 Inductor 模式）**
+Float16 数据类型通常用于减少 AI 推理和训练中的内存使用并加快计算速度。最近推出的 [Intel® Xeon® 6 with P-Cores](https://www.intel.com/content/www/us/en/products/details/processors/xeon/xeon6-p-cores.html) 等 CPU 支持带有本机加速器 [AMX](https://www.intel.com/content/www/us/en/products/docs/accelerator-engines/advanced-matrix-extensions/overview.html) 的 Float16 数据类型。 PyTorch 2.5 中引入了对 X86 CPU 的 Float16 支持作为原型功能，现在它针对 eager 模式和 Torch.compile + Inductor 模式进行了进一步改进，使其成为 Beta 级功能，其功能和性能都经过了广泛的工作负载验证。
+### 原型特征
+**[原型]改进了 Intel GPU 上的 PyTorch 用户体验**
+通过简化安装步骤、Windows 版本二进制发行版以及扩大支持的 GPU 型号（包括最新的 Intel® Arc™ B 系列独立显卡）覆盖范围，PyTorch 在 Intel GPU 上的用户体验得到进一步改善。寻求在 [英特尔® 酷睿™ Ultra AI PC](https://www.intel.com/content/www/us/en/products/docs/processors/core-ultra/ai-pc.html) 和 [英特尔® Arc™ 独立显卡](https://www.intel.com/content/www/us/en/products/details/discrete-gpus/arc.html) 上使用 PyTorch 模型进行微调、推理和开发的应用程序开发人员和研究人员现在可以直接安装适用于 Windows、Linux 和 Linux 2 的 Windows 子系统的二进制版本的 PyTorch。
+* 简化了英特尔 GPU 软件堆栈设置，可实现 torch-xpu PIP 轮的一次 click 安装，以开箱即用的方式运行深度学习工作负载，从而消除了安装和激活英特尔 GPU 开发软件包的复杂性。
+* torch core、torchvision 和 torchaudio 的 Windows 二进制版本已可用于英特尔 GPU，并且支持的 GPU 型号已从采用英特尔® Arc™ 显卡的英特尔® 酷睿™ Ultra 处理器、[采用英特尔® Arc™ 显卡的英特尔® 酷睿™ Ultra 系列 2](https://www.intel.com/content/www/us/en/products/details/processors/core-ultra.html) 和 [英特尔® Arc™ A 系列显卡](https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/arc/desktop/a-series/overview.html) 扩展到最新的 GPU 硬件 [英特尔® Arc™ B 系列图形](https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/arc/desktop/b-series/overview.html)。
+* 通过 SYCL* 内核进一步增强了 Intel GPU 上 Aten 算子的覆盖范围，以实现流畅的 eager 模式执行，以及 Intel GPU 上 torch.compile 的错误修复和性能优化。
+有关Intel GPU支持的更多信息，请参阅[入门指南](https://pytorch.org/docs/main/notes/get_start_xpu.html)。
+**[原型] X86 CPU 上针对法学硕士的 FlexAttention 支持**
+FlexAttention 最初在 PyTorch 2.5 中引入，旨在通过灵活的 API 为 Attention 变体提供优化实现。在 PyTorch 2.6 中，通过 TorchInductor CPP 后端添加了对 FlexAttention 的 X86 CPU 支持。这项新功能利用并扩展了当前的 CPP 模板功能，以支持基于现有 FlexAttention API 的广泛注意力变体（例如：PageAttention，这对于 LLM 推理至关重要），并在 x86 CPU 上带来优化的性能。有了这个特性，就可以很容易地使用FlexAttention API在CPU平台上组成Attention解决方案并获得良好的性能。
+**[原型] Dim.AUTO**
+`Dim.AUTO` 允许与 `torch.export` 一起使用自动动态形状。用户可以使用 `Dim.AUTO ` 导出并“发现”模型的动态行为，自动推断最小/最大范围、尺寸之间的关系以及静态/动态行为。
+与用于指定动态形状的现有命名 Dims 方法相比，这是一种更加用户友好的体验，后者要求用户在导出时完全了解其模型的动态行为。 `Dim.AUTO` 允许用户编写不依赖于模型的通用代码，从而提高了动态形状导出的易用性。
+请参阅[torch.export 教程](https://pytorch.org/tutorials/intermediate/torch_export_tutorial.html#constraints-dynamic-shapes) 了解更多信息。
+**[原型] AOTInductor 的 CUTLASS 和 CK GEMM/CONV 后端**
+CUTLASS 和 CK 后端为 Inductor 中的 GEMM 自动调谐添加了内核选择。现在 AOTInductor 中也提供了此功能，它可以在 C++ 运行时环境中运行。两个后端的主要改进是通过消除冗余内核二进制编译和动态形状支持来提高编译时速度。
+## **跟踪回归**
+### torch.device(0) 使 CUDA 初始化在子进程中失败 
+自 PyTorch 2.5.0 以来，存在一个已知的回归 (#144152)，`torch.device(0)` 使 CUDA 初始化在子进程中失败。
+曾尝试修复回归，但它导致了一些复杂性并被恢复。
+一个简单的解决方法是使用 `torch.device('cuda')` 或 `torch.device('cuda:0')` 代替。
+### 使用 out=variant 编译 torch.all 操作时的回归
+报告了 PyTorch 2.6.0 的回归 (https://github.com/pytorch/pytorch/issues/145220) 
+`torch.all` 运算符的 `out=` 变体的编译。这应该是一个罕见的用例，解决方法可以是
+重写模型代码以避免 `out=` 变体。
+## **向后不兼容的更改**
+### 将默认的 torch.load 翻转为weights_only ([#137602](https://github.com/pytorch/pytorch/pull/137602), [#138225](https://github.com/pytorch/pytorch/pull/138225), [#138866](https://github.com/pytorch/pytorch/pull/138866), [#139221](https://github.com/pytorch/pytorch/pull/139221), [#140304](https://github.com/pytorch/pytorch/pull/140304), [#138936](https://github.com/pytorch/pytorch/pull/138936)、[#139541](https://github.com/pytorch/pytorch/pull/139541)、[#140738](https://github.com/pytorch/pytorch/pull/140738)、[#142153](https://github.com/pytorch/pytorch/pull/142153)、[#139433](https://github.com/pytorch/pytorch/pull/139433))
+我们正在结束从 2.4 开始的弃用循环，并将 `torch.load` 翻转为默认使用 `weights_only=True`。
+设置此标志后，`torch.load` 不使用通常的 pickle 模块，而是使用自定义的 unpickler，仅调用加载状态字典和基本类型所需的函数和类。
+虽然此更改对于序列化超过基本类型的用户来说具有破坏性，但我们预计默认情况下增强的安全性是值得的权衡。请注意，即使此默认值更安全，我们仍然建议仅加载 trusted 检查点，并依赖更受约束（甚至更安全）的格式，例如 [safetensors](https://github.com/huggingface/safetensors) 用于非 trusted 检查点。
+有关完整详细信息，请参阅[此开发讨论帖子](https://dev-discuss.pytorch.org/t/bc-breaking-change-torch-load-is-being-flipped-to-use-weights-only-true-by-default-in-the-nightlies-after-137602/2573)。
+### CD 中的 Anaconda 已弃用。删除 Magma 构建中的 anaconda 依赖项 ([#141024](https://github.com/pytorch/pytorch/pull/141024)) ([#141281](https://github.com/pytorch/pytorch/pull/141281)) ([#140157](https://github.com/pytorch/pytorch/pull/140157)) ([#139888](https://github.com/pytorch/pytorch/pull/139888)) ([#140141](https://github.com/pytorch/pytorch/pull/140141)) ([#139924](https://github.com/pytorch/pytorch/pull/139924)) ([#140158](https://github.com/pytorch/pytorch/pull/140158)) ([#142019](https://github.com/pytorch/pytorch/pull/142019)) ([#142276](https://github.com/pytorch/pytorch/pull/142276)) ([#142277](https://github.com/pytorch/pytorch/pull/142277)) ([#142282](https://github.com/pytorch/pytorch/pull/142282))
+PyTorch 将停止发布依赖于 Anaconda 默认包的 Anaconda 包。我们引导用户使用 download.pytorch.org 或 PyPI 中的官方 Wheel 软件包，或者如果他们想继续使用 conda，则改用 conda-forge (pytorch) 软件包。更多详情请参阅【本公告】(https://github.com/pytorch/pytorch/issues/138506)
+### 为以下二进制文件添加了 Manylinux 2.28 原型支持和 CXX11_ABI=1：Linux CUDA 12.6、Linux aarch64 CPU、Linux aarch64 GPU CUDA 12.6、ROCm 6.2.4、Linux XPU ([#139894](https://github.com/pytorch/pytorch/pull/139894)) ([#139631](https://github.com/pytorch/pytorch/pull/139631)) ([#139636](https://github.com/pytorch/pytorch/pull/139636)) ([#140743](https://github.com/pytorch/pytorch/pull/140743)) ([#137696](https://github.com/pytorch/pytorch/pull/137696)) ([#141565](https://github.com/pytorch/pytorch/pull/141565)) ([#140681](https://github.com/pytorch/pytorch/pull/140681)) ([#141609](https://github.com/pytorch/pytorch/pull/141609)) ([#141704](https://github.com/pytorch/pytorch/pull/141704)) ([#141423](https://github.com/pytorch/pytorch/pull/141423)) ([#141609](https://github.com/pytorch/pytorch/pull/141609))
+CUDA 12.6.3 附带的 PyTorch 二进制文件是使用 CXX11_ABI=1 构建的，并使用 Manylinux 2.28 构建平台。如果您正在使用自定义 C++ 或 CUDA 扩展构建 PyTorch 扩展，请更新这些版本以使用 CXX_ABI=1 并报告您遇到的任何问题。对于下一个 PyTorch 2.7 版本，我们计划将所有 Linux 版本切换为 Manylinux 2.28 和 CXX11_ABI=1，请参阅 [[RFC] PyTorch 下一个轮子构建平台：manylinux-2.28](https://github.com/pytorch/pytorch/issues/123649) 了解详细信息和讨论。
+### ONNX
+#### `torch.onnx.export(..., dynamo=True)` 现在使用 IR 版本 10 创建 ONNX 模型 ([#141207](https://github.com/pytorch/pytorch/pull/141207)) 
+ONNX ir_version=10 用于添加对 UINT4、INT4 数据类型的支持，并在 GraphProto 和 NodeProto 中包含元数据。确保模型消费者能够接受 IR 版本 10 ONNX 模型。您可以在 https://github.com/onnx/onnx/releases/tag/v1.16.0. 上阅读有关 IRv10 的更多信息
+#### 删除了几个过时的 API ([#133825, #136279, #137789, #137790](https://github.com/pytorch/pytorch/pull/133825)) 
+删除了一些日志记录 API、`torch.onnx.ExportTypes`、`torch.onnx.export_to_pretty_string`。用户应删除上述 API 的使用。 
+#### `torch.onnx.ONNXProgram` 已重新实现和改进 ([#136281](https://github.com/pytorch/pytorch/pull/136281)) 
+所有 ONNX“发电机”API 将返回新的 `ONNXProgram` 级别。一些值得注意的可用方法有 `save()`、`optimize()`。它还可以直接应用于 PyTorch 张量，以利用 ONNX 运行时来验证 ONNX 图。一些旧方法不再可用。
+## **弃用**
+###热冷
+### 删除了 CI/CD 中的 CUDA 12.1 支持 ([#141271](https://github.com/pytorch/pytorch/pull/141271)) ([#142177](https://github.com/pytorch/pytorch/pull/142177))
+完整的版本兼容性矩阵可以在 [release.md](https://github.com/pytorch/pytorch/blob/main/RELEASE.md#release-compatibility-matrix) 中找到
+### 已弃用 `c10d::onCompletionHook` ([#142390](https://github.com/pytorch/pytorch/pull/142390))
+* 在 PT 2.5 及之前版本中，用户可以执行以下操作：
+  ```py
+  pg = dist.init_process_group()
+  def hook(work_info: torch._C._distributed_c10d.WorkInfo):
+    # do something
+  pg._register_on_completion_hook(hook)
+<h1 id="the-hook-will-be-triggered-after-the-collective-complete">The hook will be triggered after the collective complete</h1>
+<p>pg.broadcast([tensor]).wait()</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>* 从 PT 2.6 开始，当用户编写上述代码时，他们将收到一条警告消息“ProcessGroupNCCL OnCompletion hook will be deprecated invantage of Flight Recorder”</span></span>
+<span class="line"><span>### 电感器</span></span>
+<span class="line"><span>### 弃用 TORCHINDUCTOR_STACK_ALLOCATION ([#139147](https://github.com/pytorch/pytorch/pull/139147))</span></span>
+<span class="line"><span>不要设置 TORCHINDUCTOR_STACK_ALLOCATION，而是更新 torch.compile 调用：`torch.compile(options={"aot_inductor.allow_stack_allocation": True})(foo)`。</span></span>
+<span class="line"><span>## **新功能**</span></span>
+<span class="line"><span>### Python 前端</span></span>
+<span class="line"><span>* 引入与设备无关的运行时 API 设计 ([#132204](https://github.com/pytorch/pytorch/pull/132204))</span></span>
+<span class="line"><span>* 添加对 `Tensor.dim_order()` 中不明确行为的验证（[#141632](https://github.com/pytorch/pytorch/pull/141632)）</span></span>
+<span class="line"><span>* 为 `torch.linalg.{vector,matrix}_norm()` 添加 `ord` 参数的类型检查 ([#137463](https://github.com/pytorch/pytorch/pull/137463))</span></span>
+<span class="line"><span>* FlexAttention 支持 NJT（[#136792](https://github.com/pytorch/pytorch/pull/136792)、[#140723](https://github.com/pytorch/pytorch/pull/140723)）</span></span>
+<span class="line"><span>### 杂项</span></span>
+<span class="line"><span>* 在 `functional.affine_grid` 中启用前向 AD ([#135494](https://github.com/pytorch/pytorch/pull/135494))</span></span>
+<span class="line"><span>* 添加了对 ARM CPU 的 SVE 支持 ([#119571](https://github.com/pytorch/pytorch/pull/119571))</span></span>
+<span class="line"><span>* 通过 MemPool API 注册用户缓冲区（[#133603](https://github.com/pytorch/pytorch/pull/133603)）</span></span>
+<span class="line"><span>* 为数据加载器添加 in_order 标志，允许无序数据加载 ([#141833](https://github.com/pytorch/pytorch/pull/141833))</span></span>
+<span class="line"><span>### 优化</span></span>
+<span class="line"><span>* 在优化器状态字典中添加对跟踪参数名称 (named_parameters) 的支持 ([#134107](https://github.com/pytorch/pytorch/pull/134107))</span></span>
+<span class="line"><span>* 支持 Adam 和 AdamW 中的张量 beta ([#134171](https://github.com/pytorch/pytorch/pull/134171))</span></span>
+<span class="line"><span>### 分布式</span></span>
+<span class="line"><span>* c10d</span></span>
+<span class="line"><span>  * 当给出 `device_id` 时，使 ProcessGroup 初始化非阻塞 [#138527](https://github.com/pytorch/pytorch/pull/138527))</span></span>
+<span class="line"><span>  * 允许急切地初始化子组，即使默认组不是（[#138665](https://github.com/pytorch/pytorch/pull/138665)）</span></span>
+<span class="line"><span>  * 在 c10d 集体中支持 `group_dst`/`group_src` ([#140460](https://github.com/pytorch/pytorch/pull/140460)、[#139677](https://github.com/pytorch/pytorch/pull/139677)、[#140827](https://github.com/pytorch/pytorch/pull/140827)、[#140843](https://github.com/pytorch/pytorch/pull/140843)、 [#140847](https://github.com/pytorch/pytorch/pull/140847))</span></span>
+<span class="line"><span>  * 为所有用户启用飞行记录器缓冲区 ([#142260](https://github.com/pytorch/pytorch/pull/142260))</span></span>
+<span class="line"><span>  * 在 PyTorch 分布式包中注册 Intel 分布式后端 (`XCCL`) ([#141856](https://github.com/pytorch/pytorch/pull/141856))</span></span>
+<span class="line"><span>* 管道</span></span>
+<span class="line"><span>  * 使用用户提供的实张量在运行时执行形状推断（[#136912](https://github.com/pytorch/pytorch/pull/136912)）</span></span>
+<span class="line"><span>  * 添加了 ZBV 时间表 ([#142084](https://github.com/pytorch/pytorch/pull/142084))</span></span>
+<span class="line"><span>* FSDP2</span></span>
+<span class="line"><span>  * 将 FSDP2 移至公开 ([#141868](https://github.com/pytorch/pytorch/pull/141868))</span></span>
+<span class="line"><span>### 迪纳摩</span></span>
+<span class="line"><span>* 添加 `torch.compiler.set_stance` 以动态更改 `torch.compile` 行为，无需重新应用 `torch.compile`。 ([#137504](https://github.com/pytorch/pytorch/pull/137504))</span></span>
+<span class="line"><span>* `automatic_dynamic` 的配置文件引导优化 - 自动保存和加载自动动态决策以在未来运行中重复使用 ([#139001](https://github.com/pytorch/pytorch/pull/139001))</span></span>
+<span class="line"><span>* 针对高级用户的 `skip_guard_eval_unsafe` 编译器立场选项 - 当已知安全时跳过防护检查 ([#140251](https://github.com/pytorch/pytorch/pull/140251))</span></span>
+<span class="line"><span>###热冷</span></span>
+<span class="line"><span>* 在 CI/CD 中添加了对 CUDA 12.6 的支持 ([#142335](https://github.com/pytorch/pytorch/pull/142335)) ([#136321](https://github.com/pytorch/pytorch/pull/136321)) ([#138417](https://github.com/pytorch/pytorch/pull/138417)) ([#138563](https://github.com/pytorch/pytorch/pull/138563)) ([#138562](https://github.com/pytorch/pytorch/pull/138562)) ([#139909](https://github.com/pytorch/pytorch/pull/139909)) ([#138899](https://github.com/pytorch/pytorch/pull/138899)) ([#141365](https://github.com/pytorch/pytorch/pull/141365)) ([#141433](https://github.com/pytorch/pytorch/pull/141433)) ([#141805](https://github.com/pytorch/pytorch/pull/141805)) ([#141976](https://github.com/pytorch/pytorch/pull/141976)) ([#139988](https://github.com/pytorch/pytorch/pull/139988)) ([#140143](https://github.com/pytorch/pytorch/pull/140143)) ([#141377](https://github.com/pytorch/pytorch/pull/141377)) ([#142064](https://github.com/pytorch/pytorch/pull/142064))</span></span>
+<span class="line"><span>* CI/CD 中的英特尔 GPU 支持。将 XPU 支持包升级到英特尔® Deep Learning Essentials 2025.0。使用 XPU 运行时 pypi 包依赖项添加原型 Linux 和 Windows 二进制构建。 ([#138189](https://github.com/pytorch/pytorch/pull/138189)) ([#139050](https://github.com/pytorch/pytorch/pull/139050)) ([#139604](https://github.com/pytorch/pytorch/pull/139604)) ([#139775](https://github.com/pytorch/pytorch/pull/139775)) ([#140373](https://github.com/pytorch/pytorch/pull/140373)) ([#141546](https://github.com/pytorch/pytorch/pull/141546)) ([#141775](https://github.com/pytorch/pytorch/pull/141775)) ([#141135](https://github.com/pytorch/pytorch/pull/141135)) ([#142210](https://github.com/pytorch/pytorch/pull/142210)) ([#135638](https://github.com/pytorch/pytorch/pull/135638)) ([#142298](https://github.com/pytorch/pytorch/pull/142298))</span></span>
+<span class="line"><span>* 在 CI/CD 支持中添加了 Python 3.13，并在 CD 中添加了对 Python 3.13t 的原型支持（仅限 Linux 和 Linux aarch64 torch 二进制文件）([#136001](https://github.com/pytorch/pytorch/pull/136001)) ([#137396](https://github.com/pytorch/pytorch/pull/137396)) ([#138037](https://github.com/pytorch/pytorch/pull/138037)) ([#138629](https://github.com/pytorch/pytorch/pull/138629)) ([#140137](https://github.com/pytorch/pytorch/pull/140137)) ([#138095](https://github.com/pytorch/pytorch/pull/138095)) ([#141572](https://github.com/pytorch/pytorch/pull/141572)) ([#140733](https://github.com/pytorch/pytorch/pull/140733)) ([#141264](https://github.com/pytorch/pytorch/pull/141264)) ([#142294](https://github.com/pytorch/pytorch/pull/142294)) ([#137142](https://github.com/pytorch/pytorch/pull/137142)) ([#137127](https://github.com/pytorch/pytorch/pull/137127)) ([#139533](https://github.com/pytorch/pytorch/pull/139533)) ([#140733](https://github.com/pytorch/pytorch/pull/140733))</span></span>
+<span class="line"><span>### ROCM</span></span>
+<span class="line"><span>* 添加了对 UUID 输入的 AMDSMI 支持 ([#129741](https://github.com/pytorch/pytorch/pull/129741))</span></span>
+<span class="line"><span>* 为 MI300 的打包 bfloat16 和 fp16 添加了更快的硬件支持（[#135770](https://github.com/pytorch/pytorch/pull/135770)）</span></span>
+<span class="line"><span>* 改进了 1D 和 2D 张量归约的性能。 ([#137737](https://github.com/pytorch/pytorch/pull/137737))</span></span>
+<span class="line"><span>### XPU</span></span>
+<span class="line"><span>* 添加 `torch.xpu.mem_get_info` API：引入新的 API 来检索 XPU 设备的内存信息。 ([#141230](https://github.com/pytorch/pytorch/pull/141230))</span></span>
+<span class="line"><span>* 向 XPU 设备添加架构属性：向 XPU 设备添加新属性以查询架构详细信息。 ([#138186](https://github.com/pytorch/pytorch/pull/138186))</span></span>
+<span class="line"><span>* 为 XPU 事件添加 `elapsed_time` 方法：引入一种测量 XPU 事件之间经过时间的方法。 ([#140865](https://github.com/pytorch/pytorch/pull/140865))</span></span>
+<span class="line"><span>* 添加 `torch.xpu.get_arch_list` 和 `torch.xpu.get_gencode_flags`：引入新的 API 来检索 XPU 的架构列表和代码生成标志。 ([#137773](https://github.com/pytorch/pytorch/pull/137773))</span></span>
+<span class="line"><span>* 为 XPU 后端添加量化卷积支持 ([#133080](https://github.com/pytorch/pytorch/pull/133080))</span></span>
+<span class="line"><span>* 启用 XPU 设备对 LSTMCell 运算符的支持 ([#140246](https://github.com/pytorch/pytorch/pull/140246))</span></span>
+<span class="line"><span>### 分析器</span></span>
+<span class="line"><span>* 在实验配置后面隐藏 ProfilerStep 对齐 ([#137668](https://github.com/pytorch/pytorch/pull/137668))</span></span>
+<span class="line"><span>* 添加调用 NCCL 分析器插件转储功能的功能 ([#137523](https://github.com/pytorch/pytorch/pull/137523))</span></span>
+<span class="line"><span>### 导出</span></span>
+<span class="line"><span>* 添加`torch.export.export_for_training()` API 执行可运行训练的导出。请注意，这取代了未记录的 `capture_pre_autograd_graph` 功能（[#135374](https://github.com/pytorch/pytorch/pull/135374)、[#135918](https://github.com/pytorch/pytorch/pull/135918)、[#135549](https://github.com/pytorch/pytorch/pull/135549)、[#143224](https://github.com/pytorch/pytorch/pull/143224)）</span></span>
+<span class="line"><span>* AOT电感器`torch._inductor.aoti_compile_and_package`的新包装APIs</span></span>
+<span class="line"><span>* 以前，AOTInductor（通过 `torch._export.aot_compile`）会返回 .so 的路径。然而，这并没有很好的用户体验，因为实际上还有其他文件与 .so 一起使用，例如 .cubin 文件和序列化的外部内核。因此，我们引入了一种新的封装格式，“[PT2 archive](https://docs.google.com/document/d/1RQ4cmywilnFUT1VE-4oTGxwXdc8vowCSZsrRgo3wFA8/edit#heading=h.v2y2jgnwc56a)”，这就是我们打算让 AOTInductor 返回的格式。这本质上包含了 AOTInductor 需要使用的所有文件的 zip 文件，并允许用户发送到其他环境。还有一种功能可以将多个模型打包到一个工件中，并在包内存储其他元数据。</span></span>
+<span class="line"><span>* [AOT电感小型化器](https://pytorch.org/docs/main/torch.compiler_aot_inductor_minifier.html)。如果您在使用 AOT 电感器 API（例如 `torch._inductor.aoti_compile_and_package`、`torch._indcutor.aoti_load_package`）或在某些输入上运行 aoti_load_package 的加载模型时遇到错误，您可以使用 AOTInductor Minifier 创建一个最小的 nn.Module 来重现该错误。 ([#139351](https://github.com/pytorch/pytorch/pull/139351)、[#140999](https://github.com/pytorch/pytorch/pull/140999)、[#141159](https://github.com/pytorch/pytorch/pull/141159)、[#141156](https://github.com/pytorch/pytorch/pull/141156))</span></span>
+<span class="line"><span>* AOTInductor：ABI 兼容模式代码生成。为了保证 ABI 向后兼容性，我们在 libtorch 中仔细定义了一组稳定的 C 接口，并确保 AOTInductor 生成的代码仅引用特定的 API 集，而不引用 libtorch 中的其他内容。我们将保持 C API 集在 Pytorch 版本中保持稳定，从而为 AOTInductor 编译的模型提供 BC 保证。</span></span>
+<span class="line"><span>* `export.export_for_inference` 和 `export.exported_program.core_aten_decompositions` API。 `export_for_inference` 返回一个功能性的、调度后的 ATen IR。 （[#135912]（https://github.com/pytorch/pytorch/pull/135912））。</span></span>
+<span class="line"><span>### 电感器</span></span>
+<span class="line"><span>* 在 AOTI 中移动与堆栈分配相关的配置（[#139093](https://github.com/pytorch/pytorch/pull/139093)）。所有与堆栈分配相关的配置现在都有 aot_inductor 前缀，因此 `torch.compile(options={"use_minimal_arrayref_interface": True})(foo)` 现在是 `torch.compile(options={"aot_inductor.use_minimal_arrayref_interface": True})(foo)`，`torch.compile(options={"allow_stack_allocation": True})(foo)` 现在是 `torch.compile(options={"aot_inductor.allow_stack_allocation": True})(foo)`。</span></span>
+<span class="line"><span>* 将 `torch._utils.is_compiling` 移动到 `torch.compiler.is_compiling` ([#127690](https://github.com/pytorch/pytorch/pull/127690)) 将 `torch._utils.is_compiling()` 重写为 `torch.compiler.is_compiling()`。</span></span>
+<span class="line"><span>* 添加了选项 `​​autotune_num_choices_displayed` 来控制显示的内核选项数量 ([#138788](https://github.com/pytorch/pytorch/pull/138788))</span></span>
+<span class="line"><span>* 使用逐点内核通过电感器添加了选项 `force_pointwise_cat` concat 支持（[#141966](https://github.com/pytorch/pytorch/pull/141966)）。这迫使 concat 生成为带有屏蔽负载的逐点操作。</span></span>
+<span class="line"><span>* 新配置选项 `annotate_training` 将电感器注释添加到 NVTX。  ([#130429](https://github.com/pytorch/pytorch/pull/130429))</span></span>
+<span class="line"><span>* 引入了一个选项 `triton_kernel_default_layout_constraint` 来调整用户定义的 Triton 内核的步幅设置，从而增强定制性和灵活性（[#135530](https://github.com/pytorch/pytorch/pull/135530)）。</span></span>
+<span class="line"><span>* 用户可以通过更改 `torch.compile(options={"triton_kernel_default_layout_constraint": "needs_fixed_stride_order"})(foo)` 来修补电感器配置，以启用严格的自定义内核布局约束（[#135581](https://github.com/pytorch/pytorch/pull/135581)）。 </span></span>
+<span class="line"><span>* 外部可调用注册 API `register_external_matmul` 用于电感器中的 Matmul 调谐候选（[#130774](https://github.com/pytorch/pytorch/pull/130774)）。</span></span>
+<span class="line"><span>* 添加对 Windows Arm64 的支持以增强平台兼容性 ([#133088](https://github.com/pytorch/pytorch/pull/133088))。</span></span>
+<span class="line"><span>* 在 ROCm 中集成对 AMD triton 流管道器的支持以增强性能 ([#139881](https://github.com/pytorch/pytorch/pull/139881))。</span></span>
+<span class="line"><span>* 在 Inductor 中添加对 TRITON_INTERPRET 的支持 ([#140841](https://github.com/pytorch/pytorch/pull/140841))。</span></span>
+<span class="line"><span>* 在 AOTInductor 中添加 update_constant_buffer pybind 支持（[#140755](https://github.com/pytorch/pytorch/pull/140755)）。</span></span>
+<span class="line"><span>* 提供一个选项 `package_constants_in_so` 以从 AOTInductor 中的 .so 文件中排除权重 ([#141997](https://github.com/pytorch/pytorch/pull/141997))。</span></span>
+<span class="line"><span>* 将 `load_constants` 添加到包 API ([#142246](https://github.com/pytorch/pytorch/pull/142246))。</span></span>
+<span class="line"><span>* 默认启用自动功能化 v2 ([#136685](https://github.com/pytorch/pytorch/pull/136685))。</span></span>
+<span class="line"><span>* 将 raise_error_on_ignored_optimization 添加到 aoti 配置中 ([#138035](https://github.com/pytorch/pytorch/pull/138035))。</span></span>
+<span class="line"><span>* 添加用于 jit 电感器张量值打印的统计摘要（平均值/最小值/最大值等）（[#135887](https://github.com/pytorch/pytorch/pull/135887)）。</span></span>
+<span class="line"><span>### ONNX</span></span>
+<span class="line"><span>* 支持使用 `torch.cond` 的型号 ([#137428](https://github.com/pytorch/pytorch/pull/137428))</span></span>
+<span class="line"><span>`torch.cond` 是引入可转换为 ONNX 模型的控制流的推荐方法。</span></span>
+<span class="line"><span>* 用户可以提供 `custom_translation_table` 来提供将运算符转换为 ONNX 的自定义实现（[#135403](https://github.com/pytorch/pytorch/pull/135403)）</span></span>
+<span class="line"><span>当您需要覆盖某个实现或提供当前未实现的实现时，这非常有用。有关操作员注册机制的更完整描述，请参阅教程。 </span></span>
+<span class="line"><span>```py </span></span>
+<span class="line"><span># Define the translation using ONNX Script </span></span>
+<span class="line"><span>from onnxscript import opset18 as op </span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>def sym_not_onnx(input): </span></span>
+<span class="line"><span> return op.Not(input) </span></span>
+<span class="line"><span>torch.onnx.export(... </span></span>
+<span class="line"><span>dynamo=True,  </span></span>
+<span class="line"><span> custom_translation_table = { # Then provide it here </span></span>
+<span class="line"><span>    torch.sym_not: sym_not_onnx,  </span></span>
+<span class="line"><span>}) </span></span></code></pre>
+<ul>
+<li><code>ONNXProgram</code> 有一个新的 <code>optimize()</code> 方法 (<a href="https://github.com/pytorch/pytorch/pull/137667">#137667</a>)
+用户可以运行 <code>optimize()</code> 来展平 ONNX 图中的嵌套结构、执行常量折叠并删除 ONNX 模型中的冗余。建议导出到 ONNX 后调用 <code>optimize()</code>。</li>
+</ul>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#24292E">onnx_program </span><span style="color:#D73A49">=</span><span style="color:#24292E"> torch.onnx.export(</span><span style="color:#005CC5">...</span><span style="color:#24292E">, </span><span style="color:#E36209">dynamo</span><span style="color:#D73A49">=</span><span style="color:#005CC5">True</span><span style="color:#24292E">) </span></span>
+<span class="line"><span style="color:#24292E">onnx_program.optimize()  </span><span style="color:#6A737D"># Optimize the graph before saving is recommended </span></span>
+<span class="line"><span style="color:#24292E">onnx_program.save(</span><span style="color:#005CC5">...</span><span style="color:#24292E">) </span></span></code></pre>
+<ul>
+<li>用户现在可以在模型中使用复杂常量并导出到 ONNX (<a href="https://github.com/pytorch/pytorch/pull/138279">#138279</a>)</li>
+</ul>
+<h2 id="改进"><strong>改进</strong></h2>
+<h3 id="python-前端">Python 前端</h3>
+<ul>
+<li>添加对 fp16 和 bf16 的支持到 <code>torch.special.i1</code> (<a href="https://github.com/pytorch/pytorch/pull/137899">#137899</a>)</li>
+<li>添加选项以禁用 <code>torch.save</code> 中的校验和计算（<a href="https://github.com/pytorch/pytorch/pull/137735">#137735</a>）</li>
+<li>加速 fp16 张量打印 (<a href="https://github.com/pytorch/pytorch/pull/141927">#141927</a>)</li>
+<li>在 cpu 上添加对 <code>torch.adaptive_pool3d</code> 的 fp16 支持 (<a href="https://github.com/pytorch/pytorch/pull/136091">#136091</a>)</li>
+<li>添加对 fp8* 的支持到 <code>torch.masked_select</code> (<a href="https://github.com/pytorch/pytorch/pull/141928">#141928</a>)</li>
+<li>添加对复杂 fp16 的支持以 fill_empty_definistic_ (<a href="https://github.com/pytorch/pytorch/pull/137488">#137488</a>)</li>
+<li>删除对 numpy 的依赖，以在没有 numpy 的情况下进行 XLA/开放注册设备的序列化（<a href="https://github.com/pytorch/pytorch/pull/137444">#137444</a>、<a href="https://github.com/pytorch/pytorch/pull/137600">#137600</a>）</li>
+<li>修复 <code>torch.{linalg.}norm</code> 复杂半支撑 (<a href="https://github.com/pytorch/pytorch/pull/133661">#133661</a>)</li>
+</ul>
+<h3 id="神经网络前端">神经网络前端</h3>
+<ul>
+<li>允许全局模块挂钩接受关键字参数 (<a href="https://github.com/pytorch/pytorch/pull/137403">#137403</a>)</li>
+<li>在“<code>nn.utils.clip_grad_norm_</code>”中添加 API 以单独的范数计算和梯度缩放（<a href="https://github.com/pytorch/pytorch/pull/139662">#139662</a>）</li>
+<li>添加对 CPU 上反射和复制填充的 Half 支持 (<a href="https://github.com/pytorch/pytorch/pull/135931">#135931</a>)</li>
+<li>将 <code>weight</code> 参数添加到 MSELoss、HuberLoss 和 L1Loss (<a href="https://github.com/pytorch/pytorch/pull/132049">#132049</a>)</li>
+<li>高斯 nll 损失标量方差支持 (<a href="https://github.com/pytorch/pytorch/pull/138931">#138931</a>)</li>
+<li>添加了对 <code>torch.nn.Linear</code> 和 <code>torch.nn.Bilinear</code> 输入类型的验证（<a href="https://github.com/pytorch/pytorch/pull/135596">#135596</a>）</li>
+</ul>
+<h3 id="优化">优化</h3>
+<ul>
+<li>通过自动更新 <code>min_lrs</code> 改进 <code>ReduceLROnPlateau</code> 和 <code>Optimizer.add_param_group</code> 交互 (<a href="https://github.com/pytorch/pytorch/pull/137637">#137637</a>)</li>
+<li>允许 <code>SequentialLR</code> 包含 <code>ChainedScheduler</code> (<a href="https://github.com/pytorch/pytorch/pull/133450">#133450</a>)</li>
+</ul>
+<h3 id="可组合性">可组合性</h3>
+<h5 id="分解faketensor-和元张量"><strong>分解、FakeTensor 和元张量</strong></h5>
+<p>运算符分解、FakeTensors 和元张量用于在 <code>torch.compile</code> 和 <code>torch.export</code> 中绘制图。他们获得了几项改进：</p>
+<ul>
+<li>一些操作符分解得到了改进/错误修复：
+<ul>
+<li><code>aten.split_with_sizes</code> (<a href="https://github.com/pytorch/pytorch/pull/135728">#135728</a>)</li>
+<li><code>aten.max_unpool2d/aten.max_unpool3d</code> (<a href="https://github.com/pytorch/pytorch/pull/133146">#133146</a>)</li>
+<li><code>aten.dot</code> (<a href="https://github.com/pytorch/pytorch/pull/138596">#138596</a>)</li>
+<li><code>aten.layer_norm</code> (<a href="https://github.com/pytorch/pytorch/pull/140557">#140557</a>)</li>
+<li><code>aten.scaled_dot_product_attention</code> (<a href="https://github.com/pytorch/pytorch/pull/135297">#135297</a>)</li>
+<li><code>aten.matmul</code> (<a href="https://github.com/pytorch/pytorch/pull/134568">#134568</a>)</li>
+<li><code>aten._embedding_bag</code> (<a href="https://github.com/pytorch/pytorch/pull/136774">#136774</a>)</li>
+<li><code>aten.native_group_norm/aten.native_layer_norm</code> (<a href="https://github.com/pytorch/pytorch/pull/137079">#137079</a>)</li>
+<li><code>aten.to(..., non_blocking=True)</code> (<a href="https://github.com/pytorch/pytorch/pull/136513">#136513</a>)</li>
+<li><code>Aten.addmm</code> (<a href="https://github.com/pytorch/pytorch/pull/138520">#138520</a>)</li>
+<li>一般修复：
+<ul>
+<li><code>out= dtype</code> 检查一元操作 (<a href="https://github.com/pytorch/pytorch/pull/140288">#140288</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>一些 pytorch 操作符的新分解：
+<ul>
+<li><code>aten.diagonal_copy</code> (<a href="https://github.com/pytorch/pytorch/pull/136730">#136730</a>)</li>
+</ul>
+</li>
+<li>运算符的几个元实现得到了改进/错误修复：
+<ul>
+<li><code>Aten.triangular_solve</code> (<a href="https://github.com/pytorch/pytorch/pull/140186">#140186</a>)</li>
+<li><code>Aten.log_softmax</code> (<a href="https://github.com/pytorch/pytorch/pull/140289">#140289</a>)</li>
+</ul>
+</li>
+<li>一些 pytorch 运算符的新元张量实现：
+<ul>
+<li><code>aten._segment_reduce_backward</code> (<a href="https://github.com/pytorch/pytorch/pull/137442">#137442</a>)</li>
+<li><code>Aten._add_relu</code> (<a href="https://github.com/pytorch/pytorch/pull/140009">#140009</a>)
+<strong>动态形状</strong>
+我们对 <code>torch.compile</code> 中的动态形状进行了许多改进和错误修复</li>
+</ul>
+</li>
+<li>小错误消息改进（<a href="https://github.com/pytorch/pytorch/pull/136671">#136671</a>、<a href="https://github.com/pytorch/pytorch/pull/138310">#138310</a>）</li>
+<li>使 <code>native_layer_norm_backward</code> 与无支持的 SymInts 一起工作（<a href="https://github.com/pytorch/pytorch/pull/136798">#136798</a>）</li>
+<li>使 <code>masked_fill</code> 与无支持的 SymIntsl 一起工作（<a href="https://github.com/pytorch/pytorch/pull/137060">#137060</a>）</li>
+<li>使用大量符号变量提高 <code>torch.cat</code> 的跟踪速度 (<a href="https://github.com/pytorch/pytorch/pull/139653">#139653</a>)</li>
+<li>改进 <code>canonicalize_bool_expr</code> 的性能 (<a href="https://github.com/pytorch/pytorch/pull/135621">#135621</a>)</li>
+<li>改进 <code>sympy_generic_le</code> 的性能 (<a href="https://github.com/pytorch/pytorch/pull/135622">#135622</a>)</li>
+<li>在获得 <code>_maybe_evaluate_static</code> 中的含义之前简化 expr (<a href="https://github.com/pytorch/pytorch/pull/135499">#135499</a>)</li>
+<li>使用快速扩展算法（<a href="https://github.com/pytorch/pytorch/pull/135999">#135999</a>、<a href="https://github.com/pytorch/pytorch/pull/136163">#136163</a>）</li>
+<li>修复调用 <code>Add._from_args</code> 和 <code>Mul._from_args</code> (<a href="https://github.com/pytorch/pytorch/pull/136143">#136143</a>)</li>
+<li>tlparse 中的动态形状日志记录改进（<a href="https://github.com/pytorch/pytorch/pull/136508">#136508</a>、<a href="https://github.com/pytorch/pytorch/pull/141068">#141068</a>、<a href="https://github.com/pytorch/pytorch/pull/140867">#140867</a>）
+*避免涉及图形输入的混叠+突变的动态形状的一些二次行为（<a href="https://github.com/pytorch/pytorch/pull/136857">#136857</a>）</li>
+<li>对 Python 标量进行张量计算 (<a href="https://github.com/pytorch/pytorch/pull/136674">#136674</a>)</li>
+<li>延迟 <code>_SympyT</code> 的 mul/pow 扩展以实现更多折叠（<a href="https://github.com/pytorch/pytorch/pull/138235">#138235</a>）</li>
+<li>修复 a*u0 的 unbacked_bindings 中的错误 (<a href="https://github.com/pytorch/pytorch/pull/138136">#138136</a>)</li>
+<li>删除parallel_and 和parallel_or (<a href="https://github.com/pytorch/pytorch/pull/138135">#138135</a>)</li>
+<li>当 record_shapeenv_event 中的 should_record_events 为 false 时，明确避免记录 (<a href="https://github.com/pytorch/pytorch/pull/138965">#138965</a>)</li>
+<li>更好地支持带有张量子类的动态形状 (<a href="https://github.com/pytorch/pytorch/pull/125941">#125941</a>)</li>
+<li>在翻译验证中支持符号浮点 (<a href="https://github.com/pytorch/pytorch/pull/139457">#139457</a>)</li>
+<li>将 trunc 添加到 z3 验证器 (<a href="https://github.com/pytorch/pytorch/pull/140886">#140886</a>)</li>
+<li>重构 ShapeGuardPrinter 以便将来添加 C++ (<a href="https://github.com/pytorch/pytorch/pull/140968">#140968</a>)</li>
+<li>修复另一个项目备忘录丢失位置 + bool 专业化错误 (<a href="https://github.com/pytorch/pytorch/pull/139587">#139587</a>)</li>
+<li>优化增量求和 (<a href="https://github.com/pytorch/pytorch/pull/140822">#140822</a>)</li>
+<li>仅在需要时计算 new_untracked_symbols 和 <code>new_unbacked_bindings</code>。 (<a href="https://github.com/pytorch/pytorch/pull/140083">#140083</a>)</li>
+<li>使用 <code>has_free_unbacked_symbols</code> 代替 <code>bool(free_unbacked_symbols)</code> (<a href="https://github.com/pytorch/pytorch/pull/140027">#140027</a>)</li>
+<li>在评估过程中需要时尝试简化 FloorDiv 公理含义。 (<a href="https://github.com/pytorch/pytorch/pull/141267">#141267</a>)</li>
+<li>修复 AttributeError: 由于常量 prop，‘int’ 对象没有属性 ‘node’ (<a href="https://github.com/pytorch/pytorch/pull/141250">#141250</a>)</li>
+<li>更新张量化过程以专门化我们没有张量化的 symfloats (<a href="https://github.com/pytorch/pytorch/pull/139564">#139564</a>)</li>
+<li>添加 <code>TORCHDYNAMO_EXTENDED_ADVICE</code> (<a href="https://github.com/pytorch/pytorch/pull/137159">#137159</a>) (<a href="https://github.com/pytorch/pytorch/pull/137196">#137196</a>)</li>
+<li>不要尝试优化 <code>get_implications</code> 中的新含义（<a href="https://github.com/pytorch/pytorch/pull/139738">#139738</a>）
+<strong>自定义运算符</strong>
+我们改进了现有的 <code>torch.library</code> API 并添加了新的。</li>
+<li>添加新的 <code>torch.library.triton_op</code> API (<a href="https://github.com/pytorch/pytorch/pull/141880">#141880</a>)</li>
+<li>修复用户 triton 内核上的分区器行为 (<a href="https://github.com/pytorch/pytorch/pull/136878">#136878</a>)</li>
+<li>添加新自定义操作登陆页面的链接（<a href="https://github.com/pytorch/pytorch/pull/137933">#137933</a>、<a href="https://github.com/pytorch/pytorch/pull/139634">#139634</a>）</li>
+<li>修复 <code>torch.library.register_vmap</code> 以使用嵌套 vmap (<a href="https://github.com/pytorch/pytorch/pull/137306">#137306</a>)</li>
+<li><code>torch.deploy</code> 上的无操作 <code>torch.library.custom_op</code> API (<a href="https://github.com/pytorch/pytorch/pull/139509">#139509</a>)</li>
+<li>优化可变 <code>torch.library.custom_op</code> 开销 (<a href="https://github.com/pytorch/pytorch/pull/139513">#139513</a>)</li>
+<li>改进 <code>torch.library.opcheck</code> 和 <code>register_autograd</code> 文档 (<a href="https://github.com/pytorch/pytorch/pull/141883">#141883</a>)</li>
+</ul>
+<h3 id="分布式">分布式</h3>
+<ul>
+<li>c10d
+<ul>
+<li>添加了对 NaN 检查器的 FP8 支持（<a href="https://github.com/pytorch/pytorch/pull/135891">#135891</a>、<a href="https://github.com/pytorch/pytorch/pull/135961">#135961</a>、<a href="https://github.com/pytorch/pytorch/pull/136115">#136115</a>）</li>
+<li>添加了对 <code>cuStreamWriteValue32</code> 的支持 (<a href="https://github.com/pytorch/pytorch/pull/136488">#136488</a>)</li>
+<li>提高了 <code>CudaDMAConnectivityDetector</code> 中的检测鲁棒性 (<a href="https://github.com/pytorch/pytorch/pull/137530">#137530</a>)</li>
+</ul>
+</li>
+<li>简化屏障实现并进一步解耦 CPU/GPU 同步 (<a href="https://github.com/pytorch/pytorch/pull/137516">#137516</a>)
+<ul>
+<li>如果将 <code>world_size=0</code> 传递给 <code>TCPStore</code>，则抛出值错误 (<a href="https://github.com/pytorch/pytorch/pull/137792">#137792</a>)</li>
+<li>在套接字中执行重试连接超时失败（<a href="https://github.com/pytorch/pytorch/pull/138003">#138003</a>）</li>
+<li>添加了 API 以获取集体和自定义错误处理的未来结果（成功或失败）（[#137799]（<a href="https://github.com/pytorch/pytorch/pull/137799%EF%BC%89%EF%BC%89">https://github.com/pytorch/pytorch/pull/137799））</a></li>
+<li>在阻塞等待模式下禁用看门狗线程 (<a href="https://github.com/pytorch/pytorch/pull/138001">#138001</a>)</li>
+<li>添加了“<code>nccl_nonblocking_timeout</code>”的默认值（<a href="https://github.com/pytorch/pytorch/pull/138374">#138374</a>）</li>
+<li>确保 nccl comm 在所有访问之前准备就绪 (<a href="https://github.com/pytorch/pytorch/pull/138384">#138384</a>)</li>
+<li>使用承诺来延迟看门狗关闭（<a href="https://github.com/pytorch/pytorch/pull/138828">#138828</a>）</li>
+<li>如果提供 <code>device_id</code>，则支持可选后端 (<a href="https://github.com/pytorch/pytorch/pull/140963">#140963</a>)</li>
+<li>支持 <code>P2POp</code> 和 <code>batch_isend_irecv</code> 中的组排名 (<a href="https://github.com/pytorch/pytorch/pull/141054">#141054</a>)</li>
+<li>默认启用 <code>CudaEventCache</code> 并添加多设备支持 (<a href="https://github.com/pytorch/pytorch/pull/140975">#140975</a>)</li>
+<li>添加了 API 以从设备检索默认分布式后端 (<a href="https://github.com/pytorch/pytorch/pull/140536">#140536</a>)</li>
+<li>支持 <code>PyProcessGroup</code> 的排名、世界大小、组名称/描述覆盖（<a href="https://github.com/pytorch/pytorch/pull/141529">#141529</a>）</li>
+<li>添加了未指定后端时加速器类型的检测(<a href="https://github.com/pytorch/pytorch/pull/142216">#142216</a>)</li>
+<li>在 gloo 工作线程中使用任务提交者 TLS (<a href="https://github.com/pytorch/pytorch/pull/142184">#142184</a>)</li>
+<li>添加了 <code>_reduce_scatter_base</code> to <code>c10d::ProcessGroupUCC</code> (<a href="https://github.com/pytorch/pytorch/pull/138021">#138021</a>)</li>
+</ul>
+</li>
+<li>完税后交货
+<ul>
+<li>使 <code>DDPOptimizer</code> 与 HOP 配合使用 (<a href="https://github.com/pytorch/pytorch/pull/138787">#138787</a>)</li>
+<li>使 DDP 量化挂钩后端不可知（<a href="https://github.com/pytorch/pytorch/pull/138816">#138816</a>）</li>
+<li>在 DDP/FSDP 中使用与设备无关的运行时 API，而不是特定于设备的 <code>cuda</code>。 (<a href="https://github.com/pytorch/pytorch/pull/137678">#137678</a>)</li>
+</ul>
+</li>
+<li>FSDP
+<ul>
+<li>更新 FSDP <code>state_dict_utils</code> 中的真实设备 (<a href="https://github.com/pytorch/pytorch/pull/134994">#134994</a>)</li>
+<li>非 cuda 执行的 FSDP 通用化 (<a href="https://github.com/pytorch/pytorch/pull/133209">#133209</a>)</li>
+</ul>
+</li>
+<li>FSDP2
+<ul>
+<li>添加了 <code>_set_unshard_async_op</code> (<a href="https://github.com/pytorch/pytorch/pull/135523">#135523</a>)</li>
+<li>添加模块，MP 策略到 <code>fsdp_pre_all_gather</code> (<a href="https://github.com/pytorch/pytorch/pull/136129">#136129</a>)</li>
+<li>添加了对连续参数的检查（<a href="https://github.com/pytorch/pytorch/pull/137000">#137000</a>）</li>
+<li>放宽了 <code>all-gather</code> 扩展的均匀分片要求 (<a href="https://github.com/pytorch/pytorch/pull/137005">#137005</a>)</li>
+<li>基于设备使用流和事件 (<a href="https://github.com/pytorch/pytorch/pull/136843">#136843</a>)</li>
+<li>添加了 <code>shard_placement_fn</code> 参数 (<a href="https://github.com/pytorch/pytorch/pull/137496">#137496</a>)</li>
+<li>添加了 <code>set_unshard_in_backward(bool)</code> (<a href="https://github.com/pytorch/pytorch/pull/137922">#137922</a>)</li>
+<li>使用弱引用进行模块到状态的映射（<a href="https://github.com/pytorch/pytorch/pull/139650">#139650</a>）</li>
+<li>删除了 fsdp2 中类似 CUDA 的设备检查。 (<a href="https://github.com/pytorch/pytorch/pull/139539">#139539</a>)</li>
+</ul>
+</li>
+<li>离散张量
+<ul>
+<li>允许用户在设备网格上手动播种不同的种子，并且仅在未调用手动种子时同步 WORLD 中的 RNG 状态 (<a href="https://github.com/pytorch/pytorch/pull/141223">#141223</a>)</li>
+<li>在推理模式下支持 <code>matmul</code> (<a href="https://github.com/pytorch/pytorch/pull/142197">#142197</a>)</li>
+</ul>
+</li>
+<li>管道
+<ul>
+<li>使 <code>PipelineStage</code> 支持元初始化 (<a href="https://github.com/pytorch/pytorch/pull/136243">#136243</a>)</li>
+<li>允许非 0 阶段接受 kwargs (<a href="https://github.com/pytorch/pytorch/pull/136416">#136416</a>)</li>
+<li>添加了计划模拟器和 chrometrace 转储 (<a href="https://github.com/pytorch/pytorch/pull/138134">#138134</a>)</li>
+<li>支持单独的 dI / dW 和 V 计划 (<a href="https://github.com/pytorch/pytorch/pull/131762">#131762</a>)</li>
+<li>更新了使用 I、B 动作的时间表。 (<a href="https://github.com/pytorch/pytorch/pull/138886">#138886</a>)</li>
+<li>为 _backward 函数添加类型检查 (<a href="https://github.com/pytorch/pytorch/pull/140019">#140019</a>)</li>
+<li>允许多个向后梯度 (<a href="https://github.com/pytorch/pytorch/pull/140981">#140981</a>)</li>
+<li>改进了时间表 csv 加载 (<a href="https://github.com/pytorch/pytorch/pull/142009">#142009</a>)</li>
+</ul>
+</li>
+<li>火炬弹性
+<ul>
+<li>在解码健康检查端口时添加了 TryException (<a href="https://github.com/pytorch/pytorch/pull/136574">#136574</a>)</li>
+<li>跳过存储屏障和存储获取主机分配 (<a href="https://github.com/pytorch/pytorch/pull/136865">#136865</a>)</li>
+</ul>
+</li>
+<li>检查点</li>
+<li>当 state_dict 和保存的张量大小不同时抛出错误 (<a href="https://github.com/pytorch/pytorch/pull/141571">#141571</a>)</li>
+</ul>
+<h3 id="分析器">分析器</h3>
+<ul>
+<li>为跟踪 ID 创建自动跟踪前端 (<a href="https://github.com/pytorch/pytorch/pull/139310">#139310</a>)</li>
+<li>添加skip_first_wait到profiler.schedule (<a href="https://github.com/pytorch/pytorch/pull/141512">#141512</a>)</li>
+<li>将 CUDA 开销添加到自动跟踪 (<a href="https://github.com/pytorch/pytorch/pull/142271">#142271</a>)</li>
+</ul>
+<h3 id="嵌套张量">嵌套张量</h3>
+<ul>
+<li>添加了 NJT 操作员支持：<code>rms_norm()</code>、<code>embedding_bag()</code>、<code>record_stream()</code>、<code>rad2deg()</code>、<code>embedding()</code> 向后、激活函数（<a href="https://github.com/pytorch/pytorch/pull/135872">#135872</a>、<a href="https://github.com/pytorch/pytorch/pull/135888">#135888</a>、<a href="https://github.com/pytorch/pytorch/pull/140736">#140736</a>、 <a href="https://github.com/pytorch/pytorch/pull/138627">#138627</a>、<a href="https://github.com/pytorch/pytorch/pull/137099">#137099</a>、<a href="https://github.com/pytorch/pytorch/pull/140290">#140290</a>)</li>
+<li>混合 NJT，密集二进制逐点广播支持（<a href="https://github.com/pytorch/pytorch/pull/133021">#133021</a>）</li>
+<li>允许 NJT 的任何单个非批量调光变得粗糙（<a href="https://github.com/pytorch/pytorch/pull/137125">#137125</a>）</li>
+<li>添加 bfloat16 支持到 <code>torch.bmm(NST, NST)</code> (<a href="https://github.com/pytorch/pytorch/pull/141380">#141380</a>)</li>
+<li>添加 NST 缺失的 fp 分类函数（<a href="https://github.com/pytorch/pytorch/pull/139890">#139890</a>）</li>
+</ul>
+<h3 id="functorch">Functorch</h3>
+<ul>
+<li>添加对 <code>torch.scatter_reduce</code> 的 vmap 支持 (<a href="https://github.com/pytorch/pytorch/pull/135547">#135547</a>)</li>
+<li>添加对 <code>native_dropout_backward</code> 的 vmap 支持 (<a href="https://github.com/pytorch/pytorch/pull/140140">#140140</a>)</li>
+<li>允许 <code>torch.func.functional_call</code> 的可选位置参数 (<a href="https://github.com/pytorch/pytorch/pull/134643">#134643)</a>)</li>
+</ul>
+<h3 id="量化">量化</h3>
+<ul>
+<li>添加对观察者的 uint16 支持 (<a href="https://github.com/pytorch/pytorch/pull/136238">#136238</a>)</li>
+<li>更改 <code>X86InductorQuantizer</code> 的压平配方 (<a href="https://github.com/pytorch/pytorch/pull/136298">#136298</a>)
+*更新choose_qparams_per_token op以输出尺度和zp的正确形状（<a href="https://github.com/pytorch/pytorch/pull/136807">#136807</a>）</li>
+<li>使 QAT Fused 模块可编写 torch 脚本 (<a href="https://github.com/pytorch/pytorch/pull/136285">#136285</a>)</li>
+<li>添加缺失的映射以支持量化和导出中的 <code>torch.uint16</code> (<a href="https://github.com/pytorch/pytorch/pull/136547">#136547</a>)</li>
+<li>默认使用训练 IR (<a href="https://github.com/pytorch/pytorch/pull/137804">#137804</a>)</li>
+<li>删除 X86 量化器中的冗余方法 (<a href="https://github.com/pytorch/pytorch/pull/139161">#139161</a>)</li>
+<li>添加对每个张量/通道 cpu/cuda 假量化操作的 bfloat16 支持 (<a href="https://github.com/pytorch/pytorch/pull/139306">#139306</a>)</li>
+<li>为 OneDNN 添加 <code>linear_dynamic_fp16</code> 操作 (<a href="https://github.com/pytorch/pytorch/pull/140376">#140376</a>)</li>
+<li>注释并转换为 x86 的 <code>linear_dynamic_fp16</code> (<a href="https://github.com/pytorch/pytorch/pull/141480">#141480</a>)
+###热冷</li>
+<li>针对 CUDA 12.6 版本、Linux 和 Windows，将 CUDNN 更新为 9.5.1.17 (<a href="https://github.com/pytorch/pytorch/pull/137978">#137978</a>)</li>
+<li>将 ROCm 的 CI/CD 升级到 6.2.4 (<a href="https://github.com/pytorch/pytorch/pull/141423">#141423</a>)</li>
+</ul>
+<h3 id="库达">库达</h3>
+<ul>
+<li>将 <code>cuda_flip</code> 扩展为无符号类型 (<a href="https://github.com/pytorch/pytorch/pull/137781">#137781</a>)</li>
+<li>SDPA 优先级管理器接受订购 (<a href="https://github.com/pytorch/pytorch/pull/140467">#140467</a>)</li>
+<li>cuDNN Attention 内存布局处理改进 (<a href="https://github.com/pytorch/pytorch/pull/141147">#141147</a>) (<a href="https://github.com/pytorch/pytorch/pull/138354">#138354</a>)</li>
+</ul>
+<h3 id="英里秒">英里/秒</h3>
+<ul>
+<li>添加原生 im2col (<a href="https://github.com/pytorch/pytorch/pull/135706">#135706</a>)</li>
+<li>添加 <code>upsample_bicubic2d</code> 作为金属操作 (<a href="https://github.com/pytorch/pytorch/pull/136123">#136123</a>)</li>
+<li>添加 <code>scatter_reduce.two</code> (<a href="https://github.com/pytorch/pytorch/pull/141948">#141948</a>)</li>
+<li>添加 i0 操作 (<a href="https://github.com/pytorch/pytorch/pull/137849">#137849</a>)</li>
+<li>添加 <code>torch.special.i1</code> 操作 (<a href="https://github.com/pytorch/pytorch/pull/140196">#140196</a>)</li>
+<li>在 MPS 上添加 <code>unfold_backward</code> (<a href="https://github.com/pytorch/pytorch/pull/135411">#135411</a>)</li>
+<li>添加 <code>isposinf</code> 和 <code>isneginf</code> (<a href="https://github.com/pytorch/pytorch/pull/136689">#136689</a>)</li>
+<li>添加 <code>MetalShaderLibrary::getFunctionNames()</code> (<a href="https://github.com/pytorch/pytorch/pull/141499">#141499</a>)</li>
+<li>添加 <code>tri[lu]_indices</code> (<a href="https://github.com/pytorch/pytorch/pull/137648">#137648</a>)</li>
+<li>修复 bfloat16 dtypes 的 Gamma (<a href="https://github.com/pytorch/pytorch/pull/136981">#136981</a>)</li>
+<li>将 <code>fmin</code>/<code>fmax</code>/<code>copysign</code> 和 <code>nextafter</code> 扩展为 bfloat16 (<a href="https://github.com/pytorch/pytorch/pull/136982">#136982</a>)</li>
+<li>为 bfloat16 启用分桶（<a href="https://github.com/pytorch/pytorch/pull/136983">#136983</a>）</li>
+<li>修复 bfloat16 的复杂类型转换 (<a href="https://github.com/pytorch/pytorch/pull/137070">#137070</a>)</li>
+<li>启用 <code>arange</code> 为 bfloat16 (<a href="https://github.com/pytorch/pytorch/pull/136754">#136754</a>)</li>
+<li>为 bfloat16 启用 <code>torch.linalg.cross</code> (<a href="https://github.com/pytorch/pytorch/pull/136984">#136984</a>)</li>
+<li>为 bfloat16 启用重新规范 (<a href="https://github.com/pytorch/pytorch/pull/136985">#136985</a>)</li>
+<li>为 bfloat16 启用 <code>nan_to_num</code> (<a href="https://github.com/pytorch/pytorch/pull/136986">#136986</a>)</li>
+<li>添加对 bfloat16 自动投射的支持 (<a href="https://github.com/pytorch/pytorch/pull/139390">#139390</a>)</li>
+<li>消除 <code>c10::value_or_else</code> (<a href="https://github.com/pytorch/pytorch/pull/138818">#138818</a>)</li>
+<li>将内核编译到 Metallib (<a href="https://github.com/pytorch/pytorch/pull/138636">#138636</a>)</li>
+<li>从 C++ 编写/调用金属着色器 (<a href="https://github.com/pytorch/pytorch/pull/141547">#141547</a>)</li>
+<li>支持 MPS 的 <code>torch.Event</code> (<a href="https://github.com/pytorch/pytorch/pull/142468">#142468</a>)</li>
+<li>添加CompileShader方法(<a href="https://github.com/pytorch/pytorch/pull/141478">#141478</a>)</li>
+<li>重新引入对输出通道 > 65536 的卷积的支持 (<a href="https://github.com/pytorch/pytorch/pull/140726">#140726</a>)</li>
+</ul>
+<h3 id="rocm">ROCM</h3>
+<ul>
+<li>通过从 GitHub 下载 AOTriton 来提高 ROCm 环境中的 PyTorch 构建速度，除非设置了 AOTRITON_INSTALL_FROM_SOURCE=1 (<a href="https://github.com/pytorch/pytorch/pull/136603">#136603</a>)</li>
+<li>为 hipblaslt 启用 gfx110x 架构 (<a href="https://github.com/pytorch/pytorch/pull/137317">#137317</a>)</li>
+</ul>
+<h3 id="xpu">XPU</h3>
+<ul>
+<li>改进了XPU的设备索引绑定检查机制。 (<a href="https://github.com/pytorch/pytorch/pull/120768">#120768</a>)</li>
+<li>在 Windows 上为 Intel GPU 使用默认上下文：通过使用默认上下文改进 Windows 上的 XPU 设备处理。 (<a href="https://github.com/pytorch/pytorch/pull/138049">#138049</a>)</li>
+<li>在 torchgen 中为 XPU 结构化运算符添加设备防护（<a href="https://github.com/pytorch/pytorch/pull/138802">#138802</a>）</li>
+<li>泛化设备偏差代码，使 XPU 展开减少与 CUDA 保持一致（<a href="https://github.com/pytorch/pytorch/pull/142348">#142348</a>）</li>
+<li>概括 CUDA C++ 包装器以供 XPU 重用 (<a href="https://github.com/pytorch/pytorch/pull/135312">#135312</a>)</li>
+</ul>
+<h3 id="杂项">杂项</h3>
+<ul>
+<li>添加 <code>torch.float8e4m3fn</code> dtype 支持半结构化稀疏 (<a href="https://github.com/pytorch/pytorch/pull/136397">#136397</a>)</li>
+<li>更快的批量采样器 (<a href="https://github.com/pytorch/pytorch/pull/137423">#137423</a>)</li>
+<li>在默认之前使用用户定义的 <code>num_threads</code> 初始化线程池 (<a href="https://github.com/pytorch/pytorch/pull/136793">#136793</a>, <a href="https://github.com/pytorch/pytorch/pull/137051">#137051</a>)</li>
+</ul>
+<h3 id="迪纳摩">迪纳摩</h3>
+<ul>
+<li><code>automatic_dynamic_shapes_mark_as</code> - 添加一个选项，使自动动态形状触发无支持的 SymInts 而不是支持的 SymInts (<a href="https://github.com/pytorch/pytorch/pull/141415">#141415</a>)</li>
+<li>将形状防护的详细源位置信息传播到防护/重新编译输出（<a href="https://github.com/pytorch/pytorch/pull/136917">#136917</a>）</li>
+<li><code>torch.compile</code> 支持 Python 3.13 (<a href="https://github.com/pytorch/pytorch/pull/139533">#139533</a>)</li>
+<li>跟踪张量变量上的动态可调用对象 (<a href="https://github.com/pytorch/pytorch/pull/137940">#137940</a>)</li>
+<li>跟踪数据类 (<a href="https://github.com/pytorch/pytorch/pull/141294">#141294</a>)</li>
+<li>用于重复数据删除的图区域跟踪（即公共子图提取）（<a href="https://github.com/pytorch/pytorch/pull/141381">#141381</a>）</li>
+<li>扫描高阶运算 (<a href="https://github.com/pytorch/pytorch/pull/134102">#134102</a>)</li>
+<li>跟踪namedtuple类型的子类(<a href="https://github.com/pytorch/pytorch/pull/140534">#140534</a>)</li>
+<li>跟踪 dict 子类 (<a href="https://github.com/pytorch/pytorch/pull/143548">#143548</a>)</li>
+</ul>
+<h3 id="导出">导出</h3>
+<ul>
+<li>Preserve 保留模块被多次调用时的调用签名 (<a href="https://github.com/pytorch/pytorch/pull/137999">#137999</a>, <a href="https://github.com/pytorch/pytorch/pull/138669">#138669</a>)</li>
+<li>让 <code>export</code> 保留 <code>node.meta["custom"]</code> 字段 (<a href="https://github.com/pytorch/pytorch/pull/138266">#138266</a>)</li>
+<li>将 <code>neg</code> 和 <code>pos</code> 运算符添加到 <code>serde/serialize</code> (<a href="https://github.com/pytorch/pytorch/pull/138309">#138309</a>, <a href="https://github.com/pytorch/pytorch/pull/143343">#143343</a>)</li>
+<li>在序列化中将 min_val 和 max_val 更新为Optional[int]，并允许模式表达无穷大 (<a href="https://github.com/pytorch/pytorch/pull/139394">#139394</a>)</li>
+</ul>
+<h3 id="外汇">外汇</h3>
+<ul>
+<li>绕过 Node.<strong>init</strong> 中的自定义 <strong>setattr</strong> (<a href="https://github.com/pytorch/pytorch/pull/135733">#135733</a>)</li>
+<li>添加新的 replacement_callback 以及时实现替换（<a href="https://github.com/pytorch/pytorch/pull/135553">#135553</a>）</li>
+<li>create_arg 中的小幅优化（<a href="https://github.com/pytorch/pytorch/pull/135821">#135821</a>）</li>
+<li>用正则表达式替换 _snake_case (<a href="https://github.com/pytorch/pytorch/pull/135822">#135822</a>)</li>
+<li>更新 <code>_inline_module</code> util 函数以同时使用 args 和 kwargs (<a href="https://github.com/pytorch/pytorch/pull/136631">#136631</a>)</li>
+<li>Fx 图表始终返回 fusion_as_graphmodule 中的元组 (<a href="https://github.com/pytorch/pytorch/pull/139236">#139236</a>)</li>
+<li>将效果图 <code>_replace_hook</code> 更改为可调用列表 (<a href="https://github.com/pytorch/pytorch/pull/142006">#142006</a>)</li>
+<li>避免 splitter v2 生成空的合并 cpu 子模块 (<a href="https://github.com/pytorch/pytorch/pull/140794">#140794</a>)</li>
+<li>使 split_module 与 <code>keep_original_order=True</code> 和无操作图一起使用 (<a href="https://github.com/pytorch/pytorch/pull/141340">#141340</a>)</li>
+<li>添加output_node util函数到<code>fx.Graph</code> (<a href="https://github.com/pytorch/pytorch/pull/139770">#139770</a>)</li>
+<li>修复 TensorMetadata 中的 <code>stride</code> 始终为 <code>Tuple[int, ...]</code> (<a href="https://github.com/pytorch/pytorch/pull/141106">#141106</a>)</li>
+<li>增强 <code>from_node</code> 节点元以递归方式跟踪源 (<a href="https://github.com/pytorch/pytorch/pull/142066">#142066</a>)</li>
+<li>支持线性/BN 融合并遵循 API 指南 (<a href="https://github.com/pytorch/pytorch/pull/141585">#141585</a>)</li>
+<li>使 <code>fuse_by_partitions</code> 始终以元组形式返回输出 (<a href="https://github.com/pytorch/pytorch/pull/142056">#142056</a>)</li>
+<li>在 fx/_utils.py 中添加更安全的 isatty 检查（<a href="https://github.com/pytorch/pytorch/pull/140876">#140876</a>）</li>
+</ul>
+<h3 id="电感器">电感器</h3>
+<ul>
+<li>在 AOTI 中将 GPU 代码生成切换为一次性（<a href="https://github.com/pytorch/pytorch/pull/141980">#141980</a>）</li>
+<li>修复在 AOTI 中使用单通道时的多内核代码生成问题（<a href="https://github.com/pytorch/pytorch/pull/142333">#142333</a>）</li>
+<li>修复后备操作在 AOTI 中不返回值时的问题 (<a href="https://github.com/pytorch/pytorch/pull/142339">#142339</a>)</li>
+<li>改进用户可见输出的步幅保留逻辑（<a href="https://github.com/pytorch/pytorch/pull/136732">#136732</a>）</li>
+<li>将工作区添加到 TritonTemplates (<a href="https://github.com/pytorch/pytorch/pull/138050">#138050</a>)</li>
+<li>为 Intel GPU 启用 Cpp 包装器。 (<a href="https://github.com/pytorch/pytorch/pull/135318">#135318</a>)</li>
+<li>翻转电感器中的 <code>custom_op_default_layout_constraint</code> 以优化张量布局 (<a href="https://github.com/pytorch/pytorch/pull/135239">#135239</a>)。</li>
+<li>通过电感器中的最大自动调谐启用坐标下降调谐 (<a href="https://github.com/pytorch/pytorch/pull/136867">#136867</a>)。</li>
+<li>添加 <code>relu_nan_to_num</code> 选项，用于在 AOTInductor 的预毕业阶段处理 NaN（<a href="https://github.com/pytorch/pytorch/pull/138545">#138545</a>）。</li>
+<li>实现电感器的协作和持续减少 (<a href="https://github.com/pytorch/pytorch/pull/138533">#138533</a>)。</li>
+<li>引入多内核支持以及 Inductor 的协作减少 (<a href="https://github.com/pytorch/pytorch/pull/138893">#138893</a>)。</li>
+<li>添加新配置 <code>env_name_default</code> 和 <code>env_name_force</code> 以实现更好的配置管理 (<a href="https://github.com/pytorch/pytorch/pull/138956">#138956</a>)。</li>
+<li>调整循环分割优化启发式（<a href="https://github.com/pytorch/pytorch/pull/137550">#137550</a>）。</li>
+<li>使用 IEEE 增强 ROCm 设备上 FlexAttention 中 fp32 的数值精度 (<a href="https://github.com/pytorch/pytorch/pull/135702">#135702</a>)。</li>
+<li>在 CUDA 电感器中启用 SDPA 模式匹配，增强优化功能 (<a href="https://github.com/pytorch/pytorch/pull/137085">#137085</a>)。</li>
+<li>更新了 Inductor 对 Triton AttrsDescriptor 的支持 (<a href="https://github.com/pytorch/pytorch/pull/137757">#137757</a>)。</li>
+<li>更新 C++ 运行程序 API 以采用 const 向量 (<a href="https://github.com/pytorch/pytorch/pull/139955">#139955</a>)</li>
+</ul>
+<h3 id="onnx">ONNX</h3>
+<ul>
+<li>删除 pow 的类型提升规则 (<a href="https://github.com/pytorch/pytorch/pull/139527">#139527</a>)</li>
+<li>优先考虑 strict=False 导出策略 (<a href="https://github.com/pytorch/pytorch/pull/139905">#139905</a>)</li>
+<li>更新 TorchTensor 实现以处理伪造模式 (<a href="https://github.com/pytorch/pytorch/pull/139534">#139534</a>)</li>
+<li>使用 TracedONNXFunction 操作签名将输入提升到张量 (<a href="https://github.com/pytorch/pytorch/pull/138770">#138770</a>)</li>
+<li>将分解分离为单步并添加到报告中（<a href="https://github.com/pytorch/pytorch/pull/140767">#140767</a>）</li>
+<li>改进 <code>from dynamic axes to shapes</code> 的转换 (<a href="https://github.com/pytorch/pytorch/pull/140488">#140488</a>)</li>
+<li>使用torchlib opset编号并修复opset导入逻辑(<a href="https://github.com/pytorch/pytorch/pull/141413">#141413</a>)</li>
+</ul>
+<h2 id="错误修复"><strong>错误修复</strong></h2>
+<h3 id="python-前端-1">Python 前端</h3>
+<ul>
+<li>修复 CPU 上 fp16 和 bf16 的 <code>torch.mean(..., out=)</code> (<a href="https://github.com/pytorch/pytorch/pull/135174">#135174</a>)</li>
+<li>修复 <code>torch.uint16</code>、<code>torch.uint32</code>、<code>torch.uint64</code> 的序列化 (<a href="https://github.com/pytorch/pytorch/pull/137184">#137184</a>)</li>
+<li>修复张量保存逻辑，使其在某些情况下不会丢失用户定义的属性 (<a href="https://github.com/pytorch/pytorch/pull/137267">#137267</a>)</li>
+<li>修复 <code>torch.utils.module_tracker.ModuleTracker</code> 中的内存泄漏 (<a href="https://github.com/pytorch/pytorch/pull/141960">#141960</a>)</li>
+</ul>
+<h3 id="神经网络前端-1">神经网络前端</h3>
+<ul>
+<li>修复 <code>nn.functional.softshrink</code> 在 NAN 输入上返回 0 (<a href="https://github.com/pytorch/pytorch/pull/138421">#138421</a>)</li>
+<li>修复 flex_decode 以构建跨步的偏移量 (<a href="https://github.com/pytorch/pytorch/pull/139516">#139516</a>)</li>
+</ul>
+<h3 id="autograd-前端">Autograd 前端</h3>
+<ul>
+<li>当 per_sample_weights 可微分但嵌入权重不可微分时修复 <code>torch.nn.EmbeddingBag</code> (<a href="https://github.com/pytorch/pytorch/pull/142338">#142338</a>)</li>
+<li>根据InputMetadata而不是InputBuffer确定autograd引擎就绪队列（<a href="https://github.com/pytorch/pytorch/pull/135633">#135633</a>）</li>
+</ul>
+<h3 id="可组合性-1">可组合性</h3>
+<ul>
+<li>修复了 <code>torch.compiling</code> <code>torch.scaled_dot_product_attention</code> 时的正确性问题，在比例参数是动态形状的情况下 (<a href="https://github.com/pytorch/pytorch/pull/141728">#141728</a>)</li>
+<li>修复了 <code>torch.compiling</code> <code>torch.rrelu</code> 时的正确性问题，在它改变任何模块缓冲区的情况下（<a href="https://github.com/pytorch/pytorch/pull/136008">#136008</a>）</li>
+</ul>
+<h3 id="分布式-1">分布式</h3>
+<ul>
+<li>c10d
+<ul>
+<li>修复了设备 0 上的额外上下文 (<a href="https://github.com/pytorch/pytorch/pull/135273">#135273</a>)</li>
+<li>修复了非阻塞模式下的错误 (<a href="https://github.com/pytorch/pytorch/pull/137741">#137741</a>)</li>
+<li>修复了非阻塞模式下的 P2P 数据损坏 (<a href="https://github.com/pytorch/pytorch/pull/138860">#138860</a>)</li>
+</ul>
+</li>
+<li>确保不使用 split 进行 P2P 通信创建 (<a href="https://github.com/pytorch/pytorch/pull/139013">#139013</a>)
+<ul>
+<li>对不同的非阻塞调用使用长/短等待（<a href="https://github.com/pytorch/pytorch/pull/142291">#142291</a>）</li>
+<li>记录 NCCLComm 方法调用期间 GPU 保护的设备索引 (<a href="https://github.com/pytorch/pytorch/pull/141270">#141270</a>)</li>
+<li>修复了 <code>destroy_process_group</code> 的行为 (<a href="https://github.com/pytorch/pytorch/pull/141510">#141510</a>)</li>
+<li>重新设计了 NCCLComm 析构函数以避免与 CUDA 驱动程序关闭发生冲突 (<a href="https://github.com/pytorch/pytorch/pull/141511">#141511</a>)</li>
+<li>删除了 <code>ProcessGroup</code> 的选项并公开后端 <code>Options</code> 以反映正确的代码结构 (<a href="https://github.com/pytorch/pytorch/pull/132931">#132931</a>) (<a href="https://github.com/pytorch/pytorch/pull/135653">#135653</a>)</li>
+<li>修复了前缀存储分段错误 (<a href="https://github.com/pytorch/pytorch/pull/136872">#136872</a>)</li>
+<li>修复了一次性 <code>all-reduce</code> 中的竞争条件 (<a href="https://github.com/pytorch/pytorch/pull/137257">#137257</a>)</li>
+<li><code>all-reduce</code> 的强制连续性（<a href="https://github.com/pytorch/pytorch/pull/137345">#137345</a>）</li>
+<li>修复了启用 <code>CUDAEventCache</code> 后的数据损坏错误 (<a href="https://github.com/pytorch/pytorch/pull/138040">#138040</a>)</li>
+<li><code>alltoall</code> 的强制连续性（<a href="https://github.com/pytorch/pytorch/pull/141816">#141816</a>）</li>
+<li>修复了合并操作的序列号 (<a href="https://github.com/pytorch/pytorch/pull/135132">#135132</a>)</li>
+<li>修正了通讯分割的颜色值为负值 (<a href="https://github.com/pytorch/pytorch/pull/137855">#137855</a>)</li>
+<li>修复了使用 <code>ncclCommSplit</code> 的逻辑 (<a href="https://github.com/pytorch/pytorch/pull/138781">#138781</a>)</li>
+<li>在NaN检测器中捕获tensor.numel() == 0 (<a href="https://github.com/pytorch/pytorch/pull/140741">#140741</a>)</li>
+<li>修复了 <code>IntraNodeComm::rendezvous()</code> 中的一个破损问题 (<a href="https://github.com/pytorch/pytorch/pull/141200">#141200</a>)</li>
+<li>修复了功能集体发电机中的 <code>_are_we_tracing()</code> (<a href="https://github.com/pytorch/pytorch/pull/142075">#142075</a>)</li>
+</ul>
+</li>
+<li>设备网格
+<ul>
+<li>修复了 <code>from_group</code> when passing a tensor <code>mesh</code> (<a href="https://github.com/pytorch/pytorch/pull/137713">#137713</a>)</li>
+</ul>
+</li>
+<li>离散张量
+<ul>
+<li>修复了具有 mesh_shape (1, n) 或 (n, 1) 的 2D DTensor <code>mm</code> (<a href="https://github.com/pytorch/pytorch/pull/139134">#139134</a>)</li>
+<li>删除了 adhoc DTensor RNG 跟踪器 <code>TensorParallelRNGTracker</code>，因为它与 FSDP2+TP 不匹配 (<a href="https://github.com/pytorch/pytorch/pull/141220">#141220</a>)</li>
+</ul>
+</li>
+<li>分布式状态字典 (DSD)
+<ul>
+<li>如果 lr 原本是张量，则将其初始化为张量 (<a href="https://github.com/pytorch/pytorch/pull/141620">#141620</a>)</li>
+</ul>
+</li>
+<li>FSDP2
+<ul>
+<li>修复了 2D 不匹配的毕业生安置问题 (<a href="https://github.com/pytorch/pytorch/pull/136237">#136237</a>)</li>
+<li>修复了<code>test_all_gather_extensions_monkey_patch</code> (<a href="https://github.com/pytorch/pytorch/pull/136130">#136130</a>)</li>
+<li>修复了目标错误的向后预取 (<a href="https://github.com/pytorch/pytorch/pull/137348">#137348</a>)</li>
+<li>修复了 <code>.to(dtype)</code> 之后不正确的张量元 (<a href="https://github.com/pytorch/pytorch/pull/137593">#137593</a>)</li>
+<li>用于火炬部署的门控发电机导入（<a href="https://github.com/pytorch/pytorch/pull/137203">#137203</a>）</li>
+<li>修复了 bf16 HSDP AR、fp32 参数的 CUDA 同步（<a href="https://github.com/pytorch/pytorch/pull/140044">#140044</a>）</li>
+<li>修复了向后兼容的导入 (<a href="https://github.com/pytorch/pytorch/pull/142419">#142419</a>)</li>
+<li>用于火炬部署的门控 PT2 代码 (<a href="https://github.com/pytorch/pytorch/pull/142456">#142456</a>)</li>
+</ul>
+</li>
+<li>管道
+<ul>
+<li>修复了 <code>stage_backward</code> 中的 py 引用周期 (<a href="https://github.com/pytorch/pytorch/pull/136507">#136507</a>)
+*修复了更多泄漏并在测试中检查泄漏（<a href="https://github.com/pytorch/pytorch/pull/136584">#136584</a>）</li>
+<li>删除了零气泡计划中对 autograd 节点的修改（<a href="https://github.com/pytorch/pytorch/pull/136678">#136678</a>）</li>
+<li>修复了零泡泡中的额外内存使用问题 (<a href="https://github.com/pytorch/pytorch/pull/138119">#138119</a>)</li>
+<li>修复了 dI / dW 的最后向后计数 (<a href="https://github.com/pytorch/pytorch/pull/139415">#139415</a>)</li>
+<li><code>_validate_schedule</code> 的前向修复 (<a href="https://github.com/pytorch/pytorch/pull/142211">#142211</a>)</li>
+<li>允许计划以单阶段运行（<a href="https://github.com/pytorch/pytorch/pull/138925">#138925</a>）</li>
+<li>在最后阶段早些时候释放了内存使用量 (<a href="https://github.com/pytorch/pytorch/pull/138504">#138504</a>)</li>
+</ul>
+</li>
+<li>火炬弹性
+<ul>
+<li>修复了 <code>rendezvous</code> 中的商店前缀竞赛 (<a href="https://github.com/pytorch/pytorch/pull/136768">#136768</a>)</li>
+<li>修复了由于 <code>EtcdStore</code> get 方法在某些情况下不等待而导致的交会错误 (<a href="https://github.com/pytorch/pytorch/pull/137056">#137056</a>)</li>
+<li>修复了动态集合点内创建 <code>TCPStore</code> 服务器时主机地址错误导致的错误 (<a href="https://github.com/pytorch/pytorch/pull/139702">#139702</a>)</li>
+</ul>
+</li>
+<li>检查点
+<ul>
+<li>修复多线程环境中 fsspec 事务失败清理 (<a href="https://github.com/pytorch/pytorch/pull/135541">#135541</a>)</li>
+</ul>
+</li>
+</ul>
+<h3 id="迪纳摩-1">迪纳摩</h3>
+<ul>
+<li>修复 NumPy 2 操作的跟踪 (<a href="https://github.com/pytorch/pytorch/pull/138686">#138686</a>)</li>
+<li>不要在内部 <code>torch.compile</code> 上绘制图表中断 (<a href="https://github.com/pytorch/pytorch/pull/135819">#135819</a>)</li>
+<li>各种闭合/单元变量/突变相关修复（<a href="https://github.com/pytorch/pytorch/pull/136891">#136891</a>、<a href="https://github.com/pytorch/pytorch/pull/139339">#139339</a>、<a href="https://github.com/pytorch/pytorch/pull/140155">#140155</a>）</li>
+<li>停止导入一些第三方库（<a href="https://github.com/pytorch/pytorch/pull/136334">#136334</a>、<a href="https://github.com/pytorch/pytorch/pull/142502">#142502</a>、<a href="https://github.com/pytorch/pytorch/pull/142503">#142503</a>）</li>
+</ul>
+<h3 id="嵌套张量前端">嵌套张量前端</h3>
+<ul>
+<li>修复 NJT 操作员支持：非连续 NJT 上的 <code>sum()</code>、<code>unsqueeze()</code>、<code>to()</code>、<code>where()</code>、<code>select()</code>、<code>chunk()</code>、减少（<a href="https://github.com/pytorch/pytorch/pull/131945">#131945</a>、<a href="https://github.com/pytorch/pytorch/pull/141392">#141392</a>、 <a href="https://github.com/pytorch/pytorch/pull/137124">#137124</a>、<a href="https://github.com/pytorch/pytorch/pull/141500">#141500</a>、<a href="https://github.com/pytorch/pytorch/pull/139317">#139317</a>、<a href="https://github.com/pytorch/pytorch/pull/141506">#141506</a>、<a href="https://github.com/pytorch/pytorch/pull/141604">#141604</a>)</li>
+<li>使用更有效的公式修复 NJT <code>linear_backward()</code> 内存使用情况 (<a href="https://github.com/pytorch/pytorch/pull/141163">#141163</a>)</li>
+<li>修复 NJT 序列化 (<a href="https://github.com/pytorch/pytorch/pull/137031">#137031</a>)</li>
+</ul>
+<h3 id="库达-1">库达</h3>
+<ul>
+<li>添加缺失的边界检查到 cunn_SoftMaxForward (<a href="https://github.com/pytorch/pytorch/pull/140682">#140682</a>)</li>
+<li>修复 CTC cuda 后端越界访问 (<a href="https://github.com/pytorch/pytorch/pull/141607">#141607</a>)</li>
+<li>修复了 cuda sanitizer 和 as_subclass 调用 (<a href="https://github.com/pytorch/pytorch/pull/138218">#138218</a>)</li>
+</ul>
+<h3 id="英里秒-1">英里/秒</h3>
+<ul>
+<li>允许 <code>nll_loss</code> 的 nan 平均减少 (<a href="https://github.com/pytorch/pytorch/pull/135434">#135434</a>)</li>
+<li>修复 AvgPool2d for float16 (<a href="https://github.com/pytorch/pytorch/pull/136822">#136822</a>)</li>
+<li>对 <code>torch.normal</code> 的错误检查/bfloat16 支持 (<a href="https://github.com/pytorch/pytorch/pull/136863">#136863</a>)</li>
+<li>修复空张量的缩减操作输出 (<a href="https://github.com/pytorch/pytorch/pull/139446">#139446</a>)</li>
+<li>将 MSELoss 限制为浮点类型 (<a href="https://github.com/pytorch/pytorch/pull/139960">#139960</a>)</li>
+<li>修复最后一个通道的转换向后传递 (<a href="https://github.com/pytorch/pytorch/pull/141009">#141009</a>)</li>
+<li>添加 SDPA 自动投射规则 (<a href="https://github.com/pytorch/pytorch/pull/141776">#141776</a>)</li>
+<li>释放 MetalShaderLibrary 缓存资源 (<a href="https://github.com/pytorch/pytorch/pull/142053">#142053</a>)</li>
+<li>修复了非连续张量上的 SiLU (<a href="https://github.com/pytorch/pytorch/pull/139006">#139006</a>)</li>
+<li>修复 <code>nn.Conv3d</code> 中的 <code>channels_last_3d</code> (<a href="https://github.com/pytorch/pytorch/pull/141780">#141780</a>)</li>
+<li>保护闪光注意 SymFloat 比例，而不是错误地转换为浮动 (<a href="https://github.com/pytorch/pytorch/pull/141725">#141725</a>)</li>
+<li>修复未释放的 NSProcessInfo 中的内存泄漏 (<a href="https://github.com/pytorch/pytorch/pull/142052">#142052</a>)</li>
+</ul>
+<h3 id="rocm-1">ROCM</h3>
+<ul>
+<li>修复了 AMD triton 后端的内存不足错误 (<a href="https://github.com/pytorch/pytorch/pull/139883">#139883</a>)</li>
+<li>修正层规范向后内核中的数值问题（<a href="https://github.com/pytorch/pytorch/pull/140259">#140259</a>）</li>
+</ul>
+<h3 id="xpu-1">XPU</h3>
+<ul>
+<li>解决了 XPU Linux CI 中重复构建环境的问题。 (<a href="https://github.com/pytorch/pytorch/pull/141546">#141546</a>)</li>
+<li>修复 XPU 支持包版本：更正 XPU 支持包的版本控制。 (<a href="https://github.com/pytorch/pytorch/pull/138189">#138189</a>)</li>
+<li>修复 XPU 后端 <code>c10::Event</code> 单元测试失败的问题 (<a href="https://github.com/pytorch/pytorch/pull/141800">#141800</a>)</li>
+<li>修复 <code>F.logsigmoid</code> 中 FakeTensor 和 XPU 具体张量之间不匹配的张量元数据 (<a href="https://github.com/pytorch/pytorch/pull/141333">#141333</a>)</li>
+<li>修复 XPU 上的内存统计错误：更正 XPU 设备的内存统计错误。 (<a href="https://github.com/pytorch/pytorch/pull/135818">#135818</a>)</li>
+<li>修复 XPU CMake 拼写错误：更正 XPU CMake 配置中的拼写错误。 (<a href="https://github.com/pytorch/pytorch/pull/140374">#140374</a>)</li>
+<li>修复了在非 XPU 环境中导致无休止代码重新生成的问题。 (<a href="https://github.com/pytorch/pytorch/pull/140438">#140438</a>)</li>
+<li>修复在 Inductor XPU 中跳过串联线性之前不正确的设备检查。 (<a href="https://github.com/pytorch/pytorch/pull/140916">#140916</a>)</li>
+</ul>
+<h3 id="分析器-1">分析器</h3>
+<ul>
+<li>收集后清除悬挂的 AppendOnlyLists (<a href="https://github.com/pytorch/pytorch/pull/137450">#137450</a>)</li>
+<li>修复 <code>UnicodeDecodeError: 'utf-8' codec can't decode byte</code> (<a href="https://github.com/pytorch/pytorch/pull/139062">#139062</a>)</li>
+<li>修复 ASAN 溢出问题 (<a href="https://github.com/pytorch/pytorch/pull/140441">#140441</a>)</li>
+<li>修复 benchmark_utilization 函数中的设备参数类型 (<a href="https://github.com/pytorch/pytorch/pull/138774">#138774</a>)<a href="https://github.com/pytorch/pytorch/pull/138774"> </a></li>
+</ul>
+<h3 id="量化-1">量化</h3>
+<ul>
+<li>在缓存未命中时将 <code>ideep:lowp_kind</code> 传递给 <code> matmul_forward::compute</code> (<a href="https://github.com/pytorch/pytorch/pull/135058">#135058</a>)</li>
+<li>修复重新导出自定义元数据（<a href="https://github.com/pytorch/pytorch/pull/135282">#135282</a>、<a href="https://github.com/pytorch/pytorch/pull/135634">#135634</a>、<a href="https://github.com/pytorch/pytorch/pull/135720">#135720</a>）</li>
+<li>将 <code>torchao/quantization/utils.py</code> 中的 eps 移动到目标设备以避免设备不匹配问题 (<a href="https://github.com/pytorch/pytorch/pull/135204">#135204</a>)</li>
+<li>在 <code>torch.quantized_max_pool3d()</code> 中添加 <code>dilation</code> 的类型检查（<a href="https://github.com/pytorch/pytorch/pull/137845">#137845</a>）</li>
+<li>从浮点数量化嵌入包时传递所有参数（<a href="https://github.com/pytorch/pytorch/pull/137697">#137697</a>）</li>
+<li>修复了启用分割门的可量化 LSTM 子类 (<a href="https://github.com/pytorch/pytorch/pull/140818">#140818</a>)</li>
+<li>当 XNNPACK 的 conv/线性拥有 > 1 个用户时修复 ReLU 融合 (<a href="https://github.com/pytorch/pytorch/pull/140846">#140846</a>)</li>
+<li>修复 <code>prepare_pt2e</code> 图与同一节点的 concat 时的递归错误 (<a href="https://github.com/pytorch/pytorch/pull/141651">#141651</a>)</li>
+</ul>
+<h3 id="稀疏前端">稀疏前端</h3>
+<ul>
+<li>修复使用 autograd 时 MaskedTensor 中的内存泄漏 (<a href="https://github.com/pytorch/pytorch/pull/137890">#137890</a>)</li>
+<li>修复 <code>bmm(COO, dense)</code> 某些形状的非法内存访问 (<a href="https://github.com/pytorch/pytorch/pull/131977">#131977</a>)</li>
+<li>修复 <code>sparse_csr</code> 布局的 MaskedTensor 二进制运算 (<a href="https://github.com/pytorch/pytorch/pull/134335">#134335</a>)</li>
+</ul>
+<h3 id="杂项-1">杂项</h3>
+<ul>
+<li>修复 PyBind 2.10.4 兼容性问题 (<a href="https://github.com/pytorch/pytorch/pull/141456">#141456</a>)
+*正确跟踪foreach减少的处理张量（范数，最大值）（[＃140103]（<a href="https://github.com/pytorch/pytorch/pull/140103%EF%BC%89%EF%BC%89">https://github.com/pytorch/pytorch/pull/140103））</a></li>
+<li>修复了 3.13 的 <code>torch.package</code> (<a href="https://github.com/pytorch/pytorch/pull/141409">#141409</a>)</li>
+</ul>
+<h3 id="导出-1">导出</h3>
+<ul>
+<li>不要将默认值的参数反序列化为 kwargs (<a href="https://github.com/pytorch/pytorch/pull/136036">#136036</a>)</li>
+<li>修复 <code>_get_non_persistent_buffers</code> 的重复子模块 (<a href="https://github.com/pytorch/pytorch/pull/136552">#136552</a>)</li>
+<li>修复 0 输入图的提升常量顺序 (<a href="https://github.com/pytorch/pytorch/pull/136658">#136658</a>)</li>
+<li>处理 <code>make_fx</code> 中的属性分配检测和注册缓冲区分配(<a href="https://github.com/pytorch/pytorch/pull/137240">#137240</a>)</li>
+<li>修复 unflatten + keep_module_call_signature 中的专业化错误 (<a href="https://github.com/pytorch/pytorch/pull/137363">#137363</a>)</li>
+<li>修复 <code>export</code> 的恒定输出（<a href="https://github.com/pytorch/pytorch/pull/137547">#137547</a>、<a href="https://github.com/pytorch/pytorch/pull/137993">#137993</a>）</li>
+<li>当存在 state_dict 钩子时修复 state_dict 的参数和缓冲区映射 (<a href="https://github.com/pytorch/pytorch/pull/137609">#137609</a>)</li>
+<li>修复导出回溯 (<a href="https://github.com/pytorch/pytorch/pull/137733">#137733</a>)</li>
+<li>修复 kwargs 的非严格回溯 (<a href="https://github.com/pytorch/pytorch/pull/138927">#138927</a>)</li>
+<li>修复在导出中使用 require_grad 作为常量分配张量的问题 (<a href="https://github.com/pytorch/pytorch/pull/137997">#137997</a>)
+*修复<code>export_for_training</code>中的runtime_assertions问题（<a href="https://github.com/pytorch/pytorch/pull/138292">#138292</a>）</li>
+<li>修复移动过程中复制参数的问题 (<a href="https://github.com/pytorch/pytorch/pull/138855">#138855</a>)</li>
+<li>修复 HOP 不平整的问题 (<a href="https://github.com/pytorch/pytorch/pull/138978">#138978</a>)</li>
+<li>修复展开以处理与对同一子模块的多次调用相对应的多个专用图（<a href="https://github.com/pytorch/pytorch/pull/137013">#137013</a>）</li>
+<li>允许在训练 ir 导出中自动播放 (<a href="https://github.com/pytorch/pytorch/pull/137287">#137287</a>)</li>
+<li>修复取消提升以保留别名常量 (<a href="https://github.com/pytorch/pytorch/pull/137310">#137310</a>)</li>
+<li>当模块被覆盖为 None 时处理 <code> AttrProxy._modules</code> (<a href="https://github.com/pytorch/pytorch/pull/139957">#139957</a>)</li>
+<li>修复联合图元数据 (<a href="https://github.com/pytorch/pytorch/pull/136011">#136011</a>)</li>
+<li>修复 <code>torch.Size</code> 的映射问题 (<a href="https://github.com/pytorch/pytorch/pull/137465">#137465</a>)</li>
+<li>修复 <code>test_lazy_module_kwargs</code> (<a href="https://github.com/pytorch/pytorch/pull/137705">#137705</a>)</li>
+<li>在下降过程中传播 ShapeEnv (<a href="https://github.com/pytorch/pytorch/pull/138362">#138362</a>)</li>
+<li>在分析过程中将 <code>is_export</code> 标记连接到 <code>FunctionalTensorMode</code> (<a href="https://github.com/pytorch/pytorch/pull/138836">#138836</a>)</li>
+</ul>
+<h3 id="外汇-1">外汇</h3>
+<ul>
+<li>将 <code>__init__.py</code> 添加到形状推理文件夹。 (<a href="https://github.com/pytorch/pytorch/pull/135461">#135461</a>)</li>
+<li>在按位和/或值范围中处理 <code>sympy.oo</code> (<a href="https://github.com/pytorch/pytorch/pull/141522">#141522</a>)</li>
+<li>修复了发电机元组中的枚举问题 (<a href="https://github.com/pytorch/pytorch/pull/133123">#133123</a>)</li>
+<li>将输出节点添加到 split_module 子图 (<a href="https://github.com/pytorch/pytorch/pull/139275">#139275</a>)</li>
+<li>修复空图的深层复制 (<a href="https://github.com/pytorch/pytorch/pull/141660">#141660</a>)</li>
+</ul>
+<h3 id="电感器-1">电感器</h3>
+<ul>
+<li>修复了未在 AOTInductor 中启用 Python 调度程序的错误 (<a href="https://github.com/pytorch/pytorch/pull/135933">#135933</a>)</li>
+<li>不要对动态形状大小张量运行重塑模式匹配 (<a href="https://github.com/pytorch/pytorch/pull/136100">#136100</a>)</li>
+<li>使 DtypeView 与 cpp_wrapper 一起使用，无需 <code>abi_compatible</code> (<a href="https://github.com/pytorch/pytorch/pull/136233">#136233</a>)</li>
+<li>检查大小提示以确定 Triton 中的索引数据类型 (<a href="https://github.com/pytorch/pytorch/pull/137234">#137234</a>)</li>
+<li>修复 <code>_dynamo.compiled_autograd.reset()</code> 中的错误 (<a href="https://github.com/pytorch/pytorch/pull/137889">#137889</a>)</li>
+<li>修复 <code>atomic_add_vec</code> 中的越界数组访问 (<a href="https://github.com/pytorch/pytorch/pull/138744">#138744</a>)
+*更新<code>clone_preserve_strides</code>中的零尺寸计算（<a href="https://github.com/pytorch/pytorch/pull/139224">#139224</a>、<a href="https://github.com/pytorch/pytorch/pull/139458">#139458</a>)</li>
+<li>修复 <code>march=aarch64+sve</code> 时 gcc10 <code>torch.compile</code> 编译器错误 (<a href="https://github.com/pytorch/pytorch/pull/137795">#137795</a>)</li>
+<li>修复 cubin 文件路径问题 (<a href="https://github.com/pytorch/pytorch/pull/139848">#139848</a>)</li>
+<li>修复 AOTI 打包的缓存问题 (<a href="https://github.com/pytorch/pytorch/pull/140022">#140022</a>)</li>
+<li>修复 AOTI 中的两遍内核不匹配问题 (<a href="https://github.com/pytorch/pytorch/pull/141041">#141041</a>)</li>
+<li>通过从 AOTI 中删除 <code>copy_misaligned_inputs</code> 来修复性能错误 (<a href="https://github.com/pytorch/pytorch/pull/142136">#142136</a>)</li>
+<li>修复 <code>torch.cat</code> 内核中的掩码错误 (<a href="https://github.com/pytorch/pytorch/pull/140838">#140838</a>)</li>
+<li>修复了 FlexAttention 中的 max-autotune 以适当重置内核选项 (<a href="https://github.com/pytorch/pytorch/pull/138733">#138733</a>)</li>
+<li>不要将 XBLOCK 设置为大于 xnumel (<a href="https://github.com/pytorch/pytorch/pull/138730">#138730</a>)</li>
+<li>修复当结果 dtype 为 bool 且运算符为 where 时电感器 CPU <code>masked()</code> 主体代码生成 (<a href="https://github.com/pytorch/pytorch/pull/138486">#138486</a>)</li>
+<li>修复 <code>codegen_dynamic_scalar</code> 中的拼写错误 (<a href="https://github.com/pytorch/pytorch/pull/138760">#138760</a>)</li>
+<li>修复 <code>TMADescriptor</code> IR 中的 <code>ReinterpretView</code> 调用 (<a href="https://github.com/pytorch/pytorch/pull/138759">#138759</a>)</li>
+<li>修复 FlexAttention 中的自由符号处理 (<a href="https://github.com/pytorch/pytorch/pull/138794">#138794</a>)</li>
+<li>修复 <code>tl.constexpr</code> 全局变量的代码生成 (<a href="https://github.com/pytorch/pytorch/pull/138757">#138757</a>)</li>
+<li>强制跨步以实现高效注意力向后 (<a href="https://github.com/pytorch/pytorch/pull/138879">#138879</a>)</li>
+<li>使 AOT 电感器正确对待 None args (<a href="https://github.com/pytorch/pytorch/pull/139114">#139114</a>)</li>
+<li>修复处理动态形状时参数排序的错误 (<a href="https://github.com/pytorch/pytorch/pull/139777">#139777</a>)</li>
+<li>修复禁用后端时丢失 ck 包的警告 (<a href="https://github.com/pytorch/pytorch/pull/139790">#139790</a>)</li>
+<li>强制连续布局以实现隐式回退（<a href="https://github.com/pytorch/pytorch/pull/140996">#140996</a>）</li>
+<li>修复另一个带有捕获缓冲区的 IMA (<a href="https://github.com/pytorch/pytorch/pull/141164">#141164</a>)</li>
+<li>电感器数据类型传播修复 (<a href="https://github.com/pytorch/pytorch/pull/141495">#141495</a>)</li>
+<li>修复 Triton 的广播逻辑 (<a href="https://github.com/pytorch/pytorch/pull/141027">#141027</a>) (<a href="https://github.com/pytorch/pytorch/pull/141693">#141693</a>)</li>
+<li>修复带有空 kwargs 的配置的网格代码生成 (<a href="https://github.com/pytorch/pytorch/pull/141824">#141824</a>)</li>
+<li>修复 CPP GEMM 模板剪枝张量中的问题 (<a href="https://github.com/pytorch/pytorch/pull/141798">#141798</a>)</li>
+<li>修复捕获缓冲区梯度的最大自动调谐错误 (<a href="https://github.com/pytorch/pytorch/pull/141531">#141531</a>)</li>
+<li>TritonTemplate 数据类型修复 (<a href="https://github.com/pytorch/pytorch/pull/141991">#141991</a>)</li>
+<li>修复 <code>NopKernelSchedulerNode</code> 的设备错误 (<a href="https://github.com/pytorch/pytorch/pull/141372">#141372</a>)</li>
+<li>解决了当两个符号未知且其乘积为零时 <code>try_solve</code> 失败的问题 (<a href="https://github.com/pytorch/pytorch/pull/137919">#137919</a>)。</li>
+<li>解决了回退操作返回 <code>None</code> 的问题，防止 AOTI 初始化中出现潜在错误 (<a href="https://github.com/pytorch/pytorch/pull/135997">#135997</a>)。</li>
+<li>解决了 pybind11 更新到版本 2.13.6 后的测试失败问题（<a href="https://github.com/pytorch/pytorch/pull/136280">#136280</a>）。</li>
+<li>修正了 Inductor 中单线程动态形状的最大自动调节 (<a href="https://github.com/pytorch/pytorch/pull/136418">#136418</a>)。</li>
+<li>修复 Halide 后端的 FMA 代码生成，以确保正确的操作行为 (<a href="https://github.com/pytorch/pytorch/pull/136810">#136810</a>)。</li>
+<li>更正了在 FlexAttention 中处理视图节点时的 <code>max-autotune</code> 行为（<a href="ZZPH100%E2%80%8B%E2%80%8B0ZZ">#137204</a>）。</li>
+<li>调整从较大序列长度重用时的 BlockMask 处理（<a href="ZZPH100%E2%80%8B%E2%80%8B1ZZ">#137255</a>）。</li>
+<li>通过在代码生成中正确扩展 Min 关键字来更正 <code>triton_reshape</code> (<a href="ZZPH100%E2%80%8B%E2%80%8B2ZZ">#137357</a>)。</li>
+<li>更正了单元素和的 <code>reduction_hint</code> 行为 (<a href="ZZPH100%E2%80%8B%E2%80%8B3ZZ">#137754</a>)。</li>
+<li>解决了 Windows 上的代码缓存 <code>write_atomic</code> 问题 (<a href="ZZPH100%E2%80%8B%E2%80%8B4ZZ">#138331</a>)。</li>
+<li>修复符号整数的 AOTI 数据类型代码生成 (<a href="ZZPH100%E2%80%8B%E2%80%8B5ZZ">#138106</a>)。</li>
+<li>解决了将 <code>None</code> 参数传递给用户定义的 Triton 内核导致错误的问题 (<a href="ZZPH100%E2%80%8B%E2%80%8B6ZZ">#138472</a>)。</li>
+<li>在 ROCmTemplate 中创建缓冲区时正确设置关键字参数以进行正确的初始化 (<a href="ZZPH100%E2%80%8B%E2%80%8B7ZZ">#138521</a>)。</li>
+</ul>
+<h3 id="吉特">吉特</h3>
+<ul>
+<li>在没有 FP16 硬件支持的情况下打破 vec128_half_neon 比较 (<a href="https://github.com/pytorch/pytorch/pull/139558">#139558</a>)</li>
+<li>隔离 NNC IRPrinter 的区域设置 (<a href="https://github.com/pytorch/pytorch/pull/136458">#136458</a>)</li>
+<li>修复了在查找中误用偏移参数的问题 (<a href="https://github.com/pytorch/pytorch/pull/140633">#140633</a>)</li>
+</ul>
+<h3 id="onnx-1">ONNX</h3>
+<ul>
+<li>删除最终 None 值作为导出器图中节点的输入 (<a href="https://github.com/pytorch/pytorch/pull/135520">#135520</a>)</li>
+<li>在调用 <code>run_decompositions</code> 之前在转置和视图之间插入连续节点（<a href="https://github.com/pytorch/pytorch/pull/137340">#137340</a>）</li>
+<li>修复图形构建中的序列处理（<a href="https://github.com/pytorch/pytorch/pull/138656">#138656</a>）</li>
+<li>修复 onnx 形状类型推断期间 2GB 导出崩溃的问题 (<a href="https://github.com/pytorch/pytorch/pull/140962">#140962</a>)</li>
+<li>当<code>torch.onnx.export(fallback=True)</code>被触发时，支持从dynamic_shapes到dynamic_axes (<a href="https://github.com/pytorch/pytorch/pull/139532">#139532</a>)</li>
+<li>删除 onnx 导出中 <code>torchvision.ops</code> 导入的特殊处理（<a href="https://github.com/pytorch/pytorch/pull/141569">#141569</a>）</li>
+<li>修复 <code>tensor.index_fill</code> 当 dim=0 时 #139594 (<a href="https://github.com/pytorch/pytorch/pull/139596">#139596</a>)</li>
+</ul>
+<h2 id="性能"><strong>性能</strong></h2>
+<h3 id="迪纳摩-2">迪纳摩</h3>
+<ul>
+<li>当达到 Dynamo 缓存限制时尝试使用之前编译的代码 (<a href="https://github.com/pytorch/pytorch/pull/136655">#136655</a>)</li>
+<li>除非必要，否则不要将 Python 帧本地 C 缓冲区转换为 Python 字典 <a href="https://github.com/pytorch/pytorch/pull/140063">#140063</a></li>
+</ul>
+<h3 id="英里秒-2">英里/秒</h3>
+<ul>
+<li>调度到 SDP-math-mps 以获取非连续张量 (<a href="https://github.com/pytorch/pytorch/pull/139791">#139791</a>)</li>
+<li>避免创建 <code>FUSED_ADAM_OPS</code> 的虚假实例 (<a href="https://github.com/pytorch/pytorch/pull/141090">#141090</a>)</li>
+</ul>
+<h3 id="rocm-2">ROCM</h3>
+<ul>
+<li>通过增加 max_values_per_thread 来提高 <code>torch.sum</code> 性能 (<a href="https://github.com/pytorch/pytorch/pull/135397">#135397</a>)</li>
+<li>在新的 ROCm 版本上打开 index_put 的快速路径 (<a href="https://github.com/pytorch/pytorch/pull/136136">#136136</a>)</li>
+</ul>
+<h3 id="稀疏前端-1">稀疏前端</h3>
+<ul>
+<li>加速稀疏_coo 张量的广播 (<a href="https://github.com/pytorch/pytorch/pull/142364">#142364</a>)</li>
+<li>A100 上某些 int8 形状的加速 addmm(dense, BSR) (<a href="https://github.com/pytorch/pytorch/pull/136088">#136088</a>)</li>
+<li>对于 A100 上的某些 int8 形状，使用 addmm(dense, BSR) 进行熔断缩放（<a href="https://github.com/pytorch/pytorch/pull/136104">#136104</a>）</li>
+<li>对于 A100 上的某些 int8 形状，使用 addmm(dense, BSR) 融合数据类型转换（<a href="https://github.com/pytorch/pytorch/pull/136626">#136626</a>）</li>
+</ul>
+<h3 id="杂项-2">杂项</h3>
+<ul>
+<li>加快 H100+ 上的 fp16/bf16 AMP 投射速度 (<a href="https://github.com/pytorch/pytorch/pull/137053">#137053</a>)</li>
+<li>c10d
+<ul>
+<li>提高了 NaN 检查器的效率（<a href="https://github.com/pytorch/pytorch/pull/135414">#135414</a>）</li>
+</ul>
+</li>
+<li>通过避免 XPU 的 <code>scatter_add</code> 中的原子添加操作来提高性能。 (<a href="https://github.com/pytorch/pytorch/pull/137966">#137966</a>)</li>
+</ul>
+<h3 id="电感器-2">电感器</h3>
+<ul>
+<li>默认情况下打开 TORCHINDUCTOR_REORDER_FOR_PEAK_MEMORY (<a href="https://github.com/pytorch/pytorch/pull/137205">#137205</a>)。  如果需要旧行为，请将 <code>"reorder_for_peak_memory": False</code> 添加到 <code>torch.compile</code> 调用中的选项。</li>
+<li>在 AMX int8 WoQ GEMM 的 L1D 中缓存权重图块 (<a href="https://github.com/pytorch/pytorch/pull/136688">#136688</a>)</li>
+<li>添加并使用 <code>borrow_arrayref_tensor_as_tensor</code> (<a href="https://github.com/pytorch/pytorch/pull/142183">#142183</a>)</li>
+<li>支持使用 x86-simd-sort 加速排序 (<a href="https://github.com/pytorch/pytorch/pull/127936">#127936</a>)</li>
+<li>在 CUTLASS 中启用扩展 MMA 形状。 (<a href="https://github.com/pytorch/pytorch/pull/133686">#133686</a>)</li>
+<li>将 ExecuTorch bfdot 端口改进回 ATen BlasKernel (<a href="https://github.com/pytorch/pytorch/pull/136331">#136331</a>、<a href="https://github.com/pytorch/pytorch/pull/137377">#137377</a>)</li>
+<li>也为非 ARM 架构构建 <code>ReducedPrecisionFloatGemvFastPathKernel</code> 和入口点 (<a href="https://github.com/pytorch/pytorch/pull/137917">#137917</a>)</li>
+<li>将 <code>fp16_gemv_trans</code> 连接到非 aarch64 架构的 gemv 快速路径 (<a href="https://github.com/pytorch/pytorch/pull/138005">#138005</a>)</li>
+<li>添加针对 ARM 的 <code>Vectorizedc10::BFloat16</code> 专业化 (<a href="https://github.com/pytorch/pytorch/pull/139090">#139090</a>)</li>
+<li>也为非 ARM 架构构建 bf16 gemv 快速路径和入口点 (<a href="https://github.com/pytorch/pytorch/pull/139208">#139208</a>)</li>
+<li>将 <code>bf16_gemv_trans</code> 连接到 x86 bf16 GEMM (<a href="https://github.com/pytorch/pytorch/pull/139220">#139220</a>)</li>
+<li>不要为 *_dot_with_fp32_arith 进行调度 (<a href="https://github.com/pytorch/pytorch/pull/140834">#140834</a>)</li>
+<li>为 NEON float/half 添加高效 isnan (<a href="https://github.com/pytorch/pytorch/pull/139082">#139082</a>, <a href="https://github.com/pytorch/pytorch/pull/139083">#139083</a>)</li>
+<li>将 <code>fp16_gemv_trans</code> 连接到 x86 fp16 GEMM (<a href="https://github.com/pytorch/pytorch/pull/137918">#137918</a>)</li>
+<li>支持 <code>fp16_gemv_trans</code> 中的非零 beta (<a href="https://github.com/pytorch/pytorch/pull/138275">#138275</a>)</li>
+<li>将 X86_F16 从 executorch half 移植到 PyTorch half (<a href="https://github.com/pytorch/pytorch/pull/140720">#140720</a>)</li>
+<li>NT GEMM Matmul 的保留向量 (<a href="https://github.com/pytorch/pytorch/pull/141130">#141130</a>)</li>
+<li>将 CK 分组 conv2d fwd 内核添加到 ROCm 代码生成中 (<a href="https://github.com/pytorch/pytorch/pull/137947">#137947</a>)</li>
+<li>在电感器内部扩展量化转换-二元（-一元）模式融合（<a href="https://github.com/pytorch/pytorch/pull/138051">#138051</a>）</li>
+<li>停止强制实现以防止递归错误，除非它更大（<a href="https://github.com/pytorch/pytorch/pull/138881">#138881</a>）</li>
+<li>提升图的常量折叠 (<a href="https://github.com/pytorch/pytorch/pull/135060">#135060</a>)</li>
+<li>为 AOTInductor 添加主机端 TMA 支持（<a href="https://github.com/pytorch/pytorch/pull/138878">#138878</a>）</li>
+<li>当其他用户无关紧要时允许替换缓冲区 (<a href="https://github.com/pytorch/pytorch/pull/138383">#138383</a>)</li>
+<li>如果可能增加峰值内存，请勿融合两个节点 (<a href="https://github.com/pytorch/pytorch/pull/138756">#138756</a>)</li>
+<li>为 Half cpp gemm 模板添加 oneDNN BRGEMM 配置 (<a href="https://github.com/pytorch/pytorch/pull/136255">#136255</a>)</li>
+<li>针对特殊情况启用 oneDNN 线性融合 (<a href="https://github.com/pytorch/pytorch/pull/139172">#139172</a>)</li>
+<li>删除已删除操作的使用 (<a href="https://github.com/pytorch/pytorch/pull/139447">#139447</a>)</li>
+<li>使用 CK 后端在 gemm max 自动调谐中启用带有偏差的缩放毫米 (<a href="https://github.com/pytorch/pytorch/pull/140674">#140674</a>)</li>
+<li>支持冻结路径的线性+二值折叠(<a href="https://github.com/pytorch/pytorch/pull/138807">#138807</a>)</li>
+<li>简化并纠正 WoQ int8 情况下 AMX GEMM 微内核的反量化 B 缓冲区加载（<a href="https://github.com/pytorch/pytorch/pull/140258">#140258</a>）</li>
+<li>通过折叠矢量化循环来提高并行化 (<a href="https://github.com/pytorch/pytorch/pull/128812">#128812</a>)</li>
+<li>XPU 后端的 qconv (<a href="https://github.com/pytorch/pytorch/pull/133080">#133080</a>)</li>
+<li>如果 y numel 可能溢出 y 网格，请勿使用常量掩码 (<a href="https://github.com/pytorch/pytorch/pull/139751">#139751</a>)</li>
+<li>使用 CK 后端将批量 gemms 添加到 gemm max 自动调谐中 (<a href="https://github.com/pytorch/pytorch/pull/141520">#141520</a>)</li>
+<li>为 <code>_scaled_mm</code> 添加降低持久 tma 设备内核的功能 (<a href="https://github.com/pytorch/pytorch/pull/142045">#142045</a>)</li>
+<li>使用 RELU 添加 <code>linear_dynamic_fp16</code> 的融合通道 (<a href="https://github.com/pytorch/pytorch/pull/141556">#141556</a>)</li>
+<li>恢复 Inductor 中的运行时数字检查以减少编译时间 (<a href="https://github.com/pytorch/pytorch/pull/137324">#137324</a>)。</li>
+<li>通过利用 128 位向量优化 ARM64 性能 (<a href="https://github.com/pytorch/pytorch/pull/137426">#137426</a>)。</li>
+<li>调整<code>score_fusion_memory_threshold</code>在电感器中的应用策略(<a href="https://github.com/pytorch/pytorch/pull/138970">#138970</a>)。</li>
+<li>通过 Inductor 中的协作多内核支持增强归约运算 (<a href="https://github.com/pytorch/pytorch/pull/138893138893">#138893</a>)。</li>
+<li>禁用电感器内核中的 <code>sanitize_overflow</code> (<a href="https://github.com/pytorch/pytorch/pull/139502">#139502</a>)。</li>
+<li>实现 <code>get_operation_names</code> 和 <code>get_buffer_names</code> 的缓存 (<a href="https://github.com/pytorch/pytorch/pull/135446">#135446</a>)。</li>
+<li>融合后重新排序调度程序节点以减少峰值内存使用量 (<a href="https://github.com/pytorch/pytorch/pull/134874">#134874</a>)。</li>
+<li>优化 AMX GEMM 模板中的 WOQ INT8 权重反量化 (<a href="https://github.com/pytorch/pytorch/pull/136630">#136630</a>)。</li>
+<li>在 Triton codegen 中使用标量表示 f64 常量（<a href="https://github.com/pytorch/pytorch/pull/136858">#136858</a>）。</li>
+<li>使用 Triton CPU 后端时减少块大小以提高性能（<a href="https://github.com/pytorch/pytorch/pull/136612">#136612</a>）。</li>
+<li>通过将 CPU 副本限制为 CUDA 设备来优化自动调整期间的 CPU 副本 (<a href="https://github.com/pytorch/pytorch/pull/137509">#137509</a>)。</li>
+<li>添加主机端 Triton TMA 支持（<a href="https://github.com/pytorch/pytorch/pull/137950">#137950</a>）。</li>
+<li>优化<code>can_fuse_vertical()</code>功能(<a href="https://github.com/pytorch/pytorch/pull/135788">#135788</a>)。</li>
+</ul>
+<h2 id="文档"><strong>文档</strong></h2>
+<h3 id="分布式-2">分布式</h3>
+<ul>
+<li>c10d
+<ul>
+<li>添加了一些 <code>TCPStore</code> 和 <code>TCPStoreLibUvBackend</code> 代码的代码文档 (<a href="https://github.com/pytorch/pytorch/pull/130496">#130496</a>)</li>
+<li>为 c10d 集体 <code>gather</code> 和 <code>scatter</code> 添加了更多示例 (<a href="https://github.com/pytorch/pytorch/pull/130427">#130427</a>)</li>
+<li>修正了 <code>ProcessGroupGloo</code> 中的注释 (<a href="https://github.com/pytorch/pytorch/pull/137746">#137746</a>)</li>
+<li>在 <code>CUDAEventCache</code> 代码中添加了更多内嵌注释 (<a href="https://github.com/pytorch/pytorch/pull/138079">#138079</a>)</li>
+<li>添加了 PG API 的文档以及一些清理（<a href="https://github.com/pytorch/pytorch/pull/140853">#140853</a>）</li>
+<li>更新了 <code>backend</code> arg 文档 (<a href="https://github.com/pytorch/pytorch/pull/142404">#142404</a>)</li>
+</ul>
+</li>
+<li>离散张量
+<ul>
+<li>更新了 DTensor 自述文件以使用新的导入路径 (<a href="https://github.com/pytorch/pytorch/pull/138625">#138625</a>)</li>
+</ul>
+</li>
+<li>FSDP2
+<ul>
+<li>更好的 CPU 卸载错误消息 (<a href="https://github.com/pytorch/pytorch/pull/135156">#135156</a>)</li>
+</ul>
+</li>
+<li>将当前 FSDP2 路径添加到旧的可组合 FSDP1 警告 (<a href="https://github.com/pytorch/pytorch/pull/139759">#139759</a>)</li>
+<li>管道
+<ul>
+<li>添加了小注释和变量重命名 (<a href="https://github.com/pytorch/pytorch/pull/138735">#138735</a>)</li>
+</ul>
+</li>
+<li>c10d
+<ul>
+<li>添加了一些 <code>TCPStore</code> 和 <code>TCPStoreLibUvBackend</code> 代码的代码文档 (<a href="https://github.com/pytorch/pytorch/pull/130496">#130496</a>)</li>
+<li>为 c10d 集体 <code>gather</code> 和 <code>scatter</code> 添加了更多示例 (<a href="https://github.com/pytorch/pytorch/pull/130427">#130427</a>)</li>
+<li>修复了 <code>ProcessGroupGloo</code> 中的注释 (<a href="https://github.com/pytorch/pytorch/pull/137746">#137746</a>)</li>
+<li>在 <code>CUDAEventCache</code> 代码中添加了更多内嵌注释 (<a href="https://github.com/pytorch/pytorch/pull/138079">#138079</a>)</li>
+<li>添加了 PG API 的文档以及一些清理（<a href="https://github.com/pytorch/pytorch/pull/140853">#140853</a>）</li>
+<li>更新了 <code>backend</code> arg 文档 (<a href="https://github.com/pytorch/pytorch/pull/142404">#142404</a>)</li>
+</ul>
+</li>
+<li>离散张量
+<ul>
+<li>更新了 DTensor 自述文件以使用新的导入路径 (<a href="https://github.com/pytorch/pytorch/pull/138625">#138625</a>)</li>
+</ul>
+</li>
+<li>FSDP2
+<ul>
+<li>更好的 CPU 卸载错误消息 (<a href="https://github.com/pytorch/pytorch/pull/135156">#135156</a>)</li>
+<li>将当前 FSDP2 路径添加到旧的可组合 FSDP1 警告（<a href="https://github.com/pytorch/pytorch/pull/139759">#139759</a>）</li>
+</ul>
+</li>
+<li>管道
+<ul>
+<li>添加了小注释和变量重命名 (<a href="https://github.com/pytorch/pytorch/pull/138735">#138735</a>)</li>
+</ul>
+</li>
+<li>TP
+*更新了distributed.tensor.parallel.rst中的链接（<a href="https://github.com/pytorch/pytorch/pull/136103">#136103</a>）</li>
+<li>检查站
+<ul>
+<li>将教程和 TorchTitan 检查点的链接添加到 DCP 文档 (<a href="https://github.com/pytorch/pytorch/pull/139776">#139776</a>)</li>
+</ul>
+</li>
+</ul>
+<h3 id="电感器-3">电感器</h3>
+<ul>
+<li>更新 OSS 教程 (<a href="https://github.com/pytorch/pytorch/pull/139956">#139956</a>)</li>
+<li>添加 <code>torch._inductor.runtime</code> 的自述文件 (<a href="https://github.com/pytorch/pytorch/pull/141492">#141492</a>)</li>
+<li>改进 OSSProxyExecutor 错误消息 (<a href="https://github.com/pytorch/pytorch/pull/141501">#141501</a>)</li>
+<li>增强了捆绑自动调整缓存的文档，以提供更清晰的指导 (<a href="https://github.com/pytorch/pytorch/pull/138298">#138298</a>)。</li>
+</ul>
+<h3 id="英里秒-3">英里/秒</h3>
+<ul>
+<li>更新 <code>MPS_ERROR_RUNTIME_TOO_LOW</code> 消息 (<a href="https://github.com/pytorch/pytorch/pull/139427">#139427</a>)</li>
+<li>修复输出 2**16 的 MPS conv1d 错误消息 (<a href="https://github.com/pytorch/pytorch/pull/134770">#134770</a>)</li>
+<li>修改缺失的操作消息 (<a href="https://github.com/pytorch/pytorch/pull/141314">#141314</a>)</li>
+<li>更新支持的自动施放类型的错误消息 (<a href="https://github.com/pytorch/pytorch/pull/139192">#139192</a>)</li>
+</ul>
+<h3 id="神经网络前端-2">神经网络前端</h3>
+<ul>
+<li>修复 RMSNorm 文档中的公式 (<a href="https://github.com/pytorch/pytorch/pull/136727">#136727</a>)</li>
+<li>删除 RMSNorm 文档中不正确的偏差初始化 (<a href="https://github.com/pytorch/pytorch/pull/139620">#139620</a>)</li>
+<li>在 <code>pack_padded_sequence</code> 文档中添加对 <code>pad_packed_sequence</code> 的引用 (<a href="https://github.com/pytorch/pytorch/pull/137294">#137294</a>)</li>
+<li>改进 <code>register_module_forward_hook</code> 的文档 (<a href="https://github.com/pytorch/pytorch/pull/140379">#140379</a>)</li>
+<li>三重保证金损失的正确参考链接 (<a href="https://github.com/pytorch/pytorch/pull/142071">#142071</a>)</li>
+<li>将标准化文档中的“标准差”更改为“方差”（<a href="https://github.com/pytorch/pytorch/pull/141982">#141982</a>）</li>
+<li>修复 <code>nn.functional.scaled_dot_product_attention</code> 文档中示例中的广播错误 (<a href="https://github.com/pytorch/pytorch/pull/135427">#135427</a>)</li>
+<li>指向变压器文档中的变压器构建模块教程 (<a href="https://github.com/pytorch/pytorch/pull/144425">#144425</a>)</li>
+</ul>
+<h3 id="优化-1">优化</h3>
+<ul>
+<li>删除有关闭包梯度修改的令人困惑的注释（<a href="https://github.com/pytorch/pytorch/pull/137535">#137535</a>）</li>
+<li>对文档中的 optim kwargs 进行少量重新排序（<a href="https://github.com/pytorch/pytorch/pull/137531">#137531</a>、<a href="https://github.com/pytorch/pytorch/pull/137528">#137528</a>）</li>
+<li>RMSprop 文档：添加缺失的输入“epsilon”（<a href="https://github.com/pytorch/pytorch/pull/137854">#137854</a>）</li>
+<li>将缺失的输入“eps”添加到 adam 文档中 (<a href="https://github.com/pytorch/pytorch/pull/135191">#135191</a>)</li>
+<li>更正了 Adam 和 AdamW 中的 AMSGrad 最大方程 (<a href="https://github.com/pytorch/pytorch/pull/142051">#142051</a>)</li>
+<li>文档更新：修复优化器文档中缺失的空格 (<a href="https://github.com/pytorch/pytorch/pull/138321">#138321</a>)</li>
+</ul>
+<h3 id="python-前端-2">Python 前端</h3>
+<ul>
+<li>修复 <code>torch.nansum</code> 示例的返回类型。 (<a href="https://github.com/pytorch/pytorch/pull/135435">#135435</a>)</li>
+<li>修复 <code>torch.cat</code> 文档 (<a href="https://github.com/pytorch/pytorch/pull/135698">#135698</a>)</li>
+<li>修复多个函数参数文档字符串 (<a href="https://github.com/pytorch/pytorch/pull/136097">#136097</a>, <a href="https://github.com/pytorch/pytorch/pull/140089">#140089</a>)</li>
+<li>澄清 NaN 彼此不相等 (<a href="https://github.com/pytorch/pytorch/pull/137386">#137386</a>)</li>
+<li>修复 <code>torch.save</code> 文档中的描述，以显示 pickle_protocol 的默认值而不是变量名称（<a href="https://github.com/pytorch/pytorch/pull/138153">#138153</a>）</li>
+<li>修复 logcumsumexp 公式的文档 (<a href="https://github.com/pytorch/pytorch/pull/139768">#139768</a>)</li>
+<li>澄清 Gamma 分布中速率参数的含义 (<a href="https://github.com/pytorch/pytorch/pull/134847">#134847</a>)</li>
+<li>更新了引用 <code>torch.expand</code> 的文档字符串以指向 <code>torch.Tensor.expand</code> (<a href="https://github.com/pytorch/pytorch/pull/140045">#140045</a>)</li>
+<li>更新 <code>torch.mean()</code> 的文档以记录空张量的行为 (<a href="https://github.com/pytorch/pytorch/pull/142039">#142039</a>)</li>
+<li>改进文档字符串中的 <code>torch.squeeze</code> 参数类型 (<a href="https://github.com/pytorch/pytorch/pull/137485">#137485</a>)</li>
+<li>改进 <code>torch.isclose</code> 文档字符串 (<a href="https://github.com/pytorch/pytorch/pull/138459">#138459</a>、<a href="https://github.com/pytorch/pytorch/pull/139724">#139724</a>)</li>
+<li>澄清 <code>torch.sum</code> dtype 升级行为 (<a href="https://github.com/pytorch/pytorch/pull/140939">#140939</a>)</li>
+<li>澄清 <code>torch.arang</code>e 浮点舍入行为 (<a href="https://github.com/pytorch/pytorch/pull/141655">#141655</a>)</li>
+<li>修复 <code>torch.trapezoid</code> 文档字符串 (<a href="https://github.com/pytorch/pytorch/pull/141459">#141459</a>)</li>
+<li>澄清何时使用可选的 opt-einsum 依赖项 (<a href="https://github.com/pytorch/pytorch/pull/137596">#137596</a>)</li>
+<li>澄清 <code>torch.linalg.vector_norm</code> 输入别名行为 (<a href="https://github.com/pytorch/pytorch/pull/136921">#136921</a>)</li>
+<li>修复 <code>torch.linalg.svd</code> V* 形状 (<a href="https://github.com/pytorch/pytorch/pull/142037">#142037</a>)</li>
+</ul>
+<h3 id="杂项-3">杂项</h3>
+<ul>
+<li>对我们的 <code>torch.compile</code> FakeTensor 文档进行小幅渲染修复 (<a href="https://github.com/pytorch/pytorch/pull/138281">#138281</a>)</li>
+<li>记录 load_inline 需要安装 C++ 编译器 (<a href="https://github.com/pytorch/pytorch/pull/137521">#137521</a>)</li>
+<li>修复 <code>torch._scaled_mm</code> 中的错误消息 (<a href="https://github.com/pytorch/pytorch/pull/140343">#140343</a>)</li>
+<li>修改 <code>torch.compile</code> 故障排除文档 (<a href="https://github.com/pytorch/pytorch/pull/138620">#138620</a>)</li>
+<li>修复了 export.export() API 的文档 (<a href="https://github.com/pytorch/pytorch/pull/135551">#135551</a>)</li>
+<li>修复 fx/interpreter 中的示例 (<a href="https://github.com/pytorch/pytorch/pull/139368">#139368</a>)</li>
+<li>添加新的 PT2 故障排除文档 (<a href="https://github.com/pytorch/pytorch/pull/138620">#138620</a>)</li>
+<li>更新“XPU 入门”文档。 (<a href="https://github.com/pytorch/pytorch/pull/137479">#137479</a>)</li>
+</ul>
+<h2 id="开发人员"><strong>开发人员</strong></h2>
+<h3 id="可组合性-2">可组合性</h3>
+<ul>
+<li>制作<code>maybe_aliasing_or_mutating</code>正确的标签(<a href="https://github.com/pytorch/pytorch/pull/131990">#131990</a>)</li>
+</ul>
+<h3 id="分布式-3">分布式</h3>
+<ul>
+<li>c10d
+<ul>
+<li>添加了 nccl 中止的等待计数器 (<a href="https://github.com/pytorch/pytorch/pull/136067">#136067</a>)</li>
+<li>添加了对象到张量和张量到对象所花费时间的等待计数器（<a href="https://github.com/pytorch/pytorch/pull/140414">#140414</a>）</li>
+<li>添加了 <code>TCPStoreLibUvBackend</code> 的跟踪操作 (<a href="https://github.com/pytorch/pytorch/pull/136320">#136320</a>)</li>
+<li>在记录之前将设备索引转换为 int (<a href="https://github.com/pytorch/pytorch/pull/135405">#135405</a>)</li>
+<li>将 <code>WorkNCCL</code> 异常字符串记录到 <code>C10dLogger</code> (<a href="https://github.com/pytorch/pytorch/pull/137736">#137736</a>)</li>
+<li>使格式化程序避免在 <code>socket.cpp</code> 中引发异常（<a href="https://github.com/pytorch/pytorch/pull/137745">#137745</a>）</li>
+<li>在飞行记录器日志中记录世界大小（<a href="https://github.com/pytorch/pytorch/pull/138044">#138044</a>）</li>
+<li>区分超时错误和 nccl 错误 (<a href="https://github.com/pytorch/pytorch/pull/138240">#138240</a>)</li>
+<li>添加了更合适的套接字错误和调试消息（<a href="https://github.com/pytorch/pytorch/pull/130347">#130347</a>）</li>
+<li>重新排序 cpp 堆栈转储和 FR 转储，并向日志记录添加日志前缀 (<a href="https://github.com/pytorch/pytorch/pull/138368">#138368</a>)</li>
+<li>重新排序 GIL 检查器和带有注释的 C++ 堆栈跟踪打印 (<a href="https://github.com/pytorch/pytorch/pull/138734">#138734</a>)</li>
+<li>启用看门狗在报告 NCCL 看门狗超时时打印调用时间回溯（<a href="https://github.com/pytorch/pytorch/pull/139659">#139659</a>）</li>
+<li>添加了 <code>FakeProcessGroup</code> 的型号信息 (<a href="https://github.com/pytorch/pytorch/pull/133211">#133211</a>)</li>
+<li>添加了转储功能的等待计数器 (<a href="https://github.com/pytorch/pytorch/pull/140823">#140823</a>)</li>
+<li>将 c10d 中的所有计时器日志记录切换为 wait_counter (<a href="https://github.com/pytorch/pytorch/pull/141154">#141154</a>)</li>
+<li>改进了飞行记录仪的功效（<a href="https://github.com/pytorch/pytorch/pull/142178">#142178</a>）</li>
+<li>将飞行记录仪的 <code>vlog(2)</code> 改回 <code>LOG(INFO)</code> (<a href="https://github.com/pytorch/pytorch/pull/142441">#142441</a>)</li>
+<li>将“NCCL屏障，nccl：all_reduce”的更好的分析标题添加到“nccl：all_reduce_barrier”（[＃140785]（<a href="https://github.com/pytorch/pytorch/pull/140785%EF%BC%89%EF%BC%89">https://github.com/pytorch/pytorch/pull/140785））</a></li>
+<li>采用更好的飞行记录器状态错误消息（<a href="https://github.com/pytorch/pytorch/pull/142505">#142505</a>）</li>
+<li>修复了 <code>ProcessGroupNCCL</code> 中错误的错误消息 (<a href="https://github.com/pytorch/pytorch/pull/135423">#135423</a>)</li>
+<li>在屏障消息中添加了一些缺失的空格（<a href="https://github.com/pytorch/pytorch/pull/137721">#137721</a>）</li>
+<li>添加了线程安全初始化警告 (<a href="https://github.com/pytorch/pytorch/pull/139638">#139638</a>)
+*添加开始工作numel的日志(<a href="https://github.com/pytorch/pytorch/pull/139773">#139773</a>)</li>
+<li>改进了 <code>ProcessGroupNCCL</code> 析构函数的消息传递（<a href="https://github.com/pytorch/pytorch/pull/142297">#142297</a>）</li>
+</ul>
+</li>
+<li>火炬弹性
+<ul>
+<li>将 <code>FileTimerRequests.to_json()</code> 传递给 <code>log_debug_info_for_expired_timers</code> 以获得更好的调试体验 (<a href="https://github.com/pytorch/pytorch/pull/135913">#135913</a>)</li>
+</ul>
+</li>
+</ul>
+<h3 id="导出-2">导出</h3>
+<ul>
+<li>原型 <code>_swap_modules</code> API 可用于交换导出程序的子模块 (<a href="https://github.com/pytorch/pytorch/pull/136190">#136190</a>, <a href="https://github.com/pytorch/pytorch/pull/139126">#139126</a>)</li>
+<li>避免调试名称因昏暗提示而崩溃 (<a href="https://github.com/pytorch/pytorch/pull/139104">#139104</a>)</li>
+</ul>
+<h3 id="电感器-4">电感器</h3>
+<ul>
+<li>删除非 ABI 兼容模式 (<a href="https://github.com/pytorch/pytorch/pull/138009">#138009</a>, <a href="https://github.com/pytorch/pytorch/pull/138047">#138047</a>)</li>
+<li>移动<code>use_minimal_arrayref_interface</code>逻辑(<a href="https://github.com/pytorch/pytorch/pull/138250">#138250</a>)</li>
+<li>将 <code>ir.Layout</code> 重构为 <code>ir.OutputSpec</code> (<a href="https://github.com/pytorch/pytorch/pull/140910">#140910</a>)</li>
+<li>重构 <code>dependencies.extract_loop_body_with_args</code> (<a href="https://github.com/pytorch/pytorch/pull/141404">#141404</a>)
+*compile_fx 中适度的代码移动（<a href="https://github.com/pytorch/pytorch/pull/141574">#141574</a>）</li>
+<li>将后编译步骤移至 post_compile1/post_compile2 方法中 (<a href="https://github.com/pytorch/pytorch/pull/141656">#141656</a>)</li>
+<li>将 <code>FxGraphCache.load</code> 内联到其唯一的调用站点 (<a href="https://github.com/pytorch/pytorch/pull/141681">#141681</a>)</li>
+<li>将 <code>set_feature_use</code> 脱离条件，重命名一些变量 (<a href="https://github.com/pytorch/pytorch/pull/141683">#141683</a>)</li>
+<li>统一缓存禁用和缓存旁路路径 (<a href="https://github.com/pytorch/pytorch/pull/141685">#141685</a>)</li>
+<li>统一 <code>post_compile1</code> 和 <code>CompiledFxGraph</code> 构造函数 (<a href="https://github.com/pytorch/pytorch/pull/141689">#141689</a>)</li>
+<li>内联 <code>compile_to_fn</code> 位于其唯一的调用位置 (<a href="https://github.com/pytorch/pytorch/pull/141691">#141691</a>)</li>
+<li>将块指针分析移至新模块 (<a href="https://github.com/pytorch/pytorch/pull/141733">#141733</a>)</li>
+<li>将 <code>_fx_graph_cache_key</code> 和 _time_taken_ns 分解为公共基类 (<a href="https://github.com/pytorch/pytorch/pull/141878">#141878</a>)</li>
+<li>codecache：将一些图形序列化代码提取到通用帮助程序中（<a href="https://github.com/pytorch/pytorch/pull/141502">#141502</a>）</li>
+<li>将可选图形模块重构为 <code>CompiledFxGraphConstants</code> (<a href="https://github.com/pytorch/pytorch/pull/141897">#141897</a>)</li>
+<li>添加编译器平分线工具以帮助 PyTorch 中的调试和开发过程 (<a href="https://github.com/pytorch/pytorch/pull/131936">#131936</a>)。</li>
+</ul>
+<h3 id="优化-2">优化</h3>
+<ul>
+<li>添加回删除 <code>*.pyi</code> 文件时丢失的优化类型提示 (<a href="https://github.com/pytorch/pytorch/pull/136185">#136185</a>)</li>
+<li>确保 SWA 边界条件 w.r.t.定义（<a href="https://github.com/pytorch/pytorch/pull/133773">#133773</a>）</li>
+</ul>
+<h3 id="量化-2">量化</h3>
+<ul>
+<li>添加未对齐的属性到 <code>q8gemm</code>/<code>4x4c2-sse2.c</code> (<a href="https://github.com/pytorch/pytorch/pull/140188">#140188</a>)</li>
+<li>添加更多支持 QuantizedPrivateuse1 后端 (<a href="https://github.com/pytorch/pytorch/pull/139860">#139860</a>)</li>
+<li>使 <code>move_exported_model_to_train</code>/<code>eval</code> 幂等 (<a href="https://github.com/pytorch/pytorch/pull/142239">#142239</a>)
+###热冷</li>
+<li>弃用 pytorch/builder 存储库 (<a href="https://github.com/pytorch/pytorch/pull/142156">#142156</a>) (<a href="https://github.com/pytorch/pytorch/pull/142277">#142277</a>) (<a href="https://github.com/pytorch/pytorch/pull/142282">#142282</a>) (<a href="https://github.com/pytorch/pytorch/pull/142482">#142482</a>) (<a href="https://github.com/pytorch/pytorch/pull/138103">#138103</a>) (<a href="https://github.com/pytorch/pytorch/pull/139815">#139815</a>) (<a href="https://github.com/pytorch/pytorch/pull/140020">#140020</a>) (<a href="https://github.com/pytorch/pytorch/pull/142382">#142382</a>)</li>
+<li>在 x86 金属流道上添加电感器微基准 (<a href="https://github.com/pytorch/pytorch/pull/135042">#135042</a>) (<a href="https://github.com/pytorch/pytorch/pull/136052">#136052</a>) (<a href="https://github.com/pytorch/pytorch/pull/135780">#135780</a>)</li>
+<li>将 PyTorch Dev Infra Runner 迁移到 Amazon Linux 2023 (<a href="https://github.com/pytorch/pytorch/pull/136540">#136540</a>) (<a href="https://github.com/pytorch/pytorch/pull/136544">#136544</a>)</li>
+<li>将HUD后端数据库从Rockset迁移到Clickhouse (<a href="https://github.com/pytorch/pytorch/pull/139296">#139296</a>) (<a href="https://github.com/pytorch/pytorch/pull/139322">#139322</a>) (<a href="https://github.com/pytorch/pytorch/pull/137207">#137207</a>) (<a href="https://github.com/pytorch/pytorch/pull/139922">#139922</a>) (<a href="https://github.com/pytorch/pytorch/pull/140574">#140574</a>)</li>
+<li>发布工程工具、CI 修复和附加 CI 测试。工作流程、Trymerge、Bot Labeler、Mergebot (<a href="https://github.com/pytorch/pytorch/pull/136060">#136060</a>) (<a href="https://github.com/pytorch/pytorch/pull/140185">#140185</a>) (<a href="https://github.com/pytorch/pytorch/pull/135582">#135582</a>) (<a href="https://github.com/pytorch/pytorch/pull/135644">#135644</a>) (<a href="https://github.com/pytorch/pytorch/pull/136061">#136061</a>) (<a href="https://github.com/pytorch/pytorch/pull/135342">#135342</a>) (<a href="https://github.com/pytorch/pytorch/pull/136043">#136043</a>) (<a href="https://github.com/pytorch/pytorch/pull/134356">#134356</a>) (<a href="https://github.com/pytorch/pytorch/pull/136208">#136208</a>) (<a href="https://github.com/pytorch/pytorch/pull/136610">#136610</a>) (<a href="https://github.com/pytorch/pytorch/pull/136791">#136791</a>) (<a href="https://github.com/pytorch/pytorch/pull/136239">#136239</a>) (<a href="https://github.com/pytorch/pytorch/pull/135342">#135342</a>) (<a href="https://github.com/pytorch/pytorch/pull/136794">#136794</a>) (<a href="https://github.com/pytorch/pytorch/pull/137104">#137104</a>) (<a href="https://github.com/pytorch/pytorch/pull/137168">#137168</a>) (<a href="https://github.com/pytorch/pytorch/pull/137176">#137176</a>) (<a href="https://github.com/pytorch/pytorch/pull/137170">#137170</a>) (<a href="https://github.com/pytorch/pytorch/pull/137169">#137169</a>) (<a href="https://github.com/pytorch/pytorch/pull/135390">#135390</a>) (<a href="https://github.com/pytorch/pytorch/pull/137614">#137614</a>) (<a href="https://github.com/pytorch/pytorch/pull/137802">#137802</a>) (<a href="https://github.com/pytorch/pytorch/pull/137791">#137791</a>) (<a href="https://github.com/pytorch/pytorch/pull/138178">#138178</a>) (<a href="https://github.com/pytorch/pytorch/pull/138054">#138054</a>) (<a href="https://github.com/pytorch/pytorch/pull/138232">#138232</a>) (<a href="https://github.com/pytorch/pytorch/pull/138263">#138263</a>) (<a href="https://github.com/pytorch/pytorch/pull/138178">#138178</a>) (<a href="https://github.com/pytorch/pytorch/pull/138752">#138752</a>) (<a href="https://github.com/pytorch/pytorch/pull/138204">#138204</a>) (<a href="https://github.com/pytorch/pytorch/pull/138714">#138714</a>) (<a href="https://github.com/pytorch/pytorch/pull/138874">#138874</a>)</li>
+</ul>
+<h3 id="xpu-2">XPU</h3>
+<ul>
+<li>删除 XPU 轮构建中不必要的 Triton 依赖项。 (<a href="https://github.com/pytorch/pytorch/pull/143983">#143983</a>)</li>
+<li>更新 Docker 使用新的 XPU 映像名称构建工作流程。 (<a href="https://github.com/pytorch/pytorch/pull/142298">#142298</a>)</li>
+<li>恢复 Triton 构建对 XPU 的支持。 (<a href="https://github.com/pytorch/pytorch/pull/141775">#141775</a>)</li>
+<li>更新 Triton XPU 版本固定。 (<a href="https://github.com/pytorch/pytorch/pull/135638">#135638</a>)</li>
+<li>改进 XPU 设备初始化的异常处理。 (<a href="https://github.com/pytorch/pytorch/pull/141658">#141658</a>)</li>
+<li>增强 XPU 内存分配的单元测试。 (<a href="https://github.com/pytorch/pytorch/pull/141325">#141325</a>)</li>
+<li>使 XPU 库可供开发人员公开访问。 (<a href="https://github.com/pytorch/pytorch/pull/136974">#136974</a>)</li>
+<li>改进 XPU oneDNN 集成的代码格式。 (<a href="https://github.com/pytorch/pytorch/pull/139721">#139721</a>)</li>
+<li>公开 XPU oneDNN 标头以用于文档目的。 (<a href="https://github.com/pytorch/pytorch/pull/139177">#139177</a>)</li>
+<li>确保 CMake 中的 XPU 编译器版本控制以实现向后兼容性。用户应将其 XPU 编译器版本与 PyTorch 中支持的版本保持一致。 (<a href="https://github.com/pytorch/pytorch/pull/139258">#139258</a>)</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/pytorch/pytorch">pytorch/pytorch</a> · 🏷️ 版本：<code>v2.6.0</code> · 📅 发布：2025-01-29 · <a href="https://github.com/pytorch/pytorch/releases/tag/v2.6.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/pytorch/pytorch_v2.7.0"> <span class="k">← 下一个</span> <span class="t">v2.7.0</span> </a> <a href="/zh/release_note/pytorch/pytorch_v2.5.1"> <span class="k">上一个 →</span> <span class="t">v2.5.1</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/pytorch/pytorch/releases/tag/v2.6.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener"> <span>pytorch/pytorch</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#亮点" class>亮点</a><a href="#改进" class>改进</a><a href="#python-前端" class="lv3">Python 前端</a><a href="#神经网络前端" class="lv3">神经网络前端</a><a href="#优化" class="lv3">优化</a><a href="#可组合性" class="lv3">可组合性</a><a href="#分布式" class="lv3">分布式</a><a href="#分析器" class="lv3">分析器</a><a href="#嵌套张量" class="lv3">嵌套张量</a><a href="#functorch" class="lv3">Functorch</a><a href="#量化" class="lv3">量化</a><a href="#库达" class="lv3">库达</a><a href="#英里秒" class="lv3">英里/秒</a><a href="#rocm" class="lv3">ROCM</a><a href="#xpu" class="lv3">XPU</a><a href="#杂项" class="lv3">杂项</a><a href="#迪纳摩" class="lv3">迪纳摩</a><a href="#导出" class="lv3">导出</a><a href="#外汇" class="lv3">外汇</a><a href="#电感器" class="lv3">电感器</a><a href="#onnx" class="lv3">ONNX</a><a href="#错误修复" class>错误修复</a><a href="#python-前端-1" class="lv3">Python 前端</a><a href="#神经网络前端-1" class="lv3">神经网络前端</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/pytorch/pytorch_v2.15.0"> <span class="v">v2.15.0</span> <span class="d">26-10-28</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.14.1"> <span class="v">v2.14.1</span> <span class="d">26-09-30</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.14.0"> <span class="v">v2.14.0</span> <span class="d">26-09-02</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.13.0"> <span class="v">v2.13.0</span> <span class="d">26-07-08</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.12.1"> <span class="v">v2.12.1</span> <span class="d">26-06-18</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.12.0"> <span class="v">v2.12.0</span> <span class="d">26-05-13</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.11.0"> <span class="v">v2.11.0</span> <span class="d">26-03-23</span> </a> </li><li> <a href="/zh/release_note/pytorch/pytorch_v2.10.0"> <span class="v">v2.10.0</span> <span class="d">26-01-21</span> </a> </li> </ul> <a href="/zh/releases/pytorch" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

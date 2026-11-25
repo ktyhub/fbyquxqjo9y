@@ -1,0 +1,881 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OmniRoute v3.8.54 — STAGS NextStack</title><meta name="description" content="Providers: official 'Sign in with ChatGPT' provider (chatgpt, PKCE + live model discovery); MiniMax Code (managed gateway + dashboard device-code sign-in); RenderHour (images, video, speech); MegaBrain (dual auth);"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.54/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/omniroute/3.8.54"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.54/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/omniroute/3.8.54"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="OmniRoute v3.8.54 — STAGS NextStack"><meta property="og:description" content="Providers: official 'Sign in with ChatGPT' provider (chatgpt, PKCE + live model discovery); MiniMax Code (managed gateway + dashboard device-code sign-in); RenderHour (images, video, speech); MegaBrain (dual auth);"><meta property="og:url" content="https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.54/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.54/#article","headline":"OmniRoute v3.8.54 release notes","datePublished":"2026-11-17","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/cheaper-inference/OmniRoute"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/omniroute/3.8.54/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/OmniRoute/OmniRoute_v3.8.54/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/omniroute/3.8.54/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/omniroute/3.8.54/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/omniroute/3.8.54/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/omniroute/3.8.54/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/omniroute/3.8.54/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/omniroute">OmniRoute</a> </nav> <h1 class="detail-title"> <span class="p">OmniRoute</span> v3.8.54 </h1> <div class="detail-meta"> <span class="chip chip--patch">修订</span> <span><span class="k">发布时间</span>2026年11月17日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/cheaper-inference/OmniRoute" target="_blank" rel="noopener"> <span class="k">来源</span>cheaper-inference/OmniRoute </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/omniroute/3.8.54"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/OmniRoute/OmniRoute_v3.8.54/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="omniroute-v3854">OmniRoute v3.8.54</h1>
+<h2 id="omniroute-v3854-1">OmniRoute v3.8.54</h2>
+<ul>
+<li>**提供商：**官方“使用 ChatGPT 登录”提供商（<code>chatgpt</code>、PKCE + 实时模型发现）； MiniMax Code（托管网关+仪表板设备代码登录）； RenderHour（图像、视频、语音）； MegaBrain（双重身份验证）； EmpirioLabs、ParalonCloud、deAPI、Replicate chat、Cerebrium、Hetzner Inference 和 Grokified；原生 <code>opencode-server</code> 执行器； Microsoft 365 Copilot 工作/学校登录； GitHub 副驾驶嵌入； Gemini Lyria 3 种音乐型号；自定义 JSON API 提供者节点（请求模板+响应路径）。</li>
+<li>**路由和组合：**特定于端点的组合路由（聊天、搜索/获取、嵌入、重新排名、图像、视频、音乐、OCR、音频）以及功能感知的搜索/获取组合；新的 <code>jev</code> 和 <code>expiry-first</code> 策略；自动组合的首选账户和储备账户；选择加入首选帐户响应启动故障转移；选择加入截止日期失败的子预算，以干净的 504 结束组合。</li>
+<li><strong>搜索：</strong> 通过连接的 Codex 帐户可启用 Web 搜索和获取提供商（默认情况下无密钥）和 <code>codex-search</code>。</li>
+<li><strong>API 按键和使用情况：</strong> <code>/v1/me/status</code> 报告今天/本周的使用情况以及每个按键的限制； <code>/v1/me/sessions</code>自助会话列表；每项滚动 5 小时美元预算；可重复使用的关键策略模板； <code>POST /api/keys/import</code>;归因于编码代理会话和项目的使用；通过分析进行提供商报告的缓存读取和 5 分钟/1 小时缓存写入层。</li>
+<li>**代理管道和流：**跨本机协议的重复工具轮和连续故障检测；选择每个模型预算的上下文压缩； <code>STREAM_READINESS_TIMEOUT</code> 现在表示发生了哪种故障形状； <code>api.anthropic.com</code> 的大型请求正文像 Claude Code 一样进行 gzip 压缩。</li>
+<li><strong>隐私和媒体：</strong> 选择加入可逆 PII 令牌库（默认关闭，需要 <code>PII_REDACTION_ENABLED</code>）；同意的、租户绑定的视频桥框架带有仪表板控件的向下钻取手柄；在发送前选择图像标准化。</li>
+<li><strong>仪表板：</strong> 跨连接提供商的“新模型”收件箱；成本 > 提供商之间的定价模型比较和“仅配置”过滤器；跨浏览器同步的配额跟踪器订单； Cmd+K 按比赛质量排名； Codex 个人计划与商务座位；兼容节点的“配额检查”切换。</li>
+<li><strong>分发和发布工程：</strong> Docker 图像还发布到 Cheaper Inference 组织 (<code>cheaperinference/omniroute</code>) 和 GHCR，由 <code>cheaper-inference/OmniRoute</code> 提供的 Electron 自动更新；派生计数仅在发布时刷新（<code>npm run facts</code>、<code>release:refresh-derived</code>）；带时间戳的迁移名称；全向队列合并队列（影子模式）；完整的欧洲葡萄牙语 (PT-PT) 目录和 66 个语言环境在发布时同步。</li>
+</ul>
+<h3 id="-按数字发布">📊 按数字发布</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>👥 贡献者</td>
+<td align="right"><strong>121</strong></td>
+</tr>
+<tr>
+<td>📝 在循环中提交</td>
+<td align="right"><strong>920</strong></td>
+</tr>
+<tr>
+<td>🔀 引用的拉取请求</td>
+<td align="right"><strong>466</strong></td>
+</tr>
+<tr>
+<td>📋 Changelog 条目</td>
+<td align="right"><strong>1,024</strong></td>
+</tr>
+<tr>
+<td>🙌 贡献者计入条目</td>
+<td align="right"><strong>117</strong></td>
+</tr>
+<tr>
+<td>🤖 自动依赖项提交</td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td><strong>按类型分类的条目</strong></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td>类型</td>
+<td align="right">计数</td>
+</tr>
+<tr>
+<td>---</td>
+<td align="right">---:</td>
+</tr>
+<tr>
+<td>🐛 修复</td>
+<td align="right">626</td>
+</tr>
+<tr>
+<td>✨ 特点</td>
+<td align="right">156</td>
+</tr>
+<tr>
+<td>📚 文档</td>
+<td align="right">73</td>
+</tr>
+<tr>
+<td>🧪 测试</td>
+<td align="right">70</td>
+</tr>
+<tr>
+<td>🧹 家务活</td>
+<td align="right">35</td>
+</tr>
+<tr>
+<td>♻️ 重构</td>
+<td align="right">25</td>
+</tr>
+<tr>
+<td>⚡ 性能</td>
+<td align="right">24</td>
+</tr>
+<tr>
+<td>⚙️ CI</td>
+<td align="right">14</td>
+</tr>
+<tr>
+<td>📦 依赖关系</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-本周期前-25-位贡献者">🏆 本周期前 25 位贡献者</h3>
+<p><em>通过在 <code>6cc6965075..a9539085bd</code> 中提交，通过 <code>.mailmap</code> 合并作者身份以及合并 PR 的 GitHub 登录名。机器人除外。</em></p>
+<table>
+<thead>
+<tr>
+<th align="right">＃</th>
+<th>贡献者</th>
+<th align="right">承诺</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">🥇</td>
+<td>迭戈苏扎普</td>
+<td align="right">586</td>
+</tr>
+<tr>
+<td align="right">🥈</td>
+<td>宁静 (@serenity-X)</td>
+<td align="right">61</td>
+</tr>
+<tr>
+<td align="right">🥉</td>
+<td>侯敏熙 (@HouMinXi)</td>
+<td align="right">35</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td>BL0ck (@Bl0ck154)</td>
+<td align="right">32</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td>奥尔多 (@aldoeliacim)</td>
+<td align="right">21</td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td>小妍儿✨ (@xiaoyaner0201)</td>
+<td align="right">15</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td>拉法·马丁斯 (@rafapti23)</td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td>Kiaro-Sama (@KiaroSama)</td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td>安德鲁·费利佩·迭戈·马塔 (@AndrewDiagoM)</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td>10福阿德·萨尔基尼 (@fouadSalkini)</td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td align="right">11</td>
+<td>11申 (@jjxyxsjr)</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td align="right">12</td>
+<td>12晕 (@maxmad64bis)</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td align="right">13</td>
+<td>Praveen K Palaniswamy (@yourspra​​veen)</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td align="right">14</td>
+<td>14 Ankit (@anki1kr)</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td align="right">15</td>
+<td>15以赛亚·阿马拉尔 (@bufftop25)</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td align="right">16</td>
+<td>16高拉夫·杜贝 (@gaurav0107)</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td align="right">17</td>
+<td>17费德里科·曼吉尼</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td align="right">18</td>
+<td>18雷杰伟</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td align="right">19</td>
+<td>19菲利普·菲德利克斯 (@fidelix)</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td>伊诺森·索尔恩采夫 (@insoln)</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td align="right">21</td>
+<td>21扬·莱昂 (@JxnLexn)</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td align="right">22</td>
+<td>22天高 (@tiangao88)</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td align="right">23</td>
+<td>23克里斯蒂安·马蒂尼·贝加莫 (@cmbergamo)</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">24</td>
+<td>托马斯·费科 (@feci)</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="right">25</td>
+<td>25众神量子</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-新功能">✨ 新功能</h3>
+<ul>
+<li><strong>feat(video):</strong> 将同意的视频桥帧向下钻取连接到请求路径 - 已派生的 JPEG 帧仅在明确的操作员和经过身份验证的每部分同意的情况下通过共享租户绑定生命周期发布（原始视频不保留）； JSON/SSE 响应返回有界不透明句柄，视频设置公开独立保留/远程读取控件和仅聚合使用，以及经过身份验证的预览/标准/详细读取、隔离幂等删除、取消、TTL/配额清理和实际内容变体出处 32 MiB 序列化响应限制。默认值保持关闭；真实模型的推广和部署需要单独的证据（#16074）。</li>
+<li><strong>修复（提供程序）：</strong> 将 TypeSafe (Jev) 视为仅决策提供程序：路由到 <code>typesafe</code> 的聊天请求现在快速失败，HTTP 400 指向 <code>POST /v1/systemone</code>，而不是落入默认执行程序聊天模型，并且 Jev 别名具有仅输入的默认价格（#14498，#13987） - 感谢 @seanford</li>
+<li><strong>feat(systemone):</strong> <code>POST /v1/systemone</code> 可以在现有 <code>ollama-local</code> 连接的本地 Ollama 上提供 <code>ollama-local/&#x3C;model></code> 决策模型（其基本 URL，默认 <code>http://localhost:11434/v1</code>，绝不是请求字段），在任何上游调用之前检查 Ollama 自己的限制（每个选择/分数问题 2-26 个候选者，最多 64 个问题，无聊天采样字段，仅原始 Base64 图像，64 KB / 32 MiB 机身盖）；通过 <code>SYSTEMONE_OLLAMA_LOCAL_BACKEND_ENABLED</code> 功能标志选择加入（默认关闭）（#14667）——感谢@PixmaNts</li>
+<li><strong>feat(api-keys)：</strong> <code>/v1/me/status</code> 现在报告今天和本周的美元、请求和令牌使用情况，<code>limits[]</code> 列表涵盖在其自己的执行窗口上测量的每个密钥限制，屏蔽帐户标签加上缓存优先的 <code>accountQuotas</code> 仅限于密钥可以到达的连接和管理员选择共享的提供商。端点还接受 <code>x-api-key</code>。每键 <code>anthropicRateLimitHeaders</code> 模式 (<code>auto</code>/<code>forward</code>/<code>strip</code>) 控制池帐户的 <code>anthropic-ratelimit-*</code> 和 <code>anthropic-organization-id</code> 标头是否到达 client； <code>auto</code> 仅针对固定到一个共享连接的密钥转发它们。 API 管理器获得匹配控件和每个密钥的详细信息页面，其中包含使用情况、限制、帐户配额以及令牌限制和密钥配额的编辑器 (#14771)。 ——谢谢@fouadSalkini</li>
+<li><strong>feat(usage):</strong> 将代理请求属性分配给编码代理会话和项目，用于团队使用情况报告、记录会话令牌计数器、定价成本、工作目录和项目存储库 (#14833) — 感谢 @fouadSalkini</li>
+<li><strong>feat(api)：</strong> 添加 <code>/v1/me/sessions</code> 自助服务 API 关键端点来列出和检查与项目、client、日期和排序过滤器的代理会话 (#14840) — 感谢 @fouadSalkini</li>
+<li><strong>feat(api):</strong> 每键 <code>anthropicRateLimitHeaders</code> 策略转发或剥离流式和非流式响应上的上游人性帐户身份和配额标头，默认保留传统转发 (#14862) — 感谢 @fouadSalkini</li>
+<li><strong>feat(chatgpt)：</strong> 添加官方“使用 ChatGPT 登录”提供商 (<code>chatgpt</code>)：使用 PKCE 进行动态注册、真实账户模型发现、通过公共响应 API 进行推理并使用 <code>earliest_refresh_at</code> 进行刷新 — 与 <code>codex</code> 和 <code>chatgpt-web</code> 分开。路由失败，无法关闭广告模型的注册； ChatGPT 目录保留其自己的所有者，并且从不继承 Cursor <code>auto*</code> 别名。 （#15201 — 感谢@JxnLexn）</li>
+<li>**壮举（路由）：**新的 <code>jev</code> 组合策略 - 您订购提供商，一个 TypeSafe System One <code>choice</code> 调用承认获胜者以及每个请求的最多 4 个后备（等于或高于 0.15 置信度的选项）；丢失密钥、超时或置信度低对您自己的订单开放，实时会话引脚会跳过呼叫，并且组合编辑器会显示隐私说明，因为最新的用户消息已发送到 TypeSafe。 TypeSafe 调用通过 <code>COMBO_JEV_STRATEGY_ENABLED</code> 功能标志选择加入（默认关闭）：单独存储的 TypeSafe 密钥永远不会发送流量，并且在标志关闭的情况下，jev 组合会保留您的订单 (#15279) — 感谢 @miguelenes</li>
+<li><strong>feat(sse)：</strong> 代理管道检测重复的工具轮次，其结果不变，调用匹配结果以及跨本机协议的连续失败轮次，然后将控制权返回给规划器。不完整或不明确的并行回合不会错误地停止执行 (#15420) (#19318) — 感谢 @potatosips。</li>
+<li><strong>feat(sse)：</strong> 代理管道支持选择加入上下文压缩，为规划器和每个执行器回退提供每个模型字符预算、保留指令和活动工具边界以及预调度超大拒绝。精确的增量大小核算避免了重复的全历史序列化；结构化屏幕截图结果保持不变（#15421）（#19317）——感谢@potatosips。</li>
+<li><strong>壮举（情报）：</strong> <code>models_dev_tier</code> 情报源现已保留（在每次功能同步后重建并通过 <code>POST /api/intelligence/sync {"rebuildTier": true}</code> 按需重建），<code>user_override</code> 条目获得经过管理验证的 <code>POST</code>/<code>DELETE /api/intelligence/overrides</code> API，<code>GET /api/intelligence/sync</code> 报告 <code>sourcesDetail</code> 中每个源的运行状况（#15906 - 谢谢@pizzav-xyz）</li>
+<li>在配额旁边添加明确的每帐户 Codex 配额查询，即使配额详细信息被隐藏也可用，而无需消耗重置积分。区分当前的、部分的、陈旧的和失败的观察；防止重复请求并协调帐户列表，而无需声明已释放冷却时间。对于 #16161，后端恢复诊断和自动恢复验证仍然是单独的工作。 (#16191)</li>
+<li><strong>feat(dashboard):</strong> 添加自定义模型时以及本机提供者的目录模型列表中设置模型的上下文窗口，因此目录不知道其窗口的模型不再回落到 128k；仅上下文覆盖不再将目录模型转换为自定义模型 (#16178)</li>
+<li><strong>feat(usage)：</strong> 报告提供者报告的缓存读取令牌在使用分析中并保留每日摘要，并具有遗留或过滤历史记录的部分覆盖指标，同时保留计费计算 (#16452) — 感谢 @KiaroSama</li>
+<li><strong>feat(proxy):</strong> 报告每个代理和聚合应用程序有效负载上传和下载流量，包括重试尝试和不完整的传输，而不将有效负载计数显示为线路流量或计费测量值 (#16455) — 感谢 @KiaroSama</li>
+<li><strong>feat(gemini-web)：</strong> 通过 UI 模式选择和验证描述符向 <code>gemini-web</code> 提供程序注册表添加选择加入 <code>gemini-4-argon</code> 模型支持；默认情况下关闭，直到其选择器被实时检查，使用 <code>OMNIROUTE_GEMINI_WEB_ARGON_ENABLED=1</code> 启用（＃16573） - 感谢@SkiiOS</li>
+<li>使用注册的本地提供商 URL 进行模型发现和同步嵌入路由，并将 Docker Model Runner 的默认值与其引擎中立的 OpenAI 端点保持一致。 Docker Model Runner 嵌入请求现在接受无密钥连接，同时保留配置的凭据和每个模型的功能检查。 (#16670)</li>
+<li><strong>feat(systemone):</strong> <code>POST /v1/systemone</code> 可以通过现有的 <code>cloudflare-ai</code> 连接（<code>cloudflare-ai/jev</code>、<code>cloudflare-ai/clef</code>、<code>cloudflare-ai/clef-flash</code>，别名 <code>cf/</code>）为 Cloudflare Workers AI 上的 TypeSafe Jev 和 Cloudflare Clef / Clef-flash 提供服务，作为新的 <code>systemOneRegistry</code> 后端，通过 <code>SYSTEMONE_CLOUDFLARE_BACKEND_ENABLED</code> 功能标志选择加入（默认）关闭）（#16676）——感谢@xiaoyaner0201</li>
+<li>feat(codex)：添加全局和每个连接的 Ultrafast 默认值，范围为 GPT-6 Astra 和 GPT-6.1 Sol，同时保留显式请求和 API-key 优先级。 (#16678)</li>
+<li><strong>feat(mitm):</strong> Antigravity MITM 可以将 Claude Sonnet 5.5 / Opus 5.5 （低/中/高层）映射到 OmniRoute 路线 (#16709) — 感谢 @lmortezal</li>
+<li><strong>feat(images):</strong> 反重力图像编辑接受多个参考图像（数据 URL 或原始 base64；远程 URL 保持拒绝），每个参考图像作为其自己的内联部分转发；无效引用会快速失败，并显示 400 和纯文本答案作为错误 (#16731) — 感谢 @yheiakadylan</li>
+<li><strong>feat(resilience):</strong> 仪表板编辑器，用于操作员错误冷却时间规则、可选状态/匹配条件以及选择加入的每个提供商的全面冷却时间，永远不会缩短更长的上游重试后/重置提示 (#16734) — 感谢 @zyizyiz</li>
+<li><strong>feat(dashboard):</strong> “新模型”收件箱 - 模型同步记录每个提供商的列表（首先同步种子基线），提供商工具栏显示带有未读徽章的新添加模型，按提供商分组，并标记为已读 (#16864) - 感谢 @ErfanBagheri404</li>
+<li><strong>feat(providers)：</strong> <code>opencode-server</code> 提供程序 — opencode CLI 本地无头服务器 (<code>opencode serve</code>) 的本机执行程序，可将 OpenAI 聊天/响应请求转换为 opencode 会话/部分，并具有流式传输、工具调用信封支持；服务器从仪表板（仅限本地 <code>/api/services/opencode-server/{status,start,stop}</code>）或使用 <code>opencode serve</code> 启动，而不是从聊天请求启动；只有服务器 URL 是仪表板设置，CLI 二进制文件仅是 env (<code>OPENCODE_SERVER_BIN</code>)，并且生成的服务器获得最小环境；它使用 opencode v1 服务器 API，并且检测到 opencode 2.x 服务器并以明确的“不支持的 opencode 服务器版本”错误进行响应，而不是被视为健康 (#16995) — 感谢 @cmbergamo</li>
+<li><strong>feat（提供商）：</strong> 添加了 EmpirioLabs AI (<code>empiriolabs</code>) 作为 OpenAI 兼容的 API 密钥提供商 (<code>https://api.empiriolabs.ai/v1</code>)，实时模型发现仅限于聊天模型，并且针对经过身份验证的 <code>/v1/account/usage</code> 端点进行 API 密钥检查 (#17209、#19316) — 感谢 @Adam-Dalloul</li>
+<li><strong>feat(providers)：</strong> 添加 MiniMax 代码提供商 — OmniRoute 现在可以通过 <code>minimax-code</code> / <code>mmcode</code> 别名下的托管 MiniMax 订阅网关路由聊天完成。网关路径读取用户自己的 MiniMax 代码配置文件 (<code>~/.minimax/auth/prod/&#x3C;region>/mcode-public/auth.json</code>) 的本地刷新令牌，并在帐户轮换凭证时重写该配置文件的身份验证文件，因此 CLI 和本地代理在下一个会话中选择轮换的凭证； OmniRoute 不会在其连接数据库中保留单独的提供程序凭据。传输采用本机工具协议，因此携带 client 工具的请求会以 <code>tool_calls</code> 的形式返回，供 client 执行，并且拒绝网关会保留其自己的状态，而不是被重命名为模型中断 (#17286) — 感谢 @megamen32</li>
+<li><strong>feat(oauth)：</strong> MiniMax Code 提供程序现在可以从仪表板登录 - 提供程序页面提供 MiniMax 帐户设备代码流 (RFC 8628 + S256-PKCE)，面板显示验证 URL 和要确认的代码，返回的凭据将写入本地 MiniMax Code 配置文件中，因此 CLI 和本地代理会在下一个会话中拾取它；仪表板连接行不存储访问或刷新令牌；提供程序本身仍然是无身份验证提供程序：仪表板连接是帐户条目，本地配置文件是凭据（#17286） - 感谢@megamen32</li>
+<li>**修复（sse）：**拒绝具有请求范围 413 的超大 MiniMax 代码请求 - 不符合托管网关上限的请求被拒绝，组合层重命名为 502，并且 502 位于模型锁定列表中，因此一个太大的请求将 MiniMax 支路从每个组合中剔除几分钟，下一个请求回答 503；拒绝现在是 413 标记为 <code>invalid_request_error</code>，这是请求的属性，而不是模型的属性 (#17286) — 感谢 @megamen32</li>
+<li><strong>修复（sse）：</strong> MiniMax代码执行器在实例耗尽时回答499 - 正常关闭会在仍在进行中的请求下破坏传输，因此失败是我们自己关闭的证据，而不是提供者的健康状况，但502表示相反：它在模型锁定列表和提供者破坏者列表中，并且不能免除连接冷却时间，因此该帐户被写为<code>unavailable</code>将 <code>rateLimitedUntil</code> 放入 <code>provider_connections</code> 表中 — 这种状态在重新启动后仍然存在；排水期间的答案现在是 499，中止的呼叫者已经获得的状态，它带有 <code>client_disconnected</code> 并且不受冷却时间的影响（#17286） - 感谢@megamen32</li>
+<li><strong>功能（使用）：</strong> 通过响应翻译、调用日志和缓存运行状况诊断保留提供商报告的 5 分钟和 1 小时缓存写入层；保持遗留的未知等级明确和现有配额扣除不变；翻译后的 Claude 和 OpenAI 用法现在还带有 <code>usage.cache_creation</code> （添加剂）（#17307） — 感谢 @xiaoyaner0201</li>
+<li><strong>feat(combo):</strong> 新的 <code>expiry-first</code> 组合路由策略（第 21 版）——使用每个目标花费的模型系列的配额窗口，通过提供商级别的到期优先抢救分数来订购目标，并为没有配额遥测的目标保留相对绑定带和优先顺序（#17829）——感谢 @HouMinXi</li>
+<li><strong>feat(search):</strong> Keenable Web 搜索和获取提供程序（<code>keenable-search</code>，别名 <code>keenable</code>）：默认情况下无密钥，带有可选的 API 密钥，该密钥仅提升每个 IP 的速率限制。服务 <code>/v1/search</code>（仅限 Web，仅限后备，因此它永远不会取代已配置的付费提供商）和 <code>/v1/web/fetch</code>（仅限 Markdown，上限为 100,000 个字符）（#17920） - 感谢 @ilya-bogin-keenable</li>
+<li><strong>功能（搜索）：</strong> 添加 <code>codex-search</code>（别名 <code>codex_search</code>），用于通过连接的 Codex (ChatGPT) 帐户进行网络/新闻搜索。名为 <code>codex-search</code> 的请求直接使用它；自动选择是在 <code>CODEX_SEARCH_AUTO_FALLBACK_ENABLED</code> 标志后面选择加入的（默认关闭），它首先保留配置的搜索提供程序，并在无密钥回退之前尝试 Codex，同时保留其他提供程序的顺序、API-key 连接范围和 REST 提供程序块。将有界 SSE 响应解析为基于源的行并记录上游标记/搜索计数。搜索失败仅应用内存中搜索特定的退避，上限为 60 秒；他们永远不会改变共享聊天帐户的健康状况。搜索消耗订阅配额，除非明确配置，否则使用 60 秒的默认超时，并将时间/域限制视为提示。搜索锁定帐户会被跳过，转而使用另一个提供商而不是另一个 Codex 帐户。 (#17933) — 感谢@xiaoyaner0201</li>
+<li>添加 <code>POST /api/keys/import</code> 以使用创建密钥策略、原子重复检查、非变异 UUID 重试、管理身份验证和屏蔽响应来注册调用者提供的 API 密钥，而无需恢复不相关的配置 (#18010) — 感谢 @xiaoyaner0201。</li>
+<li><strong>Dots Studio 工具调用标记</strong>：<code>&#x3C;dots_function_call></code> 文本块（结构化 <code>&#x3C;invoke></code> 或纯 JSON）在 Claude 流转换器和 OpenAI 响应清理器中转换为真实的工具调用，接受 OpenAI 型和 Anthropic 型 client 工具（包括没有模式声明的工具）。在 Claude 流上，未完成的块或跨块的中间标签分割的开场白将被保留，直到完成；在 OpenAI 分支上，清理仅涵盖非流式响应（流式 OpenAI 增量不变地传递）（#18024）。 — 谢谢@pizzav-xyz</li>
+<li><strong>feat(providers)：</strong> 用于图像、视频和语音的 RenderHour 提供商 — 使用 RenderHour 订阅（OAuth PKCE，在计划积分中支付）登录或粘贴 <code>rh_…</code> API 密钥（从美元余额支付）；型号为 <code>renderhour/&#x3C;model></code> (#18103 — 感谢 @sha367)</li>
+<li><strong>壮举（提供商）：</strong> MegaBrain 作为双重身份验证提供商（<code>megabrain</code> / <code>mb</code>）：通过 <code>api.getmegabrain.com</code> 上的 Kilo 设备代码流使用 MegaBrain 帐户登录或粘贴 <code>mb-v1-…</code> API 密钥；请求携带 <code>X-KILOCODE-FEATURE: omniroute</code>，因此它们按照帐户的计划运行（会话和每周限制，如提供商限制中所示），而帐户无法支付的模型的 403（<code>plan_tier_required</code>、<code>extra_usage_off</code>）仅锁定该模型，而不是禁止连接 (#18129) — 感谢 @sha367</li>
+<li><strong>feat(providers):</strong> 将导入身份验证模式添加到 Antigravity CLI (<code>agy</code>) 提供程序页面：本地 CLI 登录名（<code>AGY_TOKEN_FILE</code>、Linux 密钥环、<code>~/.gemini/antigravity-cli/</code> 和 AgentControl 配置文件）的仅环回 1-click 导入、单个令牌文件/粘贴和批量JSON 导入 (#18181) — 感谢 @ziuus</li>
+<li><strong>壮举（插件）：</strong> 将选择器名称渲染为带有前导免费图标的 <code>Provider - Model</code>，免费层预算保留为 <code>· 1M tokens/month</code> 后缀，尾随括号中显式 <code>Editor: Model</code> 名称的编辑器以及用于组合的 <code>combo - slug</code>。行为更改：<code>providerTag</code> 不再删除提供程序前缀（提供程序现在始终显示）； <code>providerTag: false</code> 只删除编辑器括号，并且根据旧的确切名称匹配条目的配置需要更新 (#18230) — 感谢 @maxmad64bis</li>
+<li><strong>feat（提供商）：</strong> GitHub Copilot 嵌入（<code>github/text-embedding-3-small</code>、<code>github/text-embedding-ada-002</code>）通过 Copilot API 与交换的 Copilot 令牌，在调度前刷新（#18291） - 感谢 @AppleVibe、@tmaarcxs</li>
+<li><strong>feat(providers):</strong> Grok CLI 目录现在列出了 <code>grok-4.7-build-fast</code> (Grok 4.7 在 Grok Build 的更快通道上，500k 窗口，low–xhigh 工作) 和 <code>grok-code-fast-1</code>，两者都被 Grok Build 代理接受，但在实时发现运行之前选择器回退到的静态目录中缺失 (#18318) — 感谢 @cristianob</li>
+<li><strong>功能（仪表板）：</strong>“仅导入免费模型”选项现在也适用于 OpenAI/Anthropic 兼容节点。仅保留终端自身<code>/models</code>列表标记为免费且无付费信号的型号；没有免费证据的模型永远不会免费导入 (#18320) — 感谢 @IlyaKhalafi / @maryasov</li>
+<li><strong>修复（提供商）：</strong> 积极的发现价格和明确的付费标志会覆盖免费目录条目和免费徽章，并通过命名提供商发现、缓存和模型同步保持可用（参考文献＃17028）。 (#18320)</li>
+<li><strong>修复（提供商）：</strong> 在检查当前型号价格后取消五个无条件免费的 Ollama Cloud 条目，记录七个免费优惠及其资格限制，并公开 Requesty 的 NVIDIA 试用培训限制（参考号＃17028）。 (#18320)</li>
+<li><strong>修复（提供商）：</strong> 停止宣传仅通过代理提供的仅限 OpenCode 的免费优惠，包括缓存的免费徽章，同时保持提供商和正常导入可用，并使不确定的定价不保密。现有的仅限免费连接保留其偏好和明确的退出控制（参考文献 #17028）。 (#18320)</li>
+<li><strong>修复（提供商）：</strong> 删除已退役的 Ollama DeepSeek V4 Flash、Ollama GLM5.1 和腾讯 Hunyuan Pro 的静态免费赠款，同时保留正常模型导入（参考号＃17028）。 (#18320)</li>
+<li><strong>修复（提供商）：</strong> 删除 AINative 已退休的 <code>nous-coder</code> 别名和企业级 <code>deepseek-r1</code> 的静态免费赠款，保留正常导入（参考文献＃17028）。 (#18320)</li>
+<li>**功能（仪表板）：**配额跟踪器提供程序订单现在跨浏览器跟随操作员（保存为 <code>settings.quotaProviderOrder</code> 到 <code>PATCH /api/settings</code>，本地存储保留为缓存），并且完整布局的提供程序部分获得与概述相同的拖动夹点和“恢复默认顺序”操作；仅显示，连接优先级从未被触及 (#18344) — 感谢 @ape1121</li>
+<li><strong>feat(usage):</strong> Cursor Quota 卡显示每个模型的 API 令牌（输入、输出、缓存读/写）和当前周期计费的 Cursor 成本，获取失败打开，以便在调用失败时现有的 % 条呈现不变 (#18346) — 感谢 @AMSeify</li>
+<li><strong>feat（仪表板）：</strong> OpenAI 和 Anthropic 兼容节点的“配额检查”切换将标准 <code>/credits</code> 余额读取到提供商限制中； <code>anthropic-compatible-*</code> 密钥现在使用可配置的配额获取器，它通过 SSRF 保护的出站获取 (#18350) — 感谢 @MWGE22629</li>
+<li><strong>壮举（音频）：</strong> Cloudflare Workers AI Deepgram Nova-3 转录 (<code>cf/@cf/deepgram/nova-3</code>) 具有选择加入说话者分类和 <code>verbose_json</code> 单词、每个说话者分段和 <code>num_speakers</code> (#18352) — 感谢 @LeandroTechify</li>
+<li><strong>feat(providers):</strong> 自定义 JSON API 提供者节点 — 具有 <code>apiType: "custom-json"</code> 的 OpenAI 兼容节点填充任何 JSON 业务端点的 JSON 请求模板（<code>{{prompt}}</code>、<code>{{messages}}</code>、<code>{{model}}</code>、<code>{{request.&#x3C;path>}}</code>；仅替换），从响应路径并以 client 的格式返回；业务请求永远不会重播（没有重试，没有帐户或组合回退）。目前仅限 API，请参阅 <code>docs/guides/CUSTOM_JSON_API.md</code> (#18353) — 感谢 @lyccccy</li>
+<li><strong>feat(providers):</strong> 添加 ParalonCloud API-key 提供商（聊天 + 嵌入）(#18356) — 感谢 @robertjitaru</li>
+<li><strong>feat（仪表板）：</strong> OpenAI 兼容的添加和编辑提供程序模式提供 <strong>自定义 JSON API</strong> 类型 - HTTP 方法、身份验证（承载、API 密钥标头或无）、具有简单字段或完整 JSON 的请求模板编辑器、响应路径和“发送测试请求”按钮 - 在浏览器中使用与服务器使用的相同架构进行验证(#18359) — 谢谢@lyccccy</li>
+<li><strong>feat(api-keys)：</strong> 每个 API 密钥滚动 5 小时美元预算，在每日/每周限制附近强制执行，并在 API 密钥端点上报告 (#18362) — 感谢 @sajjadsaharkhan</li>
+<li><strong>feat(services):</strong> 现在可以通过 <code>OMNIROUTE_SESSION_TTL_MIN</code> 配置内存中会话 TTL（分钟；默认值保持 15，无效值保留默认值）(#18394) — 感谢 @jjxyxsjr</li>
+<li><strong>feat(仪表板)：</strong> 提供商页面上的 Codex 连接显示每个计划是个人计划还是 Business 席位，并带有 ChatGPT 工作区名称（“· Business· &#x3C;工作区>”，工具提示中的角色），并且计划徽章显示为“Business Pro Lite”而不是 <code>self_serve_business_prolite</code>。在成功获取使用情况后，使用情况同步最多每周一次从 ChatGPT 的帐户端点读取工作区，超时时间为 15 秒；在那之前，这种类型会退回到计划类型（#18412 - 感谢@feci）。</li>
+<li><strong>feat(auto-combo):</strong> 重置感知的无配额下限分数现在是每个组合的配置字段（<code>resetAwareNoQuotaFloor</code>，默认保持 0.5），而不是硬编码的中点 (#18435) — 感谢 @jjxyxsjr</li>
+<li><strong>feat(sse):</strong> <code>STREAM_READINESS_TIMEOUT</code> 现在表示它是哪种故障形状：结果携带 <code>anyByteAt</code>（null = 上游完全静默，不是一个原始字节；epoch-ms 值 = 传输活动，带有 keepalive 字节，但没有内容事件）并且 504 响应在 <code>X-OmniRoute-Any-Byte-At</code> 标头中重复它以供外部工具使用。超时日志行也命名了该形状。纯遥测——没有路由或重试决策读取它。 (#18586) — 感谢@jjxyxsjr</li>
+<li><strong>feat(providers)：</strong> 在其 OpenAI 兼容网关 (oai.deapi.ai/v1) 上添加 deAPI (<code>deapi</code>)，这是一个 API 密钥媒体提供商 — 通过下载密钥门控的新 <code>deapi-video-job</code> 预设进行图像生成、文本转语音、转录、嵌入和异步视频<code>/v1/videos/{id}/content</code> 结果； OpenAI 兼容的语音路径现在在给定时转发 <code>instructions</code> (#18593) (#19319) — 感谢 @Pietrus-914</li>
+<li><strong>feat(dashboard):</strong> 成本 > 定价获得“仅配置”提供商过滤器（具有连接的提供商，加上已打开的无身份验证提供商），模型搜索仅列出每个提供商下的匹配模型 (#18651) (#18775) — 感谢 @yourspraveen</li>
+<li><strong>功能（仪表板）：</strong> 提供商连接列表上的“需要验证（N）”状态药丸，仅显示持有存储的 Google 验证帐户链接的反重力帐户，因此操作员可以一一通过 <code>403 VALIDATION_REQUIRED</code> 帐户进行操作；隐藏，但没有帐户需要验证 (#18662) — 感谢 @bufftop25</li>
+<li><strong>feat(combo):</strong> 选择加入 <code>OMNIROUTE_COMBO_MAX_DEADLINE_FAILURES</code> 子预算在 N 个流准备期限失败后以干净的 504 终止组合，而不是针对停滞的上游旋转每个剩余目标 (#18721) — 感谢 @jjxyxsjr</li>
+<li><strong>功能（路由）：</strong> 添加具有独立目标、策略和配置的特定于端点的组合路由，用于聊天、搜索/获取、嵌入、重新排名、图像、视频、音乐、OCR 和音频表面。 <code>/v1/search</code>、<code>/v1/web/fetch</code>、<code>/v1/music/generations</code>、<code>/v1/music</code>、<code>/v1/sound-generation</code> 和 <code>/v1/ocr</code> 解析保存的组合名称，同时保留本机响应合同、帐户密码和调用方密钥范围。混合组合在选择凭证之前过滤不兼容的目标。与#10274相关；修复#17858。 （#18731）——感谢@Federicomang</li>
+<li><strong>feat（翻译器）：</strong> <code>modelCompatOverrides</code> 条目上的每个节点 <code>thinkingReplay</code> 功能声明（<code>redacted</code>/<code>text</code>/<code>none</code>），可通过 <code>PUT /api/provider-models</code> 设置，覆盖有关重放思维形状的提供者前缀假设 - <code>text</code> 强制为 Claude 形状上游提供简单的 <code>thinking</code> 块拒绝 <code>redacted_thinking</code>、<code>none</code> 使重放的思维保持不变，并为不需要先驱的上游保持思维启用（#18739）——感谢@jjxyxsjr</li>
+<li><strong>feat(vision):</strong> 选择加入 <code>OMNIROUTE_IMAGE_NORMALIZATION</code> 在发送前标准化内联 Base64 图像（RGB、≤4096px 长边、~4MP、基线 JPEG/PNG），因此 Qwen2-VL 风格的视觉管道停止 400ing 或挂在超大/异国情调的图像上 (#18740) — 感谢 @jjxyxsjr</li>
+<li>**功能（仪表板）：**成本>定价可以跨提供商比较一个模型：<strong>视图：比较模型</strong>切换列出每个模型以及每个提供它的提供商，输入/输出/缓存价格，最便宜的第一个，未定价的报价标记为这样；仅配置和身份验证过滤器适用，并且变体保留在自己的行中（#18775，关闭#18642）-感谢@yourspraveen</li>
+<li><strong>壮举（提供商）：</strong> Gemini AI Studio Lyria 3 模型（<code>lyria-3-pro-preview</code>、<code>lyria-3-clip-preview</code>、<code>lyria-3.5</code>）可通过 <code>POST /v1/music/generations</code> 调用，而不是被广告为音乐并被 <code>400 Invalid music model</code> 拒绝（#18797） - 感谢 @LuisAlejandro</li>
+<li><strong>feat(gemini)：</strong> 通过 OpenAI 到 Gemini 转换，将显式的每图像 <code>media_resolution</code>（<code>low</code> 到 <code>ultra_high</code>）传递为 <code>Part.mediaResolution</code>，用于内联和远程图像；选择加入，<code>detail</code> 保留其含义 (#18844) — 感谢 @Bl0ck154</li>
+<li><strong>feat(dashboard):</strong> 当路由器策略为 <code>nadir</code> 时，组合构建器显示最低点设置部分（API 键、超时、自托管基本 URL），因此仪表板构建的组合不再需要手动编辑 JSON 或环境变量来设置 <code>config.nadir</code> (#18846) — 感谢 @doramirdor</li>
+<li><strong>feat（提供商）：</strong> 在 <code>FAL_NATIVE_ENABLED</code> 后面添加一个选择加入模式驱动的 Fal 网关（默认情况下关闭）：<code>/v1/fal</code> 路由、<code>/api/providers/{id}/fal</code> 模式路由、提供商页面上的 Fal 面板和实时目录发现，以及图像、视频和音乐路由上的 Fal 请求的模式验证。关闭标志后，Fal 请求将保持其既定形状、端点映射和响应格式。 (#18849) — 感谢@KiaroSama</li>
+<li><strong>feat(executors):</strong> 将超过 4096 个字符的 Gzip 请求正文发送到官方 <code>api.anthropic.com</code>，就像克劳德代码 2.1.3xx 所做的那样。长代理会话每回合重新上传 JSON 的 0.5-10 MB；它压缩 3-4 倍（gzip 级别 3：27 毫秒内 3 MB）。跳过代理、TLS 模拟或 <code>NODE_EXTRA_CA_CERTS</code>。被拒绝的编码（415、非 Anthropic 400/403 或源 JSON-parse 400）将在未压缩的情况下重新发送一次，并且该源将保持未压缩状态一小时；普通的 API 错误永远不会重新发送。使用 <code>OMNIROUTE_GZIP_REQUEST_BODIES=0</code> 选择退出。 (#18889) — 感谢@serenity-X</li>
+<li><strong>壮举（可观测性）：</strong> 选择加入 V8 堆压力日志：使用 <code>OMNIROUTE_HEAP_DIAGNOSTICS_ENABLED=1</code>，当 <code>heapUsed</code> 通过 <code>OMNIROUTE_HEAP_DIAGNOSTICS_THRESHOLD_MB</code> 时，事件循环失速记录器最多每分钟记录一次堆、RSS 和飞行中的数字（默认 900）（#19054） — 感谢 @Bl0ck154</li>
+<li><strong>壮举（使用）：</strong> 当操作员将可选的 Orb 计费门户链接粘贴到连接设置中时，Zed 托管模型连接会在“提供商限制”页面上显示剩余的美元积分，存储为凭证（静态加密，从 API 响应中剥离）并在不影响路由或连接停放的情况下显示（#19065） - 感谢 @wray-lee</li>
+<li><strong>壮举（提供商）：</strong> 升级现有的 Microsoft 365 Copilot 提供商，包括工作/学校 PKCE 登录、帐户安全重新身份验证、记录的模型目录、单代模拟工具、有界本机转向、不同的模型许可证和帐户限制处理以及 Copilot 安全拒绝 (<code>Disengaged</code>) 作为终端提供商安全停止而不是可重试的上游错误出现。后续请求继续相同的 Copilot 对话：精确扩展先前回复的对话（相同的连接、模型配置文件和工具集、未更改的历史记录以及回复的工具调用 ID 或文本）仅发送新消息，而不是打开包含整个历史记录的新对话，这就是 Copilot 的每用户线程限制计数；任何可疑的事情都会重新开始，无内容的 <code>InternalError</code> 会在新的对话中重新发送一次，否则会显示为 <code>m365_internal_error</code>。延续存在于进程内存中，因此重新启动会开始新的对话。图像输入的工作方式类似于网络 client：每个图像（数据 URL 或公共 HTTPS URL）都会上传到回合的对话中并附加到消息中，上传失败会导致请求失败。 <code>/v1/images/generations</code> 通过 Copilot 的内置图像工具为 <code>copilot-m365-web/m365-copilot-image</code> 提供服务（每个图像一圈；使用从登录刷新令牌生成的设计者令牌下载工件，用完的图像预算为 429）。答案保留其网络来源：Copilot 的内联引用标记变成带有 <code>url_citation</code> 注释的编号链接，而不是作为私人使用字符泄漏，并且其推理摘要以 <code>reasoning_content</code> 形式返回。过期或撤销的登录将报告为 <code>401 m365_unauthorized</code>，而不是一般连接失败，并且测试连接在过期登录时失败，无法刷新，而登录连接的测试会续订过期的访问令牌，而不是回答“不支持提供程序测试”。携带 <code>ReasoningTurnExhausted</code>（Think Deep 转弯的每个帐户上限）的拒绝将报告为 <code>429 reasoning_turns_exhausted</code>，而不是模型的优先访问。同样的拒绝使其他 <code>gpt-5.5</code>/<code>gpt-5.6</code> 思考更深层次的模型在该连接上脱离旋转，因此组合不会在每个模型上花费一回合。仍支持旧版 HAR 连接。 (#19122) — 感谢@aldoeliacim</li>
+<li><strong>壮举（执行者）：</strong> 选择加入 Bun 中继 (<code>OPENCODE_FREE_TIER_RELAY_URL</code>) 和用于门控自由层 OpenCode 请求的规范 OpenCode CLI 提示/工具，否则上游会向非 Bun clients 回复 429 FreeUsageLimitError；对注入的 CLI 工具的调用将从流中过滤掉；纯文本 <code>http://</code> 中继 URL 仅接受环回主机，非环回中继绑定需要 <code>OPENCODE_FREE_RELAY_TOKEN</code> 和代理白名单 (#19128) — 感谢 @DavyMassoneto</li>
+<li><strong>feat(skills):</strong> 选择技能沙箱的 <code>agent-sandbox</code> 运行时 — <code>execute_command</code> / <code>eval_code</code> 可以在远程 Kubernetes 沙箱（kubernetes-sigs/agent-sandbox 热池，例如 gVisor）中运行，而不是在本地容器中运行；使用 <code>SKILLS_SANDBOX_RUNTIME=agent-sandbox</code> 选择，从未自动检测到 (#19130) — 感谢 @xiaoyaner0201</li>
+<li><strong>feat(antigravity)：</strong> 添加选择加入、每个帐户的反重力物理发送阶段定时诊断，无需记录请求内容或凭据 (#19133) — 感谢 @Bl0ck154</li>
+<li><strong>壮举（反重力）：</strong> 将物理发送计时诊断公开为已保存的设置 → 弹性切换。新发送通过设置缓存使用更新的值，无需重新启动服务器。 (#19133) — 感谢@Bl0ck154</li>
+<li><strong>feat(providers):</strong> 添加 Replicate 聊天、Cerebrium、Hetzner Inference 和 Grokified 提供程序、MarkItDown MCP 启动器以及带有阿拉伯语设置指南的桌面启动器 (#19206) — 感谢 @jowimila</li>
+<li><strong>壮举（api）：</strong> 添加可重用的密钥策略模板，具有可编辑草稿、无秘密捕获和原子密钥创建（#19311） - 感谢@Szqub。</li>
+<li><strong>feat(pii):</strong> 选择加入可逆 PII 保险库（<code>PII_REVERSIBLE_VAULT_ENABLED</code>，默认关闭，需要 <code>PII_REDACTION_ENABLED</code>）：请求 PII 成为每个请求的代理令牌而不是不可逆的占位符，并且聊天处理程序恢复 2xx 响应中的原始值（SSE 跨事件和 JSON 拆分，包括工具参数和推理）。提供者、融合法官、日志和缓存只看到令牌；错误体保留令牌；屏蔽轮次会跳过内存、幂等性和语义缓存写入（#19326，基于#18017）——感谢@Ardem2025</li>
+<li><strong>feat(webhooks)：</strong> 当提供商的每个帐户冷却时，新的 <code>provider.exhausted</code> Webhook 事件会向您发出警报，每个提供商最多每 10 分钟一次。 (#19566) — 感谢@serenity-X</li>
+<li><strong>feat(db):</strong> 新迁移被命名为 <code>YYYYMMDDHHMMSS_description.sql</code> (UTC, <code>npm run db:new-migration -- &#x3C;description></code>) 而不是下一个数字，因此并行 PR 不再发生冲突。编号的迁移 (<code>001</code>–<code>241</code>) 保持冻结状态。跑步者按前缀的数值进行排序。针对基础，迁移门拒绝删除的合并迁移和不安全的重命名，并对无序和编辑的迁移运行交换检查。 Release-Green 将每次迁移应用到空数据库并与最新版本标签进行比较。 <code>RENAMED_MIGRATION_COMPATIBILITY</code> 条目的顺序不再重要：旧 PR 行阻塞彼此插槽的数据库将启动，而不是以 <code>Cannot reconcile</code> 停止 (#20169)</li>
+<li><strong>feat(docker)：</strong> 版本还发布到 <code>diegosouzapw/omniroute</code> 旁边的 Cheaper Inference Docker Hub 组织 (<code>cheaperinference/omniroute</code>)，该组织保留其拉取历史记录和每个图像；如果没有组织凭据，则会跳过副本并显示警告，并且 <code>docker-org-mirror.yml</code> 稍后会重新发布已发布的版本。桌面应用程序现在从 <code>cheaper-inference/OmniRoute</code> 自动更新 (#20344)</li>
+<li>为帐户回退计数/原因、相同帐户重试和路由等待添加有界响应标头，保留不可变标头流响应的响应路由策略。 (#19163) — 感谢@Bl0ck154</li>
+<li>**功能（分析）：**将摘要拆分为总令牌、总输入、不包括缓存读取的输入和缓存输入，并具有显式的不完整数据处理和本地化解释，同时保留提供者会计。 (#19538) — 感谢@KiaroSama</li>
+<li><strong>feat(codex):</strong> 选择自动使用即将过期的 Codex 重置积分，因此当没有人在过期前打开仪表板时，银行积分不会默默丢失 (#18630) — 感谢 @Junior-HJ</li>
+<li><strong>feat(dashboard):</strong> Cmd+K 结果按页面名称匹配程度而不是侧边栏顺序进行排名：首先是确切的名称，然后是以查询开头的名称或单词，然后是仅包含它的名称，然后在副标题或部分中匹配。输入 <code>log</code> 现在会在 <strong>日志导出</strong> 之前显示 <strong>日志</strong>，并且在 <strong>雷达目录</strong> 中命中“目录”子字符串； <code>log export</code>、<code>proxy logs</code> 和 <code>radar</code> 仍然首先打开其确切页面。箭头键遵循显示的顺序 (#17915) (#19175) — 感谢 @samimozcan / @anki1kr</li>
+<li><strong>功能（设置）：</strong> 在设置 → 弹性中配置所有聊天提供商的首选帐户响应启动故障转移，默认时间为 20 秒、5 秒反重力/12 秒 Gemini 3.8 启发式和每个提供商/每个模型覆盖。 （#19259）——感谢@Bl0ck154</li>
+<li><strong>功能（路由）：</strong> 选择首选帐户响应启动跨提供商的故障转移；一个合格的兄弟跳跃，没有共享帐户冷却时间。全局默认 20 秒，反重力默认 5 秒，Gemini 3.8 Flash 默认 12 秒，支持提供者/模型覆盖。 （#19259）——感谢@Bl0ck154</li>
+<li>添加有界的、仅限 trusted 内部的请求标头，以缩短上游响应启动截止时间，而无需更改配置的连接超时或允许公共 clients 覆盖它。 (#19162) — 感谢@Bl0ck154</li>
+<li><strong>壮举（视频）：</strong> 暴露保守的先进政策准备情况（直接提交 <code>56e39b80b9</code>）</li>
+<li><strong>壮举（视频）：</strong> 将独立确认纳入促销评估 CLI（直接提交 <code>f699ee3e11</code>）</li>
+<li><strong>壮举（视频）：</strong> 接受批准的钻取页面限制以及严格的旧别名（直接提交 <code>df19b1407a</code>）</li>
+<li><strong>壮举（视频）：</strong> 铸造版本化的钻取令牌并仅保留其摘要（直接提交 <code>4dd9717ff0</code>）</li>
+<li><strong>壮举（视频）：</strong> 在仪表板中公开私有深入使用和有效策略（直接提交 <code>99488921fe</code>）</li>
+<li><strong>feat(ui):</strong> 公开独立视频深入同意控件（直接提交 <code>4293493682</code>）</li>
+<li><strong>壮举（视频）：</strong> 在聊天响应上公开有界的向下钻取句柄（直接提交 <code>c29199cf45</code>）</li>
+<li><strong>壮举（视频）：</strong> 发布同意的租户绑定的向下钻取句柄（直接提交 <code>a88092c233</code>）</li>
+<li><strong>壮举（质量）：</strong> 捕获并撰写共同源覆盖证据（直接提交 <code>749acdd9ce</code>）</li>
+<li><strong>壮举（质量）：</strong> 通过精确提交冻结覆盖源范围（直接提交 <code>2fa884af10</code>）</li>
+<li><strong>壮举（仪表板）：</strong> 跨连接提供商的“新模型”收件箱（直接提交 <code>73856d7aeb</code>）</li>
+<li><strong>feat(search):</strong> 添加 Keenable Web 搜索和获取提供程序（直接提交 <code>7f392f2a67</code>）</li>
+<li>**壮举（仪表板）：**兼容提供者模式中的自定义 JSON API 形式（直接提交 <code>8c1e6ad41c</code>）</li>
+<li><strong>壮举（音频）：</strong> Cloudflare Workers AI Nova-3 转录与二值化（直接提交 <code>8b9c88e954</code>）</li>
+<li><strong>feat（仪表板）：</strong> OpenAI/Anthropic 兼容节点的“配额检查”切换（直接提交 <code>8f37d0f858</code>）</li>
+<li><strong>feat(providers):</strong> 自定义 JSON API 提供者节点（请求模板 + 响应路径）（直接提交 <code>9e9a3749fb</code>）</li>
+<li>**壮举（路由）：**支持能力感知的搜索和获取组合（#19771 - 感谢@Federicomang）</li>
+<li>**壮举（路由）：**添加特定于功能的组合路由（#19771 - 感谢@Federicomang）</li>
+<li><strong>feat(pii):</strong> 将可逆 PII 令牌库连接到聊天管道（直接提交 <code>7ab5d308df</code>）</li>
+<li><strong>壮举（提供者）：</strong> 添加 Hetzner、Grokified、Replicate 和 Cerebrium（直接提交 <code>cfdfef984a</code>）</li>
+<li>**壮举（质量）：**测试屏蔽报告门模式条件跳过而不是裸露的OK（直接提交<code>fdafea4710</code>）（直接提交<code>c20f9d67cb</code>）</li>
+<li><strong>feat(ci):</strong> 代理指令文件不携带派生计数（不变）（直接提交 <code>a780923703</code>）</li>
+<li><strong>feat(db):</strong> 将迁移与基础进行比较并检查无序迁移（直接提交 <code>3310d89b94</code>）</li>
+<li><strong>feat(ci):</strong> check: generated-artifacts 判断具有完整历史记录的已编辑生成文件（直接提交 <code>e6b75f7471</code>）</li>
+<li>**feat(i18n):**syncUiKeys 拒绝未知语言环境；试运行列出了紧凑目录（直接提交 <code>5ffce6416f</code>）</li>
+<li><strong>feat(i18n):</strong> pr 模式根据合并基础判断区域设置目录 PR 更改（直接提交 <code>5c54e717ab</code>）</li>
+<li><strong>feat(release):</strong> npm run release:刷新派生 [—check] (直接提交 <code>9642d234c8</code>)</li>
+<li><strong>feat(ci):</strong> 公关和发布模式下的文档计数门（直接提交 <code>692ea0c018</code>）</li>
+<li><strong>feat(release):</strong> npm 运行事实和提交的派生事实快照（直接提交 <code>8804e34acc</code>）</li>
+<li><strong>feat(ci):</strong> 声明检查的翻译系列：pr-衍生路径（直接提交 <code>c17498a608</code>）</li>
+<li><strong>feat(ci):</strong> 全队列工作流程和 ci/quality 中的候选配置文件（直接提交 <code>b32d9830c0</code>）</li>
+<li><strong>feat(ci):</strong> 声明派生文件的生成系列和基线系列（直接提交 <code>144fb9eb67</code>）</li>
+<li><strong>feat(ci):</strong> 解析全队列候选推送的基础（直接提交 <code>37e1888cc4</code>）</li>
+<li><strong>feat(ci):</strong> 从队列合并预告片到 PR 编号的全队列历史映射（直接提交 <code>e68488e5ae</code>）</li>
+<li><strong>feat(quality):</strong> —require-tighten 永远不会失败功能 PR 的改进（直接提交 <code>a712d17340</code>）</li>
+<li><strong>feat(i18n):</strong> 翻译完整性门仅在发布模式下运行（直接提交 <code>e81745421d</code>）</li>
+<li><strong>feat(ci):</strong> e2e-timings.json 在发布时同步，而不是由每个添加规范的 PR 同步（直接提交 <code>39a72a8f94</code>）</li>
+<li>**feat(i18n):**syncUiKeys() API 和 —rewriting-since 用于发布刷新（直接提交 <code>f68158cd8a</code>）</li>
+<li><strong>feat(skills):</strong> check:agent-skills-sync 仅判断功能 PR 编辑的技能（直接提交 <code>caaa3e1cd5</code>）</li>
+<li><strong>feat(ci):</strong> 全队列 CAS 状态存储和幂等刻度（直接提交 <code>953ff8d6fc</code>）</li>
+<li><strong>feat(ci):</strong> 全队列仪表板、本地 CLI 和标签审批处理程序（直接提交 <code>f054e80fa3</code>）</li>
+<li>**feat(ci):**范围生成的工件检查 PR 编辑的功能（直接提交 <code>00f6716670</code>）</li>
+<li><strong>feat(ci):</strong> 红色批次的全队列二分（直接提交 <code>3652598d24</code>）</li>
+<li><strong>feat(ci):</strong> 全队列 REST client 和进程内假 GitHub （直接提交 <code>aaf5eca2c0</code>）</li>
+<li><strong>feat(ci):</strong> 全队列发布规则集和应用规则集脚本（直接提交 <code>199856ba92</code>）</li>
+<li><strong>feat(ci):</strong> check-docs-sync 判断 PR 写入的镜像，即使在 PR 模式下也是如此（直接提交 <code>a579509ad3</code>）</li>
+<li><strong>feat(db):</strong> 带时间戳的迁移名称、门规则和生成器（直接提交 <code>5411622aed</code>）</li>
+<li><strong>feat(ci):</strong> 全队列候选判决和红色分类（直接提交 <code>0eee20f98f</code>）</li>
+<li><strong>feat(ci):</strong> 全队列候选组合和落地（直接提交 <code>c9588e7207</code>）</li>
+<li><strong>feat(ci):</strong> 全队列资格规则和批量选择（直接提交 <code>c72acfae00</code>）</li>
+<li><strong>feat(db):</strong> 按前缀的数值对迁移进行排序（直接提交 <code>ca1389b2e3</code>）</li>
+<li><strong>feat(i18n):</strong> 导出syncLlmMirrors()以进行发布刷新，添加—dry-run（直接提交<code>ced490f4f9</code>）</li>
+<li><strong>feat(ci):</strong> check-docs-sync 在 PR 模式下跳过翻译镜像检查（直接提交 <code>e2957ceb9c</code>）</li>
+<li><strong>feat(ci):</strong> 全队列共享合约、配置和模块接口（直接提交 <code>d7318d9039</code>）</li>
+<li><strong>feat(ci):</strong> 共享 pr/release 门模式和功能 PR 的派生文件防护（直接提交 <code>01258da100</code>）</li>
+<li><strong>壮举（发布）：</strong> 刷新修剪并重新排队 UI 密钥、e2e 计时步骤、火车上 pr 模式下的 i18n 门（直接提交 <code>7834d4f095</code>）</li>
+<li><strong>feat(release):</strong> 一次性传递，从开放 PR 中剥离派生值（直接提交 <code>e7d603a641</code>）</li>
+<li>**壮举（质量）：**测试屏蔽列出了每个门模式跳过助手，而不仅仅是releaseOnlyUnlessTouched（直接提交<code>c7f9eafdc5</code>）</li>
+<li><strong>feat(ci):</strong> 仅祝福队列引用受保护且候选树重组（直接提交 <code>1374b95fed</code>）</li>
+<li><strong>feat(ci):</strong> 全队列环境，土地令牌和手动祝福（直接提交 <code>e9cddb6f81</code>）</li>
+<li><strong>feat(ci):</strong> 全队列状态门规则集和队列引用规则集（直接提交 <code>c26aeaf8fb</code>）</li>
+<li><strong>feat(ci):</strong> 全队列祝福候选人并成为所有者（直接提交 <code>7cf4ca4add</code>）</li>
+<li><strong>feat(ci):</strong> 全队列登陆演员、身份和登陆状态上下文（直接提交 <code>9e605a3127</code>）</li>
+<li><strong>壮举（路由）：</strong> 将首选帐户和储备帐户添加到自动组合（＃18430） - 感谢@JxnLexn</li>
+<li><strong>feat(i18n):</strong> 完整的欧洲葡萄牙语 (PT-PT) 目录 (#18493) — 感谢 @DarkEsteves</li>
+<li><strong>feat(antigravity):</strong> 导入手动刷新令牌，在保存之前进行验证 (#18497) — 感谢 @Junior-HJ</li>
+<li><strong>feat(providers):</strong> 将 Mistral 路由到其本机 /v1/responses 端点 (#18513) — 感谢 @hartmark</li>
+<li><strong>壮举（使用）：</strong> 选择自动应用银行重置（Codex 积分、Claude 资助、Claude 会话重置）（#19267） — 感谢 @fouadSalkini</li>
+<li>**壮举（仪表板）：**调整套件类型比例并削减 57 个低于 12 像素的提示 (#19066) (#19398)</li>
+</ul>
+<h3 id="-错误修复和--维护">🐛 错误修复和 📝 维护</h3>
+<p><strong>627 个修复</strong>和 <strong>235 个维护条目</strong>在随附的 <a href="https://github.com/cheaper-inference/OmniRoute/releases/download/v3.8.54/CHANGELOG-v3.8.54.md"><code>CHANGELOG-v3.8.54.md</code></a> 和 <a href="https://github.com/cheaper-inference/OmniRoute/blob/main/CHANGELOG.md"><code>CHANGELOG.md</code> → <code>[3.8.54]</code></a> 中完整列出，每个条目都有其 PR 和作者信用（GitHub 版本的正文上限为 125 KB）。</p>
+<h3 id="-贡献者">🙌 贡献者</h3>
+<p>感谢所有将作品登陆 v3.8.54 的人：</p>
+<table>
+<thead>
+<tr>
+<th>贡献者</th>
+<th>PR / 问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/0xvectr">@0xvectr</a></td>
+<td>#19355</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Adam-Dalloul">@Adam-Dalloul</a></td>
+<td>#19316</td>
+</tr>
+<tr>
+<td><a href="https://github.com/adRn-s">@adRn-s</a></td>
+<td>#19539</td>
+</tr>
+<tr>
+<td><a href="https://github.com/afonsoft">@afonsoft</a></td>
+<td>#19281</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ahmadnbl">@ahmadnbl</a></td>
+<td>#19603</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AiCaptain357">@AiCaptain357</a></td>
+<td>#18892</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ailuvu-art">@ailuvu-art</a></td>
+<td>#19313</td>
+</tr>
+<tr>
+<td><a href="https://github.com/aldoeliacim">@aldoeliacim</a></td>
+<td>＃18272，＃18305，＃18908，＃19122，＃19124，＃19125，＃19127，＃19188，＃19193，＃19194，＃19228，＃19236，＃19237，＃19251，＃19253，＃19254， ＃19284，＃19291，＃19574</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AMSeify">@AMSeify</a></td>
+<td>#18346</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AndresDiagoM">@AndresDiagoM</a></td>
+<td>＃18851，＃19544，＃19560，＃19561，＃19563，＃19564，＃19569，＃19572</td>
+</tr>
+<tr>
+<td><a href="https://github.com/anki1kr">@anki1kr</a></td>
+<td>＃19168，＃19169，＃19170，＃19175，＃19176</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ape1121">@ape112​​1</a></td>
+<td>#18344</td>
+</tr>
+<tr>
+<td><a href="https://github.com/AppleVibe">@AppleVibe</a></td>
+<td>#18291</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Ardem2025">@Ardem2025</a></td>
+<td>#18017</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Bl0ck154">@Bl0ck154</a></td>
+<td>＃17961，＃18733，＃18841，＃18842，＃18844，＃18848，＃18891，＃18895，＃18915，＃18916，＃18917，＃19052，＃19053，＃19054，＃19055，＃19133， ＃19134，＃19138，＃19139，＃19146，＃19150，＃19151，＃19152，＃19162，＃19163，＃19164，＃19165，＃19171，＃19180，＃19259，＃19263，＃19590</td>
+</tr>
+<tr>
+<td><a href="https://github.com/bufftop25">@bufftop25</a></td>
+<td>＃18662，＃19080，＃19224，＃19276，＃19309</td>
+</tr>
+<tr>
+<td><a href="https://github.com/claytontavaresdan">@claytontavaresdan</a></td>
+<td>#18379</td>
+</tr>
+<tr>
+<td><a href="https://github.com/cmbergamo">@cmbergamo</a></td>
+<td>＃16995，＃19051</td>
+</tr>
+<tr>
+<td><a href="https://github.com/copystring">@copystring</a></td>
+<td>#19295</td>
+</tr>
+<tr>
+<td><a href="https://github.com/cristianob">@cristianob</a></td>
+<td>#18318</td>
+</tr>
+<tr>
+<td><a href="https://github.com/DarkEsteves">@DarkEsteves</a></td>
+<td>#18493</td>
+</tr>
+<tr>
+<td><a href="https://github.com/datalover37">@datalover37</a></td>
+<td>#18275</td>
+</tr>
+<tr>
+<td><a href="https://github.com/DavyMassoneto">@DavyMassoneto</a></td>
+<td>#19128</td>
+</tr>
+<tr>
+<td><a href="https://github.com/doramirdor">@doramirdor</a></td>
+<td>#18846</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dqphong0302">@dqphong0302</a></td>
+<td>#18287</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ErfanBagheri404">@ErfanBagheri404</a></td>
+<td>#16864</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fabioKoruja00">@fabioKoruja00</a></td>
+<td>#18902</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fabioluissilva">@fabioluissilva</a></td>
+<td>#19169</td>
+</tr>
+<tr>
+<td><a href="https://github.com/feci">@feci</a></td>
+<td>＃18412，＃19277</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Federicomang">@Federicomang</a></td>
+<td>＃18731，＃19771</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fidelix">@fidelix</a></td>
+<td>＃19240，＃19241，＃19242</td>
+</tr>
+<tr>
+<td><a href="https://github.com/fouadSalkini">@fouadSalkini</a></td>
+<td>＃14771，＃14833，＃14840，＃14862，＃19217，＃19267，＃19289，＃19310</td>
+</tr>
+<tr>
+<td><a href="https://github.com/GabrielToth">@GabrielToth</a></td>
+<td>#19604</td>
+</tr>
+<tr>
+<td><a href="https://github.com/gaurav0107">@gaurav0107</a></td>
+<td>＃18726，＃18847，＃18949，＃18972，＃19603</td>
+</tr>
+<tr>
+<td><a href="https://github.com/GodsQuantum">@GodsQuantum</a></td>
+<td>#19779</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hartmark">@hartmark</a></td>
+<td>＃18513，＃19189</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Hector-Ha">@Hector-Ha</a></td>
+<td>#18405</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hgdubbe">@hgdubbe</a></td>
+<td>#19355</td>
+</tr>
+<tr>
+<td><a href="https://github.com/hongkongkiwi">@hongkongkiwi</a></td>
+<td>＃19038，＃19121</td>
+</tr>
+<tr>
+<td><a href="https://github.com/HouMinXi">@HouMinXi</a></td>
+<td>#17829、#17998、#18874、#18878、#18942、#18955、#19008、#19026、#19081、#19082、#19083、#19084、#19103、#19104、#19105、#19106、 #19107、#19108、#19109、#19110、#19111、#19112、#19113、#19114、#19115、#19116、#19117、#19118、#19119、#19173、#19220、#19222、 ＃19296，＃19298</td>
+</tr>
+<tr>
+<td><a href="https://github.com/huzky-v">@huzky-v</a></td>
+<td>#19535</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ilya-bogin-keenable">@ilya-bogin-keenable</a></td>
+<td>#17920</td>
+</tr>
+<tr>
+<td><a href="https://github.com/IlyaKhalafi">@IlyaKhalafi</a></td>
+<td>#18320</td>
+</tr>
+<tr>
+<td><a href="https://github.com/insoln">@insoln</a></td>
+<td>＃18840，＃18864，＃19215</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jjxyxsjr">@jjxyxsjr</a></td>
+<td>＃18394，＃18435，＃18586，＃18721，＃18739，＃18740，＃18998</td>
+</tr>
+<tr>
+<td><a href="https://github.com/jowimila">@jowimila</a></td>
+<td>#19206</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Junior-HJ">@Junior-HJ</a></td>
+<td>#18497, #18630 ​​</td>
+</tr>
+<tr>
+<td><a href="https://github.com/JxnLexn">@JxnLexn</a></td>
+<td>＃15201，＃18430，＃19301</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KiaroSama">@KiaroSama</a></td>
+<td>＃16452，＃16455，＃18828，＃18849，＃19299，＃19515，＃19538，＃19540，＃19546，＃20271</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kkkamur07">@kkkamur07</a></td>
+<td>#19181</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KytranKatarn">@KytranKatarn</a></td>
+<td>#18604</td>
+</tr>
+<tr>
+<td><a href="https://github.com/LeandroTechify">@LeandroTechify</a></td>
+<td>#18352</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lmortezal">@lmortezal</a></td>
+<td>#16709</td>
+</tr>
+<tr>
+<td><a href="https://github.com/LuisAlejandro">@LuisAlejandro</a></td>
+<td>#18797</td>
+</tr>
+<tr>
+<td><a href="https://github.com/lyccccy">@lycccy</a></td>
+<td>＃18353，＃18359</td>
+</tr>
+<tr>
+<td><a href="https://github.com/malcollmhollmes">@malcollmhollmes</a></td>
+<td>#19347</td>
+</tr>
+<tr>
+<td><a href="https://github.com/maryasov">@maryasov</a></td>
+<td>#18320</td>
+</tr>
+<tr>
+<td><a href="https://github.com/maximee-leroyy">@maximee-leroyy</a></td>
+<td>#18875</td>
+</tr>
+<tr>
+<td><a href="https://github.com/maxmad64bis">@maxmad64bis</a></td>
+<td>＃17332，＃18060，＃18230，＃18666，＃18866，＃18870，＃18894</td>
+</tr>
+<tr>
+<td><a href="https://github.com/megamen32">@megamen32</a></td>
+<td>＃17286，＃19027</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MehranMazhar">@MehranMazhar</a></td>
+<td>#19427</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MHMB">@MHMB</a></td>
+<td>#19286</td>
+</tr>
+<tr>
+<td><a href="https://github.com/miguelenes">@miguelenes</a></td>
+<td>#15279</td>
+</tr>
+<tr>
+<td><a href="https://github.com/murtazayusuf">@murtazayusuf</a></td>
+<td>#19120</td>
+</tr>
+<tr>
+<td><a href="https://github.com/MWGE22629">@MWGE22629</a></td>
+<td>#18350</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nguyencongbaongoc">@nguyencongbaongoc</a></td>
+<td>#18669</td>
+</tr>
+<tr>
+<td><a href="https://github.com/onoobsc">@onobsc</a></td>
+<td>#19035</td>
+</tr>
+<tr>
+<td><a href="https://github.com/palpal2312">@palpal2312</a></td>
+<td>#18409</td>
+</tr>
+<tr>
+<td><a href="https://github.com/patrykkopycinski">@patrykkopycinski</a></td>
+<td>#18025</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PawelKinczyk">@PawelKinczyk</a></td>
+<td>#19168</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Pietrus-914">@Pietrus-914</a></td>
+<td>#19319</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pitupi">@pitupi</a></td>
+<td>#18898</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PixmaNts">@PixmaNts</a></td>
+<td>#14667</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pizzav-xyz">@pizzav-xyz</a></td>
+<td>＃15906，＃18024</td>
+</tr>
+<tr>
+<td><a href="https://github.com/potatosips">@potatosips</a></td>
+<td>＃19317，＃19318</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ptichalouf">@ptichalouf</a></td>
+<td>＃19264，＃19265</td>
+</tr>
+<tr>
+<td><a href="https://github.com/rafacpti23">@rafapti23</a></td>
+<td>＃18032，＃19218，＃19315，＃19334，＃19380，＃19384，＃19479，＃19483，＃19485，＃19487，＃19501，＃19578</td>
+</tr>
+<tr>
+<td><a href="https://github.com/RayJW">@RayJW</a></td>
+<td>＃19075，＃19232，＃19337，＃19338</td>
+</tr>
+<tr>
+<td><a href="https://github.com/robertjitaru">@robertjitaru</a></td>
+<td>#18356</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SajjadPSavoji">@SajjadPSavoji</a></td>
+<td>#19227</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sajjadsaharkhan">@sajjadsaharkhan</a></td>
+<td>#18362</td>
+</tr>
+<tr>
+<td><a href="https://github.com/samimozcan">@samimozcan</a></td>
+<td>#19175</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sancaksert">@sancaksert</a></td>
+<td>#18319</td>
+</tr>
+<tr>
+<td><a href="https://github.com/scursel">@scursel</a></td>
+<td>#18298</td>
+</tr>
+<tr>
+<td><a href="https://github.com/seanford">@seanford</a></td>
+<td>#13987</td>
+</tr>
+<tr>
+<td><a href="https://github.com/serenity-X">@serenity-X</a></td>
+<td>#18889、#18995、#19000、#19001、#19002、#19003、#19004、#19005、#19006、#19021、#19022、#19023、#19024、#19025、#19029、#19030、 ＃19031，＃19033，＃19034，＃19036，＃19037，＃19405，＃19407，＃19425，＃19426，＃19428，＃19430，＃19433，＃19434，＃19435，＃19445，＃19448， ＃19457，＃19458，＃19460，＃19463，＃19465，＃19466，＃19469，＃19470，＃19475，＃19476，＃19480，＃19484，＃19486，＃19499，＃19502，＃19503， ＃19504，＃19541，＃19545，＃19548，＃19557，＃19565，＃19566，＃19570，＃19573，＃19591，＃19599，＃19600，＃19601</td>
+</tr>
+<tr>
+<td><a href="https://github.com/sha367">@sha367</a></td>
+<td>＃18103，＃18129</td>
+</tr>
+<tr>
+<td><a href="https://github.com/shevar0">@shevar0</a></td>
+<td>＃18347，＃18947</td>
+</tr>
+<tr>
+<td><a href="https://github.com/shipsfromrio">@shipsfromrio</a></td>
+<td>#18773</td>
+</tr>
+<tr>
+<td><a href="https://github.com/SkiiOS">@SkiiOS</a></td>
+<td>#16573</td>
+</tr>
+<tr>
+<td><a href="https://github.com/stanescuradu">@stanescuradu</a></td>
+<td>#19170</td>
+</tr>
+<tr>
+<td><a href="https://github.com/STL1te">@STL1te</a></td>
+<td>#19282</td>
+</tr>
+<tr>
+<td><a href="https://github.com/suinly">@suinly</a></td>
+<td>#19205</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Szqub">@Szqub</a></td>
+<td>＃19043，＃19311</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tada5hi">@tada5hi</a></td>
+<td>#19210</td>
+</tr>
+<tr>
+<td><a href="https://github.com/TheDemonTuan">@TheDemonTuan</a></td>
+<td>#19505</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tiangao88">@tiangao88</a></td>
+<td>＃19325，＃19331，＃19341</td>
+</tr>
+<tr>
+<td><a href="https://github.com/trespassmk">@trespassmk</a></td>
+<td>＃19249，＃19250</td>
+</tr>
+<tr>
+<td><a href="https://github.com/vinhhap">@vinhhap</a></td>
+<td>#18288</td>
+</tr>
+<tr>
+<td><a href="https://github.com/visheshgubrani">@visheshgubrani</a></td>
+<td>#19201</td>
+</tr>
+<tr>
+<td><a href="https://github.com/wray-lee">@wray-lee</a></td>
+<td>＃18958，＃19065</td>
+</tr>
+<tr>
+<td><a href="https://github.com/xiaoyaner0201">@xiaoyaner0201</a></td>
+<td>＃16676，＃17307，＃17933，＃17962，＃18010，＃18754，＃18898，＃18960，＃19048，＃19130，＃19208，＃19210，＃19213，＃19275，＃19303，＃19308</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yheiakadylan">@yheiakadylan</a></td>
+<td>#16731​​</td>
+</tr>
+<tr>
+<td><a href="https://github.com/yourspraveen">@yourspra​​veen</a></td>
+<td>＃18642，＃18775，＃19067，＃19077，＃19199，＃19324，＃19330</td>
+</tr>
+<tr>
+<td><a href="https://github.com/z3ncv">@z3ncv</a></td>
+<td>#18322</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zeydsama">@zeydsama</a></td>
+<td>#18269</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zhiru">@zhiru</a></td>
+<td>＃18831，＃18832</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ziuus">@ziuus</a></td>
+<td>#18181</td>
+</tr>
+<tr>
+<td><a href="https://github.com/zyizyiz">@zyizyiz</a></td>
+<td>#16734</td>
+</tr>
+<tr>
+<td><a href="https://github.com/diegosouzapw">@diegosouzapw</a></td>
+<td>维护者</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/cheaper-inference/OmniRoute">cheaper-inference/OmniRoute</a> · 🏷️ 版本：<code>v3.8.54</code> · 📅 发布：2026-11-17 · <a href="https://github.com/cheaper-inference/OmniRoute/releases/tag/v3.8.54">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <span></span> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.53"> <span class="k">上一个 →</span> <span class="t">v3.8.53</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/cheaper-inference/OmniRoute/releases/tag/v3.8.54" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/cheaper-inference/OmniRoute" target="_blank" rel="noopener"> <span>cheaper-inference/OmniRoute</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#omniroute-v3854-1" class>OmniRoute v3.8.54</a><a href="#-按数字发布" class="lv3">📊 按数字发布</a><a href="#-本周期前-25-位贡献者" class="lv3">🏆 本周期前 25 位贡献者</a><a href="#-新功能" class="lv3">✨ 新功能</a><a href="#-错误修复和--维护" class="lv3">🐛 错误修复和 📝 维护</a><a href="#-贡献者" class="lv3">🙌 贡献者</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.54" aria-current="true"> <span class="v">v3.8.54</span> <span class="d">26-11-17</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.53"> <span class="v">v3.8.53</span> <span class="d">26-11-06</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.52"> <span class="v">v3.8.52</span> <span class="d">26-10-19</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.51"> <span class="v">v3.8.51</span> <span class="d">26-09-30</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.50"> <span class="v">v3.8.50</span> <span class="d">26-08-26</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.49"> <span class="v">v3.8.49</span> <span class="d">26-07-30</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.48"> <span class="v">v3.8.48</span> <span class="d">26-07-13</span> </a> </li><li> <a href="/zh/release_note/OmniRoute/OmniRoute_v3.8.47"> <span class="v">v3.8.47</span> <span class="d">26-07-13</span> </a> </li> </ul> <a href="/zh/releases/omniroute" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 39 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

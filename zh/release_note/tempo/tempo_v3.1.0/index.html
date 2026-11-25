@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>tempo v3.1.0 — STAGS NextStack</title><meta name="description" content="Grafana Tempo 3.1.0 adds query-based trace redaction, TraceQL metrics arithmetic and sampling-aware extrapolation, Kafka connectivity improvements, and experimental tools for comparing and pruning traces."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/tempo/tempo_v3.1.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/tempo/3.1.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/tempo/tempo_v3.1.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/tempo/3.1.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="tempo v3.1.0 — STAGS NextStack"><meta property="og:description" content="Grafana Tempo 3.1.0 adds query-based trace redaction, TraceQL metrics arithmetic and sampling-aware extrapolation, Kafka connectivity improvements, and experimental tools for comparing and pruning traces."><meta property="og:url" content="https://www.stags.cn/zh/release_note/tempo/tempo_v3.1.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/tempo/tempo_v3.1.0/#article","headline":"tempo v3.1.0 release notes","datePublished":"2026-09-29","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/grafana/tempo"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/tempo/3.1.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/tempo/tempo_v3.1.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/tempo/3.1.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/tempo/3.1.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/tempo/3.1.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/tempo/3.1.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/tempo/3.1.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/tempo">tempo</a> </nav> <h1 class="detail-title"> <span class="p">tempo</span> v3.1.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年9月29日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/grafana/tempo" target="_blank" rel="noopener"> <span class="k">来源</span>grafana/tempo </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/tempo/3.1.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/tempo/tempo_v3.1.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h1 id="tempo-v310">tempo v3.1.0</h1>
+<p>Grafana Tempo 3.1.0 添加了基于查询的跟踪编辑、TraceQL 指标算法和采样感知外推、Kafka 连接改进以及用于比较和修剪跟踪的实验工具。
+它还使 vParquet5 成为新写入块的默认格式。</p>
+<h2 id="亮点">亮点</h2>
+<ul>
+<li><strong>按查询进行编辑：</strong> 使用 TraceQL 选择器提交编辑作业，而不是枚举跟踪 ID，并具有可选时间窗口和编辑可靠性改进。</li>
+<li><strong>TraceQL 指标：</strong> 将聚合与算术结合起来，并选择使用跨度中记录的采样概率进行外推。现在默认启用更快的仅跨度获取路径。</li>
+<li><strong>指标生成器和服务图：</strong> 使用选择加入的连接信息量规检测重采样下的服务拓扑，识别 <code>db.system.name</code>，并减少跨度指标和服务图处理开销。</li>
+<li><strong>实验性跨度修剪：</strong> 通过请求级别选择加入和可配置的默认值，减少按 ID 跟踪 v2 响应大小。</li>
+<li><strong>Kafka 连接：</strong> 配置额外的 SASL 机制、TLS 和双向 TLS、机架感知获取和生产者压缩，包括用于 Azure 事件中心的 <code>gzip</code>。</li>
+<li><strong>实验跟踪差异和摘要：</strong> 通过 API、<code>tempo-cli</code> 和 MCP 与完整补丁和紧凑摘要格式比较跟踪。</li>
+<li><strong>vParquet5 默认情况下：</strong> 在 vParquet5 中写入新块，同时继续读取现有 vParquet4 和 vParquet3 块，无需数据迁移。
+下面详细的 changelog 包括经过审查的 RC1 注释和后续向后移植，
+包含 PR 参考、贡献者信用、安全标识符和升级指南。</li>
+</ul>
+<h2 id="特点">特点</h2>
+<ul>
+<li><code>backend-scheduler</code>：可以使用 TraceQL 查询选择器而不是显式跟踪 ID 列表来提交编辑作业，因此可以将大量删除表示为查询。 (<a href="https://github.com/grafana/tempo/issues/7663">#7663</a>) (@zalegrala)</li>
+<li><code>metrics-generator</code>：添加 <code>service-graphs-*</code> 子处理器和可选的 <code>traces_service_graph_connection_info</code> 存在量规，用于在大量采样下进行拓扑检测。 (<a href="https://github.com/grafana/tempo/issues/7202">#7202</a>) (@jcreixell)</li>
+<li><code>operations</code>：通过 Prometheus 触发器在持有的预期字节上添加 KEDA 自动缩放功能以进行实时存储。通过 <code>live_store.keda.enabled: true</code> 启用。 (<a href="https://github.com/grafana/tempo/issues/7154">#7154</a>) (@zachfi)
+使用 <code>block_builder.keda.enabled: true</code> 单独启用块构建器自动缩放，并选择使用 <code>block_builder.keda.scaling</code> 的方法。
+默认值 <code>'rollout-operator'</code> 镜像实时存储区域 a 副本，并需要启用实时存储 KEDA。
+<code>'keda'</code> 方法使用 kubernetes 工作负载触发器，并且可以在有或没有实时存储 KEDA 的情况下工作。
+启用实时存储 KEDA 会自动启用 <code>rollout_operator_replica_template_access_enabled</code>。</li>
+<li><code>operations</code>：使用新的 Grafana 仪表板监控 Tempo 现场商店的健康状况和绩效。 (<a href="https://github.com/grafana/tempo/issues/7287">#7287</a>) (@javiermolinar)</li>
+<li><code>query-frontend</code>：向trace-by ID v2端点添加实验性跨度修剪。 (<a href="https://github.com/grafana/tempo/issues/7566">#7566</a>、<a href="https://github.com/grafana/tempo/issues/7628">#7628</a>、<a href="https://github.com/grafana/tempo/issues/7693">#7693</a>) (@ie-pham)
+对于省略 <code>span_pruning</code> 的请求，默认使用 <code>span_pruning_enabled_by_default</code> 启用修剪，
+或使用 <code>span_pruning_enabled</code> 覆盖配置每个租户的默认值。
+检测到已在写入路径上修剪的迹线，并且不会再次修剪。</li>
+<li><code>query-frontend</code>：添加用于比较两个跟踪的实验端点，并由租户的 <code>max_bytes_per_trace</code> 设置强制执行组合输入大小限制。 (<a href="https://github.com/grafana/tempo/issues/7523">#7523</a>、<a href="https://github.com/grafana/tempo/issues/7539">#7539</a>、<a href="https://github.com/grafana/tempo/issues/7564">#7564</a>) (@javiermolinar)</li>
+<li><code>query-frontend</code>：添加trace-summary-v0-composed作为可选的实验跟踪差异API和tempo-cli格式。响应始终包含紧凑的摘要，并包含最多 64 KiB 的完整补丁；较大的补丁报告该补丁被省略。默认值仍然是trace-patch-v0。 （[#7593]（<a href="https://github.com/grafana/tempo/issues/7593%EF%BC%89%EF%BC%89%EF%BC%88@carles-grafana%EF%BC%89">https://github.com/grafana/tempo/issues/7593））（@carles-grafana）</a></li>
+<li><code>tempo</code>：添加 <code>client_rack</code> Kafka 配置选项以启用机架感知抓取 (KIP-392) 并减少跨区域 Kafka 流量。 (<a href="https://github.com/grafana/tempo/issues/7594">#7594</a>) (@AvivGuiser)</li>
+<li><code>tempo</code>：支持 TraceQL Metrics 中的算术运算 (<a href="https://github.com/grafana/tempo/issues/6866">#6866</a>、<a href="https://github.com/grafana/tempo/issues/7199">#7199</a>、<a href="https://github.com/grafana/tempo/issues/7409">#7409</a>) (@ruslan-mikhailov)</li>
+<li><code>tempo-cli</code>：向 tempo-cli 跟踪差异添加实验性跟踪摘要-v0-本机格式。它提供了延迟、总跨度持续时间、错误、结构变化和受影响服务的紧凑概述。 (<a href="https://github.com/grafana/tempo/issues/7510">#7510</a>) (@carles-grafana)</li>
+<li><code>tempo-cli</code>：添加实验性跟踪 diff 命令，该命令比较两个本地跟踪 JSON 文件并发出 Trace-patch-v0 输出。 (<a href="https://github.com/grafana/tempo/issues/7468">#7468</a>) (@javiermolinar)</li>
+<li><code>traceql</code>：TraceQL 指标查询可以根据 W3C 跟踪状态采样概率推断计数。通过 <code>with(extrapolate=true)</code> 提示选择加入每个查询。 (<a href="https://github.com/grafana/tempo/issues/7452">#7452</a>) (@csmarchbanks)
+当跨度在其跟踪状态中携带 OpenTelemetry 概率阈值时
+(<code>ot=th:...</code>)，每个匹配跨度贡献 <code>1 / sampling_probability</code>
+<code>rate</code>、<code>count_over_time</code>、<code>sum_over_time</code>、<code>avg_over_time</code>、
+<code>histogram_over_time</code>、<code>quantile_over_time</code> 和 <code>compare</code> 骨料 —
+匹配指标生成器现有的每跨度乘数行为。
+<code>min_over_time</code> 和 <code>max_over_time</code> 不受影响。仅支持
+vparquet4 及更高版本。</li>
+</ul>
+<h2 id="增强功能">增强功能</h2>
+<ul>
+<li><code>backend-scheduler</code>：公开每个租户和作业类型的待处理后端作业，并启用后端缓存项大小的本机直方图。 (<a href="https://github.com/grafana/tempo/issues/7772">#7772</a>) (@zalegrala)
+<code>tempo_backend_scheduler_jobs_pending{tenant, job_type}</code> 统计等待调度的作业，
+提供用于监控和自动缩放的队列深度信号。
+<code>tempodb_cache_store_size_bytes</code> 现在支持本机直方图。</li>
+<li><code>backend-scheduler</code>：添加 <code>tempo_backend_scheduler_redaction_traces_found_total{tenant, mode}</code> 指标 — 与每个租户的修订作业匹配的跟踪，其中 mode=apply 计算实际删除的跟踪，mode=dry_run 计算试运行的预览爆炸半径。 (<a href="https://github.com/grafana/tempo/issues/7699">#7699</a>) (@zalegrala)</li>
+<li><code>backend-scheduler</code>：通过索引每个租户的挂起作业和繁忙块来减少后端调度程序作业查找开销。 (<a href="https://github.com/grafana/tempo/issues/7141">#7141</a>) (@zalegrala)</li>
+<li><code>backend-scheduler</code>：将可选的 <code>[start, end]</code> 时间窗口添加到密文 (<code>tempo-cli redact --start/--end</code>)，将其范围限定为重叠块并限制每块扫描。 (<a href="https://github.com/grafana/tempo/issues/7702">#7702</a>) (@zalegrala)
+窗口式编辑可以让大租户分片进行编辑，而不是对每个块进行一次编辑，因此整个运行过程中不会推迟压缩。两个边界都是必需的并且必须订购；省略它们会像以前一样编辑整个租户。 client 将边界解析为绝对时间戳，因此长的编辑不会向前漂移到新摄取的数据中。
+该窗口限制了 <code>--query</code> 选择器的扫描。它不能与 <code>--trace-id</code> 结合使用，<code>--trace-id</code> 可以无时间限制地解析跟踪：该对将仅从与窗口重叠的块中删除每个列出的跟踪，并在报告成功时将其余部分保留在原处。
+当调度程序和工作线程运行不同版本时，请勿提交窗口化编辑。在此更改之前的工作人员会忽略窗口字段，并删除给定的每个块中的每个查询匹配项，无论时间戳如何，都不会出现错误，也无法恢复数据。</li>
+<li><code>block-builder</code>：添加 <code>tempo_block_builder_flush_size_bytes</code> 本机直方图，记录块生成器刷新的块的大小。 (<a href="https://github.com/grafana/tempo/issues/7773">#7773</a>) (@zalegrala)
+与 <code>tempo_live_store_local_flush_size_bytes</code> 一起使用
+<code>tempodb_compaction_output_block_size_bytes</code> 用于比较写入路径上的块大小
+并调整压实的 <code>max_input_blocks</code> 设置。</li>
+<li><code>cache</code>：将 <code>connect_timeout</code> 和 <code>min_idle_conns_headroom_percentage</code> 选项添加到 memcached client 以调整连接行为。 (<a href="https://github.com/grafana/tempo/issues/7671">#7671</a>) (@mapno)
+<code>connect_timeout</code> 与 <code>timeout</code> 分开绑定连接建立（请求
+往返），未设置时默认为 <code>timeout</code>。 <code>min_idle_conns_headroom_percentage</code>
+控制空闲连接 reaping：负值（默认）从不关闭空闲
+连接数，正值保持空闲连接相对打开的百分比
+最近使用的数量。</li>
+<li><code>cache</code>：为 Redis 强制执行可配置的 MaxItemSize。 (<a href="https://github.com/grafana/tempo/issues/7311">#7311</a>) (@electron0zero)</li>
+<li><code>compactor</code>：添加<code>tempodb_compaction_output_block_size_bytes</code>本机直方图，记录压缩产生的块的大小。 (<a href="https://github.com/grafana/tempo/issues/7773">#7773</a>) (@zalegrala)
+没有现有的指标捕获压缩输出块的最终大小（现有的
+<code>tempodb_compaction_bytes_written_total</code> 是每个行组刷新的累积计数器，而不是
+每个成品块的大小）。这为操作员提供了调整 <code>max_input_blocks</code> 和
+TCO 的原因。</li>
+<li><code>distributor</code>：添加 <code>ingest.kafka.producer_compression</code> 配置以允许覆盖 Kafka 生产者的压缩编解码器。 (<a href="https://github.com/grafana/tempo/issues/7691">#7691</a>) (@fleighton)
+一些兼容 Kafka 的后端仅支持某些压缩编解码器，
+特别是 Azure 事件中心，它仅支持 <code>gzip</code>。支持的值为
+<code>none</code>、<code>gzip</code>、<code>snappy</code>、<code>lz4</code>、<code>zstd</code>（不区分大小写）；未设置的
+值使 Kafka client 自己的默认编解码器首选项保持不变。</li>
+<li><code>distributor</code>：添加每个租户推送形状指标：<code>tempo_distributor_push_duration_seconds</code> 上的租户标签，以及新的 <code>tempo_distributor_push_bytes</code> 和 <code>tempo_distributor_received_traces_total</code> (<a href="https://github.com/grafana/tempo/issues/7865">#7865</a>) (@zalegrala)</li>
+<li><code>distributor</code>：添加Kafka SASL机制选择和TLS支持。 <code>sasl_mechanism</code> 选项选择 SASL 机制（<code>PLAIN</code>（默认）、<code>SCRAM-SHA-256</code>、<code>SCRAM-SHA-512</code>、<code>OAUTHBEARER</code> 或 <code>AWS_MSK_IAM</code>），带有 <code>tls_*</code> 选项的 <code>tls_enabled</code> 为 Kafka client 启用 TLS 传输和双向 TLS。 (<a href="https://github.com/grafana/tempo/issues/7586">#7586</a>) (@heytrav)
+OAUTHBEARER 和 AWS_MSK_IAM 凭证可以从 JSON 文件静态提供，或者通过 Unix 域套接字获取。现有配置不受影响，因为在未设置用户名或密码时，默认机制仍为 <code>PLAIN</code>，并禁用 SASL。</li>
+<li><code>distributor</code>：在 <code>2 × distributor.ring.heartbeat-timeout</code> 之后自动忘记分配器环中的不健康实例，从而无需在非正常 Pod 终止后在 <code>/distributor/ring</code> 上手动进行 click“忘记”。 (<a href="https://github.com/grafana/tempo/issues/7098">#7098</a>) (@oleg-kozlyuk-grafana)</li>
+<li><code>docs</code>：正确的有关 Redpanda 和 Kafka 要求的单二进制快速入门文档。 (<a href="https://github.com/grafana/tempo/issues/7704">#7704</a>) (@veenoise)</li>
+<li><code>docs</code>：添加有关配置 Tempo 微服务部署使用的 Kafka 兼容后端的指南。 (<a href="https://github.com/grafana/tempo/issues/7714">#7714</a>) (@javiermolinar)</li>
+<li><code>docs</code>：为人工智能辅助文档创作添加共享文档技能、项目上下文和发行说明工作流程。 (<a href="https://github.com/grafana/tempo/issues/7447">#7447</a>) (@knylander-grafana)</li>
+<li><code>live-store</code>：将查询检查的字节公开为指标。 (<a href="https://github.com/grafana/tempo/issues/7162">#7162</a>、<a href="https://github.com/grafana/tempo/issues/7163">#7163</a>) (@zhxiaogg)</li>
+<li><code>live-store</code>：通过消除并发评估的 WAL 块之间的锁争用来提高 TraceQL 指标查询性能。 (<a href="https://github.com/grafana/tempo/issues/7867">#7867</a>) (@ruslan-mikhailov)
+现在，每个块都使用自己的指标评估器进行评估，每个块的结果是
+求和，而不是所有 WAL 块共享一个由互斥体保护的求值器。</li>
+<li><code>live-store</code>：通过使范围不同的字符串收集器无锁来减少标签搜索中的互斥争用。 (<a href="https://github.com/grafana/tempo/issues/7492">#7492</a>) (@zhxiaogg)</li>
+<li><code>metrics-generator</code>：默认跨度类型正则表达式的快速路径跨度过滤器匹配，并在属性过滤器之前评估内在过滤器。 (<a href="https://github.com/grafana/tempo/issues/7465">#7465</a>) (@carles-grafana)</li>
+<li><code>metrics-generator</code>：识别服务图中的<code>db.system.name</code>属性，用于数据库节点检测和虚拟节点命名。 (<a href="https://github.com/grafana/tempo/issues/7697">#7697</a>) (@iamrajiv)
+OpenTelemetry 语义约定 v1.30.0 将 <code>db.system</code> 重命名为 <code>db.system.name</code>。跨度从
+仅发出新属性的检测不再被识别为数据库请求
+并且无法命名虚拟节点。
+<code>db.system.name</code> 附加到 <code>peer_attributes</code> 和 <code>peer_attributes</code> 的默认值中
+<code>database_name_attributes</code>，继<code>db.system</code>之后。因为列表是按顺序搜索的
+较旧的属性仍然列在前面，携带 <code>db.system</code> 的跨度继续生成节点名称
+今天他们这样做了。每个租户仍然可以覆盖这两个默认值。</li>
+<li><code>metrics-generator</code>：减少跨名称清理器 CPU 和重复确切名称的分配。 (<a href="https://github.com/grafana/tempo/issues/7794">#7794</a>) (@carles-grafana)
+Drain 现在拥有保留的令牌字节，重用令牌生成器状态，在匹配期间删除陈旧的候选者，
+并使用由大叶子的完整跨度名称作为键控的有界精确匹配索引。生成的跨度度量
+标签和现有的图案固定装置保持不变。</li>
+<li><code>metrics-generator</code>：通过注册表的池借用标签路径构建系列标签，减少跨度指标处理器中的每个跨度 CPU 和分配。 （[#7584]（<a href="https://github.com/grafana/tempo/issues/7584%EF%BC%89%EF%BC%89%EF%BC%88@carles-grafana%EF%BC%89">https://github.com/grafana/tempo/issues/7584））（@carles-grafana）</a>
+跨度指标处理器现在在注册表拥有的池缓冲区中构建系列标签，使用预先计算的标签哈希更新指标，并为每个资源构建一次 target_info 而不是每个跨度构建一次。指标名称、标签和值保持不变。</li>
+<li><code>metrics-generator</code>：添加 <code>skip_stale_backlog_on_startup</code> 以在启动时将分区向前寻找到摄取松弛水平，而不是重放松弛将丢弃的积压，从而在重新启动时保持分区滞后指标诚实。 (<a href="https://github.com/grafana/tempo/issues/7611">#7611</a>) (@zalegrala)</li>
+<li><code>metrics-generator</code>：通过使用不匹配的跨度类型标记过期边缘来改进服务图故障排除。 (<a href="https://github.com/grafana/tempo/issues/7709">#7709</a>) (@javiermolinar)</li>
+<li><code>metrics-generator</code>：通过注册表的池借用标签路径构建系列标签，减少服务图处理器中的每边缘 CPU 和分配。 （[#7587]（<a href="https://github.com/grafana/tempo/issues/7587%EF%BC%89%EF%BC%89%EF%BC%88@carles-grafana%EF%BC%89">https://github.com/grafana/tempo/issues/7587））（@carles-grafana）</a>
+服务图处理器现在使用计数器、直方图和连接信息量表的借用标签更新；对标准跟踪和跨度 ID 使用固定大小的键；重用跟踪 ID 缓冲区；将经典示例编码推迟到收集；并为本机直方图的每条边共享一种编码。指标名称、标签和值保持不变。</li>
+<li><code>operations</code>：为 KEDA 自动缩放添加 <code>autoscaling_prometheus_url</code> 和 <code>autoscaling_prometheus_tenant</code> 顶级配置字段。设置 <code>autoscaling_prometheus_tenant</code> 在所有 Prometheus 触发请求上发送 <code>X-Scope-OrgID</code> 标头，当后端是多租户系统（例如 Grafana Mimir）时，这是必需的。 (<a href="https://github.com/grafana/tempo/issues/7099">#7099</a>) (@zachfi)</li>
+<li><code>operations</code>：展开后端工作仪表板，其中包含编辑进度、待处理作业、删除的作业和作业持续时间面板。 (<a href="https://github.com/grafana/tempo/issues/7184">#7184</a>、<a href="https://github.com/grafana/tempo/issues/7758">#7758</a>、<a href="https://github.com/grafana/tempo/issues/7772">#7772</a>、<a href="https://github.com/grafana/tempo/issues/7795">#7795</a>) (@zalegrala)
+按租户跟踪编辑作业并在经典直方图和本机直方图之间切换延迟面板。
+在“集群”之前选择“命名空间”以筛选可用的集群。
+重试面板现在使用正确的 <code>jobs_retry_total</code> 指标。</li>
+<li><code>operations</code>：jsonnet：支持指标生成器基于 Prometheus 的 KEDA 自动缩放。 (<a href="https://github.com/grafana/tempo/issues/7362">#7362</a>) (@mapno)</li>
+<li><code>operations</code>：添加 <code>tempo-service-graph.json</code> 仪表板，可视化 <code>traces_service_graph_connection_info</code> 的服务拓扑。 (<a href="https://github.com/grafana/tempo/issues/7207">#7207</a>) (@jcreixell)</li>
+<li><code>querier</code>：添加 <code>tempo_querier_backend_processing_duration_seconds</code> 直方图，测量查询器处理后端块所花费的时间，由操作和租户标记。 (<a href="https://github.com/grafana/tempo/issues/7525">#7525</a>) (@zhxiaogg)</li>
+<li><code>querier</code>：将查询统计指标扩展到其他查询器方法。 （[#7568]（<a href="https://github.com/grafana/tempo/issues/7568%EF%BC%89%EF%BC%8C%5B#7571%5D%EF%BC%88https://github.com/grafana/tempo/issues/7571%EF%BC%89%EF%BC%89%EF%BC%88@javiermolinar%EF%BC%89">https://github.com/grafana/tempo/issues/7568），[#7571]（https://github.com/grafana/tempo/issues/7571））（@javiermolinar）</a></li>
+<li><code>querier</code>：限制外部端点响应大小到查询器 grpc MaxSendMsgSize。 (<a href="https://github.com/grafana/tempo/issues/7240">#7240</a>) (@electron0zero)</li>
+<li><code>query-frontend</code>：将每个查询响应日志字段镜像为所有查询路径上的跨度属性。查询形状跨度属性重命名为snake_case（<code>queryType</code> -> <code>query_type</code> 等）。 (<a href="https://github.com/grafana/tempo/issues/7605">#7605</a>) (@mapno)</li>
+<li><code>query-frontend</code>：将 <code>traces-diff</code> 工具添加到 Tempo MCP 服务器以比较完整的迹线。 (<a href="https://github.com/grafana/tempo/issues/7785">#7785</a>) (@carles-grafana)
+默认的组合响应包括紧凑的摘要，并有条件地包括最多 64 KiB 的补丁。本机摘要和完整补丁格式仍可根据要求提供；完整补丁没有输出大小保证。</li>
+<li><code>query-frontend</code>：TraceByID V2：将 <code>match_depth</code> 和 <code>ancestor_depth</code> 查询参数添加到 <code>q</code> 过滤器，以限制保留匹配范围的后代/祖先的跳数（<code>-1</code> 无界，<code>0</code> 无，<code>n</code> 恰好 n 跳）。 (<a href="https://github.com/grafana/tempo/issues/7708">#7708</a>) (@ie-pham)</li>
+<li><code>query-frontend</code>：添加读取路径可观察性：缓存命中/未命中计数器、日志/跨度上的查询形状、后端统计信息、vparquet5 跨度。 (<a href="https://github.com/grafana/tempo/issues/7504">#7504</a>) (@stoewer)</li>
+<li><code>query-frontend</code>：向 <code>tempo_query_frontend_queue_duration_seconds</code> 添加 <code>op</code> 标签，以便可以按查询类型细分队列时间。 (<a href="https://github.com/grafana/tempo/issues/7817">#7817</a>) (@zhxiaogg)</li>
+<li><code>query-frontend</code>：返回 TraceQL 指标 query_range 响应中已解决的步骤。 (<a href="https://github.com/grafana/tempo/issues/7871">#7871</a>) (@ruslan-mikhailov)</li>
+<li><code>query-frontend</code>：添加新功能来计算和跟踪流经 TraceQL 查询引擎的跨度及其属性的数据量以及返回的跟踪查找的数据。默认禁用，设置覆盖值 <code>engine_bytes_tracking</code> 启用。 (<a href="https://github.com/grafana/tempo/issues/7689">#7689</a>) (@mdisibio)</li>
+<li><code>query-frontend</code>：跟踪差异报告以纳秒为单位的跨度持续时间，并将数值与相对容差进行比较。 (<a href="https://github.com/grafana/tempo/issues/7544">#7544</a>) (@stoewer)</li>
+<li><code>query-frontend</code>：TraceByID V2：使用 <code>q</code>（TraceQL 过滤器）和 <code>keep_hierarchy</code> 查询参数添加第一遍过滤支持，以仅返回匹配的范围（[#7483]（<a href="https://github.com/grafana/tempo/issues/7483%EF%BC%89%EF%BC%89%EF%BC%88@">https://github.com/grafana/tempo/issues/7483））（@</a> Electron0zero）</li>
+<li><code>storage</code>：通过使用映射查找而不是对大值集进行线性扫描来加速 <code>ByteInPredicate</code>/<code>ByteNotInPredicate</code>。 (<a href="https://github.com/grafana/tempo/issues/7535">#7535</a>) (@mapno)</li>
+<li><code>storage</code>：清除保留期间删除的块的布隆过滤器和跟踪 ID 索引缓存条目，更快地为活动块释放缓存空间。 (<a href="https://github.com/grafana/tempo/issues/7204">#7204</a>) (@zalegrala)</li>
+<li><code>storage</code>：一旦达到调用者的限制，就停止扫描块中的标签值。 (<a href="https://github.com/grafana/tempo/issues/7696">#7696</a>) (@zhxiaogg)
+即使在响应之后，SearchTagValues 之前也会遍历块的每个行组
+已达到限制，报告的值随后被丢弃。现在它放弃扫描
+在达到限制的第一个行组。在 2.4GB 块上，收集值
+对于高基数专用属性，时间从 67 毫秒下降到 9 毫秒。</li>
+<li><code>storage</code>：用预构建的地图查找替换 <code>updateInternal</code> 中的 O(N²) <code>slices.ContainsFunc</code> 循环，将每次轮询成本从 O(N·M) 降低到 O(N+M)。 (<a href="https://github.com/grafana/tempo/issues/7140">#7140</a>) (@zalegrala)</li>
+<li><code>storage</code>：在时间窗口块选择器中缓存每个块的专用列哈希，而不是在 <code>BlocksToCompact</code> 热循环中的每次比较时重新计算它。 (<a href="https://github.com/grafana/tempo/issues/7803">#7803</a>) (@zalegrala)</li>
+<li><code>storage</code>：升级 grafana/gomemcache，并在 OOM 风暴期间进行改进。 (<a href="https://github.com/grafana/tempo/issues/7809">#7809</a>) (@mapno)</li>
+<li><code>storage</code>：报告匿名使用统计中配置的块格式。 (<a href="https://github.com/grafana/tempo/issues/7807">#7807</a>) (@javiermolinar)
+新的 <code>storage_block_format</code> 字段报告用于新写入块的有效 <code>storage.trace.block.version</code>。较早的 Tempo 版本省略了该字段。</li>
+<li><code>storage</code>：添加由 <code>role</code> 标记的 <code>tempodb_cache_store_size_bytes</code> 直方图，记录写入后端缓存的每个项目的大小。 (<a href="https://github.com/grafana/tempo/issues/7152">#7152</a>) (@javiermolinar)</li>
+<li><code>tempo</code>：对跟踪 ID 进行十六进制编码时，避免堆分配和不安全的字符串别名。 (<a href="https://github.com/grafana/tempo/issues/7463">#7463</a>) (@carles-grafana)</li>
+<li><code>tempo</code>：添加 <code>TempoDistributorKafkaProduceFailing</code> 警报，当分发器无法生成 Kafka 记录时触发。 (<a href="https://github.com/grafana/tempo/issues/7148">#7148</a>) (@javiermolinar)</li>
+<li><code>tempo</code>：再次重新启用 darwin 版本构建 (<a href="https://github.com/grafana/tempo/issues/7407">#7407</a>) (@electron0zero)</li>
+<li><code>tempo</code>：添加对所有酒店跟踪配置的支持以进行自我跟踪（[#7577]（<a href="https://github.com/grafana/tempo/issues/7577%EF%BC%89%EF%BC%89%EF%BC%88@">https://github.com/grafana/tempo/issues/7577））（@</a> Electron0zero）
+自跟踪设置是通过 dskit 完成的，并支持所有 OTEL_* 和 JAEGER_* 配置。</li>
+<li><code>traceql</code>：向 TraceQL 引擎添加跨度观察器框架，用于按需收集额外的查询指标。 (<a href="https://github.com/grafana/tempo/issues/7532">#7532</a>) (@mapno)
+通过实验性的每租户 <code>span_pruning_awareness</code> 覆盖启用，它报告匹配的范围是否包括范围修剪摘要范围。适用于搜索和指标查询。</li>
+<li><code>traceql</code>：默认启用新的仅跨度获取。可以通过 <code>metrics_spanonly_fetch: false</code> 针对每个租户禁用，或者通过不安全提示 <code>with(spanonly_fetch=false)</code> 针对每个查询禁用。 (<a href="https://github.com/grafana/tempo/issues/7179">#7179</a>) (@mdisibio)</li>
+</ul>
+<h2 id="重大变更">重大变更</h2>
+<h3 id="升级之前">升级之前</h3>
+<p>此版本包括重大配置更改和新的默认值。
+查看下面的详细条目，特别是如果您使用 Redis 缓存、vParquet3 写入或自定义查询前端设置。</p>
+<ul>
+<li><strong>vParquet3：</strong> 配置为写入 vParquet3 块时，Tempo 拒绝启动。升级前将<code>storage.trace.block.version</code>更改为<code>vParquet5</code>或<code>vParquet4</code>。现有 vParquet3 块仍然可读，但不再压缩。</li>
+<li><strong>Redis：</strong> Redis 集群成为默认集群，Sentinel 支持被删除，配置密钥和 TLS 设置发生变化。使用实验性 Redis 缓存升级安装之前，请查看迁移详细信息。</li>
+<li><strong>窗口化编辑：</strong> 当调度程序和工作线程运行不同版本时，不要提交窗口化编辑作业。年长的工作人员可以忽略时间窗口并编辑块中的每个匹配跟踪。</li>
+<li><strong>从 3.1 RC 升级：</strong> 删除过时的 <code>query_frontend.trace_by_id.span_pruning_enabled</code> 选项。
+除非配置了默认值，否则修剪仍然是 <code>span_pruning=true</code> 的选择加入；
+<code>span_pruning_enabled_by_default</code> 和每租户 <code>span_pruning_enabled</code> 覆盖仍然可用。</li>
+<li><strong>跟踪比较：</strong> CLI 命令和 MCP 工具现在命名为 <code>traces-diff</code>。</li>
+<li><strong>查询行为：</strong> 查看 Trace-by-ID 分片更改、更严格的指标查询验证以及减小的默认 gRPC 流数据包大小。</li>
+<li><code>cache</code>：实验性 Redis 缓存已完全重写，并进行了多项重大更改。 Sentinel 支持已被放弃，转而支持 Redis 集群（默认，选择退出）(<a href="https://github.com/grafana/tempo/issues/7337">#7337</a>) (@oleg-kozlyuk-grafana)
+<ul>
+<li>将Redis client升级为<code>github.com/redis/go-redis/v9</code>并使路由显式化。</li>
+<li>Redis 集群现在是默认集群；选择带有 <code>single_node: true</code>（或 <code>-redis.single-node</code>）的单节点 client。</li>
+<li>Redis 集群部署需要 Redis 7+。</li>
+<li>Redis Sentinel 支持已删除：<code>master_name</code>、<code>sentinel_username</code>、<code>sentinel_password</code> YAML 密钥及其 <code>-redis.master-name</code>、<code>-redis.sentinel-username</code>、<code>-redis.sentinel-password</code> 标志消失了。 YAML 钥匙 <code>idle_timeout</code> 和 <code>max_connection_age</code> 已重命名为 <code>conn_max_idle_time</code> 和 <code>conn_max_lifetime</code>。</li>
+<li>最小的 <code>tls_enabled</code>/<code>tls_insecure_skip_verify</code> 对替换为 dskit 风格的 TLS 块（<code>tls_cert_path</code>、<code>tls_key_path</code>、<code>tls_ca_path</code>、<code>tls_server_name</code>、<code>tls_insecure_skip_verify</code>、<code>tls_cipher_suites</code>、<code>tls_min_version</code>）；无效的 TLS 设置现在无法关闭，而不是静默降级为明文。</li>
+<li>添加 Redis 集群路由选项（<code>route_by_latency</code>、<code>route_randomly</code>、<code>read_only</code>、<code>max_redirects</code>、<code>min_idle_conns</code>）和可配置的 <code>max_item_size</code> 上限。跨槽 <code>MGet</code>/<code>Del</code> 并行跨分片扇出； <code>MSet</code> 使用 <code>Pipeline</code> 而不是 <code>TxPipeline</code>，因此 <code>CROSSSLOT</code> 的跨插槽写入不再失败。</li>
+<li><code>RedisCache.Store</code> 现在记录在 <code>tempo_rediscache_request_duration_seconds</code> 中，与 memcached client 匹配。</li>
+</ul>
+</li>
+<li><code>operations</code>：停止将可变的 Docker 图像标签发布到不可变的 GAR 存储库，并将示例固定到 Tempo 3.0.0。 (<a href="https://github.com/grafana/tempo/issues/7369">#7369</a>) (@javiermolinar)</li>
+<li><code>query-frontend</code>：删除集群范围内的<code>query_frontend.trace_by_id.span_pruning_enabled</code>配置选项；跨度修剪始终可用于按 ID v2 请求进行跟踪。 （[#7912]（<a href="https://github.com/grafana/tempo/issues/7912%EF%BC%89%EF%BC%8C%5B#8010%5D%EF%BC%88https://github.com/grafana/tempo/issues/8010%EF%BC%89%EF%BC%89%EF%BC%88@ie-pham%EF%BC%89">https://github.com/grafana/tempo/issues/7912），[#8010]（https://github.com/grafana/tempo/issues/8010））（@ie-pham）</a>
+除非配置了默认值，否则修剪仍然是根据 <code>span_pruning=true</code> 的请求选择加入。
+实验性 <code>span_pruning_enabled_by_default</code> 选项和每租户
+<code>span_pruning_enabled</code> 超控仍然可用；显式请求值优先。
+从早期 3.1 RC 升级的用户应删除过时的集群范围选项。</li>
+<li><code>query-frontend</code>：用于跟踪查找的新作业分片方法，使用新的配置选项 <code>blocks_per_shard</code> 取代 <code>query_shards</code>。 (<a href="https://github.com/grafana/tempo/issues/7105">#7105</a>) (@mdisibio)</li>
+<li><code>storage</code>：强制弃用 vParquet3。 Tempo 现在拒绝将 <code>storage.trace.block.version</code> 设置为 <code>vParquet3</code> 启动，并且压缩器不再将现有 vParquet3 块压缩在一起。 (<a href="https://github.com/grafana/tempo/issues/7858">#7858</a>) (@mdisibio)
+现有 vParquet3 块保持可读并保持原样。将块版本设置为
+vParquet4 或更高版本。</li>
+<li><code>traceql</code>：拒绝具有相同开始和结束时间戳的指标查询请求。 (<a href="https://github.com/grafana/tempo/issues/7602">#7602</a>) (@mdisibio)</li>
+</ul>
+<h2 id="变化">变化</h2>
+<ul>
+<li><code>backend-scheduler</code>：将密文提交上的显式跟踪 ID 列表限制为 1000，通过指向查询选择器的指针拒绝更大的请求。 (<a href="https://github.com/grafana/tempo/issues/7808">#7808</a>) (@zalegrala)
+编辑创建的每个作业都携带该批次的整个跟踪 ID 列表，因此提交成本随 ids x 块的大小而变化：针对具有数万个块的租户的几百万个 16 字节 ID 会从单个调度程序中达到 TB 的调度流量。 gRPC 消息限制已经将提交限制在 5.8M 左右，但这是在负载下发现的故障，而不是规定的边界。查询选择器解析工作线程上的每个块，并且不会向任何作业负载添加任何内容。</li>
+<li><code>cache</code>：保持 memcached 连接池温暖，以减少突发读取负载下的尾部延迟。空闲连接不再默认关闭，默认 <code>max_idle_conns</code> 从 16 提高到 100。 (<a href="https://github.com/grafana/tempo/issues/7671">#7671</a>) (@mapno)
+以前，空闲超过 2 分钟的连接总是被关闭，因此每次突发
+读取（例如按 ID 跟踪查找）始于大量新拨号，导致 p99 延迟增大
+并产生了client端超时。将 <code>min_idle_conns_headroom_percentage</code> 设置为正
+值重新启用空闲连接 reaping。</li>
+<li><code>deps</code>：使用 Go 1.27.1 构建 Tempo 容器映像并发布二进制文件。 (<a href="https://github.com/grafana/tempo/issues/7913">#7913</a>) (@javiermolinar)</li>
+<li><code>deps</code>：在 RC0 中将 GoReleaser 从 v1.25.1 升级到 v2.16.0（在 RC1 中由 v2.18.2 取代）。 (<a href="https://github.com/grafana/tempo/issues/7453">#7453</a>) (@mapno)</li>
+<li><code>operations</code>：向 <code>TempoUserConfigurableOverridesReloadFailing</code> 警报添加 15m <code>for</code> 持续时间，以便短暂的瞬态故障不会寻呼，并修复其运行手册链接。 (<a href="https://github.com/grafana/tempo/issues/7639">#7639</a>) (@zhxiaogg)</li>
+<li><code>query-frontend</code>：将默认 gRPC 流数据包大小从 2MB 减少到 1MB。 (<a href="https://github.com/grafana/tempo/issues/7615">#7615</a>) (@mdisibio)</li>
+<li><code>storage</code>：使 <code>vParquet5</code> 成为新写入块的默认块格式（原为 <code>vParquet4</code>）。 (<a href="https://github.com/grafana/tempo/issues/7775">#7775</a>) (@javiermolinar)
+无需数据迁移。升级后，Tempo 将新块写入
+vParquet5，同时继续读取现有的 vParquet4 和 vParquet3 块。至
+继续编写 vParquet4，显式设置 <code>storage.trace.block.version: vParquet4</code>。</li>
+<li><code>tempo-cli</code>：将 <code>tempo-cli experimental trace-diff</code> 重命名为 <code>tempo-cli experimental traces-diff</code>，并将 MCP 工具 <code>trace-diff</code> 重命名为 <code>traces-diff</code>。 (<a href="https://github.com/grafana/tempo/issues/8005">#8005</a>) (@javiermolinar)</li>
+</ul>
+<h2 id="安全修复">安全修复</h2>
+<ul>
+<li><code>backend-scheduler</code>：通过从请求上下文 (<code>X-Scope-OrgID</code>) 中专门获取目标租户，忽略请求正文的 <code>tenant_id</code> 字段，防止跨租户编辑。 (<a href="https://github.com/grafana/tempo/issues/7153">#7153</a>) (@zalegrala)</li>
+<li><code>operations</code>：使用无密钥联合签名签名对所有已发布的容器映像（<code>tempo</code>、<code>tempo-vulture</code>、<code>tempo-query</code> 和 <code>tempo-cli</code>）进行签名，并附加 SLSA 构建来源。 (<a href="https://github.com/grafana/tempo/issues/7493">#7493</a>、<a href="https://github.com/grafana/tempo/issues/7534">#7534</a>、<a href="https://github.com/grafana/tempo/issues/7543">#7543</a>、<a href="https://github.com/grafana/tempo/issues/7565">#7565</a>、<a href="https://github.com/grafana/tempo/issues/7601">#7601</a>) (@mattdurham)</li>
+<li><code>operations</code>：将 <code>memcached</code> 更新为 <code>1.6.42-alpine</code>，将 <code>prom/memcached-exporter</code> 更新为 <code>v0.16.0</code> 以解决已知漏洞。 (<a href="https://github.com/grafana/tempo/issues/7244">#7244</a>) (@zhxiaogg)</li>
+</ul>
+<h2 id="错误修复">错误修复</h2>
+<ul>
+<li><code>backend-scheduler</code>：修复并发工作负载下 GetJobForWorker 中的 O(N) 锁争用；将分片扫描替换为 O(1) 索引查找。 (<a href="https://github.com/grafana/tempo/issues/6992">#6992</a>) (@zalegrala)</li>
+<li><code>backend-scheduler</code>：修复了在活动编辑批处理期间将未完成块指标抑制为零的问题，导致自动缩放器在编辑过程中缩小工作人员的规模。 (<a href="https://github.com/grafana/tempo/issues/6992">#6992</a>) (@zalegrala)</li>
+<li><code>backend-scheduler</code>：修复了死作业超时后未清理的密文批次，导致租户永久阻止新的密文提交和压缩。 (<a href="https://github.com/grafana/tempo/issues/6992">#6992</a>) (@zalegrala)</li>
+<li><code>backend-scheduler</code>：空运行编辑（只读预览）不再禁用租户的压缩/保留、进入静止状态或进行重新扫描 - 这些仅适用于应用模式编辑，实际上会重写块。 (<a href="https://github.com/grafana/tempo/issues/7700">#7700</a>) (@zalegrala)</li>
+<li><code>backend-scheduler</code>：已完成的编辑批次现在在删除之前进入短暂的静止期，保持租户压缩禁用，直到重新扫描可以覆盖上次编辑作业完成时生成的压缩的任何块。以前，批处理在其作业完成后立即被删除，因此在该窗口中压缩的块可能会逃脱编辑。 (<a href="https://github.com/grafana/tempo/issues/7695">#7695</a>) (@zalegrala)</li>
+<li><code>backend-scheduler</code>：修复了后端调度程序错误，其中分配时删除的编辑作业泄漏了内部运行中计数器，这可能会使租户的编辑看起来永远在进行中，并阻止该租户未来的编辑提交。 (<a href="https://github.com/grafana/tempo/issues/7703">#7703</a>) (@zalegrala)</li>
+<li><code>backend-scheduler</code>：保留现在控制密文批次屏障 (<code>TenantPending</code>)，而不仅仅是进行中的密文作业，因此保留无法在密文批次等待重新扫描时标记已压缩的块。 (<a href="https://github.com/grafana/tempo/issues/7358">#7358</a>) (@zalegrala)</li>
+<li><code>backend-worker</code>：当实时阻止列表中不存在修订作业的目标块时，添加 <code>tempo_backend_worker_redaction_block_missing_total</code> 和警告日志，因此可以观察到覆盖间隙，而不是静默无操作。 (<a href="https://github.com/grafana/tempo/issues/7358">#7358</a>) (@zalegrala)</li>
+<li><code>cache</code>：选择布隆过滤器进行缓存时，至少应遵守 <code>cache_min_compaction_level</code>。 (<a href="https://github.com/grafana/tempo/issues/7904">#7904</a>) (@ruslan-mikhailov)</li>
+<li><code>cache</code>：当 YAML 中省略时，默认启用 Memcached 一致性哈希，与记录的默认值匹配。 (<a href="https://github.com/grafana/tempo/issues/7903">#7903</a>) (@ruslan-mikhailov)</li>
+<li><code>cache</code>：尊重 yaml 配置的内存缓存断路器默认值。 (<a href="https://github.com/grafana/tempo/issues/7972">#7972</a>) (@ruslan-mikhailov)</li>
+<li><code>compactor</code>：跳过元不再存在的输入块，而不是使整个压缩失败。 (<a href="https://github.com/grafana/tempo/issues/7902">#7902</a>) (@zhxiaogg)</li>
+<li><code>distributor</code>：返回写入 Kafka 的瞬时错误的可重试状态。 (<a href="https://github.com/grafana/tempo/issues/7506">#7506</a>) (@javiermolinar)</li>
+<li><code>distributor</code>：重新分批期间绑定的每跟踪切片预分配。 (<a href="https://github.com/grafana/tempo/issues/7288">#7288</a>) (@carles-grafana)</li>
+<li><code>live-store</code>：修复了在与块数据组合并编组时跟踪更多跨度到达时实时存储 <code>FindTraceByID</code> 中的恐慌。 (<a href="https://github.com/grafana/tempo/issues/7856">#7856</a>) (@KR-Ravindra)
+实时跟踪的 <code>Batches</code> 切片被交给具有备用容量的跟踪组合器，因此
+组合器的追加和推送路径的追加将不同的批次写入到同一插槽中
+实时跟踪的支持数组。 <code>Size()</code>和<code>Marshal()</code>然后看到不同的物体和编组
+对 <code>slice bounds out of range</code> 感到恐慌。</li>
+<li><code>live-store</code>：当磁盘缓存条目不可读或无法解组时，标记值查询不再默默地删除块的值；重新搜索该块而不是跳过该块。 (<a href="https://github.com/grafana/tempo/issues/7610">#7610</a>) (@zalegrala)</li>
+<li><code>live-store</code>：原子写入每块查询范围响应缓存（临时文件+重命名）并记录+忽略缓存读取错误。 (<a href="https://github.com/grafana/tempo/issues/7155">#7155</a>) (@zhxiaogg)</li>
+<li><code>live-store</code>：标签值查询现在缓存每个块的空（负）结果，因此每次查询时不会重新扫描不包含所请求标签值的块。 (<a href="https://github.com/grafana/tempo/issues/7617">#7617</a>) (@zalegrala)</li>
+<li><code>metrics-generator</code>：在处理跨度时，当跨度名称清理修剪 DRAIN 集群时，防止指标生成器崩溃。 （[#7787]（<a href="https://github.com/grafana/tempo/issues/7787%EF%BC%89%EF%BC%89%EF%BC%88@carles-grafana%EF%BC%89">https://github.com/grafana/tempo/issues/7787））（@carles-grafana）</a></li>
+<li><code>metrics-generator</code>：修复跨度名称清理，一旦通配符兄弟出现在模式树中，就会在每个跨度上创建一个新的 DRAIN 集群 (<a href="https://github.com/grafana/tempo/issues/7922">#7922</a>) (@zhxiaogg)</li>
+<li><code>metrics-generator</code>：针对频繁创建和驱逐的系列，通过 <code>increase()</code>/<code>rate()</code> 修复经典直方图 <code>_sum</code> 系列（例如 <code>traces_spanmetrics_latency_sum</code>）报告不足的问题。 (<a href="https://github.com/grafana/tempo/issues/7811">#7811</a>) (@yvrhdn)
+<code>_count</code> 和 <code>_bucket</code> 系列在系列生产时已植入零样品
+首次创建（或因过时而被驱逐后重新创建），因此 <code>increase()</code>/<code>rate()</code>
+能够正确地归因它们的第一个真实值。 <code>_sum</code> 缺少这个种子，所以
+<code>increase()</code>/<code>rate()</code> 可能会低估或删除高系列的贡献
+搅动。适用于仅经典直方图路径和发出的经典直方图
+在“两者”（本机+经典）模式下。</li>
+<li><code>metrics-generator</code>：停止将空的 TraceID 示例附加到没有跟踪 ID 的跨度的本机直方图。 （[#7584]（<a href="https://github.com/grafana/tempo/issues/7584%EF%BC%89%EF%BC%89%EF%BC%88@carles-grafana%EF%BC%89">https://github.com/grafana/tempo/issues/7584））（@carles-grafana）</a>
+在 <code>native</code> 和 <code>both</code> 直方图模式中，对缺少或全零跟踪 ID 的跨度的观察会附加带有空跟踪 ID 标签的样本；它们现在不带有与经典直方图相匹配的样本。</li>
+<li><code>metrics-generator</code>：仅在启用span_name_sanitization或dry_run时注册span-sanitizer指标（[#7810]（<a href="https://github.com/grafana/tempo/issues/7810%EF%BC%89%EF%BC%89%EF%BC%88@">https://github.com/grafana/tempo/issues/7810））（@</a> Electron0zero）</li>
+<li><code>metrics-generator</code>：当分区在消费者之间移动时，修剪陈旧的每个分区摄取滞后指标，并将不活动的分区保留在其先前所有者上，而不是在每次重新平衡时重新排列它们。 (<a href="https://github.com/grafana/tempo/issues/7665">#7665</a>) (@aldernero)
+修复了不断增长的 tempo_ingest_group_partition_lag 和 tempo_ingest_group_partition_lag_seconds
+分区交接后前业主报告。影响使用分区环的消费者
+合作主动粘性平衡器（指标生成器、区块构建器、实时存储）。的
+指标生成器现在还清除 OnPartitionsLost 上的这些指标（例如会话超时或
+栅栏），之前留下了陈旧的系列。</li>
+<li><code>operations</code>：将服务拓扑 Grafana 仪表板中的指标名称修复为 <code>traces_service_graph_request_total</code> (<a href="https://github.com/grafana/tempo/issues/7710">#7710</a>) (@veenoise)</li>
+<li><code>operations</code>：使用 <code>AverageValue</code>（不是 <code>Value</code>）作为实时存储 KEDA 自动定标器触发器； <code>Value</code> metricType 错误地缩放了字节值摄取指标，并且无论负载如何，都会将自动缩放器运行到 maxReplicas。 (<a href="https://github.com/grafana/tempo/issues/7376">#7376</a>) (@zalegrala)</li>
+<li><code>operations</code>：以非零生产率保护 <code>TempoDistributorKafkaProduceFailing</code>，因此它不会在 <code>tempo_distributor_produce_records_total</code> 未递增的单元上寻呼 <code>+Inf%</code>。 (<a href="https://github.com/grafana/tempo/issues/7715">#7715</a>) (@zalegrala)
+该警报将生产失败率除以无防护的生产率。在一个单元格上，其中
+<code>tempo_distributor_produce_records_total</code> 是平坦的，该比率除以零，PromQL
+评估为 <code>+Inf</code>。由于 <code>+Inf</code> 超过任何阈值，因此该警报将作为严重警报触发
+一旦记录到单个生产故障，<code>+Inf%</code> 值就毫无意义。</li>
+<li><code>operations</code>：通过将 GoReleaser 升级到 v2.18.2，使用 Go 1.27 恢复发布二进制文件和包构建。 (<a href="https://github.com/grafana/tempo/issues/7920">#7920</a>) (@javiermolinar)</li>
+<li><code>overrides</code>：在 <code>/status/overrides/{tenant}</code> 上将持续时间字段作为平面 YAML 标量发出，并在未设置时省略 <code>generate_native_histograms</code>。 (<a href="https://github.com/grafana/tempo/issues/7138">#7138</a>) (@electron0zero)</li>
+<li><code>overrides</code>：修复 <code>retry_info_enabled</code> 每个租户覆盖在未设置时静默覆盖集群默认值的问题 (<a href="https://github.com/grafana/tempo/issues/7662">#7662</a>) (@zhxiaogg)</li>
+<li><code>querier</code>：限制比较（）topn（[＃7467]（<a href="https://github.com/grafana/tempo/issues/7467%EF%BC%89%EF%BC%89%EF%BC%88@ruslan-mikhailov%EF%BC%89">https://github.com/grafana/tempo/issues/7467））（@ruslan-mikhailov）</a></li>
+<li><code>query-frontend</code>：标签值查询现在将 <code>limit</code> 和 <code>maxStaleValues</code> 参数传播到查询器和实时存储，限制每块扫描并启用过时值提前退出。以前这些仅应用于查询前端，因此每个块的扫描都没有计数限制。 (<a href="https://github.com/grafana/tempo/issues/7609">#7609</a>) (@zalegrala)</li>
+<li><code>query-frontend</code>：修复向查询器分派请求批次时查询前端中的数据争用 (<code>max_batch_size</code> > 1)。 (<a href="https://github.com/grafana/tempo/issues/7664">#7664</a>) (@aldernero)</li>
+<li><code>query-frontend</code>：如果查询被查询前端拒绝，则正确记录失败原因（[#7527]（<a href="https://github.com/grafana/tempo/issues/7527%EF%BC%89%EF%BC%89%EF%BC%88@oleg-kozlyuk-grafana%EF%BC%89">https://github.com/grafana/tempo/issues/7527））（@oleg-kozlyuk-grafana）</a></li>
+<li><code>query-frontend</code>：针对用户提供的范围而不是对齐后范围强制执行 <code>max_metrics_duration</code>。窗口完全落在 <code>query_end_cutoff</code> 内的范围查询现在返回 400 而不是空结果；现在，具有相同条件的即时查询也会被明确拒绝。对于最大持续时间验证失败，gRPC 指标查询现在返回 <code>InvalidArgument</code>。 （[#7170]（<a href="https://github.com/grafana/tempo/issues/7170%EF%BC%89%EF%BC%89%EF%BC%88@carles-grafana%EF%BC%89">https://github.com/grafana/tempo/issues/7170））（@carles-grafana）</a></li>
+<li><code>query-frontend</code>：防止空租户队列阻止查询前端队列关闭。 (<a href="https://github.com/grafana/tempo/issues/7986">#7986</a>) (@javiermolinar)</li>
+<li><code>query-frontend</code>：在解析大于 <code>max_query_expression_size_bytes</code> 的 TraceQL 查询之前拒绝它们。 （[#7245]（<a href="https://github.com/grafana/tempo/issues/7245%EF%BC%89%EF%BC%89%EF%BC%88@carles-grafana%EF%BC%89">https://github.com/grafana/tempo/issues/7245））（@carles-grafana）</a></li>
+<li><code>storage</code>：修复了使用过大的行组写入具有大字符串属性的 vParquet5 块，这可能会损坏块并导致压缩崩溃。 (<a href="https://github.com/grafana/tempo/issues/7988">#7988</a>) (@zhxiaogg)</li>
+<li><code>storage</code>：将 parquet-go 升级到 v0.32.0，以防止列字典回退到纯编码时丢失值。 (<a href="https://github.com/grafana/tempo/issues/7989">#7989</a>) (@renovate-sh-app[bot])</li>
+<li><code>storage</code>：复制 vParquet5 块时保留 no-compact 标志，以便新刷新的块在完成之前不会被压缩或轮询。 (<a href="https://github.com/grafana/tempo/issues/7786">#7786</a>) (@javiermolinar)</li>
+<li><code>storage</code>：在标签名称和值搜索中尊重作业的页面范围，并报告为 TraceQL 过滤的标签搜索读取的所有字节 (<a href="https://github.com/grafana/tempo/issues/7992">#7992</a>) (@zhxiaogg)</li>
+<li><code>storage</code>：修复了compactor中的双前缀以及azure和s3中的DeleteVersioned。 (<a href="https://github.com/grafana/tempo/issues/7271">#7271</a>) (@electron0zero)</li>
+<li><code>tempo</code>：修复 deb/rpm 的打包配置。 (<a href="https://github.com/grafana/tempo/issues/7830">#7830</a>) (@electron0zero)
+还为 <code>-config.verify</code> 添加 CI 验证和仅错误标志。</li>
+<li><code>tempo</code>：返回 llm 编码的部分跟踪提示 (<a href="https://github.com/grafana/tempo/issues/7332">#7332</a>) (@javiermolinar)</li>
+<li><code>tempo</code>：当更新间隔设置为零时，停止计算 Kafka 消费者滞后指标。 (<a href="https://github.com/grafana/tempo/issues/7973">#7973</a>) (@ruslan-mikhailov)</li>
+<li><code>tempo</code>：更好地验证 query_range 端点：不接受负步骤（[#7221]（<a href="https://github.com/grafana/tempo/issues/7221%EF%BC%89%EF%BC%89%EF%BC%88@ruslan-mikhailov%EF%BC%89">https://github.com/grafana/tempo/issues/7221））（@ruslan-mikhailov）</a></li>
+<li><code>tempo</code>：修复查询属性中不安全的引用 (<a href="https://github.com/grafana/tempo/issues/7220">#7220</a>) (@ruslan-mikhailov)</li>
+<li><code>tempo</code>：修复即时和范围指标查询之间罕见的缓存冲突 (<a href="https://github.com/grafana/tempo/issues/7290">#7290</a>) (@ruslan-mikhailov)</li>
+<li><code>tempo</code>：在为自动创建的主题设置默认分区计数时，保留不相关的 Kafka 代理配置，包括消费者组偏移量保留。 （[#7869]（<a href="https://github.com/grafana/tempo/issues/7869%EF%BC%89%EF%BC%89%EF%BC%88@carles-grafana%EF%BC%89">https://github.com/grafana/tempo/issues/7869））（@carles-grafana）</a></li>
+<li><code>traceql</code>：即时指标查询现在可以正确地重用每块作业结果缓存。 (<a href="https://github.com/grafana/tempo/issues/7602">#7602</a>) (@mdisibio)</li>
+<li><code>traceql</code>：修复当不完整匹配器针对内在函数（例如 <code>{ resource.service.name = "foo" &#x26;&#x26; name = }</code>）时标记值自动完成忽略查询过滤器（[#7660]（<a href="https://github.com/grafana/tempo/issues/7660%EF%BC%89%EF%BC%89%EF%BC%88@mapno%EF%BC%89">https://github.com/grafana/tempo/issues/7660））（@mapno）</a></li>
+<li><code>traceql</code>：修复了使用 vParquet5 和新的更快获取层时，对事件和链接内在函数（例如 <code>{ } | rate() by (event:name)</code>）的 TraceQL 指标查询将返回错误结果的错误。 (<a href="https://github.com/grafana/tempo/issues/7508">#7508</a>) (@mdisibio)</li>
+<li><code>traceql</code>：修复了新的 vParquet5 更快获取层中的其他正确性问题，包括 <code>{ trace:rootService="..." } | rate()</code>、<code>span:childCount</code> 等跟踪内在函数和数组操作。 (<a href="https://github.com/grafana/tempo/issues/7533">#7533</a>) (@mdisibio)</li>
+<li><code>traceql</code>：修复了当子查询的 <code>by()</code> 子句使用最大数量的分组属性时 TraceQL 指标数学查询（例如 <code>(A) / (B)</code>）中的恐慌。 (<a href="https://github.com/grafana/tempo/issues/7831">#7831</a>) (@electron0zero)</li>
+<li><code>traceql</code>：修复 TraceQL <code>=nil</code> 查询中缺少某些值的边缘情况 (<a href="https://github.com/grafana/tempo/issues/7345">#7345</a>) (@mdisibio)</li>
+</ul>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/grafana/tempo">grafana/tempo</a> · 🏷️ 版本：<code>v3.1.0</code> · 📅 发布：2026-09-29 · <a href="https://github.com/grafana/tempo/releases/tag/v3.1.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/tempo/tempo_v3.0.4"> <span class="k">← 下一个</span> <span class="t">v3.0.4</span> </a> <a href="/zh/release_note/tempo/tempo_v3.0.3"> <span class="k">上一个 →</span> <span class="t">v3.0.3</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/grafana/tempo/releases/tag/v3.1.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/grafana/tempo" target="_blank" rel="noopener"> <span>grafana/tempo</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#亮点" class>亮点</a><a href="#特点" class>特点</a><a href="#增强功能" class>增强功能</a><a href="#重大变更" class>重大变更</a><a href="#升级之前" class="lv3">升级之前</a><a href="#变化" class>变化</a><a href="#安全修复" class>安全修复</a><a href="#错误修复" class>错误修复</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/tempo/tempo_v3.1.1"> <span class="v">v3.1.1</span> <span class="d">26-10-21</span> </a> </li><li> <a href="/zh/release_note/tempo/tempo_v3.0.5"> <span class="v">v3.0.5</span> <span class="d">26-10-21</span> </a> </li><li> <a href="/zh/release_note/tempo/tempo_v2.10.10"> <span class="v">v2.10.10</span> <span class="d">26-10-21</span> </a> </li><li> <a href="/zh/release_note/tempo/tempo_v2.10.9"> <span class="v">v2.10.9</span> <span class="d">26-10-20</span> </a> </li><li> <a href="/zh/release_note/tempo/tempo_v3.0.4"> <span class="v">v3.0.4</span> <span class="d">26-10-16</span> </a> </li><li> <a href="/zh/release_note/tempo/tempo_v3.1.0" aria-current="true"> <span class="v">v3.1.0</span> <span class="d">26-09-29</span> </a> </li><li> <a href="/zh/release_note/tempo/tempo_v3.0.3"> <span class="v">v3.0.3</span> <span class="d">26-08-13</span> </a> </li><li> <a href="/zh/release_note/tempo/tempo_v2.9.5"> <span class="v">v2.9.5</span> <span class="d">26-08-13</span> </a> </li> </ul> <a href="/zh/releases/tempo" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 20 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

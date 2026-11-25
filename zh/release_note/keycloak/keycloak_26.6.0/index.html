@@ -1,0 +1,830 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>keycloak 26.6.0 — STAGS NextStack</title><meta name="description" content="All of these features are now fully supported and no longer in preview. Read on to learn more about each new feature. If you are upgrading from a previous release, also review the changes listed in the upgrading guide."><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/keycloak/keycloak_26.6.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/keycloak/26.6.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/keycloak/keycloak_26.6.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/keycloak/26.6.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="keycloak 26.6.0 — STAGS NextStack"><meta property="og:description" content="All of these features are now fully supported and no longer in preview. Read on to learn more about each new feature. If you are upgrading from a previous release, also review the changes listed in the upgrading guide."><meta property="og:url" content="https://www.stags.cn/zh/release_note/keycloak/keycloak_26.6.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/keycloak/keycloak_26.6.0/#article","headline":"keycloak 26.6.0 release notes","datePublished":"2026-04-08","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/keycloak/keycloak"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/keycloak/26.6.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/keycloak/keycloak_26.6.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/keycloak/26.6.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/keycloak/26.6.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/keycloak/26.6.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/keycloak/26.6.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/keycloak/26.6.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/keycloak">keycloak</a> </nav> <h1 class="detail-title"> <span class="p">keycloak</span> 26.6.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2026年4月8日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/keycloak/keycloak" target="_blank" rel="noopener"> <span class="k">来源</span>keycloak/keycloak </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/keycloak/26.6.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/keycloak/keycloak_26.6.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <div>
+    <h2>亮点</h2>
+<div class="段落">
+<p>此版本为 Keycloak 的用户和管理员提供了新功能。此版本的亮点是：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>JWT 授权授予</strong>，使用外部签名的 JWT 断言启用外部到内部的令牌交换。</p>
+</li>
+<li>
+<p><strong>联合 client 身份验证</strong>，无需在 Keycloak 中管理单独的 client 机密。</p>
+</li>
+<li>
+<p><strong>工作流程</strong>，使管理员能够自动执行领域管理任务，例如用户和 client 生命周期管理。</p>
+</li>
+<li>
+<p><strong>零停机补丁发布</strong>，允许在次要版本流中滚动更新，而无需服务停机。</p>
+</li>
+<li>
+<p><strong>Keycloak 测试框架</strong>，取代了之前基于 Arquillian 的解决方案。</p>
+</li>
+</ul>
+</div>
+<div class="段落">
+<p>所有这些功能现已得到完全支持，并且不再提供预览版。
+请继续阅读以了解有关每个新功能的更多信息。
+如果您要从以前的版本升级，<a href="https://www.keycloak.org/docs/latest/upgrading/index.html">另请查看升级指南中列出的更改</a>。</p>
+</div>
+<div类=“sect2”>
+<h3 id="_security_and_standards">安全和标准</h3>
+<div类=“sect3”>
+<h4 id="_jwt_authorization_grant_supported">JWT 授权授予（支持）</h4>
+<div class="段落">
+<p>JWT 授权授予 (<a href="https://datatracker.ietf.org/doc/html/rfc7523">RFC 7523</a>) 旨在实现外部到内部的令牌交换用例。此授权允许使用外部签名的 JWT 断言来请求 OAuth 2.0 访问令牌。</p>
+</div>
+<div class="段落">
+<p>在此版本中，JWT 授权授予从预览版升级为支持版。有关更多详细信息，请参阅 <a href="https://www.keycloak.org/securing-apps/jwt-authorization-grant">JWT 授权授予指南</a>。</p>
+</div>
+</div类=“sect3”></div类=“sect2”></div>
+<div类=“sect3”>
+<h4 id="_federated_client_authentication_supported">联合 client 身份验证（支持）</h4>
+<div class="段落">
+<p>一旦与另一个颁发者存在 trust 关系，联合 client 身份验证允许 clients 利用现有凭据。它消除了为 Keycloak 中的每个 client 分配和管理单独机密的需要。</p>
+</div>
+<div class="段落">
+<p>联合 client 身份验证现已升级为支持，包括支持由外部 OpenID Connect 身份提供商和 Kubernetes 服务帐户发出的 client 断言。</p>
+</div>
+<div class="段落">
+<p>由于 OAuth SPIFFE Client 身份验证规范仍处于草案状态，因此此功能仍然是 Keycloak 中的预览功能。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_new_guide_about_demonstrating_proof_of_possession_dpop">有关展示所有权证明 (DPoP) 的新指南</h4>
+<div class="段落">
+<p>保护应用程序指南中的 OAuth 2.0 演示所有权证明 (DPoP) 的新指南提供了有关如何通过限制令牌发送者来降低令牌被盗风险的信息。</p>
+</div>
+<div class="段落">
+<p>有关更多详细信息，请参阅<a href="https://www.keycloak.org/nightly/securing-apps/dpop">使用 DPoP 保护应用程序</a>。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_identity_brokering_apis_v2_preview">身份经纪 APIs V2（预览版）</h4>
+<div class="段落">
+<p>此版本中引入了身份代理 APIs 的新预览版本 2。当在身份验证过程中使用代理时，Keycloak 允许您存储外部身份提供商发出的令牌和响应。应用程序可以调用特定端点来检索这些令牌，而这些令牌又可用于获取额外的用户信息或调用外部 trust 域中的端点。新版本改进了令牌检索端点，以替代内部到外部令牌交换（<a href="https://www.keycloak.org/securing-apps/token-exchange#_legacy-token-exchange">旧令牌交换 V1</a> 的用例）。</p>
+</div>
+<div class="段落">
+<p>有关详细信息，请参阅《服务器开发人员指南》中的<a href="https://www.keycloak.org/docs/26.6.0/server_development/#_identity-brokering-apis">身份代理 APIs</a> 章节。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_step_up_authentication_for_saml_preview">SAML 的逐步身份验证（预览版）</h4>
+<div class="段落">
+<p>功能<code>step-up-authentication-saml</code>扩展了逐步身份验证以包括SAML协议和clients。此功能处于预览模式。更多信息请参阅<a href="https://www.keycloak.org/docs/26.6.0/server_admin/#_step-up-authentication-saml">服务器管理指南</a>。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_oauth_client_id_metadata_document_experimental">OAuth Client ID 元数据文档（实验）</h4>
+<div class="段落">
+<p><a href="https://www.ietf.org/archive/id/draft-ietf-oauth-client-id-metadata-document-01.html">OAuth Client ID 元数据文档 (CIMD)</a> 是一项新兴标准，它定义了用于描述 OAuth 2.0 client 元数据的 JSON 文档格式。自版本 2025-11-25 起，模型上下文协议 (MCP) 需要授权服务器才能符合 CIMD。 Keycloak 现在包括对 CIMD 的实验性支持，使其能够充当 MCP 版本 2025-11-25 或更高版本的授权服务器。</p>
+</div>
+<div class="段落">
+<p>请参阅<a href="https://www.keycloak.org/securing-apps/mcp-authz-server">与模型上下文协议 (MCP) 集成</a>，了解包括 CIMD 在内的更新指南。</p>
+</div>
+<div class="段落">
+<p>非常感谢<a href="https://github.com/tnorimat">Takashi Norimatsu</a>的贡献。</p>
+</div>
+
+
+<div类=“sect2”>
+<h3 id="_administration">管理</h3>
+<div类=“sect3”>
+<h4 id="_workflows_supported">工作流程（支持）</h4>
+<div class="段落">
+<p>工作流程允许管理员自动化和编排领域管理任务，将身份治理和管理 (IGA) 的关键功能引入 Keycloak。通过以 YAML 格式定义工作流，您可以根据事件、条件和计划自动执行领域资源（例如用户和 clients）的生命周期。</p>
+</div>
+<div class="段落">
+<p>在此版本中，工作流程从预览版升级为受支持版。此版本还包括新的内置步骤、故障排除指南以及对工作流引擎的各种改进。</p>
+</div>
+<div class="段落">
+<p>有关更多详细信息，请参阅服务器管理指南中的<a href="https://www.keycloak.org/docs/26.6.0/server_admin/#_managing_workflows">管理工作流</a>一章。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_organization_groups">组织群组</h4>
+<div class="段落">
+<p>组织现在支持独立的组层次结构，允许每个组织管理自己的团队和部门，而不会在整个领域出现命名冲突。此更新包括身份提供程序映射器，可根据外部声明自动将联合用户分配到组织组。当请求组织上下文时，组成员身份会自动包含在 OIDC 令牌和 SAML 断言中。</p>
+</div>
+<div class="段落">
+<p>有关更多详细信息，请参阅<a href="https://www.keycloak.org/docs/26.6.0/server_admin/#_managing_groups_">管理组织群组</a>指南。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_new_groups_scope_for_user_membership_changes">用户成员身份更改的新群组范围</h4>
+<div class="段落">
+<p>细粒度管理权限 (FGAP) 现在包含一个新的<code>组</code>范围：<code>manage-membership-of-members</code>。</p>
+</div>
+<div class="段落">
+<p>此作用域现在用作组端桥，用于根据用户当前的组成员身份评估用户端<code>manage-group-membership</code> 权限。
+现有的 <code>manage-membership</code> 范围保留其目标组成员资格管理操作的当前行为。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_looking_up_client_secrets_via_the_vault_spi">通过 Vault SPI 查找 client 机密</h4>
+<div class="段落">
+<p>现在可以通过 Vault SPI 管理和查找 clients 的秘密。</p>
+</div>
+<div class="段落">
+<p>感谢 <a href="https://github.com/tsaarni">Tero Saarni</a> 贡献此更改。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_forcing_password_change_for_ldap_users">强制 LDAP 用户更改密码</h4>
+<div class="段落">
+<p>现在初步支持 LDAP 密码策略控制。
+支持仅限于当 LDAP 服务器指示必须更改密码时提示用户更新密码。
+此前，Keycloak 让用户进入并忽略强制密码重置。
+LDAP 高级设置中有一个新的可选设置“启用 LDAP 密码策略”来启用此功能。</p>
+</div>
+<div class="段落">
+<p>感谢 <a href="https://github.com/tsaarni">Tero Saarni</a> 贡献此更改。</p>
+</div>
+
+
+<div类=“sect2”>
+<h3 id="_configuring_and_running">配置和运行</h3>
+<div类=“sect3”>
+<h4 id="_java_25_support">Java 25 支持</h4>
+<div class="段落">
+<p>Keycloak 现在支持与 OpenJDK 25 一起运行。
+服务器容器镜像目前继续使用 OpenJDK 21 以支持 FIPS 模式。有关详细信息，请参阅
+FIPS 指南中的注释。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_zero_downtime_patch_releases_supported">零停机补丁版本（支持）</h4>
+<div class="段落">
+<p>零停机补丁版本允许您在同一<code>major.minor</code>版本流中升级到较新的补丁版本时执行滚动更新，而无需服务停机。</p>
+</div>
+<div class="段落">
+<p>在此版本中，零停机补丁版本已提升为支持并默认启用。
+使用 Keycloak Operator 时，请将更新策略设置为<code>自动</code>以受益于此功能。</p>
+</div>
+<div class="段落">
+<p>有关 Operator 配置的更多详细信息，请参阅<a href="https://www.keycloak.org/operator/rolling-updates">通过滚动更新避免停机</a>指南。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_installation_instructions_for_cloudnativepg">CloudNativePG 安装说明</h4>
+<div class="段落">
+<p>对于在 Kubernetes 上运行 Keycloak 的用户，现在提供了有关如何利用 CloudNativePG Operator 在 Kubernetes 上部署 PostgreSQL 数据库以及如何将 Keycloak 连接到数据库的指南。</p>
+</div>
+<div class="段落">
+<p>有关详细信息，请参阅《高可用性指南》中的<a href="https://www.keycloak.org/nightly/high-availability/single-cluster/deploy-cnpg">在多个可用区中部署 CloudNativePG</a>。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_simplified_database_operations">简化的数据库操作</h4>
+<div class="段落">
+<p>几个新的命令行选项简化了 Keycloak 的数据库操作，并且无需使用原始 JDBC 连接选项：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>为数据库连接配置 TLS。</p>
+</li>
+<li>
+<p>数据库连接超时。</p>
+</li>
+<li>
+<p>生产就绪默认值的事务超时。</p>
+</li>
+</ul>
+</div>
+<div class="段落">
+<p>它还在启动时验证数据库的 UTF-8 字符编码是否正确，如果情况不正确，则打印警告。</p>
+</div>
+<div class="段落">
+<p>在 Kubernetes 等编排器上运行时，启动和活动探针会在数据库迁移期间返回 UP，从而无需在升级期间调整探针，从而简化了升级。</p>
+</div>
+<div class="段落">
+<p>有关各个方面的更多详细信息，请参阅迁移指南。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_graceful_shutdown_of_http_stack">正常关闭 HTTP 堆栈</h4>
+<div class="段落">
+<p>为了允许滚动更新配置更改或版本更新，Keycloak 节点的正常关闭可防止用户在登录时看到错误响应或在节点关闭时刷新其令牌。</p>
+</div>
+<div class="段落">
+<p>从此版本开始，Keycloak 支持 HTTP 堆栈的正常关闭。
+这包括在收到终止信号后延迟关闭、在此期间耗尽 HTTP/1.1 和 HTTP/2 连接的连接，以及完成正在进行的请求的关闭超时。</p>
+</div>
+<div class="段落">
+<p>默认关闭延迟和关闭超时各一秒。
+这应该非常适合反向代理使用 TLS 边缘终止或重新加密的设置，并且反向代理会收到有关 Keycloak 节点与 Keycloak 节点同时关闭的通知。
+这是常见的设置，例如在 Kubernetes 环境中。</p>
+</div>
+<div class="段落">
+<p>用户应根据其代理设置调整这些值。
+有关详细信息，请参阅反向代理指南中的<a href="https://www.keycloak.org/server/reverseproxy#graceful-http-shutdown">正常 HTTP 关闭</a>部分。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_new_kcraw_prefix_for_environment_variables_to_preserve_literal_values">环境变量的新 <code>KCRAW_</code> 前缀用于保留文字值</h4>
+<div class="段落">
+<p>Keycloak 现在支持环境变量的 <code>KCRAW_</code> 前缀，以完全按照写入方式保留包含 <code>$</code> 字符的值，而无需表达式求值。</p>
+</div>
+<div class="段落">
+<p>使用标准 <code>KC_</code> 前缀时，Keycloak（通过 SmallRye Config）计算值中的表达式（例如，解析 <code>${some_key}</code> 并将 <code>$$</code> 折叠为 <code>$</code>）。
+这可以静默修改由秘密管理器或编排工具注入的密码或秘密，而手动 escaping 不可行。</p>
+</div>
+<div class="段落">
+<p>设置 <code>KCRAW_<key></key></code> 而不是 <code>KC_<key></key></code> 会完全保留所提供的值。</p>
+</div>
+<div class="段落">
+<p>有关详细信息，请参阅服务器配置指南中的<a href="https://www.keycloak.org/server/configuration#kcraw-prefix">保留带有 KCRAW_ 前缀的文字值</a>部分。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_automatic_reload_of_lists_with_disallowed_passwords">自动重新加载包含不允许的密码的列表</h4>
+<div class="段落">
+<p>当不允许的密码列表（也称为黑名单）发生更改时，会自动重新加载。这避免了列表更改时重新启动服务器的需要。</p>
+</div>
+<div class="段落">
+<p>感谢 <a href="https://github.com/tsaarni">Tero Saarni</a> 贡献此更改。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_automatic_truststore_initialization_on_kubernetes_and_openshift">Kubernetes 和 OpenShift 上自动 truststore 初始化</h4>
+<div class="段落">
+<p>Keycloak 现在在 Kubernetes 或 OpenShift 上运行时自动发现并 trust 集群证书颁发机构，无需操作员预先配置 truststore。</p>
+</div>
+<div class="段落">
+<p>如果容器文件系统中存在以下证书，则会在启动时将以下证书添加到系统 truststore 中：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/var/run/secrets/kubernetes.io/serviceaccount/ca.crt</code>（Kubernetes 服务帐户 CA）</p>
+</li>
+<li>
+<p><code>/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt</code>（OpenShift 服务 CA）</p>
+</li>
+</ul>
+</div>
+<div class="段落">
+<p>此行为默认启用，可以通过服务器选项 <code>--truststore-kubernetes-enabled=true|false</code> 进行控制（默认值：<code>true</code>）。</p>
+</div>
+<div class="段落">
+<p>大多数部署不需要任何操作。如果您之前依赖 Operator 来管理这些 truststore 条目，那么服务器现在可以直接执行相同的功能。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_client_certificate_lookup_providers_for_traefik_and_envoy">适用于 Traefik 和 Envoy 的 Client 证书查找提供商</h4>
+<div class="段落">
+<p>您现在可以为 Traefik 和 Envoy 代理使用新的 client 证书查找提供程序。
+有关详细信息，请参阅文档的<a href="https://www.keycloak.org/server/reverseproxy#_enabling_client_certificate_lookup">启用 Client 证书查找</a>部分。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_configurable_kubernetes_service_name_and_port_in_the_keycloak_operator">Keycloak Operator 中可配置的 Kubernetes 服务名称和端口</h4>
+<div class="段落">
+<p>Keycloak Operator 现在支持覆盖它为 Keycloak 部署创建的 Kubernetes 服务的名称和端口。</p>
+</div>
+<div class="段落">
+<p>以前，服务名称始终派生为 <code><cr-name>-service</cr-name></code>，并且服务端口始终与容器端口匹配。
+您现在可以使用 <code>spec.http.serviceName</code>、<code>spec.http.serviceHttpsPort</code> 和 <code>spec.http.serviceHttpPort</code> 字段来
+独立配置这些。</p>
+</div>
+<div class="段落">
+<p>有关更多详细信息，请参阅<a href="https://www.keycloak.org/operator/advanced-configuration">高级配置</a>指南。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_sensitive_information_is_not_displayed_in_the_http_access_log">敏感信息不显示在 HTTP 访问日志中</h4>
+<div class="段落">
+<p>如果您使用 HTTP 访问日志记录功能，则会忽略敏感信息。
+这意味着“授权”HTTP 标头中的令牌和特定的敏感 cookie 不会显示。</p>
+</div>
+<div class="段落">
+<p>有关详细信息，请参阅<a href="https://www.keycloak.org/server/logging#http-access-logging">配置 HTTP 访问日志记录</a>。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_configurable_log_file_rotation">可配置的日志文件轮换</h4>
+<div class="段落">
+<p>现在可以在使用 Keycloak 的内置文件日志记录处理程序时配置日志文件轮换。
+这包括一个完全禁用日志轮换的简单选项，这在使用 <code>logrotate</code> 等外部日志轮换解决方案时非常有用。</p>
+</div>
+<div class="段落">
+<p>要禁用日志文件轮转：</p>
+</div>
+<div class="listingblock">
+<div类=“内容”>
+<pre class="highlight"><code class="language-bash" data-lang="bash">bin/kc.sh start --log="console,file" --log-file-rotation-enabled=false</code></pre>
+</div类=“内容”></div>
+
+<div class="段落">
+<p>有关详细信息，请参阅<a href="https://www.keycloak.org/server/logging/file">文件日志记录</a>指南。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_http_access_logs_in_a_dedicated_file">HTTP 访问日志位于专用文件中</h4>
+<div class="段落">
+<p>HTTP 访问日志现在可以写入专用文件，与服务器日志分开。
+这使得独立处理和归档访问日志以进行安全审核和合规性监控变得更加容易。</p>
+</div>
+<div class="段落">
+<p>有关详细信息，请参阅<a href="https://www.keycloak.org/server/logging#http-access-logging">配置 HTTP 访问日志记录</a>。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_customizable_service_fields_in_json_log_output">JSON 日志输出中的可自定义服务字段</h4>
+<div class="段落">
+<p>Keycloak 现在提供本机选项来自定义所有日志处理程序（控制台、文件和系统日志）中 JSON 日志输出中的 <code>service.name</code> 和 <code>service.environment</code> 字段。</p>
+</div>
+<div class="段落">
+<p>以前，使用 ECS 格式时，无法通过 Keycloak 配置覆盖 <code>service.name</code> 和 <code>service.environment</code>。
+这使得将 JSON 日志字段与 OpenTelemetry 资源属性对齐变得困难。</p>
+</div>
+<div class="段落">
+<p>您现在可以使用 <code>log-service-name</code> 和 <code>log-service-environment</code> 设置这些字段。</p>
+</div>
+<div class="段落">
+<p>有关详细信息，请参阅<a href="https://www.keycloak.org/server/logging#customize-service-fields">配置日志记录</a>指南。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_new_and_updated_translations">新翻译和更新翻译</h4>
+<div class="段落">
+<p>添加了印度尼西亚语和亚美尼亚语的新翻译。热烈欢迎这些语言的新语言维护者！
+瑞典语翻译还有新的语言维护者，他们翻译了所有剩余的消息密钥。非常感谢！</p>
+</div>
+<div class="段落">
+<p>在<a href="https://www.keycloak.org/translations">翻译状态页面</a>上关注翻译进度，帮助翻译，并阅读有关如何添加其他语言的翻译指南。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_right_to_left_language_support_in_the_account_ui">帐户界面中从右到左的语言支持</h4>
+<div class="段落">
+<p>几个版本之前的登录 UI、管理 UI 和电子邮件模板中添加了对从右到左 (RTL) 语言的支持。此版本向帐户 UI 添加了初始 RTL 支持，从而完成了这项工作。</p>
+</div>
+
+
+<div类=“sect2”>
+<h3 id="_observability">可观测性</h3>
+<div类=“sect3”>
+<h4 id="_telemetry_configuration_via_the_keycloak_cr">通过 Keycloak CR 进行遥测配置</h4>
+<div class="段落">
+<p>Keycloak 现在支持在使用 Operator 时通过 Keycloak CR 配置 OpenTelemetry 属性。
+这些属性在可用的 OpenTelemetry 组件之间共享 - 日志、指标和跟踪。</p>
+</div>
+<div class="段落">
+<p>有关更多详细信息，请参阅<a href="https://www.keycloak.org/observability/telemetry">使用 OpenTelemetry 集中您的可观测性堆栈</a>指南。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_custom_request_headers_for_opentelemetry">OpenTelemetry 的自定义请求标头</h4>
+<div class="段落">
+<p>现在可以设置请求标头以通过 OpenTelemetry 协议 (OTLP) 导出遥测数据。
+这主要用于在请求中提供令牌。</p>
+</div>
+<div class="段落">
+<p>您可以通过 <code>telemetry-header-</code></p><header> 通配符选项指定这些标头，该选项接受任何自定义标头名称。
+或者，对 OpenTelemetry 日志使用 <code>telemetry-logs-header-</code><header><code></code> 或对 OpenTelemetry 指标使用 <code>telemetry-metrics-header-</code><header><code></code>。<p></p>
+</header></header></header></div>
+<div class="段落">
+<p>有关更多详细信息，请参阅<a href="https://www.keycloak.org/observability/telemetry">使用 OpenTelemetry 集中您的可观测性堆栈</a>指南。</p>
+</div>
+
+<div类=“sect3”>
+<h4 id="_service_monitor_annotations_and_labels_via_the_keycloak_cr">通过 Keycloak CR 的服务监视器注释和标签</h4>
+<div class="段落">
+<p>现在可以在使用 Operator 时通过 Keycloak CR 配置服务监视器标签和注释。</p>
+</div>
+<div class="段落">
+<p>有关更多详细信息，请参阅<a href="https://www.keycloak.org/operator/advanced-configuration#_servicemonitor">高级配置操作符</a>指南。</p>
+</div>
+
+
+<div类=“sect2”>
+<h3 id="_extension_development">扩展开发</h3>
+<div类=“sect3”>
+<h4 id="_keycloak_test_framework_supported">Keycloak 测试框架（支持）</h4>
+<div class="段落">
+<p>现在完全支持基于 JUnit 6 的 Keycloak 测试框架。</p>
+</div>
+<div class="段落">
+<p>它取代了之前基于 Arquillian 和 JUnit 4 构建的解决方案。
+该框架在幕后处理 Keycloak、数据库以及任何注入的资源（例如领域和 clients）的生命周期。</p>
+</div>
+<div class="段落">
+<p>测试只需声明他们想要什么，包括特定配置，框架会处理其余的事情。</p>
+</div>
+<div class="段落">
+<p>有关详细信息，请参阅<a href="https://github.com/keycloak/keycloak/tree/main/test-framework#readme">Keycloak 测试框架</a>。</p>
+</div>
+
+
+<h2>升级</h2>
+<p>升级之前，请参阅<a href="https://www.keycloak.org/docs/latest/upgrading/#migration-changes">迁移指南</a>以获取完整的更改列表。</p>
+<h2>所有已解决的问题</h2>
+<h3>已弃用的功能</h3>
+<ul>
+<li><a href="https://github.com/keycloak/keycloak/issues/45156">#45156</a> 弃用令牌交换 v1 </li>
+</ul>
+<h3>新功能</h3>
+<ul>
+<li><a href="https://github.com/keycloak/keycloak/issues/10155">#10155</a> SAML clients 的逐步身份验证<code>身份验证</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/13102">#13102</a> 添加对使用Vault<code>core</code>指定`client.secret`的支持</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/39888">#39888</a> 工作流程 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/42634">#42634</a> 联合 client 身份验证 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43144">#43144</a> 跨域的 OAuth 身份和授权链 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43146">#43146</a>新测试框架</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43152">#43152</a>授权授予</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43252">#43252</a> Keycloak 补丁版本之间的零停机升级</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43257">#43257</a> 支持 Kubernetes 本机数据库 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43507">#43507</a> 添加对组织特定群组的支持</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43576">#43576</a> 向社交提供商授予授权<code>token-exchange/federated</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44833">#44833</a> [OID4VCI] 使natural_person配置以所有格式可用<code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45106">#45106</a> OAuth Client ID 元数据文档 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45284">#45284</a> CIMD - 持久 CIMD <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46633">#46633</a> keycloak 运算符：在 keycloak CRD 中添加对 kubernetes 服务定义的不同端口和名称的支持</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47011">#47011</a> 将调试帮助程序实用程序添加到测试框架<code>test-framework</code></li>
+</ul>
+<h3>增强功能</h3>
+<ul>
+<li><a href="https://github.com/keycloak/keycloak/issues/10618">#10618</a> 日志记录配置的增强<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/14523">#14523</a> 添加对通过 LDAP 联合强制更改密码的支持 <code>ldap</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/17904">#17904</a> 支持 RTL UI <code>account/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/19374">#19374</a> 允许缓存配置文件的绝对路径吗？ <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/19453">#19453</a> 默认数据库事务超时不应应用于 Liquibase 或数据迁移<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/20618">#20618</a> 支持启用访问日志<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/27986">#27986</a> 从 Keycloak 根 pom 中删除 Liquibase 依赖版本 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/33160">#33160</a> 添加对 Envoy 的 X509 client 证书查找的支持 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/33198">#33198</a> 为电子邮件模板引入 `resourcesCommonUrl` <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/33818">#33818</a> 增强请求：公开 x509cert-lookup SPI </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/34435">#34435</a> OTEL：将跟踪 ID 添加到用户面临的错误消息<code>可观察性</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/35298">#35298</a> 尽管设置了 X-Forwarded-Prefix 标头，反向代理提供的上下文路径仍无法正常工作<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/36226">#36226</a> 向 Keycloak 管理 UI 提供身份提供商映射器配置屏幕的只读视图 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/36710">#36710</a> 拥有一流的 CLI 选项来更改 Keycloak 的事务超时<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/38884">#38884</a> 补丁版本的升级命令滚动更新/步骤 3：Infinispan/JGroups 支持</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/38888">#38888</a>避免在补丁发布期间破坏数据库更改</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/40902">#40902</a> 更完整地记录操作员升级场景，特别是自定义映像<code>docs</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/41330">#41330</a> 改进 JpaUserSessionPersisterProvider#expire 的日志记录 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/41353">#41353</a> 提供旋转写入文件的 HTTP 访问日志 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/41629">#41629</a> 删除 Infinispan/JGroups 类中的跟踪解决方法</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/42256">#42256</a> 数据库故障转移时出现数据库连接池获取超时错误 <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/42626">#42626</a> 提供一种向生成的 ServiceMonitor 添加自定义标签的方法</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/42747">#42747</a> 使 DPoP 文档更加详细<code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/42876">#42876</a> 开发模式应仅绑定到本地主机（如果可能）</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/42900">#42900</a> 将扫描 Kubernetes CA 的逻辑移至 Keycloak <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43589">#43589</a> 正常关闭 HTTP 堆栈 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43701">#43701</a> 改进 SimpleHttp API <code>核心</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43829">#43829</a> 将createdTimestamp过滤器（之前/之后）添加到/admin/realms/{realm}/users </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44090">#44090</a> 错误屏幕和日志记录的 ErrorId </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44101">#44101</a> 使用新框架运行测试时允许重复使用服务器</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44364">#44364</a> 在管理控制台 <code>core</code> 中使用 PKCE 改进 client 创建</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44424">#44424</a> findClientSessionsClientIds 性能问题<code>存储</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44459">#44459</a> 将日志添加到所需的操作中，以显示 LDAP 策略语法违规的原因 <code>ldap</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44846">#44846</a> [OID4VCI]：确保 OID4VCI 可选字段干净保存并使用默认值 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44849">#44849</a> [OID4VCI] 在 OID4VCI client 范围中添加对 `vc.credential_signing_alg` 的 UI 支持 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44973">#44973</a> 在领域登录设置中禁用“记住我”功能时，隐藏“记住我”会话设置 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45006">#45006</a> [OID4VCI] 添加对用户作为主题 ID 执行的支持 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45188">#45188</a>升级到quarkus 3.30.5 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45220">#45220</a> OTEL：能够为导出器指定标头<code>可观察性</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45231">#45231</a> [OID4VCI] 使用 JWT 格式生成预授权代码 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45254">#45254</a> 管理 UI javascript 捆绑包应具有源映射 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45278">#45278</a>升级到 Quarkus 3.33.x LTS </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45281">#45281</a> 为管理主题消息添加缺少的瑞典语翻译<code>翻译</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45322">#45322</a> 如果用户已链接<code>身份代理</code>，则将用户与 idp 链接失败并显示一般消息</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45337">#45337</a>升级到Quarkus 3.31 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45348">#45348</a> OTEL：向 Keycloak CR 添加遥测选项<code>可观察性</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45360">#45360</a> 记录 HA 架构已使用 Openshift 4.18 进行测试</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45467">#45467</a> 管理界面端点列出了可用端点<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45620">#45620</a> 将默认的验证前时间更改为 10 秒，而不是 0 <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45623">#45623</a> 在操作员测试执行期间避免不必要的警告日志<code>testsuite</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45629">#45629</a> 写入文件的 HTTP 访问日志应位于单独的目录中 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45689">#45689</a> 当用户加入角色或组时，不应从数据库中读取所有现有角色和组</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45704">#45704</a> 从管理 UI <code>组织</code> 邀请现有用户</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45718">#45718</a> 改进组织名称无法用作别名时的错误消息</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45795">#45795</a> 将 Keycloak 和 KeycloakRealmImport CRD 升级到 v2beta1 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45841">#45841</a> 将恢复按钮添加到 client 凭据页面 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45880">#45880</a> SAMLEndpoint - 通过提高某些私有字段/方法的可访问性来提高可扩展性</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45882">#45882</a> 在群组中使用 GroupResource 上下文，以便可以重用群组组件</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45884">#45884</a> Testframework 核心依赖于测试容器</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45898">#45898</a>支持的配置指南</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45909">#45909</a> 将主题说明简介添加到领域设置<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45941">#45941</a> 不要在测试中使用已弃用的测试容器<code>testsuite</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45944">#45944</a> OTEL：对跨度属性使用建议的“code.function.name”<code>可观察性</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45965">#45965</a> [OID4VCI] 重新访问并修复 OAuthClient.credentialRequest() <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45992">#45992</a> 澄清涉及通配符证书和 OpenShift 的操作员说明</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45996">#45996</a> 使用 `.gitattributes` 对 `*.tsx` 文件强制使用 `LF` 行结尾 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45999">#45999</a> [OID4VCI] 重新访问并修复 OAuthClient.credentialOfferUriRequest() <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46001">#46001</a> [OID4VCI] 重新访问并修复 OAuthClient.credentialOfferRequest() <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46043">#46043</a> 升级到 Quarkus 3.31.2 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46055">#46055</a> [OID4VCI] 将测试领域设置限制为 TestCase.configureTestRealm() </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46156">#46156</a> 向 LoadBalancer API 添加节点计数和下一个节点选择</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46164">#46164</a> 单独的密码和 OTP 暴力保护，默认防止 OTP 绕过攻击</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46255">#46255</a> 升级到 Quarkus 3.32.0.CR1 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46292">#46292</a> 允许通过 ServerMetadataResource 公开 WellKnown 提供程序 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46304">#46304</a> SPIFFE 身份提供商默认 TTL 太低</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46355">#46355</a> [OID4VCI] 添加对 CredentialScopeRepresentation <code>oid4vc</code> 的支持</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46395">#46395</a> 自 26.5.0 <code>身份验证</code>以来，从 Traefik PassTlsClientCert 中间件传递的 X509 证书已损坏</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46421">#46421</a> 重新访问 Infinispan 会话空闲和生命周期设置 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46429">#46429</a> 将用户名添加到通过 JWTBearer Grant 创建的 BrokeredIdentityContext <code>token-exchange/federated</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46471">#46471</a> 聚合 client-id 字段以改进 Infinispan 查询</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46494">#46494</a> 允许在 JWTAuthorizationGrantType 中自定义联合身份查找</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46531">#46531</a> 考虑公开管理 api v2 资源的 UUID </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46556">#46556</a> 对于 MSSQL Server，默认将 `sendStringParametersAsUnicode` 设置为 `false` <code>存储</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46557">#46557</a> Keycloak 应在启动时检查数据库的 Unicode 设置</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46603">#46603</a> 添加用于数据库 TLS 加密的数据库 CLI 选项</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46617">#46617</a> 26.6 的 MCP 文档 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46626">#46626</a> 允许为 Kubernetes 身份提供商配置 Client 断言最长过期时间 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46627">#46627</a> 允许为 OIDC 身份提供商配置 Client 断言最长过期时间 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46657">#46657</a> 通过环境变量设置时，包含 `$$` 或 `${` 模式的密码会被破坏（SmallRye 表达式求值）<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46671">#46671</a> 允许在 DLockProvider 中自定义超时 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46689">#46689</a> 删除令牌自省错误响应中的用户输入反射 <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46693">#46693</a> 群组级别拒绝策略不会阻止群组成员上的 `manage-group-membership` <code>admin/fine-grained-permissions</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46699">#46699</a> CIMD - 性能：避免在 verifyUri() 中重复使用 ConvertContentFilledList() </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46701">#46701</a> CIMD - 性能：单遍 HTTP 缓存控制标头查找 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46703">#46703</a> CIMD - 性能：消除 ClientIdUriSchemeCondition.applyPolicy() 中的双重 URI 解析 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46708">#46708</a> CIMD - 性能：避免多次传输指令列表</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46711">#46711</a> 升级到 Quarkus 3.32.1 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46728">#46728</a> 在 keycloak 默认值之前使用 quarkus 属性或从值映射</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46757">#46757</a> 升级到 jackson-core 2.21.1 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46765">#46765</a> 添加缺少的问号 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46781">#46781</a> IdP 别名在组织的“身份提供商”选项卡中不可使用 click<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46796">#46796</a>导出的文档不是备份</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46809">#46809</a> 为所有数据库类型设置默认连接超时</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46872">#46872</a> 更明确地说明如何在操作员<code>可观察性</code>中启用 OTel 日志和指标</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46874">#46874</a> 更明确地使用 OTel 日志级别<code>可观察性</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46890">#46890</a> 升级到 Quarkus 3.32.2 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46936">#46936</a> 减少 client 策略上下文和条件/执行器之间的紧密耦合 <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46964">#46964</a> 添加更多匈牙利语翻译 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46972">#46972</a> 澄清 GET /admin/realms/{realm}/users 文档中凭据字段的可用性</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47038">#47038</a> UI 主题描述的翻译支持<code>翻译</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47081">#47081</a> 升级到 Quarkus 3.32.3 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47130">#47130</a> 升级到 Quarkus 3.33.0.CR1 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47140">#47140</a> 添加 CLI 数据库连接超时选项并将其提供给 quarkus.datasource.jdbc.login-timeout </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47146">#47146</a> Keycloak：没有用于自定义 JSON 日志 service.name 和 service.environment 字段的原生选项<code>可观察性</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47163">#47163</a> 增强功能：密码拒绝列表文件更改不需要重新启动服务器</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47187">#47187</a> 异步服务器初始化 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47229">#47229</a> 通过推送授权请求中的 kc_idp_hint 进行身份提供商重定向 <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47416">#47416</a>未启用健康检查时，不会启用异步启动</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47535">#47535</a> 完善 CNPG 安装文档</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47667">#47667</a> 更新 CIMD 发行说明</li>
+</ul>
+<h3>错误</h3>
+<ul>
+<li><a href="https://github.com/keycloak/keycloak/issues/22569">#22569</a> 提供默认领域管理角色的描述 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/26946">#26946</a> 多个同名的协议映射器。 <code>admin/api</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/28970">#28970</a> 有关默认数据库模式的文档不明确 <code>docs</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/36593">#36593</a> 未针对 KC 26 <code>组织</code>更新内置身份验证流程</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/37231">#37231</a>通过密码重置功能多次设置新密码<code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/38991">#38991</a> [测试框架]嵌入式服务器 -> 未指定版本时出现依赖下载错误<code>test-framework</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/39127">#39127</a> JWT 算法设置为无<code>身份验证</code>时返回代码不正确</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/40510">#40510</a> 当凭据存在时，组织流不会重定向<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/40753">#40753</a> 资源泄漏：Util.readProperties(File) 中的 FileInputStream 从未关闭 .SAST <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/40921">#40921</a> 在权限创建中拒绝无效资源 ID </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/41165">#41165</a>作为身份提供商<code>身份经纪</code>，飞书登录持续失败</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/41630">#41630</a> 警告日志消息 SRCFG01008：默认值已被布尔转换器转换为“false”<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/41924">#41924</a> 将管理 UI 主题更改为“base”后出现内部服务器错误 - 一个长期存在的问题 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/42222">#42222</a> 在 Keycloak 26.3+ 中编辑提供程序时未显示联合缓存策略详细信息 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/42836">#42836</a> 令牌刷新后组织选择发生变化<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/42839">#42839</a> UserInfo 端点返回不正确的组织声明<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43198">#43198</a> keycloak 的操作员状态修补失败<code>操作员</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43201">#43201</a> 实体映射不适用于 26.4 <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43356">#43356</a> Keycloak 测试框架 - 当版本字符串使用后缀 <code>test-framework</code> 时，识别 ZIP 文件内分发目录的问题</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43613">#43613</a> 组织身份提供商域中不区分大小写的匹配 - 如果选择“ANY”选项<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43726">#43726</a> 缓慢评估 client 角色，并为角色映射器和其他<code>身份代理</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43757">#43757</a> 身份验证 SPI 文档中的代码示例与快速入门存储库<code>身份验证</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43854">#43854</a> OID4VCI 凭据的主题 ID 值无效<code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43949">#43949</a> 映射器中的多值字符串不会以显示的默认值保存到后端<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/43991">#43991</a> Keycloak 操作员 - 协调失败<code>操作员</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44099">#44099</a> 嵌入式服务器重新启动 3-4 次后内存不足 <code>testsuite</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44100">#44100</a> 启动服务器问题导致测试 <code>testsuite</code> 中出现连接拒绝异常</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44132">#44132</a> Bug -> 默认情况下启用 Keycloak 预览功能“脚本”<code>身份验证</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44283">#44283</a> 不稳定测试：org.keycloak.testsuite.federation.ldap.LDAPGroupMapperTest#test06_addingUserToNewKeycloakGroup <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44403">#44403</a> DCR 端点忽略 client 请求的 token_endpoint_auth_method <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44425">#44425</a> [Keycloak JS CI] 管理 UI E2E Firefox 失败 <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44498">#44498</a> [quick-theme] 徽标和 Favicon 问题 <code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44574">#44574</a> 无法找到类型为 org.keycloak.models.KeycloakSession <code>testsuite</code> 的上下文数据</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44598">#44598</a> 当映射属性缺少 <code>saml</code> 时，使用空用户名创建 SAML 用户</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44622">#44622</a> 当禁用“验证凭据”开关时，应为领域禁用 OID4VCI 功能 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44637">#44637</a> 无法导入启用 OID4VCI 的领域<code>导入导出</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44670">#44670</a> 可以使用不正确的访问令牌调用 CredentialEndpoint <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44678">#44678</a> 使用通配符时搜索不一致<code>admin/api</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44699">#44699</a> 如果从管理控制台保存 client 范围，则无法找到凭据签名的密钥 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44737">#44737</a> CredentialRequest 要求将 client 范围指定为“可选”<code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44784">#44784</a> 指向重置凭据的链接会忽略默认区域设置和 ui_locales <code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44803">#44803</a> SAMLRequestParser 中未处理的 IllegalArgumentException <code>saml</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44807">#44807</a> [OID4VCI] 未为 ClientScope 设置默认值 <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44819">#44819</a> 编辑用户<code>用户个人资料</code>时，界面上缺少验证错误标签</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44824">#44824</a> Keycloak 会保留映射的firstName 值，并且当上游身份提供商停止发送声明时不会使其无效<code>身份代理</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44875">#44875</a> [OID4VCI] CredentialSignerException：ldp_vc 格式不支持证明类型 null <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44905">#44905</a> 电子邮件未根据上游 IdP 电子邮件进行更新<code>身份代理</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/44961">#44961</a> Authorization_details 添加到令牌响应中，即使不应该是 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45005">#45005</a> [OID4VCI] 重新访问并修复 /credential_offer_uri 端点 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45058">#45058</a> 基本主题：“用户属性”和“注册”必需标记缺少所需的类 <code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45069">#45069</a> 基本主题：`login-config-totp`、`label` 已硬编码 `control-label` 而不是 `${properties.kcLabelClass!}` <code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45160">#45160</a> 使用 JwsHeader.builder().withx5c(certificate) 时出现 NullPointer <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45162">#45162</a> v2 keycloak 登录主题中缺少图标 <code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45163">#45163</a> 指南引用了不再存在的 Docker 注册表 <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45164">#45164</a> 基本主题：`login-config-totp`，按钮未包含在 `kcFormGroupClass` 中 <code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45209">#45209</a> [OID4VCI] 颁发者元数据包含 credential_configurations_supported <code>oid4vc</code> 不需要的“id”</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45219">#45219</a> 用户 REST 管理员 API - 计数和搜索返回不同数量的用户 <code>account/api</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45227">#45227</a> 辅助功能：改进屏幕阅读器和键盘导航的身份验证器选择器<code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45252">#45252</a> `.env.test` 覆盖环境 <code>testsuite</code> 中的值</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45272">#45272</a> EventOptionsTest 由于缺少 verabilible_credential 选项而失败 <code>testsuite</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45324">#45324</a> 管理控制台的平权聚合政策无法正确评估<code>admin/fine-grained-permissions</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45385">#45385</a> [OID4VCI] 没有 id 密钥...和算法...可用 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45406">#45406</a> SearchDropdown 清除按钮不会重置表单字段，URI 搜索已损坏<code>授权服务</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45422">#45422</a> 在未解析任何组织时，组织登录会泄漏 IdP 别名（IdP/租户枚举）<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45425">#45425</a> OpenApiDistTest 在 CI 中失败 <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45428">#45428</a> 管理 UI：通过资源详细信息访问权限的重定向错误 <code>authorization-services</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45446">#45446</a> [OID4VCI] 由于区分大小写，vc.credential_build_config.hash_algorithm 的默认值导致 _sd_alg 无效 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45485">#45485</a> [OID4VCI] 众所周知的 OID4VC 元数据不一致（所有格式的元数据相同）<code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45488">#45488</a> 导入期间不显示文件名<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45501">#45501</a> KeycloakProcessor#configureProfile 中的 ConcurrentModificationException <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45519">#45519</a> 用户个人资料属性多选 inputType 自 26.4.0 起不起作用 <code>user-profile</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45522">#45522</a> LoggingDistTest.httpAccessLogNotNamedPattern 不稳定 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45539">#45539</a> 避免在 UI 和文档中使用一些黑名单/白名单措辞 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45561">#45561</a> 在并发 authz 删除 <code>authorization-services</code> 期间，当parentPolicy为空时，授权评估中出现 NPE</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45564">#45564</a> Argon2 哈希中信号量释放处理的嵌套错误 <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45586">#45586</a> 管理 UI 中缺少用于添加 client 策略条件的帮助文本 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45587">#45587</a> SecureClientUrisExecutor 不允许使用“+”weborigin <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45606">#45606</a> 记录反向通道请求限制<code>docs</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45669">#45669</a> 无法将当前项目解析为测试框架服务器配置的依赖项<code>testsuite</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45694">#45694</a> 通过矩阵参数注入在 ResourceAdminManager 中构建未经验证的 URL <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45724">#45724</a> [OID4VCI] 与加密绑定和证明相关的 OID4VCI 元数据不一致 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45727">#45727</a> 重构 `SessionsResource` 以提高内存使用率和性能<code>infinispan</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45733">#45733</a> 管理 UI 主题徽标未从主题属性中显示 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45738">#45738</a> clients-registrations/default GET 端点不会按照记录的 <code>oidc</code> 轮换注册访问令牌</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45740">#45740</a> Client 策略中的 `client-access-type` 条件不会触发令牌请求事件<code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45747">#45747</a> 当一个领域中的多个 IDP 具有相同的颁发者 URL <code>core</code> 时，管理行为会令人困惑</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45748">#45748</a> [OID4VCI] OpenID4VCI 用户属性映射器不支持嵌套声明 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45750">#45750</a> 如果关闭重用，测试框架不会停止运行 Keycloak 实例 <code>testsuite</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45760">#45760</a> 已禁用的组织不应执行邀请<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45812">#45812</a> ROPC：invalid_grant 错误响应不符合 RFC <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45818">#45818</a>TokenTab 上没有保存按钮<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45829">#45829</a> 在启用了密码历史记录的领域中查询用户的凭据时，记录了无用的警告<code>身份验证</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45859">#45859</a> [OID4VCI] 重复处理 AuthorizationDetailsProcessorManager <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45875">#45875</a> 工作流程执行绕过管理员权限边界（管理领域 -> 领域管理）<code>工作流程</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45877">#45877</a> UiPageProvider 组件未按管理 UI 中的实现进行过滤 <code>admin/api</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45881">#45881</a> 不稳定测试：org.keycloak.testsuite.oauth.OfflineTokenTest#offlineTokenBrowserFlow <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45888">#45888</a> 由于缺少字段 <code>docs</code>，未创建 ServiceMonitor</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45917">#45917</a>“group-ldap-mapper”类型的 LDAP 映射器不会以 GUID 格式公开组的“objectGUID”<code>ldap</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45921">#45921</a> 使用嵌入式 Keycloak 从 Maven 抛出 `Config should not be initialized until profile is determined` <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45922">#45922</a> 不稳定测试：org.keycloak.testsuite.forms.LevelOfAssuranceFlowTest#optionalClaimNotReachedSucceeds <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45924">#45924</a> 确保在重新验证<code>组织</code>时忽略已禁用的组织</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45947">#45947</a> 创建 client 策略时选择的条件类型太宽<code>核心</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45971">#45971</a> 尝试发现提供程序 JAR 文件时，带有空格的路径不会被解码 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45986">#45986</a> [KEYCLOAK CI] - AuroraDB IT - 在 EC2 上运行 Aurora 新数据库测试 <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/45993">#45993</a> [quarkus-next] 修复由于缺少构建步骤排序约束而导致的构建失败<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46006">#46006</a> JpaOrganizationProvider.searchGroupsByName 忽略搜索参数<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46009">#46009</a> Client 会话分页不起作用<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46010">#46010</a> 缺少用于获取 client 的反 ID 网络钓鱼检查 <code>admin/api</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46015">#46015</a> OpenAPI 规范中的重复 `{client-uuid}` 路径参数 <code>admin/api</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46040">#46040</a> 将领域用户分配给组织<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46050">#46050</a> AuthorizationServices 应阻止组策略的组织组 ID <code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46051">#46051</a> [OIDC4VCI] - JWT_VC 中的类型 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46075">#46075</a> [quarkus-next] 由于在disableHealthCheckBean上缺少构建步骤排序约束，测试失败<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46081">#46081</a> [Keycloak JS CI] `fetchWithError` 抛出 `NetworkError` <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46084">#46084</a> [quarkus-next] DatasourcesDistTest 由于 Quarkus stdout/stderr 捕获更改而失败<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46089">#46089</a> 删除第 2 页上的资源会显示“未找到资源”空状态，而授权资源选项卡中仍存在资源<code>authorization-services</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46095">#46095</a> [quarkus-next] configureResteasy() 缺少 Quarkus 构建步骤依赖项<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46110">#46110</a> 分发服务器有时会使用错误的 pid 来启动 Keycloak 服务器 <code>test-framework</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46121">#46121</a> 在 Quarkus 开发模式下启动服务器时无法初始化“jakarta.el.ExpressionFactory”<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46159">#46159</a> 文档：authorization_services/topics/resource-server-default-config.adoc <code>authorization-services</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46160">#46160</a> `quarkus/tests/junit5` 的 Keycloak 在启动失败时不会引发异常 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46175">#46175</a> MANAGED_REALM 模式下的 AdminClient 存在错误 <code>test-framework</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46187">#46187</a> [quarkus-next] 更新证书重新加载测试中无效持续时间的错误消息 <code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46192">#46192</a> 发送电子邮件时检查未转换的 FROM 地址 <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46193">#46193</a> [UI 错误] Microsoft/OIDC IdP“提示”下拉菜单保存人类可读的标签而不是技术价值 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46235">#46235</a> 欢迎屏幕 URL 不正确，主机名设置为 URL <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46297">#46297</a> [OID4VCI] 如果为领域启用了 OID4VCI，则应将属性 did 添加到用户配置文件</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46314">#46314</a> account-ui 中的捆绑问题 <code>account/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46321">#46321</a> [Keycloak CI] Azure 和 Aurora 迁移测试失败 <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46322">#46322</a> [Keycloak CI] 新数据库测试在 Aurora 和 Azure <code>ci</code> 上失败</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46350">#46350</a> RestartLoginCookie 不允许密钥轮换，因为它始终使用活动密钥进行验证<code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46366">#46366</a> @keycloak/keycloak-admin-client 的组表示中缺少 `parentId` <code>admin/client-js</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46374">#46374</a> [quick-theme] 后台未热重新部署<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46384">#46384</a> 当资源不在初始结果中时，基于范围的权限创建中不会显示资源选择<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46403">#46403</a> 缓存或角色解析应特定于领域<code>infinispan</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46413">#46413</a> [管理 UI] 用户的组织列表被延迟/清空，直到 API 调用的 N+1 级联完成<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46445">#46445</a> 组织群组 API 不会返回 subGroupCount <code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46454">#46454</a> 组织群组未包含在用户群组查询中。 <code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46455">#46455</a> REST API 不允许将组织群组移至根<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46493">#46493</a> show-config 包含具有空值的日志相关条目<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46503">#46503</a> 不稳定测试：org.keycloak.testsuite.webauthn.account.WebAuthnTransportLocaleTest#localizationTransportUSB <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46512">#46512</a> 帐户控制台中的身份提供商显示名称未本地化 <code>account/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46517">#46517</a> 身份验证错误顺序不一致<code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46542">#46542</a> 更新动态 client 范围超时<code>admin/api</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46571">#46571</a> 禁用组织功能时按路径查找组织群组时的 NPE <code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46579">#46579</a> 不包含 arquillian 集成测试的 PR 未通过 GHA Testsuite 弃用检查 <code>testsuite</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46606">#46606</a> 管理控制台管理员关联角色不适用于大量领域<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46614">#46614</a> 基本主题模板在delete-account-confirm.ftl 中使用内联样式<code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46628">#46628</a> 重命名 ClientPolicy 时，添加的条件和配置文件不应消失。 <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46639">#46639</a> [OID4VCI] 由于 credential_identifier 检查错误 <code>oid4vc</code> 导致颁发失败</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46644">#46644</a> 生成失败时 Kiota 会默默失败 <code>admin/client-js</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46647">#46647</a> Rfc9440 证书查找不应将超过证书长度视为错误 <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46658">#46658</a> SCIM PUT 端点允许通过主体 ID 覆盖 (IDOR) 修改资源<code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46667">#46667</a> IntegrationTest 子类 @TestSetup 在超类 <code>testsuite</code> 之前调用</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46673">#46673</a> 提高 `poolMaxSize` 的最小最大数量，因为 Keycloak 示例中显示的值 3 会导致切换到 JDBC Ping 后获取超时 <code>docs</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46695">#46695</a> CIMD - 配置描述更正：通配符而不是正则表达式 <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46697">#46697</a> CIMD - 注释行中的拼写错误<code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46716">#46716</a> UMA 权限授予接受过期的 ID 令牌 Claim_token 并发出 RPT <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46717">#46717</a> UMA 权限授予接受颁发给不同 client <code>核心</code>的 ID 令牌</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46718">#46718</a> V1 令牌交换受众验证中出现 UnsupportedOperationException（FGAPv2 不兼容）<code>token-exchange</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46738">#46738</a> 在身份验证流程<code>身份验证</code>期间禁用 Client 时，SessionCodeChecks 中出现 NullPointerException 崩溃</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46745">#46745</a> 增强 SAML 元数据描述符 URL 的网络验证 <code>saml</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46750">#46750</a> OIDC 错误响应未设置无缓存标头（至少对于 userinfo 端点没有）<code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46774">#46774</a> 抽屉式拆分器不会扩展组织组中的整个页面高度<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46775">#46775</a>“复制”功能在组织群组中无法正常工作<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46776">#46776</a> 无法从“移至”对话框中的搜索结果中选择组<code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46777">#46777</a> 组织组树不显示包含子组的组的展开切换 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46778">#46778</a> 清除组织组树中的搜索后，过时的搜索结果仍然存在 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46780">#46780</a> 组织组树搜索返回平面结果而不是层次结构<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46792">#46792</a> 删除操作不会触发管理事件 v2 <code>admin/api</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46808">#46808</a> 静音“无法解码令牌，未找到有效负载。”记录适配器/javascript</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46819">#46819</a> 当 SAMLart 参数太短时，ArtifactBindingUtils 中出现 ArrayIndexOutOfBoundsException </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46848">#46848</a> DPoPUtil 中的 NullPointerException <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46857">#46857</a> 身份提供商映射器编辑表单在保存时丢失 ID 和名称字段值 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46860">#46860</a> 无法再运行 /testsuite - org.keycloak.common.Profile.getInstance() 的值为 null <code>testsuite</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46861">#46861</a> 元数据检查：cacheEmbedded.configFile 由于路径 <code>infinispan</code> 始终不兼容</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46883">#46883</a> 不稳定测试：org.keycloak.testsuite.model.infinispan.EmbeddedInfinispanSplitBrainTest#testLocalCacheClearedOnMergeEvent <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46933">#46933</a> Client 范围 client 策略条件在资源所有者密码凭证授予请求期间未触发 <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46969">#46969</a> 组织中混合大小写电子邮件域的身份验证失败<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/46997">#46997</a> 链接到组织<code>组织</code>时，通过身份提供商映射器中的静默组解析回退进行权限升级</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47002">#47002</a> [quarkus-next] Prometheus 拒绝标签键不一致的用户事件指标<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47025">#47025</a> createCurlContainer 方法隐式依赖于 DockerHub <code>testsuite</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47043">#47043</a> 搜索包含 `populateHierarchy=true` 的组织群组会暴露内部组织群组<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47045">#47045</a> [OID4VCI] 不使用 JSON-LD 时，凭据定义不得包含 `@context` <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47047">#47047</a> 基于控制台的登录中未使用的消息键 <code>login/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47051">#47051</a> 搜索组织群组成员资格会忽略搜索参数<code>organizations</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47055">#47055</a> `Include sub-group users` 按钮不适用于组织群组<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47063">#47063</a> 当包含 client-updater-context 的 client 策略存在时，重新生成 client 机密时出现 NPE <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47080">#47080</a> 如果不是当前组织<code>组织</code>的邀请，则不允许管理邀请</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47084">#47084</a> 登录错误消息中缺少组织名称的输出编码<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47085">#47085</a> 通过 Translation-notify.yml 中的提交 SHA 固定操作/签出 <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47108">#47108</a> 组织群组子级 API 不会返回 subGroupCount <code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47110">#47110</a> LDAP 联合配置供应商相关默认值在表单 <code>ldap</code> 中不可见</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47114">#47114</a> ImmutableAttributeValidator 在检查更改时不会小写电子邮件 <code>ldap</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47137">#47137</a> 确保组织群组成员身份检查用户所属的组织<code>组织</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47139">#47139</a> 在挑选 #46654 后编辑身份验证流程时的性能下降（领域失效会触发昂贵的角色重新加载）<code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47157">#47157</a> 复合 client 角色映射端点速度缓慢，并且在与许多 client 角色并发的情况下性能会下降 <code>admin/api</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47162">#47162</a> 升级到 KC 26.5（形式 26.3）后，通过令牌交换进行模拟失败：java.lang.UnsupportedOperationException：在 org.keycloak.services.resources.admin.fgap.ClientPermissionsV2.canExchangeTo 的 V2 中不受支持（ <code>令牌交换</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47164">#47164</a> 新测试框架DisabledForServers注释不起作用<code>testsuite</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47201">#47201</a> 环境变量默认值在 {} 替换 <code>login/ui</code> 时被切断</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47203">#47203</a> [OID4VCI] 某些事件中存在小不一致 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47221">#47221</a> Kiota 在调用 github 中生成 client <code>admin/client-js</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47251">#47251</a> [OID4VCI] 减少 CredentialScopeModelUtils 中的日志量 <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47271">#47271</a> 在 OID4VC 随机数和时间声明生成中使用 java.util.Random / Math.random() <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47321">#47321</a> [KEYCLOAK CI] - 帐户 UI - NetworkError <code>account/ui</code> 引发的unknown_error</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47332">#47332</a> 缺少 OpenTelemetry 跨度属性位置更改的 release note 条目<code>可观察性</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47379">#47379</a> RetryConfig 被忽略<code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47398">#47398</a> 添加 ClientProfile 时，“保存”按钮功能不一致 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47412">#47412</a> 文档中的拼写错误：OpenTelementry <code>docs</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47418">#47418</a> Agroal：登录超时应小于获取超时<code>dist/quarkus</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47427">#47427</a> facebook <code>docs</code> 文档中出现新链接错误</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47444">#47444</a> client 联合文档和工具提示中的不准确 <code>oidc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47452">#47452</a> 已部署的 Javascript 策略说明未显示在 Keycloak 控制台中 <code>authorization-services</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47454">#47454</a> 工作流程编辑器使用比例字体而不是等宽字体 <code>admin/ui</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47473">#47473</a> [quarkus-next] 修复 JOSDK 5.3.0 事件过滤升级<code>operator</code>后操作员控制器停止的问题</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47495">#47495</a> JavaKeystoreKeyProvider 在每次重新启动或配置更改时为对称密钥 (HMAC) 生成新的随机 KID <code>authorization-services</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47536">#47536</a> 用户组管理中的 SCIM 授权绕过 <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47544">#47544</a> 当映射器配置丢失或为空时，OID4VCMapper 中出现 NullPointerException <code>oid4vc</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47572">#47572</a> DefaultKeycloakSession.getComponentProvider() 中可能存在 NPE <code>core</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47587">#47587</a> [Operator CI] - 测试远程 - 等待更多副本超时 </li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47646">#47646</a> Clusterless 和 Volatile-Session 套件都包含对已删除测试文件的引用。 <code>测试套件</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47675">#47675</a> LDAP 联合：无法正确读取“389 DS/RHDS”ldap 后端的密码更改时间<code>ldap</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47685">#47685</a> 使用 HttpClient 并启用跟踪<code>可观察性</code>时出现 NPE</li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47708">#47708</a> 在 Windows 上测试 testNoConfigNoServerShowsV2Hint 失败 <code>admin/api</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47720">#47720</a> 发布 API 文档的夜间版本已损坏 <code>ci</code></li>
+<li><a href="https://github.com/keycloak/keycloak/issues/47753">#47753</a> 修饰 LDAP 用户配置文件会抛出 NPE，阻止登录 <code>ldap</code></li>
+</ul>
+
+---
+> **来源** [keycloak/keycloak](https://github.com/keycloak/keycloak) · `26.6.0` · 2026-04-08 · [上游发布](https://github.com/keycloak/keycloak/releases/tag/26.6.0)
+*逐字镜像以进行索引。所有权利属于上游项目。*
+---
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/keycloak/keycloak">keycloak/keycloak</a> · 🏷️ 版本：<code>26.6.0</code> · 📅 发布：2026-04-08 · <a href="https://github.com/keycloak/keycloak/releases/tag/26.6.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p></div类=“sect3”></div类=“sect2”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect2”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect2”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect2”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”></div类=“sect3”>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/keycloak/keycloak_26.6.1"> <span class="k">← 下一个</span> <span class="t">26.6.1</span> </a> <a href="/zh/release_note/keycloak/keycloak_26.5.7"> <span class="k">上一个 →</span> <span class="t">26.5.7</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/keycloak/keycloak/releases/tag/26.6.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/keycloak/keycloak" target="_blank" rel="noopener"> <span>keycloak/keycloak</span> <span class="d">↗</span> </a> </li> </ul> </div>  <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/keycloak/keycloak_26.8.2"> <span class="v">26.8.2</span> <span class="d">26-11-05</span> </a> </li><li> <a href="/zh/release_note/keycloak/keycloak_26.8.1"> <span class="v">26.8.1</span> <span class="d">26-10-13</span> </a> </li><li> <a href="/zh/release_note/keycloak/keycloak_26.8.0"> <span class="v">26.8.0</span> <span class="d">26-10-01</span> </a> </li><li> <a href="/zh/release_note/keycloak/keycloak_26.7.5"> <span class="v">26.7.5</span> <span class="d">26-09-30</span> </a> </li><li> <a href="/zh/release_note/keycloak/keycloak_26.7.4"> <span class="v">26.7.4</span> <span class="d">26-09-16</span> </a> </li><li> <a href="/zh/release_note/keycloak/keycloak_26.7.3"> <span class="v">26.7.3</span> <span class="d">26-08-31</span> </a> </li><li> <a href="/zh/release_note/keycloak/keycloak_26.7.2"> <span class="v">26.7.2</span> <span class="d">26-08-19</span> </a> </li><li> <a href="/zh/release_note/keycloak/keycloak_26.7.1"> <span class="v">26.7.1</span> <span class="d">26-08-05</span> </a> </li> </ul> <a href="/zh/releases/keycloak" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 16 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>

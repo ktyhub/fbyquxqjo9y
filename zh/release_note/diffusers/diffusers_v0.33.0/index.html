@@ -1,0 +1,819 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>diffusers v0.33.0 — STAGS NextStack</title><meta name="description" content="Wan2.1 is a comprehensive and open suite of video foundation models that pushes the boundaries of video generation. The model release includes 4 different model variants and three different pipelines for Text to Video…"><meta name="keywords" content="开源项目版本发布, Release Note, 更新日志聚合, 破坏性变更, 弃用提醒, Kafka 版本, Spring Boot 版本, Kubernetes 版本"><meta name="generator" content="Astro v5.18.2"><link rel="canonical" href="https://www.stags.cn/zh/release_note/diffusers/diffusers_v0.33.0/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="alternate" type="application/rss+xml" title="STAGS NextStack — releases" href="/zh/releases.xml"><link rel="alternate" hreflang="en" href="https://www.stags.cn/releases/diffusers/0.33.0"><link rel="alternate" hreflang="zh-Hans" href="https://www.stags.cn/zh/release_note/diffusers/diffusers_v0.33.0/"><link rel="alternate" hreflang="x-default" href="https://www.stags.cn/releases/diffusers/0.33.0"><meta property="og:site_name" content="STAGS"><meta property="og:type" content="article"><meta property="og:title" content="diffusers v0.33.0 — STAGS NextStack"><meta property="og:description" content="Wan2.1 is a comprehensive and open suite of video foundation models that pushes the boundaries of video generation. The model release includes 4 different model variants and three different pipelines for Text to Video…"><meta property="og:url" content="https://www.stags.cn/zh/release_note/diffusers/diffusers_v0.33.0/"><meta property="og:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><meta property="og:locale" content="zh_CN"><meta property="og:locale:alternate" content="en_US"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="ru_RU"><meta property="og:locale:alternate" content="tr_TR"><meta property="og:locale:alternate" content="id_ID"><meta property="og:locale:alternate" content="vi_VN"><meta property="og:locale:alternate" content="ar_SA"><meta property="og:locale:alternate" content="sv_SE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.stags.cn/img/stags-tracker-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.stags.cn/#website","name":"STAGS","url":"https://www.stags.cn/","inLanguage":"zh-CN","description":"STAGS 索引基础设施与 AI 开源项目的 Release Note：破坏性变更、弃用与迁移说明，汇成一个英文优先的信息流。","publisher":{"@id":"https://www.stags.cn/#org"}},{"@type":"Organization","@id":"https://www.stags.cn/#org","name":"STAGS","alternateName":"NextStack","url":"https://www.stags.cn/"},{"@type":"TechArticle","@id":"https://www.stags.cn/zh/release_note/diffusers/diffusers_v0.33.0/#article","headline":"diffusers v0.33.0 release notes","datePublished":"2025-04-09","inLanguage":"zh-CN","isPartOf":{"@id":"https://www.stags.cn/#website"},"about":{"@type":"SoftwareSourceCode","codeRepository":"https://github.com/huggingface/diffusers"}}]}</script><!-- 第三方脚本的连接预热：这两个域名几乎每页都要连，
+         提前建连能省掉 DNS + TCP + TLS 一个往返（移动网络 100~300ms）。
+         AdSense 只在开关打开时预热——关掉广告后连这个域名都没必要。 --><link rel="preconnect" href="https://www.googletagmanager.com"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://pagead2.googlesyndication.com"><!-- Google AdSense：站点所有权校验与广告投放共用同一段脚本，全站只加载一次。
+         未创建广告单元时页面上不渲染任何广告容器，站点保持干净。
+         fetchpriority=low：它不参与首屏渲染，不该跟正文抢带宽。 --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4184355057086168" crossorigin="anonymous" fetchpriority="low"></script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-RFRF1TVRMP" fetchpriority="low"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-RFRF1TVRMP");
+    </script><!-- 百度统计（国内流量统计）。官方标准片段，is:inline 原样输出，
+         hm.js 动态插到首个 script 前，异步不阻塞首屏渲染。 --><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?299e5b4e65b86ed16879bdcbe70531d6";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><link rel="stylesheet" href="/assets/index.DQGt3qLZ.css">
+<style>.ad-slot[data-astro-cid-fgwukgf6]{margin:var(--s10) 0 0;padding-top:var(--s5);border-top:1px solid var(--line)}.ad-slot-label[data-astro-cid-fgwukgf6]{margin-bottom:var(--s3);font-size:11px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-4)}.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{display:block;min-height:100px}@media(min-width:640px){.ad-slot[data-astro-cid-fgwukgf6] ins.adsbygoogle{min-height:250px}}
+</style></head> <body> <a class="skip" href="#main">跳到正文</a> <header class="hdr" data-header> <div class="wrap hdr-inner"> <a href="/zh/" class="brand" aria-label="STAGS NextStack — 开源项目版本发布情报"> <span class="brand-mark" aria-hidden="true">S</span> <span class="brand-main">STAGS</span> <span class="brand-sub" aria-hidden="true">NextStack</span> </a> <nav class="nav" aria-label="Primary"> <a href="/zh/releases">版本发布</a><a href="/zh/projects">项目</a><a href="/zh/topics">专题</a><a href="/zh/compare">对比</a> </nav>  <details class="navmenu" data-navmenu> <summary class="navmenu-btn" aria-label="打开菜单"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"> <path d="M4 7h16M4 12h16M4 17h16"></path> </svg> </summary> <div class="navmenu-panel" role="group" aria-label="主导航"> <a href="/zh/releases" class="navmenu-item">版本发布</a><a href="/zh/projects" class="navmenu-item">项目</a><a href="/zh/topics" class="navmenu-item">专题</a><a href="/zh/compare" class="navmenu-item">对比</a> </div> </details> <div class="hdr-tools"> <button class="searchbtn" type="button" data-search-open aria-label="搜索版本"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <span class="lbl">搜索</span> <span class="kbd">⌘K</span> </button> <details class="langmenu" data-langmenu> <summary class="langmenu-btn" aria-label="语言"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"> <circle cx="12" cy="12" r="9"></circle> <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z"></path> </svg> <span class="langmenu-cur">中</span> <svg class="langmenu-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m2 4 4 4 4-4"></path></svg> </summary> <div class="langmenu-panel" role="group" aria-label="语言"> <p class="langmenu-head">语言</p> <a class="langmenu-item" href="/releases/diffusers/0.33.0/" hreflang="en" lang="en" data-on="false"> <span class="langmenu-label">English</span> <span class="langmenu-code">EN</span> </a><a class="langmenu-item" href="/zh/release_note/diffusers/diffusers_v0.33.0/" hreflang="zh-Hans" lang="zh-CN" aria-current="true" data-on="true"> <span class="langmenu-label">中文</span> <span class="langmenu-code">中</span> </a><a class="langmenu-item" href="/ja/releases/diffusers/0.33.0/" hreflang="ja" lang="ja" data-on="false"> <span class="langmenu-label">日本語</span> <span class="langmenu-code">日</span> </a><a class="langmenu-item" href="/de/releases/diffusers/0.33.0/" hreflang="de" lang="de" data-on="false"> <span class="langmenu-label">Deutsch</span> <span class="langmenu-code">DE</span> </a><a class="langmenu-item" href="/fr/releases/diffusers/0.33.0/" hreflang="fr" lang="fr" data-on="false"> <span class="langmenu-label">Français</span> <span class="langmenu-code">FR</span> </a><a class="langmenu-item" href="/es/releases/diffusers/0.33.0/" hreflang="es" lang="es" data-on="false"> <span class="langmenu-label">Español</span> <span class="langmenu-code">ES</span> </a><a class="langmenu-item" href="/pt/releases/diffusers/0.33.0/" hreflang="pt-BR" lang="pt-BR" data-on="false"> <span class="langmenu-label">Português</span> <span class="langmenu-code">PT</span> </a><a class="langmenu-item" href="/ko/releases" hreflang="ko" lang="ko" data-on="false"> <span class="langmenu-label">한국어</span> <span class="langmenu-code">한</span> </a><a class="langmenu-item" href="/it/releases" hreflang="it" lang="it" data-on="false"> <span class="langmenu-label">Italiano</span> <span class="langmenu-code">IT</span> </a><a class="langmenu-item" href="/ru/releases" hreflang="ru" lang="ru" data-on="false"> <span class="langmenu-label">Русский</span> <span class="langmenu-code">RU</span> </a><a class="langmenu-item" href="/tr/releases" hreflang="tr" lang="tr" data-on="false"> <span class="langmenu-label">Türkçe</span> <span class="langmenu-code">TR</span> </a><a class="langmenu-item" href="/id/releases" hreflang="id" lang="id" data-on="false"> <span class="langmenu-label">Bahasa Indonesia</span> <span class="langmenu-code">ID</span> </a><a class="langmenu-item" href="/vi/releases" hreflang="vi" lang="vi" data-on="false"> <span class="langmenu-label">Tiếng Việt</span> <span class="langmenu-code">VI</span> </a><a class="langmenu-item" href="/ar/releases" hreflang="ar" lang="ar" data-on="false"> <span class="langmenu-label">العربية</span> <span class="langmenu-code">ع</span> </a><a class="langmenu-item" href="/sv/releases" hreflang="sv" lang="sv" data-on="false"> <span class="langmenu-label">Svenska</span> <span class="langmenu-code">SV</span> </a> </div> </details> <a class="iconlink" href="/releases.xml" aria-label="RSS"> <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"> <path d="M2 12.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM2 7.5a6.5 6.5 0 0 1 6.5 6.5h-2A4.5 4.5 0 0 0 2 9.5v-2ZM2 2.5A11.5 11.5 0 0 1 13.5 14h-2A9.5 9.5 0 0 0 2 4.5v-2Z"></path> </svg> </a> </div> </div> </header> <main id="main">  <div class="wrap"> <div class="detail"> <article> <header class="detail-hd"> <nav class="crumbs" aria-label="Breadcrumb"> <a href="/zh/">首页</a> <span class="sep">/</span> <a href="/zh/releases">版本发布</a> <span class="sep">/</span> <a href="/zh/releases/diffusers">diffusers</a> </nav> <h1 class="detail-title"> <span class="p">diffusers</span> v0.33.0 </h1> <div class="detail-meta"> <span class="chip chip--minor">小版本</span> <span><span class="k">发布时间</span>2025年4月9日</span>  <span class="sep" aria-hidden="true"></span> <a href="https://github.com/huggingface/diffusers" target="_blank" rel="noopener"> <span class="k">来源</span>huggingface/diffusers </a>   <span class="sep" aria-hidden="true"></span> <a href="/releases/diffusers/0.33.0"> 英文原文 </a>  <span class="sep" aria-hidden="true"></span> <button class="btn btn--ghost btn--sm" type="button" data-copy="https://www.stags.cn/zh/release_note/diffusers/diffusers_v0.33.0/">复制链接</button> </div> </header> <div class="prose" style="margin-top:var(--s8)">   <h2 id="视频生成的新管道">视频生成的新管道</h2>
+<p>###万2.1
+Wan2.1 是一套全面、开放的视频基础模型套件，突破了视频生成的界限。该模型版本包括 4 种不同的模型变体以及用于文本到视频、图像到视频和视频到视频的三种不同管道。</p>
+<ul>
+<li><code>Wan-AI/Wan2.1-T2V-1.3B-Diffusers</code></li>
+<li><code>Wan-AI/Wan2.1-T2V-14B-Diffusers</code></li>
+<li><code>Wan-AI/Wan2.1-I2V-14B-480P-Diffusers</code></li>
+<li><code>Wan-AI/Wan2.1-I2V-14B-720P-Diffusers</code>
+查看文档<a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/wan">此处</a> 以了解更多信息。</li>
+</ul>
+<h3 id="ltx-视频-095">LTX 视频 0.9.5</h3>
+<p>LTX Video 0.9.5 是超高速 LTX Video 型号系列的更新版本。最新模型引入了额外的调节选项，例如基于关键帧的动画和视频扩展（向前和向后）。
+为了支持这些额外的调节输入，我们引入了 <code>LTXConditionPipeline</code> 和 <code>LTXVideoCondition</code> 对象。
+要了解有关用法的更多信息，请查看<a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/ltx_video">此处</a> 的文档。</p>
+<h3 id="浑源图像转视频">浑源图像转视频</h3>
+<p>Hunyuan 利用预训练的多模态大语言模型 (MLLM) 和仅解码器架构作为文本编码器。  输入图像由 MLLM 处理以生成语义图像标记。然后将这些标记与视频潜在标记连接起来，从而能够对组合数据进行全面的全注意力计算，并无缝集成来自图像及其相关标题的信息。
+要了解更多信息，请查看<a href="ZZPH100%E2%80%8B%E2%80%8BZZ">此处</a> 的文档。</p>
+<h3 id="其他">其他</h3>
+<ul>
+<li><a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/easyanimate">EasyAnimateV5</a>（感谢@bubbliiiing 在<a href="https://github.com/huggingface/diffusers/pull/10626">此 PR</a> 中贡献了这一点）</li>
+<li><a href="https://huggingface.co/docs/diffusers/main/en/using-diffusers/consisid">ConsisID</a>（感谢@SHYuanBest 在<a href="https://github.com/huggingface/diffusers/pull/10140">此 PR</a> 中做出的贡献）</li>
+</ul>
+<h2 id="图像生成的新管道">图像生成的新管道</h2>
+<h3 id="sana-sprint">Sana-Sprint</h3>
+<p>SANA-Sprint 是一种高效的扩散模型，可实现超快速文本到图像的生成。 SANA-Sprint 基于预先训练的基础模型构建，并通过混合蒸馏进行增强，将推理步骤从 20 个大幅减少到 1-4 个，与 Flux 等模型的质量相媲美。
+感谢@lawrence-cj 对<a href="https://github.com/huggingface/diffusers/pull/11074">此 PR</a> 的帮助和指导。
+查看 SANA-Sprint 的<a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/sana_sprint">管道文档</a> 以了解更多信息。</p>
+<h3 id="发光2">发光2</h3>
+<p>Lumina-Image-2.0 是一个基于 2B 参数流的扩散转换器，用于生成文本到图像，在 Apache 2.0 许可证下发布。
+查看<a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/lumina2">文档</a> 以了解更多信息。感谢@zhuole1025 通过<a href="https://github.com/huggingface/diffusers/pull/10642">此 PR</a> 做出的贡献。
+人们还可以利用 LoRA 的 Apach2.0 许可对 Lumina2 进行微调。查看<a href="https://github.com/huggingface/diffusers/blob/main/examples/dreambooth/README_lumina2.md">指南</a> 了解更多详情。</p>
+<h3 id="奥尼金">奥尼金</h3>
+<p>OmniGen 是一个统一的图像生成模型，可以在单个框架内处理多种任务，包括文本到图像、图像编辑、主题驱动生成以及各种计算机视觉任务。该模型由 VAE 和基于 Phi-3 的单个变压器组成，用于处理文本和图像编码以及扩散过程。
+查看<a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/omnigen">文档</a> 以了解有关 OmniGen 的更多信息。感谢 @staoxiao 在 <a href="https://github.com/huggingface/diffusers/pull/10148">此 PR</a> 中贡献 OmniGen。</p>
+<h3 id="其他-1">其他</h3>
+<ul>
+<li><a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/cogview4">CogView4</a>（感谢@zRzRzRzRzRzRzR 在<a href="https://github.com/huggingface/diffusers/pull/10649">此 PR</a> 中贡献 CogView4）</li>
+</ul>
+<h2 id="新的内存优化">新的内存优化</h2>
+<h3 id="分层铸造">分层铸造</h3>
+<p>PyTorch 支持 <code>torch.float8_e4m3fn</code> 和 <code>torch.float8_e5m2</code> 作为权重存储 <code>dtypes</code>，但由于未实现的内核支持，它们无法用于许多设备上的计算。
+但是，您仍然可以使用这些 <code>dtypes</code> 以 FP8 精度存储模型权重，并在前向传递中使用层时将其即时向上转换为广泛支持的数据类型，例如 <code>torch.float16</code> 或 <code>torch.bfloat16</code>。这称为分层权重铸造。这可能会将模型的 VRAM 需求降低 50%。   
+&#x3C;详情>
+&#x3C;摘要>代码&#x3C;/摘要></p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> torch</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers </span><span style="color:#D73A49">import</span><span style="color:#24292E"> CogVideoXPipeline, CogVideoXTransformer3DModel</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers.utils </span><span style="color:#D73A49">import</span><span style="color:#24292E"> export_to_video</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">model_id </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "THUDM/CogVideoX-5b"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Load the model in bfloat16 and enable layerwise casting</span></span>
+<span class="line"><span style="color:#24292E">transformer </span><span style="color:#D73A49">=</span><span style="color:#24292E"> CogVideoXTransformer3DModel.from_pretrained(model_id, </span><span style="color:#E36209">subfolder</span><span style="color:#D73A49">=</span><span style="color:#032F62">"transformer"</span><span style="color:#24292E">, </span><span style="color:#E36209">torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.bfloat16)</span></span>
+<span class="line"><span style="color:#24292E">transformer.enable_layerwise_casting(</span><span style="color:#E36209">storage_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.float8_e4m3fn, </span><span style="color:#E36209">compute_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.bfloat16)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Load the pipeline</span></span>
+<span class="line"><span style="color:#24292E">pipe </span><span style="color:#D73A49">=</span><span style="color:#24292E"> CogVideoXPipeline.from_pretrained(model_id, </span><span style="color:#E36209">transformer</span><span style="color:#D73A49">=</span><span style="color:#24292E">transformer, </span><span style="color:#E36209">torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.bfloat16)</span></span>
+<span class="line"><span style="color:#24292E">pipe.to(</span><span style="color:#032F62">"cuda"</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">prompt </span><span style="color:#D73A49">=</span><span style="color:#24292E"> (</span></span>
+<span class="line"><span style="color:#032F62">    "A panda, dressed in a small, red jacket and a tiny hat, sits on a wooden stool in a serene bamboo forest. "</span></span>
+<span class="line"><span style="color:#032F62">    "The panda's fluffy paws strum a miniature acoustic guitar, producing soft, melodic tunes. Nearby, a few other "</span></span>
+<span class="line"><span style="color:#032F62">    "pandas gather, watching curiously and some clapping in rhythm. Sunlight filters through the tall bamboo, "</span></span>
+<span class="line"><span style="color:#032F62">    "casting a gentle glow on the scene. The panda's face is expressive, showing concentration and joy as it plays. "</span></span>
+<span class="line"><span style="color:#032F62">    "The background includes a small, flowing stream and vibrant green foliage, enhancing the peaceful and magical "</span></span>
+<span class="line"><span style="color:#032F62">    "atmosphere of this unique musical performance."</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">video </span><span style="color:#D73A49">=</span><span style="color:#24292E"> pipe(</span><span style="color:#E36209">prompt</span><span style="color:#D73A49">=</span><span style="color:#24292E">prompt, </span><span style="color:#E36209">guidance_scale</span><span style="color:#D73A49">=</span><span style="color:#005CC5">6</span><span style="color:#24292E">, </span><span style="color:#E36209">num_inference_steps</span><span style="color:#D73A49">=</span><span style="color:#005CC5">50</span><span style="color:#24292E">).frames[</span><span style="color:#005CC5">0</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#24292E">export_to_video(video, </span><span style="color:#032F62">"output.mp4"</span><span style="color:#24292E">, </span><span style="color:#E36209">fps</span><span style="color:#D73A49">=</span><span style="color:#005CC5">8</span><span style="color:#24292E">)</span></span></code></pre>
+<p>&#x3C;/详情></p>
+<h3 id="群组卸载">群组卸载</h3>
+<p>组卸载是顺序卸载和模型卸载之间的中间立场。它通过卸载内部层组（<code>torch.nn.ModuleList</code> 或 <code>torch.nn.Sequential</code>）来工作，这比模型级卸载使用更少的内存。它也比顺序级卸载更快，因为设备同步的数量减少了。
+在 CUDA 设备上，我们还可以选择通过 <a href="https://pytorch.org/docs/stable/generated/torch.cuda.Stream.html">CUDA Streams</a> 启用层预取。当当前层正在执行时，要执行的下一层会加载到加速器设备上，这使得推理速度大大加快，同时仍然保持 VRAM 要求非常低。由此，我们引入了计算与数据传输重叠的想法。
+需要注意的一件事是，使用 CUDA 流可能会导致 CPU RAM 使用量大幅增加。如果您选择设置<code>use_stream=True</code>，请确保可用CPU RAM是型号大小的2倍。您可以通过设置 <code>low_cpu_mem_usage=True</code> 来减少 CPU RAM 使用量。这应该限制所使用的 CPU RAM 与模型的大小大致相同，但会在推理过程中引入轻微的延迟。<br>
+您还可以在使用 <code>use_stream=True</code> 时使用 <code>record_stream=True</code> 来获得更多加速，但代价是稍微增加内存使用量。
+&#x3C;详情>
+&#x3C;摘要>代码&#x3C;/摘要></p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> torch</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers </span><span style="color:#D73A49">import</span><span style="color:#24292E"> CogVideoXPipeline</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers.utils </span><span style="color:#D73A49">import</span><span style="color:#24292E"> export_to_video</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Load the pipeline</span></span>
+<span class="line"><span style="color:#24292E">onload_device </span><span style="color:#D73A49">=</span><span style="color:#24292E"> torch.device(</span><span style="color:#032F62">"cuda"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">offload_device </span><span style="color:#D73A49">=</span><span style="color:#24292E"> torch.device(</span><span style="color:#032F62">"cpu"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pipe </span><span style="color:#D73A49">=</span><span style="color:#24292E"> CogVideoXPipeline.from_pretrained(</span><span style="color:#032F62">"THUDM/CogVideoX-5b"</span><span style="color:#24292E">, </span><span style="color:#E36209">torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.bfloat16)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># We can utilize the enable_group_offload method for Diffusers model implementations</span></span>
+<span class="line"><span style="color:#24292E">pipe.transformer.enable_group_offload(</span></span>
+<span class="line"><span style="color:#E36209">	onload_device</span><span style="color:#D73A49">=</span><span style="color:#24292E">onload_device, </span></span>
+<span class="line"><span style="color:#E36209">	offload_device</span><span style="color:#D73A49">=</span><span style="color:#24292E">offload_device, </span></span>
+<span class="line"><span style="color:#E36209">	offload_type</span><span style="color:#D73A49">=</span><span style="color:#032F62">"leaf_level"</span><span style="color:#24292E">, </span></span>
+<span class="line"><span style="color:#E36209">	use_stream</span><span style="color:#D73A49">=</span><span style="color:#005CC5">True</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">prompt </span><span style="color:#D73A49">=</span><span style="color:#24292E"> (</span></span>
+<span class="line"><span style="color:#032F62">    "A panda, dressed in a small, red jacket and a tiny hat, sits on a wooden stool in a serene bamboo forest. "</span></span>
+<span class="line"><span style="color:#032F62">    "The panda's fluffy paws strum a miniature acoustic guitar, producing soft, melodic tunes. Nearby, a few other "</span></span>
+<span class="line"><span style="color:#032F62">    "pandas gather, watching curiously and some clapping in rhythm. Sunlight filters through the tall bamboo, "</span></span>
+<span class="line"><span style="color:#032F62">    "casting a gentle glow on the scene. The panda's face is expressive, showing concentration and joy as it plays. "</span></span>
+<span class="line"><span style="color:#032F62">    "The background includes a small, flowing stream and vibrant green foliage, enhancing the peaceful and magical "</span></span>
+<span class="line"><span style="color:#032F62">    "atmosphere of this unique musical performance."</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">video </span><span style="color:#D73A49">=</span><span style="color:#24292E"> pipe(</span><span style="color:#E36209">prompt</span><span style="color:#D73A49">=</span><span style="color:#24292E">prompt, </span><span style="color:#E36209">guidance_scale</span><span style="color:#D73A49">=</span><span style="color:#005CC5">6</span><span style="color:#24292E">, </span><span style="color:#E36209">num_inference_steps</span><span style="color:#D73A49">=</span><span style="color:#005CC5">50</span><span style="color:#24292E">).frames[</span><span style="color:#005CC5">0</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#6A737D"># This utilized about 14.79 GB. It can be further reduced by using tiling and using leaf_level offloading throughout the pipeline.</span></span>
+<span class="line"><span style="color:#005CC5">print</span><span style="color:#24292E">(</span><span style="color:#D73A49">f</span><span style="color:#032F62">"Max memory reserved: </span><span style="color:#005CC5">{</span><span style="color:#24292E">torch.cuda.max_memory_allocated() </span><span style="color:#D73A49">/</span><span style="color:#005CC5"> 1024</span><span style="color:#D73A49">**</span><span style="color:#005CC5">3</span><span style="color:#D73A49">:.2f</span><span style="color:#005CC5">}</span><span style="color:#032F62"> GB"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">export_to_video(video, </span><span style="color:#032F62">"output.mp4"</span><span style="color:#24292E">, </span><span style="color:#E36209">fps</span><span style="color:#D73A49">=</span><span style="color:#005CC5">8</span><span style="color:#24292E">)</span></span></code></pre>
+<p>&#x3C;/详情>
+组卸载还可以应用于非 Diffusers 模型，例如 <code>transformers</code> 库中的文本编码器。<br>
+&#x3C;详情>
+&#x3C;摘要>代码&#x3C;/摘要></p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> torch</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers </span><span style="color:#D73A49">import</span><span style="color:#24292E"> CogVideoXPipeline</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers.hooks </span><span style="color:#D73A49">import</span><span style="color:#24292E"> apply_group_offloading</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers.utils </span><span style="color:#D73A49">import</span><span style="color:#24292E"> export_to_video</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Load the pipeline</span></span>
+<span class="line"><span style="color:#24292E">onload_device </span><span style="color:#D73A49">=</span><span style="color:#24292E"> torch.device(</span><span style="color:#032F62">"cuda"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">offload_device </span><span style="color:#D73A49">=</span><span style="color:#24292E"> torch.device(</span><span style="color:#032F62">"cpu"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pipe </span><span style="color:#D73A49">=</span><span style="color:#24292E"> CogVideoXPipeline.from_pretrained(</span><span style="color:#032F62">"THUDM/CogVideoX-5b"</span><span style="color:#24292E">, </span><span style="color:#E36209">torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.bfloat16)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># For any other model implementations, the apply_group_offloading function can be used</span></span>
+<span class="line"><span style="color:#24292E">apply_group_offloading(pipe.text_encoder, </span><span style="color:#E36209">onload_device</span><span style="color:#D73A49">=</span><span style="color:#24292E">onload_device, </span><span style="color:#E36209">offload_type</span><span style="color:#D73A49">=</span><span style="color:#032F62">"block_level"</span><span style="color:#24292E">, </span><span style="color:#E36209">num_blocks_per_group</span><span style="color:#D73A49">=</span><span style="color:#005CC5">2</span><span style="color:#24292E">)</span></span></code></pre>
+<p>&#x3C;/详情></p>
+<h2 id="远程组件">远程组件</h2>
+<p>远程组件是一项实验性功能，旨在将推理管道的内存密集型步骤卸载到远程端点。最初的实现主要侧重于 VAE 解码操作。以下是当前支持的模型端点：</p>
+<table>
+<thead>
+<tr>
+<th>型号</th>
+<th>端点</th>
+<th>型号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>稳定扩散 v1</td>
+<td><a href="https://q1bj3bpq6kzilnsu.us-east-1.aws.endpoints.huggingface.cloud">https://q1bj3bpq6kzilnsu.us-east-1.aws.endpoints.huggingface.cloud</a></td>
+<td>稳定性ai/sd-vae-ft-mse</td>
+</tr>
+<tr>
+<td>稳定扩散 XL</td>
+<td><a href="https://x2dmsqunjd6k9prw.us-east-1.aws.endpoints.huggingface.cloud">https://x2dmsqunjd6k9prw.us-east-1.aws.endpoints.huggingface.cloud</a></td>
+<td>madebyollin/sdxl-vae-fp16-修复</td>
+</tr>
+<tr>
+<td>助焊剂</td>
+<td><a href="https://whhx50ex1aryqvw6.us-east-1.aws.endpoints.huggingface.cloud">https://whhx50ex1aryqvw6.us-east-1.aws.endpoints.huggingface.cloud</a></td>
+<td>黑森林实验室/FLUX.1-schnell</td>
+</tr>
+<tr>
+<td>浑源视频</td>
+<td><a href="https://o7ywnmrahorts457.us-east-1.aws.endpoints.huggingface.cloud">https://o7ywnmrahorts457.us-east-1.aws.endpoints.huggingface.cloud</a></td>
+<td>混源视频社区/混源视频</td>
+</tr>
+<tr>
+<td>这是使用浑源视频管道进行远程解码的示例：</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&#x3C;详情></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&#x3C;摘要>代码&#x3C;/摘要></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers </span><span style="color:#D73A49">import</span><span style="color:#24292E"> HunyuanVideoPipeline, HunyuanVideoTransformer3DModel</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">model_id </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "hunyuanvideo-community/HunyuanVideo"</span></span>
+<span class="line"><span style="color:#24292E">transformer </span><span style="color:#D73A49">=</span><span style="color:#24292E"> HunyuanVideoTransformer3DModel.from_pretrained(</span></span>
+<span class="line"><span style="color:#24292E">    model_id, </span><span style="color:#E36209">subfolder</span><span style="color:#D73A49">=</span><span style="color:#032F62">"transformer"</span><span style="color:#24292E">, </span><span style="color:#E36209">torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.bfloat16</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pipe </span><span style="color:#D73A49">=</span><span style="color:#24292E"> HunyuanVideoPipeline.from_pretrained(</span></span>
+<span class="line"><span style="color:#24292E">    model_id, </span><span style="color:#E36209">transformer</span><span style="color:#D73A49">=</span><span style="color:#24292E">transformer, </span><span style="color:#E36209">vae</span><span style="color:#D73A49">=</span><span style="color:#005CC5">None</span><span style="color:#24292E">, </span><span style="color:#E36209">torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.float16</span></span>
+<span class="line"><span style="color:#24292E">).to(</span><span style="color:#032F62">"cuda"</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">latent </span><span style="color:#D73A49">=</span><span style="color:#24292E"> pipe(</span></span>
+<span class="line"><span style="color:#E36209">    prompt</span><span style="color:#D73A49">=</span><span style="color:#032F62">"A cat walks on the grass, realistic"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">    height</span><span style="color:#D73A49">=</span><span style="color:#005CC5">320</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">    width</span><span style="color:#D73A49">=</span><span style="color:#005CC5">512</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">    num_frames</span><span style="color:#D73A49">=</span><span style="color:#005CC5">61</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">    num_inference_steps</span><span style="color:#D73A49">=</span><span style="color:#005CC5">30</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">    output_type</span><span style="color:#D73A49">=</span><span style="color:#032F62">"latent"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">).frames</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">video </span><span style="color:#D73A49">=</span><span style="color:#24292E"> remote_decode(</span></span>
+<span class="line"><span style="color:#E36209">    endpoint</span><span style="color:#D73A49">=</span><span style="color:#032F62">"https://o7ywnmrahorts457.us-east-1.aws.endpoints.huggingface.cloud/"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">    tensor</span><span style="color:#D73A49">=</span><span style="color:#24292E">latent,</span></span>
+<span class="line"><span style="color:#E36209">    output_type</span><span style="color:#D73A49">=</span><span style="color:#032F62">"mp4"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#005CC5"> isinstance</span><span style="color:#24292E">(video, </span><span style="color:#005CC5">bytes</span><span style="color:#24292E">):</span></span>
+<span class="line"><span style="color:#D73A49">    with</span><span style="color:#005CC5"> open</span><span style="color:#24292E">(</span><span style="color:#032F62">"video.mp4"</span><span style="color:#24292E">, </span><span style="color:#032F62">"wb"</span><span style="color:#24292E">) </span><span style="color:#D73A49">as</span><span style="color:#24292E"> f:</span></span>
+<span class="line"><span style="color:#24292E">        f.write(video) </span></span></code></pre>
+<p>&#x3C;/详情>
+查看<a href="https://huggingface.co/docs/diffusers/main/en/hybrid_inference/overview">文档</a> 以了解更多信息。</p>
+<h2 id="引入-dit-的缓存推理">引入 DiT 的缓存推理</h2>
+<p>Diffusion Transformer 模型的缓存推理是一种性能优化，可通过缓存中间值显着加速去噪过程。该技术减少了跨时间步长的冗余计算，从而加快了生成速度，但输出质量略有下降。
+查看<a href="https://huggingface.co/docs/diffusers/main/en/api/cache">文档</a> 以了解有关可用缓存方法的更多信息。
+<strong>金字塔关注广播</strong>
+&#x3C;详情>
+&#x3C;摘要>代码&#x3C;/摘要></p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> torch</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers </span><span style="color:#D73A49">import</span><span style="color:#24292E"> CogVideoXPipeline, PyramidAttentionBroadcastConfig</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">pipe </span><span style="color:#D73A49">=</span><span style="color:#24292E"> CogVideoXPipeline.from_pretrained(</span><span style="color:#032F62">"THUDM/CogVideoX-5b"</span><span style="color:#24292E">, </span><span style="color:#E36209">torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.bfloat16)</span></span>
+<span class="line"><span style="color:#24292E">pipe.to(</span><span style="color:#032F62">"cuda"</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">config </span><span style="color:#D73A49">=</span><span style="color:#24292E"> PyramidAttentionBroadcastConfig(</span></span>
+<span class="line"><span style="color:#E36209">    spatial_attention_block_skip_range</span><span style="color:#D73A49">=</span><span style="color:#005CC5">2</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">    spatial_attention_timestep_skip_range</span><span style="color:#D73A49">=</span><span style="color:#24292E">(</span><span style="color:#005CC5">100</span><span style="color:#24292E">, </span><span style="color:#005CC5">800</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#E36209">    current_timestep_callback</span><span style="color:#D73A49">=lambda</span><span style="color:#24292E">: pipe.current_timestep,</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pipe.transformer.enable_cache(config)</span></span></code></pre>
+<p>&#x3C;/详情>
+<strong>更快的缓存</strong>
+&#x3C;详情>
+&#x3C;摘要>代码&#x3C;/摘要></p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> torch</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers </span><span style="color:#D73A49">import</span><span style="color:#24292E"> CogVideoXPipeline, FasterCacheConfig</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">pipe </span><span style="color:#D73A49">=</span><span style="color:#24292E"> CogVideoXPipeline.from_pretrained(</span><span style="color:#032F62">"THUDM/CogVideoX-5b"</span><span style="color:#24292E">, </span><span style="color:#E36209">torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.bfloat16)</span></span>
+<span class="line"><span style="color:#24292E">pipe.to(</span><span style="color:#032F62">"cuda"</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">config </span><span style="color:#D73A49">=</span><span style="color:#24292E"> FasterCacheConfig(</span></span>
+<span class="line"><span style="color:#E36209">        spatial_attention_block_skip_range</span><span style="color:#D73A49">=</span><span style="color:#005CC5">2</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">        spatial_attention_timestep_skip_range</span><span style="color:#D73A49">=</span><span style="color:#24292E">(</span><span style="color:#D73A49">-</span><span style="color:#005CC5">1</span><span style="color:#24292E">, </span><span style="color:#005CC5">901</span><span style="color:#24292E">),</span></span>
+<span class="line"><span style="color:#E36209">        unconditional_batch_skip_range</span><span style="color:#D73A49">=</span><span style="color:#005CC5">2</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">        attention_weight_callback</span><span style="color:#D73A49">=lambda</span><span style="color:#24292E"> _: </span><span style="color:#005CC5">0.5</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">        is_guidance_distilled</span><span style="color:#D73A49">=</span><span style="color:#005CC5">True</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pipe.transformer.enable_cache(config)</span></span></code></pre>
+<p>&#x3C;/详情></p>
+<h2 id="量化">量化</h2>
+<h3 id="双币种后端">双币种后端</h3>
+<p>Diffusers 现在支持 <a href="https://huggingface.co/docs/diffusers/main/en/quantization/quanto">Quanto 量化后端</a>，它提供 <code>float8</code> 、 <code>int8</code> 、 <code>int4</code> 和 <code>int2</code> 量化 dtypes。</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> torch</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers </span><span style="color:#D73A49">import</span><span style="color:#24292E"> FluxTransformer2DModel, QuantoConfig</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">model_id </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "black-forest-labs/FLUX.1-dev"</span></span>
+<span class="line"><span style="color:#24292E">quantization_config </span><span style="color:#D73A49">=</span><span style="color:#24292E"> QuantoConfig(</span><span style="color:#E36209">weights_dtype</span><span style="color:#D73A49">=</span><span style="color:#032F62">"float8"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">transformer </span><span style="color:#D73A49">=</span><span style="color:#24292E"> FluxTransformer2DModel.from_pretrained(</span></span>
+<span class="line"><span style="color:#24292E">      model_id,</span></span>
+<span class="line"><span style="color:#E36209">      subfolder</span><span style="color:#D73A49">=</span><span style="color:#032F62">"transformer"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">      quantization_config</span><span style="color:#D73A49">=</span><span style="color:#24292E">quantization_config,</span></span>
+<span class="line"><span style="color:#E36209">      torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.bfloat16,</span></span>
+<span class="line"><span style="color:#24292E">)</span></span></code></pre>
+<p>Quanto <code>int8</code> 型号还与 <code>torch.compile</code> 兼容：
+&#x3C;详情>
+&#x3C;摘要>代码&#x3C;/摘要></p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> torch</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers </span><span style="color:#D73A49">import</span><span style="color:#24292E"> FluxTransformer2DModel, QuantoConfig</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">model_id </span><span style="color:#D73A49">=</span><span style="color:#032F62"> "black-forest-labs/FLUX.1-dev"</span></span>
+<span class="line"><span style="color:#24292E">quantization_config </span><span style="color:#D73A49">=</span><span style="color:#24292E"> QuantoConfig(</span><span style="color:#E36209">weights_dtype</span><span style="color:#D73A49">=</span><span style="color:#032F62">"float8"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">transformer </span><span style="color:#D73A49">=</span><span style="color:#24292E"> FluxTransformer2DModel.from_pretrained(</span></span>
+<span class="line"><span style="color:#24292E">      model_id,</span></span>
+<span class="line"><span style="color:#E36209">      subfolder</span><span style="color:#D73A49">=</span><span style="color:#032F62">"transformer"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">      quantization_config</span><span style="color:#D73A49">=</span><span style="color:#24292E">quantization_config,</span></span>
+<span class="line"><span style="color:#E36209">      torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">torch.bfloat16,</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">transformer.compile()</span></span></code></pre>
+<p>&#x3C;/详情></p>
+<h3 id="改进了-uintx-torchao-检查点与-torch26-的加载">改进了 <code>uintx</code> TorchAO 检查点与 <code>torch>=2.6</code> 的加载</h3>
+<p>TorchAO 检查点当前必须使用 pickle 进行序列化。对于某些使用 <code>uintx</code> 格式的量化数据类型（例如 <code>uint4wo</code>），这涉及在模型文件中保存子类 TorchAO Tensor 对象。这使得直接使用 Diffusers 加载模型有点棘手，因为我们不允许从 pickle 文件反序列化 artbitary Python 对象。<br>
+Torch 2.6 允许将预期的张量添加到 torch 安全全局变量中，这使我们可以直接使用这些对象加载 TorchAO 检查点。</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="diff"><code><span class="line"><span style="color:#B31D28"><span style="user-select: none;">-</span> state_dict = torch.load("/path/to/flux_uint4wo/diffusion_pytorch_model.bin", weights_only=False, map_location="cpu")</span></span>
+<span class="line"><span style="color:#B31D28"><span style="user-select: none;">-</span> with init_empty_weights():</span></span>
+<span class="line"><span style="color:#B31D28"><span style="user-select: none;">-</span>     transformer = FluxTransformer2DModel.from_config("/path/to/flux_uint4wo/config.json")</span></span>
+<span class="line"><span style="color:#B31D28"><span style="user-select: none;">-</span> transformer.load_state_dict(state_dict, strict=True, assign=True)</span></span>
+<span class="line"><span style="color:#22863A"><span style="user-select: none;">+</span> transformer = FluxTransformer2DModel.from_pretrained("/path/to/flux_uint4wo/")  </span></span></code></pre>
+<h2 id="lora">LoRA</h2>
+<p>在此版本中，我们对 LoRA 方面进行了一些改进。
+<strong>🚨 改进了加载 Flux 的非扩散器 LoRA 检查点的覆盖范围</strong>
+请注意 <a href="https://github.com/huggingface/diffusers/pull/10985">此 PR</a> 中引入的重大更改🚨 我们建议您将 <code>peft</code> 安装升级到最新版本 - <code>pip install -U peft</code>，尤其是在处理 Flux LoRA 时。
+<strong>热插拔 LoRA 时支持 <code>torch.compile()</code>，而不触发重新编译</strong>
+服务多个适配器时的常见用例是首先加载一个适配器，生成图像，加载另一个适配器，生成更多图像，加载另一个适配器等。此工作流程通常需要调用 <a href="https://huggingface.co/docs/diffusers/v0.33.0/en/api/loaders/lora#diffusers.loaders.StableDiffusionLoraLoaderMixin.load_lora_weights">load_lora_weights()</a>、set_adapters()，可能还需要调用 <a href="https://huggingface.co/docs/diffusers/v0.33.0/en/api/loaders/peft#diffusers.loaders.PeftAdapterMixin.delete_adapters">delete_adapters()</a> 以节省内存。此外，如果使用 torch.compile 编译模型，执行这些步骤需要重新编译，这需要时间。
+为了更好地支持这种常见的工作流程，您可以“热交换”LoRA 适配器，以避免积累内存，并在某些情况下避免重新编译。它需要已加载适配器，并且将新的适配器重量替换为现有适配器。
+查看<a href="https://huggingface.co/docs/diffusers/en/using-diffusers/loading_adapters#hotswapping-lora-adapters">文档</a> 以了解有关此功能的更多信息。
+另一个主要变化是支持</p>
+<ul>
+<li>将 LoRA 加载到量化模型检查点</li>
+</ul>
+<h2 id="dtype-管道图"><code>dtype</code> 管道图</h2>
+<p>由于各种管道要求其组件在不同的计算数据类型中运行，因此我们现在支持在初始化管道时传递数据类型映射：</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers </span><span style="color:#D73A49">import</span><span style="color:#24292E"> HunyuanVideoPipeline</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> torch</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">pipe </span><span style="color:#D73A49">=</span><span style="color:#24292E"> HunyuanVideoPipeline.from_pretrained(</span></span>
+<span class="line"><span style="color:#032F62">    "hunyuanvideo-community/HunyuanVideo"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#E36209">    torch_dtype</span><span style="color:#D73A49">=</span><span style="color:#24292E">{</span><span style="color:#032F62">"transformer"</span><span style="color:#24292E">: torch.bfloat16, </span><span style="color:#032F62">"default"</span><span style="color:#24292E">: torch.float16},</span></span>
+<span class="line"><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#005CC5">print</span><span style="color:#24292E">(pipe.transformer.dtype, pipe.vae.dtype)  </span><span style="color:#6A737D"># (torch.bfloat16, torch.float16)</span></span></code></pre>
+<h2 id="汽车模型">汽车模型</h2>
+<p>此版本包含一个类似于 <code>transformers</code> 中的 AutoModel 对象，它会自动为所提供的存储库获取适当的模型类。</p>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> diffusers </span><span style="color:#D73A49">import</span><span style="color:#24292E"> AutoModel</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">unet </span><span style="color:#D73A49">=</span><span style="color:#24292E"> AutoModel.from_pretrained(</span><span style="color:#032F62">"runwayml/stable-diffusion-v1-5"</span><span style="color:#24292E">, </span><span style="color:#E36209">subfolder</span><span style="color:#D73A49">=</span><span style="color:#032F62">"unet"</span><span style="color:#24292E">)</span></span></code></pre>
+<h2 id="所有提交">所有提交</h2>
+<ul>
+<li>[Sana 4K] 添加 vae 平铺选项以避免 OOM by @leisuzz in #10583</li>
+<li><code>StableDiffusion3Img2ImgPipeline</code> 的 IP 适配器，作者：@guiyrt，#10589</li>
+<li>[DC-AE、SANA] 修复了 @chenjy2003 在 #10595 中的 SanaMultiscaleLinearAttention apply_quadratic_attention bf16</li>
+<li>通过 @hlky 在 #10523 中将缓冲区移动到设备</li>
+<li>[文档] 通过 @guiyrt 在 #10597 中将 SD3 ip_adapter model_id 更新为扩散器检查点</li>
+<li>@hlky 在 #10549 中对 MPS 进行调度修复</li>
+<li>[文档] 在 #10544 中添加@ Chengzeyi 使用 ParaAttention 优化 FLUX 和 HunyuanVideo 的文档</li>
+<li>@leisuzz 在 #10534 中对 RMSNorm 进行 NPU 适配</li>
+<li>在 #10515 中@entrpn 使用 ptxla 在 TPU 上实现 Flux</li>
+<li>[核心] ConsisID by @SHYuanBest in #10140</li>
+<li>[训练] 将其余块设置为 <code>requires_grad</code> False。  由 @sayakpaul 在 #10607</li>
+<li>杂务：删除 #10609 中 @sunxunle 的多余单词</li>
+<li>由 @baymax591 在 #10123 中修正 npu 不支持 float64 的错误</li>
+<li>[杂务] 将许可从 2024 年更改为 2025 年。作者：@sayakpaul，#10615</li>
+<li>在其他设备上启用 dreambooth lorafinetune 示例，作者：@jiqing-feng，#10602</li>
+<li>在 #10617 中通过 @lmxyy 进行评估时删除 FP32 Wrapper</li>
+<li>[测试] 使测试与设备无关（第 3 部分），作者：@faaany，#10437</li>
+<li>修复@yiyixuxu 在 #10366 中的卸载 GPU 测试等</li>
+<li>删除 #10619 中 @Wauplin 的缓存迁移脚本</li>
+<li>[核心] 分层向上转换，作者：@a-r-r-o-w，#10347</li>
+<li>通过 @a-r-r-o-w 在 #10627 中改进 TorchAO 错误消息</li>
+<li>[CI] 在#10613中通过@DN6更新所有工作流程中的HF_TOKEN</li>
+<li>添加 onnxruntime-migraphx 作为 import_utils.py 中 onnxruntime 检查的一部分，由 @kahmed10 在 #10624 中添加</li>
+<li>[测试] 修改 @sayakpaul 在 #10630 中失败的亚麻测试的测试切片</li>
+<li>[文档] 修复@sayakpaul 在#10632 中的para 注意文档中的图像路径</li>
+<li>[文档] @stevhliu 在 #10622 中进行 uv 安装</li>
+<li>@raulc0399 在 #10629 中混淆了宽度和高度</li>
+<li>将 IP 适配器示例添加到 Flux 文档，作者为 @hlky，位于 #10633</li>
+<li>删除冗余的 require_grad = False by @YanivDorGalron in #10628</li>
+<li>[杂务] 添加一个脚本，从 @sayakpaul 的完整微调模型中提取 loras #10631</li>
+<li>添加 pipeline_stable_diffusion_xl_attentive_eraser by @Anonym0u3 in #10579</li>
+<li>@leisuzz 在 #10409 中针对 Sanna 的 NPU 适配</li>
+<li>在 @JacobHelwig 的 <code>scheduling_ddpm.py</code> 文档中添加 sigmoid 调度程序 #10648</li>
+<li>通过 @lavinal712 在 #10605 创建一个脚本来训练 autoencoderkl</li>
+<li>在 #10610 中添加 @Marlon154 为 FLUX 提供语义指导的社区管道</li>
+<li>ControlNet Union controlnet_conditioning_scale 用于多个控制输入，由 @hlky 在 #10666 中提供</li>
+<li>[训练] 由 @hlky 在 #10664 中转换为 ImageFolder 脚本</li>
+<li>添加provider_options到OnnxRuntimeModel by @hlky in #10661</li>
+<li>在 #10651 中由 @victolee0 修复 LuminaText2ImgPipeline 中的 check_inputs 函数</li>
+<li>SDXL ControlNet Union 管道，@Teriks 在 #10663 中使 control_image 参数不可变</li>
+<li>恢复@GiusCat 在 #10644 中的 RePaint 调度程序“修复”</li>
+<li>[核心] 金字塔注意力广播，作者：@a-r-r-o-w，#9562</li>
+<li>[修复] 参考 #10600 中 @hanchchch 的 AutoencoderKLHunyuanVideo._encode 上的 use_framewise_encoding</li>
+<li>在 #10611 中通过 @a-r-r-o-w 重构梯度检查点</li>
+<li>[测试] 有条件地检查 @sayakpaul 在 #10669 中的 <code>fp8_e4m3_bf16_max_memory &#x3C; fp8_e4m3_fp32_max_memory</code></li>
+<li>修复了 @dimitribarbot 在 #10670 中以 float16 模式使用 SDXL 参考社区管道时管道 dtype 发生意外变化的问题</li>
+<li>[测试] 在 #10681 中@sayakpaul 的 hunyuanvideo 测试中更新 llamatokenizer</li>
+<li>支持 StableDiffusionAdapterPipeline.from_single_file by @Teriks in #10552</li>
+<li>修复（hunyuan-video）：@badayvedat 在 #10684 中检查高度和宽度输入时的拼写错误</li>
+<li>[修复] Auraflow Pipeline 中的 check_inputs 函数，由 @SahilCarterr 在 #10678 中编写</li>
+<li>修复@tenpercent 在 #10564 中启用对 ROCm 的内存高效关注</li>
+<li>修复 #10698 中 @Luvata 指示 pix2pix 中随机变换不一致的问题</li>
+<li>feat(training-utils)：在 #10699 中@badayvedat 支持compute_密度_for_timestep_sampling 中的设备和数据类型参数</li>
+<li>修复了 @N0-Flux-given 在 #10706 中“write_own_pipeline”自述文件中的语法</li>
+<li>修复@ParagEkbote 在 #10704 中有关图像到图像管道的文档</li>
+<li>[bitsandbytes] 通过 @sayakpaul 在 #10401 中简化 bnb int8 dequant</li>
+<li>修复 train_text_to_image.py —help by @nkthiebaut in #10711</li>
+<li>@ParagEkbote 的社区脚本笔记本 - 6，#10713</li>
+<li>[修复] @SahilCarterr 在 #10714 中在 from_pretrained() 中键入提示以确保正确的类型推断</li>
+<li>在#10719中@xieofxie在from_pretrained中添加provider_options</li>
+<li>[社区] @suzukimain 在 #10417 中增强了 <code>Model Search</code></li>
+<li>[错误修正] @leisuzz 在 #10724 中针对 Sana 的 NPU 适配</li>
+<li>@hlky 在 #10728 中使用 IP 适配器量化通量</li>
+<li>EDMEulerScheduler 接受 sigmas，由 @hlky 在 #10734 添加 Final_sigmas_type</li>
+<li>[LoRA] 修复@sayakpaul 在 #10532 中的 peft 状态字典解析</li>
+<li>在 #10742 中@hlky 将 <code>Self</code> 类型提示添加到 <code>ModelMixin</code> 的 <code>from_pretrained</code></li>
+<li>[测试] 通过 @sayakpaul 在 #10765 中的训练测试分层铸造</li>
+<li>加速 hunyuan 编码器因果掩码生成，由 @dabeschte 在 #10764 中完成</li>
+<li>[CI] 在 #10769 中修复 @DN6 的 Truffle Hog 失败问题</li>
+<li>在 #10148 中添加 @staoxiao 的 OmniGen</li>
+<li>壮举：@elismasilva 在 #10759 中针对 SDXL 的新社区 mix_tiling_sdxl 管道</li>
+<li>在#10642中添加@zhuole1025对lumina2的支持</li>
+<li>由 @a-r-r-o-w 在 #10771 中重构 OmniGen</li>
+<li>@Luvata 在 #10777 中更快的 set_adapters</li>
+<li>[单个文件] 在 #10781 中为 @DN6 添加对 Lumina Image 2.0 Transformer 的单个文件支持</li>
+<li>在 #10740 中@hlky 将 <code>use_lu_lambdas</code> 和 <code>use_karras_sigmas</code> 与 <code>DPMSolverMultistepScheduler</code> 中的 <code>beta_schedule=squaredcos_cap_v2</code> 一起修复</li>
+<li>SDXL 上的 <code>MultiControlNetUnionModel</code>，作者：@guiyrt，#10747
+*修复：[社区管道]修复@elismasilva在#10774中图像上的扁平化元素</li>
+<li>在 #10761 中 @faaany 传递给 safetensors 之前使张量连续</li>
+<li>在 #10685 中通过 @a-r-r-o-w 使用 fp8 分层投射时禁用 PEFT 输入自动投射</li>
+<li>更新 FlowMatch 文档字符串以通过 @a-r-r-o-w 在 #10788 中提及正确的输出类</li>
+<li>通过 @a-r-r-o-w 在 #10789 中重构 CogVideoX 变压器</li>
+<li>@a-r-r-o-w 在 #10503 中的模块组卸载</li>
+<li>更新多概念推理的自定义扩散文档以解决问题 #10791 by @puhuk in #10792</li>
+<li>[修复] lumina2 中的 check_inputs 函数，由 @SahilCarterr 在 #10784 中完成</li>
+<li>@yiyixuxu 在 #10776 中对 lumina2 进行后续重构</li>
+<li>CogView4（支持不同长度的 c 和 uc），作者：@zRzRzRzRzRzRzR，#10649</li>
+<li>@YanivDorGalron 在 #10802 中修复了拼写错误</li>
+<li>扩展对 AuraFlow 和 LuminaText2Img 管道的 callback_on_step_end 的支持，由 @ParagEkbote 在 #10746 中提供</li>
+<li>[杂务] 由 @sayakpaul 在 #10592 中更新笔记生成空间</li>
+<li>[LoRA] 改进 lora 对 Flux 的支持。  由 @sayakpaul 在 #10810</li>
+<li>通过 @puhuk 在 #10807 中将 Flux 中的 max_shift 值和相关函数修复为 1.15（问题 #10675）</li>
+<li>[文档] 将缺失的条目添加到 lora 文档中。  由 @sayakpaul 在 #10819</li>
+<li>DiffusionPipeline mixin <code>to</code>+FromOriginalModelMixin/FromSingleFileMixin <code>from_single_file</code> 类型提示由 @hlky 在 #10811 中提供</li>
+<li>[LoRA] 使 <code>set_adapters()</code> 在静默故障方面具有鲁棒性。  由 @sayakpaul 在 #9618</li>
+<li>[FEAT] @SunMarc 在 #10604 中重构模型加载</li>
+<li>[杂项]壮举：引入风格机器人。  由 @sayakpaul 在 #10274</li>
+<li>删除 #10836 中 @a-r-r-o-w 的打印语句</li>
+<li>[测试] 在 lumina2 测试中使用正确的 gemma 类和配置。  由 @sayakpaul 在 #10828</li>
+<li>[LoRA] 在 Lumina2 中添加 LoRA 支持，并通过 @sayakpaul 在 #10818 中微调脚本</li>
+<li>[Utils] 添加实用程序，用于检查 @sayakpaul 在 #7763 中是否正确记录了某些实用程序</li>
+<li>在 #10834 中@AstraliteHeart 在 GGUFParameter 中添加缺少的 <code>isinstance</code> 参数检查</li>
+<li>[测试] 由 @sayakpaul 在 #10438 中单独测试 <code>encode_prompt()</code></li>
+<li>存储激活 cls 而不是 @SunMarc 在 #10832 中的函数</li>
+<li>修复：在 #10779 中@JeffersonQin 支持管道中变压器模型的 <code>generation_config</code></li>
+<li>@ParagEkbote 的社区脚本笔记本 - 7 #10846</li>
+<li>[CI] 在 #10289 中安装 @sayakpaul 的 <code>main</code> 加速变压器</li>
+<li>[CI] 根据拉取请求有条件地运行快速 GPU 测试。  由 @sayakpaul 在 #10310</li>
+<li>SD3 IP 适配器运行时检查点转换由 @guiyrt 在 #10718 中完成</li>
+<li>@a-r-r-o-w 在 #10835 中对 HunyuanVideo 进行了一些与一致性相关的修复</li>
+<li>SkyReels 浑源 T2V 和 I2V 作者：@a-r-r-o-w，#10837</li>
+<li>修复：从 pr 工作流程运行测试。  由 @sayakpaul 在 #9696</li>
+<li>[chore] 远程 vae 模板。  由 @sayakpaul 在 #10849</li>
+<li>在 #10852 中修复@sayakpaul 的远程 vae 模板</li>
+<li>[CI] 修复 #10854 中 @DN6 为 Hunyuan DiT 命名错误的测试模块</li>
+<li>[CI] 在 #10856 中通过 @DN6 更新始终测试 Pipeline fetcher 中的 Pipelines 列表</li>
+<li><code>load_model_dict_into_meta</code> 中的 <code>device_map</code> by @hlky in #10851</li>
+<li>[修复] @SahilCarterr 在 #10858 中的文档概述.md</li>
+<li>删除 @SunMarc 在 #10864 中对 safetensors 文件的格式检查</li>
+<li>[文档] @stevhliu 在 #10844 中提供 LoRA 支持</li>
+<li>@guiyrt 在 #10758 中对 <code>from_pretrained</code> kwargs 进行全面类型检查</li>
+<li>在 #10816 中用 @hlky 的 <code>transformers</code> v4.49 修复 Kolors 文本编码器中的 <code>torch_dtype</code></li>
+<li>[LoRA] 限制检查某些键以进行 peft 配置更新。  由 @sayakpaul 在 #10808</li>
+<li>将 SD3 ControlNet 添加到 AutoPipeline，由 @hlky 在 #10888 中添加</li>
+<li>[文档] 由 @stevhliu 在 #10843 中更新提示权重文档</li>
+<li>[文档] @stevhliu 在 #10847 中的 Flux 组卸载</li>
+<li>[修复] #10889 中 @SahilCarterr 在 train_dreambooth_lora_sdxl 中的 fp16 缩放</li>
+<li>[文档] 通过 @a-r-r-o-w 在 #10885 添加 CogVideoX 调度程序</li>
+<li>[杂务] 正确的qk规范列表。  由 @sayakpaul 在 #10876</li>
+<li>[文档] 在 #10894 中修复了 @DN6 的 toctree 排序</li>
+<li>[重构] SD3 文档并删除 #10882 中 @a-r-r-o-w 的附加代码</li>
+<li>[重构] 在 #10881 中通过 @a-r-r-o-w 删除额外的 Flux 代码</li>
+<li>[CI] @DN6 在 #10859 中对条件 GPU PR 测试的改进</li>
+<li>用于 Flux 管道的多 IP 适配器，由 @guiyrt 在 #10867 中提供</li>
+<li>修复 SDXL Controlnet Inpaint 和 Img2img 管道的回调张量输入缺少“controlnet_image”。  通过 @CyberVy 在 #10880</li>
+<li>@ydshieh 在 #10905 中修复了安全问题</li>
+<li>Marigold 更新：v1-1 模型，内在图像分解管道，@toshas 的文档 #10884</li>
+<li>[测试] 修复：@sayakpaul 在 #10911 中进行 lumina2 lora fusion_nan 测试</li>
+<li>修复 SD Controlnet 管道的回调张量输入缺少一些元素。  由 @CyberVy 在 #10907 中提供</li>
+<li>[CI] 在 #10912 中修复 @DN6 对 PR 的快速 GPU 测试</li>
+<li>[CI] 修复了 #10915 中 @DN6 在快速 GPU PR 测试中 IP 适配器测试失败的问题</li>
+<li>@hlky 在 #10723 中对 ControlNet Union 的每个控制类型规模进行实验</li>
+<li>[style bot] 提高 stylebot 的安全性。  由 @sayakpaul 在 #10908</li>
+<li>[CI] 在 #10931 中通过 @DN6 更新 Stylebot 权限</li>
+<li>[阿里巴巴 Wan 团队] 继续 #10921 Wan2.1 by @yiyixuxu in #10922</li>
+<li>支持 IPAdapter 以获取更多 Flux 管道，@hlky 在 #10708 中</li>
+<li>由 @hlky 在 #10898 中将 <code>remote_decode</code> 添加到 <code>remote_utils</code></li>
+<li>由 @hlky 在 #10939 中更新 VAE 解码端点</li>
+<li>[杂务] 修复复制到通量管道由 @sayakpaul 在 #10941</li>
+<li>[测试] 删除@sayakpaul 在 #10942 中的更多编码提示测试</li>
+<li>在 #10626 中添加 @bubbliiiiing 的 EasyAnimateV5.1 文本到视频、图像到视频、控件到视频生成模型</li>
+<li>修复@Teriks 在 #10770 中的 SD2.X clip 单文件加载projection_dim</li>
+<li>在#10924中通过@<not found="">将from_single_file添加到animatediff</not></li>
+<li>将 IPAdapterScaleCutoffCallback 示例添加到 @ParagEkbote 的文档 #10934</li>
+<li>在 #10944 中通过 @zRzRzRzRzRzRzR 更新 pipeline_cogview4.py</li>
+<li>在 #10945 中由 @ahmedbelgacem 修复 UNet2DModel 中冗余的 prev_output_channel 分配</li>
+<li>通过 @CyberVy 在 #10948 中改进 load_ip_adapter RAM 使用情况</li>
+<li>[测试] 使测试与设备无关（第 4 部分），作者：@faaany，#10508</li>
+<li>由@sayakpaul 在#10938 更新evaluation.md</li>
+<li>[LoRA] 壮举：支持非扩散器 lumina2 LoRA。  由 @sayakpaul 在 #10909</li>
+<li>[量化] 支持通过 @a120092009 在 #10927 中为 TorchAoConfig 传递 MappingType</li>
+<li>修复 quantization_config.py 中调用 is_torchao_available 时缺少括号的问题。  通过 @CyberVy 在 #10961</li>
+<li>[LoRA] 支持 Wan by @a-r-r-o-w #10943</li>
+<li>修复@azolotenkov 在 #10964 中当 args.seed 为 0 时不正确的种子初始化</li>
+<li>壮举：添加 Mixture-of-Diffusers ControlNet Tile upscaler Pipeline for SDXL by @elismasilva in #10951</li>
+<li>[文档] CogView4 评论由 @zRzRzRzRzRzRzR 在 #10957 中修复</li>
+<li>由 @yiyixuxu 在 #10966 中更新 cogview4 的 check_input</li>
+<li>添加@hlky 在 #10946 中的 VAE 解码端点慢速测试</li>
+<li>[flux lora 训练] 修复@linoytsaban 在 #10845 中的 t5 训练错误</li>
+<li>使用 @hanouticelina 的 <code>huggingface_hub</code> 样式机器人 GH Action #10970</li>
+<li>[train_dreambooth_lora.py] 当 @flyxiv 在 #10973 中将 <code>num_train_epochs</code> 在分布式训练环境中传递时修复 LR 调度程序</li>
+<li>[测试] 修复@sayakpaul 在 #10977 中保存加载组件的测试</li>
+<li>修复了 @hlky 在 #10978 中加载 OneTrainer Flux LoRA 的问题</li>
+<li>在 #10982 中修复@catwell 文档字符串中 Fluxguiding_scale 的默认值</li>
+<li>[CI] 删除同步。  由 @sayakpaul 在 #10980</li>
+<li>在 #10984 中 @dependabot[bot] 在 /examples/research_projects/realfill 中将 jinja2 从 3.1.5 提升到 3.1.6</li>
+<li>修复 Flux Controlnet Pipeline _callback_tensor_inputs 缺少一些元素（@CyberVy 在 #10974 中）</li>
+<li>[单个文件] 将用户代理添加到 SF 下载请求。   由 @DN6 在 #10979 中提供</li>
+<li>将 CogVideoX DDIM 反转添加到社区管道中，由 @LittleNyima 在 #10956 中完成</li>
+<li>由 @yupeng1111 在 #10975 中修复 wan i2v 管道错误</li>
+<li>浑源 I2V 作者：@a-r-r-o-w，#10983</li>
+<li>修复@hengzeyi 在 #10959 中编译 CogView4 时的图形中断问题</li>
+<li>Wan VAE 将缩放移至管道，由 @hlky 在 #10998 中完成</li>
+<li>[LoRA] 从 pft 中删除完整的密钥前缀。  由 @sayakpaul 在 #11004</li>
+<li>[单个文件] 在 #10991 中通过 @DN6 添加对 Wan T2V/I2V 的单个文件支持</li>
+<li>通过 @kinam0252 在 #10960 中将 STG 添加到社区管道中</li>
+<li>[LoRA] 改进了 @sayakpaul 在 #10995 中从 LoRA 加载器类中的注释复制的内容</li>
+<li>修复了 #10646 中仅通过 @DN6 获取变体的问题</li>
+<li>[Quantization] 在 #10756 中通过 @DN6 添加 Quanto 后端</li>
+<li>[单个文件] 通过 @ishan-modi 在 #10947 中为 SANA Transformer 添加单个文件加载</li>
+<li>[LoRA] 在 #10187 中@sayakpaul 改进 LoRA 加载变为无操作时的警告消息</li>
+<li>[LoRA] CogView4 by @a-r-r-o-w 在 #10981</li>
+<li>[测试] 通过在 #11021 中 @sayakpaul 额外测量推理内存节省来改进量化测试</li>
+<li>[<code>Research Project</code>] 添加 AnyText：多语言视觉文本生成和编辑，作者：@tolgacangoz，#8998</li>
+<li>[量化] 允许在 #11018 中通过 @DN6 使用 torch>=2.6 加载 TorchAO 序列化 Tensor 对象</li>
+<li>修复：混合平铺 sdxl 管道 - 通过 @elismasilva 在 #11012 中调整 gating time_ids 和嵌入</li>
+<li>[LoRA] 支持来自世界各地的 wan i2v loras。  由 @sayakpaul 在 #11025</li>
+<li>修复了 @hlky 在 #11027 中的 SD3 IPAdapter 特征提取器</li>
+<li>杂务：修复@wonderfan 在 #10923 中的高级传播示例中的帮助消息</li>
+<li>修复 lora_pipeline.py 中缺失的 **kwargs，作者为 #11011 中的 @CyberVy</li>
+<li>修复了 @AmericanPresidentJimmyCarter 在 #10997 中的多 GPU WAN 推理</li>
+<li>[重构] 在 #11026 中通过 @DN6 清理 import utils 样板</li>
+<li>在 #11030 中 @hlky 在 <code>repeat_interleave</code> 中使用 <code>output_size</code></li>
+<li>[混合推理🍯🐝] 在#11017中添加@hlky的VAE编码</li>
+<li>Wan Pipeline 缩放修复、类型提示警告、多生成器修复 (@hlky 在 #11007 中)</li>
+<li>[LoRA] 在 #11044 中 @sayakpaul 通知用户有关 LoRA no-op 时，信息更改为警告</li>
+<li>在 #10827 中由 @hlky 重命名 Lumina(2)Text2ImgPipeline -> Lumina(2)Pipeline</li>
+<li>通过 @YanivDorGalron 在 #10801 中使 <code>formatted_images</code> 初始化变得紧凑</li>
+<li>修复 #10820 中 @ZhengKai91 的 get_1d_rotary_pos_embed NPU 上的 aclnnRepeatInterleaveIntWithDim 错误</li>
+<li>[测试] 限制某些方案的双币种内存测试。  由 @sayakpaul 在 #11052</li>
+<li>[LoRA] 壮举：支持非扩散器 wan t2v loras。  由 @sayakpaul 在 #11059</li>
+<li>[examples/controlnet/train_controlnet_sd3.py] 修复#11050 - 将prompt_embeds和pooled_prompt_embeds转换为weight_dtype以防止@andjoer在#11051中的dtype不匹配</li>
+<li>恢复删除 attn 中 attn_mask 的意外更改。改善 fl… by @entrpn in #11065</li>
+<li>修复 #10696 中@dimitribarbot 获取管道数据类型和设备时的确定性问题</li>
+<li>[测试]添加需要peft装饰器。  由 @sayakpaul 在 #11037</li>
+<li>CogView4 控制块由 @zRzRzRzRzRzRzR 在 #10809 中提供</li>
+<li>[CI] 引脚变压器版本用于基准测试。  由 @sayakpaul 在 #11067</li>
+<li>由 @hengzeyi 在 #11087 中修复 Wan I2V 质量</li>
+<li>LTX 0.9.5 作者：@a-r-r-o-w，#10968</li>
+<li>根据样式进行 PR GPU 测试。  由 @sayakpaul 在 #11099</li>
+<li>@a-r-r-o-w 在 #11094 中对组卸载进行了改进</li>
+<li>在 #11095 中通过 @co63oc 修复 pipeline_flux_controlnet.py</li>
+<li>更新自述文件说明。  由 @entrpn 在 #11096</li>
+<li>解决 UNet ResNet 中的步幅不匹配问题，以支持 Torch DDP（@jinc7461 在 #11098 中）</li>
+<li>修复 #11097 中 @a-r-r-o-w 使用流时的组卸载行为</li>
+<li>@hlky 在 #11090 中 <code>export_to_video</code> 中的质量选项</li>
+<li>[CI] 从 pr gpu 测试中正确卸载 deps。  由 @sayakpaul 在 #11102</li>
+<li>[BUG] 修复 @lavinal712 在 #11113 中的 Autoencoderkl 训练脚本</li>
+<li>[Wan LoRAs] 让 T2V LoRA 与 @linoytsaban 在 #11107 中的 Wan I2V 兼容</li>
+<li>[测试] 通过 @faaany 在 #11001 中启用 xpu 上的 bnb 测试</li>
+<li>[修复错误] PixArt inference_steps=1 by @lawrence-cj in #11079</li>
+<li>Flux with Remote Encode by @hlky in #11091</li>
+<li>[测试] 让 cuda 只测试与设备无关的 @faaany in #11058</li>
+<li>在 #11106 中通过 @DN6 提供减少 Group Offload 中 CPU RAM 使用的选项</li>
+<li>现在由 @yiyixuxu 在 #11126 中删除 F.rms_norm</li>
+<li>@ParagEkbote 的社区脚本笔记本 - 8 #11128</li>
+<li>修复 sd controlnet inpaint 管道的 _callback_tensor_inputs 缺少一些元素（@CyberVy 在 #11073 中）</li>
+<li>[核心] FasterCache by @a-r-r-o-w in #10163</li>
+<li>在 #11074 中添加 @yiyixuxu 的 sana-sprint
+*不要覆盖<code>torch_dtype</code>，并且当@hlky在#11039中设置<code>quantization_config</code>时不要使用</li>
+<li>在 #11028 中更新 @tolgacangoz 的 AnyText 使用自述文件和示例代码</li>
+<li>修改CogView4-Control中retrieve_timesteps的实现。  通过 @zRzRzRzRzRzRzR 在 #11125</li>
+<li>[修复 SANA-Sprint]，作者：@lawrence-cj，#11142</li>
+<li>@a-r-r-o-w 的新 HunyuanVideo-I2V #11066</li>
+<li>[doc] 修复韩国 Controlnet Train 文档，作者为 @flyxiv，位于 #11141</li>
+<li>通过 @a-r-r-o-w 在 #11101 中改进有关组卸载和分层铸造的信息</li>
+<li>在 #11150 中为 @lawrence-cj 为 sana-sprint 教师模型添加时间步长比例</li>
+<li>[量化] GGUF 的 dtype 修复 + 修复 @DN6 在 #11159 中的 BnB 测试</li>
+<li>当 LoRA 使用 PeftAdapterMixin 类中的 <code>load_lora_adapter</code> 加载时，将 self._hf_peft_config_loaded 设置为 True，@kentdan3msu 在 #11155 中</li>
+<li>WanI2V 编码图像，作者：@hlky，#11164</li>
+<li>[文档] 通过 @DN6 在 #11089 中更新 Wan 文档并进行内存优化</li>
+<li>修复 LatteTransformer3DModel dtype 与 @hlky 在#11139中的enable_temporal_attentions不匹配的问题</li>
+<li>如果 Wan num_frames 不是 4k + 1，则发出警告并向下取整（@a-r-r-o-w in #11167）</li>
+<li>[文档] 通过@remarkablemark 在 #11179 中修复 <code>installation.md</code> 中的环境变量</li>
+<li>将 <code>latents_mean</code> 和 <code>latents_std</code> 添加到 <code>SDXLLongPromptWeightingPipeline</code>，由 @hlky 在 #11034 中添加</li>
+<li>当 @kakukakujirori 在 #10918 中设置潜在值时，LTXImageToVideoPipeline.prepare_latents() 中的错误修复</li>
+<li>[测试] @faaany 在 #11186 中没有硬编码 cuda</li>
+<li>[WIP] 在 #11053 中添加 @DN6 的 Wan Video2Video</li>
+<li>由 @yao-matrix 在 #11191 中将 BACKEND_RESET_MAX_MEMORY_ALLOCATED 映射到 XPU 上的 Reset_peak_memory_stats</li>
+<li>修复@jiqing-feng 在 #11190 中的自动施法</li>
+<li>修复：用于检查@elismasilva 在 #11189 中的强制和可选管道组件</li>
+<li>删除 #10620 中 @bm-synth 对 <code>F.pad</code> 不必要的调用</li>
+<li>允许模型使用用户提供的数据类型映射运行，而不是 @hlky 在 #10301 中的单个数据类型</li>
+<li>[测试] @faaany 在 #11197 中 XPU 上的 HunyuanDiTControlNetPipeline 推理精度问题</li>
+<li>在 ModelMixin save_pretrained 中恢复 <code>save_model</code> 并在 @hlky #11196 的测试中使用 safe_serialization=False</li>
+<li>[文档] <code>torch_dtype</code> 由 @hlky 在 #11194 中绘制</li>
+<li>修复@hlky 在 #11195 中 CogView4Pipeline 中的enable_sequential_cpu_offload</li>
+<li>SchedulerMixin from_pretrained 和 ConfigMixin Self 类型注释由@hlky in #11192</li>
+<li>由 @Lakshaysharma048 在 #10329 中更新 import_utils.py</li>
+<li>通过 @DN6 在 #11187 中将 CacheMixin 添加到 Wan 和 LTX Transformers</li>
+<li>壮举：[社区管道] - FaithDiff Stable Diffusion XL Pipeline by @elismasilva in #11188</li>
+<li>[模型卡] 标准化高级扩散训练 sdxl lora by @chiral-carbon #7615</li>
+<li>将 KolorsPipeline LoRA Loader 更改为 @BasileLewan 在 #11198 中的 StableDiffusion</li>
+<li>由 @hanouticelina 在 #11202 中更新 Style Bot 工作流程</li>
+<li>通过添加超时参数修复了 requests.get 函数调用。  通过 @kghamilton89 在 #11156</li>
+<li>修复 #11200 中 @DN6 的 LTX VAE 单个文件加载问题</li>
+<li>[feat]在 #10603 中@Suprhimp 添加 Flux_fill 管道的强度（fluxfill 的去噪强度）</li>
+<li>[LTX0.9.5] @tolgacangoz 在 #11174 中重构 <code>LTXConditionPipeline</code> 以实现纯文本调节</li>
+<li>添加带有 STG 的 Wan 作为社区管道，由 @Ednaordinary 在 #11184 中添加</li>
+<li>通过 @mjkvaak-amd 在 #11146 中添加缺少的 MochiEncoder3D.gradient_checkpointing 属性</li>
+<li>在 #11219 中通过 @yao-matrix 在 XPU 上启用 1 个案例</li>
+<li>确保扩散潜伏和 vae 权重之间的 dtype 匹配（@heyalexchoi 在 #8391 中）</li>
+<li>[文档] @stevhliu 在 #11212 中的 MPS 更新</li>
+<li>添加支持将图像嵌入传递到 WAN I2V 管道。  由 @goiri 在 #11175</li>
+<li>[train_controlnet.py] 当@Bhavay-2001在#8461中在分布式训练环境中传递num_train_epochs时修复LR调度程序</li>
+<li>[训练] @asomoza 在 #11206 中训练脚本中更好的图像插值</li>
+<li>[LoRA] 由 @BenjaminBossan 在 #9453 中实现 LoRA 的热插拔</li>
+<li>引入计算架构特定期望并修复 @yao-matrix 在 #11227 中的 test_sd3_img2img_inference 失败</li>
+<li>[Flux LoRA] 修复了 @linoytsaban 在 #11111 中的 Flux Lora 脚本中的问题</li>
+<li>@hlky 在 #10990 中使用 lora 量化通量</li>
+<li>[feat] 在 @sayakpaul 在 #11081 中的组卸载期间使用 CUDA 流时实现 <code>record_stream</code></li>
+<li>[bistandbytes] 改进@sayakpaul 在 #11132 中对 bnb 的替换警告</li>
+<li>对 sana sprint 文档进行小幅更新。  由 @sayakpaul 在 #11236</li>
+<li>[文档] 对 dtype 地图文档的小幅更新。  由 @sayakpaul 在 #11237</li>
+<li>[LoRA] 支持更多 comyui loras for Flux 🚨 by @sayakpaul in #10985</li>
+<li>修复：SD3 ControlNet 验证，以便它在 A100 上运行。  由 @sayakpaul 在 #11238</li>
+<li>@hlky 在 #11244 中修复了 AudioLDM2</li>
+<li>AutoModel 由 @hlky 在 #11115 中</li>
+<li>修复 #11245 中@yao-matrix 在 XPU 上的 FluxReduxSlowTests::test_flux_redux_inference 案例失败</li>
+<li>[文档] AutoModel by @hlky in #11250</li>
+<li>在 #10919 中将 Ruff 更新到 @DN6 的最新版本</li>
+<li>修复 #11152 中 @free001style 的 Flux controlnet 错误</li>
+<li>由 @sayakpaul 在 #11252 中修复超时常量</li>
+<li>修复 @sayakpaul 在 #11254 中的 consisid 导入</li>
+<li>发布：@sayakpaul 的 v0.33.0（直接提交到 v0.33.0-release）</li>
+</ul>
+<h2 id="重大社区贡献">重大社区贡献</h2>
+<p>以下贡献者对上一个版本的库进行了重大更改：</p>
+<ul>
+<li>@guiyrt
+<ul>
+<li><code>StableDiffusion3Img2ImgPipeline</code> 的 IP 适配器 (#10589)</li>
+<li>[文档] 将 SD3 ip_adapter model_id 更新为扩散器检查点 (#10597)</li>
+<li>SDXL 上的 <code>MultiControlNetUnionModel</code> (#10747)</li>
+<li>SD3 IP 适配器运行时检查点转换 (#10718)</li>
+<li><code>from_pretrained</code> kwargs 的全面类型检查 (#10758)</li>
+<li>用于 Flux 管道的多 IP 适配器 (#10867)</li>
+</ul>
+</li>
+<li>@成泽一
+<ul>
+<li>[文档] 添加有关使用 ParaAttention 优化 FLUX 和 HunyuanVideo 的文档 (#10544)</li>
+<li>修复编译 CogView4 时图表中断的问题 (#10959)</li>
+<li>修复 Wan I2V 质量 (#11087)</li>
+</ul>
+</li>
+<li>@entrpn
+<ul>
+<li>使用 ptxla 在 TPU 上实现 Flux (#10515)</li>
+<li>恢复删除 attn 中 attn_mask 的意外更改。改善佛罗里达州… (#11065)</li>
+<li>更新自述文件说明。 (#11096)</li>
+</ul>
+</li>
+<li>@SHYuanBest
+<ul>
+<li>[核心] ConsisID (#10140)</li>
+</ul>
+</li>
+<li>@faaany
+<ul>
+<li>[测试] 使测试与设备无关（第 3 部分）(#10437)</li>
+<li>在传递给 safetensors 之前使张量连续 (#10761)</li>
+<li>[测试] 使测试与设备无关（第 4 部分）(#10508)</li>
+<li>[测试] 在 xpu 上启用 bnb 测试 (#11001)</li>
+<li>[测试] 使 cuda 只测试设备无关的 (#11058)</li>
+<li>[测试] 没有硬编码 cuda (#11186)</li>
+<li>[测试] XPU 上的 HunyuanDiTControlNetPipeline 推理精度问题 (#11197)</li>
+</ul>
+</li>
+<li>@yiyixuxu
+<ul>
+<li>修复卸载 GPU 测试等 (#10366)</li>
+<li>lumina2 的后续重构 (#10776)</li>
+<li>[阿里巴巴 Wan 团队] 继续#10921 Wan2.1 (#10922)</li>
+<li>更新 cogview4 的 check_input (#10966)</li>
+<li>暂时删除 F.rms_norm (#11126)</li>
+<li>添加 sana-sprint (#11074)</li>
+</ul>
+</li>
+<li>@DN6
+<ul>
+<li>[CI] 更新所有工作流程中的 HF_TOKEN (#10613)</li>
+<li>[CI] 修复 Truffle Hog 失败 (#10769)</li>
+<li>[单个文件] 添加对 Lumina Image 2.0 Transformer 的单个文件支持 (#10781)</li>
+<li>[CI] 修复 Hunyuan DiT 的测试模块命名错误 (#10854)</li>
+<li>[CI] 更新 Pipeline fetcher 中始终测试 Pipelines 列表 (#10856)</li>
+<li>[文档] 修复 toctree 排序 (#10894)</li>
+<li>[CI] 条件 GPU PR 测试的改进 (#10859)</li>
+<li>[CI] 修复 PR 上的快速 GPU 测试 (#10912)</li>
+<li>[CI] 修复了 Fast GPU PR 测试中 IP 适配器测试失败的问题 (#10915)</li>
+<li>[CI] 更新 Stylebot 权限 (#10931)</li>
+</ul>
+</li>
+<li>[单个文件] 将用户代理添加到 SF 下载请求。  (#10979)
+<ul>
+<li>[单个文件] 添加对 Wan T2V/I2V 的单个文件支持 (#10991)</li>
+<li>修复仅获取变体的问题 (#10646)</li>
+<li>[Quantization] 添加 Quanto 后端 (#10756)</li>
+<li>[量化] 允许使用 torch>=2.6 加载 TorchAO 序列化 Tensor 对象 (#11018)</li>
+<li>[重构] 清理 import utils 样板 (#11026)</li>
+<li>提供减少 Group Offload 中 CPU RAM 使用的选项 (#11106)</li>
+<li>[量化] GGUF 的 dtype 修复 + 修复 BnB 测试 (#11159)</li>
+<li>[文档] 通过内存优化更新 Wan 文档 (#11089)</li>
+<li>[WIP] 添加Wan Video2Video (#11053)</li>
+<li>将 CacheMixin 添加到 Wan 和 LTX Transformers (#11187)</li>
+<li>修复 LTX VAE 的单个文件加载问题 (#11200)</li>
+<li>将 Ruff 更新到最新版本 (#10919)</li>
+</ul>
+</li>
+<li>@Anonym0u3
+<ul>
+<li>添加 pipeline_stable_diffusion_xl_attentive_eraser (#10579)</li>
+</ul>
+</li>
+<li>@lavinal712
+<ul>
+<li>创建一个脚本来训练 autoencoderkl (#10605)</li>
+<li>[BUG] 修复 Autoencoderkl 训练脚本 (#11113)</li>
+</ul>
+</li>
+<li>@Marlon154
+<ul>
+<li>添加社区管道以进行 FLUX 语义指导 (#10610)</li>
+</ul>
+</li>
+<li>@ParagEkbote
+<ul>
+<li>修复有关图像到图像管道的文档 (#10704)</li>
+<li>社区脚本笔记本-6 (#10713)</li>
+<li>扩展对 AuraFlow 和 LuminaText2Img 管道的 callback_on_step_end 的支持 (#10746)</li>
+<li>社区脚本笔记本-7 (#10846)</li>
+<li>将 IPAdapterScaleCutoffCallback 示例添加到文档中 (#10934)</li>
+<li>社区脚本笔记本-8 (#11128)</li>
+</ul>
+</li>
+<li>@铃木主
+<ul>
+<li>[社区] 增强型 <code>Model Search</code> (#10417)</li>
+</ul>
+</li>
+<li>@staoxiao
+<ul>
+<li>添加 OmniGen (#10148)</li>
+</ul>
+</li>
+<li>@elismasilva
+<ul>
+<li>壮举：SDXL 的新社区 mix_tiling_sdxl 管道 (#10759)</li>
+<li>修复：[社区管道] 修复图像上的扁平化元素 (#10774)</li>
+<li>壮举：为 SDXL 添加 Mixture-of-Diffusers ControlNet Tile 放大管道 (#10951)</li>
+<li>修复：混合平铺 sdxl 管道 - 调整 gating time_ids 和嵌入 (#11012)</li>
+<li>修复：用于检查强制和可选管道组件 (#11189)</li>
+<li>壮举：[社区管道] - FaithDiff Stable Diffusion XL Pipeline (#11188)</li>
+</ul>
+</li>
+<li>@卓乐1025
+<ul>
+<li>添加对 lumina2 的支持 (#10642)</li>
+</ul>
+</li>
+<li>@zRzRzRzRzRzRzR
+<ul>
+<li>CogView4（支持不同长度的c和uc）（#10649）</li>
+<li>更新 pipeline_cogview4.py (#10944)</li>
+<li>[文档] CogView4 评论修复 (#10957)</li>
+<li>CogView4 控制块 (#10809)</li>
+<li>修改CogView4-Control中retrieve_timesteps的实现。 (#11125)</li>
+</ul>
+</li>
+<li>@toshas
+<ul>
+<li>Marigold 更新：v1-1 模型、内在图像分解管道、文档 (#10884)</li>
+</ul>
+</li>
+<li>@bubbliiiing
+<ul>
+<li>添加 EasyAnimateV5.1 文本转视频、图像转视频、控件转视频生成模型 (#10626)</li>
+</ul>
+</li>
+<li>@LittleNyima
+<ul>
+<li>将 CogVideoX DDIM 反转添加到社区管道 (#10956)</li>
+</ul>
+</li>
+<li>@kinam0252
+<ul>
+<li>将 STG 添加到社区管道 (#10960)</li>
+</ul>
+</li>
+<li>@tolgacangoz
+<ul>
+<li>[<code>Research Project</code>] 添加 AnyText：多语言可视文本生成和编辑 (#8998)</li>
+<li>更新 AnyText 使用的自述文件和示例代码 (#11028)</li>
+<li>[LTX0.9.5] 重构 <code>LTXConditionPipeline</code> 以进行纯文本调节 (#11174)</li>
+</ul>
+</li>
+<li>@Ednaordinary
+<ul>
+<li>添加带有 STG 的 Wan 作为社区管道 (#11184)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>来源</strong> <a href="https://github.com/huggingface/diffusers">huggingface/diffusers</a> · <code>v0.33.0</code> · 2025-04-09 · <a href="https://github.com/huggingface/diffusers/releases/tag/v0.33.0">上游版本</a>
+<em>逐字镜像以进行索引。所有权利属于上游项目。</em></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>📦 仓库：<a href="https://github.com/huggingface/diffusers">huggingface/diffusers</a> · 🏷️ 版本：<code>v0.33.0</code> · 📅 发布：2025-04-09 · <a href="https://github.com/huggingface/diffusers/releases/tag/v0.33.0">查看英文原版 Release</a></p>
+</blockquote>
+<p><em>本文由 NextStack 自动翻译，内容以官方英文原文为准。</em></p>   </div> <p class="muted" style="margin-top:var(--s8);font-size:12.5px;border-top:1px solid var(--line);padding-top:var(--s4)"> 版本说明来自上游项目。我们整理并关联各版本，方便你快速对比变更。内容版权归原作者所有。 </p> <nav class="pager" aria-label="Release navigation"> <a href="/zh/release_note/diffusers/diffusers_v0.34.0"> <span class="k">← 下一个</span> <span class="t">v0.34.0</span> </a> <a href="/zh/release_note/diffusers/diffusers_v0.32.2"> <span class="k">上一个 →</span> <span class="t">v0.32.2</span> </a> </nav> <aside class="ad-slot" aria-label="广告" data-astro-cid-fgwukgf6><div class="ad-slot-label" data-astro-cid-fgwukgf6>广告</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4184355057086168" data-ad-slot="9133765584" data-ad-format="auto" data-full-width-responsive="true" data-astro-cid-fgwukgf6></ins><script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></aside> </article> <aside class="rail"> <div class="rail-card"> <div class="rail-title">Source</div> <ul class="rail-list"> <li> <a href="https://github.com/huggingface/diffusers/releases/tag/v0.33.0" target="_blank" rel="noopener"> <span>GitHub 原文</span> <span class="d">↗</span> </a> </li> <li> <a href="https://github.com/huggingface/diffusers" target="_blank" rel="noopener"> <span>huggingface/diffusers</span> <span class="d">↗</span> </a> </li> </ul> </div> <div class="rail-card rail-toc"> <div class="rail-title">本页目录</div> <nav> <a href="#视频生成的新管道" class>视频生成的新管道</a><a href="#ltx-视频-095" class="lv3">LTX 视频 0.9.5</a><a href="#浑源图像转视频" class="lv3">浑源图像转视频</a><a href="#其他" class="lv3">其他</a><a href="#图像生成的新管道" class>图像生成的新管道</a><a href="#sana-sprint" class="lv3">Sana-Sprint</a><a href="#发光2" class="lv3">发光2</a><a href="#奥尼金" class="lv3">奥尼金</a><a href="#其他-1" class="lv3">其他</a><a href="#新的内存优化" class>新的内存优化</a><a href="#分层铸造" class="lv3">分层铸造</a><a href="#群组卸载" class="lv3">群组卸载</a><a href="#远程组件" class>远程组件</a><a href="#引入-dit-的缓存推理" class>引入 DiT 的缓存推理</a><a href="#量化" class>量化</a><a href="#双币种后端" class="lv3">双币种后端</a><a href="#改进了-uintx-torchao-检查点与-torch26-的加载" class="lv3">改进了 uintx TorchAO 检查点与 torch&gt;=2.6 的加载</a><a href="#lora" class>LoRA</a><a href="#dtype-管道图" class>dtype 管道图</a><a href="#汽车模型" class>汽车模型</a><a href="#所有提交" class>所有提交</a><a href="#重大社区贡献" class>重大社区贡献</a> </nav> </div> <div class="rail-card"> <div class="rail-title">版本历史</div> <ul class="rail-list"> <li> <a href="/zh/release_note/diffusers/diffusers_v0.43.0"> <span class="v">v0.43.0</span> <span class="d">26-11-12</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.42.1"> <span class="v">v0.42.1</span> <span class="d">26-10-27</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.42.0"> <span class="v">v0.42.0</span> <span class="d">26-10-23</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.41.0"> <span class="v">v0.41.0</span> <span class="d">26-10-06</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.40.0"> <span class="v">v0.40.0</span> <span class="d">26-08-20</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.39.0"> <span class="v">v0.39.0</span> <span class="d">26-07-03</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.38.0"> <span class="v">v0.38.0</span> <span class="d">26-05-01</span> </a> </li><li> <a href="/zh/release_note/diffusers/diffusers_v0.37.1"> <span class="v">v0.37.1</span> <span class="d">26-03-25</span> </a> </li> </ul> <a href="/zh/releases/diffusers" class="mono" style="display:inline-block;margin-top:var(--s3);font-size:11.5px;color:var(--ink-3)"> 查看全部 16 条 →
+</a> </div> </aside> </div> </div>  </main> <footer class="site-footer"> <div class="wrap"> <div class="footer-grid"> <div class="footer-brand"> <a href="/zh/" class="brand" aria-label="STAGS NextStack"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-main">STAGS</span><span class="brand-sub" aria-hidden="true">NextStack</span></a> <p>开源项目版本发布情报，每日更新。</p> </div> <div class="footer-col"> <h3>追踪</h3> <ul> <li><a href="/zh/releases">版本发布</a></li> <li><a href="/zh/projects">项目</a></li> <li><a href="/zh/releases.xml">RSS 订阅</a></li> </ul> </div> <div class="footer-col"> <h3>归档</h3> <ul> <li><a href="/zh/release_note" hreflang="zh-Hans">中文归档</a></li> <li><a href="/zh/chapters/" hreflang="zh-Hans">技术笔记</a></li> <li><a href="/zh/downloads/">Stags Tracker</a></li> </ul> </div> <div class="footer-col"> <h3>关于</h3> <ul> <li><a href="/zh/privacy">隐私政策</a></li> <li><a href="/releases.xml">RSS</a></li> <li><a href="/sitemap-index.xml">Sitemap</a></li> </ul> </div> </div> <div class="footer-btm"> <span>© 2026 STAGS</span> <span>Release Note 版权归上游项目所有。</span> </div> </div> </footer> <!-- 搜索面板 --> <div class="palette-bg" data-palette-bg data-open="false"> <div class="palette" role="dialog" aria-modal="true" aria-label="搜索版本"> <div class="palette-in"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--ink-4);flex:none"> <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path> </svg> <input type="search" data-palette-input placeholder="搜索发布记录、项目、版本号…" autocomplete="off" spellcheck="false"> <span class="kbd">esc</span> </div> <ul class="palette-res" data-palette-res></ul> <div class="palette-ft"> <span>↑↓ 选择</span> <span>↵ 打开</span> <span style="margin-left:auto" data-palette-count></span> </div> </div> </div> <script type="module" src="/assets/Shell.astro_astro_type_script_index_0_lang.0ZkKXV47.js"></script> </body> </html>
