@@ -62,68 +62,86 @@
 </ul>
 <p><strong>这是 Alpha 版本，可能存在稳定性或兼容性问题。首先在测试环境中进行验证。此版本迁移对话存储、代理配置和会话设置。升级前备份数据和配置；降级还需要恢复升级前的备份。</strong></p>
 <h3 id="变更流程图">变更流程图</h3>
-<svg viewBox="0 0 680 172" width="100%" role="img" aria-label="变更流程图：对话迁移事件源架构" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s6) 0">
-<defs><marker id="cf-ar-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
-<text x="20" y="14" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">1 · 对话迁移事件源架构</text>
-<rect x="20" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="34" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">改动</text>
-<text x="34" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">对话改事件源</text>
-<text x="34" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#10077</text>
-<rect x="250" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="264" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">机制</text>
-<text x="264" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">增量保留消息</text>
-<text x="264" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#11158</text>
-<rect x="480" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="494" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">影响</text>
-<text x="494" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">减写入放大</text>
-<text x="494" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#11162</text>
-<line x1="204" y1="60" x2="246" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-1)"></line>
-<line x1="434" y1="60" x2="476" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-1)"></line>
-<rect x="20" y="108" width="640" height="44" rx="4" fill="var(--paper-2)"></rect>
-<rect x="20" y="108" width="3" height="44" fill="var(--accent)"></rect>
-<text x="36" y="135" font-family="var(--sans)" font-size="12.5" fill="var(--ink-2)">Alpha用户验中断历史处理</text>
+<svg viewBox="0 0 1160 220" width="100%" role="img" aria-label="变更流程图：对话迁移事件源架构" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s8) 0">
+<defs><marker id="cf-ar-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+<text x="20" y="20" font-family="var(--sans)" font-size="16" font-weight="600" fill="var(--ink)">1 · 对话迁移事件源架构</text>
+<rect x="20" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="20" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="36" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">改动</text>
+<text x="36" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">对话改事件源</text>
+<text x="36" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#10077</text>
+<rect x="422" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="422" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="422" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="438" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">机制</text>
+<text x="438" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">增量保留消息</text>
+<text x="438" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#11158</text>
+<rect x="824" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="824" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="824" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="840" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">影响</text>
+<text x="840" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">减写入放大</text>
+<text x="840" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#11162</text>
+<line x1="344" y1="82" x2="414" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-1)"></line>
+<line x1="746" y1="82" x2="816" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-1)"></line>
+<rect x="20" y="148" width="1120" height="52" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="148" width="4" height="52" rx="2" fill="var(--accent)"></rect>
+<text x="40" y="179" font-family="var(--sans)" font-size="15" font-weight="500" fill="var(--ink-2)">Alpha用户验中断历史处理</text>
 </svg>
-<svg viewBox="0 0 680 172" width="100%" role="img" aria-label="变更流程图：新代理运行时模型" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s6) 0">
-<defs><marker id="cf-ar-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
-<text x="20" y="14" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">2 · 新代理运行时模型</text>
-<rect x="20" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="34" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">改动</text>
-<text x="34" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">新增turn调用</text>
-<text x="34" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">run_turn()</text>
-<rect x="250" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="264" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">机制</text>
-<text x="264" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">插件可调代理</text>
-<text x="264" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#10934</text>
-<rect x="480" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="494" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">影响</text>
-<text x="494" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">插件需适配API</text>
-<text x="494" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#11052</text>
-<line x1="204" y1="60" x2="246" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-2)"></line>
-<line x1="434" y1="60" x2="476" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-2)"></line>
-<rect x="20" y="108" width="640" height="44" rx="4" fill="var(--paper-2)"></rect>
-<rect x="20" y="108" width="3" height="44" fill="var(--accent)"></rect>
-<text x="36" y="135" font-family="var(--sans)" font-size="12.5" fill="var(--ink-2)">插件开发者适配新运行时</text>
+<svg viewBox="0 0 1160 220" width="100%" role="img" aria-label="变更流程图：新代理运行时模型" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s8) 0">
+<defs><marker id="cf-ar-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+<text x="20" y="20" font-family="var(--sans)" font-size="16" font-weight="600" fill="var(--ink)">2 · 新代理运行时模型</text>
+<rect x="20" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="20" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="36" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">改动</text>
+<text x="36" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">新增turn调用</text>
+<text x="36" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">run_turn()</text>
+<rect x="422" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="422" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="422" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="438" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">机制</text>
+<text x="438" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">插件可调代理</text>
+<text x="438" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#10934</text>
+<rect x="824" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="824" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="824" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="840" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">影响</text>
+<text x="840" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">插件需适配API</text>
+<text x="840" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#11052</text>
+<line x1="344" y1="82" x2="414" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-2)"></line>
+<line x1="746" y1="82" x2="816" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-2)"></line>
+<rect x="20" y="148" width="1120" height="52" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="148" width="4" height="52" rx="2" fill="var(--accent)"></rect>
+<text x="40" y="179" font-family="var(--sans)" font-size="15" font-weight="500" fill="var(--ink-2)">插件开发者适配新运行时</text>
 </svg>
-<svg viewBox="0 0 680 172" width="100%" role="img" aria-label="变更流程图：新增Windows应用沙箱" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s6) 0">
-<defs><marker id="cf-ar-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
-<text x="20" y="14" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">3 · 新增Windows应用沙箱</text>
-<rect x="20" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="34" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">改动</text>
-<text x="34" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">新增Win沙箱</text>
-<text x="34" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#10466</text>
-<rect x="250" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="264" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">机制</text>
-<text x="264" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">隔离代码与网络</text>
-<text x="264" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">工作区隔离</text>
-<rect x="480" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="494" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">影响</text>
-<text x="494" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">Win获本地沙箱</text>
-<text x="494" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">网络控制</text>
-<line x1="204" y1="60" x2="246" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-3)"></line>
-<line x1="434" y1="60" x2="476" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-3)"></line>
-<rect x="20" y="108" width="640" height="44" rx="4" fill="var(--paper-2)"></rect>
-<rect x="20" y="108" width="3" height="44" fill="var(--live)"></rect>
-<text x="36" y="135" font-family="var(--sans)" font-size="12.5" fill="var(--ink-2)">Windows本地执行用户升级Alpha</text>
+<svg viewBox="0 0 1160 220" width="100%" role="img" aria-label="变更流程图：新增Windows应用沙箱" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s8) 0">
+<defs><marker id="cf-ar-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+<text x="20" y="20" font-family="var(--sans)" font-size="16" font-weight="600" fill="var(--ink)">3 · 新增Windows应用沙箱</text>
+<rect x="20" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="20" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="36" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">改动</text>
+<text x="36" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">新增Win沙箱</text>
+<text x="36" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#10466</text>
+<rect x="422" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="422" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="422" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="438" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">机制</text>
+<text x="438" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">隔离代码与网络</text>
+<text x="438" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">工作区隔离</text>
+<rect x="824" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="824" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="824" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="840" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">影响</text>
+<text x="840" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">Win获本地沙箱</text>
+<text x="840" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">网络控制</text>
+<line x1="344" y1="82" x2="414" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-3)"></line>
+<line x1="746" y1="82" x2="816" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-3)"></line>
+<rect x="20" y="148" width="1120" height="52" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="148" width="4" height="52" rx="2" fill="var(--live)"></rect>
+<text x="40" y="179" font-family="var(--sans)" font-size="15" font-weight="500" fill="var(--ink-2)">Windows本地执行用户升级Alpha</text>
 </svg>
 <h2 id="亮点">亮点</h2>
 <ul>
