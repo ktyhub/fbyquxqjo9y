@@ -22,68 +22,86 @@
 <p>🐈 纳米机器人 <code>v0.1.4.post5</code> 就在这里 — 57 个 PR 合并，29 个新贡献者，以及一个发布周期，它不是由奇观而是由更安静的东西决定：在最重要的地方进行仔细的改进。
 这种发布让项目在日常使用中感觉更有价值。边缘变得更光滑，故障模式变得更柔和，平台变得更宽。在渠道、提供商、内存、MCP、CLI 和基础设施方面，纳米机器人不仅变得更加强大，而且更加可靠 — 更像是一种可以实际使用的工具。</p>
 <h2 id="变更流程图">变更流程图</h2>
-<svg viewBox="0 0 680 172" width="100%" role="img" aria-label="变更流程图：可靠性中心" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s6) 0">
-<defs><marker id="cf-ar-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
-<text x="20" y="14" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">1 · 可靠性中心</text>
-<rect x="20" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="34" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">改动</text>
-<text x="34" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">循环少崩溃</text>
-<text x="34" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#1999</text>
-<rect x="250" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="264" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">机制</text>
-<text x="264" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">MCP取消稳</text>
-<text x="264" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#1953/2075</text>
-<rect x="480" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="494" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">影响</text>
-<text x="494" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">输出更干净</text>
-<text x="494" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#2039</text>
-<line x1="204" y1="60" x2="246" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-1)"></line>
-<line x1="434" y1="60" x2="476" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-1)"></line>
-<rect x="20" y="108" width="640" height="44" rx="4" fill="var(--paper-2)"></rect>
-<rect x="20" y="108" width="3" height="44" fill="var(--live)"></rect>
-<text x="36" y="135" font-family="var(--sans)" font-size="12.5" fill="var(--ink-2)">重稳定性者应升级</text>
+<svg viewBox="0 0 1160 220" width="100%" role="img" aria-label="变更流程图：可靠性中心" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s8) 0">
+<defs><marker id="cf-ar-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+<text x="20" y="20" font-family="var(--sans)" font-size="16" font-weight="600" fill="var(--ink)">1 · 可靠性中心</text>
+<rect x="20" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="20" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="36" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">改动</text>
+<text x="36" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">循环少崩溃</text>
+<text x="36" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#1999</text>
+<rect x="422" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="422" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="422" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="438" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">机制</text>
+<text x="438" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">MCP取消稳</text>
+<text x="438" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#1953/2075</text>
+<rect x="824" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="824" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="824" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="840" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">影响</text>
+<text x="840" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">输出更干净</text>
+<text x="840" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#2039</text>
+<line x1="344" y1="82" x2="414" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-1)"></line>
+<line x1="746" y1="82" x2="816" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-1)"></line>
+<rect x="20" y="148" width="1120" height="52" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="148" width="4" height="52" rx="2" fill="var(--live)"></rect>
+<text x="40" y="179" font-family="var(--sans)" font-size="15" font-weight="500" fill="var(--ink-2)">重稳定性者应升级</text>
 </svg>
-<svg viewBox="0 0 680 172" width="100%" role="img" aria-label="变更流程图：内存实用化" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s6) 0">
-<defs><marker id="cf-ar-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
-<text x="20" y="14" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">2 · 内存实用化</text>
-<rect x="20" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="34" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">改动</text>
-<text x="34" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">异步整合</text>
-<text x="34" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#1961/1962</text>
-<rect x="250" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="264" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">机制</text>
-<text x="264" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">输入忠实</text>
-<text x="264" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#1868</text>
-<rect x="480" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="494" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">影响</text>
-<text x="494" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">存前校验</text>
-<text x="494" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#1810/1909</text>
-<line x1="204" y1="60" x2="246" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-2)"></line>
-<line x1="434" y1="60" x2="476" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-2)"></line>
-<rect x="20" y="108" width="640" height="44" rx="4" fill="var(--paper-2)"></rect>
-<rect x="20" y="108" width="3" height="44" fill="var(--live)"></rect>
-<text x="36" y="135" font-family="var(--sans)" font-size="12.5" fill="var(--ink-2)">用记忆者升级,整合更可靠</text>
+<svg viewBox="0 0 1160 220" width="100%" role="img" aria-label="变更流程图：内存实用化" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s8) 0">
+<defs><marker id="cf-ar-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+<text x="20" y="20" font-family="var(--sans)" font-size="16" font-weight="600" fill="var(--ink)">2 · 内存实用化</text>
+<rect x="20" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="20" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="36" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">改动</text>
+<text x="36" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">异步整合</text>
+<text x="36" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#1961/1962</text>
+<rect x="422" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="422" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="422" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="438" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">机制</text>
+<text x="438" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">输入忠实</text>
+<text x="438" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#1868</text>
+<rect x="824" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="824" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="824" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="840" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">影响</text>
+<text x="840" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">存前校验</text>
+<text x="840" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#1810/1909</text>
+<line x1="344" y1="82" x2="414" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-2)"></line>
+<line x1="746" y1="82" x2="816" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-2)"></line>
+<rect x="20" y="148" width="1120" height="52" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="148" width="4" height="52" rx="2" fill="var(--live)"></rect>
+<text x="40" y="179" font-family="var(--sans)" font-size="15" font-weight="500" fill="var(--ink-2)">用记忆者升级,整合更可靠</text>
 </svg>
-<svg viewBox="0 0 680 172" width="100%" role="img" aria-label="变更流程图：通道插件架构" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s6) 0">
-<defs><marker id="cf-ar-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
-<text x="20" y="14" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">3 · 通道插件架构</text>
-<rect x="20" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="34" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">改动</text>
-<text x="34" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">通道插件化</text>
-<text x="34" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#1982</text>
-<rect x="250" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="264" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">机制</text>
-<text x="264" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">自动发现</text>
-<text x="264" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#1888</text>
-<rect x="480" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="494" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">影响</text>
-<text x="494" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">边界更清晰</text>
-<text x="494" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">内置通道</text>
-<line x1="204" y1="60" x2="246" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-3)"></line>
-<line x1="434" y1="60" x2="476" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-3)"></line>
-<rect x="20" y="108" width="640" height="44" rx="4" fill="var(--paper-2)"></rect>
-<rect x="20" y="108" width="3" height="44" fill="var(--live)"></rect>
-<text x="36" y="135" font-family="var(--sans)" font-size="12.5" fill="var(--ink-2)">要扩展渠道者升级</text>
+<svg viewBox="0 0 1160 220" width="100%" role="img" aria-label="变更流程图：通道插件架构" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s8) 0">
+<defs><marker id="cf-ar-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+<text x="20" y="20" font-family="var(--sans)" font-size="16" font-weight="600" fill="var(--ink)">3 · 通道插件架构</text>
+<rect x="20" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="20" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="36" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">改动</text>
+<text x="36" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">通道插件化</text>
+<text x="36" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#1982</text>
+<rect x="422" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="422" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="422" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="438" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">机制</text>
+<text x="438" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">自动发现</text>
+<text x="438" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#1888</text>
+<rect x="824" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="824" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="824" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="840" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">影响</text>
+<text x="840" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">边界更清晰</text>
+<text x="840" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">内置通道</text>
+<line x1="344" y1="82" x2="414" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-3)"></line>
+<line x1="746" y1="82" x2="816" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-3)"></line>
+<rect x="20" y="148" width="1120" height="52" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="148" width="4" height="52" rx="2" fill="var(--live)"></rect>
+<text x="40" y="179" font-family="var(--sans)" font-size="15" font-weight="500" fill="var(--ink-2)">要扩展渠道者升级</text>
 </svg>
 <h2 id="亮点">亮点</h2>
 <ul>
