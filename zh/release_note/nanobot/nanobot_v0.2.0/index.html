@@ -24,68 +24,86 @@
 第二个故事是<strong>WebUI 的成长</strong>。在作为纯源预览发布了几次之后，它现在<strong>在方向盘内</strong> - <code>pip install nanobot-ai</code>，你就拥有了它。设置和 BYOK 进行了全面重新设计，斜线调色板已本地化，LAN 访问由令牌控制，推理流实时聊天，全新的图像生成工具将“画我 X”变成内联预览，而无需离开对话。
 第三层是<strong>机房</strong>。代理循环得到了真正的重构 - <code>AgentLoop.from_config()</code> 用于干净的嵌入，<code>_process_message</code> 重写为功能状态机，存档摘要移至系统提示中以确保 KV 缓存稳定性，工具转换为自描述插件架构，<code>ask_user</code> 和 <code>GlobTool</code> 退役以支持更干净的替代品。五家新提供商（<strong>AWS Bedrock Converse</strong>、<strong>NVIDIA NIM</strong>、<strong>LongCat</strong>、<strong>Atomic Chat</strong>、<strong>MiMo</strong>）加入了该阵容，并以 <code>fallback_models</code> 作为安全网，因此单个脆弱端点无法拒绝。加上四个 <code>[security]</code> 修复 - SSRF、媒体路径限制、更软的工作空间边界 - 以及聊天本机配对，因此 DM 批准最终发生在聊天中，而不是在配置文件中。</p>
 <h2 id="变更流程图">变更流程图</h2>
-<svg viewBox="0 0 680 172" width="100%" role="img" aria-label="变更流程图：/goal长任务" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s6) 0">
-<defs><marker id="cf-ar-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
-<text x="20" y="14" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">1 · /goal长任务</text>
-<rect x="20" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="34" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">改动</text>
-<text x="34" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">/goal长任务</text>
-<text x="34" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#3788</text>
-<rect x="250" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="264" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">机制</text>
-<text x="264" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">目标常驻上下文</text>
-<text x="264" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#3855</text>
-<rect x="480" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="494" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">影响</text>
-<text x="494" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">超时自动加宽</text>
-<text x="494" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">idle timeout</text>
-<line x1="204" y1="60" x2="246" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-1)"></line>
-<line x1="434" y1="60" x2="476" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-1)"></line>
-<rect x="20" y="108" width="640" height="44" rx="4" fill="var(--paper-2)"></rect>
-<rect x="20" y="108" width="3" height="44" fill="var(--live)"></rect>
-<text x="36" y="135" font-family="var(--sans)" font-size="12.5" fill="var(--ink-2)">长任务用户应升级,目标不丢</text>
+<svg viewBox="0 0 1160 220" width="100%" role="img" aria-label="变更流程图：/goal长任务" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s8) 0">
+<defs><marker id="cf-ar-1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+<text x="20" y="20" font-family="var(--sans)" font-size="16" font-weight="600" fill="var(--ink)">1 · /goal长任务</text>
+<rect x="20" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="20" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="36" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">改动</text>
+<text x="36" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">/goal长任务</text>
+<text x="36" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#3788</text>
+<rect x="422" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="422" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="422" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="438" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">机制</text>
+<text x="438" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">目标常驻上下文</text>
+<text x="438" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#3855</text>
+<rect x="824" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="824" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="824" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="840" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">影响</text>
+<text x="840" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">超时自动加宽</text>
+<text x="840" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">idle timeout</text>
+<line x1="344" y1="82" x2="414" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-1)"></line>
+<line x1="746" y1="82" x2="816" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-1)"></line>
+<rect x="20" y="148" width="1120" height="52" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="148" width="4" height="52" rx="2" fill="var(--live)"></rect>
+<text x="40" y="179" font-family="var(--sans)" font-size="15" font-weight="500" fill="var(--ink-2)">长任务用户应升级,目标不丢</text>
 </svg>
-<svg viewBox="0 0 680 172" width="100%" role="img" aria-label="变更流程图：WebUI打包" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s6) 0">
-<defs><marker id="cf-ar-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
-<text x="20" y="14" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">2 · WebUI打包</text>
-<rect x="20" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="34" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">改动</text>
-<text x="34" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">WebUI打包</text>
-<text x="34" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#3653</text>
-<rect x="250" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="264" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">机制</text>
-<text x="264" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">启WS通道</text>
-<text x="264" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#3661</text>
-<rect x="480" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="494" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">影响</text>
-<text x="494" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">免bun构建</text>
-<text x="494" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#3703</text>
-<line x1="204" y1="60" x2="246" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-2)"></line>
-<line x1="434" y1="60" x2="476" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-2)"></line>
-<rect x="20" y="108" width="640" height="44" rx="4" fill="var(--paper-2)"></rect>
-<rect x="20" y="108" width="3" height="44" fill="var(--live)"></rect>
-<text x="36" y="135" font-family="var(--sans)" font-size="12.5" fill="var(--ink-2)">想开箱用WebUI者应升级</text>
+<svg viewBox="0 0 1160 220" width="100%" role="img" aria-label="变更流程图：WebUI打包" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s8) 0">
+<defs><marker id="cf-ar-2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+<text x="20" y="20" font-family="var(--sans)" font-size="16" font-weight="600" fill="var(--ink)">2 · WebUI打包</text>
+<rect x="20" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="20" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="36" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">改动</text>
+<text x="36" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">WebUI打包</text>
+<text x="36" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#3653</text>
+<rect x="422" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="422" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="422" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="438" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">机制</text>
+<text x="438" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">启WS通道</text>
+<text x="438" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#3661</text>
+<rect x="824" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="824" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="824" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="840" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">影响</text>
+<text x="840" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">免bun构建</text>
+<text x="840" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#3703</text>
+<line x1="344" y1="82" x2="414" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-2)"></line>
+<line x1="746" y1="82" x2="816" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-2)"></line>
+<rect x="20" y="148" width="1120" height="52" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="148" width="4" height="52" rx="2" fill="var(--live)"></rect>
+<text x="40" y="179" font-family="var(--sans)" font-size="15" font-weight="500" fill="var(--ink-2)">想开箱用WebUI者应升级</text>
 </svg>
-<svg viewBox="0 0 680 172" width="100%" role="img" aria-label="变更流程图：核心重构与破坏" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s6) 0">
-<defs><marker id="cf-ar-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
-<text x="20" y="14" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">3 · 核心重构与破坏</text>
-<rect x="20" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--amber)" stroke-width="0.75"></rect>
-<text x="34" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--amber)">改动</text>
-<text x="34" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">删ask_user</text>
-<text x="34" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#3757</text>
-<rect x="250" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="264" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">机制</text>
-<text x="264" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">弃GlobTool</text>
-<text x="264" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#3841</text>
-<rect x="480" y="28" width="180" height="64" rx="4" fill="var(--surface)" stroke="var(--line-2)" stroke-width="0.75"></rect>
-<text x="494" y="46" font-family="var(--mono)" font-size="10.5" fill="var(--ink-4)">影响</text>
-<text x="494" y="64" font-family="var(--sans)" font-size="13" font-weight="600" fill="var(--ink)">组装集中</text>
-<text x="494" y="81" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">#3708</text>
-<line x1="204" y1="60" x2="246" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-3)"></line>
-<line x1="434" y1="60" x2="476" y2="60" stroke="var(--ink-4)" stroke-width="1" marker-end="url(#cf-ar-3)"></line>
-<rect x="20" y="108" width="640" height="44" rx="4" fill="var(--paper-2)"></rect>
-<rect x="20" y="108" width="3" height="44" fill="var(--amber)"></rect>
-<text x="36" y="135" font-family="var(--sans)" font-size="12.5" fill="var(--amber)">用ask_user/GlobTool者先改调用</text>
+<svg viewBox="0 0 1160 220" width="100%" role="img" aria-label="变更流程图：核心重构与破坏" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:var(--s8) 0">
+<defs><marker id="cf-ar-3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+<text x="20" y="20" font-family="var(--sans)" font-size="16" font-weight="600" fill="var(--ink)">3 · 核心重构与破坏</text>
+<rect x="20" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--amber)" stroke-width="1"></rect>
+<rect x="20" y="36" width="316" height="26" rx="8" fill="var(--amber-wash)"></rect>
+<rect x="20" y="54" width="316" height="8" fill="var(--amber-wash)"></rect>
+<text x="36" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--amber)">改动</text>
+<text x="36" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">删ask_user</text>
+<text x="36" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#3757</text>
+<rect x="422" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="422" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="422" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="438" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">机制</text>
+<text x="438" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">弃GlobTool</text>
+<text x="438" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#3841</text>
+<rect x="824" y="36" width="316" height="92" rx="8" fill="var(--surface)" stroke="var(--line-2)" stroke-width="1"></rect>
+<rect x="824" y="36" width="316" height="26" rx="8" fill="var(--paper-2)"></rect>
+<rect x="824" y="54" width="316" height="8" fill="var(--paper-2)"></rect>
+<text x="840" y="54" font-family="var(--sans)" font-size="12.5" font-weight="600" fill="var(--ink-2)">影响</text>
+<text x="840" y="84" font-family="var(--sans)" font-size="17" font-weight="600" fill="var(--ink)">组装集中</text>
+<text x="840" y="112" font-family="var(--mono)" font-size="12.5" fill="var(--ink-3)">#3708</text>
+<line x1="344" y1="82" x2="414" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-3)"></line>
+<line x1="746" y1="82" x2="816" y2="82" stroke="var(--ink-3)" stroke-width="2" marker-end="url(#cf-ar-3)"></line>
+<rect x="20" y="148" width="1120" height="52" rx="8" fill="var(--paper-2)"></rect>
+<rect x="20" y="148" width="4" height="52" rx="2" fill="var(--amber)"></rect>
+<text x="40" y="179" font-family="var(--sans)" font-size="15" font-weight="500" fill="var(--amber)">用ask_user/GlobTool者先改调用</text>
 </svg>
 <h2 id="亮点">亮点</h2>
 <ul>
